@@ -1,0 +1,76 @@
+{
+  "dice": {
+    "index": 1,
+    "sides": [
+      {
+        "value": 2,
+        "unicode": null,
+        "unicodeColour": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 1
+        },
+        "imagePath": null,
+        "text": "heads",
+        "textColour": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 1
+        },
+        "soundPath": null,
+        "useSound": false
+      },
+      {
+        "value": 1,
+        "unicode": null,
+        "unicodeColour": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 1
+        },
+        "imagePath": null,
+        "text": "tails",
+        "textColour": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 1
+        },
+        "soundPath": null,
+        "useSound": false
+      }
+    ],
+    "colour": {
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 1
+    },
+    "descrption": "text",
+    "penaltyBonus": 0
+  },
+  "roll": {},
+  "settings": {
+    "diceTab": {
+      "demonstration": false,
+      "zoom": 0,
+      "showDescription": true
+    },
+    "rollTab": {
+      "diceToRoll": [
+        1
+      ],
+      "rollSequentially": false,
+      "link": false,
+      "split": false,
+      "zoom": 0,
+      "showTotal": false,
+      "showDetailedInfo": false,
+      "showHistory": false,
+      "useRollSound": false
+    }
+  }
+}
