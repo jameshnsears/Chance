@@ -1,2 +1,53 @@
+https://www.dicegamedepot.com/polyhedral-dice-by-shape/
+
+https://www.chessex.com/
+
+https://easyrollerdice.com/
+
+--
+
 A two-sided dice, often referred to as a coin, is typically a flat, circular object. One side is designated as “heads” and the other as “tails”.
 
+--
+
+A four-sided dice, also known as a tetrahedron, is a pyramid with a triangular base. Each face is an equilateral triangle, and all four faces meet at a single point at the top. The numbers are usually placed at the edges so that the number rolled is visible at the base of the dice. It’s one of the five platonic solids and is the simplest regular polyhedron.
+
+D4: This is a four-sided die, also known as a tetrahedron. Each face is an equilateral triangle1
+
+--
+
+A six-sided dice, also known as a cube or a hexahedron, is a regular solid with six square faces. All sides are equal in length and meet at right angles. Each face is numbered from one to six. The opposite faces of a properly constructed dice will always add up to seven (1 is opposite to 6, 2 is opposite to 5, and 3 is opposite to 4). It’s the most commonly used dice in games. 
+
+D6: The most common type of dice. It’s a cube with six faces. Each face is a square and they bear a different number from 1 to 6, generally using dots (a.k.a. pips) or numerals2
+
+--
+
+An eight-sided dice, also known as an octahedron, is one of the five platonic solids. It has eight faces, each of which is an equilateral triangle. All edges are of equal length and all angles are equal. The numbers are usually placed at the vertices so that the number rolled is visible at the base of the dice. It’s a common dice used in role-playing games like Dungeons & Dragons.
+
+D8: An eight-sided die, also known as an octahedron. Each face is an equilateral triangle1
+
+--
+
+A ten-sided dice, also known as a d10, is shaped like a pentagonal trapezohedron12. A pentagonal trapezohedron is a three-dimensional shape with ten faces, which are congruent kites1. It can be decomposed into two pentagonal pyramids and a pentagonal antiprism in the middle1. It’s one of the many types of polyhedral dice used in tabletop games.
+
+D10: A ten-sided die, also known as a pentagonal trapezohedron. Each face is a kite1
+
+--
+
+A twelve-sided dice, also known as a d12, is shaped like a dodecahedron123. A dodecahedron is a three-dimensional shape with twelve flat faces1. The most familiar dodecahedron is the regular dodecahedron with regular pentagons as faces, which is a Platonic solid1. It’s one of the many types of polyhedral dice used in tabletop games2.
+
+D12: A twelve-sided die, also known as a dodecahedron. Each face is a regular pentagon1
+
+--
+
+A twenty-sided dice, also known as a d20, is shaped like an icosahedron12. An icosahedron is a three-dimensional shape with 20 faces1. The best known is the regular icosahedron, one of the Platonic solids, whose faces are 20 equilateral triangles1. It’s one of the many types of polyhedral dice used in tabletop games
+
+D20: A twenty-sided die, also known as an icosahedron. Each face is an equilateral triangle1
+
+-----------------
+
+Dice Bag
+
+--
+
+speckeld dice; translucent dice
