@@ -1,79 +1,128 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generator: Adobe Illustrator 25.2.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   width="100mm"
+   height="100mm"
+   viewBox="0 0 100 100"
    version="1.1"
-   id="Layer_1"
+   id="svg239"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="d2.svg"
-   x="0px"
-   y="0px"
-   viewBox="0 0 611.8 618.2"
-   style="enable-background:new 0 0 611.8 618.2;"
-   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs71" />
-<style
-   type="text/css"
-   id="style57">
-	.st0{fill:#FFFFFF;stroke:#1F1F1F;stroke-width:8;}
-	.st1{fill:none;stroke:#0000FF;stroke-width:4;}
-	.st2{fill:none;stroke:#FF0000;stroke-width:4;}
-	.st3{fill:#FFFFFF;stroke:#009900;stroke-width:4;}
-	.st4{fill:#0000FF;}
-	.st5{fill:#FF0000;}
-	.st6{fill:#1F1F1F;}
-	.st7{fill:none;stroke:#1F1F1F;stroke-width:8;}
-	.st8{fill:#009900;}
-</style>
-<sodipodi:namedview
-   bordercolor="#666666"
-   borderopacity="1"
-   gridtolerance="10"
-   guidetolerance="10"
-   id="namedview4058"
-   inkscape:current-layer="layer1"
-   inkscape:cx="435.87126"
-   inkscape:cy="354.50863"
-   inkscape:pageopacity="0"
-   inkscape:pageshadow="2"
-   inkscape:window-height="700"
-   inkscape:window-maximized="1"
-   inkscape:window-width="1366"
-   inkscape:window-x="0"
-   inkscape:window-y="0"
-   inkscape:zoom="0.86034578"
-   objecttolerance="10"
-   pagecolor="#ffffff"
-   showgrid="false"
-   inkscape:showpageshadow="2"
-   inkscape:pagecheckerboard="0"
-   inkscape:deskcolor="#d1d1d1">
-	</sodipodi:namedview>
-<g
-   id="layer1"
-   inkscape:groupmode="layer"
-   inkscape:label="Background">
-	<path
-   id="Circle_2_"
-   inkscape:connector-curvature="0"
-   class="st0"
-   d="M568.8,407.5c-52.7,145.1-213.2,219.9-358.3,167.1   C65.3,521.8-9.4,361.3,43.4,216.3C96.2,71.2,256.6-3.6,401.7,49.2C546.7,101.9,621.5,262.4,568.8,407.5L568.8,407.5z" />
-	
-	
-	
-		
-	
-	
-	
-	<path
-   id="path4797"
-   inkscape:connector-curvature="0"
-   class="st7"
-   d="M568.8,407.5c-52.7,145.1-213.2,219.9-358.3,167.1   C65.3,521.8-9.4,361.3,43.4,216.3C96.2,71.2,256.6-3.6,401.7,49.2C546.7,101.9,621.5,262.4,568.8,407.5L568.8,407.5z" />
-</g>
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview241"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.0138334"
+     inkscape:cx="3.9454216"
+     inkscape:cy="213.05277"
+     inkscape:window-width="1366"
+     inkscape:window-height="700"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs236">
+    <clipPath
+       id="presentation_clip_path"
+       clipPathUnits="userSpaceOnUse">
+   <rect
+   x="0"
+   y="0"
+   width="14534"
+   height="14540"
+   id="rect494" />
 
+  </clipPath>
+  </defs>
+  <g
+     inkscape:label="d2"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline"
+     transform="matrix(0.63302508,0,0,0.63298099,-8.1775215,-3.6648477)"
+     sodipodi:insensitive="true">
+    <path
+       id="Circle_2_"
+       inkscape:connector-curvature="0"
+       class="st0"
+       d="m 160.95048,109.91201 c -13.84755,38.1268 -56.02086,57.78141 -94.147632,43.90756 C 28.649806,139.94573 9.0214846,97.772395 22.895319,59.671875 36.769155,21.545078 78.916175,1.890463 117.04295,15.764308 c 38.10049,13.847568 57.75509,56.020903 43.90753,94.147702 z"
+       style="fill:#ffffff;stroke:#1f1f1f;stroke-width:3.15954;stroke-dasharray:none"
+       inkscape:label="d2"
+       sodipodi:insensitive="true" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="d4_d8_d20"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       d="M 50.011078,4.7357968 95.903964,96.507705 H 4.1181441 Z"
+       fill="none"
+       stroke="#000000"
+       stroke-width="1.71652"
+       id="path286"
+       inkscape:label="d4_d8_d20"
+       style="display:inline;stroke-width:2;stroke-dasharray:none"
+       sodipodi:insensitive="true" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="d6"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       fill="none"
+       stroke="#000000"
+       stroke-width="141"
+       d="M 50.026283,3.2176363 96.12403,49.653173 50.013213,96.108459 3.9089305,49.653173 50.013213,3.2044705"
+       id="path592"
+       inkscape:label="d6"
+       style="stroke-width:2;stroke-dasharray:none"
+       sodipodi:insensitive="true" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="d10"
+     style="display:none"
+     transform="translate(-0.39620815,0.51694854)"
+     sodipodi:insensitive="true">
+    <path
+       id="path1307"
+       d="M 96.296261,69.034408 50.322132,95.160021 4.3479949,69.034408 50.322132,3.7203772 c 0,0 45.974129,65.3140308 45.974129,65.3140308 z"
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-dasharray:none"
+       inkscape:label="d10"
+       sodipodi:insensitive="true" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="d12"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       fill="none"
+       stroke="#000000"
+       stroke-width="1.01219"
+       d="M 50.5658,3.2939299 97.470915,39.21492 79.55635,97.378329 21.57525,97.363589 3.660685,39.2444 50.5658,3.3234096"
+       id="path1405"
+       inkscape:label="d12"
+       style="stroke-width:2;stroke-dasharray:none"
+       sodipodi:insensitive="true" />
+  </g>
 </svg>
