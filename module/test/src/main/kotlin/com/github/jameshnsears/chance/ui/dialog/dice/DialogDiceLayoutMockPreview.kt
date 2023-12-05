@@ -8,9 +8,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
 import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
+import com.github.jameshnsears.chance.ui.dialog.dice.slider.DiceSliderPenaltyBonusMock
+import com.github.jameshnsears.chance.ui.dialog.dice.slider.DiceSliderSidesMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
-@Preview(showBackground = true)
+@Preview(heightDp = 600, widthDp = 360)
+@Composable
+fun DialogDiceLayoutMockPortraitPreview() {
+    DialogDiceLayoutMockPreview()
+}
+
+@Preview(heightDp = 360, widthDp = 600)
+@Composable
+fun DialogDiceLayoutMockLandscapePreview() {
+    DialogDiceLayoutMockPreview()
+}
+
 @Composable
 fun DialogDiceLayoutMockPreview() {
     val showDialog = remember { mutableStateOf(true) }
@@ -30,8 +43,8 @@ fun DialogDiceLayoutMockPreview() {
             DialogDiceLayout(
                 showDialog,
                 viewModel,
-                DialogDiceSliderSidesMock(),
-                DialogDiceSliderPenaltyBonusMock(),
+                DiceSliderSidesMock(),
+                DiceSliderPenaltyBonusMock(),
             )
         }
     }

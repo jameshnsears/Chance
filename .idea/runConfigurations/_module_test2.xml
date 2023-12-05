@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="module:test" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" folderName="androidTest">
+  <configuration default="false" name=":module:test" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" folderName="androidTest">
     <module name="Chance.module.test.androidTest" />
     <option name="TESTING_TYPE" value="1" />
     <option name="METHOD_NAME" value="" />

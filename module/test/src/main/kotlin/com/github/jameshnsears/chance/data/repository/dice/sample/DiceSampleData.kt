@@ -5,6 +5,13 @@ import com.github.jameshnsears.chance.data.domain.Side
 
 class DiceSampleData {
     companion object {
+        val singleDice = listOf(
+            Dice(
+                1,
+                penaltyBonus = -2
+            )
+        )
+
         val twoDice = listOf(
             Dice(
                 sides = listOf(

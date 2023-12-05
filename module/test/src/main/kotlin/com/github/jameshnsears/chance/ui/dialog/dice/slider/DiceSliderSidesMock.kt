@@ -1,6 +1,8 @@
-package com.github.jameshnsears.chance.ui.dialog.dice
+package com.github.jameshnsears.chance.ui.dialog.dice.slider
 
-class DialogDiceSliderSidesMock(override val defaultValue: Float = 2.0f) :
+import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceSliderValues
+
+class DiceSliderSidesMock(override val defaultValue: Float = 2.0f) :
     DialogDiceSliderValues() {
     override fun values(): List<String> {
         return listOf(

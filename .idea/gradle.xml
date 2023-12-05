@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/module/ui/zoom" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

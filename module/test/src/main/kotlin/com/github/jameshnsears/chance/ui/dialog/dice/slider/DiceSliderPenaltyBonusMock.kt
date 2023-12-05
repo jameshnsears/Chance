@@ -1,6 +1,8 @@
-package com.github.jameshnsears.chance.ui.dialog.dice
+package com.github.jameshnsears.chance.ui.dialog.dice.slider
 
-class DialogDiceSliderPenaltyBonusMock(override val defaultValue: Float = 3.0f) :
+import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceSliderValues
+
+class DiceSliderPenaltyBonusMock(override val defaultValue: Float = 3.0f) :
     DialogDiceSliderValues() {
     override fun values(): List<String> {
         return listOf(

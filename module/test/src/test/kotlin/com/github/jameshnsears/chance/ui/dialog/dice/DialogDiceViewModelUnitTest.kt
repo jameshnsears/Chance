@@ -24,41 +24,44 @@ class DialogDiceViewModelUnitTest {
                 0
             )
 
-            testSliderSides(viewModel)
+            val newSliderSidesPosition = 3.0f
+            val expectedSliderSidesPosition = 8
+            testSliderSides(
+                viewModel,
+                newSliderSidesPosition,
+                expectedSliderSidesPosition
+            )
 
             testDescription(viewModel)
 
-            testSliderPenaltyBonus(viewModel)
+            val newSliderPenaltyBonusPosition = 3.0f
+            val expectedSliderPenaltyBonusPosition = 0
+            testSliderPenaltyBonus(
+                viewModel,
+                newSliderPenaltyBonusPosition,
+                expectedSliderPenaltyBonusPosition
+            )
 
-            testOk(viewModel)
+            testOk(
+                viewModel,
+                expectedSliderSidesPosition,
+                expectedSliderPenaltyBonusPosition
+            )
         } finally {
             Dispatchers.resetMain()
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private fun TestScope.testOk(
-        viewModel: DialogDiceViewModel) {
-        assertEquals(2, viewModel.diceModel.fetchDice(viewModel.diceIndex).sides.size)
-        assertEquals("d2", viewModel.diceModel.fetchDice(viewModel.diceIndex).description)
-        assertEquals(3, viewModel.diceModel.fetchDice(viewModel.diceIndex).penaltyBonus)
-
-        viewModel.ok()
-        advanceUntilIdle()
-
-        assertEquals(8, viewModel.diceModel.fetchDice(viewModel.diceIndex).sides.size)
-        assertEquals("", viewModel.diceModel.fetchDice(viewModel.diceIndex).description)
-        assertEquals(0, viewModel.diceModel.fetchDice(viewModel.diceIndex).penaltyBonus)
-    }
-
-    private fun testSliderSides(viewModel: DialogDiceViewModel) {
+    private fun testSliderSides(
+        viewModel: DialogDiceViewModel,
+        newSliderPosition: Float,
+        expectedSliderPosition: Int) {
         assertEquals(0f, viewModel.sliderSidesPosition.value)
         assertEquals(2, viewModel.fetchCurrentSliderSidesPosition())
 
-        val newSliderPosition = 3.0f
         viewModel.updateCurrentSliderSidesPosition(newSliderPosition)
         assertEquals(newSliderPosition, viewModel.sliderSidesPosition.value)
-        assertEquals(8, viewModel.fetchCurrentSliderSidesPosition())
+        assertEquals(expectedSliderPosition, viewModel.fetchCurrentSliderSidesPosition())
     }
 
     private fun testDescription(viewModel: DialogDiceViewModel) {
@@ -69,13 +72,33 @@ class DialogDiceViewModelUnitTest {
         assertEquals(newDescription, viewModel.description.value)
     }
 
-    private fun testSliderPenaltyBonus(viewModel: DialogDiceViewModel) {
+    private fun testSliderPenaltyBonus(
+        viewModel: DialogDiceViewModel,
+        newSliderPosition: Float,
+        expectedSliderPosition: Int) {
         assertEquals(6.0f, viewModel.sliderPenaltyBonusPosition.value)
         assertEquals(3, viewModel.fetchCurrentSliderPenaltyBonusPosition())
 
-        val newSliderPosition = 3.0f
         viewModel.updateCurrentSliderPenaltyBonusPosition(newSliderPosition)
         assertEquals(newSliderPosition, viewModel.sliderSidesPosition.value)
-        assertEquals(0, viewModel.fetchCurrentSliderPenaltyBonusPosition())
+        assertEquals(expectedSliderPosition, viewModel.fetchCurrentSliderPenaltyBonusPosition())
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun TestScope.testOk(
+        viewModel: DialogDiceViewModel,
+        expectedSides: Int,
+        expectedPenaltyBonus: Int
+    ) {
+        assertEquals(2, viewModel.fetchDice(viewModel.diceIndex).sides.size)
+        assertEquals("d2", viewModel.fetchDice(viewModel.diceIndex).description)
+        assertEquals(3, viewModel.fetchDice(viewModel.diceIndex).penaltyBonus)
+
+        viewModel.ok()
+        advanceUntilIdle()
+
+        assertEquals(expectedSides, viewModel.fetchDice(viewModel.diceIndex).sides.size)
+        assertEquals("", viewModel.fetchDice(viewModel.diceIndex).description)
+        assertEquals(expectedPenaltyBonus, viewModel.fetchDice(viewModel.diceIndex).penaltyBonus)
     }
 }

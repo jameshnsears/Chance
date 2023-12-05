@@ -13,6 +13,7 @@ import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
 import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import timber.log.Timber
@@ -21,12 +22,20 @@ class DialogDiceInstrumentedMockTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Test
-    fun dialogDiceInstrumentedTest() {
+    @BeforeClass
+    fun beforeClass() {
         if (Timber.treeCount == 0) {
             Timber.plant(LoggingLineNumberTree())
         }
+    }
 
+    @Test
+    fun sliderSides() {
+
+    }
+
+    @Test
+    fun description() {
         val showDialog = mutableStateOf(true)
 
         val diceRepository = DiceRepositoryMock
@@ -51,5 +60,25 @@ class DialogDiceInstrumentedMockTest {
         descriptionTextField.performTextInput(newDescription)
         composeTestRule.waitForIdle()
         descriptionTextField.assert(hasText(newDescription))
+    }
+
+    @Test
+    fun sliderPenaltyBonus() {
+
+    }
+
+    @Test
+    fun clone() {
+
+    }
+
+    @Test
+    fun deletePossible() {
+
+    }
+
+    @Test
+    fun deleteNotPossible() {
+
     }
 }

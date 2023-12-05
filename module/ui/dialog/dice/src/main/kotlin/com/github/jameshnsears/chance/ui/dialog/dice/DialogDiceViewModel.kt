@@ -3,31 +3,32 @@ package com.github.jameshnsears.chance.ui.dialog.dice
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.Colour
+import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.model.DiceModel
 import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.math.round
 
-class DialogDiceViewModel(
+open class DialogDiceViewModel(
     diceRepository: DiceRepositoryInterface,
-    val diceIndex: Int = 0
+    var diceIndex: Int
 ) : ViewModel() {
-    val diceModel = DiceModel(diceRepository)
+    private val diceModel = DiceModel(diceRepository)
 
-    private val _sliderSidesPosition = MutableStateFlow(fetchInitialSliderSidesPosition())
+    var _sliderSidesPosition = MutableStateFlow(fetchInitialSliderSidesPosition())
     var sliderSidesPosition: StateFlow<Float> = _sliderSidesPosition
 
-    private val _description = MutableStateFlow(fetchInitialDescription())
+    var _description = MutableStateFlow(fetchInitialDescription())
     var description: StateFlow<String> = _description
 
-    private val _sliderPenaltyBonusPosition =
+    var _sliderPenaltyBonusPosition =
         MutableStateFlow(fetchInitialSliderPenaltyBonusPosition())
     var sliderPenaltyBonusPosition: StateFlow<Float> = _sliderPenaltyBonusPosition
 
-
-    private fun fetchInitialSliderSidesPosition(): Float {
+    fun fetchInitialSliderSidesPosition(): Float {
         return when (diceModel.fetchSides(diceIndex).size) {
             2 -> 0.0f
             4 -> 1.0f
@@ -52,12 +53,13 @@ class DialogDiceViewModel(
     }
 
     fun updateCurrentSliderSidesPosition(position: Float) {
+        Timber.d("position=$position")
         _sliderSidesPosition.value = round(position)
     }
 
-    private fun fetchInitialDescription(): String = diceModel.fetchDiceDescription(diceIndex)
+    fun fetchInitialDescription(): String = diceModel.fetchDiceDescription(diceIndex)
 
-    private fun fetchInitialSliderPenaltyBonusPosition(): Float {
+    fun fetchInitialSliderPenaltyBonusPosition(): Float {
         return when (diceModel.fetchDicePenaltyBonus(diceIndex)) {
             -3 -> 0.0f
             -2 -> 1.0f
@@ -82,10 +84,12 @@ class DialogDiceViewModel(
     }
 
     fun updateCurrentDescription(description: String) {
+        Timber.d("description=", description)
         _description.value = description
     }
 
     fun updateCurrentSliderPenaltyBonusPosition(position: Float) {
+        Timber.d("position=$position")
         _sliderPenaltyBonusPosition.value = round(position)
     }
 
@@ -100,6 +104,8 @@ class DialogDiceViewModel(
         }
     }
 
+    fun fetchDice(diceIndex: Int): Dice = diceModel.fetchDice(diceIndex)
+
     /////////
 
     fun colour(colour: Colour) {
@@ -110,17 +116,11 @@ class DialogDiceViewModel(
         TODO("Not yet implemented")
     }
 
-    fun canBeCloned(): Boolean {
-        TODO("Not yet implemented")
-    }
-
     fun clone() {
         TODO("Not yet implemented")
     }
 
-    fun canBeDeleted(): Boolean {
-        TODO("Not yet implemented")
-    }
+    fun canBeDeleted(): Boolean = diceModel.canBeDeleted()
 
     fun delete() {
         TODO("Not yet implemented")

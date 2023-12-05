@@ -3,10 +3,12 @@ package com.github.jameshnsears.chance
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
@@ -15,7 +17,6 @@ import com.github.jameshnsears.chance.ui.dialog.dice.DialogDice
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
-import com.squareup.leakcanary.core.BuildConfig
 import timber.log.Timber
 
 
@@ -23,16 +24,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (BuildConfig.DEBUG && Timber.treeCount == 0) {
+        if (Timber.treeCount == 0) {
             Timber.plant(LoggingLineNumberTree())
         }
 
         val diceRepository = DiceRepositoryMock
-        diceRepository.store(DiceSampleData.twoDice)
-
-        /*
-Remember that when using a singleton repository, it's crucial to ensure that the repository doesn't hold onto any resources that need to be released when the application shuts down. This could include database connections, file handles, or network connections.
-         */
 
         setContent {
             ChanceTheme {
@@ -42,24 +38,34 @@ Remember that when using a singleton repository, it's crucial to ensure that the
                 ) {
                     val showDialog = remember { mutableStateOf(false) }
 
-                    val viewModel = DialogDiceViewModel(
-                        diceRepository,
-                        0
-                    )
+                    val diceIndex = remember { mutableIntStateOf(0) }
 
-                    Button(
-                        onClick = {
-                            //Timber.d("james")
-                            showDialog.value = true
+                    Column {
+                        Button(
+                            onClick = {
+                                showDialog.value = true
+                                diceIndex.intValue = 0
+                                diceRepository.store(DiceSampleData.singleDice)
+                            }
+                        ) {
+                            Text("Single Dice")
                         }
-                    ) {
-                        Text("Show Dialog")
+
+                        Button(
+                            onClick = {
+                                showDialog.value = true
+                                diceIndex.intValue = 1
+                                diceRepository.store(DiceSampleData.twoDice)
+                            }
+                        ) {
+                            Text("Two Dice")
+                        }
                     }
 
                     if (showDialog.value) {
                         DialogDice(
                             showDialog,
-                            viewModel
+                            DialogDiceViewModel(diceRepository, diceIndex.intValue)
                         )
                     }
                 }

@@ -3,13 +3,13 @@
     <string name="dialog.dice.colour">Colour</string>
     <string name="dialog.dice.sides">Sides</string>
     <string-array name="dialog.dice.sides">
-        <item>d2</item>
-        <item>d4</item>
-        <item>d6</item>
-        <item>d8</item>
-        <item>d10</item>
-        <item>d12</item>
-        <item>d20</item>
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>20</item>
     </string-array>
     <string name="dialog.dice.penalty_bonus">Penalty / Bonus</string>
     <string-array name="dialog.dice.penalty_bonus">

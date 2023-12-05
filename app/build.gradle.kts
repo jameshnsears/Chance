@@ -70,7 +70,6 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation(project(mapOf("path" to ":module:test")))
 
-
     testImplementation("junit:junit:4.13.2")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

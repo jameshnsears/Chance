@@ -4,6 +4,7 @@ import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 import com.github.jameshnsears.chance.data.repository.dice.DiceRepository
 import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryInterface
+import timber.log.Timber
 
 class DiceModel(
     private val diceRepository: DiceRepositoryInterface = DiceRepository
@@ -49,6 +50,11 @@ class DiceModel(
         description: String,
         penaltyBonus: Int
     ) {
+        Timber.d("diceIndex=$diceIndex")
+        Timber.d("sids=$sides")
+        Timber.d("description=", description)
+        Timber.d("penaltyBonus=$penaltyBonus")
+
         val dice = fetchDice().map { it.copy() }.toList()
 
         dice[diceIndex].sides = (sides downTo 1).map { sideIndex ->

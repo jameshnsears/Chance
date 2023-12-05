@@ -15,11 +15,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.MutableState
@@ -81,7 +81,8 @@ fun DialogDiceLayout(
                 stringResource(R.string.dialog_dice_sides),
                 sliderSidesDisplayValues.values(),
                 sliderSidesValue,
-                viewModel::updateCurrentSliderSidesPosition
+                viewModel::updateCurrentSliderSidesPosition,
+                "diceSliderSides"
             )
 
             DiceTextFieldDescription(viewModel)
@@ -92,7 +93,8 @@ fun DialogDiceLayout(
                 stringResource(R.string.dialog_dice_penalty_bonus),
                 sliderPenaltyBonusDisplayValues.values(),
                 sliderPenaltyBonusValue,
-                viewModel::updateCurrentSliderPenaltyBonusPosition
+                viewModel::updateCurrentSliderPenaltyBonusPosition,
+                "diceSliderPenaltyBonus"
             )
 
             DiceButtonsFooter(showDialog, viewModel)
@@ -112,16 +114,22 @@ fun DiceButtonsFooter(
     ) {
         TextButton(
             onClick = { showDialog.value = false },
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .testTag("diceButtonClone")
         ) {
             Text(stringResource(R.string.dialog_dice_clone))
         }
 
-        TextButton(
-            onClick = { showDialog.value = false },
-            modifier = Modifier.padding(8.dp),
-        ) {
-            Text(stringResource(R.string.dialog_dice_delete))
+        if (viewModel.canBeDeleted()) {
+            TextButton(
+                onClick = { showDialog.value = false },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .testTag("diceButtonDelete")
+            ) {
+                Text(stringResource(R.string.dialog_dice_delete))
+            }
         }
 
         TextButton(
@@ -129,7 +137,9 @@ fun DiceButtonsFooter(
                 viewModel.ok()
                 showDialog.value = false
             },
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .testTag("diceButtonOk")
         ) {
             Text(stringResource(R.string.dialog_dice_ok))
         }
@@ -152,12 +162,14 @@ fun DiceTitle(diceIndex: Int) {
 fun DiceTextFieldDescription(viewModel: DialogDiceViewModel) {
     val descriptionText = viewModel.description.collectAsStateWithLifecycle()
 
-    TextField(
+    OutlinedTextField(
         value = descriptionText.value,
         onValueChange = { viewModel.updateCurrentDescription(it) },
         label = { Text(stringResource(R.string.dialog_dice_description)) },
         singleLine = true,
-        modifier = Modifier.testTag("diceDescription")
+        modifier = Modifier
+            .testTag("diceDescription")
+            .fillMaxWidth()
     )
 }
 
@@ -165,18 +177,24 @@ fun DiceTextFieldDescription(viewModel: DialogDiceViewModel) {
 fun DiceButtonColour() {
     val paletteIcon = painterResource(id = R.drawable.palette_fill0_wght400_grad0_opsz24)
 
-    Button(
-        onClick = { /* Do something when clicked */ },
+    Row(
+        modifier = Modifier
+            .padding(top = 16.dp)
     ) {
-        Icon(
-            paletteIcon,
-            contentDescription = "Color palette",
-            modifier = Modifier.size(24.dp)
-        )
+        Button(
+            onClick = { /* Do something when clicked */ },
+            modifier = Modifier.testTag("diceButtonColour")
+        ) {
+            Icon(
+                paletteIcon,
+                contentDescription = "Color palette",
+                modifier = Modifier.size(24.dp)
+            )
 
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
-        Text(stringResource(R.string.dialog_dice_colour))
+            Text(stringResource(R.string.dialog_dice_colour))
+        }
     }
 }
 
@@ -185,7 +203,8 @@ fun DiceSlider(
     sliderTitle: String,
     sliderDisplayValues: List<String>,
     sliderPosition: MutableFloatState,
-    updateSliderPosition: (Float) -> Unit
+    updateSliderPosition: (Float) -> Unit,
+    testTag: String
 ) {
     Row {
         Text(
@@ -209,7 +228,8 @@ fun DiceSlider(
                 thumbColor = MaterialTheme.colorScheme.secondary,
                 activeTrackColor = MaterialTheme.colorScheme.secondary,
                 inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-            )
+            ),
+            modifier = Modifier.testTag(testTag),
         )
     }
 }
