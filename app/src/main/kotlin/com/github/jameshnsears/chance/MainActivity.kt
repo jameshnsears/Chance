@@ -86,9 +86,25 @@ class MainActivity : ComponentActivity() {
                         Image(
                             painter = rememberAsyncImagePainter(R.drawable.d12, imageLoader),
                             contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize() // TODO change this to fit inside!
                         )
                     }
+
+                    /*
+                                                    dice side # | dice side # | ...
+
+                                                    UTF-8 code  |
+                     throw # : cumulative side #'s
+                                                    Text        |
+
+                                                    SVG image   |
+
+
+                    Show throw #    = switch
+                    Show cumulative = switch
+                    Show side       = switch (always set, unless marking available)
+                    Show marking    = switch (only enabled if marking set; UTF-8 code/text/SVG image)
+                     */
 
                     /////////////////////
 

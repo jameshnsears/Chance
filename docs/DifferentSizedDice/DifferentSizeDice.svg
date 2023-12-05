@@ -24,34 +24,33 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.0138334"
-     inkscape:cx="4.4385993"
-     inkscape:cy="213.05277"
+     inkscape:zoom="2.3257219"
+     inkscape:cx="188.32862"
+     inkscape:cy="220.1467"
      inkscape:window-width="1221"
      inkscape:window-height="628"
      inkscape:window-x="26"
      inkscape:window-y="23"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer5" />
+     inkscape:current-layer="layer6" />
   <defs
      id="defs236">
     <clipPath
        id="presentation_clip_path"
        clipPathUnits="userSpaceOnUse">
-   <rect
-   x="0"
-   y="0"
-   width="14534"
-   height="14540"
-   id="rect494" />
-
-  </clipPath>
+      <rect
+         x="0"
+         y="0"
+         width="14534"
+         height="14540"
+         id="rect494" />
+    </clipPath>
   </defs>
   <g
      inkscape:label="d2"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline"
+     style="display:none"
      transform="matrix(0.63302508,0,0,0.63298099,-8.1775215,-3.6648477)"
      sodipodi:insensitive="true">
     <path
@@ -83,7 +82,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="d6"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <path
        fill="none"
@@ -99,7 +98,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="d10"
-     style="display:inline"
+     style="display:none"
      transform="translate(-0.39620815,0.51694854)"
      sodipodi:insensitive="true">
     <path
@@ -113,7 +112,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="d12"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <path
        fill="none"
@@ -124,5 +123,22 @@
        inkscape:label="d12"
        style="stroke-width:2;stroke-dasharray:none"
        sodipodi:insensitive="true" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="d4_d8_d20 # 20"
+     sodipodi:insensitive="true">
+    <text
+       xml:space="preserve"
+       style="font-size:41.91px;fill:#000000;stroke-width:26.4"
+       x="23.18042"
+       y="91.309769"
+       id="text245"><tspan
+         sodipodi:role="line"
+         id="tspan243"
+         style="stroke-width:26.4"
+         x="23.18042"
+         y="91.309769">20</tspan></text>
   </g>
 </svg>
