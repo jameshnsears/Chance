@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) 
+     cleaned with Programmers Notepad 2 ;P
+-->
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   width="310"
+   height="360"
+   version="1.0">
+	<defs>
+		<style type="text/css">
+			path {
+				fill:none;
+				stroke-width:1px; stroke:#000;
+			}
+		</style>
+	</defs>
+	<g transform="translate(-94.91373,-48.32488)">
+		<path
+			transform="translate(10,100)"
+			d="M 103.95908,42.569584 A 16.428572,18.571428 0 0 1 106.39123,51.110682"
+			id="path2224"
+			style="stroke:#2200ff;"
+		/>
+		<path
+			id="path1307"
+			d="M 100,152.36218 L 250,52.362183 L 400,152.36218 L 250,402.36218 C 250,402.36218 100,152.36218 100,152.36218 z "
+			style="stroke-width:2.5;"
+		/>
+		<path
+			id="path2182"
+			d="M 97.984797,152.36218 L 400,152.36218"
+			style="stroke-dasharray:8, 1;"
+		/>
+		<path
+			id="path2184"
+			d="M 250,52.362183 L 250,402.36218"
+			style="stroke-dasharray:8, 1;"
+		/>
+		<path
+			id="path2186"
+			d="M 250,142.36218 C 260,142.36218 260,142.36218 260,142.36218 L 260,152.36218"
+		/>
+		<path
+			id="path2188"
+			d="M 180,109.8368 L 166.96954,94.887564"
+			style="stroke:#004cff;"
+		/>
+		<path
+			id="path2190"
+			d="M 320.5,111.86218 L 333.53046,96.912943"
+			style="stroke:#004cff;"
+		/>
+		<path
+			id="path2192"
+			d="M 329.5,287.81142 L 316.46954,272.86218"
+			style="stroke:#ff0000;"
+		/>
+		<path
+			id="path2196"
+			d="M 333.03046,282.36218 L 320,267.41294"
+			style="stroke:#ff0000;"
+		/>
+		<path
+			id="path2198"
+			d="M 173.53046,287.81142 L 186.56092,272.86218"
+			style="stroke:#ff0000;"
+		/>
+		<path
+			id="path2200"
+			d="M 170,282.36218 L 183.03046,267.41294"
+			style="stroke:#ff0000;"
+		/>
+		<path
+			d="M 110,152.36218 A 10,10 0 0 1 106.13941,160.2557"
+			id="path2206"
+			style="stroke:#ff0000;"
+		/>
+		<path
+			transform="matrix(-1,0,0,1,500.5,0.5)"
+			d="M 110,152.36218 A 10,10 0 0 1 106.13941,160.2557"
+			id="path2208"
+			style="stroke:#ff0000;"
+		/>
+		<path
+			transform="matrix(-1,0,0,1,490,100.7515)"
+			d="M 103.95908,42.569584 A 16.428572,18.571428 0 0 1 106.39123,51.110682"
+			id="path2226"
+			style="stroke:#2200ff;"
+		/>
+		<path
+			transform="matrix(1.07893,0,0,1.07893,-19.73262,-10.55196)"
+			d="M 352.85714 182.36218 A 102.85714 102.85714 0 1 1  147.14286,182.36218 A 102.85714 102.85714 0 1 1  352.85714 182.36218 z"
+			id="path2237"
+			style="stroke:#008d25;"
+		/>
+	</g>
+</svg>
