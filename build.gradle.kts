@@ -5,7 +5,7 @@ plugins {
     id("com.android.library") version "8.2.0" apply false
 
     id("io.gitlab.arturbosch.detekt").version("1.23.3")
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
+    id("org.jlleitschuh.gradle.ktlint") version "12.0.2"
     id("com.diffplug.spotless") version "6.23.2"
 }
 
