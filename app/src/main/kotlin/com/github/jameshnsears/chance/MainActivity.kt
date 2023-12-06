@@ -91,19 +91,27 @@ class MainActivity : ComponentActivity() {
                     }
 
                     /*
-                                                    dice side # | dice side # | ...
+
+                    1               |       6       |       5       |   ...
+
+                    ---- detail view...
+                                        Character
+
+                    description         Text
+
+                                        Image
+
+                    -----------------
+
+                    throw # : cumulative side #'s | dice side # | dice side # | ...
 
                                                     UTF-8 code  |
-                     throw # : cumulative side #'s
+
                                                     Text        |
 
                                                     SVG image   |
 
-
-                    Show throw #    = switch
-                    Show cumulative = switch
-                    Show side       = switch (always set, unless marking available)
-                    Show marking    = switch (only enabled if marking set; UTF-8 code/text/SVG image)
+                    -----------------
                      */
 
                     /////////////////////
