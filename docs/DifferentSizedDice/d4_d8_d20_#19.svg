@@ -8,7 +8,7 @@
    version="1.1"
    id="svg239"
    inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
-   sodipodi:docname="DifferentSizeDice.svg"
+   sodipodi:docname="d4_d8_d20_#19.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,15 +24,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.5780205"
-     inkscape:cx="121.67142"
-     inkscape:cy="184.7251"
+     inkscape:zoom="1.8003991"
+     inkscape:cx="237.72507"
+     inkscape:cy="209.95345"
      inkscape:window-width="1661"
-     inkscape:window-height="985"
-     inkscape:window-x="133"
-     inkscape:window-y="57"
+     inkscape:window-height="872"
+     inkscape:window-x="259"
+     inkscape:window-y="120"
      inkscape:window-maximized="0"
-     inkscape:current-layer="g1" />
+     inkscape:current-layer="g2" />
   <defs
      id="defs236">
     <clipPath
@@ -50,7 +50,7 @@
      inkscape:label="d2"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline"
+     style="display:none"
      transform="matrix(0.63302508,0,0,0.63298099,-8.1775215,-3.6648477)"
      sodipodi:insensitive="true">
     <path
@@ -66,7 +66,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="d4_d8_d20"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <path
        d="M 50.011078,4.7357968 95.903964,96.507705 H 4.1181441 Z"
@@ -82,7 +82,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="d6"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <path
        fill="none"
@@ -98,12 +98,12 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="d10"
-     style="display:inline"
+     style="display:none"
      transform="translate(-0.39620815,0.51694854)"
      sodipodi:insensitive="true">
     <path
        id="path1307"
-       d="M 96.296261,69.034408 50.322132,95.160021 4.3479949,69.034408 50.322132,3.7203772 Z"
+       d="M 96.296261,69.034408 50.322132,95.160021 4.3479949,69.034408 50.322132,3.7203772 c 0,0 45.974129,65.3140308 45.974129,65.3140308 z"
        style="fill:none;stroke:#000000;stroke-width:2;stroke-dasharray:none"
        inkscape:label="d10"
        sodipodi:insensitive="true" />
@@ -112,7 +112,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="d12"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <path
        fill="none"
@@ -132,33 +132,27 @@
      sodipodi:insensitive="true">
     <text
        xml:space="preserve"
-       style="font-size:41.91px;display:inline;fill:#000000;stroke-width:26.4"
-       x="23.18042"
-       y="91.309769"
-       id="text245"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.9419px;font-family:FreeSans;-inkscape-font-specification:FreeSans;text-align:start;text-anchor:start;display:inline;fill:#000000;stroke-width:32.0894"
+       x="22.267975"
+       y="92.117805"
+       id="text1"
        inkscape:label="20"><tspan
          sodipodi:role="line"
-         id="tspan243"
-         style="stroke-width:26.4"
-         x="23.18042"
-         y="91.309769">20</tspan></text>
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:FreeSans;-inkscape-font-specification:FreeSans;text-align:start;text-anchor:start;stroke-width:32.0894"
+         x="22.267975"
+         y="92.117805">20</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
-     id="g1"
+     id="g2"
      inkscape:label="d4_d8_d20 # 19"
-     style="display:none">
-    <text
-       xml:space="preserve"
-       style="font-size:41.91px;display:inline;fill:#000000;stroke-width:26.4"
-       x="23.18042"
-       y="91.309769"
-       id="text1"
-       inkscape:label="19"><tspan
-         sodipodi:role="line"
-         id="tspan1"
-         style="stroke-width:26.4"
-         x="23.18042"
-         y="91.309769">19</tspan></text>
+     style="display:inline">
+    <path
+       d="m 33.874425,66.392147 h -7.997878 v -3.20934 Q 31.072621,62.520563 32.651819,61.348899 34.231018,60.177235 35.402682,56 h 2.95463 v 36.117805 h -4.482887 z m 41.059157,7.233749 q 0,4.788539 -0.866012,8.456356 -0.866012,3.616874 -2.190502,5.705492 -1.273547,2.088618 -3.107455,3.413107 -1.782967,1.273548 -3.413108,1.681083 -1.63014,0.407535 -3.413107,0.407535 -4.126293,0 -6.877156,-2.496153 -2.699921,-2.496153 -3.362165,-6.928098 h 4.482887 q 0.560361,2.598037 2.13956,4.02441 1.579198,1.426373 3.922526,1.426373 3.871584,0 5.90926,-3.514991 2.088618,-3.565933 2.13956,-10.18838 -3.362166,4.02441 -8.252588,4.02441 -4.890422,0 -7.997878,-3.209339 -3.107456,-3.20934 -3.107456,-8.252588 0,-5.297957 3.311224,-8.711064 Q 57.613337,56 62.758469,56 74.933582,56 74.933582,73.625896 Z M 62.707527,59.922526 q -3.107456,0 -5.145132,2.241443 -2.037676,2.241444 -2.037676,5.654551 0,3.616875 1.88485,5.756434 1.884851,2.088618 5.145132,2.088618 3.260282,0 5.348899,-2.139559 2.13956,-2.13956 2.13956,-5.450784 0,-3.514991 -2.088618,-5.807376 -2.088618,-2.343327 -5.247015,-2.343327 z"
+       id="text2"
+       style="font-size:50.9419px;font-family:FreeSans;-inkscape-font-specification:FreeSans;stroke-width:32.0894"
+       inkscape:label="19"
+       aria-label="19" />
   </g>
 </svg>
