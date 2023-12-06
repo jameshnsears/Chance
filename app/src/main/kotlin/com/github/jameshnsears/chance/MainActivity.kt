@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
+import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
 import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
@@ -108,71 +110,109 @@ fun HorizontalScrollingColumn() {
             .fillMaxSize()
             .horizontalScroll(horizontalScrollState)
     ) {
-        repeat(10) {
-            Text(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .background(Color.Blue)
-                    .clickable {
-                        // Handle click
-                    },
-                text = "Item ${it + 1}",
-                color = Color.White
-            )
-        }
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__20, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(
+                R.drawable.mrbenn_crocodile,
+                imageLoader
+            ),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d12, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d10, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
+
+        Image(
+            painter = rememberAsyncImagePainter(R.drawable.d6, imageLoader),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .size(50.dp)
+                .clickable {
+                    // Handle click
+                }
+        )
     }
 
-
-//                    Image(
-//                        painter = rememberAsyncImagePainter(R.drawable.d12, imageLoader),
-//                        contentDescription = null,
-//                        modifier = Modifier.fillMaxSize()
-//                    )
-//
-//                    Row {
-//                        Box(modifier = Modifier.fillMaxSize()) {
-//                            Image(
-//                                painter = rememberAsyncImagePainter(R.drawable.d2, imageLoader),
-//                                contentDescription = null,
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//                            Image(
-//                                painter = rememberAsyncImagePainter(
-//                                    R.drawable.d4_d8_d20,
-//                                    imageLoader
-//                                ),
-//                                contentDescription = null,
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//                            Image(
-//                                painter = rememberAsyncImagePainter(R.drawable.d6, imageLoader),
-//                                contentDescription = null,
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//                            Image(
-//                                painter = rememberAsyncImagePainter(R.drawable.d10, imageLoader),
-//                                contentDescription = null,
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//                            Image(
-//                                painter = rememberAsyncImagePainter(R.drawable.d12, imageLoader),
-//                                contentDescription = null,
-//                                modifier = Modifier.fillMaxSize()
-//                            )
-//                        }
-//                    }
-//
-//                    Row {
-//                        Image(
-//                            painter = rememberAsyncImagePainter(
-//                                R.drawable.mrbenn_crocodile,
-//                                imageLoader
-//                            ),
-//                            contentDescription = null,
-//                            modifier = Modifier.fillMaxSize()
-//                        )
-//                    }
 
     /*
 
