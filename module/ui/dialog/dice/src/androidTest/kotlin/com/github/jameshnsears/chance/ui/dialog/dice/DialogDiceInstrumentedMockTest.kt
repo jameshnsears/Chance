@@ -13,6 +13,7 @@ import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
 import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
+import junit.framework.TestCase.fail
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
@@ -31,7 +32,7 @@ class DialogDiceInstrumentedMockTest {
 
     @Test
     fun sliderSides() {
-
+        fail("TODO")
     }
 
     @Test
@@ -64,21 +65,21 @@ class DialogDiceInstrumentedMockTest {
 
     @Test
     fun sliderPenaltyBonus() {
-
+        fail("TODO")
     }
 
     @Test
     fun clone() {
-
+        fail("TODO")
     }
 
     @Test
     fun deletePossible() {
-
+        fail("TODO")
     }
 
     @Test
     fun deleteNotPossible() {
-
+        fail("TODO")
     }
 }

@@ -33,15 +33,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ChanceTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val showDialog = remember { mutableStateOf(false) }
 
                     val diceIndex = remember { mutableIntStateOf(0) }
-
-                    /////////////////////
 
                     Column {
                         Button(

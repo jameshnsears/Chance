@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.ui.dialog.dice
+package com.github.jameshnsears.chance.ui.zoom
 
 import ZoomColumn
 import androidx.compose.material3.MaterialTheme
@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
 import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
+import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
 @Preview(heightDp = 600, widthDp = 360)
@@ -39,6 +40,7 @@ fun ZoomComposablePreviewMock() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
+            // TODO pass in non SVG to preview
             ZoomColumn()
         }
     }

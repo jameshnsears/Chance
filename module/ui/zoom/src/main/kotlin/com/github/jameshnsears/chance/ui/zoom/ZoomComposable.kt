@@ -1,6 +1,7 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,112 +26,115 @@ fun ZoomColumn() {
 
     val horizontalScrollState = rememberScrollState(0)
 
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .horizontalScroll(horizontalScrollState)
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__20, imageLoader),
-            contentDescription = null,
+    Column {
+        Row(
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+                .fillMaxSize()
+                .horizontalScroll(horizontalScrollState)
+        ) {
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__20, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(
-                R.drawable.mrbenn_crocodile,
-                imageLoader
-            ),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(
+                    R.drawable.mrbenn_crocodile,
+                    imageLoader
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d12, imageLoader),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d12, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d10, imageLoader),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d10, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
 
-        Image(
-            painter = rememberAsyncImagePainter(R.drawable.d6, imageLoader),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp)
-                .size(50.dp)
-                .clickable {
-                    // Handle click
-                }
-        )
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
+
+            Image(
+                painter = rememberAsyncImagePainter(R.drawable.d6, imageLoader),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
+        }
     }
 
 
