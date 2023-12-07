@@ -66,6 +66,7 @@ dependencies {
     implementation(project(mapOf("path" to ":module:ui:dialog:dice")))
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
+    implementation(project(":module:ui:zoom"))
 
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")

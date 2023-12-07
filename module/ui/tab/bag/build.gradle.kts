@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.jameshnsears.chance.ui.colorpicker"
+    namespace = "com.github.jameshnsears.chance.ui.tab.bag"
     compileSdk = 34
 
     defaultConfig {
@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-    implementation("com.github.skydoves:colorpicker-compose:1.0.6")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

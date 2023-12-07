@@ -63,15 +63,12 @@ dependencies {
     implementation(project(mapOf("path" to ":module:ui:zoom")))
     implementation(project(mapOf("path" to ":module:ui:dialog:about")))
     implementation(project(mapOf("path" to ":module:data")))
-    implementation(project(mapOf("path" to ":module:ui:colorpicker")))
+    implementation(project(mapOf("path" to ":module:ui:dialog:colorpicker")))
     implementation(project(mapOf("path" to ":module:ui:dialog:dice")))
     implementation(project(mapOf("path" to ":module:common")))
     implementation("androidx.test.ext:junit-ktx:1.1.5")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation(project(mapOf("path" to ":module:test")))
-
-    implementation("io.coil-kt:coil-compose:2.5.0")
-    implementation("io.coil-kt:coil-svg:2.5.0")
 
     testImplementation("junit:junit:4.13.2")
 

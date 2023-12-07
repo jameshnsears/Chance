@@ -4,7 +4,6 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
@@ -16,11 +15,14 @@
             <option value="$PROJECT_DIR$/module/data" />
             <option value="$PROJECT_DIR$/module/test" />
             <option value="$PROJECT_DIR$/module/ui" />
-            <option value="$PROJECT_DIR$/module/ui/colorpicker" />
             <option value="$PROJECT_DIR$/module/ui/dialog" />
             <option value="$PROJECT_DIR$/module/ui/dialog/about" />
+            <option value="$PROJECT_DIR$/module/ui/dialog/colorpicker" />
             <option value="$PROJECT_DIR$/module/ui/dialog/dice" />
             <option value="$PROJECT_DIR$/module/ui/dialog/side" />
+            <option value="$PROJECT_DIR$/module/ui/tab" />
+            <option value="$PROJECT_DIR$/module/ui/tab/bag" />
+            <option value="$PROJECT_DIR$/module/ui/tab/roll" />
             <option value="$PROJECT_DIR$/module/ui/zoom" />
           </set>
         </option>

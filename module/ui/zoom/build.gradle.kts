@@ -51,6 +51,9 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core")
     implementation(project(mapOf("path" to ":module:common")))
 
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-svg:2.5.0")
+
     testImplementation("junit:junit:4.13.2")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
