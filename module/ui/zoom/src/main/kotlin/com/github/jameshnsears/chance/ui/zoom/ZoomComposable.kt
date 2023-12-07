@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
@@ -18,6 +19,7 @@ import com.github.jameshnsears.chance.ui.zoom.R
 
 @Composable
 fun ZoomColumn() {
+    // coil is NOT required to load drawable!
     val imageLoader = ImageLoader.Builder(LocalContext.current)
         .components {
             add(SvgDecoder.Factory())
@@ -33,8 +35,9 @@ fun ZoomColumn() {
                 .horizontalScroll(horizontalScrollState)
         ) {
 
+
             Image(
-                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__20, imageLoader),
+                painter = painterResource(id = R.drawable.mrbenn_crocodile),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(horizontal = 10.dp, vertical = 5.dp)
@@ -44,96 +47,6 @@ fun ZoomColumn() {
                     }
             )
 
-            Image(
-                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
-
-            Image(
-                painter = rememberAsyncImagePainter(
-                    R.drawable.mrbenn_crocodile,
-                    imageLoader
-                ),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
-
-            Image(
-                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
-
-            Image(
-                painter = rememberAsyncImagePainter(R.drawable.d12, imageLoader),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
-
-            Image(
-                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
-
-            Image(
-                painter = rememberAsyncImagePainter(R.drawable.d10, imageLoader),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
-
-            Image(
-                painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__19, imageLoader),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
-
-            Image(
-                painter = rememberAsyncImagePainter(R.drawable.d6, imageLoader),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .size(50.dp)
-                    .clickable {
-                        // Handle click
-                    }
-            )
         }
     }
 
@@ -163,4 +76,27 @@ fun ZoomColumn() {
 
     354px x 354px svg
      */
+}
+
+@Composable
+fun ZoomColumnWithCoilExample() {
+    // not usable with @Preview
+
+    val imageLoader = ImageLoader.Builder(LocalContext.current)
+        .components {
+            add(SvgDecoder.Factory())
+        }
+        .build()
+
+
+    Image(
+        painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__20, imageLoader),
+        contentDescription = null,
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+            .size(50.dp)
+            .clickable {
+                // Handle click
+            }
+    )
 }
