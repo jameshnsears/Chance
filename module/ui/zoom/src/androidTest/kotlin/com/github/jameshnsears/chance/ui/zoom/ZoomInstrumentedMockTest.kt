@@ -1,5 +1,6 @@
 package com.github.jameshnsears.chance.ui.zoom
 
+import ZoomColumn
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertTextContains
@@ -13,6 +14,7 @@ import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
 import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
+import junit.framework.TestCase.fail
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
@@ -31,29 +33,23 @@ class ZoomInstrumentedMockTest {
 
     @Test
     fun zoom() {
-        val showDialog = mutableStateOf(true)
-
         val diceRepository = DiceRepositoryMock
         diceRepository.store(DiceSampleData.twoDice)
 
         composeTestRule.setContent {
             ChanceTheme {
-//                DialogDice(
-//                    showDialog,
-//                    DialogDiceViewModel(
-//                        diceRepository,
-//                        1
-//                    )
-//                )
+                ZoomColumn()
             }
         }
 
-        val descriptionTextField = composeTestRule.onNodeWithTag("diceDescription")
-        descriptionTextField.assertTextContains(Dice().description)
-        val newDescription = "a b c"
-        descriptionTextField.performTextClearance()
-        descriptionTextField.performTextInput(newDescription)
-        composeTestRule.waitForIdle()
-        descriptionTextField.assert(hasText(newDescription))
+//        val descriptionTextField = composeTestRule.onNodeWithTag("diceDescription")
+//        descriptionTextField.assertTextContains(Dice().description)
+//        val newDescription = "a b c"
+//        descriptionTextField.performTextClearance()
+//        descriptionTextField.performTextInput(newDescription)
+//        composeTestRule.waitForIdle()
+//        descriptionTextField.assert(hasText(newDescription))
+
+        fail("todo")
     }
 }

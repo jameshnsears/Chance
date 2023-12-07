@@ -37,7 +37,7 @@ fun ZoomColumn() {
 
 
             Image(
-                painter = painterResource(id = R.drawable.mrbenn_crocodile),
+                painter = painterResource(id = R.drawable.demo_animals_crocodile),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(horizontal = 10.dp, vertical = 5.dp)
@@ -90,7 +90,7 @@ fun ZoomColumnWithCoilExample() {
 
 
     Image(
-        painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20__20, imageLoader),
+        painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20_20, imageLoader),
         contentDescription = null,
         modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 5.dp)
