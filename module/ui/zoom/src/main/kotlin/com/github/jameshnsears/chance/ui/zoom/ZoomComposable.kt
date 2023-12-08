@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -19,13 +21,6 @@ import com.github.jameshnsears.chance.ui.zoom.R
 
 @Composable
 fun ZoomColumn() {
-    // coil is NOT required to load drawable!
-    val imageLoader = ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
-
     val horizontalScrollState = rememberScrollState(0)
 
     Column {
@@ -35,9 +30,8 @@ fun ZoomColumn() {
                 .horizontalScroll(horizontalScrollState)
         ) {
 
-
             Image(
-                painter = painterResource(id = R.drawable.demo_d10_crocodile),
+                painter = painterResource(id = R.drawable.demo_crocodile),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(horizontal = 10.dp, vertical = 5.dp)
@@ -47,6 +41,28 @@ fun ZoomColumn() {
                     }
             )
 
+            Image(
+                painter = painterResource(id = R.drawable.demo_crocodile),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    },
+                colorFilter = ColorFilter.tint(Color.Red)
+            )
+
+            Image(
+                painter = painterResource(R.drawable.d4_d8_d20),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
+                    .size(50.dp)
+                    .clickable {
+                        // Handle click
+                    }
+            )
         }
     }
 
@@ -88,9 +104,8 @@ fun ZoomColumnWithCoilExample() {
         }
         .build()
 
-
     Image(
-        painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20_20, imageLoader),
+        painter = rememberAsyncImagePainter(R.drawable.d4_d8_d20, imageLoader),
         contentDescription = null,
         modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 5.dp)
