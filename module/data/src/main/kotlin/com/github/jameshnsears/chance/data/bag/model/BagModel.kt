@@ -9,32 +9,32 @@ import timber.log.Timber
 class BagModel(
     private val bagRepository: BagRepositoryInterface = BagRepository
 ) {
-    fun cloneDice(diceToClone: Dice) {
-        var dice = fetchDice()
+    fun diceClone(diceToClone: Dice) {
+        var dice = dice()
         dice += diceToClone
         store(dice)
     }
 
-    fun canBeDeleted() = fetchDice().size > 1
+    fun diceCanBeDeleted() = dice().size > 1
 
-    fun fetchDice(): List<Dice> {
+    fun dice(): List<Dice> {
         return bagRepository.fetch()
     }
 
-    fun fetchDice(diceIndex: Int): Dice {
-        val dice = fetchDice()
+    fun dice(diceIndex: Int): Dice {
+        val dice = dice()
         if (diceIndex < 0 || diceIndex >= dice.size) {
             throw BagModelIndexException()
         }
         return dice[diceIndex]
     }
 
-    fun fetchDiceDescription(diceIndex: Int): String = fetchDice(diceIndex).description
+    fun diceDescription(diceIndex: Int): String = dice(diceIndex).description
 
-    fun fetchSides(diceIndex: Int): List<Side> = fetchDice(diceIndex).sides
+    fun sides(diceIndex: Int): List<Side> = dice(diceIndex).sides
 
-    fun fetchSide(diceIndex: Int, sideIndex: Int): Side {
-        val sides = fetchDice(diceIndex).sides
+    fun side(diceIndex: Int, sideIndex: Int): Side {
+        val sides = dice(diceIndex).sides
         if (sideIndex < 0 || sideIndex >= sides.size) {
             throw BagModelIndexException()
         }
@@ -42,7 +42,7 @@ class BagModel(
         return sides[sideIndex]
     }
 
-    fun fetchDicePenaltyBonus(diceIndex: Int): Int = fetchDice(diceIndex).penaltyBonus
+    fun dicePanaltyBonus(diceIndex: Int): Int = dice(diceIndex).penaltyBonus
 
     fun store(
         diceIndex: Int,
@@ -55,7 +55,7 @@ class BagModel(
         Timber.d("description=", description)
         Timber.d("penaltyBonus=$penaltyBonus")
 
-        val dice = fetchDice().map { it.copy() }.toList()
+        val dice = dice().map { it.copy() }.toList()
 
         dice[diceIndex].sides = (sides downTo 1).map { sideIndex ->
             Side(sideIndex = sideIndex)

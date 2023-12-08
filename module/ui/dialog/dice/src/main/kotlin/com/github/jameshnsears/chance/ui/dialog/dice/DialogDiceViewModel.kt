@@ -29,7 +29,7 @@ open class DialogDiceViewModel(
     var sliderPenaltyBonusPosition: StateFlow<Float> = _sliderPenaltyBonusPosition
 
     fun fetchInitialSliderSidesPosition(): Float {
-        return when (bagModel.fetchSides(diceIndex).size) {
+        return when (bagModel.sides(diceIndex).size) {
             2 -> 0.0f
             4 -> 1.0f
             6 -> 2.0f
@@ -57,10 +57,10 @@ open class DialogDiceViewModel(
         _sliderSidesPosition.value = round(position)
     }
 
-    fun fetchInitialDescription(): String = bagModel.fetchDiceDescription(diceIndex)
+    fun fetchInitialDescription(): String = bagModel.diceDescription(diceIndex)
 
     fun fetchInitialSliderPenaltyBonusPosition(): Float {
-        return when (bagModel.fetchDicePenaltyBonus(diceIndex)) {
+        return when (bagModel.dicePanaltyBonus(diceIndex)) {
             -3 -> 0.0f
             -2 -> 1.0f
             -1 -> 2.0f
@@ -104,7 +104,7 @@ open class DialogDiceViewModel(
         }
     }
 
-    fun fetchDice(diceIndex: Int): Dice = bagModel.fetchDice(diceIndex)
+    fun fetchDice(diceIndex: Int): Dice = bagModel.dice(diceIndex)
 
     /////////
 
@@ -120,7 +120,7 @@ open class DialogDiceViewModel(
         TODO("Not yet implemented")
     }
 
-    fun canBeDeleted(): Boolean = bagModel.canBeDeleted()
+    fun canBeDeleted(): Boolean = bagModel.diceCanBeDeleted()
 
     fun delete() {
         TODO("Not yet implemented")

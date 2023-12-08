@@ -24,14 +24,14 @@ class BagModelUnitTest {
     fun confirmDiceRepositoryWorks() {
         val bagModel = BagModel(getDiceRepository())
 
-        assertEquals(2, bagModel.fetchDice().size)
-        assertEquals(6, bagModel.fetchSides(1).size)
-        assertEquals(3, bagModel.fetchSide(1, 3).sideIndex)
+        assertEquals(2, bagModel.dice().size)
+        assertEquals(6, bagModel.sides(1).size)
+        assertEquals(3, bagModel.side(1, 3).sideIndex)
 
         bagModel.store(listOf(d4))
 
-        assertEquals(1, bagModel.fetchDice().size)
-        assertEquals(4, bagModel.fetchDice(0).sides.size)
+        assertEquals(1, bagModel.dice().size)
+        assertEquals(4, bagModel.dice(0).sides.size)
     }
 
     @Test
@@ -39,11 +39,11 @@ class BagModelUnitTest {
         val bagModel = BagModel(getDiceRepository())
 
         assertThrows(BagModelIndexException::class.java) {
-            bagModel.fetchDice(3)
+            bagModel.dice(3)
         }
 
         assertThrows(BagModelIndexException::class.java) {
-            bagModel.fetchSide(1, 7)
+            bagModel.side(1, 7)
         }
     }
 
@@ -58,19 +58,19 @@ class BagModelUnitTest {
         val bagModel = BagModel(getDiceRepository())
 
         d4.diceIndex = 3
-        bagModel.cloneDice(d4)
+        bagModel.diceClone(d4)
 
-        assertEquals(3, bagModel.fetchDice().size)
-        assertEquals(4, bagModel.fetchDice(2).sides.size)
+        assertEquals(3, bagModel.dice().size)
+        assertEquals(4, bagModel.dice(2).sides.size)
     }
 
     @Test
     fun canBeDeleted() {
         val bagModel = BagModel(getDiceRepository())
 
-        assertTrue(bagModel.canBeDeleted())
+        assertTrue(bagModel.diceCanBeDeleted())
 
         bagModel.store(listOf(d4))
-        assertFalse(bagModel.canBeDeleted())
+        assertFalse(bagModel.diceCanBeDeleted())
     }
 }

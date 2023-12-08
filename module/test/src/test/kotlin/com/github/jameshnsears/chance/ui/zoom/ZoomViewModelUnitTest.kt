@@ -24,9 +24,8 @@ class ZoomViewModelUnitTest {
 
             assertEquals(4, bagDemo.size)
 
-            bagDemo.forEach { dice ->
-                println(dice)
-            }
+            // TODO test the functions of the viewmodel!
+
 
         } finally {
             Dispatchers.resetMain()
