@@ -1,12 +1,12 @@
 <resources>
-    <string name="demo_dice_centurion">Centurion</string>
-    <string name="demo_dice_crocodile">Crocodile</string>
-    <string name="demo_dice_elephants">Elephants</string>
-    <string name="demo_dice_hunter">Hunter</string>
-    <string name="demo_dice_knight">Knight</string>
-    <string name="demo_dice_lion">Lion</string>
-    <string name="demo_dice_parrot">Parrot</string>
-    <string name="demo_dice_pirate">Pirate</string>
-    <string name="demo_dice_queen">Queen</string>
-    <string name="demo_dice_spaceship">Spaceship</string>
+    <string name="demo_bag_centurion">Centurion</string>
+    <string name="demo_bag_crocodile">Crocodile</string>
+    <string name="demo_bag_elephants">Elephants</string>
+    <string name="demo_bag_hunter">Hunter</string>
+    <string name="demo_bag_knight">Knight</string>
+    <string name="demo_bag_lion">Lion</string>
+    <string name="demo_bag_parrot">Parrot</string>
+    <string name="demo_bag_pirate">Pirate</string>
+    <string name="demo_bag_queen">Queen</string>
+    <string name="demo_bag_spaceship">Spaceship</string>
 </resources>

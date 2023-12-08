@@ -1,15 +1,10 @@
 package com.github.jameshnsears.chance.ui.zoom
 
-import ZoomColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
-import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
-import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceViewModel
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
 @Preview(heightDp = 600, widthDp = 360)
@@ -26,22 +21,13 @@ fun ZoomComposablePreviewMockLandscape() {
 
 @Composable
 fun ZoomComposablePreviewMock() {
-    val showDialog = remember { mutableStateOf(true) }
-
-    val diceRepository = DiceRepositoryMock
-    diceRepository.store(DiceSampleData.twoDice)
-
-    val viewModel = DialogDiceViewModel(
-        diceRepository,
-        0
-    )
+    val viewModel = ZoomViewModel(BagRepositoryMock)
 
     ChanceTheme {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            // TODO pass in non SVG to preview
-            ZoomColumn()
+            ZoomColumn(viewModel)
         }
     }
 }

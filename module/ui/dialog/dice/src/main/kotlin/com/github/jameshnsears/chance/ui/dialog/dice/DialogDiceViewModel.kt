@@ -2,10 +2,10 @@ package com.github.jameshnsears.chance.ui.dialog.dice
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.jameshnsears.chance.data.bag.model.BagModel
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.domain.Colour
 import com.github.jameshnsears.chance.data.domain.Dice
-import com.github.jameshnsears.chance.data.model.DiceModel
-import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -13,10 +13,10 @@ import timber.log.Timber
 import kotlin.math.round
 
 open class DialogDiceViewModel(
-    diceRepository: DiceRepositoryInterface,
+    bagRepository: BagRepositoryInterface,
     var diceIndex: Int
 ) : ViewModel() {
-    private val diceModel = DiceModel(diceRepository)
+    private val bagModel = BagModel(bagRepository)
 
     var _sliderSidesPosition = MutableStateFlow(fetchInitialSliderSidesPosition())
     var sliderSidesPosition: StateFlow<Float> = _sliderSidesPosition
@@ -29,7 +29,7 @@ open class DialogDiceViewModel(
     var sliderPenaltyBonusPosition: StateFlow<Float> = _sliderPenaltyBonusPosition
 
     fun fetchInitialSliderSidesPosition(): Float {
-        return when (diceModel.fetchSides(diceIndex).size) {
+        return when (bagModel.fetchSides(diceIndex).size) {
             2 -> 0.0f
             4 -> 1.0f
             6 -> 2.0f
@@ -57,10 +57,10 @@ open class DialogDiceViewModel(
         _sliderSidesPosition.value = round(position)
     }
 
-    fun fetchInitialDescription(): String = diceModel.fetchDiceDescription(diceIndex)
+    fun fetchInitialDescription(): String = bagModel.fetchDiceDescription(diceIndex)
 
     fun fetchInitialSliderPenaltyBonusPosition(): Float {
-        return when (diceModel.fetchDicePenaltyBonus(diceIndex)) {
+        return when (bagModel.fetchDicePenaltyBonus(diceIndex)) {
             -3 -> 0.0f
             -2 -> 1.0f
             -1 -> 2.0f
@@ -95,7 +95,7 @@ open class DialogDiceViewModel(
 
     fun ok() {
         viewModelScope.launch {
-            diceModel.store(
+            bagModel.store(
                 diceIndex,
                 fetchCurrentSliderSidesPosition(),
                 description.value,
@@ -104,7 +104,7 @@ open class DialogDiceViewModel(
         }
     }
 
-    fun fetchDice(diceIndex: Int): Dice = diceModel.fetchDice(diceIndex)
+    fun fetchDice(diceIndex: Int): Dice = bagModel.fetchDice(diceIndex)
 
     /////////
 
@@ -120,7 +120,7 @@ open class DialogDiceViewModel(
         TODO("Not yet implemented")
     }
 
-    fun canBeDeleted(): Boolean = diceModel.canBeDeleted()
+    fun canBeDeleted(): Boolean = bagModel.canBeDeleted()
 
     fun delete() {
         TODO("Not yet implemented")

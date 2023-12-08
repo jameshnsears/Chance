@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
-import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import com.github.jameshnsears.chance.ui.dialog.dice.slider.DiceSliderPenaltyBonusMock
 import com.github.jameshnsears.chance.ui.dialog.dice.slider.DiceSliderSidesMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
@@ -28,11 +28,11 @@ fun DialogDiceComposablePreviewMockLandscape() {
 fun DialogDiceComposablePreviewMock() {
     val showDialog = remember { mutableStateOf(true) }
 
-    val diceRepository = DiceRepositoryMock
-    diceRepository.store(DiceSampleData.twoDice)
+    val bagRepository = BagRepositoryMock
+    bagRepository.store(BagSampleData.twoDice)
 
     val viewModel = DialogDiceViewModel(
-        diceRepository,
+        bagRepository,
         0
     )
 

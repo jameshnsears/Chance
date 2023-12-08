@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.ui.dialog.dice
 
-import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
-import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
@@ -21,11 +21,11 @@ class DialogDiceViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val diceRepository = DiceRepositoryMock
-            diceRepository.store(DiceSampleData.twoDice)
+            val bagRepository = BagRepositoryMock
+            bagRepository.store(BagSampleData.twoDice)
 
             val viewModel = DialogDiceViewModel(
-                diceRepository,
+                bagRepository,
                 0
             )
 

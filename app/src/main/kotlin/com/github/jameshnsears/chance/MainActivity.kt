@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance
 
-import ZoomColumn
+import com.github.jameshnsears.chance.ui.zoom.ZoomColumn
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,11 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
-import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDice
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
+import com.github.jameshnsears.chance.ui.zoom.ZoomViewModel
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
 import timber.log.Timber
 
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
             Timber.plant(LoggingLineNumberTree())
         }
 
-        val diceRepository = DiceRepositoryMock
+        val bagRepository = BagRepositoryMock
 
         setContent {
             ChanceTheme {
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
                             onClick = {
                                 showDialog.value = true
                                 diceIndex.intValue = 0
-                                diceRepository.store(DiceSampleData.singleDice)
+                                bagRepository.store(BagSampleData.singleDice)
                             }
                         ) {
                             Text("Single Dice")
@@ -55,19 +56,19 @@ class MainActivity : ComponentActivity() {
                             onClick = {
                                 showDialog.value = true
                                 diceIndex.intValue = 1
-                                diceRepository.store(DiceSampleData.twoDice)
+                                bagRepository.store(BagSampleData.twoDice)
                             }
                         ) {
                             Text("Two Dice")
                         }
 
-                        ZoomColumn()
+                        ZoomColumn(ZoomViewModel(bagRepository))
                     }
 
                     if (showDialog.value) {
                         DialogDice(
                             showDialog,
-                            DialogDiceViewModel(diceRepository, diceIndex.intValue)
+                            DialogDiceViewModel(bagRepository, diceIndex.intValue)
                         )
                     }
                 }
