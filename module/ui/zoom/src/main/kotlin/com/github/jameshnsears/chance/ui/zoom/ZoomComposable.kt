@@ -27,9 +27,13 @@ import com.github.jameshnsears.chance.data.repository.dice.demo.DiceDemo
 fun ZoomColumn() {
     val horizontalScrollState = rememberScrollState(0)
 
-    val diceDemo = DiceDemo.dice
+    DiceDemo.dice.forEach { dice ->
+        println(dice)
 
-    for ()
+        dice.sides.forEach { side ->
+            print(side)
+        }
+    }
 
     Column {
         Row(

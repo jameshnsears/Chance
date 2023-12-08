@@ -58,7 +58,7 @@ class DiceModel(
         val dice = fetchDice().map { it.copy() }.toList()
 
         dice[diceIndex].sides = (sides downTo 1).map { sideIndex ->
-            Side(sideIndex = sideIndex, defaultValue = sideIndex)
+            Side(sideIndex = sideIndex)
         }
         dice[diceIndex].description = description
         dice[diceIndex].penaltyBonus = penaltyBonus

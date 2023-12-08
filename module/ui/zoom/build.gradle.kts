@@ -54,6 +54,7 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("io.coil-kt:coil-svg:2.5.0")
+    implementation(project(":module:data"))
 
     testImplementation("junit:junit:4.13.2")
 
