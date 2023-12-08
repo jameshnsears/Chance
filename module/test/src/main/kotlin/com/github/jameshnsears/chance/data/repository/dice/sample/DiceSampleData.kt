@@ -15,8 +15,8 @@ class DiceSampleData {
         val twoDice = listOf(
             Dice(
                 sides = listOf(
-                    Side(sideIndex = 2, defaultValue = 2),
-                    Side(sideIndex = 1, defaultValue = 1)
+                    Side(sideIndex = 2),
+                    Side(sideIndex = 1)
                 ),
                 description = "d2",
                 penaltyBonus = 3

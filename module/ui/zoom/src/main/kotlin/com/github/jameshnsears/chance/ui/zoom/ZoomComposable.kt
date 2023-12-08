@@ -20,11 +20,16 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
-import com.github.jameshnsears.chance.ui.zoom.R
+import com.github.jameshnsears.chance.data.R
+import com.github.jameshnsears.chance.data.repository.dice.demo.DiceDemo
 
 @Composable
 fun ZoomColumn() {
     val horizontalScrollState = rememberScrollState(0)
+
+    val diceDemo = DiceDemo.dice
+
+    for ()
 
     Column {
         Row(
@@ -34,7 +39,7 @@ fun ZoomColumn() {
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.demo_crocodile),
+                painter = painterResource(id = R.drawable.demo_dice_crocodile),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(horizontal = 10.dp, vertical = 5.dp)
@@ -45,7 +50,7 @@ fun ZoomColumn() {
             )
 
             Image(
-                painter = painterResource(id = R.drawable.demo_crocodile),
+                painter = painterResource(id = R.drawable.demo_dice_crocodile),
                 contentDescription = null,
                 modifier = Modifier
                     .padding(horizontal = 10.dp, vertical = 5.dp)
@@ -73,7 +78,91 @@ fun ZoomColumn() {
                 Text(
                     text = "20",
                     color = Color.Black,
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding( 0.dp, 20.dp ,0.dp ,0.dp )
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.d4_d8_d20),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 5.dp)
+                        .size(50.dp)
+                        .clickable {
+                            // Handle click
+                        }
+                )
+
+                Text(
+                    text = "1",
+                    color = Color.Black,
+                    modifier = Modifier.padding( 0.dp, 20.dp ,0.dp ,0.dp )
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.d6),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 5.dp)
+                        .size(50.dp)
+                        .clickable {
+                            // Handle click
+                        }
+                )
+
+                Text(
+                    text = "6",
+                    color = Color.Black,
+                    modifier = Modifier.padding( 0.dp, 0.dp ,0.dp ,0.dp )
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.d10),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 5.dp)
+                        .size(50.dp)
+                        .clickable {
+                            // Handle click
+                        }
+                )
+
+                Text(
+                    text = "10",
+                    color = Color.Black,
+                    modifier = Modifier.padding( 0.dp, 0.dp ,0.dp ,0.dp )
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.d12),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 5.dp)
+                        .size(50.dp)
+                        .clickable {
+                            // Handle click
+                        }
+                )
+
+                Text(
+                    text = "12",
+                    color = Color.Black,
+                    modifier = Modifier.padding( 0.dp, 0.dp ,0.dp ,0.dp )
                 )
             }
         }
