@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.ui.zoom
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,15 +32,35 @@ import com.github.jameshnsears.chance.data.R
 
 @Composable
 fun ZoomColumn(viewModel: ZoomViewModel) {
-    val horizontalScrollState = rememberScrollState(0)
+    val listState = rememberScrollState()
 
-    val bagDemo = viewModel.bagDemo()
 
-    val list = remember { bagDemo }
+    val bagdemo = remember { viewModel.bagDemo() }
 
     LazyColumn {
-        items(items = list) { item ->
-            Text(item.description)
+        items(items = bagdemo) { dice ->
+            Text(dice.description)
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+
+                items(dice.sides) { side ->
+                    Text("${side.sideIndex}")
+
+                    Image(
+                        painter = painterResource(id = R.drawable.demo_bag_crocodile),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(horizontal = 10.dp, vertical = 5.dp)
+                            .size(50.dp)
+                            .clickable {
+                                // Handle click
+                            }
+                    )
+
+                }
+            }
         }
     }
 
