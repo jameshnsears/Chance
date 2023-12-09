@@ -37,9 +37,14 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
     ) {
         items(items = bagDemo) { dice ->
 
+            TextDiceStringsId
+            Text(modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+                text = dice.description)
+
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 5.dp)
             ) {
                 items(dice.sides) { side ->
 

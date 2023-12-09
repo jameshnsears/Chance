@@ -11,6 +11,7 @@ data class Dice(
         Side(sideIndex = 1)
     ),
     var colour: Colour = Colour(),
-    var description: String = "d6",
+    var description: String = "",
+    var descriptionStringsId: Int = 0,
     var penaltyBonus: Int = 0
 )
