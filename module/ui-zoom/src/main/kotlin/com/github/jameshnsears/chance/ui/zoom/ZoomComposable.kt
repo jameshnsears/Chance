@@ -9,9 +9,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -31,30 +33,69 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
         state = listState
     ) {
         items(items = bagDemo) { dice ->
-            Text(dice.description)
+
+            var showDiceIndex = true
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
                 items(dice.sides) { side ->
-                    Text("${side.sideIndex}")
 
-                    Image(
-                        painter = painterResource(id = R.drawable.demo_bag_crocodile),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp, vertical = 5.dp)
-                            .size(50.dp)
-                            .clickable {
-                                // Handle click
-                            }
-                    )
+                    if (showDiceIndex) {
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 20.dp, vertical = 20.dp)
+                                .clickable {
+                                    // Handle click
+                                },
+                            text = "" + dice.diceIndex
+                        )
+                        showDiceIndex = false
+                    }
+
+                    if (viewModel.imageDrawableAvailable(side)) {
+                        Image(
+                            painter = painterResource(id = side.imageDrawableId),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(horizontal = 5.dp, vertical = 5.dp)
+                                .size(viewModel.zoomSize())
+                                .clickable {
+                                    // Handle click
+                                }
+                        )
+                    } else {
+//                        SideImage(dice)
+                    }
                 }
             }
+
+            Divider()
         }
     }
 }
+
+//@Composable
+//fun SideImage(dice: Dice) {
+//    when (dice.sides.size) {
+//        2 -> {
+//
+//        }
+//    }
+//
+//    Image(
+//        painter = painterResource(id = side.imageDrawableId),
+//        contentDescription = null,
+//        modifier = Modifier
+//            .padding(horizontal = 5.dp, vertical = 5.dp)
+//            .size(viewModel.zoomSize())
+//            .clickable {
+//                // Handle click
+//            }
+//    )
+//}
 
 /*
 roll # : cumulative side #'s | dice side # | dice side # | ...

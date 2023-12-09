@@ -1,6 +1,9 @@
 package com.github.jameshnsears.chance.ui.zoom
 
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.domain.Side
 import com.github.jameshnsears.chance.data.zoom.model.ZoomModel
@@ -25,6 +28,8 @@ open class ZoomViewModel(
 
     fun bagDemo() = bagRepository.bagDemo
 
+    fun zoomSize() = 100.dp
+
     /*
     1 / description     |       6       |       5       |   ...
 
@@ -47,13 +52,10 @@ open class ZoomViewModel(
         */
     }
 
-    fun image(side: Side) {
-        /*
-        return one of the following
-
-        side.imagePath
-        side.imageDrawableId == painterResource(id = ...)
-         */
-
+    fun imageDrawableAvailable(side: Side): Boolean {
+        if (side.imageDrawableId == 0)
+            return false
+        else
+            return true
     }
 }

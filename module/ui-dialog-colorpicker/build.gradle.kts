@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation("com.github.skydoves:colorpicker-compose:1.0.6")
+    implementation("com.github.skydoves:colorpicker-compose:1.0.7")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
