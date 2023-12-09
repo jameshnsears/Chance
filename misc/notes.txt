@@ -1,8 +1,0 @@
-ffmpeg -i B1_t00.mkv -ss 00:03:30 -q:v 1 -r 10 -vframes 25 frames/frame%04d.jpg
-
---
-
-ffmpeg -i B1_t00.mkv -ss 00:04:16 -q:v 1 -r 10 -vframes 25 frames/frame%04d.jpg
-
-
-

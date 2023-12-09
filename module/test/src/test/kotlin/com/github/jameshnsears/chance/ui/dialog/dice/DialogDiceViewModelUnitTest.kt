@@ -1,10 +1,15 @@
 package com.github.jameshnsears.chance.ui.dialog.dice
 
-import com.github.jameshnsears.chance.data.repository.dice.DiceRepositoryMock
-import com.github.jameshnsears.chance.data.repository.dice.sample.DiceSampleData
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -16,11 +21,11 @@ class DialogDiceViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val diceRepository = DiceRepositoryMock
-            diceRepository.store(DiceSampleData.twoDice)
+            val bagRepository = BagRepositoryMock
+            bagRepository.store(BagSampleData.twoDice)
 
             val viewModel = DialogDiceViewModel(
-                diceRepository,
+                bagRepository,
                 0
             )
 
@@ -55,7 +60,8 @@ class DialogDiceViewModelUnitTest {
     private fun testSliderSides(
         viewModel: DialogDiceViewModel,
         newSliderPosition: Float,
-        expectedSliderPosition: Int) {
+        expectedSliderPosition: Int
+    ) {
         assertEquals(0f, viewModel.sliderSidesPosition.value)
         assertEquals(2, viewModel.fetchCurrentSliderSidesPosition())
 
@@ -75,7 +81,8 @@ class DialogDiceViewModelUnitTest {
     private fun testSliderPenaltyBonus(
         viewModel: DialogDiceViewModel,
         newSliderPosition: Float,
-        expectedSliderPosition: Int) {
+        expectedSliderPosition: Int
+    ) {
         assertEquals(6.0f, viewModel.sliderPenaltyBonusPosition.value)
         assertEquals(3, viewModel.fetchCurrentSliderPenaltyBonusPosition())
 

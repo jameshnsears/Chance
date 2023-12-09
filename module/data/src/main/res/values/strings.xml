@@ -1,0 +1,23 @@
+<resources>
+    <string name="demo_bag_heads_tails">Heads / Tails</string>
+    <string name="demo_bag_heads">Heads</string>
+    <string name="demo_bag_tails">Tails</string>
+
+    <string name="demo_bag_story">Story</string>
+    <string name="demo_bag_story_centurion">Centurion</string>
+    <string name="demo_bag_story_crocodile">Crocodile</string>
+    <string name="demo_bag_story_elephants">Elephants</string>
+    <string name="demo_bag_story_hunter">Hunter</string>
+    <string name="demo_bag_story_knight">Knight</string>
+    <string name="demo_bag_story_lion">Lion</string>
+    <string name="demo_bag_story_parrot">Parrot</string>
+    <string name="demo_bag_story_pirate">Pirate</string>
+    <string name="demo_bag_story_queen">Queen</string>
+    <string name="demo_bag_story_spaceship">Spaceship</string>
+
+    <string name="demo_bag_compass">Compass</string>
+    <string name="demo_bag_compass_north">North</string>
+    <string name="demo_bag_compass_east">East</string>
+    <string name="demo_bag_compass_south">South</string>
+    <string name="demo_bag_compass_west">West</string>
+</resources>
