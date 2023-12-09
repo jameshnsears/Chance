@@ -1,9 +1,7 @@
 package com.github.jameshnsears.chance.ui.zoom
 
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
-import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.domain.Side
 import com.github.jameshnsears.chance.data.zoom.model.ZoomModel
@@ -43,16 +41,21 @@ open class ZoomViewModel(
     -----------------
      */
 
-    fun text(side: Side) {
+    fun textStringsIdAvailable(side: Side): Boolean {
         /*
         return one of the following
 
         side.text
         side.textStringsId == stringResource(id = ...)
         */
+
+        if (side.textStringsId ==0 )
+            return false
+        else
+            return true
     }
 
-    fun imageDrawableAvailable(side: Side): Boolean {
+    fun imageDrawableIdAvailable(side: Side): Boolean {
         if (side.imageDrawableId == 0)
             return false
         else

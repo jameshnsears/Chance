@@ -1,4 +1,7 @@
 <resources>
+    <string name="demo_bag_heads">Heads</string>
+    <string name="demo_bag_tails">Tails</string>
+
     <string name="demo_bag_centurion">Centurion</string>
     <string name="demo_bag_crocodile">Crocodile</string>
     <string name="demo_bag_elephants">Elephants</string>
@@ -9,4 +12,9 @@
     <string name="demo_bag_pirate">Pirate</string>
     <string name="demo_bag_queen">Queen</string>
     <string name="demo_bag_spaceship">Spaceship</string>
+
+    <string name="demo_bag_north">North</string>
+    <string name="demo_bag_east">East</string>
+    <string name="demo_bag_south">South</string>
+    <string name="demo_bag_west">West</string>
 </resources>

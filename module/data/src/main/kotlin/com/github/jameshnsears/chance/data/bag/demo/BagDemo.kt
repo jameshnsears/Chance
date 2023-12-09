@@ -10,8 +10,8 @@ class BagDemo {
             Dice(
                 1,
                 sides = listOf(
-                    Side(sideIndex = 2, text = "Heads"),
-                    Side(sideIndex = 1, text = "Tails")
+                    Side(sideIndex = 2, textStringsId = R.string.demo_bag_heads),
+                    Side(sideIndex = 1, textStringsId = R.string.demo_bag_tails)
                 ),
                 description = "Heads / Tails",
             ),
@@ -77,10 +77,10 @@ class BagDemo {
             Dice(
                 4,
                 sides = listOf(
-                    Side(sideIndex = 4, text = "North", character = 8593),
-                    Side(sideIndex = 3, text = "East", character = 8594),
-                    Side(sideIndex = 2, text = "South", character = 8595),
-                    Side(sideIndex = 1, text = "West", character = 8592)
+                    Side(sideIndex = 4, textStringsId = R.string.demo_bag_north, character = 8593),
+                    Side(sideIndex = 3, textStringsId = R.string.demo_bag_east, character = 8594),
+                    Side(sideIndex = 2, textStringsId = R.string.demo_bag_south, character = 8595),
+                    Side(sideIndex = 1, textStringsId = R.string.demo_bag_west, character = 8592)
                 ),
                 description = "Compass",
             ),
