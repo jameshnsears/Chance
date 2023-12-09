@@ -26,20 +26,7 @@ open class ZoomViewModel(
 
     fun bagDemo() = bagRepository.bagDemo
 
-    fun zoomSize() = 100.dp
-
-    /*
-    1 / description     |       6       |       5       |   ...
-
-    ---- detail view...
-                            Character
-
-                             Text
-
-                             Image
-
-    -----------------
-     */
+    fun zoomSize() = 50.dp
 
     fun textStringsIdAvailable(side: Side): Boolean {
         /*
@@ -49,7 +36,7 @@ open class ZoomViewModel(
         side.textStringsId == stringResource(id = ...)
         */
 
-        if (side.textStringsId ==0 )
+        if (side.textStringsId == 0 )
             return false
         else
             return true

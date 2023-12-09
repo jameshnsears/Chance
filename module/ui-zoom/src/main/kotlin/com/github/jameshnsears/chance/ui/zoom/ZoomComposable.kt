@@ -37,9 +37,7 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
     ) {
         items(items = bagDemo) { dice ->
 
-            TextDiceStringsId
-            Text(modifier = Modifier.padding(start = 5.dp, top = 5.dp),
-                text = dice.description)
+            TextDiceDescription(viewModel, dice)
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -49,20 +47,13 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
                 items(dice.sides) { side ->
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        ImageSide(viewModel, dice, side)
+                        ImageSideEdge(viewModel, dice, side)
 
-                        ImageSideDrawableId(viewModel, side)
+                        ImageSideImage(viewModel, side)
 
-                        ImageSideStringsId(viewModel, side)
+                        ImageSideUnicodeCharacter(side)
 
-                        /*
-                        roll # : cumulative side #'s | dice side # | dice side # | ...
-
-                                                        UTF-8 code  |
-
-                        -----------------
-                         */
-
+                        ImageSideText(viewModel, side)
                     }
                 }
             }
@@ -73,7 +64,32 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
 }
 
 @Composable
-fun ImageSide(viewModel: ZoomViewModel, dice: Dice, side: Side) {
+fun ImageSideUnicodeCharacter(side: Side) {
+    if (side.unicodeCharacter != 0) {
+        Text(
+            fontSize = 36.sp,
+            text = "" + side.unicodeCharacter.toChar()
+        )
+    }
+}
+
+@Composable
+fun TextDiceDescription(viewModel: ZoomViewModel, dice: Dice) {
+    if (dice.description != "") {
+        Text(
+            modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+            text = dice.description
+        )
+    } else if (dice.descriptionStringsId != 0) {
+        Text(
+            modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+            text = stringResource(id = dice.descriptionStringsId)
+        )
+    }
+}
+
+@Composable
+fun ImageSideEdge(viewModel: ZoomViewModel, dice: Dice, side: Side) {
     Box {
         val diceSideResourceId = when (dice.sides.size) {
             2 -> R.drawable.d2
@@ -109,15 +125,21 @@ fun ImageSide(viewModel: ZoomViewModel, dice: Dice, side: Side) {
 }
 
 @Composable
-fun ImageSideStringsId(viewModel: ZoomViewModel, side: Side) {
-    if (viewModel.textStringsIdAvailable(side)) {
+fun ImageSideText(viewModel: ZoomViewModel, side: Side) {
+    if (side.text != "") {
+    Text(
+        text = side.text
+    )
+}
+    else if (side.textStringsId != 0) {
         Text(
-            text = stringResource(id = side.textStringsId))
+            text = stringResource(id = side.textStringsId)
+        )
     }
 }
 
 @Composable
-fun ImageSideDrawableId(viewModel: ZoomViewModel, side: Side) {
+fun ImageSideImage(viewModel: ZoomViewModel, side: Side) {
     if (viewModel.imageDrawableIdAvailable(side)) {
         Image(
             painter = painterResource(id = side.imageDrawableId),

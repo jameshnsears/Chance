@@ -77,10 +77,10 @@ class BagDemo {
             Dice(
                 4,
                 sides = listOf(
-                    Side(sideIndex = 4, textStringsId = R.string.demo_bag_compass_north, character = 8593),
-                    Side(sideIndex = 3, textStringsId = R.string.demo_bag_compass_east, character = 8594),
-                    Side(sideIndex = 2, textStringsId = R.string.demo_bag_compass_south, character = 8595),
-                    Side(sideIndex = 1, textStringsId = R.string.demo_bag_compass_west, character = 8592)
+                    Side(sideIndex = 4, textStringsId = R.string.demo_bag_compass_north, unicodeCharacter = 8593),
+                    Side(sideIndex = 3, textStringsId = R.string.demo_bag_compass_east, unicodeCharacter = 8594),
+                    Side(sideIndex = 2, textStringsId = R.string.demo_bag_compass_south, unicodeCharacter = 8595),
+                    Side(sideIndex = 1, textStringsId = R.string.demo_bag_compass_west, unicodeCharacter = 8592)
                 ),
                 descriptionStringsId = R.string.demo_bag_compass
             ),
