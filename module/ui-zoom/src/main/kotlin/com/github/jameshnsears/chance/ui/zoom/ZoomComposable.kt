@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
@@ -42,18 +41,18 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 5.dp)
+                modifier = Modifier.padding(start = 5.dp, bottom = 5.dp)
             ) {
                 items(dice.sides) { side ->
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        ImageSideEdge(viewModel, dice, side)
+                        ImageSide(viewModel, dice, side)
 
-                        ImageSideImage(viewModel, side)
+                        SideImage(viewModel, side)
 
-                        ImageSideUnicodeCharacter(side)
+                        SideUnicodeCharacter(viewModel, dice, side)
 
-                        ImageSideText(viewModel, side)
+                        SideText(viewModel, side)
                     }
                 }
             }
@@ -64,10 +63,10 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
 }
 
 @Composable
-fun ImageSideUnicodeCharacter(side: Side) {
+fun SideUnicodeCharacter(viewModel: ZoomViewModel, dice: Dice, side: Side) {
     if (side.unicodeCharacter != 0) {
         Text(
-            fontSize = 36.sp,
+            fontSize = viewModel.scaleTextFontSize(dice),
             text = "" + side.unicodeCharacter.toChar()
         )
     }
@@ -89,7 +88,7 @@ fun TextDiceDescription(viewModel: ZoomViewModel, dice: Dice) {
 }
 
 @Composable
-fun ImageSideEdge(viewModel: ZoomViewModel, dice: Dice, side: Side) {
+fun ImageSide(viewModel: ZoomViewModel, dice: Dice, side: Side) {
     Box {
         val diceSideResourceId = when (dice.sides.size) {
             2 -> R.drawable.d2
@@ -103,29 +102,24 @@ fun ImageSideEdge(viewModel: ZoomViewModel, dice: Dice, side: Side) {
             contentDescription = null,
             modifier = Modifier
                 .padding(horizontal = 5.dp, vertical = 5.dp)
-                .size(viewModel.zoomSize())
+                .size(viewModel.scale())
                 .clickable {
                     // Handle click
                 }
         )
 
-        val sideIndexTopPadding = when (dice.sides.size) {
-            10 -> 25.dp
-            4, 8, 20 -> 40.dp
-            else -> 0.dp
-        }
         Text(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = sideIndexTopPadding),
-            fontSize = 36.sp,
+                .padding(top = viewModel.scaleTextPaddingTop(dice)),
+            fontSize = viewModel.scaleTextFontSize(dice),
             text = "${side.sideIndex}"
         )
     }
 }
 
 @Composable
-fun ImageSideText(viewModel: ZoomViewModel, side: Side) {
+fun SideText(viewModel: ZoomViewModel, side: Side) {
     if (side.text != "") {
     Text(
         text = side.text
@@ -139,14 +133,14 @@ fun ImageSideText(viewModel: ZoomViewModel, side: Side) {
 }
 
 @Composable
-fun ImageSideImage(viewModel: ZoomViewModel, side: Side) {
+fun SideImage(viewModel: ZoomViewModel, side: Side) {
     if (viewModel.imageDrawableIdAvailable(side)) {
         Image(
             painter = painterResource(id = side.imageDrawableId),
             contentDescription = null,
             modifier = Modifier
                 .padding(horizontal = 5.dp, vertical = 5.dp)
-                .size(viewModel.zoomSize())
+                .size(viewModel.scale())
         )
     }
 }
