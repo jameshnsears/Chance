@@ -68,6 +68,7 @@ dependencies {
     implementation("androidx.test.ext:junit-ktx:1.1.5")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation(project(mapOf("path" to ":module:test")))
+    implementation(project(":module:ui-dialog-dice"))
 
     testImplementation("junit:junit:4.13.2")
 

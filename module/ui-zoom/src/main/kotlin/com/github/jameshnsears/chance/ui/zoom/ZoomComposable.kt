@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.ui.zoom
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,8 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.Dice
+import com.github.jameshnsears.chance.data.domain.Side
 
 @Composable
 fun ZoomColumn(viewModel: ZoomViewModel) {
@@ -32,8 +35,6 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
     ) {
         items(items = bagDemo) { dice ->
 
-            var showDiceIndex = true
-
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -41,32 +42,11 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
 
                 items(dice.sides) { side ->
 
-                    if (showDiceIndex) {
-                        Text(
-                            modifier = Modifier
-                                .padding(horizontal = 20.dp, vertical = 20.dp)
-                                .clickable {
-                                    // Handle click
-                                },
-                            text = "" + dice.diceIndex
-                        )
-                        showDiceIndex = false
-                    }
-
                     Column {
-                        ImageSide(viewModel, dice)
+                        ImageSide(viewModel, dice, side)
 
                         if (viewModel.imageDrawableAvailable(side)) {
-                            Image(
-                                painter = painterResource(id = side.imageDrawableId),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .padding(horizontal = 5.dp, vertical = 5.dp)
-                                    .size(viewModel.zoomSize())
-                                    .clickable {
-                                        // Handle click
-                                    }
-                            )
+                            ImageSideDrawable(viewModel, side)
                         }
                     }
                 }
@@ -78,24 +58,49 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
 }
 
 @Composable
-fun ImageSide(viewModel: ZoomViewModel, dice: Dice) {
-    val diceSideResourceId = when (dice.sides.size) {
-        2 -> R.drawable.d2
-        4, 8, 20 -> R.drawable.d4_d8_d20
-        6 -> R.drawable.d6
-        10 -> R.drawable.d10
-        else -> R.drawable.d4_d8_d20
-    }
+fun ImageSide(viewModel: ZoomViewModel, dice: Dice, side: Side) {
+    Box {
+        val diceSideResourceId = when (dice.sides.size) {
+            2 -> R.drawable.d2
+            6 -> R.drawable.d6
+            10 -> R.drawable.d10
+            12 -> R.drawable.d12
+            else -> R.drawable.d4_d8_d20
+        }
+        Image(
+            painter = painterResource(id = diceSideResourceId),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 5.dp, vertical = 5.dp)
+                .size(viewModel.zoomSize())
+                .clickable {
+                    // Handle click
+                }
+        )
 
+        val sideIndexTopPadding = when (dice.sides.size) {
+            10 -> 25.dp
+            4, 8, 20 -> 40.dp
+            else -> 0.dp
+        }
+        Text(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = sideIndexTopPadding),
+            fontSize = 36.sp,
+            text = "${side.sideIndex}"
+        )
+    }
+}
+
+@Composable
+fun ImageSideDrawable(viewModel: ZoomViewModel, side: Side) {
     Image(
-        painter = painterResource(id = diceSideResourceId),
+        painter = painterResource(id = side.imageDrawableId),
         contentDescription = null,
         modifier = Modifier
             .padding(horizontal = 5.dp, vertical = 5.dp)
             .size(viewModel.zoomSize())
-            .clickable {
-                // Handle click
-            }
     )
 }
 
