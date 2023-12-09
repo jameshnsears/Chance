@@ -3,7 +3,11 @@
     <string name="demo_bag_heads">Heads</string>
     <string name="demo_bag_tails">Tails</string>
 
+    <string name="demo_bag_compass">Compass</string>
+
     <string name="demo_bag_d6">d6</string>
+
+    <string name="demo_bag_d8">d8</string>
 
     <string name="demo_bag_story">Story</string>
     <string name="demo_bag_story_centurion">Centurion</string>
@@ -17,5 +21,7 @@
     <string name="demo_bag_story_queen">Queen</string>
     <string name="demo_bag_story_spaceship">Spaceship</string>
 
-    <string name="demo_bag_compass">Compass</string>
+    <string name="demo_bag_d12">d12</string>
+
+    <string name="demo_bag_d20">d20</string>
 </resources>

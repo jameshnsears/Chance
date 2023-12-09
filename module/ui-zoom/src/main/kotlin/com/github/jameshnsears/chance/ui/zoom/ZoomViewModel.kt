@@ -30,14 +30,17 @@ open class ZoomViewModel(
 
     fun bagDemo() = bagRepository.bagDemo
 
-    fun scale() = 100.dp
+    fun scale() = 100.dp    // 75; 50; 25
 
     fun scaleTextPaddingTop(dice: Dice): Dp {
-        return when (scale()) {
-            100.dp -> {
+        when (scale()) {
+            100.dp -> { // done
                 return when (dice.sides.size) {
+                    4 -> 25.dp
+                    8  -> 30.dp
                     10 -> 15.dp
-                    4, 8, 20 -> 40.dp
+                    12 -> 15.dp
+                    20 -> 40.dp
                     else -> 0.dp
                 }
             }
@@ -61,13 +64,16 @@ open class ZoomViewModel(
     }
 
     fun scaleTextFontSize(dice: Dice): TextUnit {
-        return when (scale()) {
-            100.dp -> {
+        when (scale()) {
+            100.dp -> { // done
                 return when (dice.sides.size) {
-                    2 -> 60.sp              // d2
+                    2 -> 72.sp
+                    4 -> 60.sp
+                    6 -> 60.sp
+                    8 -> 50.sp
                     10 -> 44.sp
-                    4, 8, 20 -> 40.sp       // 3 sides
-                    else -> 48.sp           // d6
+                    20 -> 40.sp
+                    else -> 48.sp
                 }
             }
 
@@ -91,17 +97,7 @@ open class ZoomViewModel(
         }
     }
 
-    fun textStringsIdAvailable(side: Side): Boolean {
-        if (side.textStringsId == 0)
-            return false
-        else
-            return true
-    }
+    fun textStringsIdAvailable(side: Side) = side.textStringsId != 0
 
-    fun imageDrawableIdAvailable(side: Side): Boolean {
-        if (side.imageDrawableId == 0)
-            return false
-        else
-            return true
-    }
+    fun imageDrawableIdAvailable(side: Side) = side.imageDrawableId != 0
 }

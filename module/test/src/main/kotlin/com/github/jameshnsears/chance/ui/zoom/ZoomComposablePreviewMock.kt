@@ -7,20 +7,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
-@Preview(heightDp = 600, widthDp = 360)
+@Preview(heightDp = 1300, widthDp = 360)
 @Composable
 fun ZoomComposablePreviewMockPortrait() {
-    ZoomComposablePreviewMock()
-}
-
-@Preview(heightDp = 360, widthDp = 600)
-@Composable
-fun ZoomComposablePreviewMockLandscape() {
-    ZoomComposablePreviewMock()
-}
-
-@Composable
-fun ZoomComposablePreviewMock() {
     val viewModel = ZoomViewModel(BagRepositoryMock)
 
     ChanceTheme {

@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.Dice
@@ -77,12 +78,14 @@ fun TextDiceDescription(viewModel: ZoomViewModel, dice: Dice) {
     if (dice.description != "") {
         Text(
             modifier = Modifier.padding(start = 5.dp, top = 5.dp),
-            text = dice.description
+            text = dice.description,
+            fontWeight = FontWeight.Bold
         )
     } else if (dice.descriptionStringsId != 0) {
         Text(
             modifier = Modifier.padding(start = 5.dp, top = 5.dp),
-            text = stringResource(id = dice.descriptionStringsId)
+            text = stringResource(id = dice.descriptionStringsId),
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -121,11 +124,10 @@ fun ImageSide(viewModel: ZoomViewModel, dice: Dice, side: Side) {
 @Composable
 fun SideText(viewModel: ZoomViewModel, side: Side) {
     if (side.text != "") {
-    Text(
-        text = side.text
-    )
-}
-    else if (side.textStringsId != 0) {
+        Text(
+            text = side.text
+        )
+    } else if (side.textStringsId != 0) {
         Text(
             text = stringResource(id = side.textStringsId)
         )
