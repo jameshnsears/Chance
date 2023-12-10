@@ -29,70 +29,29 @@ open class ZoomViewModel(
     // TODO might not need a ZoomModel!
     val zoomModel = ZoomModel()
 
-    fun scale() = 100.dp    // 75; 50; 25
+    fun scale() = 75.dp    // 75; 50; 25
 
     fun scaleValuePaddingTop(dice: Dice): Dp {
-        when (scale()) {
-            100.dp -> { // done
-                return when (dice.sides.size) {
-                    4 -> 25.dp
-                    8 -> 30.dp
-                    10 -> 15.dp
-                    12 -> 15.dp
-                    20 -> 40.dp
-                    else -> 0.dp
-                }
-            }
-
-            50.dp -> {
-                return when (dice.sides.size) {
-                    10 -> 12.dp
-                    4, 8, 20 -> 20.dp
-                    else -> 0.dp
-                }
-            }
-
-            else -> {
-                return when (dice.sides.size) {
-                    10 -> 25.dp
-                    4, 8, 20 -> 40.dp
-                    else -> 0.dp
-                }
-            }
+        return when (dice.sides.size) {
+            2 -> 0.dp
+            4 -> (25.dp * scale().value / 100)
+            6 -> 0.dp
+            8 -> (30.dp * scale().value / 100)
+            10 -> (15.dp * scale().value / 100)
+            12 -> (15.dp * scale().value / 100)
+            else -> (48.dp * scale().value / 100)
         }
     }
 
     fun scaleTextFontSize(dice: Dice): TextUnit {
-        when (scale()) {
-            100.dp -> { // done
-                return when (dice.sides.size) {
-                    2 -> 72.sp
-                    4 -> 60.sp
-                    6 -> 60.sp
-                    8 -> 50.sp
-                    10 -> 44.sp
-                    20 -> 40.sp
-                    else -> 48.sp
-                }
-            }
-
-            50.dp -> {
-                return when (dice.sides.size) {
-                    2 -> 30.sp
-                    10 -> 18.sp
-                    4, 8, 20 -> 18.sp
-                    else -> 18.sp
-                }
-            }
-
-            else -> {
-                return when (dice.sides.size) {
-                    2 -> 15.sp
-                    10 -> 9.sp
-                    4, 8, 20 -> 9.sp
-                    else -> 9.sp
-                }
-            }
+        return when (dice.sides.size) {
+            2 -> (72.sp * scale().value / 100)
+            4 -> (60.sp * scale().value / 100)
+            6 -> (60.sp * scale().value / 100)
+            8 -> (50.sp * scale().value / 100)
+            10 -> (44.sp * scale().value / 100)
+            20 -> (40.sp * scale().value / 100)
+            else -> (48.sp * scale().value / 100)
         }
     }
 
