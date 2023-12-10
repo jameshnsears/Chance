@@ -1,6 +1,5 @@
 package com.github.jameshnsears.chance
 
-import com.github.jameshnsears.chance.ui.zoom.ZoomColumn
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +16,7 @@ import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDice
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
+import com.github.jameshnsears.chance.ui.zoom.ZoomColumn
 import com.github.jameshnsears.chance.ui.zoom.ZoomViewModel
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
 import timber.log.Timber
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                             onClick = {
                                 showDialog.value = true
                                 diceIndex.intValue = 0
-                                bagRepository.store(BagSampleData.singleDice)
+                                bagRepository.store(BagSampleData.oneDice)
                             }
                         ) {
                             Text("Single Dice")

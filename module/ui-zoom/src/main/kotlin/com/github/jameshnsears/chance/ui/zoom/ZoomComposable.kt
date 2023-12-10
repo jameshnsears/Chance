@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,9 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 
@@ -30,30 +28,30 @@ import com.github.jameshnsears.chance.data.domain.Side
 fun ZoomColumn(viewModel: ZoomViewModel) {
     val listState = rememberLazyListState()
 
-    val bagDemo = remember { viewModel.bagDemo() }
+    val bagDemo = remember { viewModel.bagRepository.fetch() }
 
     LazyColumn(
         state = listState
     ) {
         items(items = bagDemo) { dice ->
 
-            TextDiceDescription(viewModel, dice)
+            DiceDescription(viewModel, dice)
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 5.dp)
+                modifier = Modifier.padding(start = 5.dp, bottom = 5.dp)
             ) {
                 items(dice.sides) { side ->
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        ImageSideEdge(viewModel, dice, side)
+                        Side(viewModel, dice, side)
 
-                        ImageSideImage(viewModel, side)
+                        SideImage(viewModel, side)
 
-                        ImageSideUnicodeCharacter(side)
+                        SideUnicodeCharacter(viewModel, dice, side)
 
-                        ImageSideText(viewModel, side)
+                        SideText(viewModel, side)
                     }
                 }
             }
@@ -64,74 +62,66 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
 }
 
 @Composable
-fun ImageSideUnicodeCharacter(side: Side) {
+fun SideUnicodeCharacter(viewModel: ZoomViewModel, dice: Dice, side: Side) {
     if (side.unicodeCharacter != 0) {
         Text(
-            fontSize = 36.sp,
+            fontSize = viewModel.scaleTextFontSize(dice),
             text = "" + side.unicodeCharacter.toChar()
         )
     }
 }
 
 @Composable
-fun TextDiceDescription(viewModel: ZoomViewModel, dice: Dice) {
-    if (dice.description != "") {
-        Text(
-            modifier = Modifier.padding(start = 5.dp, top = 5.dp),
-            text = dice.description
-        )
-    } else if (dice.descriptionStringsId != 0) {
-        Text(
-            modifier = Modifier.padding(start = 5.dp, top = 5.dp),
-            text = stringResource(id = dice.descriptionStringsId)
-        )
-    }
+fun DiceDescription(viewModel: ZoomViewModel, dice: Dice) {
+    var description = ""
+    if (dice.description != "")
+        description = dice.description
+    else
+        description = stringResource(id = dice.descriptionStringsId)
+
+    Text(
+        modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+        text = description,
+        fontWeight = FontWeight.Bold
+    )
 }
 
 @Composable
-fun ImageSideEdge(viewModel: ZoomViewModel, dice: Dice, side: Side) {
+fun Side(viewModel: ZoomViewModel, dice: Dice, side: Side) {
     Box {
-        val diceSideResourceId = when (dice.sides.size) {
-            2 -> R.drawable.d2
-            6 -> R.drawable.d6
-            10 -> R.drawable.d10
-            12 -> R.drawable.d12
-            else -> R.drawable.d4_d8_d20
-        }
-        Image(
-            painter = painterResource(id = diceSideResourceId),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 5.dp, vertical = 5.dp)
-                .size(viewModel.zoomSize())
-                .clickable {
-                    // Handle click
-                }
-        )
+        SideShape(viewModel, dice)
 
-        val sideIndexTopPadding = when (dice.sides.size) {
-            10 -> 25.dp
-            4, 8, 20 -> 40.dp
-            else -> 0.dp
-        }
         Text(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = sideIndexTopPadding),
-            fontSize = 36.sp,
+                .padding(top = viewModel.scaleValuePaddingTop(dice)),
+            fontSize = viewModel.scaleTextFontSize(dice),
             text = "${side.sideIndex}"
         )
     }
 }
 
 @Composable
-fun ImageSideText(viewModel: ZoomViewModel, side: Side) {
-    if (side.text != "") {
-    Text(
-        text = side.text
+fun SideShape(viewModel: ZoomViewModel, dice: Dice) {
+    Image(
+        painter = painterResource(viewModel.sideAppearance(dice)),
+        contentDescription = null,
+        modifier = Modifier
+            .padding(horizontal = 5.dp, vertical = 5.dp)
+            .size(viewModel.scale())
+            .clickable {
+                // Handle click
+            }
     )
 }
-    else if (side.textStringsId != 0) {
+
+@Composable
+fun SideText(viewModel: ZoomViewModel, side: Side) {
+    if (side.text != "") {
+        Text(
+            text = side.text
+        )
+    } else if (side.textStringsId != 0) {
         Text(
             text = stringResource(id = side.textStringsId)
         )
@@ -139,14 +129,14 @@ fun ImageSideText(viewModel: ZoomViewModel, side: Side) {
 }
 
 @Composable
-fun ImageSideImage(viewModel: ZoomViewModel, side: Side) {
+fun SideImage(viewModel: ZoomViewModel, side: Side) {
     if (viewModel.imageDrawableIdAvailable(side)) {
         Image(
             painter = painterResource(id = side.imageDrawableId),
             contentDescription = null,
             modifier = Modifier
                 .padding(horizontal = 5.dp, vertical = 5.dp)
-                .size(viewModel.zoomSize())
+                .size(viewModel.scale())
         )
     }
 }

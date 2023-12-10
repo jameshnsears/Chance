@@ -17,9 +17,16 @@ class BagDemo {
             ),
             Dice(
                 2,
+                sides = listOf(
+                    Side(sideIndex = 4, unicodeCharacter = 8593),
+                    Side(sideIndex = 3, unicodeCharacter = 8594),
+                    Side(sideIndex = 2, unicodeCharacter = 8595),
+                    Side(sideIndex = 1, unicodeCharacter = 8592)
+                ),
+                descriptionStringsId = R.string.demo_bag_compass
             ),
             Dice(
-                3,
+                5,
                 sides = listOf(
                     Side(
                         sideIndex = 10,
@@ -73,16 +80,6 @@ class BagDemo {
                     )
                 ),
                 descriptionStringsId = R.string.demo_bag_story,
-            ),
-            Dice(
-                4,
-                sides = listOf(
-                    Side(sideIndex = 4, textStringsId = R.string.demo_bag_compass_north, unicodeCharacter = 8593),
-                    Side(sideIndex = 3, textStringsId = R.string.demo_bag_compass_east, unicodeCharacter = 8594),
-                    Side(sideIndex = 2, textStringsId = R.string.demo_bag_compass_south, unicodeCharacter = 8595),
-                    Side(sideIndex = 1, textStringsId = R.string.demo_bag_compass_west, unicodeCharacter = 8592)
-                ),
-                descriptionStringsId = R.string.demo_bag_compass
             ),
         )
     }
