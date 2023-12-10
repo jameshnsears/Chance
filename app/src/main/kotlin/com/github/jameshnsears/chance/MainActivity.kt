@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.github.jameshnsears.chance.data.bag.demo.BagDemo
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDice
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
         }
 
         val bagRepository = BagRepositoryMock
+        bagRepository.store(BagDemo.dice)
 
         setContent {
             ChanceTheme {
