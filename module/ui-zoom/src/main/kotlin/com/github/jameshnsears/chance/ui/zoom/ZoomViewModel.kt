@@ -37,7 +37,7 @@ open class ZoomViewModel(
             100.dp -> { // done
                 return when (dice.sides.size) {
                     4 -> 25.dp
-                    8  -> 30.dp
+                    8 -> 30.dp
                     10 -> 15.dp
                     12 -> 15.dp
                     20 -> 40.dp

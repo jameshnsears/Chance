@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +46,7 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
                 items(dice.sides) { side ->
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        ImageSide(viewModel, dice, side)
+                        Side(viewModel, dice, side)
 
                         SideImage(viewModel, side)
 
@@ -91,25 +90,9 @@ fun TextDiceDescription(viewModel: ZoomViewModel, dice: Dice) {
 }
 
 @Composable
-fun ImageSide(viewModel: ZoomViewModel, dice: Dice, side: Side) {
+fun Side(viewModel: ZoomViewModel, dice: Dice, side: Side) {
     Box {
-        val diceSideResourceId = when (dice.sides.size) {
-            2 -> R.drawable.d2
-            6 -> R.drawable.d6
-            10 -> R.drawable.d10
-            12 -> R.drawable.d12
-            else -> R.drawable.d4_d8_d20
-        }
-        Image(
-            painter = painterResource(id = diceSideResourceId),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(horizontal = 5.dp, vertical = 5.dp)
-                .size(viewModel.scale())
-                .clickable {
-                    // Handle click
-                }
-        )
+        SideShape(viewModel, dice)
 
         Text(
             modifier = Modifier
@@ -119,6 +102,27 @@ fun ImageSide(viewModel: ZoomViewModel, dice: Dice, side: Side) {
             text = "${side.sideIndex}"
         )
     }
+}
+
+@Composable
+fun SideShape(viewModel: ZoomViewModel, dice: Dice) {
+    val diceSideResourceId = when (dice.sides.size) {
+        2 -> R.drawable.d2
+        6 -> R.drawable.d6
+        10 -> R.drawable.d10
+        12 -> R.drawable.d12
+        else -> R.drawable.d4_d8_d20
+    }
+    Image(
+        painter = painterResource(id = diceSideResourceId),
+        contentDescription = null,
+        modifier = Modifier
+            .padding(horizontal = 5.dp, vertical = 5.dp)
+            .size(viewModel.scale())
+            .clickable {
+                // Handle click
+            }
+    )
 }
 
 @Composable

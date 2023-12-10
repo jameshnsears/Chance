@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.ui.zoom
 
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -18,11 +19,12 @@ class ZoomViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val viewModel = ZoomViewModel(BagRepositoryMock)
+            val bagRepository = BagRepositoryMock
+            bagRepository.store(BagSampleData.allDice)
 
-            val bagDemo = viewModel.bagDemo()
+            val viewModel = ZoomViewModel(bagRepository)
 
-            assertEquals(4, bagDemo.size)
+            assertEquals(7, viewModel.bagRepository.fetch())
 
             // TODO test the functions of the viewmodel!
 
