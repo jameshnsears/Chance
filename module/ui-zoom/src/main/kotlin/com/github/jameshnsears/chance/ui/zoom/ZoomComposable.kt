@@ -21,7 +21,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 
@@ -36,7 +35,7 @@ fun ZoomColumn(viewModel: ZoomViewModel) {
     ) {
         items(items = bagDemo) { dice ->
 
-            TextDiceDescription(viewModel, dice)
+            DiceDescription(viewModel, dice)
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -73,20 +72,18 @@ fun SideUnicodeCharacter(viewModel: ZoomViewModel, dice: Dice, side: Side) {
 }
 
 @Composable
-fun TextDiceDescription(viewModel: ZoomViewModel, dice: Dice) {
-    if (dice.description != "") {
-        Text(
-            modifier = Modifier.padding(start = 5.dp, top = 5.dp),
-            text = dice.description,
-            fontWeight = FontWeight.Bold
-        )
-    } else if (dice.descriptionStringsId != 0) {
-        Text(
-            modifier = Modifier.padding(start = 5.dp, top = 5.dp),
-            text = stringResource(id = dice.descriptionStringsId),
-            fontWeight = FontWeight.Bold
-        )
-    }
+fun DiceDescription(viewModel: ZoomViewModel, dice: Dice) {
+    var description = ""
+    if (dice.description != "")
+        description = dice.description
+    else
+        description = stringResource(id = dice.descriptionStringsId)
+
+    Text(
+        modifier = Modifier.padding(start = 5.dp, top = 5.dp),
+        text = description,
+        fontWeight = FontWeight.Bold
+    )
 }
 
 @Composable
@@ -97,7 +94,7 @@ fun Side(viewModel: ZoomViewModel, dice: Dice, side: Side) {
         Text(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = viewModel.scaleTextPaddingTop(dice)),
+                .padding(top = viewModel.scaleValuePaddingTop(dice)),
             fontSize = viewModel.scaleTextFontSize(dice),
             text = "${side.sideIndex}"
         )
@@ -106,15 +103,8 @@ fun Side(viewModel: ZoomViewModel, dice: Dice, side: Side) {
 
 @Composable
 fun SideShape(viewModel: ZoomViewModel, dice: Dice) {
-    val diceSideResourceId = when (dice.sides.size) {
-        2 -> R.drawable.d2
-        6 -> R.drawable.d6
-        10 -> R.drawable.d10
-        12 -> R.drawable.d12
-        else -> R.drawable.d4_d8_d20
-    }
     Image(
-        painter = painterResource(id = diceSideResourceId),
+        painter = painterResource(viewModel.sideAppearance(dice)),
         contentDescription = null,
         modifier = Modifier
             .padding(horizontal = 5.dp, vertical = 5.dp)

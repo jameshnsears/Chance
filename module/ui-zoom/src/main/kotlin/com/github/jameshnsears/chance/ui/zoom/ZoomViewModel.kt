@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
@@ -28,11 +29,9 @@ open class ZoomViewModel(
     // TODO might not need a ZoomModel!
     val zoomModel = ZoomModel()
 
-    fun bagDemo() = bagRepository.bagDemo
-
     fun scale() = 100.dp    // 75; 50; 25
 
-    fun scaleTextPaddingTop(dice: Dice): Dp {
+    fun scaleValuePaddingTop(dice: Dice): Dp {
         when (scale()) {
             100.dp -> { // done
                 return when (dice.sides.size) {
@@ -94,6 +93,16 @@ open class ZoomViewModel(
                     else -> 9.sp
                 }
             }
+        }
+    }
+
+    fun sideAppearance(dice: Dice): Int {
+        return when (dice.sides.size) {
+            2 -> R.drawable.d2
+            6 -> R.drawable.d6
+            10 -> R.drawable.d10
+            12 -> R.drawable.d12
+            else -> R.drawable.d4_d8_d20
         }
     }
 
