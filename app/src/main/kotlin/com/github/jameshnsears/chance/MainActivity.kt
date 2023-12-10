@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                             onClick = {
                                 showDialog.value = true
                                 diceIndex.intValue = 0
-                                bagRepository.store(BagSampleData.singleDice)
+                                bagRepository.store(BagSampleData.oneDice)
                             }
                         ) {
                             Text("Single Dice")

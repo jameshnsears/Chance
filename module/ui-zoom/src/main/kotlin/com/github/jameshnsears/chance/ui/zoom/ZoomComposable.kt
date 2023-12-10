@@ -30,7 +30,7 @@ import com.github.jameshnsears.chance.data.domain.Side
 fun ZoomColumn(viewModel: ZoomViewModel) {
     val listState = rememberLazyListState()
 
-    val bagDemo = remember { viewModel.bagDemo() }
+    val bagDemo = remember { viewModel.bagRepository.fetch() }
 
     LazyColumn(
         state = listState

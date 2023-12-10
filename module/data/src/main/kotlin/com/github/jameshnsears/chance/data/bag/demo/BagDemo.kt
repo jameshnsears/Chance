@@ -26,15 +26,6 @@ class BagDemo {
                 descriptionStringsId = R.string.demo_bag_compass
             ),
             Dice(
-                3,
-                descriptionStringsId = R.string.demo_bag_d6,
-            ),
-            Dice(
-                4,
-                sides = (8 downTo 1).map { index -> Side(sideIndex = index) },
-                descriptionStringsId = R.string.demo_bag_d8,
-            ),
-            Dice(
                 5,
                 sides = listOf(
                     Side(
@@ -89,16 +80,6 @@ class BagDemo {
                     )
                 ),
                 descriptionStringsId = R.string.demo_bag_story,
-            ),
-            Dice(
-                6,
-                sides = (12 downTo 1).map { index -> Side(sideIndex = index) },
-                descriptionStringsId = R.string.demo_bag_d12,
-            ),
-            Dice(
-                7,
-                sides = (20 downTo 1).map { index -> Side(sideIndex = index) },
-                descriptionStringsId = R.string.demo_bag_d20,
             ),
         )
     }
