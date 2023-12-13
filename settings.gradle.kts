@@ -17,7 +17,7 @@ rootProject.name = "Chance"
 include(":app")
 include(":module:data")
 include(":module:common")
-include(":module:ui-dialog-dice")
+include(":module:ui-dialog-bag")
 include(":module:ui-dialog-about")
 include(":module:ui-dialog-colorpicker")
 include(":module:ui-zoom")

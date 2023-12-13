@@ -66,7 +66,7 @@ dependencies {
     implementation("androidx.test.ext:junit-ktx:1.1.5")
     implementation(project(":module:ui-zoom"))
     implementation(project(":module:ui-tab-bag"))
-    implementation(project(":module:ui-dialog-dice"))
+    implementation(project(":module:ui-dialog-bag"))
 
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
