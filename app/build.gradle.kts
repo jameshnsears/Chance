@@ -59,7 +59,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-core")
-    implementation(project(mapOf("path" to ":module:ui-dialog-side")))
     implementation(project(mapOf("path" to ":module:ui-zoom")))
     implementation(project(mapOf("path" to ":module:ui-dialog-about")))
     implementation(project(mapOf("path" to ":module:data")))

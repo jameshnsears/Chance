@@ -62,7 +62,6 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core")
     implementation(project(mapOf("path" to ":module:common")))
     implementation(project(mapOf("path" to ":module:data")))
-    implementation(project(mapOf("path" to ":module:ui-dialog-side")))
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
     implementation(project(":module:ui-zoom"))
