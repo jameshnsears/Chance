@@ -53,7 +53,8 @@ dependencies {
     implementation(project(mapOf("path" to ":module:data")))
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose")
-    implementation("androidx.vectordrawable:vectordrawable:1.1.0")
+    implementation("androidx.vectordrawable:vectordrawable")
+    implementation("androidx.compose.material:material-icons-core-android:1.5.4")
 
     testImplementation("junit:junit:4.13.2")
 
@@ -61,7 +62,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation(project(":module:test"))
 
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")

@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Order
 class BagModelUnitTest {
     private var d4 = Dice(
         sides = listOf(
-            Side(sideIndex = 4),
-            Side(sideIndex = 3),
-            Side(sideIndex = 2),
-            Side(sideIndex = 1)
+            Side(index = 4),
+            Side(index = 3),
+            Side(index = 2),
+            Side(index = 1)
         ),
-        description = "d4",
+        title = "d4",
     )
 
     @Order(1)
@@ -25,8 +25,7 @@ class BagModelUnitTest {
         val bagModel = BagModel(getDiceRepository())
 
         assertEquals(2, bagModel.dice().size)
-        assertEquals(6, bagModel.sides(1).size)
-        assertEquals(3, bagModel.side(1, 3).sideIndex)
+        assertEquals(2, bagModel.sides(1).size)
 
         bagModel.store(listOf(d4))
 
@@ -57,7 +56,7 @@ class BagModelUnitTest {
     fun cloneDice() {
         val bagModel = BagModel(getDiceRepository())
 
-        d4.diceIndex = 3
+        d4.index = 3
         bagModel.diceClone(d4)
 
         assertEquals(3, bagModel.dice().size)

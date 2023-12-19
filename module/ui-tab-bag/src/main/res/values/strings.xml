@@ -1,0 +1,6 @@
+<resources>
+    <string name="tab.bag.demo.bag">Example bag</string>
+    <string name="tab.bag.import">Import…</string>
+    <string name="tab.bag.export">Export…</string>
+    <string name="tab.bag.zoom">Zoom</string>
+</resources>

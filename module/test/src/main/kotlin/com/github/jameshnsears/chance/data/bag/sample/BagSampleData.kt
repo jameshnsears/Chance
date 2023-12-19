@@ -7,59 +7,51 @@ import com.github.jameshnsears.chance.data.domain.Side
 class BagSampleData {
     companion object {
         val oneDice = listOf(
-            Dice(
-                1,
-                penaltyBonus = -2
-            )
+            Dice()
         )
 
         val twoDice = listOf(
+            Dice(),
             Dice(
-                sides = listOf(
-                    Side(sideIndex = 2),
-                    Side(sideIndex = 1)
-                ),
-                description = "d2",
-                penaltyBonus = 3
-            ),
-            oneDice[0]
+                2,
+            )
         )
 
         val allDice = listOf(
             Dice(
                 1,
-                sides = (2 downTo 1).map { index -> Side(sideIndex = index) },
-                description = "d2"
+                sides = (2 downTo 1).map { index -> Side(index = index) },
+                title = "d2"
             ),
             Dice(
                 2,
-                sides = (4 downTo 1).map { index -> Side(sideIndex = index) },
-                description = "d4"
+                sides = (4 downTo 1).map { index -> Side(index = index) },
+                title = "d4"
             ),
             Dice(
                 3,
-                sides = (6 downTo 1).map { index -> Side(sideIndex = index) },
-                description = "d6",
+                sides = (6 downTo 1).map { index -> Side(index = index) },
+                title = "d6",
             ),
             Dice(
                 4,
-                sides = (8 downTo 1).map { index -> Side(sideIndex = index) },
-                description = "d8",
+                sides = (8 downTo 1).map { index -> Side(index = index) },
+                title = "d8",
             ),
             Dice(
                 5,
-                sides = (10 downTo 1).map { index -> Side(sideIndex = index) },
-                description = "d10",
+                sides = (10 downTo 1).map { index -> Side(index = index) },
+                title = "d10",
             ),
             Dice(
                 6,
-                sides = (12 downTo 1).map { index -> Side(sideIndex = index) },
-                descriptionStringsId = R.string.demo_bag_d12,
+                sides = (12 downTo 1).map { index -> Side(index = index) },
+                titleStringsId = R.string.bag_d12,
             ),
             Dice(
                 7,
-                sides = (20 downTo 1).map { index -> Side(sideIndex = index) },
-                descriptionStringsId = R.string.demo_bag_d20,
+                sides = (20 downTo 1).map { index -> Side(index = index) },
+                titleStringsId = R.string.bag_d20,
             )
         )
     }

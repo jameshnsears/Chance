@@ -1,27 +1,25 @@
 <resources>
-    <string name="demo_bag_heads_tails">Heads / Tails</string>
-    <string name="demo_bag_heads">Heads</string>
-    <string name="demo_bag_tails">Tails</string>
+    <string name="bag_d2">d2</string>
+    <string name="bag_d4">d4</string>
+    <string name="bag_d6">d6</string>
+    <string name="bag_d8">d8</string>
+    <string name="bag_d10">d10</string>
+    <string name="bag_d12">d12</string>
+    <string name="bag_d20">d20</string>
 
-    <string name="demo_bag_compass">Compass</string>
+    <string name="bag_demo_heads_tails">Heads / Tails</string>
+    <string name="bag_demo_heads">Heads</string>
+    <string name="bag_demo_tails">Tails</string>
 
-    <string name="demo_bag_d6">d6</string>
-
-    <string name="demo_bag_d8">d8</string>
-
-    <string name="demo_bag_story">Story</string>
-    <string name="demo_bag_story_centurion">Centurion</string>
-    <string name="demo_bag_story_crocodile">Crocodile</string>
-    <string name="demo_bag_story_elephants">Elephants</string>
-    <string name="demo_bag_story_hunter">Hunter</string>
-    <string name="demo_bag_story_knight">Knight</string>
-    <string name="demo_bag_story_lion">Lion</string>
-    <string name="demo_bag_story_parrot">Parrot</string>
-    <string name="demo_bag_story_pirate">Pirate</string>
-    <string name="demo_bag_story_queen">Queen</string>
-    <string name="demo_bag_story_spaceship">Spaceship</string>
-
-    <string name="demo_bag_d12">d12</string>
-
-    <string name="demo_bag_d20">d20</string>
+    <string name="bag_demo_story">Story</string>
+    <string name="bag_demo_story_centurion">Centurion</string>
+    <string name="bag_demo_story_crocodile">Crocodile</string>
+    <string name="bag_demo_story_elephants">Elephants</string>
+    <string name="bag_demo_story_hunter">Hunter</string>
+    <string name="bag_demo_story_knight">Knight</string>
+    <string name="bag_demo_story_lion">Lion</string>
+    <string name="bag_demo_story_parrot">Parrot</string>
+    <string name="bag_demo_story_pirate">Pirate</string>
+    <string name="bag_demo_story_queen">Queen</string>
+    <string name="bag_demo_story_spaceship">Spaceship</string>
 </resources>

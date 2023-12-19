@@ -1,14 +1,15 @@
 /build
 /captures
 .cxx
-docs/uml/chance.vpp.bak*
-/docs/uml/.chance.vpp.lck
+misc/uml/chance.vpp.bak*
+/misc/uml/.chance.vpp.lck
 .DS_Store
 .externalNativeBuild
 .gradle
 /.idea/assetWizardSettings.xml
 /.idea/caches
 /.idea/libraries
+/.idea/sonarlint
 /.idea/modules.xml
 /.idea/navEditor.xml
 /.idea/workspace.xml

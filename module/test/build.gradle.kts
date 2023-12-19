@@ -64,9 +64,13 @@ dependencies {
     implementation(project(mapOf("path" to ":module:data")))
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
-    implementation(project(":module:ui-zoom"))
+    implementation(project(":module:ui-zoom-bag"))
     implementation(project(":module:ui-tab-bag"))
     implementation(project(":module:ui-dialog-bag"))
+    implementation(project(":module:ui-dialog-about"))
+    implementation(project(":module:ui-dialog-colorpicker"))
+    implementation(project(":module:ui-tab-roll"))
+    implementation(project(":module:ui-tab"))
 
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -79,5 +83,4 @@ dependencies {
 
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }

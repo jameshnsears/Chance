@@ -1,8 +1,17 @@
 <resources>
-    <string name="dialog.dice.description">Description</string>
-    <string name="dialog.dice.colour">Colour</string>
-    <string name="dialog.dice.sides">Sides</string>
-    <string-array name="dialog.dice.sides">
+    <string name="dialog.bag.title">Configure Bag</string>
+    <string name="dialog.bag.save">Save</string>
+
+    <string name="dialog.bag.side">Side #</string>
+    <string name="dialog.bag.side.colour">Colour…</string>
+    <string name="dialog.bag.side.colour.info">Applies to Side # &amp; Description</string>
+    <string name="dialog.bag.side.image">Image…</string>
+    <string name="dialog.bag.side.image.info">Must be a SVG file, ideally with constant width and height</string>
+    <string name="dialog.bag.side.description">Description</string>
+
+    <string name="dialog.bag.dice">Dice</string>
+    <string name="dialog.bag.dice.sides">Sides</string>
+    <string-array name="dialog.bag.dice.sides">
         <item>2</item>
         <item>4</item>
         <item>6</item>
@@ -11,17 +20,18 @@
         <item>12</item>
         <item>20</item>
     </string-array>
-    <string name="dialog.dice.penalty_bonus">Penalty / Bonus</string>
-    <string-array name="dialog.dice.penalty_bonus">
-        <item>-3</item>
-        <item>-2</item>
-        <item>-1</item>
-        <item>0</item>
-        <item>+1</item>
-        <item>+2</item>
-        <item>+3</item>
+    <string name="dialog.bag.dice.title">Title</string>
+    <string name="dialog.bag.dice.title.info">Title is mandatory; defaults to dice size</string>
+    <string-array name="dialog.bag.dice.title.mandatory">
+        <item>d2</item>
+        <item>d4</item>
+        <item>d6</item>
+        <item>d8</item>
+        <item>d10</item>
+        <item>d12</item>
+        <item>d20</item>
     </string-array>
-    <string name="dialog.dice.clone">Clone</string>
-    <string name="dialog.dice.delete">Delete</string>
-    <string name="dialog.dice.ok">OK</string>
+    <string name="dialog.bag.dice.colour">Colour…</string>
+    <string name="dialog.bag.dice.clone">Clone</string>
+    <string name="dialog.bag.dice.delete">Delete</string>
 </resources>

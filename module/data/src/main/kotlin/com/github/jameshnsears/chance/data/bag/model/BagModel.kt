@@ -29,7 +29,7 @@ class BagModel(
         return dice[diceIndex]
     }
 
-    fun diceDescription(diceIndex: Int): String = dice(diceIndex).description
+    fun diceDescription(diceIndex: Int): String = dice(diceIndex).title
 
     fun sides(diceIndex: Int): List<Side> = dice(diceIndex).sides
 
@@ -42,26 +42,21 @@ class BagModel(
         return sides[sideIndex]
     }
 
-    fun dicePanaltyBonus(diceIndex: Int): Int = dice(diceIndex).penaltyBonus
-
     fun store(
         diceIndex: Int,
         sides: Int,
         description: String,
-        penaltyBonus: Int
     ) {
         Timber.d("diceIndex=$diceIndex")
         Timber.d("sids=$sides")
         Timber.d("description=", description)
-        Timber.d("penaltyBonus=$penaltyBonus")
 
         val dice = dice().map { it.copy() }.toList()
 
         dice[diceIndex].sides = (sides downTo 1).map { sideIndex ->
-            Side(sideIndex = sideIndex)
+            Side(index = sideIndex)
         }
-        dice[diceIndex].description = description
-        dice[diceIndex].penaltyBonus = penaltyBonus
+        dice[diceIndex].title = description
 
         store(dice)
     }

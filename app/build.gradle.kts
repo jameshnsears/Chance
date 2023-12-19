@@ -59,7 +59,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-core")
-    implementation(project(mapOf("path" to ":module:ui-zoom")))
+    implementation(project(mapOf("path" to ":module:ui-zoom-bag")))
     implementation(project(mapOf("path" to ":module:ui-dialog-about")))
     implementation(project(mapOf("path" to ":module:data")))
     implementation(project(mapOf("path" to ":module:ui-dialog-colorpicker")))
@@ -68,6 +68,9 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation(project(mapOf("path" to ":module:test")))
     implementation(project(":module:ui-dialog-bag"))
+    implementation(project(":module:ui-tab-bag"))
+    implementation(project(":module:ui-tab-roll"))
+    implementation(project(":module:ui-tab"))
 
     testImplementation("junit:junit:4.13.2")
 
