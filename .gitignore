@@ -16,7 +16,6 @@ misc/uml/chance.vpp.bak*
 *.iml
 /local.properties
 local.properties
-/module/dialog/colorpicker/build
 /module/dialog/about/build
 /module/dialog/dice/build
 /module/dialog/side/build

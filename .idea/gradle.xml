@@ -14,9 +14,7 @@
             <option value="$PROJECT_DIR$/module/common" />
             <option value="$PROJECT_DIR$/module/data" />
             <option value="$PROJECT_DIR$/module/test" />
-            <option value="$PROJECT_DIR$/module/ui-dialog-about" />
             <option value="$PROJECT_DIR$/module/ui-dialog-bag" />
-            <option value="$PROJECT_DIR$/module/ui-dialog-colorpicker" />
             <option value="$PROJECT_DIR$/module/ui-tab" />
             <option value="$PROJECT_DIR$/module/ui-tab-bag" />
             <option value="$PROJECT_DIR$/module/ui-tab-roll" />

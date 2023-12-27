@@ -1,13 +1,13 @@
 package com.github.jameshnsears.chance.data.bag.model
 
-import com.github.jameshnsears.chance.data.bag.repository.BagRepository
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryImpl
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 import timber.log.Timber
 
 class BagModel(
-    private val bagRepository: BagRepositoryInterface = BagRepository
+    private val bagRepository: BagRepositoryInterface = BagRepositoryImpl
 ) {
     fun diceClone(diceToClone: Dice) {
         var dice = dice()
@@ -24,7 +24,7 @@ class BagModel(
     fun dice(diceIndex: Int): Dice {
         val dice = dice()
         if (diceIndex < 0 || diceIndex >= dice.size) {
-            throw BagModelIndexException()
+            throw BagModelException()
         }
         return dice[diceIndex]
     }
@@ -36,7 +36,7 @@ class BagModel(
     fun side(diceIndex: Int, sideIndex: Int): Side {
         val sides = dice(diceIndex).sides
         if (sideIndex < 0 || sideIndex >= sides.size) {
-            throw BagModelIndexException()
+            throw BagModelException()
         }
 
         return sides[sideIndex]
@@ -54,7 +54,7 @@ class BagModel(
         val dice = dice().map { it.copy() }.toList()
 
         dice[diceIndex].sides = (sides downTo 1).map { sideIndex ->
-            Side(index = sideIndex)
+            Side(number = sideIndex)
         }
         dice[diceIndex].title = description
 

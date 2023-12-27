@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -54,10 +53,4 @@ fun ZoomAnimationComposable() {
             Text("finished")
         }
     }
-}
-
-@Preview
-@Composable
-fun ZoonAnimationComposablePreview() {
-    ZoomAnimationComposable()
 }

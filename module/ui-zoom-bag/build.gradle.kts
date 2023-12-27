@@ -36,13 +36,22 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.4"
     }
+    flavorDimensions += listOf("store")
+    productFlavors {
+        create("fdroid") {
+            dimension = "store"
+        }
+        create("googleplay") {
+            dimension = "store"
+        }
+    }
 }
 
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.1")
+    implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -57,6 +66,7 @@ dependencies {
     implementation(project(":module:data"))
 
     implementation("com.airbnb.android:lottie-compose:6.2.0")
+    implementation(project(":module:ui-dialog-bag"))
 
     testImplementation("junit:junit:4.13.2")
 
@@ -65,7 +75,6 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(project(":module:test"))
-    implementation(project(":module:data"))
 
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")

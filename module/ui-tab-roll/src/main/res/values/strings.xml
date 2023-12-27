@@ -1,6 +1,5 @@
 <resources>
     <string name="tab.roll.sequentially">Roll sequentially</string>
-    <string name="tab.roll.sequentially.info">Dice will be rolled in order selected</string>
     <string name="tab.roll.undo">Undo</string>
     <string name="tab.roll.roll">Roll</string>
     <string name="tab.roll.zoom">Zoom</string>

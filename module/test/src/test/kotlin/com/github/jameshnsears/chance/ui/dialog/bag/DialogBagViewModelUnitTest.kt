@@ -37,9 +37,9 @@ class DialogBagViewModelUnitTest {
                 expectedSliderSidesPosition
             )
 
-            testDescription(viewModel)
+            testTitle(viewModel)
 
-            testOk(
+            testSave(
                 viewModel,
                 expectedSliderSidesPosition
             )
@@ -61,26 +61,26 @@ class DialogBagViewModelUnitTest {
         assertEquals(expectedSliderPosition, viewModel.fetchCurrentSliderSidesPosition())
     }
 
-    private fun testDescription(viewModel: DialogBagViewModel) {
-        assertEquals("d2", viewModel.diceTitle.value)
+    private fun testTitle(viewModel: DialogBagViewModel) {
+        assertEquals("", viewModel.diceTitle.value)
 
-        val newDescription = ""
-        viewModel.updateDiceTitle(newDescription)
-        assertEquals(newDescription, viewModel.diceTitle.value)
+        val newTitle = "d2"
+        viewModel.updateDiceTitle(newTitle)
+        assertEquals(newTitle, viewModel.diceTitle.value)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private fun TestScope.testOk(
+    private fun TestScope.testSave(
         viewModel: DialogBagViewModel,
         expectedSides: Int,
     ) {
         assertEquals(2, viewModel.fetchDice(viewModel.diceIndex).sides.size)
-        assertEquals("d2", viewModel.fetchDice(viewModel.diceIndex).title)
+        assertEquals("", viewModel.fetchDice(viewModel.diceIndex).title)
 
-        viewModel.ok()
+        viewModel.save()
         advanceUntilIdle()
 
         assertEquals(expectedSides, viewModel.fetchDice(viewModel.diceIndex).sides.size)
-        assertEquals("", viewModel.fetchDice(viewModel.diceIndex).title)
+        assertEquals("d2", viewModel.fetchDice(viewModel.diceIndex).title)
     }
 }

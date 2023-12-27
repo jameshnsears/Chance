@@ -17,6 +17,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.colour.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 class BagCardSideTestTag {
@@ -74,12 +77,14 @@ fun SideNumber(diceIndex: Int) {
 fun SideColour() {
     val paletteIcon = painterResource(id = R.drawable.palette_fill0_wght400_grad0_opsz24)
 
+    val showDialogColourPicker = remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier
             .padding(top = 16.dp)
     ) {
         Button(
-            onClick = { /* Do something when clicked */ },
+            onClick = { showDialogColourPicker.value = true },
             modifier = Modifier.testTag(BagCardSideTestTag.colour)
         ) {
             Icon(
@@ -101,6 +106,13 @@ fun SideColour() {
     )
 
     Text(stringResource(R.string.dialog_bag_side_colour_info))
+
+    if (showDialogColourPicker.value) {
+        DialogColourPicker(
+            showDialogColourPicker,
+            stringResource(R.string.dialog_bag_colour_side)
+        )
+    }
 }
 
 

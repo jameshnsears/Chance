@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.colour.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 import kotlin.math.roundToInt
 
@@ -157,15 +159,20 @@ fun DiceTitle(viewModel: DialogBagViewModel) {
 fun DiceColour() {
     val paletteIcon = painterResource(id = R.drawable.palette_fill0_wght400_grad0_opsz24)
 
+    val showDialogColourPicker = remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier
             .padding(top = 16.dp, bottom = 8.dp)
     ) {
         Button(
-            onClick = { /* Do something when clicked */ },
+            onClick = {
+                showDialogColourPicker.value = true
+            },
             modifier = Modifier
                 .width(140.dp)
                 .testTag(BagCardDiceTestTag.colour)
+
         ) {
             Icon(
                 paletteIcon,
@@ -177,6 +184,13 @@ fun DiceColour() {
 
             Text(stringResource(R.string.dialog_bag_dice_colour))
         }
+    }
+
+    if (showDialogColourPicker.value) {
+        DialogColourPicker(
+            showDialogColourPicker,
+            stringResource(R.string.dialog_bag_colour_dice)
+        )
     }
 }
 

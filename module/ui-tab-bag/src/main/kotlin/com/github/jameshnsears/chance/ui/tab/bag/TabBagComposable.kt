@@ -1,5 +1,11 @@
 package com.github.jameshnsears.chance.ui.tab.bag
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -22,26 +29,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.github.jameshnsears.chance.data.bag.demo.BagDemo
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagViewModel
 import com.github.jameshnsears.chance.ui.zoom.bag.ZoomColumn
 
 @Composable
-fun TabBag() {
-    TabBagLayout()
+fun TabBag(viewModel: TabBagViewModel) {
+    TabBagLayout(viewModel)
 }
 
 @Composable
-fun TabBagLayout() {
+fun TabBagLayout(viewModel: TabBagViewModel) {
     Column(modifier = Modifier.padding(10.dp)) {
         ElevatedCard(
             modifier = Modifier
@@ -58,13 +65,10 @@ fun TabBagLayout() {
             }
         }
 
-        val bagRepository = BagRepositoryMock
-        bagRepository.store(BagDemo.dice)
-
-        ZoomColumn(ZoomBagViewModel(bagRepository))
+        ZoomColumn(ZoomBagViewModel(viewModel.bagRepository))
     }
 
-    BottomSheet()
+    TabBagBottomSheet()
 }
 
 @Composable
@@ -99,11 +103,14 @@ fun ImportExport() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp)
+            .padding(start = 8.dp, end = 8.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
-            modifier = Modifier.testTag("bagButtonExport")
+            modifier = Modifier
+                .width(150.dp)
+                .testTag("bagButtonExport")
         ) {
             Icon(
                 exportIcon,
@@ -116,11 +123,13 @@ fun ImportExport() {
             Text(stringResource(R.string.tab_bag_export))
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.padding(horizontal = 10.dp))
 
         Button(
             onClick = { /* Do something when clicked */ },
-            modifier = Modifier.testTag("bagButtonImport")
+            modifier = Modifier
+                .width(150.dp)
+                .testTag("bagButtonImport")
         ) {
             Icon(
                 importIcon,
@@ -138,39 +147,92 @@ fun ImportExport() {
 @Composable
 fun Slider() {
     var sliderPosition by remember { mutableStateOf(0f) }
-    Slider(
-        value = sliderPosition,
-        onValueChange = { sliderPosition = it },
-        valueRange = 0f..100f,
-        onValueChangeFinished = {
-            // launch some business logic update with the state you hold
-            // viewModel.updateSelectedSliderValue(sliderPosition)
-        },
-        steps = 5,
-    )
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+    ) {
+        Text(stringResource(R.string.tab_bag_zoom))
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Slider(
+            value = sliderPosition,
+            onValueChange = { sliderPosition = it },
+            valueRange = 0f..100f,
+            onValueChangeFinished = {
+                // launch some business logic update with the state you hold
+                // viewModel.updateSelectedSliderValue(sliderPosition)
+            },
+            steps = 5,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet() {
-    val scope = rememberCoroutineScope()
+fun TabBagBottomSheet() {
     val scaffoldState = rememberBottomSheetScaffoldState()
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 32.dp,
         sheetContent = {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                    .height(64.dp),
-            ) {
-                Slider()
+            TabBagBottomSheetLayout()
+        }) {
+    }
+}
+
+@Composable
+fun VersionDetails() {
+    val v = BuildConfig.GIT_HASH
+
+    val context = LocalContext.current
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        Text(
+            text = v + "-" + BuildConfig.FLAVOR,
+            fontSize = 14.sp
+        )
+
+        Spacer(Modifier.weight(1f))
+
+        val drawable = painterResource(id = R.drawable.github_logo)
+        Image(
+            painter = drawable,
+            contentDescription = "",
+            modifier = Modifier.clickable {
+                openUrlInBrowser(
+                    context,
+                    "https://github.com/jameshnsears/chance"
+                )
             }
-        }) { innerPadding ->
-//        Box(Modifier.padding(innerPadding)) {
-//            Text("Scaffold Content")
-//        }
+        )
+    }
+}
+
+fun openUrlInBrowser(context: Context, url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    startActivity(context, intent, null)
+}
+
+@Composable
+fun TabBagBottomSheetLayout() {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .height(80.dp),
+    ) {
+        Slider()
+
+        VersionDetails()
     }
 }

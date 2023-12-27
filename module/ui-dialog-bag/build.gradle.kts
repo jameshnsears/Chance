@@ -36,13 +36,22 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.4"
     }
+    flavorDimensions += listOf("store")
+    productFlavors {
+        create("fdroid") {
+            dimension = "store"
+        }
+        create("googleplay") {
+            dimension = "store"
+        }
+    }
 }
 
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.1")
+    implementation("androidx.activity:activity-compose:1.8.2")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -55,6 +64,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose")
     implementation("androidx.vectordrawable:vectordrawable")
     implementation("androidx.compose.material:material-icons-core-android:1.5.4")
+
+    implementation("com.github.skydoves:colorpicker-compose:1.0.7")
 
     testImplementation("junit:junit:4.13.2")
 

@@ -1,5 +1,6 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,9 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -62,19 +63,11 @@ fun TabRollLayout() {
 
                 UndoRoll()
 
-//        Zoom(
-//            stringResource(R.string.tab_roll_zoom),
-//            sliderSidesDisplayValues.values(),
-//            sliderSidesValue,
-//            viewModel::updateCurrentSliderSidesPosition,
-//            "diceSliderSides"
-//        )
-
             }
         }
     }
 
-    BottomSheet()
+    TabRollBottomSheet()
 }
 
 @Composable
@@ -85,11 +78,14 @@ fun UndoRoll() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp)
+            .padding(top = 8.dp, start = 8.dp, end = 8.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
-            modifier = Modifier.testTag("bagButtonExport")
+            modifier = Modifier
+                .width(140.dp)
+                .testTag("bagButtonExport"),
         ) {
             Icon(
                 undoIcon,
@@ -102,11 +98,13 @@ fun UndoRoll() {
             Text(stringResource(R.string.tab_roll_undo))
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.padding(horizontal = 10.dp))
 
         Button(
             onClick = { /* Do something when clicked */ },
-            modifier = Modifier.testTag("bagButtonImport")
+            modifier = Modifier
+                .width(140.dp)
+                .testTag("bagButtonImport")
         ) {
             Icon(
                 rollIcon,
@@ -165,13 +163,6 @@ fun RollSequentially() {
             }
         )
     }
-
-    Icon(Icons.Outlined.Info, contentDescription = "Info")
-
-    Text(
-        modifier = Modifier.padding(vertical = 10.dp),
-        text = stringResource(R.string.tab_roll_sequentially_info)
-    )
 }
 
 @Composable
@@ -262,58 +253,35 @@ fun UseSound() {
     }
 }
 
-//@Composable
-//fun Zoom(
-//    sliderTitle: String,
-//    sliderDisplayValues: List<String>,
-//    sliderPosition: MutableFloatState,
-//    updateSliderPosition: (Float) -> Unit,
-//    testTag: String
-//) {
-//    Row {
-//        Text(
-//            sliderTitle,
-//            modifier = Modifier.align(Alignment.CenterVertically)
-//        )
-//
-//        Spacer(modifier = Modifier.width(10.dp))
-//
-//        Slider(
-//            value = sliderPosition.floatValue,
-//            onValueChange = {
-//                sliderPosition.floatValue = it
-//                updateSliderPosition(it)
-//            },
-//            valueRange = 0f..sliderDisplayValues.lastIndex.toFloat(),
-//            steps = sliderDisplayValues.lastIndex - 1,
-//            colors = SliderDefaults.colors(
-//                thumbColor = MaterialTheme.colorScheme.secondary,
-//                activeTrackColor = MaterialTheme.colorScheme.secondary,
-//                inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-//            ),
-//            modifier = Modifier.testTag(testTag),
-//        )
-//    }
-//}
-
 @Composable
 fun Slider() {
     var sliderPosition by remember { mutableStateOf(0f) }
-    Slider(
-        value = sliderPosition,
-        onValueChange = { sliderPosition = it },
-        valueRange = 0f..100f,
-        onValueChangeFinished = {
-            // launch some business logic update with the state you hold
-            // viewModel.updateSelectedSliderValue(sliderPosition)
-        },
-        steps = 5,
-    )
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Text(stringResource(R.string.tab_roll_zoom))
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Slider(
+            value = sliderPosition,
+            onValueChange = { sliderPosition = it },
+            valueRange = 0f..100f,
+            onValueChangeFinished = {
+                // launch some business logic update with the state you hold
+                // viewModel.updateSelectedSliderValue(sliderPosition)
+            },
+            steps = 5,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheet() {
+fun TabRollBottomSheet() {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
 
@@ -321,25 +289,28 @@ fun BottomSheet() {
         scaffoldState = scaffoldState,
         sheetPeekHeight = 32.dp,
         sheetContent = {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                    .height(250.dp),
-            ) {
-                Slider()
+            TabRollBottomSheetLayout()
+        }
+    ) {
+    }
+}
 
-                ShowHistory()
+@Composable
+fun TabRollBottomSheetLayout() {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .height(250.dp),
+    ) {
+        Slider()
 
-                ShowSideNumber()
+        ShowHistory()
 
-                ShowSum()
+        ShowSideNumber()
 
-                UseSound()
-            }
-        }) { innerPadding ->
-//        Box(Modifier.padding(innerPadding)) {
-//            Text("Scaffold Content")
-//        }
+        ShowSum()
+
+        UseSound()
     }
 }

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.bag.model.BagModel
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
-import com.github.jameshnsears.chance.data.domain.Colour
 import com.github.jameshnsears.chance.data.domain.Dice
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -60,7 +59,7 @@ open class DialogBagViewModel(
         _diceTitle.value = diceTitle
     }
 
-    fun ok() {
+    fun save() {
         viewModelScope.launch {
             bagModel.store(
                 diceIndex,
@@ -74,7 +73,7 @@ open class DialogBagViewModel(
 
     /////////
 
-    fun colour(colour: Colour) {
+    fun colour(colour: String) {
         TODO("Not yet implemented")
     }
 

@@ -21,7 +21,7 @@
         <item>20</item>
     </string-array>
     <string name="dialog.bag.dice.title">Title</string>
-    <string name="dialog.bag.dice.title.info">Title is mandatory; defaults to dice size</string>
+    <string name="dialog.bag.dice.title.info">Title is mandatory; defaults to # of sides</string>
     <string-array name="dialog.bag.dice.title.mandatory">
         <item>d2</item>
         <item>d4</item>
@@ -34,4 +34,9 @@
     <string name="dialog.bag.dice.colour">Colour…</string>
     <string name="dialog.bag.dice.clone">Clone</string>
     <string name="dialog.bag.dice.delete">Delete</string>
+
+    <string name="dialog.bag.colour.side">Side # &amp; Description</string>
+    <string name="dialog.bag.colour.dice">Dice</string>
+    <string name="dialog.bag.colour.cancel">Cancel</string>
+    <string name="dialog.bag.colour.ok">OK</string>
 </resources>

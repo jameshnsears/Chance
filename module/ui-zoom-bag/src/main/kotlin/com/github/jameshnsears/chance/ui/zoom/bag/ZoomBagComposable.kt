@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBag
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagViewModel
 
 @Composable
 fun ZoomColumn(viewModel: ZoomBagViewModel) {
@@ -62,11 +65,10 @@ fun ZoomColumn(viewModel: ZoomBagViewModel) {
 
 @Composable
 fun DiceDescription(viewModel: ZoomBagViewModel, dice: Dice) {
-    var description = ""
-    if (dice.title != "")
-        description = dice.title
+    val description = if (dice.title != "")
+        dice.title
     else
-        description = stringResource(id = dice.titleStringsId)
+        stringResource(id = dice.titleStringsId)
 
     Text(
         modifier = Modifier.padding(start = 5.dp, top = 5.dp),
@@ -85,7 +87,7 @@ fun Side(viewModel: ZoomBagViewModel, dice: Dice, side: Side) {
                 .align(Alignment.Center)
                 .padding(top = viewModel.scaleValuePaddingTop(dice)),
             fontSize = viewModel.scaleTextFontSize(dice),
-            text = "${side.index}",
+            text = "${side.number}",
             color = Color.White
         )
     }
@@ -93,6 +95,8 @@ fun Side(viewModel: ZoomBagViewModel, dice: Dice, side: Side) {
 
 @Composable
 fun SideShape(viewModel: ZoomBagViewModel, dice: Dice) {
+    val showDialog = remember { mutableStateOf(false) }
+
     Image(
         painter = painterResource(viewModel.sideAppearance(dice)),
         contentDescription = null,
@@ -100,9 +104,19 @@ fun SideShape(viewModel: ZoomBagViewModel, dice: Dice) {
             .padding(horizontal = 5.dp, vertical = 5.dp)
             .size(viewModel.scale())
             .clickable {
-                // Handle click
+                showDialog.value = true
             }
     )
+
+    if (showDialog.value) {
+        DialogBag(
+            showDialog,
+            DialogBagViewModel(
+                viewModel.bagRepository,
+                1
+            )
+        )
+    }
 }
 
 @Composable
