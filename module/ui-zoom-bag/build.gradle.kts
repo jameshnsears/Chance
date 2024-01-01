@@ -65,7 +65,7 @@ dependencies {
     implementation("io.coil-kt:coil-svg:2.5.0")
     implementation(project(":module:data"))
 
-    implementation("com.airbnb.android:lottie-compose:6.2.0")
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
     implementation(project(":module:ui-dialog-bag"))
 
     testImplementation("junit:junit:4.13.2")
