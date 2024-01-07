@@ -11,7 +11,7 @@ import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
 @SuppressLint("UnrememberedMutableState")
-@Preview(heightDp = 900)
+@Preview(heightDp = 850)
 @Composable
 fun DialogBagComposablePreview() {
     val showDialog = mutableStateOf(true)

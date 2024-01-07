@@ -75,8 +75,6 @@ fun DialogBagLayout(
                 )
             }
 
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-
             Text(
                 text = stringResource(R.string.dialog_bag_title),
                 textAlign = TextAlign.Center,
@@ -91,7 +89,7 @@ fun DialogBagLayout(
                     text = stringResource(R.string.dialog_bag_save),
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 16.dp),
+                        .padding(end = 8.dp),
                     textAlign = TextAlign.End,
                     fontSize = 14.sp
                 )
