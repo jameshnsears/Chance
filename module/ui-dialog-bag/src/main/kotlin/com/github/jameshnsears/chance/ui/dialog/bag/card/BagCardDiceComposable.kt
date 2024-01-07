@@ -219,7 +219,8 @@ fun DiceColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
         Text(
             modifier = Modifier
                 .padding(start = 16.dp),
-            text = diceColour)
+            text = diceColour
+        )
     }
 
     Divider(

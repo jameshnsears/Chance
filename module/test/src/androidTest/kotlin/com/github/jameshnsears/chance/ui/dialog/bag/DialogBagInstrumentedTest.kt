@@ -7,7 +7,6 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
@@ -35,10 +34,10 @@ class DialogBagInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature() {
             ChanceTheme {
                 DialogBag(
                     showDialog,
-                        bagRepository,
-                        dice,
-                        side
-                    )
+                    bagRepository,
+                    dice,
+                    side
+                )
             }
         }
 

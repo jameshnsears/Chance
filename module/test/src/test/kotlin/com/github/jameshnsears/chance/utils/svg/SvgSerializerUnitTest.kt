@@ -1,7 +1,6 @@
 package com.github.jameshnsears.chance.utils.svg
 
 import org.junit.Assert.fail
-import org.junit.Ignore
 import org.junit.Test
 
 class SvgSerializerUnitTest {

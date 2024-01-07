@@ -23,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -134,8 +133,9 @@ fun SideColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
         )
     }
 
-    Divider(            modifier = Modifier
-        .padding(top = 14.dp, bottom = 4.dp)
+    Divider(
+        modifier = Modifier
+            .padding(top = 14.dp, bottom = 4.dp)
     )
 
     if (showDialogColourPicker.value) {
@@ -196,8 +196,9 @@ fun SideImage(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInter
         )
     }
 
-    Divider(            modifier = Modifier
-        .padding(top = 12.dp, bottom = 12.dp)
+    Divider(
+        modifier = Modifier
+            .padding(top = 12.dp, bottom = 12.dp)
     )
 }
 
