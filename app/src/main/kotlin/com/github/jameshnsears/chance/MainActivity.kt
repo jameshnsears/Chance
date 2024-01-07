@@ -7,29 +7,36 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.ui.ExperimentalComposeUiApi
-import com.github.jameshnsears.chance.data.bag.demo.BagDemo
+import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
+import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
 import com.github.jameshnsears.chance.ui.tab.TabRowChance
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagViewModel
+import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
 import timber.log.Timber
 
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalComposeUiApi::class)
     @SuppressLint("UnrememberedMutableState")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // lock to portrait as Bottom Sheets don't look too good!
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         initLogging()
 
         val bagRepository = BagRepositoryMock
-        bagRepository.store(BagDemo.dice)
+        bagRepository.store(
+            listOf(
+                BagDemoData.diceHeadsTails
+            )
+        )
+
+        val rollRepository = RollRepositoryMock
+        rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
 
         setContent {
             ChanceTheme {
@@ -37,11 +44,11 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     TabRowChance(
-                        TabBagViewModel(bagRepository)
+                        TabBagViewModel(bagRepository),
+                        TabRollViewModel(RollRepositoryMock)
                     )
 
 //                    ZoomAnimationComposable()
-
 
 //                    val showDialog = mutableStateOf(true)
 //                    val bagRepository = BagRepositoryMock

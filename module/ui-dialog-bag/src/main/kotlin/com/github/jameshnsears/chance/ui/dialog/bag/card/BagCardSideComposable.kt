@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,21 +28,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModelInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.colour.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 class BagCardSideTestTag {
     companion object {
-        val colour = "colour"
-        val image = "image"
-        val description = "description"
+        const val sideNumber = "sideNumber"
+        const val sideColour = "sideColour"
+        const val sideImage = "sideImage"
+        const val sideDescription = "sideDescription"
     }
 }
 
 @Composable
-fun BagCardSide(viewModel: DialogBagViewModel) {
+fun BagCardSide(viewModel: DialogBagAndroidViewModelInterface) {
     ElevatedCard(
         modifier = Modifier
             .padding(top = 4.dp, bottom = 8.dp)
@@ -51,11 +54,11 @@ fun BagCardSide(viewModel: DialogBagViewModel) {
         ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            SideNumber(viewModel.diceIndex)
+            SideNumber(viewModel)
 
-            SideColour()
+            SideColour(viewModel)
 
-            SideImage()
+            SideImage(viewModel)
 
             SideDescription(viewModel)
         }
@@ -63,18 +66,24 @@ fun BagCardSide(viewModel: DialogBagViewModel) {
 }
 
 @Composable
-fun SideNumber(diceIndex: Int) {
+fun SideNumber(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
+    val sideNumber by dialogBagAndroidViewModelInterface.sideNumber.collectAsStateWithLifecycle()
+
     Text(
-        text = "${stringResource(R.string.dialog_bag_side)} $diceIndex",
+        text = "${stringResource(R.string.dialog_bag_side)} $sideNumber",
         modifier = Modifier
-            .wrapContentSize(Alignment.Center),
+            .wrapContentSize(Alignment.Center)
+            .testTag(BagCardSideTestTag.sideNumber),
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
     )
 }
 
 @Composable
-fun SideColour() {
+fun SideColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
+    val sideColour by dialogBagAndroidViewModelInterface.sideColour.collectAsStateWithLifecycle()
+
     val paletteIcon = painterResource(id = R.drawable.palette_fill0_wght400_grad0_opsz24)
 
     val showDialogColourPicker = remember { mutableStateOf(false) }
@@ -85,7 +94,7 @@ fun SideColour() {
     ) {
         Button(
             onClick = { showDialogColourPicker.value = true },
-            modifier = Modifier.testTag(BagCardSideTestTag.colour)
+            modifier = Modifier.testTag(BagCardSideTestTag.sideColour)
         ) {
             Icon(
                 paletteIcon,
@@ -97,6 +106,8 @@ fun SideColour() {
 
             Text(stringResource(R.string.dialog_bag_side_colour))
         }
+
+        Text(sideColour)
     }
 
     Icon(
@@ -115,9 +126,10 @@ fun SideColour() {
     }
 }
 
-
 @Composable
-fun SideImage() {
+fun SideImage(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
+    val sideImageFilename by dialogBagAndroidViewModelInterface.sideImageFilename.collectAsStateWithLifecycle()
+
     val paletteIcon = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24)
 
     Row(
@@ -126,7 +138,7 @@ fun SideImage() {
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
-            modifier = Modifier.testTag(BagCardSideTestTag.image)
+            modifier = Modifier.testTag(BagCardSideTestTag.sideImage)
         ) {
             Icon(
                 paletteIcon,
@@ -138,6 +150,8 @@ fun SideImage() {
 
             Text(stringResource(R.string.dialog_bag_side_image))
         }
+
+        Text(sideImageFilename)
     }
 
     Icon(
@@ -152,18 +166,18 @@ fun SideImage() {
     )
 }
 
-
 @Composable
-fun SideDescription(viewModel: DialogBagViewModel) {
-    val sideDescription = viewModel.diceTitle.collectAsStateWithLifecycle()
+fun SideDescription(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
+    val sideDescription =
+        dialogBagAndroidViewModelInterface.sideDescription.collectAsStateWithLifecycle()
 
     OutlinedTextField(
         value = sideDescription.value,
-        onValueChange = { viewModel.updateDiceTitle(it) },
+        onValueChange = { dialogBagAndroidViewModelInterface.sideDescription(it) },
         label = { Text(stringResource(R.string.dialog_bag_side_description)) },
         singleLine = true,
         modifier = Modifier
-            .testTag(BagCardSideTestTag.description)
+            .testTag(BagCardSideTestTag.sideDescription)
             .padding(bottom = 8.dp)
             .fillMaxWidth()
     )

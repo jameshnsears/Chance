@@ -6,17 +6,6 @@ import com.github.jameshnsears.chance.data.domain.Side
 
 class BagSampleData {
     companion object {
-        val oneDice = listOf(
-            Dice()
-        )
-
-        val twoDice = listOf(
-            Dice(),
-            Dice(
-                2,
-            )
-        )
-
         val allDice = listOf(
             Dice(
                 1,

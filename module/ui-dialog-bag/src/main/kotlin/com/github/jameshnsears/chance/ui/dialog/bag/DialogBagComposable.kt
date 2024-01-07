@@ -36,7 +36,7 @@ import com.github.jameshnsears.chance.ui.dialog.dice.R
 @Composable
 fun DialogBag(
     showDialog: MutableState<Boolean>,
-    dialogBagViewModel: DialogBagViewModel,
+    viewModel: DialogBagAndroidViewModelInterface,
 ) {
     Dialog(
         onDismissRequest = { showDialog.value = false },
@@ -45,7 +45,7 @@ fun DialogBag(
         Surface(modifier = Modifier.fillMaxSize()) {
             DialogBagLayout(
                 showDialog,
-                dialogBagViewModel,
+                viewModel,
             )
         }
     }
@@ -54,7 +54,7 @@ fun DialogBag(
 @Composable
 fun DialogBagLayout(
     showDialog: MutableState<Boolean>,
-    viewModel: DialogBagViewModel,
+    dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface,
 ) {
     Column(
         modifier = Modifier
@@ -84,17 +84,17 @@ fun DialogBagLayout(
             )
 
             TextButton(onClick = {
-                viewModel.save()
+                dialogBagAndroidViewModelInterface.save()
                 showDialog.value = false
             }) {
-            Text(
-                text = stringResource(R.string.dialog_bag_save),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 16.dp),
-                textAlign = TextAlign.End,
-                fontSize = 14.sp
-            )
+                Text(
+                    text = stringResource(R.string.dialog_bag_save),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 16.dp),
+                    textAlign = TextAlign.End,
+                    fontSize = 14.sp
+                )
             }
         }
 
@@ -102,10 +102,9 @@ fun DialogBagLayout(
             modifier = Modifier
                 .padding(start = 8.dp, end = 8.dp)
         ) {
+            BagCardSide(dialogBagAndroidViewModelInterface)
 
-            BagCardSide(viewModel)
-
-            BagCardDice(viewModel)
+            BagCardDice(dialogBagAndroidViewModelInterface)
         }
     }
 }

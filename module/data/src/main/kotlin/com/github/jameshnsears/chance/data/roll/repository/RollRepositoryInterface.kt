@@ -1,15 +1,8 @@
 package com.github.jameshnsears.chance.data.roll.repository
 
-import com.github.jameshnsears.chance.data.domain.Roll
-
-typealias RollSequenceEpoch = Long
-
-typealias RollSequence = List<Roll>
-
-typealias RollHistory = LinkedHashMap<RollSequenceEpoch, RollSequence>
+import com.github.jameshnsears.chance.data.domain.RollHistory
 
 interface RollRepositoryInterface {
-    var rollHistory: RollHistory
     fun fetch(): RollHistory
-    fun store(rollSequence: RollSequence)
+    fun store(newRollHistory: RollHistory)
 }

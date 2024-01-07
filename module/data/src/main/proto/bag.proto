@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.protocolbuffer;
+
+import "dice.proto";
+
+message BagProtocolBuffer {
+  int32 tabRowChance = 1;
+  bool bagDemoBag = 2;
+  int32 bagZoom = 3;
+  repeated DiceProtocolBuffer dice = 4;
+  bool rollSequentially = 5;
+  int32 rollZoom = 6;
+  bool rollTitle = 7;
+  bool rollSlideNumber = 8;
+  bool rollTotal = 9;
+  bool rollHistory = 10;
+  bool rollSound = 11;
+}

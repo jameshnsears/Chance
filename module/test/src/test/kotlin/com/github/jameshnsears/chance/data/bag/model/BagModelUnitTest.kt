@@ -1,75 +1,42 @@
 package com.github.jameshnsears.chance.data.bag.model
 
+import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
-import com.github.jameshnsears.chance.data.domain.Dice
-import com.github.jameshnsears.chance.data.domain.Side
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.fail
 
 class BagModelUnitTest {
-    private var d4 = Dice(
-        sides = listOf(
-            Side(number = 4),
-            Side(number = 3),
-            Side(number = 2),
-            Side(number = 1)
-        ),
-        title = "d4",
-    )
+    private val bagRepository = BagRepositoryMock
 
-    @Order(1)
     @Test
-    fun confirmDiceRepositoryWorks() {
-        val bagModel = BagModel(getDiceRepository())
+    fun diceUpdate() {
+        bagRepository.store(listOf(BagDemoData.diceHeadsTails))
+        assertEquals(1, bagRepository.fetch().size)
 
-        assertEquals(2, bagModel.dice().size)
-        assertEquals(2, bagModel.sides(1).size)
+        val bagModel = BagModel(bagRepository)
+        bagModel.diceUpdate(BagDemoData.diceStory)
 
-        bagModel.store(listOf(d4))
+        fail("todo")
 
-        assertEquals(1, bagModel.dice().size)
-        assertEquals(4, bagModel.dice(0).sides.size)
+        assertEquals(2, bagRepository.fetch().size)
     }
 
     @Test
-    fun indexBehaviour() {
-        val bagModel = BagModel(getDiceRepository())
+    fun diceCanBeDeleted() {
+        bagRepository.store(BagSampleData.allDice)
 
-        assertThrows(BagModelException::class.java) {
-            bagModel.dice(3)
-        }
-
-        assertThrows(BagModelException::class.java) {
-            bagModel.side(1, 7)
-        }
-    }
-
-    private fun getDiceRepository(): BagRepositoryMock {
-        val bagRepository = BagRepositoryMock
-        bagRepository.store(BagSampleData.twoDice)
-        return bagRepository
-    }
-
-    @Test
-    fun cloneDice() {
-        val bagModel = BagModel(getDiceRepository())
-
-        d4.epoch = 3
-        bagModel.diceClone(d4)
-
-        assertEquals(3, bagModel.dice().size)
-        assertEquals(4, bagModel.dice(2).sides.size)
-    }
-
-    @Test
-    fun canBeDeleted() {
-        val bagModel = BagModel(getDiceRepository())
-
+        val bagModel = BagModel(bagRepository)
         assertTrue(bagModel.diceCanBeDeleted())
 
-        bagModel.store(listOf(d4))
+        bagRepository.store(
+            listOf(
+                BagDemoData.diceHeadsTails
+            )
+        )
         assertFalse(bagModel.diceCanBeDeleted())
     }
 }

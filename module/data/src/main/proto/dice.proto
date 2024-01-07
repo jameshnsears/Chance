@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.protocolbuffer;
+
+import "side.proto";
+
+message DiceProtocolBuffer {
+  uint64 epoch = 1;
+  repeated SideProtocolBuffer side = 2;
+  string title = 3;
+  int32 titleStringsId = 4;
+  string colour = 5;
+  bool selected = 6;
+}

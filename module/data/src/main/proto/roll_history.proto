@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.protocolbuffer;
+
+import "roll.proto";
+
+message RollHistoryProtocolBuffer {
+  map<int64, RollListProtocolBuffer> values = 1;
+}
+
+message RollListProtocolBuffer {
+  repeated RollProtocolBuffer roll = 1;
+}
