@@ -24,6 +24,15 @@ class TabRollViewModel(
 //        _description.value = description
 //    }
 
+    /*
+                                        Title
+                                        Side # + Side Image
+    History timestamp       Total
+                                        Image
+                                        Description
+     */
+
+
     private val random: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 
     fun selectedDice() {
