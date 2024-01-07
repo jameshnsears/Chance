@@ -14,6 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
+import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryInterface
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryInterface
 import com.github.jameshnsears.chance.ui.tab.bag.TabBag
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.TabRoll
@@ -21,8 +24,9 @@ import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
 
 @Composable
 fun TabRowChance(
-    tabBagViewModel: TabBagViewModel,
-    tabRollViewModel: TabRollViewModel
+    settingsRepository: SettingsRepositoryInterface,
+    bagRepository: BagRepositoryInterface,
+    rollRepository: RollRepositoryInterface
 ) {
     val tabs = listOf(
         stringResource(R.string.tab_bag),
@@ -59,8 +63,8 @@ fun TabRowChance(
 
     Column(modifier = Modifier.padding(top = 65.dp)) {
         val selectedTabContent = when (selectedTabIndex.intValue) {
-            0 -> TabBag(tabBagViewModel)
-            1 -> TabRoll(tabRollViewModel)
+            0 -> TabBag(TabBagViewModel(bagRepository))
+            1 -> TabRoll(TabRollViewModel(rollRepository) )
             else -> throw IllegalStateException("Invalid selected tab index")
         }
     }

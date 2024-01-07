@@ -11,9 +11,8 @@ import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
 import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryMock
 import com.github.jameshnsears.chance.ui.tab.TabRowChance
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagViewModel
-import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
 import timber.log.Timber
@@ -28,8 +27,10 @@ class MainActivity : ComponentActivity() {
 
         initLogging()
 
-        val bagRepository = BagRepositoryMock
-        bagRepository.store(
+        val settingsRepositoryMock = SettingsRepositoryMock
+
+        val bagRepositoryMock = BagRepositoryMock
+        bagRepositoryMock.store(
             listOf(
                 BagDemoData.diceHeadsTails
             )
@@ -44,22 +45,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     TabRowChance(
-                        TabBagViewModel(bagRepository),
-                        TabRollViewModel(RollRepositoryMock)
+                        settingsRepositoryMock,
+                        bagRepositoryMock,
+                        RollRepositoryMock
                     )
-
-//                    ZoomAnimationComposable()
-
-//                    val showDialog = mutableStateOf(true)
-//                    val bagRepository = BagRepositoryMock
-//                    bagRepository.store(BagSampleData.twoDice)
-//                    DialogBagLayout(
-//                        showDialog,
-//                        DialogBagViewModel(
-//                            bagRepository,
-//                            0
-//                        )
-//                    )
                 }
             }
         }

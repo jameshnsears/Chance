@@ -8,4 +8,14 @@ database connections, file handles, or network connections.
 
 https://plugins.jetbrains.com/plugin/7380-adb-idea
 
+---
+
+    TabBagViewModel
+        DialogBagViewModel
+        ZoomBagViewModel    == needed?!!!!!!!!!!??????
+
+
+    TabRollViewModel(RollRepositoryMock)
+
+
 */
