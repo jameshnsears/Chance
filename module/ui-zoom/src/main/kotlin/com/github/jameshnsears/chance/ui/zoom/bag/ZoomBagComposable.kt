@@ -1,6 +1,5 @@
 package com.github.jameshnsears.chance.ui.zoom.bag
 
-import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBag
-import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 
 @Composable
 fun ZoomBag(
@@ -120,18 +117,12 @@ fun SideShape(
             }
     )
 
-    val context = LocalContext.current
-    val application = context.applicationContext as Application
-
     if (showDialog.value) {
         DialogBag(
             showDialog,
-            DialogBagAndroidViewModel(
-                application,
-                zoomBagViewModel.bagRepository,
-                dice,
-                side
-            )
+            zoomBagViewModel.bagRepository,
+            dice,
+            side
         )
     }
 }

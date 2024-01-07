@@ -9,7 +9,7 @@ import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
-@Preview(heightDp = 800, widthDp = 360)
+@Preview(heightDp = 400, widthDp = 360)
 @Composable
 fun ZoomBagComposablePreviewPortrait() {
     val bagRepository = BagRepositoryMock
@@ -26,7 +26,7 @@ fun ZoomBagComposablePreviewPortrait() {
     }
 }
 
-@Preview(heightDp = 1000, widthDp = 1000)
+@Preview(heightDp = 900, widthDp = 1000)
 @Composable
 fun ZoomBagComposablePreviewLandscape() {
     val bagRepository = BagRepositoryMock

@@ -2,11 +2,11 @@
     <string name="dialog.bag.title">Configure Bag</string>
     <string name="dialog.bag.save">Save</string>
 
-    <string name="dialog.bag.side">Side</string>
+    <string name="dialog.bag.side">Side #</string>
     <string name="dialog.bag.side.colour">Colour…</string>
-    <string name="dialog.bag.side.colour.info">Side number and text colour</string>
+    <string name="dialog.bag.side.colour.info">Side # and description</string>
     <string name="dialog.bag.side.image">Image…</string>
-    <string name="dialog.bag.side.image.info">Must be a SVG file</string>
+    <string name="dialog.bag.side.image.info">SVG file</string>
     <string name="dialog.bag.side.description">Description</string>
 
     <string name="dialog.bag.dice">Dice</string>

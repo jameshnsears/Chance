@@ -1,6 +1,5 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
-import android.app.Application
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertTextContains
@@ -15,8 +14,6 @@ import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.ui.dialog.bag.card.BagCardDiceTestTag
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTreeInstrumentedFeature
-import junit.framework.TestCase.fail
-import org.junit.Ignore
 import org.junit.Test
 
 class DialogBagInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature() {
@@ -38,13 +35,10 @@ class DialogBagInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature() {
             ChanceTheme {
                 DialogBag(
                     showDialog,
-                    DialogBagAndroidViewModel(
-                        ApplicationProvider.getApplicationContext(),
                         bagRepository,
                         dice,
                         side
                     )
-                )
             }
         }
 

@@ -6,14 +6,12 @@ import org.junit.Test
 
 class SvgSerializerUnitTest {
     @Test
-    @Ignore("todo")
     fun encode() {
         val serializer = SvgSerializer()
         fail("todo")
     }
 
     @Test
-    @Ignore("todo")
     fun decode() {
         fail("todo")
     }

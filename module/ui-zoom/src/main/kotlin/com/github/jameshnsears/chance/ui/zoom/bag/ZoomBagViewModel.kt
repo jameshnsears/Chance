@@ -7,5 +7,4 @@ class ZoomBagViewModel(
     val bagRepository: BagRepositoryInterface
 ) : ZoomViewModel() {
     override fun zoom() {}
-
 }

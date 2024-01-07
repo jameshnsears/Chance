@@ -158,7 +158,7 @@ fun DiceTitle(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInter
 
     Row(
         modifier = Modifier
-            .padding(top = 8.dp)
+            .padding(top = 12.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     )
