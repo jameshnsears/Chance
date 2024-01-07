@@ -60,8 +60,6 @@ fun TabBag(tabBagViewModel: TabBagViewModel) {
 @Composable
 fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
     Column(modifier = Modifier.padding(10.dp)) {
-        TopCard()
-
         ZoomBag(
             ZoomBagViewModel(tabBagViewModel.bagRepository)
         )
@@ -74,7 +72,7 @@ fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
 fun TopCard() {
     ElevatedCard(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp)
+            .padding(bottom = 16.dp)
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -247,9 +245,11 @@ fun TabBagBottomSheetLayout() {
         Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .height(80.dp),
+            .height(220.dp),
     ) {
         Slider()
+
+        TopCard()
 
         VersionDetails()
     }
