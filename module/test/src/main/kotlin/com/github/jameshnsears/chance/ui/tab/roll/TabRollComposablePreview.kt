@@ -8,7 +8,7 @@ import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
 import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
-@Preview
+@Preview(heightDp = 400)
 @Composable
 fun TabRollComposablePreview() {
     ChanceTheme {
@@ -25,7 +25,7 @@ fun TabRollComposablePreview() {
     }
 }
 
-@Preview
+@Preview(heightDp = 600)
 @Composable
 fun TabRollBottomSheetLayoutComposablePreview() {
     ChanceTheme {

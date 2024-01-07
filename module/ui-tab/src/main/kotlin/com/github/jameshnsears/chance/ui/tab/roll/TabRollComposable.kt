@@ -60,23 +60,6 @@ fun TabRollLayout(tabRollViewModel: TabRollViewModel) {
 //    val sliderSidesValue = remember { mutableFloatStateOf(tabRollViewModel.sliderSidesPosition.value) }
 
     Column(modifier = Modifier.padding(10.dp)) {
-        ElevatedCard(
-            modifier = Modifier
-                .padding(top = 8.dp, bottom = 8.dp)
-                .fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-        ) {
-            Column(modifier = Modifier.padding(10.dp)) {
-                DiceFilter()
-
-                RollSequentially()
-
-                UndoRollButtons()
-            }
-        }
-
         ZoomRoll(ZoomRollViewModel(tabRollViewModel.rollRepository))
     }
 
@@ -92,7 +75,7 @@ fun UndoRollButtons() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp),
+            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Button(
@@ -369,7 +352,7 @@ fun TabRollBottomSheet() {
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
-        sheetPeekHeight = 32.dp,
+        sheetPeekHeight = 130.dp,
         sheetContent = {
             TabRollBottomSheetLayout()
         }
@@ -385,6 +368,23 @@ fun TabRollBottomSheetLayout() {
             .padding(10.dp)
             .height(320.dp),
     ) {
+        ElevatedCard(
+            modifier = Modifier
+                .padding(top = 8.dp, bottom = 8.dp)
+                .fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp
+            ),
+        ) {
+            Column(modifier = Modifier.padding(10.dp)) {
+                UndoRollButtons()
+
+                DiceFilter()
+
+                RollSequentially()
+            }
+        }
+
         Slider()
 
         ShowDiceTitle()

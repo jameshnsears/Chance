@@ -8,7 +8,7 @@ import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
-@Preview
+@Preview(heightDp = 500)
 @Composable
 fun TabBagComposablePreview() {
     ChanceTheme {

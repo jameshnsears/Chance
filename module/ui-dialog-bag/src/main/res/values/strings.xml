@@ -4,7 +4,7 @@
 
     <string name="dialog.bag.side">Side #</string>
     <string name="dialog.bag.side.colour">Colour…</string>
-    <string name="dialog.bag.side.colour.info">Side # and description</string>
+    <string name="dialog.bag.side.colour.info">Applies to Side # and description</string>
     <string name="dialog.bag.side.image">Image…</string>
     <string name="dialog.bag.side.image.info">SVG file</string>
     <string name="dialog.bag.side.description">Description</string>
