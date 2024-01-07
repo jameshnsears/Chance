@@ -60,15 +60,18 @@ fun TabBag(tabBagViewModel: TabBagViewModel) {
 fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
     Column(modifier = Modifier.padding(10.dp)) {
         ZoomBag(
-            ZoomBagViewModel(tabBagViewModel.bagRepository)
+            ZoomBagViewModel(
+                tabBagViewModel.settingsRepository,
+                tabBagViewModel.bagRepository
+            )
         )
     }
 
-    TabBagBottomSheet()
+    TabBagBottomSheet(tabBagViewModel)
 }
 
 @Composable
-fun DemoBag() {
+fun DemoBag(tabBagViewModel: TabBagViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
@@ -95,7 +98,7 @@ fun DemoBag() {
 }
 
 @Composable
-fun ImportExport() {
+fun ImportExport(tabBagViewModel: TabBagViewModel) {
     val importIcon = painterResource(id = R.drawable.publish_fill0_wght400_grad0_opsz24)
     val exportIcon = painterResource(id = R.drawable.upload_fill0_wght400_grad0_opsz24)
 
@@ -144,7 +147,7 @@ fun ImportExport() {
 }
 
 @Composable
-fun Slider() {
+fun ZoomBagSlider(tabBagViewModel: TabBagViewModel) {
     var sliderPosition by remember { mutableFloatStateOf(0f) }
 
     Row(
@@ -169,14 +172,14 @@ fun Slider() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TabBagBottomSheet() {
+fun TabBagBottomSheet(tabBagViewModel: TabBagViewModel) {
     val scaffoldState = rememberBottomSheetScaffoldState()
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 32.dp,
         sheetContent = {
-            TabBagBottomSheetLayout()
+            TabBagBottomSheetLayout(tabBagViewModel)
         }) {
     }
 }
@@ -221,22 +224,22 @@ fun openUrlInBrowser(context: Context, url: String) {
 }
 
 @Composable
-fun TabBagBottomSheetLayout() {
+fun TabBagBottomSheetLayout(tabBagViewModel: TabBagViewModel) {
     Column(
         Modifier
             .fillMaxWidth()
             .padding(10.dp)
             .height(220.dp),
     ) {
-        Slider()
+        ZoomBagSlider(tabBagViewModel)
 
         Divider()
 
-        DemoBag()
+        DemoBag(tabBagViewModel)
 
         Divider()
 
-        ImportExport()
+        ImportExport(tabBagViewModel)
 
         Divider()
 

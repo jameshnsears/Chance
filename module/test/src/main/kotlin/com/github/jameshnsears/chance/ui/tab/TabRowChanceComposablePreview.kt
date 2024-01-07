@@ -8,6 +8,7 @@ import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
 import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
 import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryMock
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
@@ -19,6 +20,8 @@ fun TabRowChanceComposablePreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
+            val settingsRepository = SettingsRepositoryMock
+
             val bagRepository = BagRepositoryMock
             bagRepository.store(BagDemoData.dice)
 
@@ -26,8 +29,9 @@ fun TabRowChanceComposablePreview() {
             rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
 
             TabRowChance(
-                TabBagViewModel(bagRepository),
-                TabRollViewModel(rollRepository)
+                settingsRepository,
+                bagRepository,
+                rollRepository
             )
         }
     }

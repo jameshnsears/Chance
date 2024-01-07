@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.fail
 import org.junit.Test
 
 class SettingsUnitTest {
@@ -31,6 +32,11 @@ class SettingsUnitTest {
             SettingsSampleData.settingsProtocolBuffer.rollZoom,
             import.rollZoom
         )
+    }
+
+    @Test
+    fun demoProtocolBufferIntoJson() {
+        fail("todo")
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

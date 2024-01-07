@@ -26,7 +26,7 @@ fun DialogBagComposablePreview() {
     val dice = bagRepository.fetch()[0]
     val side = dice.sides[1]
 
-    val viewModel = DialogBagAndroidViewModelMock(
+    val dialogBagAndroidViewModelMock = DialogBagAndroidViewModelMock(
         bagRepository,
         dice,
         side
@@ -38,7 +38,7 @@ fun DialogBagComposablePreview() {
         ) {
             DialogBagLayout(
                 showDialog,
-                viewModel
+                dialogBagAndroidViewModelMock
             )
         }
     }

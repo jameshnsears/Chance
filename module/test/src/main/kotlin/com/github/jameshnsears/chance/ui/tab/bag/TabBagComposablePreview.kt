@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
 import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
 @Preview(heightDp = 500)
@@ -15,10 +16,11 @@ fun TabBagComposablePreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            val bagRepository = BagRepositoryMock
-            bagRepository.store(BagDemoData.dice)
 
-            TabBagLayout(TabBagViewModel(bagRepository))
+
+            TabBagLayout(
+                getTabBagViewModel()
+            )
         }
     }
 }
@@ -31,7 +33,16 @@ fun TabBagBottomSheetLayoutComposablePreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            TabBagBottomSheetLayout()
+            TabBagBottomSheetLayout(getTabBagViewModel())
         }
     }
+}
+
+fun getTabBagViewModel() : TabBagViewModel {
+    val settingsRepository = SettingsRepositoryMock
+
+    val bagRepository = BagRepositoryMock
+    bagRepository.store(BagDemoData.dice)
+
+    return TabBagViewModel(settingsRepository, bagRepository)
 }

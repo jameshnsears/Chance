@@ -62,9 +62,13 @@ fun TabRowChance(
     }
 
     Column(modifier = Modifier.padding(top = 65.dp)) {
-        val selectedTabContent = when (selectedTabIndex.intValue) {
-            0 -> TabBag(TabBagViewModel(bagRepository))
-            1 -> TabRoll(TabRollViewModel(rollRepository) )
+        when (selectedTabIndex.intValue) {
+            0 -> TabBag(
+                TabBagViewModel(settingsRepository, bagRepository)
+            )
+            1 -> TabRoll(
+                TabRollViewModel(settingsRepository, rollRepository)
+            )
             else -> throw IllegalStateException("Invalid selected tab index")
         }
     }

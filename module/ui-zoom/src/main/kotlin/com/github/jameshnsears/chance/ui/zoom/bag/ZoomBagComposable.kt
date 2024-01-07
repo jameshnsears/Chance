@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBag
 
 @Composable

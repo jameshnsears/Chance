@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
 import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryMock
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
 @Preview(heightDp = 400)
@@ -15,24 +16,28 @@ fun TabRollComposablePreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            val rollRepository = RollRepositoryMock
-            rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
-
-            val viewModel = TabRollViewModel(rollRepository)
-
-            TabRollLayout(viewModel)
+            TabRollLayout(getTabRollViewModel())
         }
     }
 }
 
-@Preview(heightDp = 530)
+@Preview(heightDp = 550)
 @Composable
 fun TabRollBottomSheetLayoutComposablePreview() {
     ChanceTheme {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            TabRollBottomSheetLayout()
+            TabRollBottomSheetLayout(getTabRollViewModel())
         }
     }
+}
+
+fun getTabRollViewModel() : TabRollViewModel{
+    val settingsRepository = SettingsRepositoryMock
+
+    val rollRepository = RollRepositoryMock
+    rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
+
+    return TabRollViewModel(settingsRepository, rollRepository)
 }

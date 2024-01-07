@@ -10,7 +10,7 @@ import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 
 abstract class ZoomViewModel : ViewModel() {
-    abstract fun zoom()
+    fun zoom() {}
 
     fun scale() = 75.dp
 

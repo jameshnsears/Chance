@@ -45,7 +45,7 @@ class BagCardSideTestTag {
 }
 
 @Composable
-fun BagCardSide(viewModel: DialogBagAndroidViewModelInterface) {
+fun BagCardSide(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
     ElevatedCard(
         modifier = Modifier
             .padding(top = 4.dp, bottom = 8.dp)
@@ -55,13 +55,13 @@ fun BagCardSide(viewModel: DialogBagAndroidViewModelInterface) {
         ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            SideNumber(viewModel)
+            SideNumber(dialogBagAndroidViewModelInterface)
 
-            SideColour(viewModel)
+            SideColour(dialogBagAndroidViewModelInterface)
 
-            SideImage(viewModel)
+            SideImage(dialogBagAndroidViewModelInterface)
 
-            SideDescription(viewModel)
+            SideDescription(dialogBagAndroidViewModelInterface)
         }
     }
 }

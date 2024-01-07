@@ -27,10 +27,10 @@ class MainActivity : ComponentActivity() {
 
         initLogging()
 
-        val settingsRepositoryMock = SettingsRepositoryMock
+        val settingsRepository = SettingsRepositoryMock
 
-        val bagRepositoryMock = BagRepositoryMock
-        bagRepositoryMock.store(
+        val bagRepository = BagRepositoryMock
+        bagRepository.store(
             listOf(
                 BagDemoData.diceHeadsTails
             )
@@ -45,9 +45,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     TabRowChance(
-                        settingsRepositoryMock,
-                        bagRepositoryMock,
-                        RollRepositoryMock
+                        settingsRepository,
+                        bagRepository,
+                        rollRepository
                     )
                 }
             }
