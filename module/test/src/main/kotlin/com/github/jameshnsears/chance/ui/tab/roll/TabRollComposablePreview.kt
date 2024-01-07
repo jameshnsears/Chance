@@ -25,7 +25,7 @@ fun TabRollComposablePreview() {
     }
 }
 
-@Preview(heightDp = 600)
+@Preview(heightDp = 530)
 @Composable
 fun TabRollBottomSheetLayoutComposablePreview() {
     ChanceTheme {

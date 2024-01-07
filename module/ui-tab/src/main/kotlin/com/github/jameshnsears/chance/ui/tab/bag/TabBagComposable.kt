@@ -17,8 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Slider
@@ -69,24 +68,6 @@ fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
 }
 
 @Composable
-fun TopCard() {
-    ElevatedCard(
-        modifier = Modifier
-            .padding(bottom = 16.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-    ) {
-        Column(modifier = Modifier.padding(10.dp)) {
-            DemoBag()
-
-            ImportExport()
-        }
-    }
-}
-
-@Composable
 fun DemoBag() {
     var checked by remember { mutableStateOf(true) }
 
@@ -94,7 +75,7 @@ fun DemoBag() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
+            .padding(top = 8.dp, bottom = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -121,7 +102,7 @@ fun ImportExport() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp),
+            .padding(top = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Button(
@@ -170,7 +151,6 @@ fun Slider() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
     ) {
         Text(stringResource(R.string.tab_bag_zoom))
 
@@ -211,6 +191,7 @@ fun VersionDetails() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 8.dp)
     ) {
 
         Text(
@@ -249,7 +230,15 @@ fun TabBagBottomSheetLayout() {
     ) {
         Slider()
 
-        TopCard()
+        Divider()
+
+        DemoBag()
+
+        Divider()
+
+        ImportExport()
+
+        Divider()
 
         VersionDetails()
     }

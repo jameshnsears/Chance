@@ -15,8 +15,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -95,12 +94,11 @@ fun UndoRollButtons() {
             Text(stringResource(R.string.tab_roll_undo))
         }
 
-        Spacer(modifier = Modifier.weight(1f))
-
         Button(
             onClick = { /* Do something when clicked */ },
             modifier = Modifier
-                .width(115.dp)
+                .weight(1f)
+                .padding(start = 18.dp)
                 .testTag(TabRollTestTag.roll)
         ) {
             Icon(
@@ -147,6 +145,7 @@ fun RollSequentially() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(bottom = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -176,6 +175,7 @@ fun History() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -195,7 +195,9 @@ fun History() {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
@@ -224,6 +226,7 @@ fun ShowDiceTitle() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -352,7 +355,7 @@ fun TabRollBottomSheet() {
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
-        sheetPeekHeight = 130.dp,
+        sheetPeekHeight = 110.dp,
         sheetContent = {
             TabRollBottomSheetLayout()
         }
@@ -366,34 +369,31 @@ fun TabRollBottomSheetLayout() {
         Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .height(320.dp),
+            .height(530.dp),
     ) {
-        ElevatedCard(
-            modifier = Modifier
-                .padding(top = 8.dp, bottom = 8.dp)
-                .fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-        ) {
-            Column(modifier = Modifier.padding(10.dp)) {
-                UndoRollButtons()
+        UndoRollButtons()
 
-                DiceFilter()
+        Divider(Modifier.padding(bottom = 8.dp))
 
-                RollSequentially()
-            }
-        }
+        DiceFilter()
+
+        RollSequentially()
+
+        Divider()
 
         Slider()
+
+        Divider()
+
+        History()
+
+        Divider()
 
         ShowDiceTitle()
 
         ShowSideNumber()
 
         ShowSum()
-
-        History()
 
         UseSound()
     }
