@@ -90,7 +90,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java:3.25.1")
     implementation("com.google.protobuf:protobuf-kotlin:3.25.1")
     implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("io.mockk:mockk:1.13.8")
+    implementation("io.mockk:mockk:1.13.9")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation(project(":module:common"))
     implementation(project(":module:data"))
