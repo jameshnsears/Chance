@@ -5,12 +5,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
-import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryTestDouble
+import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
-import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryMock
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagViewModel
-import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryTestDouble
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
 @Preview
@@ -20,12 +18,12 @@ fun TabRowChanceComposablePreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            val settingsRepository = SettingsRepositoryMock
+            val settingsRepository = SettingsRepositoryTestDouble
 
-            val bagRepository = BagRepositoryMock
+            val bagRepository = BagRepositoryTestDouble
             bagRepository.store(BagDemoData.dice)
 
-            val rollRepository = RollRepositoryMock
+            val rollRepository = RollRepositoryTestDouble
             rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
 
             TabRowChance(

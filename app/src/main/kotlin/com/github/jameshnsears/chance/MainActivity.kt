@@ -8,10 +8,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
-import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryTestDouble
+import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
-import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryMock
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryTestDouble
 import com.github.jameshnsears.chance.ui.tab.TabRowChance
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
@@ -27,16 +27,16 @@ class MainActivity : ComponentActivity() {
 
         initLogging()
 
-        val settingsRepository = SettingsRepositoryMock
+        val settingsRepository = SettingsRepositoryTestDouble
 
-        val bagRepository = BagRepositoryMock
+        val bagRepository = BagRepositoryTestDouble
         bagRepository.store(
             listOf(
                 BagDemoData.diceHeadsTails
             )
         )
 
-        val rollRepository = RollRepositoryMock
+        val rollRepository = RollRepositoryTestDouble
         rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
 
         setContent {

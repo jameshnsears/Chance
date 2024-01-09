@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.data.settings
 
 import com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryMock
+import com.github.jameshnsears.chance.data.settings.repository.SettingsRepositoryTestDouble
 import com.github.jameshnsears.chance.data.settings.sample.SettingsSampleData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -42,7 +42,7 @@ class SettingsUnitTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun confirmRepositoryMockWorks() = runTest {
-        val settingsRepositoryMock = SettingsRepositoryMock
+        val settingsRepositoryMock = SettingsRepositoryTestDouble
 
         val settings = SettingsSampleData.headsTails
 

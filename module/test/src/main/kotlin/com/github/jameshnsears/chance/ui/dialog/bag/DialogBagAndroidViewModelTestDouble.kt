@@ -1,14 +1,14 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
 import com.github.jameshnsears.chance.data.bag.model.BagModel
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class DialogBagAndroidViewModelMock(
-    bagRepository: BagRepositoryMock,
+class DialogBagAndroidViewModelTestDouble(
+    bagRepository: BagRepositoryTestDouble,
     val dice: Dice,
     val side: Side
 ) : DialogBagAndroidViewModelInterface {

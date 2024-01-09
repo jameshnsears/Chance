@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.data.bag.repository
 
 import com.github.jameshnsears.chance.data.domain.Dice
 
-object BagRepositoryMock : BagRepositoryInterface {
+object BagRepositoryTestDouble : BagRepositoryInterface {
     private lateinit var bag: List<Dice>
 
     override fun fetch(): List<Dice> {

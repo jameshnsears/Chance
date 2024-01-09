@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.data.bag.model
 
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.fail
 
 class BagModelUnitTest {
-    private val bagRepository = BagRepositoryMock
+    private val bagRepository = BagRepositoryTestDouble
 
     @Test
     fun diceUpdate() {

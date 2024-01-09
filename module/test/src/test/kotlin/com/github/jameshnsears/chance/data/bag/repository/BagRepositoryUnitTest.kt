@@ -4,10 +4,10 @@ import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 
-class BagRepositoryMockUnitTest {
+class BagRepositoryUnitTest {
     @Test
     fun confirmRepositoryWorks() {
-        val bagRepository = BagRepositoryMock
+        val bagRepository = BagRepositoryTestDouble
         bagRepository.store(BagSampleData.allDice)
 
         val bag = bagRepository.fetch()

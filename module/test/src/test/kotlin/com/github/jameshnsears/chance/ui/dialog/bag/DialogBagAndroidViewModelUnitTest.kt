@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.ui.dialog.bag
 
 import android.app.Application
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
 import io.mockk.every
 import io.mockk.mockk
@@ -26,7 +26,7 @@ class DialogBagAndroidViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val bagRepository = BagRepositoryMock
+            val bagRepository = BagRepositoryTestDouble
             bagRepository.store(
                 listOf(
                     BagDemoData.diceHeadsTails
@@ -67,7 +67,7 @@ class DialogBagAndroidViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val bagRepository = BagRepositoryMock
+            val bagRepository = BagRepositoryTestDouble
             bagRepository.store(BagSampleData.allDice)
 
             val application = mockk<Application>()
@@ -88,7 +88,7 @@ class DialogBagAndroidViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val bagRepository = BagRepositoryMock
+            val bagRepository = BagRepositoryTestDouble
             bagRepository.store(
                 listOf(
                     BagDemoData.diceHeadsTails
@@ -142,7 +142,7 @@ class DialogBagAndroidViewModelUnitTest {
 
     private fun getDialogBagAndroidViewModel(
         application: Application,
-        bagRepository: BagRepositoryMock
+        bagRepository: BagRepositoryTestDouble
     ): DialogBagAndroidViewModel {
         val dice = bagRepository.fetch()[0]
         val side = dice.sides[0]

@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.data.roll.repository
 
 import com.github.jameshnsears.chance.data.domain.RollHistory
 
-object RollRepositoryMock : RollRepositoryInterface {
+object RollRepositoryTestDouble : RollRepositoryInterface {
     private lateinit var rollHistory: RollHistory
 
     override fun fetch(): RollHistory {

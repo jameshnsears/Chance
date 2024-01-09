@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
+import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.ui.dialog.bag.card.BagCardDiceTestTag
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTreeInstrumentedFeature
@@ -20,7 +20,7 @@ class DialogBagInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature() {
     fun diceTitle() {
         val showDialog = mutableStateOf(true)
 
-        val bagRepository = BagRepositoryMock
+        val bagRepository = BagRepositoryTestDouble
         bagRepository.store(
             listOf(
                 BagDemoData.diceHeadsTails

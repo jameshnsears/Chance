@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
 import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
-import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryMock
+import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.roll.sample.RollSampleData
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class TabRollViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val rollRepository = RollRepositoryMock
+            val rollRepository = RollRepositoryTestDouble
             rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
 
             assertEquals(1, rollRepository.fetch().size)

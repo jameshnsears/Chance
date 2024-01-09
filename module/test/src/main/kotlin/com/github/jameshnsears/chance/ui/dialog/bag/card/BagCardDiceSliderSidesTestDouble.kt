@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card
 
-class BagCardDiceSliderSidesMock(override val defaultValue: Float = 2.0f) :
+class BagCardDiceSliderSidesTestDouble(override val defaultValue: Float = 2.0f) :
     BagCardDiceSliderValues() {
     override fun values(): List<String> {
         return listOf(
