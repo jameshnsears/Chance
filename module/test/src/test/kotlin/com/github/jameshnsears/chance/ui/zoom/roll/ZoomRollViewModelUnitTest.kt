@@ -1,5 +1,8 @@
 package com.github.jameshnsears.chance.ui.zoom.roll
 
+import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
+import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
+import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -17,6 +20,17 @@ class ZoomRollViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
+            val settingsRepository = SettingsRepositoryTestDouble.getInstance()
+
+            val rollRepositoryTestDouble = RollRepositoryTestDouble.getInstance()
+            rollRepositoryTestDouble.store(
+                RollSampleData.rollHistory_roll1Sequence1
+            )
+
+            val zoomRollModel = ZoomRollViewModel(settingsRepository, rollRepositoryTestDouble)
+
+            zoomRollModel.zoom()
+
             fail("todo")
         } finally {
             Dispatchers.resetMain()

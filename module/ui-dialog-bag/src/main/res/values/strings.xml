@@ -4,9 +4,9 @@
 
     <string name="dialog.bag.side">Side #</string>
     <string name="dialog.bag.side.colour">Colour…</string>
-    <string name="dialog.bag.side.colour.info">Applies to Side # &amp; Description</string>
+    <string name="dialog.bag.side.colour.info">Applies to Side # and Description</string>
     <string name="dialog.bag.side.image">Image…</string>
-    <string name="dialog.bag.side.image.info">Must be a SVG file, ideally with constant width and height</string>
+    <string name="dialog.bag.side.image.info">SVG file</string>
     <string name="dialog.bag.side.description">Description</string>
 
     <string name="dialog.bag.dice">Dice</string>
@@ -21,7 +21,7 @@
         <item>20</item>
     </string-array>
     <string name="dialog.bag.dice.title">Title</string>
-    <string name="dialog.bag.dice.title.info">Title is mandatory; defaults to # of sides</string>
+    <string name="dialog.bag.dice.title.info">Title is mandatory; defaults to d&lt;# of sides&gt;</string>
     <string-array name="dialog.bag.dice.title.mandatory">
         <item>d2</item>
         <item>d4</item>

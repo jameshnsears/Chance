@@ -1,0 +1,96 @@
+package com.github.jameshnsears.chance.data.repository.settings
+
+import com.github.jameshnsears.chance.data.domain.Dice
+import com.github.jameshnsears.chance.data.domain.Settings
+import com.github.jameshnsears.chance.data.domain.Side
+import com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer
+import com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer
+import com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer
+import com.google.protobuf.util.JsonFormat
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+
+class SettingsRepositoryTestDouble private constructor() :
+    SettingsRepositoryInterface {
+    companion object {
+        private var instance: SettingsRepositoryTestDouble? = null
+
+        fun getInstance(): SettingsRepositoryTestDouble {
+            if (instance == null) {
+                instance = SettingsRepositoryTestDouble()
+            }
+            return instance!!
+        }
+    }
+
+    private lateinit var settings: Settings
+
+    override suspend fun fetch(): Flow<Settings> = flow {
+        emit(settings)
+    }
+
+    override suspend fun store(newSettings: Settings) {
+        settings = newSettings
+    }
+
+    override suspend fun export(): String {
+        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
+            SettingsProtocolBuffer.newBuilder()
+
+        mapSettingsIntoSettingsProtocolBufferBuilder(settings, settingsProtocolBufferBuilder)
+
+        return JsonFormat.printer().print(settingsProtocolBufferBuilder.build())
+    }
+
+    override suspend fun import(json: String) {
+        settings = Settings()
+
+        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
+            SettingsProtocolBuffer.newBuilder()
+
+        JsonFormat.parser().merge(json, settingsProtocolBufferBuilder)
+
+        val settingsProtocolBuffer = settingsProtocolBufferBuilder.build()
+
+        val settings = Settings()
+
+        settings.tabRowChance = settingsProtocolBuffer.tabRowChance
+
+        settings.bagZoom = settingsProtocolBuffer.bagZoom
+        settings.bagDemoBag = settingsProtocolBuffer.bagDemoBag
+
+        val rollSelectedDice = mutableListOf<Dice>()
+        for (diceProtocolBuffer: DiceProtocolBuffer in settingsProtocolBuffer.rollSelectedDiceList) {
+            val dice = Dice()
+            dice.title = diceProtocolBuffer.title
+
+            val sides = mutableListOf<Side>()
+            for (sideProtocolBuffer: SideProtocolBuffer in diceProtocolBuffer.sideList) {
+                var side = Side()
+                side.number = sideProtocolBuffer.number
+                side.colour = sideProtocolBuffer.colour
+                side.imageFilename = sideProtocolBuffer.imageFilename
+                side.imageBase64 = sideProtocolBuffer.imageBase64.toString()
+                side.imageDrawableId = sideProtocolBuffer.imageDrawableId
+                side.description = sideProtocolBuffer.description
+                side.descriptionStringsId = sideProtocolBuffer.descriptionStringsId
+
+                sides.add(side)
+            }
+            dice.sides = sides
+
+            rollSelectedDice.add(dice)
+        }
+        settings.rollSelectedDice = rollSelectedDice
+
+        settings.rollSequentially = settingsProtocolBuffer.rollSequentially
+        settings.rollZoom = settingsProtocolBuffer.rollZoom
+        settings.rollHistory = settingsProtocolBuffer.rollHistory
+        settings.rollTitle = settingsProtocolBuffer.rollTitle
+        settings.rollSideNumber = settingsProtocolBuffer.rollSideNumber
+        settings.rollTotal = settingsProtocolBuffer.rollTotal
+        settings.rollSound = settingsProtocolBuffer.rollSound
+
+        store(settings)
+    }
+}

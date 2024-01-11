@@ -8,14 +8,16 @@ import "dice.proto";
 
 message SettingsProtocolBuffer {
   int32 tabRowChance = 1;
-  bool bagDemoBag = 2;
-  int32 bagZoom = 3;
+
+  int32 bagZoom = 2;
+  bool bagDemoBag = 3;
+
   repeated DiceProtocolBuffer rollSelectedDice = 4;
   bool rollSequentially = 5;
   int32 rollZoom = 6;
-  bool rollTitle = 7;
-  bool rollSideNumber = 8;
-  bool rollTotal = 9;
-  bool rollHistory = 10;
+  bool rollHistory = 7;
+  bool rollTitle = 8;
+  bool rollSideNumber = 9;
+  bool rollTotal = 10;
   bool rollSound = 11;
 }

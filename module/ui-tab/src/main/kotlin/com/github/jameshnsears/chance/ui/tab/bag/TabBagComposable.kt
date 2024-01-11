@@ -17,8 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Slider
@@ -60,43 +59,26 @@ fun TabBag(tabBagViewModel: TabBagViewModel) {
 @Composable
 fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
     Column(modifier = Modifier.padding(10.dp)) {
-        TopCard()
-
         ZoomBag(
-            ZoomBagViewModel(tabBagViewModel.bagRepository)
+            ZoomBagViewModel(
+                tabBagViewModel.settingsRepository,
+                tabBagViewModel.bagRepository
+            )
         )
     }
 
-    TabBagBottomSheet()
+    TabBagBottomSheet(tabBagViewModel)
 }
 
 @Composable
-fun TopCard() {
-    ElevatedCard(
-        modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-    ) {
-        Column(modifier = Modifier.padding(10.dp)) {
-            DemoBag()
-
-            ImportExport()
-        }
-    }
-}
-
-@Composable
-fun DemoBag() {
+fun DemoBag(tabBagViewModel: TabBagViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
+            .padding(top = 8.dp, bottom = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -116,14 +98,14 @@ fun DemoBag() {
 }
 
 @Composable
-fun ImportExport() {
+fun ImportExport(tabBagViewModel: TabBagViewModel) {
     val importIcon = painterResource(id = R.drawable.publish_fill0_wght400_grad0_opsz24)
     val exportIcon = painterResource(id = R.drawable.upload_fill0_wght400_grad0_opsz24)
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp),
+            .padding(top = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Button(
@@ -165,14 +147,13 @@ fun ImportExport() {
 }
 
 @Composable
-fun Slider() {
+fun ZoomBagSlider(tabBagViewModel: TabBagViewModel) {
     var sliderPosition by remember { mutableFloatStateOf(0f) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
     ) {
         Text(stringResource(R.string.tab_bag_zoom))
 
@@ -191,14 +172,14 @@ fun Slider() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TabBagBottomSheet() {
+fun TabBagBottomSheet(tabBagViewModel: TabBagViewModel) {
     val scaffoldState = rememberBottomSheetScaffoldState()
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 32.dp,
         sheetContent = {
-            TabBagBottomSheetLayout()
+            TabBagBottomSheetLayout(tabBagViewModel)
         }) {
     }
 }
@@ -213,6 +194,7 @@ fun VersionDetails() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 8.dp)
     ) {
 
         Text(
@@ -242,14 +224,24 @@ fun openUrlInBrowser(context: Context, url: String) {
 }
 
 @Composable
-fun TabBagBottomSheetLayout() {
+fun TabBagBottomSheetLayout(tabBagViewModel: TabBagViewModel) {
     Column(
         Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .height(80.dp),
+            .height(220.dp),
     ) {
-        Slider()
+        ZoomBagSlider(tabBagViewModel)
+
+        Divider()
+
+        DemoBag(tabBagViewModel)
+
+        Divider()
+
+        ImportExport(tabBagViewModel)
+
+        Divider()
 
         VersionDetails()
     }

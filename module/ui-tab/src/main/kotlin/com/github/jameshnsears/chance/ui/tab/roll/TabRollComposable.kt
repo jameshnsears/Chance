@@ -15,8 +15,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
@@ -51,8 +50,8 @@ class TabRollTestTag {
 }
 
 @Composable
-fun TabRoll(viewModel: TabRollViewModel) {
-    TabRollLayout(viewModel)
+fun TabRoll(tabRollViewModel: TabRollViewModel) {
+    TabRollLayout(tabRollViewModel)
 }
 
 @Composable
@@ -60,39 +59,27 @@ fun TabRollLayout(tabRollViewModel: TabRollViewModel) {
 //    val sliderSidesValue = remember { mutableFloatStateOf(tabRollViewModel.sliderSidesPosition.value) }
 
     Column(modifier = Modifier.padding(10.dp)) {
-        ElevatedCard(
-            modifier = Modifier
-                .padding(top = 8.dp, bottom = 8.dp)
-                .fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            ),
-        ) {
-            Column(modifier = Modifier.padding(10.dp)) {
-                DiceFilter()
-
-                RollSequentially()
-
-                UndoRollButtons()
-            }
-        }
-
-        ZoomRoll(ZoomRollViewModel(tabRollViewModel.rollRepository))
+        ZoomRoll(
+            ZoomRollViewModel(
+                tabRollViewModel.settingsRepository,
+                tabRollViewModel.rollRepository
+            )
+        )
     }
 
-    TabRollBottomSheet()
+    TabRollBottomSheet(tabRollViewModel)
 }
 
 
 @Composable
-fun UndoRollButtons() {
+fun UndoRollButtons(tabRollViewModel: TabRollViewModel) {
     val undoIcon = painterResource(id = R.drawable.undo_fill0_wght400_grad0_opsz24)
     val rollIcon = painterResource(id = R.drawable.custom_casino_fill0_wght400_grad0_opsz24)
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp),
+            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Button(
@@ -112,12 +99,11 @@ fun UndoRollButtons() {
             Text(stringResource(R.string.tab_roll_undo))
         }
 
-        Spacer(modifier = Modifier.weight(1f))
-
         Button(
             onClick = { /* Do something when clicked */ },
             modifier = Modifier
-                .width(115.dp)
+                .weight(1f)
+                .padding(start = 18.dp)
                 .testTag(TabRollTestTag.roll)
         ) {
             Icon(
@@ -135,7 +121,7 @@ fun UndoRollButtons() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DiceFilter() {
+fun DiceFilter(tabRollViewModel: TabRollViewModel) {
     var selected by remember { mutableStateOf(false) }
 
     FilterChip(
@@ -164,6 +150,7 @@ fun RollSequentially() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(bottom = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -183,7 +170,7 @@ fun RollSequentially() {
 }
 
 @Composable
-fun History() {
+fun History(tabRollViewModel: TabRollViewModel) {
     val historyClearIcon =
         painterResource(id = R.drawable.delete_forever_fill0_wght400_grad0_opsz24)
 
@@ -193,6 +180,7 @@ fun History() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -212,7 +200,9 @@ fun History() {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
@@ -234,13 +224,14 @@ fun History() {
 }
 
 @Composable
-fun ShowDiceTitle() {
+fun ShowDiceTitle(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -260,7 +251,7 @@ fun ShowDiceTitle() {
 }
 
 @Composable
-fun ShowSideNumber() {
+fun ShowSideNumber(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
@@ -286,7 +277,7 @@ fun ShowSideNumber() {
 }
 
 @Composable
-fun ShowSum() {
+fun ShowSum(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
@@ -312,7 +303,7 @@ fun ShowSum() {
 }
 
 @Composable
-fun UseSound() {
+fun UseSound(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
@@ -338,7 +329,7 @@ fun UseSound() {
 }
 
 @Composable
-fun Slider() {
+fun ZoomRollSlider(tabRollViewModel: TabRollViewModel) {
     var sliderPosition by remember { mutableFloatStateOf(0f) }
 
     Row(
@@ -363,38 +354,52 @@ fun Slider() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TabRollBottomSheet() {
+fun TabRollBottomSheet(tabRollViewModel: TabRollViewModel) {
     val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
-        sheetPeekHeight = 32.dp,
+        sheetPeekHeight = 115.dp,
         sheetContent = {
-            TabRollBottomSheetLayout()
+            TabRollBottomSheetLayout(tabRollViewModel)
         }
     ) {
     }
 }
 
 @Composable
-fun TabRollBottomSheetLayout() {
+fun TabRollBottomSheetLayout(tabRollViewModel: TabRollViewModel) {
     Column(
         Modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .height(320.dp),
+            .height(530.dp),
     ) {
-        Slider()
+        UndoRollButtons(tabRollViewModel)
 
-        ShowDiceTitle()
+        Divider(Modifier.padding(bottom = 8.dp))
 
-        ShowSideNumber()
+        DiceFilter(tabRollViewModel)
 
-        ShowSum()
+        RollSequentially()
 
-        History()
+        Divider()
 
-        UseSound()
+        ZoomRollSlider(tabRollViewModel)
+
+        Divider()
+
+        History(tabRollViewModel)
+
+        Divider()
+
+        ShowDiceTitle(tabRollViewModel)
+
+        ShowSideNumber(tabRollViewModel)
+
+        ShowSum(tabRollViewModel)
+
+        UseSound(tabRollViewModel)
     }
 }

@@ -66,7 +66,7 @@ android {
 
 dependencies {
     implementation(project(":module:ui-dialog-bag"))
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.13")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")

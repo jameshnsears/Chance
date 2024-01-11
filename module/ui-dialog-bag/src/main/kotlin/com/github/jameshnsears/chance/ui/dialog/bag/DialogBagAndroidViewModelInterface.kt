@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
-import com.github.jameshnsears.chance.data.bag.model.BagModel
+import com.github.jameshnsears.chance.data.repository.bag.BagModel
 import kotlinx.coroutines.flow.StateFlow
 
 interface DialogBagAndroidViewModelInterface {
@@ -32,7 +32,7 @@ interface DialogBagAndroidViewModelInterface {
     fun mapDiceTitle(): String
     fun diceTitle(diceTitle: String)
     fun diceColour(diceColour: String)
-    fun diceCanBeDeleted(): Boolean
+    var diceCanBeDeleted: StateFlow<Boolean>
     fun getString(stringsId: Int): String
     fun save()
 }

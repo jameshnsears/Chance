@@ -16,18 +16,18 @@ public interface SettingsProtocolBufferOrBuilder extends
     int getTabRowChance();
 
     /**
-     * <code>bool bagDemoBag = 2;</code>
-     *
-     * @return The bagDemoBag.
-     */
-    boolean getBagDemoBag();
-
-    /**
-     * <code>int32 bagZoom = 3;</code>
+     * <code>int32 bagZoom = 2;</code>
      *
      * @return The bagZoom.
      */
     int getBagZoom();
+
+    /**
+     * <code>bool bagDemoBag = 3;</code>
+     *
+     * @return The bagDemoBag.
+     */
+    boolean getBagDemoBag();
 
     /**
      * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
@@ -72,32 +72,32 @@ public interface SettingsProtocolBufferOrBuilder extends
     int getRollZoom();
 
     /**
-     * <code>bool rollTitle = 7;</code>
+     * <code>bool rollHistory = 7;</code>
+     *
+     * @return The rollHistory.
+     */
+    boolean getRollHistory();
+
+    /**
+     * <code>bool rollTitle = 8;</code>
      *
      * @return The rollTitle.
      */
     boolean getRollTitle();
 
     /**
-     * <code>bool rollSideNumber = 8;</code>
+     * <code>bool rollSideNumber = 9;</code>
      *
      * @return The rollSideNumber.
      */
     boolean getRollSideNumber();
 
     /**
-     * <code>bool rollTotal = 9;</code>
+     * <code>bool rollTotal = 10;</code>
      *
      * @return The rollTotal.
      */
     boolean getRollTotal();
-
-    /**
-     * <code>bool rollHistory = 10;</code>
-     *
-     * @return The rollHistory.
-     */
-    boolean getRollHistory();
 
     /**
      * <code>bool rollSound = 11;</code>

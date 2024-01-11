@@ -15,6 +15,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -134,6 +135,11 @@ fun DiceSides(
             modifier = Modifier.testTag(testTag),
         )
     }
+
+    Divider(
+        modifier = Modifier
+            .padding(top = 4.dp, bottom = 12.dp)
+    )
 }
 
 @Composable
@@ -150,13 +156,29 @@ fun DiceTitle(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInter
             .fillMaxWidth()
     )
 
-    Icon(
-        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-        imageVector = Icons.Outlined.Info,
-        contentDescription = ""
+    Row(
+        modifier = Modifier
+            .padding(top = 12.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
     )
+    {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = ""
+        )
 
-    Text(stringResource(R.string.dialog_bag_dice_title_info))
+        Text(
+            modifier = Modifier
+                .padding(start = 8.dp),
+            text = stringResource(R.string.dialog_bag_dice_title_info)
+        )
+    }
+
+    Divider(
+        modifier = Modifier
+            .padding(top = 12.dp)
+    )
 }
 
 @Composable
@@ -169,7 +191,10 @@ fun DiceColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
 
     Row(
         modifier = Modifier
-            .padding(top = 16.dp, bottom = 8.dp)
+            .padding(top = 12.dp, bottom = 4.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+
     ) {
         Button(
             onClick = {
@@ -191,8 +216,17 @@ fun DiceColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
             Text(stringResource(R.string.dialog_bag_dice_colour))
         }
 
-        Text(diceColour)
+        Text(
+            modifier = Modifier
+                .padding(start = 16.dp),
+            text = diceColour
+        )
     }
+
+    Divider(
+        modifier = Modifier
+            .padding(top = 8.dp, bottom = 4.dp)
+    )
 
     if (showDialogColourPicker.value) {
         DialogColourPicker(
@@ -232,7 +266,7 @@ fun DiceCloneDelete(
             Text(stringResource(R.string.dialog_bag_dice_clone))
         }
 
-        if (dialogBagAndroidViewModelInterface.diceCanBeDeleted()) {
+        if (dialogBagAndroidViewModelInterface.diceCanBeDeleted.value) {
             Button(
                 onClick = { },
                 modifier = Modifier

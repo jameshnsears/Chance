@@ -9,7 +9,9 @@ import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 
-open class ZoomViewModel : ViewModel() {
+abstract class ZoomViewModel : ViewModel() {
+    fun zoom() {}
+
     fun scale() = 75.dp
 
     fun scaleValuePaddingTop(dice: Dice): Dp {
@@ -45,8 +47,6 @@ open class ZoomViewModel : ViewModel() {
             else -> R.drawable.d4_d8_d20
         }
     }
-
-    fun textStringsIdAvailable(side: Side) = side.descriptionStringsId != 0
 
     fun imageDrawableIdAvailable(side: Side) = side.imageDrawableId != 0
 }

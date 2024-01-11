@@ -3,10 +3,10 @@ package com.github.jameshnsears.chance.ui.dialog.bag
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.jameshnsears.chance.data.bag.model.BagModel
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
+import com.github.jameshnsears.chance.data.repository.bag.BagModel
+import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -100,9 +100,10 @@ class DialogBagAndroidViewModel(
 
     ////////////////////////////////
 
-    fun diceClone() = bagModel.diceClone(dice)
+    suspend fun diceClone() = bagModel.diceClone(dice)
 
-    override fun diceCanBeDeleted() = bagModel.diceCanBeDeleted()
+    private var _diceCanBeDeleted = MutableStateFlow(bagModel.diceCanBeDeleted())
+    override var diceCanBeDeleted: StateFlow<Boolean> = _diceCanBeDeleted
 
     fun diceDelete() = bagModel.diceDelete(dice)
 

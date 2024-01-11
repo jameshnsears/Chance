@@ -20,7 +20,7 @@ import com.github.jameshnsears.chance.utils.epoch.EpochTime
 fun ZoomRoll(zoomRollViewModel: ZoomRollViewModel) {
     val listState = rememberLazyListState()
 
-    val bagRepository = remember { zoomRollViewModel.bagRepository.fetch() }
+    val bagRepository = remember { zoomRollViewModel.rollRepository.fetch() }
 
     LazyColumn(
         state = listState

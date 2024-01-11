@@ -12,15 +12,15 @@ public final class SettingsProtocolBuffer extends
         // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer)
         SettingsProtocolBufferOrBuilder {
     public static final int TABROWCHANCE_FIELD_NUMBER = 1;
-    public static final int BAGDEMOBAG_FIELD_NUMBER = 2;
-    public static final int BAGZOOM_FIELD_NUMBER = 3;
+    public static final int BAGZOOM_FIELD_NUMBER = 2;
+    public static final int BAGDEMOBAG_FIELD_NUMBER = 3;
     public static final int ROLLSELECTEDDICE_FIELD_NUMBER = 4;
     public static final int ROLLSEQUENTIALLY_FIELD_NUMBER = 5;
     public static final int ROLLZOOM_FIELD_NUMBER = 6;
-    public static final int ROLLTITLE_FIELD_NUMBER = 7;
-    public static final int ROLLSIDENUMBER_FIELD_NUMBER = 8;
-    public static final int ROLLTOTAL_FIELD_NUMBER = 9;
-    public static final int ROLLHISTORY_FIELD_NUMBER = 10;
+    public static final int ROLLHISTORY_FIELD_NUMBER = 7;
+    public static final int ROLLTITLE_FIELD_NUMBER = 8;
+    public static final int ROLLSIDENUMBER_FIELD_NUMBER = 9;
+    public static final int ROLLTOTAL_FIELD_NUMBER = 10;
     public static final int ROLLSOUND_FIELD_NUMBER = 11;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer)
@@ -52,16 +52,16 @@ public final class SettingsProtocolBuffer extends
     }
 
     private int tabRowChance_ = 0;
-    private boolean bagDemoBag_ = false;
     private int bagZoom_ = 0;
+    private boolean bagDemoBag_ = false;
     @SuppressWarnings("serial")
     private java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer> rollSelectedDice_;
     private boolean rollSequentially_ = false;
     private int rollZoom_ = 0;
+    private boolean rollHistory_ = false;
     private boolean rollTitle_ = false;
     private boolean rollSideNumber_ = false;
     private boolean rollTotal_ = false;
-    private boolean rollHistory_ = false;
     private boolean rollSound_ = false;
     private byte memoizedIsInitialized = -1;
 
@@ -202,23 +202,23 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool bagDemoBag = 2;</code>
-     *
-     * @return The bagDemoBag.
-     */
-    @java.lang.Override
-    public boolean getBagDemoBag() {
-        return bagDemoBag_;
-    }
-
-    /**
-     * <code>int32 bagZoom = 3;</code>
+     * <code>int32 bagZoom = 2;</code>
      *
      * @return The bagZoom.
      */
     @java.lang.Override
     public int getBagZoom() {
         return bagZoom_;
+    }
+
+    /**
+     * <code>bool bagDemoBag = 3;</code>
+     *
+     * @return The bagDemoBag.
+     */
+    @java.lang.Override
+    public boolean getBagDemoBag() {
+        return bagDemoBag_;
     }
 
     /**
@@ -284,7 +284,17 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollTitle = 7;</code>
+     * <code>bool rollHistory = 7;</code>
+     *
+     * @return The rollHistory.
+     */
+    @java.lang.Override
+    public boolean getRollHistory() {
+        return rollHistory_;
+    }
+
+    /**
+     * <code>bool rollTitle = 8;</code>
      *
      * @return The rollTitle.
      */
@@ -294,7 +304,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollSideNumber = 8;</code>
+     * <code>bool rollSideNumber = 9;</code>
      *
      * @return The rollSideNumber.
      */
@@ -304,23 +314,13 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollTotal = 9;</code>
+     * <code>bool rollTotal = 10;</code>
      *
      * @return The rollTotal.
      */
     @java.lang.Override
     public boolean getRollTotal() {
         return rollTotal_;
-    }
-
-    /**
-     * <code>bool rollHistory = 10;</code>
-     *
-     * @return The rollHistory.
-     */
-    @java.lang.Override
-    public boolean getRollHistory() {
-        return rollHistory_;
     }
 
     /**
@@ -349,11 +349,11 @@ public final class SettingsProtocolBuffer extends
         if (tabRowChance_ != 0) {
             output.writeInt32(1, tabRowChance_);
         }
-        if (bagDemoBag_ != false) {
-            output.writeBool(2, bagDemoBag_);
-        }
         if (bagZoom_ != 0) {
-            output.writeInt32(3, bagZoom_);
+            output.writeInt32(2, bagZoom_);
+        }
+        if (bagDemoBag_ != false) {
+            output.writeBool(3, bagDemoBag_);
         }
         for (int i = 0; i < rollSelectedDice_.size(); i++) {
             output.writeMessage(4, rollSelectedDice_.get(i));
@@ -364,17 +364,17 @@ public final class SettingsProtocolBuffer extends
         if (rollZoom_ != 0) {
             output.writeInt32(6, rollZoom_);
         }
+        if (rollHistory_ != false) {
+            output.writeBool(7, rollHistory_);
+        }
         if (rollTitle_ != false) {
-            output.writeBool(7, rollTitle_);
+            output.writeBool(8, rollTitle_);
         }
         if (rollSideNumber_ != false) {
-            output.writeBool(8, rollSideNumber_);
+            output.writeBool(9, rollSideNumber_);
         }
         if (rollTotal_ != false) {
-            output.writeBool(9, rollTotal_);
-        }
-        if (rollHistory_ != false) {
-            output.writeBool(10, rollHistory_);
+            output.writeBool(10, rollTotal_);
         }
         if (rollSound_ != false) {
             output.writeBool(11, rollSound_);
@@ -392,13 +392,13 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                     .computeInt32Size(1, tabRowChance_);
         }
-        if (bagDemoBag_ != false) {
-            size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(2, bagDemoBag_);
-        }
         if (bagZoom_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(3, bagZoom_);
+                    .computeInt32Size(2, bagZoom_);
+        }
+        if (bagDemoBag_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeBoolSize(3, bagDemoBag_);
         }
         for (int i = 0; i < rollSelectedDice_.size(); i++) {
             size += com.google.protobuf.CodedOutputStream
@@ -412,21 +412,21 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                     .computeInt32Size(6, rollZoom_);
         }
+        if (rollHistory_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeBoolSize(7, rollHistory_);
+        }
         if (rollTitle_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(7, rollTitle_);
+                    .computeBoolSize(8, rollTitle_);
         }
         if (rollSideNumber_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(8, rollSideNumber_);
+                    .computeBoolSize(9, rollSideNumber_);
         }
         if (rollTotal_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(9, rollTotal_);
-        }
-        if (rollHistory_ != false) {
-            size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(10, rollHistory_);
+                    .computeBoolSize(10, rollTotal_);
         }
         if (rollSound_ != false) {
             size += com.google.protobuf.CodedOutputStream
@@ -449,24 +449,24 @@ public final class SettingsProtocolBuffer extends
 
         if (getTabRowChance()
                 != other.getTabRowChance()) return false;
-        if (getBagDemoBag()
-                != other.getBagDemoBag()) return false;
         if (getBagZoom()
                 != other.getBagZoom()) return false;
+        if (getBagDemoBag()
+                != other.getBagDemoBag()) return false;
         if (!getRollSelectedDiceList()
                 .equals(other.getRollSelectedDiceList())) return false;
         if (getRollSequentially()
                 != other.getRollSequentially()) return false;
         if (getRollZoom()
                 != other.getRollZoom()) return false;
+        if (getRollHistory()
+                != other.getRollHistory()) return false;
         if (getRollTitle()
                 != other.getRollTitle()) return false;
         if (getRollSideNumber()
                 != other.getRollSideNumber()) return false;
         if (getRollTotal()
                 != other.getRollTotal()) return false;
-        if (getRollHistory()
-                != other.getRollHistory()) return false;
         if (getRollSound()
                 != other.getRollSound()) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -482,11 +482,11 @@ public final class SettingsProtocolBuffer extends
         hash = (19 * hash) + getDescriptor().hashCode();
         hash = (37 * hash) + TABROWCHANCE_FIELD_NUMBER;
         hash = (53 * hash) + getTabRowChance();
+        hash = (37 * hash) + BAGZOOM_FIELD_NUMBER;
+        hash = (53 * hash) + getBagZoom();
         hash = (37 * hash) + BAGDEMOBAG_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                 getBagDemoBag());
-        hash = (37 * hash) + BAGZOOM_FIELD_NUMBER;
-        hash = (53 * hash) + getBagZoom();
         if (getRollSelectedDiceCount() > 0) {
             hash = (37 * hash) + ROLLSELECTEDDICE_FIELD_NUMBER;
             hash = (53 * hash) + getRollSelectedDiceList().hashCode();
@@ -496,6 +496,9 @@ public final class SettingsProtocolBuffer extends
                 getRollSequentially());
         hash = (37 * hash) + ROLLZOOM_FIELD_NUMBER;
         hash = (53 * hash) + getRollZoom();
+        hash = (37 * hash) + ROLLHISTORY_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+                getRollHistory());
         hash = (37 * hash) + ROLLTITLE_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                 getRollTitle());
@@ -505,9 +508,6 @@ public final class SettingsProtocolBuffer extends
         hash = (37 * hash) + ROLLTOTAL_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                 getRollTotal());
-        hash = (37 * hash) + ROLLHISTORY_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-                getRollHistory());
         hash = (37 * hash) + ROLLSOUND_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                 getRollSound());
@@ -553,18 +553,18 @@ public final class SettingsProtocolBuffer extends
             com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBufferOrBuilder {
         private int bitField0_;
         private int tabRowChance_;
-        private boolean bagDemoBag_;
         private int bagZoom_;
+        private boolean bagDemoBag_;
         private java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer> rollSelectedDice_ =
                 java.util.Collections.emptyList();
         private com.google.protobuf.RepeatedFieldBuilderV3<
                 com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder> rollSelectedDiceBuilder_;
         private boolean rollSequentially_;
         private int rollZoom_;
+        private boolean rollHistory_;
         private boolean rollTitle_;
         private boolean rollSideNumber_;
         private boolean rollTotal_;
-        private boolean rollHistory_;
         private boolean rollSound_;
 
         // Construct using com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer.newBuilder()
@@ -596,8 +596,8 @@ public final class SettingsProtocolBuffer extends
             super.clear();
             bitField0_ = 0;
             tabRowChance_ = 0;
-            bagDemoBag_ = false;
             bagZoom_ = 0;
+            bagDemoBag_ = false;
             if (rollSelectedDiceBuilder_ == null) {
                 rollSelectedDice_ = java.util.Collections.emptyList();
             } else {
@@ -607,10 +607,10 @@ public final class SettingsProtocolBuffer extends
             bitField0_ = (bitField0_ & ~0x00000008);
             rollSequentially_ = false;
             rollZoom_ = 0;
+            rollHistory_ = false;
             rollTitle_ = false;
             rollSideNumber_ = false;
             rollTotal_ = false;
-            rollHistory_ = false;
             rollSound_ = false;
             return this;
         }
@@ -664,10 +664,10 @@ public final class SettingsProtocolBuffer extends
                 result.tabRowChance_ = tabRowChance_;
             }
             if (((from_bitField0_ & 0x00000002) != 0)) {
-                result.bagDemoBag_ = bagDemoBag_;
+                result.bagZoom_ = bagZoom_;
             }
             if (((from_bitField0_ & 0x00000004) != 0)) {
-                result.bagZoom_ = bagZoom_;
+                result.bagDemoBag_ = bagDemoBag_;
             }
             if (((from_bitField0_ & 0x00000010) != 0)) {
                 result.rollSequentially_ = rollSequentially_;
@@ -676,16 +676,16 @@ public final class SettingsProtocolBuffer extends
                 result.rollZoom_ = rollZoom_;
             }
             if (((from_bitField0_ & 0x00000040) != 0)) {
-                result.rollTitle_ = rollTitle_;
+                result.rollHistory_ = rollHistory_;
             }
             if (((from_bitField0_ & 0x00000080) != 0)) {
-                result.rollSideNumber_ = rollSideNumber_;
+                result.rollTitle_ = rollTitle_;
             }
             if (((from_bitField0_ & 0x00000100) != 0)) {
-                result.rollTotal_ = rollTotal_;
+                result.rollSideNumber_ = rollSideNumber_;
             }
             if (((from_bitField0_ & 0x00000200) != 0)) {
-                result.rollHistory_ = rollHistory_;
+                result.rollTotal_ = rollTotal_;
             }
             if (((from_bitField0_ & 0x00000400) != 0)) {
                 result.rollSound_ = rollSound_;
@@ -746,11 +746,11 @@ public final class SettingsProtocolBuffer extends
             if (other.getTabRowChance() != 0) {
                 setTabRowChance(other.getTabRowChance());
             }
-            if (other.getBagDemoBag() != false) {
-                setBagDemoBag(other.getBagDemoBag());
-            }
             if (other.getBagZoom() != 0) {
                 setBagZoom(other.getBagZoom());
+            }
+            if (other.getBagDemoBag() != false) {
+                setBagDemoBag(other.getBagDemoBag());
             }
             if (rollSelectedDiceBuilder_ == null) {
                 if (!other.rollSelectedDice_.isEmpty()) {
@@ -784,6 +784,9 @@ public final class SettingsProtocolBuffer extends
             if (other.getRollZoom() != 0) {
                 setRollZoom(other.getRollZoom());
             }
+            if (other.getRollHistory() != false) {
+                setRollHistory(other.getRollHistory());
+            }
             if (other.getRollTitle() != false) {
                 setRollTitle(other.getRollTitle());
             }
@@ -792,9 +795,6 @@ public final class SettingsProtocolBuffer extends
             }
             if (other.getRollTotal() != false) {
                 setRollTotal(other.getRollTotal());
-            }
-            if (other.getRollHistory() != false) {
-                setRollHistory(other.getRollHistory());
             }
             if (other.getRollSound() != false) {
                 setRollSound(other.getRollSound());
@@ -831,12 +831,12 @@ public final class SettingsProtocolBuffer extends
                             break;
                         } // case 8
                         case 16: {
-                            bagDemoBag_ = input.readBool();
+                            bagZoom_ = input.readInt32();
                             bitField0_ |= 0x00000002;
                             break;
                         } // case 16
                         case 24: {
-                            bagZoom_ = input.readInt32();
+                            bagDemoBag_ = input.readBool();
                             bitField0_ |= 0x00000004;
                             break;
                         } // case 24
@@ -864,22 +864,22 @@ public final class SettingsProtocolBuffer extends
                             break;
                         } // case 48
                         case 56: {
-                            rollTitle_ = input.readBool();
+                            rollHistory_ = input.readBool();
                             bitField0_ |= 0x00000040;
                             break;
                         } // case 56
                         case 64: {
-                            rollSideNumber_ = input.readBool();
+                            rollTitle_ = input.readBool();
                             bitField0_ |= 0x00000080;
                             break;
                         } // case 64
                         case 72: {
-                            rollTotal_ = input.readBool();
+                            rollSideNumber_ = input.readBool();
                             bitField0_ |= 0x00000100;
                             break;
                         } // case 72
                         case 80: {
-                            rollHistory_ = input.readBool();
+                            rollTotal_ = input.readBool();
                             bitField0_ |= 0x00000200;
                             break;
                         } // case 80
@@ -941,43 +941,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool bagDemoBag = 2;</code>
-         *
-         * @return The bagDemoBag.
-         */
-        @java.lang.Override
-        public boolean getBagDemoBag() {
-            return bagDemoBag_;
-        }
-
-        /**
-         * <code>bool bagDemoBag = 2;</code>
-         *
-         * @param value The bagDemoBag to set.
-         * @return This builder for chaining.
-         */
-        public Builder setBagDemoBag(boolean value) {
-
-            bagDemoBag_ = value;
-            bitField0_ |= 0x00000002;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bool bagDemoBag = 2;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearBagDemoBag() {
-            bitField0_ = (bitField0_ & ~0x00000002);
-            bagDemoBag_ = false;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>int32 bagZoom = 3;</code>
+         * <code>int32 bagZoom = 2;</code>
          *
          * @return The bagZoom.
          */
@@ -987,7 +951,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>int32 bagZoom = 3;</code>
+         * <code>int32 bagZoom = 2;</code>
          *
          * @param value The bagZoom to set.
          * @return This builder for chaining.
@@ -995,19 +959,55 @@ public final class SettingsProtocolBuffer extends
         public Builder setBagZoom(int value) {
 
             bagZoom_ = value;
+            bitField0_ |= 0x00000002;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int32 bagZoom = 2;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearBagZoom() {
+            bitField0_ = (bitField0_ & ~0x00000002);
+            bagZoom_ = 0;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool bagDemoBag = 3;</code>
+         *
+         * @return The bagDemoBag.
+         */
+        @java.lang.Override
+        public boolean getBagDemoBag() {
+            return bagDemoBag_;
+        }
+
+        /**
+         * <code>bool bagDemoBag = 3;</code>
+         *
+         * @param value The bagDemoBag to set.
+         * @return This builder for chaining.
+         */
+        public Builder setBagDemoBag(boolean value) {
+
+            bagDemoBag_ = value;
             bitField0_ |= 0x00000004;
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 bagZoom = 3;</code>
+         * <code>bool bagDemoBag = 3;</code>
          *
          * @return This builder for chaining.
          */
-        public Builder clearBagZoom() {
+        public Builder clearBagDemoBag() {
             bitField0_ = (bitField0_ & ~0x00000004);
-            bagZoom_ = 0;
+            bagDemoBag_ = false;
             onChanged();
             return this;
         }
@@ -1339,115 +1339,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollTitle = 7;</code>
-         *
-         * @return The rollTitle.
-         */
-        @java.lang.Override
-        public boolean getRollTitle() {
-            return rollTitle_;
-        }
-
-        /**
-         * <code>bool rollTitle = 7;</code>
-         *
-         * @param value The rollTitle to set.
-         * @return This builder for chaining.
-         */
-        public Builder setRollTitle(boolean value) {
-
-            rollTitle_ = value;
-            bitField0_ |= 0x00000040;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bool rollTitle = 7;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearRollTitle() {
-            bitField0_ = (bitField0_ & ~0x00000040);
-            rollTitle_ = false;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bool rollSideNumber = 8;</code>
-         *
-         * @return The rollSideNumber.
-         */
-        @java.lang.Override
-        public boolean getRollSideNumber() {
-            return rollSideNumber_;
-        }
-
-        /**
-         * <code>bool rollSideNumber = 8;</code>
-         *
-         * @param value The rollSideNumber to set.
-         * @return This builder for chaining.
-         */
-        public Builder setRollSideNumber(boolean value) {
-
-            rollSideNumber_ = value;
-            bitField0_ |= 0x00000080;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bool rollSideNumber = 8;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearRollSideNumber() {
-            bitField0_ = (bitField0_ & ~0x00000080);
-            rollSideNumber_ = false;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bool rollTotal = 9;</code>
-         *
-         * @return The rollTotal.
-         */
-        @java.lang.Override
-        public boolean getRollTotal() {
-            return rollTotal_;
-        }
-
-        /**
-         * <code>bool rollTotal = 9;</code>
-         *
-         * @param value The rollTotal to set.
-         * @return This builder for chaining.
-         */
-        public Builder setRollTotal(boolean value) {
-
-            rollTotal_ = value;
-            bitField0_ |= 0x00000100;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bool rollTotal = 9;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearRollTotal() {
-            bitField0_ = (bitField0_ & ~0x00000100);
-            rollTotal_ = false;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bool rollHistory = 10;</code>
+         * <code>bool rollHistory = 7;</code>
          *
          * @return The rollHistory.
          */
@@ -1457,7 +1349,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollHistory = 10;</code>
+         * <code>bool rollHistory = 7;</code>
          *
          * @param value The rollHistory to set.
          * @return This builder for chaining.
@@ -1465,19 +1357,127 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollHistory(boolean value) {
 
             rollHistory_ = value;
+            bitField0_ |= 0x00000040;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollHistory = 7;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearRollHistory() {
+            bitField0_ = (bitField0_ & ~0x00000040);
+            rollHistory_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollTitle = 8;</code>
+         *
+         * @return The rollTitle.
+         */
+        @java.lang.Override
+        public boolean getRollTitle() {
+            return rollTitle_;
+        }
+
+        /**
+         * <code>bool rollTitle = 8;</code>
+         *
+         * @param value The rollTitle to set.
+         * @return This builder for chaining.
+         */
+        public Builder setRollTitle(boolean value) {
+
+            rollTitle_ = value;
+            bitField0_ |= 0x00000080;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollTitle = 8;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearRollTitle() {
+            bitField0_ = (bitField0_ & ~0x00000080);
+            rollTitle_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollSideNumber = 9;</code>
+         *
+         * @return The rollSideNumber.
+         */
+        @java.lang.Override
+        public boolean getRollSideNumber() {
+            return rollSideNumber_;
+        }
+
+        /**
+         * <code>bool rollSideNumber = 9;</code>
+         *
+         * @param value The rollSideNumber to set.
+         * @return This builder for chaining.
+         */
+        public Builder setRollSideNumber(boolean value) {
+
+            rollSideNumber_ = value;
+            bitField0_ |= 0x00000100;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollSideNumber = 9;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearRollSideNumber() {
+            bitField0_ = (bitField0_ & ~0x00000100);
+            rollSideNumber_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollTotal = 10;</code>
+         *
+         * @return The rollTotal.
+         */
+        @java.lang.Override
+        public boolean getRollTotal() {
+            return rollTotal_;
+        }
+
+        /**
+         * <code>bool rollTotal = 10;</code>
+         *
+         * @param value The rollTotal to set.
+         * @return This builder for chaining.
+         */
+        public Builder setRollTotal(boolean value) {
+
+            rollTotal_ = value;
             bitField0_ |= 0x00000200;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollHistory = 10;</code>
+         * <code>bool rollTotal = 10;</code>
          *
          * @return This builder for chaining.
          */
-        public Builder clearRollHistory() {
+        public Builder clearRollTotal() {
             bitField0_ = (bitField0_ & ~0x00000200);
-            rollHistory_ = false;
+            rollTotal_ = false;
             onChanged();
             return this;
         }

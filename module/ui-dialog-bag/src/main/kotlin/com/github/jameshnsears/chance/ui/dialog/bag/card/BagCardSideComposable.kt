@@ -12,6 +12,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -44,7 +45,7 @@ class BagCardSideTestTag {
 }
 
 @Composable
-fun BagCardSide(viewModel: DialogBagAndroidViewModelInterface) {
+fun BagCardSide(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
     ElevatedCard(
         modifier = Modifier
             .padding(top = 4.dp, bottom = 8.dp)
@@ -54,13 +55,13 @@ fun BagCardSide(viewModel: DialogBagAndroidViewModelInterface) {
         ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            SideNumber(viewModel)
+            SideNumber(dialogBagAndroidViewModelInterface)
 
-            SideColour(viewModel)
+            SideColour(dialogBagAndroidViewModelInterface)
 
-            SideImage(viewModel)
+            SideImage(dialogBagAndroidViewModelInterface)
 
-            SideDescription(viewModel)
+            SideDescription(dialogBagAndroidViewModelInterface)
         }
     }
 }
@@ -90,7 +91,8 @@ fun SideColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
 
     Row(
         modifier = Modifier
-            .padding(top = 16.dp)
+            .padding(top = 16.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Button(
             onClick = { showDialogColourPicker.value = true },
@@ -107,16 +109,34 @@ fun SideColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
             Text(stringResource(R.string.dialog_bag_side_colour))
         }
 
-        Text(sideColour)
+        Text(
+            modifier = Modifier
+                .padding(start = 16.dp),
+            text = sideColour
+        )
     }
 
-    Icon(
-        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-        imageVector = Icons.Outlined.Info,
-        contentDescription = ""
-    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = ""
+        )
 
-    Text(stringResource(R.string.dialog_bag_side_colour_info))
+        Text(
+            modifier = Modifier
+                .padding(start = 8.dp),
+            text = stringResource(R.string.dialog_bag_side_colour_info)
+        )
+    }
+
+    Divider(
+        modifier = Modifier
+            .padding(top = 14.dp, bottom = 4.dp)
+    )
 
     if (showDialogColourPicker.value) {
         DialogColourPicker(
@@ -134,7 +154,8 @@ fun SideImage(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInter
 
     Row(
         modifier = Modifier
-            .padding(top = 16.dp)
+            .padding(top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
@@ -151,18 +172,33 @@ fun SideImage(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInter
             Text(stringResource(R.string.dialog_bag_side_image))
         }
 
-        Text(sideImageFilename)
+        Text(
+            modifier = Modifier
+                .padding(start = 16.dp),
+            text = sideImageFilename
+        )
     }
 
-    Icon(
-        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-        imageVector = Icons.Outlined.Info,
-        contentDescription = ""
-    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = ""
+        )
 
-    Text(
-        modifier = Modifier.padding(bottom = 8.dp),
-        text = stringResource(R.string.dialog_bag_side_image_info)
+        Text(
+            modifier = Modifier
+                .padding(start = 8.dp),
+            text = stringResource(R.string.dialog_bag_side_image_info)
+        )
+    }
+
+    Divider(
+        modifier = Modifier
+            .padding(top = 12.dp, bottom = 12.dp)
     )
 }
 

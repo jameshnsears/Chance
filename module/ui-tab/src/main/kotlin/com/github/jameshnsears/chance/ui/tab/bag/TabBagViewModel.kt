@@ -1,20 +1,34 @@
 package com.github.jameshnsears.chance.ui.tab.bag
 
 import androidx.lifecycle.ViewModel
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryInterface
+import androidx.lifecycle.viewModelScope
+import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class TabBagViewModel(
+    val settingsRepository: SettingsRepositoryInterface,
     val bagRepository: BagRepositoryInterface,
+    val rollRepository: RollRepositoryInterface
 ) : ViewModel() {
-    fun demoBag(selected: Boolean = true) {
-
+    fun bagDemoBag(selected: Boolean = true) {
+        viewModelScope.launch {
+            val settings = settingsRepository.fetch().first()
+            settings.bagDemoBag = selected
+            settingsRepository.store(settings)
+        }
     }
 
-    fun export() {
-
+    suspend fun export(): String {
+        // TODO combine all json from all 3 repos + wrap in an []
+        // i.e. [ {a}, {b}, {c} ]
+        return settingsRepository.export()
     }
 
-    fun import() {
-
+    suspend fun import(json: String) {
+        // TODO extract all json for all 3 repos
+        settingsRepository.import(json)
     }
 }

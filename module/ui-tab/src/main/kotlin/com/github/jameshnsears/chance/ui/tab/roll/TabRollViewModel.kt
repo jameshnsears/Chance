@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Roll
-import com.github.jameshnsears.chance.data.roll.repository.RollRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
 import com.github.jameshnsears.chance.utils.epoch.EpochTime
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -12,6 +13,7 @@ import kotlinx.coroutines.sync.withLock
 import java.security.SecureRandom
 
 class TabRollViewModel(
+    val settingsRepository: SettingsRepositoryInterface,
     var rollRepository: RollRepositoryInterface,
 ) : ViewModel() {
     //    var _description = MutableStateFlow(fetchInitialDescription())
@@ -23,6 +25,15 @@ class TabRollViewModel(
 //        Timber.d("description=", description)
 //        _description.value = description
 //    }
+
+    /*
+                                        Title
+                                        Side # + Side Image
+    History timestamp       Total
+                                        Image
+                                        Description
+     */
+
 
     private val random: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 

@@ -8,4 +8,13 @@ database connections, file handles, or network connections.
 
 https://plugins.jetbrains.com/plugin/7380-adb-idea
 
+---
+
+    TabBagViewModel = settingsRepository, bagRepository
+        DialogBagAndroidViewModel = settingsRepository, bagRepository
+        ZoomBagViewModel = settingsRepository, bagRepository
+
+    TabRollViewModel = settingsRepository, rollRepository
+        ZoomRollViewModel = settingsRepository, rollRepository
+
 */

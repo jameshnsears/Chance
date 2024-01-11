@@ -1,13 +1,14 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
 import android.app.Application
-import com.github.jameshnsears.chance.data.bag.demo.BagDemoData
-import com.github.jameshnsears.chance.data.bag.repository.BagRepositoryMock
-import com.github.jameshnsears.chance.data.bag.sample.BagSampleData
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.BagSampleData
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -26,7 +27,7 @@ class DialogBagAndroidViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val bagRepository = BagRepositoryMock
+            val bagRepository = BagRepositoryTestDouble.getInstance()
             bagRepository.store(
                 listOf(
                     BagDemoData.diceHeadsTails
@@ -54,7 +55,7 @@ class DialogBagAndroidViewModelUnitTest {
             assertEquals(dialogBagAndroidViewModel.diceSidesSliderPosition.value, 0.0f)
             assertEquals(dialogBagAndroidViewModel.diceTitle.value, mockDiceTitle)
             assertEquals(dialogBagAndroidViewModel.diceColour.value, dice.colour)
-            assertFalse(dialogBagAndroidViewModel.diceCanBeDeleted())
+            assertFalse(dialogBagAndroidViewModel.diceCanBeDeleted.value)
         } finally {
             Dispatchers.resetMain()
         }
@@ -67,7 +68,7 @@ class DialogBagAndroidViewModelUnitTest {
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val bagRepository = BagRepositoryMock
+            val bagRepository = BagRepositoryTestDouble.getInstance()
             bagRepository.store(BagSampleData.allDice)
 
             val application = mockk<Application>()
@@ -75,7 +76,7 @@ class DialogBagAndroidViewModelUnitTest {
 
             val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(application, bagRepository)
 
-            assertTrue(dialogBagAndroidViewModel.diceCanBeDeleted())
+            assertTrue(dialogBagAndroidViewModel.diceCanBeDeleted.value)
         } finally {
             Dispatchers.resetMain()
         }
@@ -83,12 +84,12 @@ class DialogBagAndroidViewModelUnitTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun save() = runTest {
+    fun todo() = runTest {
         val testDispatcher = UnconfinedTestDispatcher(testScheduler)
         Dispatchers.setMain(testDispatcher)
 
         try {
-            val bagRepository = BagRepositoryMock
+            val bagRepository = BagRepositoryTestDouble.getInstance()
             bagRepository.store(
                 listOf(
                     BagDemoData.diceHeadsTails
@@ -142,9 +143,11 @@ class DialogBagAndroidViewModelUnitTest {
 
     private fun getDialogBagAndroidViewModel(
         application: Application,
-        bagRepository: BagRepositoryMock
+        bagRepository: BagRepositoryTestDouble
     ): DialogBagAndroidViewModel {
-        val dice = bagRepository.fetch()[0]
+        val dice = runBlocking {
+            bagRepository.fetch()[0]
+        }
         val side = dice.sides[0]
 
         return DialogBagAndroidViewModel(
