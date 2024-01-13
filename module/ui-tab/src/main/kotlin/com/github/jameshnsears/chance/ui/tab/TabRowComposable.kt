@@ -66,13 +66,16 @@ fun TabRowChance(
             0 -> TabBag(
                 TabBagViewModel(
                     settingsRepository,
-                    bagRepository,
-                    rollRepository
+                    bagRepository
                 )
             )
 
             1 -> TabRoll(
-                TabRollViewModel(settingsRepository, rollRepository)
+                TabRollViewModel(
+                    settingsRepository,
+                    bagRepository,
+                    rollRepository
+                )
             )
 
             else -> throw IllegalStateException("Invalid selected tab index")

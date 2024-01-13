@@ -42,8 +42,7 @@ class TabBagViewModelUnitTest {
 
             val tabBagViewModel = TabBagViewModel(
                 settingsRepository,
-                bagRepository,
-                rollRepository
+                bagRepository
             )
 
             runBlocking {

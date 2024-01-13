@@ -33,7 +33,9 @@ fun TabBagBottomSheetLayoutComposablePreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            TabBagBottomSheetLayout(getTabBagViewModel())
+            TabBagBottomSheetLayout(
+                getTabBagViewModel()
+            )
         }
     }
 }
@@ -49,7 +51,6 @@ fun getTabBagViewModel(): TabBagViewModel {
 
     return TabBagViewModel(
         settingsRepository,
-        bagRepository,
-        rollRepository
+        bagRepository
     )
 }

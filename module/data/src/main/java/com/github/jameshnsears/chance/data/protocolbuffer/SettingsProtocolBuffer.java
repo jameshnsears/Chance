@@ -14,14 +14,13 @@ public final class SettingsProtocolBuffer extends
     public static final int TABROWCHANCE_FIELD_NUMBER = 1;
     public static final int BAGZOOM_FIELD_NUMBER = 2;
     public static final int BAGDEMOBAG_FIELD_NUMBER = 3;
-    public static final int ROLLSELECTEDDICE_FIELD_NUMBER = 4;
-    public static final int ROLLSEQUENTIALLY_FIELD_NUMBER = 5;
-    public static final int ROLLZOOM_FIELD_NUMBER = 6;
-    public static final int ROLLHISTORY_FIELD_NUMBER = 7;
-    public static final int ROLLTITLE_FIELD_NUMBER = 8;
-    public static final int ROLLSIDENUMBER_FIELD_NUMBER = 9;
-    public static final int ROLLTOTAL_FIELD_NUMBER = 10;
-    public static final int ROLLSOUND_FIELD_NUMBER = 11;
+    public static final int ROLLSEQUENTIALLY_FIELD_NUMBER = 4;
+    public static final int ROLLZOOM_FIELD_NUMBER = 5;
+    public static final int ROLLHISTORY_FIELD_NUMBER = 6;
+    public static final int ROLLTITLE_FIELD_NUMBER = 7;
+    public static final int ROLLSIDENUMBER_FIELD_NUMBER = 8;
+    public static final int ROLLTOTAL_FIELD_NUMBER = 9;
+    public static final int ROLLSOUND_FIELD_NUMBER = 10;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer DEFAULT_INSTANCE;
@@ -54,8 +53,6 @@ public final class SettingsProtocolBuffer extends
     private int tabRowChance_ = 0;
     private int bagZoom_ = 0;
     private boolean bagDemoBag_ = false;
-    @SuppressWarnings("serial")
-    private java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer> rollSelectedDice_;
     private boolean rollSequentially_ = false;
     private int rollZoom_ = 0;
     private boolean rollHistory_ = false;
@@ -71,10 +68,9 @@ public final class SettingsProtocolBuffer extends
     }
 
     private SettingsProtocolBuffer() {
-        rollSelectedDice_ = java.util.Collections.emptyList();
     }
 
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.protocolbuffer.Settings.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SettingsProtocolBuffer_descriptor;
     }
@@ -222,49 +218,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    @java.lang.Override
-    public java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer> getRollSelectedDiceList() {
-        return rollSelectedDice_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder>
-    getRollSelectedDiceOrBuilderList() {
-        return rollSelectedDice_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    @java.lang.Override
-    public int getRollSelectedDiceCount() {
-        return rollSelectedDice_.size();
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer getRollSelectedDice(int index) {
-        return rollSelectedDice_.get(index);
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder getRollSelectedDiceOrBuilder(
-            int index) {
-        return rollSelectedDice_.get(index);
-    }
-
-    /**
-     * <code>bool rollSequentially = 5;</code>
+     * <code>bool rollSequentially = 4;</code>
      *
      * @return The rollSequentially.
      */
@@ -274,7 +228,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>int32 rollZoom = 6;</code>
+     * <code>int32 rollZoom = 5;</code>
      *
      * @return The rollZoom.
      */
@@ -284,7 +238,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollHistory = 7;</code>
+     * <code>bool rollHistory = 6;</code>
      *
      * @return The rollHistory.
      */
@@ -294,7 +248,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollTitle = 8;</code>
+     * <code>bool rollTitle = 7;</code>
      *
      * @return The rollTitle.
      */
@@ -304,7 +258,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollSideNumber = 9;</code>
+     * <code>bool rollSideNumber = 8;</code>
      *
      * @return The rollSideNumber.
      */
@@ -314,7 +268,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollTotal = 10;</code>
+     * <code>bool rollTotal = 9;</code>
      *
      * @return The rollTotal.
      */
@@ -324,7 +278,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollSound = 11;</code>
+     * <code>bool rollSound = 10;</code>
      *
      * @return The rollSound.
      */
@@ -334,7 +288,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     @java.lang.Override
-    public final boolean isInitialized() {
+    public boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -352,32 +306,29 @@ public final class SettingsProtocolBuffer extends
         if (bagZoom_ != 0) {
             output.writeInt32(2, bagZoom_);
         }
-        if (bagDemoBag_ != false) {
+        if (bagDemoBag_) {
             output.writeBool(3, bagDemoBag_);
         }
-        for (int i = 0; i < rollSelectedDice_.size(); i++) {
-            output.writeMessage(4, rollSelectedDice_.get(i));
-        }
-        if (rollSequentially_ != false) {
-            output.writeBool(5, rollSequentially_);
+        if (rollSequentially_) {
+            output.writeBool(4, rollSequentially_);
         }
         if (rollZoom_ != 0) {
-            output.writeInt32(6, rollZoom_);
+            output.writeInt32(5, rollZoom_);
         }
-        if (rollHistory_ != false) {
-            output.writeBool(7, rollHistory_);
+        if (rollHistory_) {
+            output.writeBool(6, rollHistory_);
         }
-        if (rollTitle_ != false) {
-            output.writeBool(8, rollTitle_);
+        if (rollTitle_) {
+            output.writeBool(7, rollTitle_);
         }
-        if (rollSideNumber_ != false) {
-            output.writeBool(9, rollSideNumber_);
+        if (rollSideNumber_) {
+            output.writeBool(8, rollSideNumber_);
         }
-        if (rollTotal_ != false) {
-            output.writeBool(10, rollTotal_);
+        if (rollTotal_) {
+            output.writeBool(9, rollTotal_);
         }
-        if (rollSound_ != false) {
-            output.writeBool(11, rollSound_);
+        if (rollSound_) {
+            output.writeBool(10, rollSound_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -396,41 +347,37 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                     .computeInt32Size(2, bagZoom_);
         }
-        if (bagDemoBag_ != false) {
+        if (bagDemoBag_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(3, bagDemoBag_);
         }
-        for (int i = 0; i < rollSelectedDice_.size(); i++) {
+        if (rollSequentially_) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeMessageSize(4, rollSelectedDice_.get(i));
-        }
-        if (rollSequentially_ != false) {
-            size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(5, rollSequentially_);
+                    .computeBoolSize(4, rollSequentially_);
         }
         if (rollZoom_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(6, rollZoom_);
+                    .computeInt32Size(5, rollZoom_);
         }
-        if (rollHistory_ != false) {
+        if (rollHistory_) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(7, rollHistory_);
+                    .computeBoolSize(6, rollHistory_);
         }
-        if (rollTitle_ != false) {
+        if (rollTitle_) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(8, rollTitle_);
+                    .computeBoolSize(7, rollTitle_);
         }
-        if (rollSideNumber_ != false) {
+        if (rollSideNumber_) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(9, rollSideNumber_);
+                    .computeBoolSize(8, rollSideNumber_);
         }
-        if (rollTotal_ != false) {
+        if (rollTotal_) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(10, rollTotal_);
+                    .computeBoolSize(9, rollTotal_);
         }
-        if (rollSound_ != false) {
+        if (rollSound_) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(11, rollSound_);
+                    .computeBoolSize(10, rollSound_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -442,10 +389,9 @@ public final class SettingsProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer)) {
+        if (!(obj instanceof SettingsProtocolBuffer other)) {
             return super.equals(obj);
         }
-        com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer other = (com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer) obj;
 
         if (getTabRowChance()
                 != other.getTabRowChance()) return false;
@@ -453,8 +399,6 @@ public final class SettingsProtocolBuffer extends
                 != other.getBagZoom()) return false;
         if (getBagDemoBag()
                 != other.getBagDemoBag()) return false;
-        if (!getRollSelectedDiceList()
-                .equals(other.getRollSelectedDiceList())) return false;
         if (getRollSequentially()
                 != other.getRollSequentially()) return false;
         if (getRollZoom()
@@ -469,8 +413,7 @@ public final class SettingsProtocolBuffer extends
                 != other.getRollTotal()) return false;
         if (getRollSound()
                 != other.getRollSound()) return false;
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
+        return getUnknownFields().equals(other.getUnknownFields());
     }
 
     @java.lang.Override
@@ -487,10 +430,6 @@ public final class SettingsProtocolBuffer extends
         hash = (37 * hash) + BAGDEMOBAG_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                 getBagDemoBag());
-        if (getRollSelectedDiceCount() > 0) {
-            hash = (37 * hash) + ROLLSELECTEDDICE_FIELD_NUMBER;
-            hash = (53 * hash) + getRollSelectedDiceList().hashCode();
-        }
         hash = (37 * hash) + ROLLSEQUENTIALLY_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                 getRollSequentially());
@@ -555,10 +494,6 @@ public final class SettingsProtocolBuffer extends
         private int tabRowChance_;
         private int bagZoom_;
         private boolean bagDemoBag_;
-        private java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer> rollSelectedDice_ =
-                java.util.Collections.emptyList();
-        private com.google.protobuf.RepeatedFieldBuilderV3<
-                com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder> rollSelectedDiceBuilder_;
         private boolean rollSequentially_;
         private int rollZoom_;
         private boolean rollHistory_;
@@ -578,7 +513,7 @@ public final class SettingsProtocolBuffer extends
 
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor
+        public static com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.protocolbuffer.Settings.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SettingsProtocolBuffer_descriptor;
         }
@@ -598,13 +533,6 @@ public final class SettingsProtocolBuffer extends
             tabRowChance_ = 0;
             bagZoom_ = 0;
             bagDemoBag_ = false;
-            if (rollSelectedDiceBuilder_ == null) {
-                rollSelectedDice_ = java.util.Collections.emptyList();
-            } else {
-                rollSelectedDice_ = null;
-                rollSelectedDiceBuilder_.clear();
-            }
-            bitField0_ = (bitField0_ & ~0x00000008);
             rollSequentially_ = false;
             rollZoom_ = 0;
             rollHistory_ = false;
@@ -638,24 +566,11 @@ public final class SettingsProtocolBuffer extends
         @java.lang.Override
         public com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer buildPartial() {
             com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer result = new com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer(this);
-            buildPartialRepeatedFields(result);
             if (bitField0_ != 0) {
                 buildPartial0(result);
             }
             onBuilt();
             return result;
-        }
-
-        private void buildPartialRepeatedFields(com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer result) {
-            if (rollSelectedDiceBuilder_ == null) {
-                if (((bitField0_ & 0x00000008) != 0)) {
-                    rollSelectedDice_ = java.util.Collections.unmodifiableList(rollSelectedDice_);
-                    bitField0_ = (bitField0_ & ~0x00000008);
-                }
-                result.rollSelectedDice_ = rollSelectedDice_;
-            } else {
-                result.rollSelectedDice_ = rollSelectedDiceBuilder_.build();
-            }
         }
 
         private void buildPartial0(com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer result) {
@@ -669,25 +584,25 @@ public final class SettingsProtocolBuffer extends
             if (((from_bitField0_ & 0x00000004) != 0)) {
                 result.bagDemoBag_ = bagDemoBag_;
             }
-            if (((from_bitField0_ & 0x00000010) != 0)) {
+            if (((from_bitField0_ & 0x00000008) != 0)) {
                 result.rollSequentially_ = rollSequentially_;
             }
-            if (((from_bitField0_ & 0x00000020) != 0)) {
+            if (((from_bitField0_ & 0x00000010) != 0)) {
                 result.rollZoom_ = rollZoom_;
             }
-            if (((from_bitField0_ & 0x00000040) != 0)) {
+            if (((from_bitField0_ & 0x00000020) != 0)) {
                 result.rollHistory_ = rollHistory_;
             }
-            if (((from_bitField0_ & 0x00000080) != 0)) {
+            if (((from_bitField0_ & 0x00000040) != 0)) {
                 result.rollTitle_ = rollTitle_;
             }
-            if (((from_bitField0_ & 0x00000100) != 0)) {
+            if (((from_bitField0_ & 0x00000080) != 0)) {
                 result.rollSideNumber_ = rollSideNumber_;
             }
-            if (((from_bitField0_ & 0x00000200) != 0)) {
+            if (((from_bitField0_ & 0x00000100) != 0)) {
                 result.rollTotal_ = rollTotal_;
             }
-            if (((from_bitField0_ & 0x00000400) != 0)) {
+            if (((from_bitField0_ & 0x00000200) != 0)) {
                 result.rollSound_ = rollSound_;
             }
         }
@@ -749,54 +664,28 @@ public final class SettingsProtocolBuffer extends
             if (other.getBagZoom() != 0) {
                 setBagZoom(other.getBagZoom());
             }
-            if (other.getBagDemoBag() != false) {
+            if (other.getBagDemoBag()) {
                 setBagDemoBag(other.getBagDemoBag());
             }
-            if (rollSelectedDiceBuilder_ == null) {
-                if (!other.rollSelectedDice_.isEmpty()) {
-                    if (rollSelectedDice_.isEmpty()) {
-                        rollSelectedDice_ = other.rollSelectedDice_;
-                        bitField0_ = (bitField0_ & ~0x00000008);
-                    } else {
-                        ensureRollSelectedDiceIsMutable();
-                        rollSelectedDice_.addAll(other.rollSelectedDice_);
-                    }
-                    onChanged();
-                }
-            } else {
-                if (!other.rollSelectedDice_.isEmpty()) {
-                    if (rollSelectedDiceBuilder_.isEmpty()) {
-                        rollSelectedDiceBuilder_.dispose();
-                        rollSelectedDiceBuilder_ = null;
-                        rollSelectedDice_ = other.rollSelectedDice_;
-                        bitField0_ = (bitField0_ & ~0x00000008);
-                        rollSelectedDiceBuilder_ =
-                                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                                        getRollSelectedDiceFieldBuilder() : null;
-                    } else {
-                        rollSelectedDiceBuilder_.addAllMessages(other.rollSelectedDice_);
-                    }
-                }
-            }
-            if (other.getRollSequentially() != false) {
+            if (other.getRollSequentially()) {
                 setRollSequentially(other.getRollSequentially());
             }
             if (other.getRollZoom() != 0) {
                 setRollZoom(other.getRollZoom());
             }
-            if (other.getRollHistory() != false) {
+            if (other.getRollHistory()) {
                 setRollHistory(other.getRollHistory());
             }
-            if (other.getRollTitle() != false) {
+            if (other.getRollTitle()) {
                 setRollTitle(other.getRollTitle());
             }
-            if (other.getRollSideNumber() != false) {
+            if (other.getRollSideNumber()) {
                 setRollSideNumber(other.getRollSideNumber());
             }
-            if (other.getRollTotal() != false) {
+            if (other.getRollTotal()) {
                 setRollTotal(other.getRollTotal());
             }
-            if (other.getRollSound() != false) {
+            if (other.getRollSound()) {
                 setRollSound(other.getRollSound());
             }
             this.mergeUnknownFields(other.getUnknownFields());
@@ -805,7 +694,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         @java.lang.Override
-        public final boolean isInitialized() {
+        public boolean isInitialized() {
             return true;
         }
 
@@ -840,54 +729,41 @@ public final class SettingsProtocolBuffer extends
                             bitField0_ |= 0x00000004;
                             break;
                         } // case 24
-                        case 34: {
-                            com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer m =
-                                    input.readMessage(
-                                            com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.parser(),
-                                            extensionRegistry);
-                            if (rollSelectedDiceBuilder_ == null) {
-                                ensureRollSelectedDiceIsMutable();
-                                rollSelectedDice_.add(m);
-                            } else {
-                                rollSelectedDiceBuilder_.addMessage(m);
-                            }
-                            break;
-                        } // case 34
-                        case 40: {
+                        case 32: {
                             rollSequentially_ = input.readBool();
+                            bitField0_ |= 0x00000008;
+                            break;
+                        } // case 32
+                        case 40: {
+                            rollZoom_ = input.readInt32();
                             bitField0_ |= 0x00000010;
                             break;
                         } // case 40
                         case 48: {
-                            rollZoom_ = input.readInt32();
+                            rollHistory_ = input.readBool();
                             bitField0_ |= 0x00000020;
                             break;
                         } // case 48
                         case 56: {
-                            rollHistory_ = input.readBool();
+                            rollTitle_ = input.readBool();
                             bitField0_ |= 0x00000040;
                             break;
                         } // case 56
                         case 64: {
-                            rollTitle_ = input.readBool();
+                            rollSideNumber_ = input.readBool();
                             bitField0_ |= 0x00000080;
                             break;
                         } // case 64
                         case 72: {
-                            rollSideNumber_ = input.readBool();
+                            rollTotal_ = input.readBool();
                             bitField0_ |= 0x00000100;
                             break;
                         } // case 72
                         case 80: {
-                            rollTotal_ = input.readBool();
+                            rollSound_ = input.readBool();
                             bitField0_ |= 0x00000200;
                             break;
                         } // case 80
-                        case 88: {
-                            rollSound_ = input.readBool();
-                            bitField0_ |= 0x00000400;
-                            break;
-                        } // case 88
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -1012,262 +888,8 @@ public final class SettingsProtocolBuffer extends
             return this;
         }
 
-        private void ensureRollSelectedDiceIsMutable() {
-            if (!((bitField0_ & 0x00000008) != 0)) {
-                rollSelectedDice_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer>(rollSelectedDice_);
-                bitField0_ |= 0x00000008;
-            }
-        }
-
         /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer> getRollSelectedDiceList() {
-            if (rollSelectedDiceBuilder_ == null) {
-                return java.util.Collections.unmodifiableList(rollSelectedDice_);
-            } else {
-                return rollSelectedDiceBuilder_.getMessageList();
-            }
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public int getRollSelectedDiceCount() {
-            if (rollSelectedDiceBuilder_ == null) {
-                return rollSelectedDice_.size();
-            } else {
-                return rollSelectedDiceBuilder_.getCount();
-            }
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer getRollSelectedDice(int index) {
-            if (rollSelectedDiceBuilder_ == null) {
-                return rollSelectedDice_.get(index);
-            } else {
-                return rollSelectedDiceBuilder_.getMessage(index);
-            }
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder setRollSelectedDice(
-                int index, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer value) {
-            if (rollSelectedDiceBuilder_ == null) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                ensureRollSelectedDiceIsMutable();
-                rollSelectedDice_.set(index, value);
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.setMessage(index, value);
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder setRollSelectedDice(
-                int index, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder builderForValue) {
-            if (rollSelectedDiceBuilder_ == null) {
-                ensureRollSelectedDiceIsMutable();
-                rollSelectedDice_.set(index, builderForValue.build());
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.setMessage(index, builderForValue.build());
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder addRollSelectedDice(com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer value) {
-            if (rollSelectedDiceBuilder_ == null) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                ensureRollSelectedDiceIsMutable();
-                rollSelectedDice_.add(value);
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.addMessage(value);
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder addRollSelectedDice(
-                int index, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer value) {
-            if (rollSelectedDiceBuilder_ == null) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                ensureRollSelectedDiceIsMutable();
-                rollSelectedDice_.add(index, value);
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.addMessage(index, value);
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder addRollSelectedDice(
-                com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder builderForValue) {
-            if (rollSelectedDiceBuilder_ == null) {
-                ensureRollSelectedDiceIsMutable();
-                rollSelectedDice_.add(builderForValue.build());
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.addMessage(builderForValue.build());
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder addRollSelectedDice(
-                int index, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder builderForValue) {
-            if (rollSelectedDiceBuilder_ == null) {
-                ensureRollSelectedDiceIsMutable();
-                rollSelectedDice_.add(index, builderForValue.build());
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.addMessage(index, builderForValue.build());
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder addAllRollSelectedDice(
-                java.lang.Iterable<? extends com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer> values) {
-            if (rollSelectedDiceBuilder_ == null) {
-                ensureRollSelectedDiceIsMutable();
-                com.google.protobuf.AbstractMessageLite.Builder.addAll(
-                        values, rollSelectedDice_);
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.addAllMessages(values);
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder clearRollSelectedDice() {
-            if (rollSelectedDiceBuilder_ == null) {
-                rollSelectedDice_ = java.util.Collections.emptyList();
-                bitField0_ = (bitField0_ & ~0x00000008);
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.clear();
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public Builder removeRollSelectedDice(int index) {
-            if (rollSelectedDiceBuilder_ == null) {
-                ensureRollSelectedDiceIsMutable();
-                rollSelectedDice_.remove(index);
-                onChanged();
-            } else {
-                rollSelectedDiceBuilder_.remove(index);
-            }
-            return this;
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder getRollSelectedDiceBuilder(
-                int index) {
-            return getRollSelectedDiceFieldBuilder().getBuilder(index);
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder getRollSelectedDiceOrBuilder(
-                int index) {
-            if (rollSelectedDiceBuilder_ == null) {
-                return rollSelectedDice_.get(index);
-            } else {
-                return rollSelectedDiceBuilder_.getMessageOrBuilder(index);
-            }
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public java.util.List<? extends com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder>
-        getRollSelectedDiceOrBuilderList() {
-            if (rollSelectedDiceBuilder_ != null) {
-                return rollSelectedDiceBuilder_.getMessageOrBuilderList();
-            } else {
-                return java.util.Collections.unmodifiableList(rollSelectedDice_);
-            }
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder addRollSelectedDiceBuilder() {
-            return getRollSelectedDiceFieldBuilder().addBuilder(
-                    com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.getDefaultInstance());
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder addRollSelectedDiceBuilder(
-                int index) {
-            return getRollSelectedDiceFieldBuilder().addBuilder(
-                    index, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.getDefaultInstance());
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-         */
-        public java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder>
-        getRollSelectedDiceBuilderList() {
-            return getRollSelectedDiceFieldBuilder().getBuilderList();
-        }
-
-        private com.google.protobuf.RepeatedFieldBuilderV3<
-                com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder>
-        getRollSelectedDiceFieldBuilder() {
-            if (rollSelectedDiceBuilder_ == null) {
-                rollSelectedDiceBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-                        com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder>(
-                        rollSelectedDice_,
-                        ((bitField0_ & 0x00000008) != 0),
-                        getParentForChildren(),
-                        isClean());
-                rollSelectedDice_ = null;
-            }
-            return rollSelectedDiceBuilder_;
-        }
-
-        /**
-         * <code>bool rollSequentially = 5;</code>
+         * <code>bool rollSequentially = 4;</code>
          *
          * @return The rollSequentially.
          */
@@ -1277,7 +899,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollSequentially = 5;</code>
+         * <code>bool rollSequentially = 4;</code>
          *
          * @param value The rollSequentially to set.
          * @return This builder for chaining.
@@ -1285,25 +907,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollSequentially(boolean value) {
 
             rollSequentially_ = value;
-            bitField0_ |= 0x00000010;
+            bitField0_ |= 0x00000008;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollSequentially = 5;</code>
+         * <code>bool rollSequentially = 4;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollSequentially() {
-            bitField0_ = (bitField0_ & ~0x00000010);
+            bitField0_ = (bitField0_ & ~0x00000008);
             rollSequentially_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 rollZoom = 6;</code>
+         * <code>int32 rollZoom = 5;</code>
          *
          * @return The rollZoom.
          */
@@ -1313,7 +935,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>int32 rollZoom = 6;</code>
+         * <code>int32 rollZoom = 5;</code>
          *
          * @param value The rollZoom to set.
          * @return This builder for chaining.
@@ -1321,25 +943,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollZoom(int value) {
 
             rollZoom_ = value;
-            bitField0_ |= 0x00000020;
+            bitField0_ |= 0x00000010;
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 rollZoom = 6;</code>
+         * <code>int32 rollZoom = 5;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollZoom() {
-            bitField0_ = (bitField0_ & ~0x00000020);
+            bitField0_ = (bitField0_ & ~0x00000010);
             rollZoom_ = 0;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollHistory = 7;</code>
+         * <code>bool rollHistory = 6;</code>
          *
          * @return The rollHistory.
          */
@@ -1349,7 +971,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollHistory = 7;</code>
+         * <code>bool rollHistory = 6;</code>
          *
          * @param value The rollHistory to set.
          * @return This builder for chaining.
@@ -1357,25 +979,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollHistory(boolean value) {
 
             rollHistory_ = value;
-            bitField0_ |= 0x00000040;
+            bitField0_ |= 0x00000020;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollHistory = 7;</code>
+         * <code>bool rollHistory = 6;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollHistory() {
-            bitField0_ = (bitField0_ & ~0x00000040);
+            bitField0_ = (bitField0_ & ~0x00000020);
             rollHistory_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollTitle = 8;</code>
+         * <code>bool rollTitle = 7;</code>
          *
          * @return The rollTitle.
          */
@@ -1385,7 +1007,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollTitle = 8;</code>
+         * <code>bool rollTitle = 7;</code>
          *
          * @param value The rollTitle to set.
          * @return This builder for chaining.
@@ -1393,25 +1015,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollTitle(boolean value) {
 
             rollTitle_ = value;
-            bitField0_ |= 0x00000080;
+            bitField0_ |= 0x00000040;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollTitle = 8;</code>
+         * <code>bool rollTitle = 7;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollTitle() {
-            bitField0_ = (bitField0_ & ~0x00000080);
+            bitField0_ = (bitField0_ & ~0x00000040);
             rollTitle_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollSideNumber = 9;</code>
+         * <code>bool rollSideNumber = 8;</code>
          *
          * @return The rollSideNumber.
          */
@@ -1421,7 +1043,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollSideNumber = 9;</code>
+         * <code>bool rollSideNumber = 8;</code>
          *
          * @param value The rollSideNumber to set.
          * @return This builder for chaining.
@@ -1429,25 +1051,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollSideNumber(boolean value) {
 
             rollSideNumber_ = value;
-            bitField0_ |= 0x00000100;
+            bitField0_ |= 0x00000080;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollSideNumber = 9;</code>
+         * <code>bool rollSideNumber = 8;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollSideNumber() {
-            bitField0_ = (bitField0_ & ~0x00000100);
+            bitField0_ = (bitField0_ & ~0x00000080);
             rollSideNumber_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollTotal = 10;</code>
+         * <code>bool rollTotal = 9;</code>
          *
          * @return The rollTotal.
          */
@@ -1457,7 +1079,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollTotal = 10;</code>
+         * <code>bool rollTotal = 9;</code>
          *
          * @param value The rollTotal to set.
          * @return This builder for chaining.
@@ -1465,25 +1087,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollTotal(boolean value) {
 
             rollTotal_ = value;
-            bitField0_ |= 0x00000200;
+            bitField0_ |= 0x00000100;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollTotal = 10;</code>
+         * <code>bool rollTotal = 9;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollTotal() {
-            bitField0_ = (bitField0_ & ~0x00000200);
+            bitField0_ = (bitField0_ & ~0x00000100);
             rollTotal_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollSound = 11;</code>
+         * <code>bool rollSound = 10;</code>
          *
          * @return The rollSound.
          */
@@ -1493,7 +1115,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollSound = 11;</code>
+         * <code>bool rollSound = 10;</code>
          *
          * @param value The rollSound to set.
          * @return This builder for chaining.
@@ -1501,31 +1123,31 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollSound(boolean value) {
 
             rollSound_ = value;
-            bitField0_ |= 0x00000400;
+            bitField0_ |= 0x00000200;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollSound = 11;</code>
+         * <code>bool rollSound = 10;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollSound() {
-            bitField0_ = (bitField0_ & ~0x00000400);
+            bitField0_ = (bitField0_ & ~0x00000200);
             rollSound_ = false;
             onChanged();
             return this;
         }
 
         @java.lang.Override
-        public final Builder setUnknownFields(
+        public Builder setUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.setUnknownFields(unknownFields);
         }
 
         @java.lang.Override
-        public final Builder mergeUnknownFields(
+        public Builder mergeUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.mergeUnknownFields(unknownFields);
         }

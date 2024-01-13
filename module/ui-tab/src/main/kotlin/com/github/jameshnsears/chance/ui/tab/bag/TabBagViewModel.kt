@@ -3,7 +3,6 @@ package com.github.jameshnsears.chance.ui.tab.bag
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
-import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -11,7 +10,6 @@ import kotlinx.coroutines.launch
 class TabBagViewModel(
     val settingsRepository: SettingsRepositoryInterface,
     val bagRepository: BagRepositoryInterface,
-    val rollRepository: RollRepositoryInterface
 ) : ViewModel() {
     fun bagDemoBag(selected: Boolean = true) {
         viewModelScope.launch {

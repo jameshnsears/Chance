@@ -74,7 +74,7 @@ public final class BagProtocolBuffer extends
         dice_ = java.util.Collections.emptyList();
     }
 
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.protocolbuffer.Bag.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_BagProtocolBuffer_descriptor;
     }
@@ -334,7 +334,7 @@ public final class BagProtocolBuffer extends
     }
 
     @java.lang.Override
-    public final boolean isInitialized() {
+    public boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -349,7 +349,7 @@ public final class BagProtocolBuffer extends
         if (tabRowChance_ != 0) {
             output.writeInt32(1, tabRowChance_);
         }
-        if (bagDemoBag_ != false) {
+        if (bagDemoBag_) {
             output.writeBool(2, bagDemoBag_);
         }
         if (bagZoom_ != 0) {
@@ -358,25 +358,25 @@ public final class BagProtocolBuffer extends
         for (int i = 0; i < dice_.size(); i++) {
             output.writeMessage(4, dice_.get(i));
         }
-        if (rollSequentially_ != false) {
+        if (rollSequentially_) {
             output.writeBool(5, rollSequentially_);
         }
         if (rollZoom_ != 0) {
             output.writeInt32(6, rollZoom_);
         }
-        if (rollTitle_ != false) {
+        if (rollTitle_) {
             output.writeBool(7, rollTitle_);
         }
-        if (rollSlideNumber_ != false) {
+        if (rollSlideNumber_) {
             output.writeBool(8, rollSlideNumber_);
         }
-        if (rollTotal_ != false) {
+        if (rollTotal_) {
             output.writeBool(9, rollTotal_);
         }
-        if (rollHistory_ != false) {
+        if (rollHistory_) {
             output.writeBool(10, rollHistory_);
         }
-        if (rollSound_ != false) {
+        if (rollSound_) {
             output.writeBool(11, rollSound_);
         }
         getUnknownFields().writeTo(output);
@@ -392,7 +392,7 @@ public final class BagProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                     .computeInt32Size(1, tabRowChance_);
         }
-        if (bagDemoBag_ != false) {
+        if (bagDemoBag_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(2, bagDemoBag_);
         }
@@ -404,7 +404,7 @@ public final class BagProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                     .computeMessageSize(4, dice_.get(i));
         }
-        if (rollSequentially_ != false) {
+        if (rollSequentially_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(5, rollSequentially_);
         }
@@ -412,23 +412,23 @@ public final class BagProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                     .computeInt32Size(6, rollZoom_);
         }
-        if (rollTitle_ != false) {
+        if (rollTitle_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(7, rollTitle_);
         }
-        if (rollSlideNumber_ != false) {
+        if (rollSlideNumber_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(8, rollSlideNumber_);
         }
-        if (rollTotal_ != false) {
+        if (rollTotal_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(9, rollTotal_);
         }
-        if (rollHistory_ != false) {
+        if (rollHistory_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(10, rollHistory_);
         }
-        if (rollSound_ != false) {
+        if (rollSound_) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(11, rollSound_);
         }
@@ -442,10 +442,9 @@ public final class BagProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof com.github.jameshnsears.chance.data.protocolbuffer.BagProtocolBuffer)) {
+        if (!(obj instanceof BagProtocolBuffer other)) {
             return super.equals(obj);
         }
-        com.github.jameshnsears.chance.data.protocolbuffer.BagProtocolBuffer other = (com.github.jameshnsears.chance.data.protocolbuffer.BagProtocolBuffer) obj;
 
         if (getTabRowChance()
                 != other.getTabRowChance()) return false;
@@ -469,8 +468,7 @@ public final class BagProtocolBuffer extends
                 != other.getRollHistory()) return false;
         if (getRollSound()
                 != other.getRollSound()) return false;
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
+        return getUnknownFields().equals(other.getUnknownFields());
     }
 
     @java.lang.Override
@@ -578,7 +576,7 @@ public final class BagProtocolBuffer extends
 
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor
+        public static com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.protocolbuffer.Bag.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_BagProtocolBuffer_descriptor;
         }
@@ -746,7 +744,7 @@ public final class BagProtocolBuffer extends
             if (other.getTabRowChance() != 0) {
                 setTabRowChance(other.getTabRowChance());
             }
-            if (other.getBagDemoBag() != false) {
+            if (other.getBagDemoBag()) {
                 setBagDemoBag(other.getBagDemoBag());
             }
             if (other.getBagZoom() != 0) {
@@ -778,25 +776,25 @@ public final class BagProtocolBuffer extends
                     }
                 }
             }
-            if (other.getRollSequentially() != false) {
+            if (other.getRollSequentially()) {
                 setRollSequentially(other.getRollSequentially());
             }
             if (other.getRollZoom() != 0) {
                 setRollZoom(other.getRollZoom());
             }
-            if (other.getRollTitle() != false) {
+            if (other.getRollTitle()) {
                 setRollTitle(other.getRollTitle());
             }
-            if (other.getRollSlideNumber() != false) {
+            if (other.getRollSlideNumber()) {
                 setRollSlideNumber(other.getRollSlideNumber());
             }
-            if (other.getRollTotal() != false) {
+            if (other.getRollTotal()) {
                 setRollTotal(other.getRollTotal());
             }
-            if (other.getRollHistory() != false) {
+            if (other.getRollHistory()) {
                 setRollHistory(other.getRollHistory());
             }
-            if (other.getRollSound() != false) {
+            if (other.getRollSound()) {
                 setRollSound(other.getRollSound());
             }
             this.mergeUnknownFields(other.getUnknownFields());
@@ -805,7 +803,7 @@ public final class BagProtocolBuffer extends
         }
 
         @java.lang.Override
-        public final boolean isInitialized() {
+        public boolean isInitialized() {
             return true;
         }
 
@@ -1013,7 +1011,7 @@ public final class BagProtocolBuffer extends
         }
 
         private void ensureDiceIsMutable() {
-            if (!((bitField0_ & 0x00000008) != 0)) {
+            if ((bitField0_ & 0x00000008) == 0) {
                 dice_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer>(dice_);
                 bitField0_ |= 0x00000008;
             }
@@ -1519,13 +1517,13 @@ public final class BagProtocolBuffer extends
         }
 
         @java.lang.Override
-        public final Builder setUnknownFields(
+        public Builder setUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.setUnknownFields(unknownFields);
         }
 
         @java.lang.Override
-        public final Builder mergeUnknownFields(
+        public Builder mergeUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.mergeUnknownFields(unknownFields);
         }

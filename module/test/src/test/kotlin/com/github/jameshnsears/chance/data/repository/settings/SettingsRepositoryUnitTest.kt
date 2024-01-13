@@ -1,8 +1,6 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
-import com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -14,24 +12,6 @@ class SettingsRepositoryUnitTest {
     @Test
     fun demoProtocolBuffer() {
         val settingsProtocolBuffer: SettingsProtocolBuffer = SettingsProtocolBuffer.newBuilder()
-            .addRollSelectedDice(
-                DiceProtocolBuffer.newBuilder()
-                    .setTitle("heads / tails")
-                    .addSide(
-                        SideProtocolBuffer.newBuilder()
-                            .setNumber(2)
-                            .setDescription("heads")
-                            .build()
-                    )
-                    .addSide(
-                        SideProtocolBuffer.newBuilder()
-                            .setNumber(1)
-                            .setDescription("tails")
-                            .build()
-                    )
-                    .setSelected(false)
-                    .build()
-            )
             .setBagZoom(5)
             .setRollZoom(10)
             .build()
@@ -39,11 +19,6 @@ class SettingsRepositoryUnitTest {
         val serialisation = settingsProtocolBuffer.toByteArray()
 
         val import = SettingsProtocolBuffer.parseFrom(serialisation)
-
-        assertEquals(
-            settingsProtocolBuffer.rollSelectedDiceList[0].sideList.size,
-            import.rollSelectedDiceList[0].sideList.size
-        )
 
         assertEquals(
             settingsProtocolBuffer.bagZoom,

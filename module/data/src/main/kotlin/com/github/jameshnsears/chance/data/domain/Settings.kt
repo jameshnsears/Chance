@@ -6,7 +6,6 @@ data class Settings(
     var bagZoom: Int = 0,
     var bagDemoBag: Boolean = true,
 
-    var rollSelectedDice: List<Dice> = emptyList(),
     var rollSequentially: Boolean = false,
     var rollZoom: Int = 0,
     var rollHistory: Boolean = false,

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Roll
+import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
 import com.github.jameshnsears.chance.utils.epoch.EpochTime
@@ -14,6 +15,7 @@ import java.security.SecureRandom
 
 class TabRollViewModel(
     val settingsRepository: SettingsRepositoryInterface,
+    val bagRepository: BagRepositoryInterface,
     var rollRepository: RollRepositoryInterface,
 ) : ViewModel() {
     //    var _description = MutableStateFlow(fetchInitialDescription())

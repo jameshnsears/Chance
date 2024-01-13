@@ -10,7 +10,7 @@ public final class Dice {
     static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internal_static_com_github_jameshnsears_chance_data_protocolbuffer_DiceProtocolBuffer_fieldAccessorTable;
-    private static com.google.protobuf.Descriptors.FileDescriptor
+    private static final com.google.protobuf.Descriptors.FileDescriptor
             descriptor;
 
     static {

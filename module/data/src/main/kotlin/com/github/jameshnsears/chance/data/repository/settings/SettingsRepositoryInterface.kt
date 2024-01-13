@@ -1,11 +1,7 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
-import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Settings
-import com.github.jameshnsears.chance.data.domain.Side
-import com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.ImportExportRepositoryInterface
 import kotlinx.coroutines.flow.Flow
 
@@ -21,24 +17,6 @@ interface SettingsRepositoryInterface : ImportExportRepositoryInterface {
 
         settingsProtocolBufferBuilder.setBagZoom(settings.bagZoom)
         settingsProtocolBufferBuilder.setBagDemoBag(settings.bagDemoBag)
-
-        for (dice: Dice in settings.rollSelectedDice) {
-            val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
-                .setTitle(dice.title)
-
-            for (side: Side in dice.sides) {
-                diceProtocolBuffer.addSide(
-                    SideProtocolBuffer.newBuilder()
-                        .setNumber(side.number)
-                        .setDescription(side.description)
-                        .build()
-                )
-            }
-
-            diceProtocolBuffer.build()
-
-            settingsProtocolBufferBuilder.addRollSelectedDice(diceProtocolBuffer)
-        }
 
         settingsProtocolBufferBuilder.setRollSequentially(settings.rollSequentially)
         settingsProtocolBufferBuilder.setRollZoom(settings.rollZoom)

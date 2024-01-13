@@ -4,6 +4,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.BagSampleData
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
@@ -36,8 +38,15 @@ fun TabRollBottomSheetLayoutComposablePreview() {
 fun getTabRollViewModel(): TabRollViewModel {
     val settingsRepository = SettingsRepositoryTestDouble.getInstance()
 
+    val bagRepository = BagRepositoryTestDouble.getInstance()
+    bagRepository.store(BagSampleData.allDice)
+
     val rollRepository = RollRepositoryTestDouble.getInstance()
     rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
 
-    return TabRollViewModel(settingsRepository, rollRepository)
+    return TabRollViewModel(
+        settingsRepository,
+        bagRepository,
+        rollRepository
+    )
 }

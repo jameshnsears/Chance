@@ -1,6 +1,8 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
 import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.BagSampleData
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
@@ -25,13 +27,20 @@ class TabRollViewModelUnitTest {
         try {
             val settingsRepository = SettingsRepositoryTestDouble.getInstance()
 
+            val bagRepository = BagRepositoryTestDouble.getInstance()
+            bagRepository.store(BagSampleData.allDice)
+
             val rollRepository = RollRepositoryTestDouble.getInstance()
             rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
 
             assertEquals(1, rollRepository.fetch().size)
             val firstRoll = rollRepository.fetch()[0]
 
-            val tabRollViewModel = TabRollViewModel(settingsRepository, rollRepository)
+            val tabRollViewModel = TabRollViewModel(
+                settingsRepository,
+                bagRepository,
+                rollRepository
+            )
 
             tabRollViewModel.roll(BagDemoData.dice)
             advanceUntilIdle()

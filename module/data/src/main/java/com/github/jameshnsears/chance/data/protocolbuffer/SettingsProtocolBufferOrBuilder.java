@@ -30,77 +30,49 @@ public interface SettingsProtocolBufferOrBuilder extends
     boolean getBagDemoBag();
 
     /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    java.util.List<com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer>
-    getRollSelectedDiceList();
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer getRollSelectedDice(int index);
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    int getRollSelectedDiceCount();
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    java.util.List<? extends com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder>
-    getRollSelectedDiceOrBuilderList();
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer rollSelectedDice = 4;</code>
-     */
-    com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder getRollSelectedDiceOrBuilder(
-            int index);
-
-    /**
-     * <code>bool rollSequentially = 5;</code>
+     * <code>bool rollSequentially = 4;</code>
      *
      * @return The rollSequentially.
      */
     boolean getRollSequentially();
 
     /**
-     * <code>int32 rollZoom = 6;</code>
+     * <code>int32 rollZoom = 5;</code>
      *
      * @return The rollZoom.
      */
     int getRollZoom();
 
     /**
-     * <code>bool rollHistory = 7;</code>
+     * <code>bool rollHistory = 6;</code>
      *
      * @return The rollHistory.
      */
     boolean getRollHistory();
 
     /**
-     * <code>bool rollTitle = 8;</code>
+     * <code>bool rollTitle = 7;</code>
      *
      * @return The rollTitle.
      */
     boolean getRollTitle();
 
     /**
-     * <code>bool rollSideNumber = 9;</code>
+     * <code>bool rollSideNumber = 8;</code>
      *
      * @return The rollSideNumber.
      */
     boolean getRollSideNumber();
 
     /**
-     * <code>bool rollTotal = 10;</code>
+     * <code>bool rollTotal = 9;</code>
      *
      * @return The rollTotal.
      */
     boolean getRollTotal();
 
     /**
-     * <code>bool rollSound = 11;</code>
+     * <code>bool rollSound = 10;</code>
      *
      * @return The rollSound.
      */
