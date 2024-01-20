@@ -36,7 +36,7 @@ class SettingsRepositoryUnitTest {
     fun `store and fetch`() = runTest {
         val settingsRepositoryTestDouble = SettingsRepositoryTestDouble.getInstance()
 
-        val settings = SettingsSampleData.headsTails
+        val settings = SettingsSampleData.settings
 
         runBlocking {
             settingsRepositoryTestDouble.store(settings)

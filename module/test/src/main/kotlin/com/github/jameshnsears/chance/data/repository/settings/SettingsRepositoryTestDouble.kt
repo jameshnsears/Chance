@@ -52,15 +52,13 @@ class SettingsRepositoryTestDouble private constructor() :
 
         settings.tabRowChance = settingsProtocolBuffer.tabRowChance
 
-        settings.bagZoom = settingsProtocolBuffer.bagZoom
         settings.bagDemoBag = settingsProtocolBuffer.bagDemoBag
 
         settings.rollSequentially = settingsProtocolBuffer.rollSequentially
-        settings.rollZoom = settingsProtocolBuffer.rollZoom
         settings.rollHistory = settingsProtocolBuffer.rollHistory
-        settings.rollTitle = settingsProtocolBuffer.rollTitle
+        settings.rollDiceTitle = settingsProtocolBuffer.rollDiceTitle
         settings.rollSideNumber = settingsProtocolBuffer.rollSideNumber
-        settings.rollTotal = settingsProtocolBuffer.rollTotal
+        settings.rollScore = settingsProtocolBuffer.rollScore
         settings.rollSound = settingsProtocolBuffer.rollSound
 
         store(settings)

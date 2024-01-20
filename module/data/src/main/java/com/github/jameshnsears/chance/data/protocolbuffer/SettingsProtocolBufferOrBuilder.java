@@ -16,63 +16,49 @@ public interface SettingsProtocolBufferOrBuilder extends
     int getTabRowChance();
 
     /**
-     * <code>int32 bagZoom = 2;</code>
-     *
-     * @return The bagZoom.
-     */
-    int getBagZoom();
-
-    /**
-     * <code>bool bagDemoBag = 3;</code>
+     * <code>bool bagDemoBag = 2;</code>
      *
      * @return The bagDemoBag.
      */
     boolean getBagDemoBag();
 
     /**
-     * <code>bool rollSequentially = 4;</code>
+     * <code>bool rollSequentially = 3;</code>
      *
      * @return The rollSequentially.
      */
     boolean getRollSequentially();
 
     /**
-     * <code>int32 rollZoom = 5;</code>
-     *
-     * @return The rollZoom.
-     */
-    int getRollZoom();
-
-    /**
-     * <code>bool rollHistory = 6;</code>
+     * <code>bool rollHistory = 4;</code>
      *
      * @return The rollHistory.
      */
     boolean getRollHistory();
 
     /**
-     * <code>bool rollTitle = 7;</code>
+     * <code>bool rollScore = 5;</code>
      *
-     * @return The rollTitle.
+     * @return The rollScore.
      */
-    boolean getRollTitle();
+    boolean getRollScore();
 
     /**
-     * <code>bool rollSideNumber = 8;</code>
+     * <code>bool rollDiceTitle = 6;</code>
+     *
+     * @return The rollDiceTitle.
+     */
+    boolean getRollDiceTitle();
+
+    /**
+     * <code>bool rollSideNumber = 7;</code>
      *
      * @return The rollSideNumber.
      */
     boolean getRollSideNumber();
 
     /**
-     * <code>bool rollTotal = 9;</code>
-     *
-     * @return The rollTotal.
-     */
-    boolean getRollTotal();
-
-    /**
-     * <code>bool rollSound = 10;</code>
+     * <code>bool rollSound = 8;</code>
      *
      * @return The rollSound.
      */

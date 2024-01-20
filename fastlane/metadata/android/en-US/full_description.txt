@@ -2,4 +2,6 @@ Use this - easy to use - app to give meaning to chance
 
 &bull; Assign a picture and / or text to the side of a dice
 &bull; ...invent unique dice based games
+&bull; Choose which dice to roll and the order they roll
+&bull; Export &amp; Import feature
 &bull; User feedback drives development

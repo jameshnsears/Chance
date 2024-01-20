@@ -8,9 +8,9 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
-import com.github.jameshnsears.chance.ui.dialog.bag.card.BagCardDiceTestTag
+import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.BagCardDiceTestTag
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTreeInstrumentedFeature
 import org.junit.Test
@@ -23,7 +23,7 @@ class DialogBagInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature() {
         val bagRepository = BagRepositoryTestDouble.getInstance()
         bagRepository.store(
             listOf(
-                BagDemoData.diceHeadsTails
+                BagDemoSampleData.diceHeadsTails
             )
         )
 
@@ -43,7 +43,7 @@ class DialogBagInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature() {
 
         val diceTitle = composeTestRule.onNodeWithTag(BagCardDiceTestTag.diceTitle)
         diceTitle.assertTextContains(
-            InstrumentationRegistry.getInstrumentation().targetContext.getString(BagDemoData.dice[0].titleStringsId)
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(BagDemoSampleData.allDice[0].titleStringsId)
         )
 
         diceTitle.performTextClearance()

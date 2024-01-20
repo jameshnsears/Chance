@@ -8,3 +8,11 @@ class ZoomRollViewModel(
     settingsRepository: SettingsRepositoryInterface,
     val rollRepository: RollRepositoryInterface,
 ) : ZoomViewModel()
+
+/*
+                                Title Dice
+                                Side # + Side Image
+History timestamp       Score
+                                Side Image
+                                Side Description
+*/

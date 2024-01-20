@@ -2,11 +2,11 @@
     <string name="dialog.bag.title">Configure Bag</string>
     <string name="dialog.bag.save">Save</string>
 
-    <string name="dialog.bag.side">Side #</string>
+    <string name="dialog.bag.side">Side</string>
     <string name="dialog.bag.side.colour">Colour…</string>
-    <string name="dialog.bag.side.colour.info">Applies to Side # and Description</string>
+    <string name="dialog.bag.side.colour.info">Change colour of side value:</string>
     <string name="dialog.bag.side.image">Image…</string>
-    <string name="dialog.bag.side.image.info">SVG file</string>
+    <string name="dialog.bag.side.image.info">Attach an SVG to this side</string>
     <string name="dialog.bag.side.description">Description</string>
 
     <string name="dialog.bag.dice">Dice</string>
@@ -21,7 +21,7 @@
         <item>20</item>
     </string-array>
     <string name="dialog.bag.dice.title">Title</string>
-    <string name="dialog.bag.dice.title.info">Title is mandatory; defaults to d&lt;# of sides&gt;</string>
+    <string name="dialog.bag.dice.title.info">Each dice must have a unique title</string>
     <string-array name="dialog.bag.dice.title.mandatory">
         <item>d2</item>
         <item>d4</item>
@@ -35,8 +35,9 @@
     <string name="dialog.bag.dice.clone">Clone</string>
     <string name="dialog.bag.dice.delete">Delete</string>
 
-    <string name="dialog.bag.colour.side">Side # &amp; Description</string>
-    <string name="dialog.bag.colour.dice">Dice</string>
-    <string name="dialog.bag.colour.cancel">Cancel</string>
-    <string name="dialog.bag.colour.ok">OK</string>
+    <string name="dialog.bag.colour.picker.side">Side value</string>
+    <string name="dialog.bag.colour.picker.description">Description</string>
+    <string name="dialog.bag.colour.picker.dice">Dice</string>
+    <string name="dialog.bag.colour.picker.cancel">Cancel</string>
+    <string name="dialog.bag.colour.picker.ok">OK</string>
 </resources>

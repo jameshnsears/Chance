@@ -21,6 +21,9 @@ class DialogBagAndroidViewModel(
 ) : AndroidViewModel(
     application
 ), DialogBagAndroidViewModelInterface {
+    override fun dice() = dice
+    override fun side() = side
+
     override var bagModel: BagModel = BagModel(bagRepository)
 
     ////////////////////////////////
@@ -39,15 +42,6 @@ class DialogBagAndroidViewModel(
 
     ////////////////////////////////
 
-    private var _sideImageFilename = MutableStateFlow(side.imageFilename)
-    override var sideImageFilename: StateFlow<String> = _sideImageFilename
-
-    override fun sideImageFilename(imageFilename: String) {
-        _sideImageFilename.value = imageFilename
-    }
-
-    ////////////////////////////////
-
     private var _sideDescription = MutableStateFlow(mapSideDescription())
     override var sideDescription: StateFlow<String> = _sideDescription
 
@@ -60,6 +54,15 @@ class DialogBagAndroidViewModel(
 
     override fun sideDescription(sideDescription: String) {
         _sideDescription.value = sideDescription
+    }
+
+    ////////////////////////////////
+
+    private var _sideDesciptionColour = MutableStateFlow(side.descriptionColour)
+    override var sideDescriptionColour: StateFlow<String> = _sideDesciptionColour
+
+    override fun sideDescriptionColour(colour: String) {
+        _sideDesciptionColour.value = colour
     }
 
     ////////////////////////////////
@@ -85,25 +88,30 @@ class DialogBagAndroidViewModel(
             getString(dice.titleStringsId)
     }
 
-    override fun diceTitle(diceTitle: String) {
-        _diceTitle.value = diceTitle
+    override fun diceTitle(title: String) {
+        _diceTitle.value = title
     }
 
     ////////////////////////////////
 
+    /*
+    _diceColour is a private and mutable variable that can be changed within the class
+
+    diceColour is a public and immutable variable that can be accessed and observed from
+    outside the class, but cannot be changed from outside the class.
+     */
     private var _diceColour = MutableStateFlow(dice.colour)
     override var diceColour: StateFlow<String> = _diceColour
 
-    override fun diceColour(diceColour: String) {
-        _diceColour.value = diceColour
+    override fun diceColour(colour: String) {
+        _diceColour.value = colour
     }
 
     ////////////////////////////////
 
     suspend fun diceClone() = bagModel.diceClone(dice)
 
-    private var _diceCanBeDeleted = MutableStateFlow(bagModel.diceCanBeDeleted())
-    override var diceCanBeDeleted: StateFlow<Boolean> = _diceCanBeDeleted
+    override fun diceCanBeDeleted() = bagModel.diceCanBeDeleted()
 
     fun diceDelete() = bagModel.diceDelete(dice)
 

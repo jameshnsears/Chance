@@ -46,7 +46,7 @@ class SvgSerializerInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature()
                         model = model,
                         contentDescription = "",
                         modifier = Modifier
-                            .size(width = 100.dp, height = 100.dp)
+                            .size(width = 200.dp, height = 200.dp)
                             .testTag(assetFilename)
                     )
                 }

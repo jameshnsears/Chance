@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
@@ -47,29 +47,25 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun rollRepositoryTestDouble(): RollRepositoryInterface {
-        val rollRepository = RollRepositoryTestDouble.getInstance()
-        rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
-        return rollRepository
+    private fun settingsRepositoryTestDouble(): SettingsRepositoryInterface {
+        val settingsRepository = SettingsRepositoryTestDouble.getInstance()
+        runBlocking {
+            settingsRepository.store(SettingsSampleData.settings)
+        }
+        return settingsRepository
     }
 
     private fun bagRepositoryTestDouble(): BagRepositoryInterface {
         val bagRepository = BagRepositoryTestDouble.getInstance()
-        bagRepository.store(
-            listOf(
-                BagDemoData.diceHeadsTails
-            )
-        )
+        bagRepository.store(BagDemoSampleData.allDice)
 
         return bagRepository
     }
 
-    private fun settingsRepositoryTestDouble(): SettingsRepositoryInterface {
-        val settingsRepository = SettingsRepositoryTestDouble.getInstance()
-        runBlocking {
-            settingsRepository.store(SettingsSampleData.headsTails)
-        }
-        return settingsRepository
+    private fun rollRepositoryTestDouble(): RollRepositoryInterface {
+        val rollRepository = RollRepositoryTestDouble.getInstance()
+        rollRepository.store(RollSampleData.rollHistory)
+        return rollRepository
     }
 
     private fun initLogging() {

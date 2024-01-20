@@ -59,7 +59,7 @@ class SettingsRepositoryInstrumentedTest : LoggingLineNumberTreeInstrumentedFeat
 
         val settingsRepository = SettingsRepository.getInstance(context)
 
-        val settings = SettingsSampleData.headsTails
+        val settings = SettingsSampleData.settings
 
         runBlocking {
             settingsRepository.store(settings)

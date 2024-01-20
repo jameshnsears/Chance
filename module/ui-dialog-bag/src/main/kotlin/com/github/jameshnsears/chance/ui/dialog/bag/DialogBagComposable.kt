@@ -30,8 +30,8 @@ import androidx.compose.ui.window.DialogProperties
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
-import com.github.jameshnsears.chance.ui.dialog.bag.card.BagCardDice
-import com.github.jameshnsears.chance.ui.dialog.bag.card.BagCardSide
+import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.BagCardDice
+import com.github.jameshnsears.chance.ui.dialog.bag.card.side.BagCardSide
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 

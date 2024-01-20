@@ -1,41 +1,36 @@
 package com.github.jameshnsears.chance.ui.zoom.bag
 
-import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.MainDispatcherRule
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Assert.fail
+import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
 
 class ZoomBagViewModelUnitTest {
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    @Ignore
     @Test
     fun todo() = runTest {
-        val testDispatcher = UnconfinedTestDispatcher(testScheduler)
-        Dispatchers.setMain(testDispatcher)
 
-        try {
-            val settingsRepository = SettingsRepositoryTestDouble.getInstance()
+        val settingsRepository = SettingsRepositoryTestDouble.getInstance()
 
-            val bagRepository = BagRepositoryTestDouble.getInstance()
-            bagRepository.store(
-                listOf(
-                    BagDemoData.diceHeadsTails
-                )
+        val bagRepository = BagRepositoryTestDouble.getInstance()
+        bagRepository.store(
+            listOf(
+                BagDemoSampleData.diceHeadsTails
             )
+        )
 
-            val zoomBagRollModel = ZoomBagViewModel(settingsRepository, bagRepository)
+        val zoomBagRollModel = ZoomBagViewModel(settingsRepository, bagRepository)
 
-            zoomBagRollModel.zoom()
+        zoomBagRollModel.zoom()
 
-            fail("todo")
-        } finally {
-            Dispatchers.resetMain()
-        }
+        fail("todo")
     }
 }

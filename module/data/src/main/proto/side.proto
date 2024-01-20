@@ -7,9 +7,9 @@ package com.github.jameshnsears.chance.data.protocolbuffer;
 message SideProtocolBuffer {
   int32 number = 1;
   string colour = 2;
-  string imageFilename = 3;
-  bytes imageBase64 = 4;
-  int32 imageDrawableId = 5;
-  string description = 6;
-  int32 descriptionStringsId = 7;
+  bytes imageBase64 = 3;
+  int32 imageDrawableId = 4;
+  string description = 5;
+  int32 descriptionStringsId = 6;
+  string descriptionColour = 7;
 }

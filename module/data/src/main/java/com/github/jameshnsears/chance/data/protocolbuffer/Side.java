@@ -10,18 +10,18 @@ public final class Side {
     static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SideProtocolBuffer_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.FileDescriptor
+    private static com.google.protobuf.Descriptors.FileDescriptor
             descriptor;
 
     static {
         java.lang.String[] descriptorData = {
                 "\n\nside.proto\0222com.github.jameshnsears.ch" +
-                        "ance.data.protocolbuffer\"\254\001\n\022SideProtoco" +
+                        "ance.data.protocolbuffer\"\260\001\n\022SideProtoco" +
                         "lBuffer\022\016\n\006number\030\001 \001(\005\022\016\n\006colour\030\002 \001(\t\022" +
-                        "\025\n\rimageFilename\030\003 \001(\t\022\023\n\013imageBase64\030\004 " +
-                        "\001(\014\022\027\n\017imageDrawableId\030\005 \001(\005\022\023\n\013descript" +
-                        "ion\030\006 \001(\t\022\034\n\024descriptionStringsId\030\007 \001(\005B" +
-                        "\002P\001b\006proto3"
+                        "\023\n\013imageBase64\030\003 \001(\014\022\027\n\017imageDrawableId\030" +
+                        "\004 \001(\005\022\023\n\013description\030\005 \001(\t\022\034\n\024descriptio" +
+                        "nStringsId\030\006 \001(\005\022\031\n\021descriptionColour\030\007 " +
+                        "\001(\tB\002P\001b\006proto3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
                 .internalBuildGeneratedFileFrom(descriptorData,
@@ -32,7 +32,7 @@ public final class Side {
         internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SideProtocolBuffer_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
                 internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SideProtocolBuffer_descriptor,
-                new java.lang.String[]{"Number", "Colour", "ImageFilename", "ImageBase64", "ImageDrawableId", "Description", "DescriptionStringsId",});
+                new java.lang.String[]{"Number", "Colour", "ImageBase64", "ImageDrawableId", "Description", "DescriptionStringsId", "DescriptionColour",});
     }
 
     private Side() {

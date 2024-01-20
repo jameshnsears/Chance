@@ -15,15 +15,13 @@ interface SettingsRepositoryInterface : ImportExportRepositoryInterface {
     ) {
         settingsProtocolBufferBuilder.setTabRowChance(settings.tabRowChance)
 
-        settingsProtocolBufferBuilder.setBagZoom(settings.bagZoom)
         settingsProtocolBufferBuilder.setBagDemoBag(settings.bagDemoBag)
 
         settingsProtocolBufferBuilder.setRollSequentially(settings.rollSequentially)
-        settingsProtocolBufferBuilder.setRollZoom(settings.rollZoom)
         settingsProtocolBufferBuilder.setRollHistory(settings.rollHistory)
-        settingsProtocolBufferBuilder.setRollTitle(settings.rollTitle)
+        settingsProtocolBufferBuilder.setRollDiceTitle(settings.rollDiceTitle)
         settingsProtocolBufferBuilder.setRollSideNumber(settings.rollSideNumber)
-        settingsProtocolBufferBuilder.setRollTotal(settings.rollTotal)
+        settingsProtocolBufferBuilder.setRollScore(settings.rollScore)
         settingsProtocolBufferBuilder.setRollSound(settings.rollSound)
     }
 }

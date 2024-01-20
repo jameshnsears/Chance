@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
@@ -21,10 +21,10 @@ fun TabRowChanceComposablePreview() {
             val settingsRepository = SettingsRepositoryTestDouble.getInstance()
 
             val bagRepository = BagRepositoryTestDouble.getInstance()
-            bagRepository.store(BagDemoData.dice)
+            bagRepository.store(BagDemoSampleData.allDice)
 
             val rollRepository = RollRepositoryTestDouble.getInstance()
-            rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
+            rollRepository.store(RollSampleData.rollHistory)
 
             TabRowChance(
                 settingsRepository,

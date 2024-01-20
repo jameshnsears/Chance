@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.bag.BagSampleData
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
@@ -16,7 +16,7 @@ fun ZoomBagComposablePreviewPortrait() {
     val settingsRepository = SettingsRepositoryTestDouble.getInstance()
 
     val bagRepository = BagRepositoryTestDouble.getInstance()
-    bagRepository.store(BagDemoData.dice)
+    bagRepository.store(BagDemoSampleData.allDice)
 
     val zoomBagViewModel = ZoomBagViewModel(settingsRepository, bagRepository)
 

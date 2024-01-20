@@ -68,7 +68,7 @@ public final class DiceProtocolBuffer extends
         colour_ = "";
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.protocolbuffer.Dice.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_DiceProtocolBuffer_descriptor;
     }
@@ -336,7 +336,7 @@ public final class DiceProtocolBuffer extends
     }
 
     @java.lang.Override
-    public boolean isInitialized() {
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -363,7 +363,7 @@ public final class DiceProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(colour_)) {
             com.google.protobuf.GeneratedMessageV3.writeString(output, 5, colour_);
         }
-        if (selected_) {
+        if (selected_ != false) {
             output.writeBool(6, selected_);
         }
         getUnknownFields().writeTo(output);
@@ -393,7 +393,7 @@ public final class DiceProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(colour_)) {
             size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, colour_);
         }
-        if (selected_) {
+        if (selected_ != false) {
             size += com.google.protobuf.CodedOutputStream
                     .computeBoolSize(6, selected_);
         }
@@ -407,9 +407,10 @@ public final class DiceProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof DiceProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer other = (com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer) obj;
 
         if (getEpoch()
                 != other.getEpoch()) return false;
@@ -423,7 +424,8 @@ public final class DiceProtocolBuffer extends
                 .equals(other.getColour())) return false;
         if (getSelected()
                 != other.getSelected()) return false;
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -511,7 +513,7 @@ public final class DiceProtocolBuffer extends
 
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.protocolbuffer.Dice.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_DiceProtocolBuffer_descriptor;
         }
@@ -698,7 +700,7 @@ public final class DiceProtocolBuffer extends
                 bitField0_ |= 0x00000010;
                 onChanged();
             }
-            if (other.getSelected()) {
+            if (other.getSelected() != false) {
                 setSelected(other.getSelected());
             }
             this.mergeUnknownFields(other.getUnknownFields());
@@ -707,7 +709,7 @@ public final class DiceProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
 
@@ -818,7 +820,7 @@ public final class DiceProtocolBuffer extends
         }
 
         private void ensureSideIsMutable() {
-            if ((bitField0_ & 0x00000002) == 0) {
+            if (!((bitField0_ & 0x00000002) != 0)) {
                 side_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer>(side_);
                 bitField0_ |= 0x00000002;
             }
@@ -1312,13 +1314,13 @@ public final class DiceProtocolBuffer extends
         }
 
         @java.lang.Override
-        public Builder setUnknownFields(
+        public final Builder setUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.setUnknownFields(unknownFields);
         }
 
         @java.lang.Override
-        public Builder mergeUnknownFields(
+        public final Builder mergeUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.mergeUnknownFields(unknownFields);
         }

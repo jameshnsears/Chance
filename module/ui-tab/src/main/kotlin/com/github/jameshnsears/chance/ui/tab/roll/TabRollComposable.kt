@@ -20,16 +20,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,11 +51,17 @@ fun TabRoll(tabRollViewModel: TabRollViewModel) {
     TabRollLayout(tabRollViewModel)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabRollLayout(tabRollViewModel: TabRollViewModel) {
-//    val sliderSidesValue = remember { mutableFloatStateOf(tabRollViewModel.sliderSidesPosition.value) }
+    val scaffoldState = rememberBottomSheetScaffoldState()
 
-    Column(modifier = Modifier.padding(10.dp)) {
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        sheetPeekHeight = 110.dp,
+        sheetContent = {
+            TabRollBottomSheetLayout(tabRollViewModel)
+        }) { innerPadding ->
         ZoomRoll(
             ZoomRollViewModel(
                 tabRollViewModel.settingsRepository,
@@ -66,10 +69,7 @@ fun TabRollLayout(tabRollViewModel: TabRollViewModel) {
             )
         )
     }
-
-    TabRollBottomSheet(tabRollViewModel)
 }
-
 
 @Composable
 fun UndoRollButtons(tabRollViewModel: TabRollViewModel) {
@@ -99,11 +99,13 @@ fun UndoRollButtons(tabRollViewModel: TabRollViewModel) {
             Text(stringResource(R.string.tab_roll_undo))
         }
 
+        Spacer(modifier = Modifier.weight(1f))
+
         Button(
             onClick = { /* Do something when clicked */ },
             modifier = Modifier
-                .weight(1f)
                 .padding(start = 18.dp)
+                .width(115.dp)
                 .testTag(TabRollTestTag.roll)
         ) {
             Icon(
@@ -121,7 +123,7 @@ fun UndoRollButtons(tabRollViewModel: TabRollViewModel) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DiceFilter(tabRollViewModel: TabRollViewModel) {
+fun DiceSelection(tabRollViewModel: TabRollViewModel) {
     var selected by remember { mutableStateOf(false) }
 
     FilterChip(
@@ -224,14 +226,13 @@ fun History(tabRollViewModel: TabRollViewModel) {
 }
 
 @Composable
-fun ShowDiceTitle(tabRollViewModel: TabRollViewModel) {
+fun DiceTitle(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -251,7 +252,7 @@ fun ShowDiceTitle(tabRollViewModel: TabRollViewModel) {
 }
 
 @Composable
-fun ShowSideNumber(tabRollViewModel: TabRollViewModel) {
+fun SideNumber(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
@@ -277,7 +278,7 @@ fun ShowSideNumber(tabRollViewModel: TabRollViewModel) {
 }
 
 @Composable
-fun ShowSum(tabRollViewModel: TabRollViewModel) {
+fun Score(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
@@ -290,7 +291,7 @@ fun ShowSum(tabRollViewModel: TabRollViewModel) {
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_roll_show_sum)
+            text = stringResource(R.string.tab_roll_show_score)
         )
 
         Switch(
@@ -303,7 +304,7 @@ fun ShowSum(tabRollViewModel: TabRollViewModel) {
 }
 
 @Composable
-fun UseSound(tabRollViewModel: TabRollViewModel) {
+fun RollSound(tabRollViewModel: TabRollViewModel) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
@@ -329,77 +330,33 @@ fun UseSound(tabRollViewModel: TabRollViewModel) {
 }
 
 @Composable
-fun ZoomRollSlider(tabRollViewModel: TabRollViewModel) {
-    var sliderPosition by remember { mutableFloatStateOf(0f) }
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Text(stringResource(R.string.tab_roll_zoom))
-
-        Spacer(modifier = Modifier.width(10.dp))
-
-        Slider(
-            value = sliderPosition,
-            onValueChange = { sliderPosition = it },
-            valueRange = 0f..100f,
-            onValueChangeFinished = {
-            },
-            steps = 5,
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TabRollBottomSheet(tabRollViewModel: TabRollViewModel) {
-    val scope = rememberCoroutineScope()
-    val scaffoldState = rememberBottomSheetScaffoldState()
-
-    BottomSheetScaffold(
-        scaffoldState = scaffoldState,
-        sheetPeekHeight = 115.dp,
-        sheetContent = {
-            TabRollBottomSheetLayout(tabRollViewModel)
-        }
-    ) {
-    }
-}
-
-@Composable
 fun TabRollBottomSheetLayout(tabRollViewModel: TabRollViewModel) {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(10.dp)
-            .height(530.dp),
+            .padding(8.dp)
+            .height(480.dp),
     ) {
         UndoRollButtons(tabRollViewModel)
 
         Divider(Modifier.padding(bottom = 8.dp))
 
-        DiceFilter(tabRollViewModel)
+        DiceSelection(tabRollViewModel)
 
         RollSequentially()
 
         Divider()
 
-        ZoomRollSlider(tabRollViewModel)
-
-        Divider()
-
         History(tabRollViewModel)
 
-        Divider()
+        Divider(Modifier.padding(bottom = 8.dp))
 
-        ShowDiceTitle(tabRollViewModel)
+        Score(tabRollViewModel)
 
-        ShowSideNumber(tabRollViewModel)
+        DiceTitle(tabRollViewModel)
 
-        ShowSum(tabRollViewModel)
+        SideNumber(tabRollViewModel)
 
-        UseSound(tabRollViewModel)
+        RollSound(tabRollViewModel)
     }
 }

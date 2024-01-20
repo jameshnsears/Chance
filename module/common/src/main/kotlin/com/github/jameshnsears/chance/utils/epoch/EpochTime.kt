@@ -6,7 +6,10 @@ import java.util.Locale
 
 class EpochTime {
     companion object {
-        fun now() = System.currentTimeMillis()
+        fun now(): Long {
+            Thread.sleep(5)
+            return System.currentTimeMillis()
+        }
 
         fun formatDay(timeMillis: Long): String =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

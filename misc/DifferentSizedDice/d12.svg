@@ -5,21 +5,24 @@
     version="1.1" viewBox="0 0 100 100" width="100mm" xmlns="http://www.w3.org/2000/svg"
     inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)" sodipodi:docname="d12.svg">
     <sodipodi:namedview bordercolor="#000000" borderopacity="0.25" id="namedview241"
-        pagecolor="#ffffff" showgrid="false" inkscape:current-layer="svg239"
-        inkscape:cx="-9.8635535" inkscape:cy="214.03911" inkscape:deskcolor="#d1d1d1"
-        inkscape:document-units="mm" inkscape:pagecheckerboard="0" inkscape:pageopacity="0.0"
-        inkscape:pageshadow="2" inkscape:showpageshadow="2" inkscape:window-height="736"
-        inkscape:window-maximized="1" inkscape:window-width="1366" inkscape:window-x="0"
-        inkscape:window-y="0" inkscape:zoom="1.0138334" />
+        pagecolor="#ffffff" showgrid="false" inkscape:current-layer="svg239" inkscape:cx="253.75004"
+        inkscape:cy="100.10814" inkscape:deskcolor="#d1d1d1" inkscape:document-units="mm"
+        inkscape:pagecheckerboard="0" inkscape:pageopacity="0.0" inkscape:pageshadow="2"
+        inkscape:showpageshadow="2" inkscape:window-height="736" inkscape:window-maximized="1"
+        inkscape:window-width="1366" inkscape:window-x="0" inkscape:window-y="0"
+        inkscape:zoom="1.86798" />
     <defs id="defs236">
         <clipPath clipPathUnits="userSpaceOnUse" id="presentation_clip_path">
             <rect height="14540" id="rect494" width="14534" x="0" y="0" />
         </clipPath>
     </defs>
-    <g style="display:inline;fill:#000000;fill-opacity:1" id="layer5" inkscape:label="d12">
-        <path style="stroke-width:2;stroke-dasharray:none;fill:#000000;fill-opacity:1"
-            d="M 50.5658,3.2939299 97.470915,39.21492 79.55635,97.378329 21.57525,97.363589 3.660685,39.2444 50.5658,3.3234096"
-            fill="none" id="path1405" stroke="#000000" stroke-width="1.01219"
-            inkscape:label="d12" />
-    </g>
+    <path style="fill:#000000;stroke:#00ffff;stroke-width:0.736586"
+        d="m 644.24587,111.46167 -70.10185,50.81088 -68.39032,-53.09219 -69.98669,-50.969399 29.35991,-81.449448 26.8477,-82.311703 86.53574,2.75366 86.57948,0.098 24.12212,83.151308 26.66136,82.372254 z"
+        id="path846"
+        transform="matrix(-0.10478843,0.34966688,-0.33635172,-0.10893669,115.77552,-144.77282)"
+        inkscape:flatsided="false" inkscape:randomized="0" inkscape:rounded="0"
+        inkscape:transform-center-x="-8.8923269" inkscape:transform-center-y="-1.649583"
+        sodipodi:arg1="0.95894878" sodipodi:arg2="1.5872673" sodipodi:cx="576.56976"
+        sodipodi:cy="15.011953" sodipodi:r1="117.82446" sodipodi:r2="147.28058" sodipodi:sides="5"
+        sodipodi:type="star" />
 </svg>

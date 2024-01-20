@@ -55,7 +55,7 @@ public final class RollProtocolBuffer extends
     private RollProtocolBuffer() {
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.protocolbuffer.Roll.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_RollProtocolBuffer_descriptor;
     }
@@ -229,7 +229,7 @@ public final class RollProtocolBuffer extends
     }
 
     @java.lang.Override
-    public boolean isInitialized() {
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -274,9 +274,10 @@ public final class RollProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof RollProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer other = (com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer) obj;
 
         if (hasDice() != other.hasDice()) return false;
         if (hasDice()) {
@@ -288,7 +289,8 @@ public final class RollProtocolBuffer extends
             if (!getSide()
                     .equals(other.getSide())) return false;
         }
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -365,7 +367,7 @@ public final class RollProtocolBuffer extends
             maybeForceBuilderInitialization();
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.protocolbuffer.Roll.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_RollProtocolBuffer_descriptor;
         }
@@ -514,7 +516,7 @@ public final class RollProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
 
@@ -821,13 +823,13 @@ public final class RollProtocolBuffer extends
         }
 
         @java.lang.Override
-        public Builder setUnknownFields(
+        public final Builder setUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.setUnknownFields(unknownFields);
         }
 
         @java.lang.Override
-        public Builder mergeUnknownFields(
+        public final Builder mergeUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.mergeUnknownFields(unknownFields);
         }

@@ -17,13 +17,14 @@ class DialogBagAndroidViewModelTestDouble(
 ) : AndroidViewModel(
     application
 ), DialogBagAndroidViewModelInterface {
+    override fun dice() = dice
+    override fun side() = side
+
     override var bagModel: BagModel = BagModel(bagRepository)
 
     override var sideNumber: StateFlow<Int> = MutableStateFlow(side.number)
 
     override var sideColour: StateFlow<String> = MutableStateFlow(side.colour)
-
-    override var sideImageFilename: StateFlow<String> = MutableStateFlow(side.imageFilename)
 
     override var sideDescription: StateFlow<String> = MutableStateFlow(mapSideDescription())
 
@@ -33,6 +34,8 @@ class DialogBagAndroidViewModelTestDouble(
         else
             side.descriptionStringsId.toString()
     }
+
+    override var sideDescriptionColour: StateFlow<String> = MutableStateFlow(side.descriptionColour)
 
     override var diceSidesSliderPosition: StateFlow<Float> =
         MutableStateFlow(diceSidesSliderInitialPosition(dice.sides.size))
@@ -48,20 +51,19 @@ class DialogBagAndroidViewModelTestDouble(
 
     override var diceColour: StateFlow<String> = MutableStateFlow(dice.colour)
 
-    private var _diceCanBeDeleted = MutableStateFlow(bagModel.diceCanBeDeleted())
-    override var diceCanBeDeleted: StateFlow<Boolean> = _diceCanBeDeleted
+    override fun diceCanBeDeleted() = bagModel.diceCanBeDeleted()
 
     override fun sideColour(colour: String) {}
 
-    override fun sideImageFilename(imageFilename: String) {}
-
     override fun sideDescription(sideDescription: String) {}
+
+    override fun sideDescriptionColour(colour: String) {}
 
     override fun diceSidesSliderPosition(position: Float) {}
 
-    override fun diceTitle(diceTitle: String) {}
+    override fun diceTitle(title: String) {}
 
-    override fun diceColour(diceColour: String) {}
+    override fun diceColour(colour: String) {}
 
     override fun getString(stringsId: Int): String {
         return ""

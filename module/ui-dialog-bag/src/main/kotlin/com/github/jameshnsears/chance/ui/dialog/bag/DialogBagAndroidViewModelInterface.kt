@@ -1,5 +1,7 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
+import com.github.jameshnsears.chance.data.domain.Dice
+import com.github.jameshnsears.chance.data.domain.Side
 import com.github.jameshnsears.chance.data.repository.bag.BagModel
 import kotlinx.coroutines.flow.StateFlow
 
@@ -7,15 +9,18 @@ interface DialogBagAndroidViewModelInterface {
     var bagModel: BagModel
     var sideNumber: StateFlow<Int>
     var sideColour: StateFlow<String>
-    var sideImageFilename: StateFlow<String>
     var sideDescription: StateFlow<String>
+    var sideDescriptionColour: StateFlow<String>
     var diceSidesSliderPosition: StateFlow<Float>
     var diceTitle: StateFlow<String>
     var diceColour: StateFlow<String>
+    fun dice(): Dice
+    fun side(): Side
     fun sideColour(colour: String)
-    fun sideImageFilename(imageFilename: String)
     fun mapSideDescription(): String
     fun sideDescription(sideDescription: String)
+    fun sideDescriptionColour(colour: String)
+
     fun diceSidesSliderInitialPosition(diceSidesSize: Int): Float {
         return when (diceSidesSize) {
             2 -> 0.0f
@@ -30,9 +35,9 @@ interface DialogBagAndroidViewModelInterface {
 
     fun diceSidesSliderPosition(position: Float)
     fun mapDiceTitle(): String
-    fun diceTitle(diceTitle: String)
-    fun diceColour(diceColour: String)
-    var diceCanBeDeleted: StateFlow<Boolean>
+    fun diceTitle(title: String)
+    fun diceColour(colour: String)
+    fun diceCanBeDeleted(): Boolean
     fun getString(stringsId: Int): String
     fun save()
 }

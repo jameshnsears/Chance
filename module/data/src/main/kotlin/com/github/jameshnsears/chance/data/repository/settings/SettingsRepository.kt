@@ -27,7 +27,16 @@ class SettingsRepository private constructor(val context: Context) :
         val settings: Settings = context.settingsDataStore.data
             .map { settingsProtocolBuffer ->
                 // map SettingsProtocolBuffer into Settings
-                Settings(bagZoom = settingsProtocolBuffer.bagZoom)
+                Settings(
+                    tabRowChance = settingsProtocolBuffer.tabRowChance,
+                    bagDemoBag = settingsProtocolBuffer.bagDemoBag,
+                    rollSequentially = settingsProtocolBuffer.rollSequentially,
+                    rollHistory = settingsProtocolBuffer.rollHistory,
+                    rollScore = settingsProtocolBuffer.rollScore,
+                    rollDiceTitle = settingsProtocolBuffer.rollDiceTitle,
+                    rollSideNumber = settingsProtocolBuffer.rollSideNumber,
+                    rollSound = settingsProtocolBuffer.rollSound
+                )
             }.first()
 
         emit(settings)

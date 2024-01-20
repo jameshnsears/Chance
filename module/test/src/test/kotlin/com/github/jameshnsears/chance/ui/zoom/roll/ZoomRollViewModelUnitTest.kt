@@ -1,39 +1,33 @@
 package com.github.jameshnsears.chance.ui.zoom.roll
 
+import com.github.jameshnsears.chance.MainDispatcherRule
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Assert.fail
+import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
 
 class ZoomRollViewModelUnitTest {
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    @Ignore
     @Test
     fun todo() = runTest {
-        val testDispatcher = UnconfinedTestDispatcher(testScheduler)
-        Dispatchers.setMain(testDispatcher)
+        val settingsRepository = SettingsRepositoryTestDouble.getInstance()
 
-        try {
-            val settingsRepository = SettingsRepositoryTestDouble.getInstance()
+        val rollRepositoryTestDouble = RollRepositoryTestDouble.getInstance()
+        rollRepositoryTestDouble.store(
+            RollSampleData.rollHistory
+        )
 
-            val rollRepositoryTestDouble = RollRepositoryTestDouble.getInstance()
-            rollRepositoryTestDouble.store(
-                RollSampleData.rollHistory_roll1Sequence1
-            )
+        val zoomRollModel = ZoomRollViewModel(settingsRepository, rollRepositoryTestDouble)
 
-            val zoomRollModel = ZoomRollViewModel(settingsRepository, rollRepositoryTestDouble)
+        zoomRollModel.zoom()
 
-            zoomRollModel.zoom()
-
-            fail("todo")
-        } finally {
-            Dispatchers.resetMain()
-        }
+        fail("todo")
     }
 }

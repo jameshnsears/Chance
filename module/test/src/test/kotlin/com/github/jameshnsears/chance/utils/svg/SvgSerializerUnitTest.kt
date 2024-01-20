@@ -10,7 +10,6 @@ class SvgSerializerUnitTest {
     @Test
     fun isSVG() {
         val url = this::class.java.getResource("/SvgSerializer-d2.svg")
-
         assertTrue(serializer.isSVG(url!!))
     }
 

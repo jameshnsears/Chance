@@ -7,13 +7,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.Preview
-import com.github.jameshnsears.chance.data.repository.bag.BagDemoData
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import io.mockk.mockk
 
 @SuppressLint("UnrememberedMutableState")
-@Preview(heightDp = 850)
+@Preview(heightDp = 900)
 @Composable
 fun DialogBagComposablePreview() {
     val showDialog = mutableStateOf(true)
@@ -21,7 +21,7 @@ fun DialogBagComposablePreview() {
     val bagRepository = BagRepositoryTestDouble.getInstance()
     bagRepository.store(
         listOf(
-            BagDemoData.diceHeadsTails
+            BagDemoSampleData.diceHeadsTails
         )
     )
 
@@ -46,4 +46,3 @@ fun DialogBagComposablePreview() {
         }
     }
 }
-

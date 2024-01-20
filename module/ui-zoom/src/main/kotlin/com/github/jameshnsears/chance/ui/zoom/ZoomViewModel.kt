@@ -1,5 +1,7 @@
 package com.github.jameshnsears.chance.ui.zoom
 
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -14,19 +16,19 @@ abstract class ZoomViewModel : ViewModel() {
 
     fun scale() = 75.dp
 
-    fun scaleValuePaddingTop(dice: Dice): Dp {
+    fun sideNumberPaddingTop(dice: Dice): Dp {
         return when (dice.sides.size) {
             2 -> 0.dp
-            4 -> (25.dp * scale().value / 100)
+            4 -> (22.dp * scale().value / 100)
             6 -> 0.dp
-            8 -> (30.dp * scale().value / 100)
-            10 -> (15.dp * scale().value / 100)
-            12 -> (15.dp * scale().value / 100)
-            else -> (48.dp * scale().value / 100)
+            8 -> (25.dp * scale().value / 100)
+            10 -> (10.dp * scale().value / 100)
+            12 -> (10.dp * scale().value / 100)
+            else -> (42.dp * scale().value / 100)
         }
     }
 
-    fun scaleTextFontSize(dice: Dice): TextUnit {
+    fun sideNumberFontSize(dice: Dice): TextUnit {
         return when (dice.sides.size) {
             2 -> (72.sp * scale().value / 100)
             4 -> (60.sp * scale().value / 100)
@@ -38,7 +40,7 @@ abstract class ZoomViewModel : ViewModel() {
         }
     }
 
-    fun sideAppearance(dice: Dice): Int {
+    fun diceShape(dice: Dice): Int {
         return when (dice.sides.size) {
             2 -> R.drawable.d2
             6 -> R.drawable.d6
@@ -47,6 +49,24 @@ abstract class ZoomViewModel : ViewModel() {
             else -> R.drawable.d4_d8_d20
         }
     }
+
+    fun diceColor(hexColour: String): ColorFilter {
+        //TODO rm the if! as all should have colour filled in!
+        return if (hexColour == "")
+            ColorFilter.tint(Color.Black)
+        else
+            ColorFilter.tint(makeColour(hexColour))
+    }
+
+    fun sideColorText(hexColour: String): androidx.compose.ui.graphics.Color {
+        return if (hexColour == "")
+            Color.White
+        else
+            makeColour(hexColour)
+    }
+
+    private fun makeColour(hexColour: String) =
+        Color(android.graphics.Color.parseColor("#${hexColour}"))
 
     fun imageDrawableIdAvailable(side: Side) = side.imageDrawableId != 0
 }

@@ -11,7 +11,7 @@ import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
-@Preview(heightDp = 400)
+@Preview(heightDp = 800)
 @Composable
 fun TabRollComposablePreview() {
     ChanceTheme {
@@ -23,7 +23,7 @@ fun TabRollComposablePreview() {
     }
 }
 
-@Preview(heightDp = 550)
+@Preview(heightDp = 500)
 @Composable
 fun TabRollBottomSheetLayoutComposablePreview() {
     ChanceTheme {
@@ -42,7 +42,7 @@ fun getTabRollViewModel(): TabRollViewModel {
     bagRepository.store(BagSampleData.allDice)
 
     val rollRepository = RollRepositoryTestDouble.getInstance()
-    rollRepository.store(RollSampleData.rollHistory_roll1Sequence1)
+    rollRepository.store(RollSampleData.rollHistory)
 
     return TabRollViewModel(
         settingsRepository,

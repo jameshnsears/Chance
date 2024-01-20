@@ -2,6 +2,7 @@ package com.github.jameshnsears.chance.data.repository.bag
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -11,14 +12,15 @@ import org.junit.jupiter.api.fail
 class BagModelUnitTest {
     private val bagRepository = BagRepositoryTestDouble.getInstance()
 
+    @Ignore
     @Test
     fun todo() = runTest {
-        bagRepository.store(listOf(BagDemoData.diceHeadsTails))
+        bagRepository.store(listOf(BagDemoSampleData.diceHeadsTails))
         assertEquals(1, bagRepository.fetch().size)
 
         val bagModel = BagModel(bagRepository)
         runBlocking {
-            bagModel.diceUpdate(BagDemoData.diceStory)
+            bagModel.diceUpdate(BagDemoSampleData.diceStory)
         }
 
         fail("todo")
@@ -37,7 +39,7 @@ class BagModelUnitTest {
 
         bagRepository.store(
             listOf(
-                BagDemoData.diceHeadsTails
+                BagDemoSampleData.diceHeadsTails
             )
         )
         runBlocking {

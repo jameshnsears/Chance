@@ -87,6 +87,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
     implementation("com.google.protobuf:protobuf-java:3.25.1")
     implementation("com.google.protobuf:protobuf-java-util:3.25.1")
     implementation("com.google.protobuf:protobuf-kotlin:3.25.1")

@@ -4,19 +4,15 @@ option java_multiple_files = true;
 
 package com.github.jameshnsears.chance.data.protocolbuffer;
 
-import "dice.proto";
-
 message SettingsProtocolBuffer {
   int32 tabRowChance = 1;
 
-  int32 bagZoom = 2;
-  bool bagDemoBag = 3;
+  bool bagDemoBag = 2;
 
-  bool rollSequentially = 4;
-  int32 rollZoom = 5;
-  bool rollHistory = 6;
-  bool rollTitle = 7;
-  bool rollSideNumber = 8;
-  bool rollTotal = 9;
-  bool rollSound = 10;
+  bool rollSequentially = 3;
+  bool rollHistory = 4;
+  bool rollScore = 5;
+  bool rollDiceTitle = 6;
+  bool rollSideNumber = 7;
+  bool rollSound = 8;
 }

@@ -10,13 +10,13 @@ import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositor
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 
 
-@Preview(heightDp = 300, widthDp = 500)
+@Preview(heightDp = 750, widthDp = 1000)
 @Composable
 fun ZoomRollComposablePreview() {
     val settingsRepository = SettingsRepositoryTestDouble.getInstance()
 
     val rollRepository = RollRepositoryTestDouble.getInstance()
-    rollRepository.store(RollSampleData.rollHistory_roll2Sequence2)
+    rollRepository.store(RollSampleData.rollHistory)
 
     val zoomRollViewModel = ZoomRollViewModel(settingsRepository, rollRepository)
 

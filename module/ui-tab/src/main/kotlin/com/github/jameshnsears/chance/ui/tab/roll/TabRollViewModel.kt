@@ -7,6 +7,7 @@ import com.github.jameshnsears.chance.data.domain.Roll
 import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollViewModel
 import com.github.jameshnsears.chance.utils.epoch.EpochTime
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -28,16 +29,9 @@ class TabRollViewModel(
 //        _description.value = description
 //    }
 
-    /*
-                                        Title
-                                        Side # + Side Image
-    History timestamp       Total
-                                        Image
-                                        Description
-     */
-
-
     private val random: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
+
+    val zoomRollModel = ZoomRollViewModel(settingsRepository, rollRepository)
 
     fun selectedDice() {
     }

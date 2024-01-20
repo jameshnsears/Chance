@@ -31,43 +31,28 @@ public interface SideProtocolBufferOrBuilder extends
     getColourBytes();
 
     /**
-     * <code>string imageFilename = 3;</code>
-     *
-     * @return The imageFilename.
-     */
-    java.lang.String getImageFilename();
-
-    /**
-     * <code>string imageFilename = 3;</code>
-     *
-     * @return The bytes for imageFilename.
-     */
-    com.google.protobuf.ByteString
-    getImageFilenameBytes();
-
-    /**
-     * <code>bytes imageBase64 = 4;</code>
+     * <code>bytes imageBase64 = 3;</code>
      *
      * @return The imageBase64.
      */
     com.google.protobuf.ByteString getImageBase64();
 
     /**
-     * <code>int32 imageDrawableId = 5;</code>
+     * <code>int32 imageDrawableId = 4;</code>
      *
      * @return The imageDrawableId.
      */
     int getImageDrawableId();
 
     /**
-     * <code>string description = 6;</code>
+     * <code>string description = 5;</code>
      *
      * @return The description.
      */
     java.lang.String getDescription();
 
     /**
-     * <code>string description = 6;</code>
+     * <code>string description = 5;</code>
      *
      * @return The bytes for description.
      */
@@ -75,9 +60,24 @@ public interface SideProtocolBufferOrBuilder extends
     getDescriptionBytes();
 
     /**
-     * <code>int32 descriptionStringsId = 7;</code>
+     * <code>int32 descriptionStringsId = 6;</code>
      *
      * @return The descriptionStringsId.
      */
     int getDescriptionStringsId();
+
+    /**
+     * <code>string descriptionColour = 7;</code>
+     *
+     * @return The descriptionColour.
+     */
+    java.lang.String getDescriptionColour();
+
+    /**
+     * <code>string descriptionColour = 7;</code>
+     *
+     * @return The bytes for descriptionColour.
+     */
+    com.google.protobuf.ByteString
+    getDescriptionColourBytes();
 }

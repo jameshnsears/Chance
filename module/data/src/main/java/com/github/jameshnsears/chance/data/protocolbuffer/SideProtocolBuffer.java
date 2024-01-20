@@ -13,11 +13,11 @@ public final class SideProtocolBuffer extends
         SideProtocolBufferOrBuilder {
     public static final int NUMBER_FIELD_NUMBER = 1;
     public static final int COLOUR_FIELD_NUMBER = 2;
-    public static final int IMAGEFILENAME_FIELD_NUMBER = 3;
-    public static final int IMAGEBASE64_FIELD_NUMBER = 4;
-    public static final int IMAGEDRAWABLEID_FIELD_NUMBER = 5;
-    public static final int DESCRIPTION_FIELD_NUMBER = 6;
-    public static final int DESCRIPTIONSTRINGSID_FIELD_NUMBER = 7;
+    public static final int IMAGEBASE64_FIELD_NUMBER = 3;
+    public static final int IMAGEDRAWABLEID_FIELD_NUMBER = 4;
+    public static final int DESCRIPTION_FIELD_NUMBER = 5;
+    public static final int DESCRIPTIONSTRINGSID_FIELD_NUMBER = 6;
+    public static final int DESCRIPTIONCOLOUR_FIELD_NUMBER = 7;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer DEFAULT_INSTANCE;
@@ -50,13 +50,13 @@ public final class SideProtocolBuffer extends
     private int number_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object colour_ = "";
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object imageFilename_ = "";
     private com.google.protobuf.ByteString imageBase64_ = com.google.protobuf.ByteString.EMPTY;
     private int imageDrawableId_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
     private int descriptionStringsId_ = 0;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object descriptionColour_ = "";
     private byte memoizedIsInitialized = -1;
 
     // Use SideProtocolBuffer.newBuilder() to construct.
@@ -66,12 +66,12 @@ public final class SideProtocolBuffer extends
 
     private SideProtocolBuffer() {
         colour_ = "";
-        imageFilename_ = "";
         imageBase64_ = com.google.protobuf.ByteString.EMPTY;
         description_ = "";
+        descriptionColour_ = "";
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.protocolbuffer.Side.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SideProtocolBuffer_descriptor;
     }
@@ -238,46 +238,7 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>string imageFilename = 3;</code>
-     *
-     * @return The imageFilename.
-     */
-    @java.lang.Override
-    public java.lang.String getImageFilename() {
-        java.lang.Object ref = imageFilename_;
-        if (ref instanceof java.lang.String) {
-            return (java.lang.String) ref;
-        } else {
-            com.google.protobuf.ByteString bs =
-                    (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            imageFilename_ = s;
-            return s;
-        }
-    }
-
-    /**
-     * <code>string imageFilename = 3;</code>
-     *
-     * @return The bytes for imageFilename.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-    getImageFilenameBytes() {
-        java.lang.Object ref = imageFilename_;
-        if (ref instanceof java.lang.String) {
-            com.google.protobuf.ByteString b =
-                    com.google.protobuf.ByteString.copyFromUtf8(
-                            (java.lang.String) ref);
-            imageFilename_ = b;
-            return b;
-        } else {
-            return (com.google.protobuf.ByteString) ref;
-        }
-    }
-
-    /**
-     * <code>bytes imageBase64 = 4;</code>
+     * <code>bytes imageBase64 = 3;</code>
      *
      * @return The imageBase64.
      */
@@ -287,7 +248,7 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>int32 imageDrawableId = 5;</code>
+     * <code>int32 imageDrawableId = 4;</code>
      *
      * @return The imageDrawableId.
      */
@@ -297,7 +258,7 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>string description = 6;</code>
+     * <code>string description = 5;</code>
      *
      * @return The description.
      */
@@ -316,7 +277,7 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>string description = 6;</code>
+     * <code>string description = 5;</code>
      *
      * @return The bytes for description.
      */
@@ -336,7 +297,7 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>int32 descriptionStringsId = 7;</code>
+     * <code>int32 descriptionStringsId = 6;</code>
      *
      * @return The descriptionStringsId.
      */
@@ -345,8 +306,47 @@ public final class SideProtocolBuffer extends
         return descriptionStringsId_;
     }
 
+    /**
+     * <code>string descriptionColour = 7;</code>
+     *
+     * @return The descriptionColour.
+     */
     @java.lang.Override
-    public boolean isInitialized() {
+    public java.lang.String getDescriptionColour() {
+        java.lang.Object ref = descriptionColour_;
+        if (ref instanceof java.lang.String) {
+            return (java.lang.String) ref;
+        } else {
+            com.google.protobuf.ByteString bs =
+                    (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            descriptionColour_ = s;
+            return s;
+        }
+    }
+
+    /**
+     * <code>string descriptionColour = 7;</code>
+     *
+     * @return The bytes for descriptionColour.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+    getDescriptionColourBytes() {
+        java.lang.Object ref = descriptionColour_;
+        if (ref instanceof java.lang.String) {
+            com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                            (java.lang.String) ref);
+            descriptionColour_ = b;
+            return b;
+        } else {
+            return (com.google.protobuf.ByteString) ref;
+        }
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -364,20 +364,20 @@ public final class SideProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(colour_)) {
             com.google.protobuf.GeneratedMessageV3.writeString(output, 2, colour_);
         }
-        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageFilename_)) {
-            com.google.protobuf.GeneratedMessageV3.writeString(output, 3, imageFilename_);
-        }
         if (!imageBase64_.isEmpty()) {
-            output.writeBytes(4, imageBase64_);
+            output.writeBytes(3, imageBase64_);
         }
         if (imageDrawableId_ != 0) {
-            output.writeInt32(5, imageDrawableId_);
+            output.writeInt32(4, imageDrawableId_);
         }
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-            com.google.protobuf.GeneratedMessageV3.writeString(output, 6, description_);
+            com.google.protobuf.GeneratedMessageV3.writeString(output, 5, description_);
         }
         if (descriptionStringsId_ != 0) {
-            output.writeInt32(7, descriptionStringsId_);
+            output.writeInt32(6, descriptionStringsId_);
+        }
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(descriptionColour_)) {
+            com.google.protobuf.GeneratedMessageV3.writeString(output, 7, descriptionColour_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -395,23 +395,23 @@ public final class SideProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(colour_)) {
             size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, colour_);
         }
-        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageFilename_)) {
-            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, imageFilename_);
-        }
         if (!imageBase64_.isEmpty()) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBytesSize(4, imageBase64_);
+                    .computeBytesSize(3, imageBase64_);
         }
         if (imageDrawableId_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(5, imageDrawableId_);
+                    .computeInt32Size(4, imageDrawableId_);
         }
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, description_);
+            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, description_);
         }
         if (descriptionStringsId_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(7, descriptionStringsId_);
+                    .computeInt32Size(6, descriptionStringsId_);
+        }
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(descriptionColour_)) {
+            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, descriptionColour_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -423,16 +423,15 @@ public final class SideProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof SideProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer other = (com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer) obj;
 
         if (getNumber()
                 != other.getNumber()) return false;
         if (!getColour()
                 .equals(other.getColour())) return false;
-        if (!getImageFilename()
-                .equals(other.getImageFilename())) return false;
         if (!getImageBase64()
                 .equals(other.getImageBase64())) return false;
         if (getImageDrawableId()
@@ -441,7 +440,10 @@ public final class SideProtocolBuffer extends
                 .equals(other.getDescription())) return false;
         if (getDescriptionStringsId()
                 != other.getDescriptionStringsId()) return false;
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (!getDescriptionColour()
+                .equals(other.getDescriptionColour())) return false;
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -455,8 +457,6 @@ public final class SideProtocolBuffer extends
         hash = (53 * hash) + getNumber();
         hash = (37 * hash) + COLOUR_FIELD_NUMBER;
         hash = (53 * hash) + getColour().hashCode();
-        hash = (37 * hash) + IMAGEFILENAME_FIELD_NUMBER;
-        hash = (53 * hash) + getImageFilename().hashCode();
         hash = (37 * hash) + IMAGEBASE64_FIELD_NUMBER;
         hash = (53 * hash) + getImageBase64().hashCode();
         hash = (37 * hash) + IMAGEDRAWABLEID_FIELD_NUMBER;
@@ -465,6 +465,8 @@ public final class SideProtocolBuffer extends
         hash = (53 * hash) + getDescription().hashCode();
         hash = (37 * hash) + DESCRIPTIONSTRINGSID_FIELD_NUMBER;
         hash = (53 * hash) + getDescriptionStringsId();
+        hash = (37 * hash) + DESCRIPTIONCOLOUR_FIELD_NUMBER;
+        hash = (53 * hash) + getDescriptionColour().hashCode();
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -508,11 +510,11 @@ public final class SideProtocolBuffer extends
         private int bitField0_;
         private int number_;
         private java.lang.Object colour_ = "";
-        private java.lang.Object imageFilename_ = "";
         private com.google.protobuf.ByteString imageBase64_ = com.google.protobuf.ByteString.EMPTY;
         private int imageDrawableId_;
         private java.lang.Object description_ = "";
         private int descriptionStringsId_;
+        private java.lang.Object descriptionColour_ = "";
 
         // Construct using com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer.newBuilder()
         private Builder() {
@@ -525,7 +527,7 @@ public final class SideProtocolBuffer extends
 
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.protocolbuffer.Side.internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SideProtocolBuffer_descriptor;
         }
@@ -544,11 +546,11 @@ public final class SideProtocolBuffer extends
             bitField0_ = 0;
             number_ = 0;
             colour_ = "";
-            imageFilename_ = "";
             imageBase64_ = com.google.protobuf.ByteString.EMPTY;
             imageDrawableId_ = 0;
             description_ = "";
             descriptionStringsId_ = 0;
+            descriptionColour_ = "";
             return this;
         }
 
@@ -591,19 +593,19 @@ public final class SideProtocolBuffer extends
                 result.colour_ = colour_;
             }
             if (((from_bitField0_ & 0x00000004) != 0)) {
-                result.imageFilename_ = imageFilename_;
-            }
-            if (((from_bitField0_ & 0x00000008) != 0)) {
                 result.imageBase64_ = imageBase64_;
             }
-            if (((from_bitField0_ & 0x00000010) != 0)) {
+            if (((from_bitField0_ & 0x00000008) != 0)) {
                 result.imageDrawableId_ = imageDrawableId_;
             }
-            if (((from_bitField0_ & 0x00000020) != 0)) {
+            if (((from_bitField0_ & 0x00000010) != 0)) {
                 result.description_ = description_;
             }
-            if (((from_bitField0_ & 0x00000040) != 0)) {
+            if (((from_bitField0_ & 0x00000020) != 0)) {
                 result.descriptionStringsId_ = descriptionStringsId_;
+            }
+            if (((from_bitField0_ & 0x00000040) != 0)) {
+                result.descriptionColour_ = descriptionColour_;
             }
         }
 
@@ -666,11 +668,6 @@ public final class SideProtocolBuffer extends
                 bitField0_ |= 0x00000002;
                 onChanged();
             }
-            if (!other.getImageFilename().isEmpty()) {
-                imageFilename_ = other.imageFilename_;
-                bitField0_ |= 0x00000004;
-                onChanged();
-            }
             if (other.getImageBase64() != com.google.protobuf.ByteString.EMPTY) {
                 setImageBase64(other.getImageBase64());
             }
@@ -679,11 +676,16 @@ public final class SideProtocolBuffer extends
             }
             if (!other.getDescription().isEmpty()) {
                 description_ = other.description_;
-                bitField0_ |= 0x00000020;
+                bitField0_ |= 0x00000010;
                 onChanged();
             }
             if (other.getDescriptionStringsId() != 0) {
                 setDescriptionStringsId(other.getDescriptionStringsId());
+            }
+            if (!other.getDescriptionColour().isEmpty()) {
+                descriptionColour_ = other.descriptionColour_;
+                bitField0_ |= 0x00000040;
+                onChanged();
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -691,7 +693,7 @@ public final class SideProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
 
@@ -722,30 +724,30 @@ public final class SideProtocolBuffer extends
                             break;
                         } // case 18
                         case 26: {
-                            imageFilename_ = input.readStringRequireUtf8();
+                            imageBase64_ = input.readBytes();
                             bitField0_ |= 0x00000004;
                             break;
                         } // case 26
-                        case 34: {
-                            imageBase64_ = input.readBytes();
+                        case 32: {
+                            imageDrawableId_ = input.readInt32();
                             bitField0_ |= 0x00000008;
                             break;
-                        } // case 34
-                        case 40: {
-                            imageDrawableId_ = input.readInt32();
+                        } // case 32
+                        case 42: {
+                            description_ = input.readStringRequireUtf8();
                             bitField0_ |= 0x00000010;
                             break;
-                        } // case 40
-                        case 50: {
-                            description_ = input.readStringRequireUtf8();
+                        } // case 42
+                        case 48: {
+                            descriptionStringsId_ = input.readInt32();
                             bitField0_ |= 0x00000020;
                             break;
-                        } // case 50
-                        case 56: {
-                            descriptionStringsId_ = input.readInt32();
+                        } // case 48
+                        case 58: {
+                            descriptionColour_ = input.readStringRequireUtf8();
                             bitField0_ |= 0x00000040;
                             break;
-                        } // case 56
+                        } // case 58
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -883,91 +885,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>string imageFilename = 3;</code>
-         *
-         * @return The imageFilename.
-         */
-        public java.lang.String getImageFilename() {
-            java.lang.Object ref = imageFilename_;
-            if (!(ref instanceof java.lang.String)) {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                java.lang.String s = bs.toStringUtf8();
-                imageFilename_ = s;
-                return s;
-            } else {
-                return (java.lang.String) ref;
-            }
-        }
-
-        /**
-         * <code>string imageFilename = 3;</code>
-         *
-         * @param value The imageFilename to set.
-         * @return This builder for chaining.
-         */
-        public Builder setImageFilename(
-                java.lang.String value) {
-            if (value == null) {
-                throw new NullPointerException();
-            }
-            imageFilename_ = value;
-            bitField0_ |= 0x00000004;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string imageFilename = 3;</code>
-         *
-         * @return The bytes for imageFilename.
-         */
-        public com.google.protobuf.ByteString
-        getImageFilenameBytes() {
-            java.lang.Object ref = imageFilename_;
-            if (ref instanceof String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (java.lang.String) ref);
-                imageFilename_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
-        }
-
-        /**
-         * <code>string imageFilename = 3;</code>
-         *
-         * @param value The bytes for imageFilename to set.
-         * @return This builder for chaining.
-         */
-        public Builder setImageFilenameBytes(
-                com.google.protobuf.ByteString value) {
-            if (value == null) {
-                throw new NullPointerException();
-            }
-            checkByteStringIsUtf8(value);
-            imageFilename_ = value;
-            bitField0_ |= 0x00000004;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string imageFilename = 3;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearImageFilename() {
-            imageFilename_ = getDefaultInstance().getImageFilename();
-            bitField0_ = (bitField0_ & ~0x00000004);
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>bytes imageBase64 = 4;</code>
+         * <code>bytes imageBase64 = 3;</code>
          *
          * @return The imageBase64.
          */
@@ -977,7 +895,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>bytes imageBase64 = 4;</code>
+         * <code>bytes imageBase64 = 3;</code>
          *
          * @param value The imageBase64 to set.
          * @return This builder for chaining.
@@ -987,25 +905,25 @@ public final class SideProtocolBuffer extends
                 throw new NullPointerException();
             }
             imageBase64_ = value;
-            bitField0_ |= 0x00000008;
+            bitField0_ |= 0x00000004;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bytes imageBase64 = 4;</code>
+         * <code>bytes imageBase64 = 3;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearImageBase64() {
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000004);
             imageBase64_ = getDefaultInstance().getImageBase64();
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 imageDrawableId = 5;</code>
+         * <code>int32 imageDrawableId = 4;</code>
          *
          * @return The imageDrawableId.
          */
@@ -1015,7 +933,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>int32 imageDrawableId = 5;</code>
+         * <code>int32 imageDrawableId = 4;</code>
          *
          * @param value The imageDrawableId to set.
          * @return This builder for chaining.
@@ -1023,25 +941,25 @@ public final class SideProtocolBuffer extends
         public Builder setImageDrawableId(int value) {
 
             imageDrawableId_ = value;
-            bitField0_ |= 0x00000010;
+            bitField0_ |= 0x00000008;
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 imageDrawableId = 5;</code>
+         * <code>int32 imageDrawableId = 4;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearImageDrawableId() {
-            bitField0_ = (bitField0_ & ~0x00000010);
+            bitField0_ = (bitField0_ & ~0x00000008);
             imageDrawableId_ = 0;
             onChanged();
             return this;
         }
 
         /**
-         * <code>string description = 6;</code>
+         * <code>string description = 5;</code>
          *
          * @return The description.
          */
@@ -1059,7 +977,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>string description = 6;</code>
+         * <code>string description = 5;</code>
          *
          * @param value The description to set.
          * @return This builder for chaining.
@@ -1070,13 +988,13 @@ public final class SideProtocolBuffer extends
                 throw new NullPointerException();
             }
             description_ = value;
-            bitField0_ |= 0x00000020;
+            bitField0_ |= 0x00000010;
             onChanged();
             return this;
         }
 
         /**
-         * <code>string description = 6;</code>
+         * <code>string description = 5;</code>
          *
          * @return The bytes for description.
          */
@@ -1095,7 +1013,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>string description = 6;</code>
+         * <code>string description = 5;</code>
          *
          * @param value The bytes for description to set.
          * @return This builder for chaining.
@@ -1107,25 +1025,25 @@ public final class SideProtocolBuffer extends
             }
             checkByteStringIsUtf8(value);
             description_ = value;
-            bitField0_ |= 0x00000020;
+            bitField0_ |= 0x00000010;
             onChanged();
             return this;
         }
 
         /**
-         * <code>string description = 6;</code>
+         * <code>string description = 5;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearDescription() {
             description_ = getDefaultInstance().getDescription();
-            bitField0_ = (bitField0_ & ~0x00000020);
+            bitField0_ = (bitField0_ & ~0x00000010);
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 descriptionStringsId = 7;</code>
+         * <code>int32 descriptionStringsId = 6;</code>
          *
          * @return The descriptionStringsId.
          */
@@ -1135,7 +1053,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>int32 descriptionStringsId = 7;</code>
+         * <code>int32 descriptionStringsId = 6;</code>
          *
          * @param value The descriptionStringsId to set.
          * @return This builder for chaining.
@@ -1143,31 +1061,115 @@ public final class SideProtocolBuffer extends
         public Builder setDescriptionStringsId(int value) {
 
             descriptionStringsId_ = value;
+            bitField0_ |= 0x00000020;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int32 descriptionStringsId = 6;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearDescriptionStringsId() {
+            bitField0_ = (bitField0_ & ~0x00000020);
+            descriptionStringsId_ = 0;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string descriptionColour = 7;</code>
+         *
+         * @return The descriptionColour.
+         */
+        public java.lang.String getDescriptionColour() {
+            java.lang.Object ref = descriptionColour_;
+            if (!(ref instanceof java.lang.String)) {
+                com.google.protobuf.ByteString bs =
+                        (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                descriptionColour_ = s;
+                return s;
+            } else {
+                return (java.lang.String) ref;
+            }
+        }
+
+        /**
+         * <code>string descriptionColour = 7;</code>
+         *
+         * @param value The descriptionColour to set.
+         * @return This builder for chaining.
+         */
+        public Builder setDescriptionColour(
+                java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            descriptionColour_ = value;
             bitField0_ |= 0x00000040;
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 descriptionStringsId = 7;</code>
+         * <code>string descriptionColour = 7;</code>
+         *
+         * @return The bytes for descriptionColour.
+         */
+        public com.google.protobuf.ByteString
+        getDescriptionColourBytes() {
+            java.lang.Object ref = descriptionColour_;
+            if (ref instanceof String) {
+                com.google.protobuf.ByteString b =
+                        com.google.protobuf.ByteString.copyFromUtf8(
+                                (java.lang.String) ref);
+                descriptionColour_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        /**
+         * <code>string descriptionColour = 7;</code>
+         *
+         * @param value The bytes for descriptionColour to set.
+         * @return This builder for chaining.
+         */
+        public Builder setDescriptionColourBytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            descriptionColour_ = value;
+            bitField0_ |= 0x00000040;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string descriptionColour = 7;</code>
          *
          * @return This builder for chaining.
          */
-        public Builder clearDescriptionStringsId() {
+        public Builder clearDescriptionColour() {
+            descriptionColour_ = getDefaultInstance().getDescriptionColour();
             bitField0_ = (bitField0_ & ~0x00000040);
-            descriptionStringsId_ = 0;
             onChanged();
             return this;
         }
 
         @java.lang.Override
-        public Builder setUnknownFields(
+        public final Builder setUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.setUnknownFields(unknownFields);
         }
 
         @java.lang.Override
-        public Builder mergeUnknownFields(
+        public final Builder mergeUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.mergeUnknownFields(unknownFields);
         }

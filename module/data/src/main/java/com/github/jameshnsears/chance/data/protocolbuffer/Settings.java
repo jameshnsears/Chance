@@ -10,33 +10,30 @@ public final class Settings {
     static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SettingsProtocolBuffer_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.FileDescriptor
+    private static com.google.protobuf.Descriptors.FileDescriptor
             descriptor;
 
     static {
         java.lang.String[] descriptorData = {
                 "\n\016settings.proto\0222com.github.jameshnsear" +
-                        "s.chance.data.protocolbuffer\032\ndice.proto" +
-                        "\"\345\001\n\026SettingsProtocolBuffer\022\024\n\014tabRowCha" +
-                        "nce\030\001 \001(\005\022\017\n\007bagZoom\030\002 \001(\005\022\022\n\nbagDemoBag" +
-                        "\030\003 \001(\010\022\030\n\020rollSequentially\030\004 \001(\010\022\020\n\010roll" +
-                        "Zoom\030\005 \001(\005\022\023\n\013rollHistory\030\006 \001(\010\022\021\n\trollT" +
-                        "itle\030\007 \001(\010\022\026\n\016rollSideNumber\030\010 \001(\010\022\021\n\tro" +
-                        "llTotal\030\t \001(\010\022\021\n\trollSound\030\n \001(\010B\002P\001b\006pr" +
-                        "oto3"
+                        "s.chance.data.protocolbuffer\"\306\001\n\026Setting" +
+                        "sProtocolBuffer\022\024\n\014tabRowChance\030\001 \001(\005\022\022\n" +
+                        "\nbagDemoBag\030\002 \001(\010\022\030\n\020rollSequentially\030\003 " +
+                        "\001(\010\022\023\n\013rollHistory\030\004 \001(\010\022\021\n\trollScore\030\005 " +
+                        "\001(\010\022\025\n\rrollDiceTitle\030\006 \001(\010\022\026\n\016rollSideNu" +
+                        "mber\030\007 \001(\010\022\021\n\trollSound\030\010 \001(\010B\002P\001b\006proto" +
+                        "3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
                 .internalBuildGeneratedFileFrom(descriptorData,
                         new com.google.protobuf.Descriptors.FileDescriptor[]{
-                                com.github.jameshnsears.chance.data.protocolbuffer.Dice.getDescriptor(),
                         });
         internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SettingsProtocolBuffer_descriptor =
                 getDescriptor().getMessageTypes().get(0);
         internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SettingsProtocolBuffer_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
                 internal_static_com_github_jameshnsears_chance_data_protocolbuffer_SettingsProtocolBuffer_descriptor,
-                new java.lang.String[]{"TabRowChance", "BagZoom", "BagDemoBag", "RollSequentially", "RollZoom", "RollHistory", "RollTitle", "RollSideNumber", "RollTotal", "RollSound",});
-        com.github.jameshnsears.chance.data.protocolbuffer.Dice.getDescriptor();
+                new java.lang.String[]{"TabRowChance", "BagDemoBag", "RollSequentially", "RollHistory", "RollScore", "RollDiceTitle", "RollSideNumber", "RollSound",});
     }
 
     private Settings() {

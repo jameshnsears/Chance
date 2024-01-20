@@ -20,13 +20,11 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -56,9 +54,17 @@ fun TabBag(tabBagViewModel: TabBagViewModel) {
     TabBagLayout(tabBagViewModel)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
-    Column(modifier = Modifier.padding(10.dp)) {
+    val scaffoldState = rememberBottomSheetScaffoldState()
+
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        sheetPeekHeight = 32.dp,
+        sheetContent = {
+            TabBagBottomSheetLayout(tabBagViewModel)
+        }) { innerPadding ->
         ZoomBag(
             ZoomBagViewModel(
                 tabBagViewModel.settingsRepository,
@@ -66,8 +72,6 @@ fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
             )
         )
     }
-
-    TabBagBottomSheet(tabBagViewModel)
 }
 
 @Composable
@@ -78,7 +82,7 @@ fun DemoBag(tabBagViewModel: TabBagViewModel) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp)
+            .padding(bottom = 8.dp)
             .clickable {
                 checked = !checked
             }
@@ -147,44 +151,6 @@ fun ImportExport(tabBagViewModel: TabBagViewModel) {
 }
 
 @Composable
-fun ZoomBagSlider(tabBagViewModel: TabBagViewModel) {
-    var sliderPosition by remember { mutableFloatStateOf(0f) }
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Text(stringResource(R.string.tab_bag_zoom))
-
-        Spacer(modifier = Modifier.width(10.dp))
-
-        Slider(
-            value = sliderPosition,
-            onValueChange = { sliderPosition = it },
-            valueRange = 0f..100f,
-            onValueChangeFinished = {
-            },
-            steps = 5,
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TabBagBottomSheet(tabBagViewModel: TabBagViewModel) {
-    val scaffoldState = rememberBottomSheetScaffoldState()
-
-    BottomSheetScaffold(
-        scaffoldState = scaffoldState,
-        sheetPeekHeight = 32.dp,
-        sheetContent = {
-            TabBagBottomSheetLayout(tabBagViewModel)
-        }) {
-    }
-}
-
-@Composable
 fun VersionDetails() {
     val v = BuildConfig.GIT_HASH
 
@@ -228,13 +194,9 @@ fun TabBagBottomSheetLayout(tabBagViewModel: TabBagViewModel) {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(10.dp)
-            .height(220.dp),
+            .padding(8.dp)
+            .height(155.dp),
     ) {
-        ZoomBagSlider(tabBagViewModel)
-
-        Divider()
-
         DemoBag(tabBagViewModel)
 
         Divider()
