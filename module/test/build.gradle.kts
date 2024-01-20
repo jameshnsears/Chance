@@ -89,7 +89,7 @@ dependencies {
     implementation("androidx.test.ext:junit-ktx:1.1.5")
     implementation("com.airbnb.android:lottie-compose:6.3.0")
     implementation("com.google.protobuf:protobuf-java:3.25.1")
-    implementation("com.google.protobuf:protobuf-java-util:3.25.1")
+    implementation("com.google.protobuf:protobuf-java-util:3.25.2")
     implementation("com.google.protobuf:protobuf-kotlin:3.25.1")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.coil-kt:coil:2.5.0")
