@@ -6,7 +6,7 @@ plugins {
 
     id("io.gitlab.arturbosch.detekt").version("1.23.3")
     id("org.jlleitschuh.gradle.ktlint") version "12.0.3"
-    id("com.diffplug.spotless") version "6.23.3"
+    id("com.diffplug.spotless") version "6.24.0"
 }
 
 spotless {
