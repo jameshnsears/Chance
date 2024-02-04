@@ -7,7 +7,7 @@ class LoggingLineNumberTree : Timber.DebugTree() {
         return String.format(
             "%s, %s",
             element.lineNumber,
-            element.methodName
+            element.methodName,
         )
     }
 }

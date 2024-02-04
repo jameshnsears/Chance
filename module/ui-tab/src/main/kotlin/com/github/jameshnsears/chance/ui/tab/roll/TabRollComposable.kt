@@ -40,9 +40,9 @@ import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollViewModel
 
 class TabRollTestTag {
     companion object {
-        const val undo = "export"
-        const val roll = "import"
-        const val historyClear = "clearHistory"
+        const val UNDO = "UNDO"
+        const val ROLL = "ROLL"
+        const val HISTORY_CLEAR = "HISTORY_CLEAR"
     }
 }
 
@@ -61,12 +61,14 @@ fun TabRollLayout(tabRollViewModel: TabRollViewModel) {
         sheetPeekHeight = 110.dp,
         sheetContent = {
             TabRollBottomSheetLayout(tabRollViewModel)
-        }) { innerPadding ->
+        },
+    ) { _ ->
         ZoomRoll(
             ZoomRollViewModel(
                 tabRollViewModel.settingsRepository,
-                tabRollViewModel.rollRepository
-            )
+                tabRollViewModel.bagRepository,
+                tabRollViewModel.rollRepository,
+            ),
         )
     }
 }
@@ -80,18 +82,18 @@ fun UndoRollButtons(tabRollViewModel: TabRollViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
             modifier = Modifier
                 .width(115.dp)
-                .testTag(TabRollTestTag.undo),
+                .testTag(TabRollTestTag.UNDO),
         ) {
             Icon(
                 undoIcon,
                 contentDescription = stringResource(R.string.tab_roll_undo),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -106,12 +108,12 @@ fun UndoRollButtons(tabRollViewModel: TabRollViewModel) {
             modifier = Modifier
                 .padding(start = 18.dp)
                 .width(115.dp)
-                .testTag(TabRollTestTag.roll)
+                .testTag(TabRollTestTag.ROLL),
         ) {
             Icon(
                 rollIcon,
                 contentDescription = stringResource(R.string.tab_roll_roll),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -135,12 +137,12 @@ fun DiceSelection(tabRollViewModel: TabRollViewModel) {
                 Icon(
                     imageVector = Icons.Filled.Done,
                     contentDescription = "Localized Description",
-                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    modifier = Modifier.size(FilterChipDefaults.IconSize),
                 )
             }
         } else {
             null
-        }
+        },
     )
 }
 
@@ -155,18 +157,18 @@ fun RollSequentially() {
             .padding(bottom = 8.dp)
             .clickable {
                 checked = !checked
-            }
+            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_roll_sequentially)
+            text = stringResource(R.string.tab_roll_sequentially),
         )
 
         Switch(
             checked = checked,
             onCheckedChange = {
                 checked = it
-            }
+            },
         )
     }
 }
@@ -185,18 +187,18 @@ fun History(tabRollViewModel: TabRollViewModel) {
             .padding(top = 8.dp)
             .clickable {
                 checked = !checked
-            }
+            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_roll_show_history)
+            text = stringResource(R.string.tab_roll_show_history),
         )
 
         Switch(
             checked = checked,
             onCheckedChange = {
                 checked = it
-            }
+            },
         )
     }
 
@@ -204,18 +206,18 @@ fun History(tabRollViewModel: TabRollViewModel) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp)
+            .padding(bottom = 8.dp),
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
             modifier = Modifier
                 .width(115.dp)
-                .testTag(TabRollTestTag.historyClear),
+                .testTag(TabRollTestTag.HISTORY_CLEAR),
         ) {
             Icon(
                 historyClearIcon,
                 contentDescription = stringResource(R.string.tab_roll_show_history_clear),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -235,18 +237,18 @@ fun DiceTitle(tabRollViewModel: TabRollViewModel) {
             .fillMaxWidth()
             .clickable {
                 checked = !checked
-            }
+            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_roll_show_dice_title)
+            text = stringResource(R.string.tab_roll_show_dice_title),
         )
 
         Switch(
             checked = checked,
             onCheckedChange = {
                 checked = it
-            }
+            },
         )
     }
 }
@@ -261,18 +263,18 @@ fun SideNumber(tabRollViewModel: TabRollViewModel) {
             .fillMaxWidth()
             .clickable {
                 checked = !checked
-            }
+            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_roll_show_side_number)
+            text = stringResource(R.string.tab_roll_show_side_number),
         )
 
         Switch(
             checked = checked,
             onCheckedChange = {
                 checked = it
-            }
+            },
         )
     }
 }
@@ -287,18 +289,18 @@ fun Score(tabRollViewModel: TabRollViewModel) {
             .fillMaxWidth()
             .clickable {
                 checked = !checked
-            }
+            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_roll_show_score)
+            text = stringResource(R.string.tab_roll_show_score),
         )
 
         Switch(
             checked = checked,
             onCheckedChange = {
                 checked = it
-            }
+            },
         )
     }
 }
@@ -313,18 +315,18 @@ fun RollSound(tabRollViewModel: TabRollViewModel) {
             .fillMaxWidth()
             .clickable {
                 checked = !checked
-            }
+            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_roll_use_sound)
+            text = stringResource(R.string.tab_roll_use_sound),
         )
 
         Switch(
             checked = checked,
             onCheckedChange = {
                 checked = it
-            }
+            },
         )
     }
 }

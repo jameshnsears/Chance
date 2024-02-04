@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -25,6 +24,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableFloatState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -40,7 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModelInterface
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.ColourSampleCanvas
 import com.github.jameshnsears.chance.ui.dialog.bag.colour.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.dice.R
@@ -48,33 +48,33 @@ import kotlin.math.roundToInt
 
 class BagCardDiceTestTag {
     companion object {
-        const val diceSides = "diceSides"
-        const val diceTitle = "diceTitle"
-        const val diceColour = "diceColour"
-        const val diceClone = "diceClone"
-        const val diceDelete = "diceDelete"
+        const val DICE_SIDES = "DICE_SIDES"
+        const val DICE_TITLE = "DICE_TITLE"
+        const val DICE_COLOUR = "DICE_COLOUR"
+        const val DICE_CLONE = "DICE_CLONE"
+        const val DICE_DELETE = "DICE_DELETE"
     }
 }
 
 @Composable
 fun BagCardDice(
-    dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface,
+    dialogBagAndroidViewModel: DialogBagAndroidViewModel,
 ) {
     val diceSidesSliderPosition =
-        remember { mutableFloatStateOf(dialogBagAndroidViewModelInterface.diceSidesSliderPosition.value) }
+        remember { mutableFloatStateOf(dialogBagAndroidViewModel.diceSidesSliderPosition.value) }
 
     ElevatedCard(
         modifier = Modifier
             .padding(top = 8.dp, bottom = 16.dp)
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = 6.dp,
         ),
 
         ) {
         Column(
             modifier = Modifier
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
         ) {
             Text(
                 text = stringResource(R.string.dialog_bag_dice),
@@ -82,22 +82,22 @@ fun BagCardDice(
                     .wrapContentSize(Alignment.Center),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
+                fontSize = 18.sp,
             )
 
             DiceSides(
                 stringResource(R.string.dialog_bag_dice_sides),
                 BagCardDiceSliderSides(LocalContext.current).values(),
                 diceSidesSliderPosition,
-                dialogBagAndroidViewModelInterface::diceSidesSliderPosition,
-                BagCardDiceTestTag.diceSides
+                dialogBagAndroidViewModel::diceSidesSliderPosition,
+                BagCardDiceTestTag.DICE_SIDES,
             )
 
-            DiceTitle(dialogBagAndroidViewModelInterface)
+            DiceTitle(dialogBagAndroidViewModel)
 
-            DiceColour(dialogBagAndroidViewModelInterface)
+            DiceColour(dialogBagAndroidViewModel)
 
-            DiceCloneDelete(dialogBagAndroidViewModelInterface)
+            DiceCloneDelete(dialogBagAndroidViewModel)
         }
     }
 }
@@ -108,14 +108,14 @@ fun DiceSides(
     sliderDisplayValues: List<String>,
     sliderPosition: MutableFloatState,
     diceSidesSliderPosition: (Float) -> Unit,
-    testTag: String
+    testTag: String,
 ) {
     Row {
         Text(
             "${sliderTitle}: ${
                 sliderDisplayValues[sliderPosition.floatValue.roundToInt()]
             }",
-            modifier = Modifier.align(Alignment.CenterVertically)
+            modifier = Modifier.align(Alignment.CenterVertically),
         )
 
         Spacer(modifier = Modifier.width(10.dp))
@@ -139,75 +139,56 @@ fun DiceSides(
 
     Divider(
         modifier = Modifier
-            .padding(top = 4.dp, bottom = 12.dp)
+            .padding(top = 4.dp, bottom = 12.dp),
     )
 }
 
 @Composable
-fun DiceTitle(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
-    val diceTitle by dialogBagAndroidViewModelInterface.diceTitle.collectAsStateWithLifecycle()
+fun DiceTitle(dialogBagAndroidViewModel: DialogBagAndroidViewModel) {
+    val diceTitle by dialogBagAndroidViewModel.diceTitle.collectAsStateWithLifecycle()
 
     OutlinedTextField(
         value = diceTitle,
-        onValueChange = { dialogBagAndroidViewModelInterface.diceTitle(it) },
+        onValueChange = { dialogBagAndroidViewModel.diceTitle(it) },
         label = { Text(stringResource(R.string.dialog_bag_dice_title)) },
         singleLine = true,
         modifier = Modifier
-            .testTag(BagCardDiceTestTag.diceTitle)
-            .fillMaxWidth()
-    )
-
-    Row(
-        modifier = Modifier
-            .padding(top = 12.dp)
+            .testTag(BagCardDiceTestTag.DICE_TITLE)
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
     )
-    {
-        Icon(
-            imageVector = Icons.Outlined.Info,
-            contentDescription = ""
-        )
-
-        Text(
-            modifier = Modifier
-                .padding(start = 8.dp),
-            text = stringResource(R.string.dialog_bag_dice_title_info)
-        )
-    }
 
     Divider(
         modifier = Modifier
-            .padding(top = 12.dp)
+            .padding(top = 12.dp),
     )
 }
 
 @Composable
-fun DiceColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface) {
+fun DiceColour(dialogBagAndroidViewModel: DialogBagAndroidViewModel) {
     val paletteIcon = painterResource(id = R.drawable.palette_fill0_wght400_grad0_opsz24)
 
     val showDialogColourPicker = remember { mutableStateOf(false) }
 
-    val diceColour by dialogBagAndroidViewModelInterface.diceColour.collectAsStateWithLifecycle()
+    val diceColour by dialogBagAndroidViewModel.diceColour.collectAsStateWithLifecycle()
 
     Row(
         modifier = Modifier
             .padding(top = 12.dp, bottom = 4.dp)
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
             onClick = {
                 showDialogColourPicker.value = true
             },
             modifier = Modifier
-                .testTag(BagCardDiceTestTag.diceColour)
+                .testTag(BagCardDiceTestTag.DICE_COLOUR),
 
-        ) {
+            ) {
             Icon(
                 paletteIcon,
                 contentDescription = stringResource(R.string.dialog_bag_dice_colour),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -222,7 +203,7 @@ fun DiceColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
 
     Divider(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 4.dp)
+            .padding(top = 8.dp, bottom = 4.dp),
     )
 
     if (showDialogColourPicker.value) {
@@ -230,16 +211,18 @@ fun DiceColour(dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInte
             showDialogColourPicker,
             stringResource(R.string.dialog_bag_colour_picker_dice),
             diceColour,
-            dialogBagAndroidViewModelInterface::diceColour
+            dialogBagAndroidViewModel::diceColour,
         )
     }
 }
 
 @Composable
 fun DiceCloneDelete(
-    dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface
+    dialogBagAndroidViewModel: DialogBagAndroidViewModel,
 ) {
     val cloneDice = painterResource(id = R.drawable.content_copy_fill0_wght400_grad0_opsz24)
+
+    val diceCanBeDeleted = dialogBagAndroidViewModel.diceCanBeDeleted.collectAsState()
 
     Row(
         modifier = Modifier
@@ -252,12 +235,12 @@ fun DiceCloneDelete(
             modifier = Modifier
                 .padding(8.dp)
                 .width(140.dp)
-                .testTag(BagCardDiceTestTag.diceClone)
+                .testTag(BagCardDiceTestTag.DICE_CLONE),
         ) {
             Icon(
                 cloneDice,
                 contentDescription = stringResource(R.string.dialog_bag_dice_delete),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -265,17 +248,17 @@ fun DiceCloneDelete(
             Text(stringResource(R.string.dialog_bag_dice_clone))
         }
 
-        if (dialogBagAndroidViewModelInterface.diceCanBeDeleted()) {
+        if (diceCanBeDeleted.value) {
             Button(
                 onClick = { },
                 modifier = Modifier
                     .padding(8.dp)
                     .width(140.dp)
-                    .testTag(BagCardDiceTestTag.diceDelete)
+                    .testTag(BagCardDiceTestTag.DICE_DELETE),
             ) {
                 Icon(
                     Icons.Outlined.Delete,
-                    contentDescription = stringResource(R.string.dialog_bag_dice_delete)
+                    contentDescription = stringResource(R.string.dialog_bag_dice_delete),
                 )
 
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))

@@ -31,11 +31,19 @@ public interface SideProtocolBufferOrBuilder extends
     getColourBytes();
 
     /**
-     * <code>bytes imageBase64 = 3;</code>
+     * <code>string imageBase64 = 3;</code>
      *
      * @return The imageBase64.
      */
-    com.google.protobuf.ByteString getImageBase64();
+    java.lang.String getImageBase64();
+
+    /**
+     * <code>string imageBase64 = 3;</code>
+     *
+     * @return The bytes for imageBase64.
+     */
+    com.google.protobuf.ByteString
+    getImageBase64Bytes();
 
     /**
      * <code>int32 imageDrawableId = 4;</code>

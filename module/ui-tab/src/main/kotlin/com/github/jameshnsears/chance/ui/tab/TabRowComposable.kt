@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
 import com.github.jameshnsears.chance.ui.tab.bag.TabBag
@@ -24,12 +24,12 @@ import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
 @Composable
 fun TabRowChance(
     settingsRepository: SettingsRepositoryInterface,
-    bagRepository: BagRepositoryInterface,
-    rollRepository: RollRepositoryInterface
+    bagRepository: DiceBagRepositoryInterface,
+    rollRepository: RollRepositoryInterface,
 ) {
     val tabs = listOf(
         stringResource(R.string.tab_bag),
-        stringResource(R.string.tab_roll)
+        stringResource(R.string.tab_roll),
     )
     val selectedTabIndex = remember { mutableIntStateOf(0) }
 
@@ -50,13 +50,13 @@ fun TabRowChance(
                             Icon(
                                 iconBag,
                                 contentDescription = stringResource(R.string.tab_bag),
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(24.dp),
                             )
                         else
                             Icon(
                                 iconRoll,
                                 contentDescription = stringResource(R.string.tab_roll),
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier.size(24.dp),
                             )
                     },
                 )
@@ -68,16 +68,17 @@ fun TabRowChance(
                 0 -> TabBag(
                     TabBagViewModel(
                         settingsRepository,
-                        bagRepository
-                    )
+                        bagRepository,
+                        rollRepository,
+                    ),
                 )
 
                 1 -> TabRoll(
                     TabRollViewModel(
                         settingsRepository,
                         bagRepository,
-                        rollRepository
-                    )
+                        rollRepository,
+                    ),
                 )
 
                 else -> throw IllegalStateException("Invalid selected tab index")

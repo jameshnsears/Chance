@@ -7,5 +7,5 @@ data class Side(
     var imageDrawableId: Int = 0,
     var description: String = "",
     var descriptionStringsId: Int = 0,
-    var descriptionColour: String = "FF000000"
+    var descriptionColour: String = "FF000000",
 )

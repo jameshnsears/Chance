@@ -9,23 +9,11 @@ public interface RollProtocolBufferOrBuilder extends
         com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
+     * <code>int64 diceEpoch = 1;</code>
      *
-     * @return Whether the dice field is set.
+     * @return The diceEpoch.
      */
-    boolean hasDice();
-
-    /**
-     * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-     *
-     * @return The dice.
-     */
-    com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer getDice();
-
-    /**
-     * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-     */
-    com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder getDiceOrBuilder();
+    long getDiceEpoch();
 
     /**
      * <code>.com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer side = 2;</code>

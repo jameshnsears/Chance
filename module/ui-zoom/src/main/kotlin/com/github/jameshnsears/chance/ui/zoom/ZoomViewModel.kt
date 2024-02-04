@@ -7,11 +7,25 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.Dice
+import com.github.jameshnsears.chance.data.domain.DiceBag
+import com.github.jameshnsears.chance.data.domain.RollHistory
 import com.github.jameshnsears.chance.data.domain.Side
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryInterface
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
-abstract class ZoomViewModel : ViewModel() {
+abstract class ZoomViewModel(
+    val bagRepository: DiceBagRepositoryInterface,
+) : ViewModel() {
+    protected val _diceDiceBag: MutableStateFlow<DiceBag> = MutableStateFlow(emptyList())
+    val diceBag: MutableStateFlow<DiceBag> = _diceDiceBag
+
+    val _rollHistory: MutableStateFlow<RollHistory> = MutableStateFlow(LinkedHashMap())
+    val rollHistory: MutableStateFlow<RollHistory> = _rollHistory
+
     fun zoom() {}
 
     fun scale() = 75.dp
@@ -58,7 +72,7 @@ abstract class ZoomViewModel : ViewModel() {
             ColorFilter.tint(makeColour(hexColour))
     }
 
-    fun sideColorText(hexColour: String): androidx.compose.ui.graphics.Color {
+    fun sideColorText(hexColour: String): Color {
         return if (hexColour == "")
             Color.White
         else
@@ -69,4 +83,13 @@ abstract class ZoomViewModel : ViewModel() {
         Color(android.graphics.Color.parseColor("#${hexColour}"))
 
     fun imageDrawableIdAvailable(side: Side) = side.imageDrawableId != 0
+
+    val _dice: MutableStateFlow<Dice> = MutableStateFlow(Dice())
+    val dice: MutableStateFlow<Dice> = _dice
+
+    fun dice(diceEpoch: Long) {
+        viewModelScope.launch {
+            _dice.value = bagRepository.fetch(diceEpoch)
+        }
+    }
 }

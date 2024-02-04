@@ -1,6 +1,8 @@
 package com.github.jameshnsears.chance.data.repository.roll
 
 import com.github.jameshnsears.chance.data.domain.RollHistory
+import com.github.jameshnsears.chance.data.protocolbuffer.RollHistoryProtocolBuffer
+import com.google.protobuf.util.JsonFormat
 
 class RollRepositoryTestDouble private constructor() :
     RollRepositoryInterface {
@@ -26,7 +28,13 @@ class RollRepositoryTestDouble private constructor() :
     }
 
     override suspend fun export(): String {
-        TODO("Not yet implemented")
+        val rollHistoryProtocolBufferBuilder: RollHistoryProtocolBuffer.Builder =
+            RollHistoryProtocolBuffer.newBuilder()
+
+        mapBagIntoBagProtocolBufferBuilder(rollHistory, rollHistoryProtocolBufferBuilder)
+
+        return JsonFormat.printer().includingDefaultValueFields()
+            .print(rollHistoryProtocolBufferBuilder.build())
     }
 
     override suspend fun import(json: String) {

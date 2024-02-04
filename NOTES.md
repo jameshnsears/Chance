@@ -67,4 +67,43 @@ try to reduce coupling, even if there is duplication!
 - hinders experimentation / flexibility
 - make things easy to understand for someone new to codebase and easy to test
 
+======================
+
+// destructuring
+
+val allUsers List<User> = ...
+val (isOnline, isOffline) = allUsers.partition { it.isOnline }
+
+isOnline.forEach { user ->
+user.sendMessage(...)
+}
+
+val ma p mapOf<String, Int>
+map.forEach { (key, value) ->
+key...
+value...
+}
+
+
+// property delegate == overider getter / setter == inhertit ReadWriteProperty class
+: ReadWriteProperty<Any?, String>
+
+======================
+
+design suspend fun's to be able to work from main without a problem
+= avoid having coroutinescope run within cocoroutinescope
+= IDE tells use if suspend being used or not
+
+return withContentext(Dispatcher.IO) {
+// prevents code from blocking
+}
+
+======================
+
+what is compose LaunchedEffect(...) ?
+
+vararg val args: Any
+
+use Channel
+
 */

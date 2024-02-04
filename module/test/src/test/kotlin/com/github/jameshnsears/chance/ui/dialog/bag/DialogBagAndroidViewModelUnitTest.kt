@@ -1,10 +1,10 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
 import android.app.Application
-import com.github.jameshnsears.chance.MainDispatcherRule
 import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
-import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.bag.BagSampleData
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryTestDouble
+import com.github.jameshnsears.chance.utils.rule.RuleMainDispatcher
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -12,22 +12,20 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
 class DialogBagAndroidViewModelUnitTest {
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    val ruleMainDispatcher = RuleMainDispatcher()
 
     @Test
-    fun confirmDiceAndSideDetailsAvailable() = runTest {
-        val bagRepository = BagRepositoryTestDouble.getInstance()
+    fun checkViewModelShowsCorrectDiceAndSideDetails() = runTest {
+        val bagRepository = DiceBagRepositoryTestDouble.getInstance()
         bagRepository.store(
             listOf(
-                BagDemoSampleData.diceHeadsTails
-            )
+                BagDemoSampleData.diceHeadsTails,
+            ),
         )
 
         val application = mockk<Application>()
@@ -50,73 +48,26 @@ class DialogBagAndroidViewModelUnitTest {
         assertEquals(dialogBagAndroidViewModel.diceSidesSliderPosition.value, 0.0f)
         assertEquals(dialogBagAndroidViewModel.diceTitle.value, mockDiceTitle)
         assertEquals(dialogBagAndroidViewModel.diceColour.value, dice.colour)
-        assertFalse(dialogBagAndroidViewModel.diceCanBeDeleted())
+        assertFalse(dialogBagAndroidViewModel.diceCanBeDeleted.value)
     }
 
     @Test
-    fun diceCanBeDeleted() = runTest {
-        val bagRepository = BagRepositoryTestDouble.getInstance()
+    fun checkViewModelCanDeleteDice() = runTest {
+        val bagRepository = DiceBagRepositoryTestDouble.getInstance()
         bagRepository.store(BagSampleData.allDice)
 
         val application = mockk<Application>()
         every { application.getString(any()) } returns ""
 
-        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(application, bagRepository)
+        val dialogBagAndroidViewModel: DialogBagAndroidViewModel =
+            getDialogBagAndroidViewModel(application, bagRepository)
 
-        assertTrue(dialogBagAndroidViewModel.diceCanBeDeleted())
-    }
-
-    @Ignore
-    @Test
-    fun todo() = runTest {
-        val bagRepository = BagRepositoryTestDouble.getInstance()
-        bagRepository.store(
-            listOf(
-                BagDemoSampleData.diceHeadsTails
-            )
-        )
-
-        val application = mockk<Application>()
-        every { application.getString(any()) } returns ""
-
-        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(application, bagRepository)
-
-        val sideColour = "sideColour"
-        dialogBagAndroidViewModel.sideColour(sideColour)
-
-        val sideDescription = "sideDescription"
-        dialogBagAndroidViewModel.sideDescription(sideDescription)
-
-        /////////////////
-
-        dialogBagAndroidViewModel.diceSidesSliderPosition(2.0f)
-
-        val diceTitle = "diceTitle"
-        dialogBagAndroidViewModel.diceTitle(diceTitle)
-
-        val diceColour = "diceColour"
-        dialogBagAndroidViewModel.diceColour(diceColour)
-
-        fail("todo")
-
-        dialogBagAndroidViewModel.save()
-
-        val diceBag = bagRepository.fetch()
-        assertEquals(diceBag.size, 1)
-
-        val dice = diceBag[0]
-        val side = dice.sides[0]
-        assertEquals(side.colour, sideColour)
-        assertEquals(side.description, sideDescription)
-
-        assertEquals(dice.sides.size, 6)
-        assertEquals(dice.title, diceTitle)
-        assertEquals(dice.colour, diceColour)
+        assertTrue(dialogBagAndroidViewModel.diceCanBeDeleted.value)
     }
 
     private fun getDialogBagAndroidViewModel(
         application: Application,
-        bagRepository: BagRepositoryTestDouble
+        bagRepository: DiceBagRepositoryTestDouble,
     ): DialogBagAndroidViewModel {
         val dice = runBlocking {
             bagRepository.fetch()[0]
@@ -127,7 +78,7 @@ class DialogBagAndroidViewModelUnitTest {
             application,
             bagRepository,
             dice,
-            side
+            side,
         )
     }
 }

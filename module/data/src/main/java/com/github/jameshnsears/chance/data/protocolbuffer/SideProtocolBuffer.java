@@ -50,7 +50,8 @@ public final class SideProtocolBuffer extends
     private int number_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object colour_ = "";
-    private com.google.protobuf.ByteString imageBase64_ = com.google.protobuf.ByteString.EMPTY;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object imageBase64_ = "";
     private int imageDrawableId_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
@@ -66,7 +67,7 @@ public final class SideProtocolBuffer extends
 
     private SideProtocolBuffer() {
         colour_ = "";
-        imageBase64_ = com.google.protobuf.ByteString.EMPTY;
+        imageBase64_ = "";
         description_ = "";
         descriptionColour_ = "";
     }
@@ -238,13 +239,42 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>bytes imageBase64 = 3;</code>
+     * <code>string imageBase64 = 3;</code>
      *
      * @return The imageBase64.
      */
     @java.lang.Override
-    public com.google.protobuf.ByteString getImageBase64() {
-        return imageBase64_;
+    public java.lang.String getImageBase64() {
+        java.lang.Object ref = imageBase64_;
+        if (ref instanceof java.lang.String) {
+            return (java.lang.String) ref;
+        } else {
+            com.google.protobuf.ByteString bs =
+                    (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            imageBase64_ = s;
+            return s;
+        }
+    }
+
+    /**
+     * <code>string imageBase64 = 3;</code>
+     *
+     * @return The bytes for imageBase64.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+    getImageBase64Bytes() {
+        java.lang.Object ref = imageBase64_;
+        if (ref instanceof java.lang.String) {
+            com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                            (java.lang.String) ref);
+            imageBase64_ = b;
+            return b;
+        } else {
+            return (com.google.protobuf.ByteString) ref;
+        }
     }
 
     /**
@@ -364,8 +394,8 @@ public final class SideProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(colour_)) {
             com.google.protobuf.GeneratedMessageV3.writeString(output, 2, colour_);
         }
-        if (!imageBase64_.isEmpty()) {
-            output.writeBytes(3, imageBase64_);
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageBase64_)) {
+            com.google.protobuf.GeneratedMessageV3.writeString(output, 3, imageBase64_);
         }
         if (imageDrawableId_ != 0) {
             output.writeInt32(4, imageDrawableId_);
@@ -395,9 +425,8 @@ public final class SideProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(colour_)) {
             size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, colour_);
         }
-        if (!imageBase64_.isEmpty()) {
-            size += com.google.protobuf.CodedOutputStream
-                    .computeBytesSize(3, imageBase64_);
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageBase64_)) {
+            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, imageBase64_);
         }
         if (imageDrawableId_ != 0) {
             size += com.google.protobuf.CodedOutputStream
@@ -510,7 +539,7 @@ public final class SideProtocolBuffer extends
         private int bitField0_;
         private int number_;
         private java.lang.Object colour_ = "";
-        private com.google.protobuf.ByteString imageBase64_ = com.google.protobuf.ByteString.EMPTY;
+        private java.lang.Object imageBase64_ = "";
         private int imageDrawableId_;
         private java.lang.Object description_ = "";
         private int descriptionStringsId_;
@@ -546,7 +575,7 @@ public final class SideProtocolBuffer extends
             bitField0_ = 0;
             number_ = 0;
             colour_ = "";
-            imageBase64_ = com.google.protobuf.ByteString.EMPTY;
+            imageBase64_ = "";
             imageDrawableId_ = 0;
             description_ = "";
             descriptionStringsId_ = 0;
@@ -668,8 +697,10 @@ public final class SideProtocolBuffer extends
                 bitField0_ |= 0x00000002;
                 onChanged();
             }
-            if (other.getImageBase64() != com.google.protobuf.ByteString.EMPTY) {
-                setImageBase64(other.getImageBase64());
+            if (!other.getImageBase64().isEmpty()) {
+                imageBase64_ = other.imageBase64_;
+                bitField0_ |= 0x00000004;
+                onChanged();
             }
             if (other.getImageDrawableId() != 0) {
                 setImageDrawableId(other.getImageDrawableId());
@@ -724,7 +755,7 @@ public final class SideProtocolBuffer extends
                             break;
                         } // case 18
                         case 26: {
-                            imageBase64_ = input.readBytes();
+                            imageBase64_ = input.readStringRequireUtf8();
                             bitField0_ |= 0x00000004;
                             break;
                         } // case 26
@@ -885,22 +916,31 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>bytes imageBase64 = 3;</code>
+         * <code>string imageBase64 = 3;</code>
          *
          * @return The imageBase64.
          */
-        @java.lang.Override
-        public com.google.protobuf.ByteString getImageBase64() {
-            return imageBase64_;
+        public java.lang.String getImageBase64() {
+            java.lang.Object ref = imageBase64_;
+            if (!(ref instanceof java.lang.String)) {
+                com.google.protobuf.ByteString bs =
+                        (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                imageBase64_ = s;
+                return s;
+            } else {
+                return (java.lang.String) ref;
+            }
         }
 
         /**
-         * <code>bytes imageBase64 = 3;</code>
+         * <code>string imageBase64 = 3;</code>
          *
          * @param value The imageBase64 to set.
          * @return This builder for chaining.
          */
-        public Builder setImageBase64(com.google.protobuf.ByteString value) {
+        public Builder setImageBase64(
+                java.lang.String value) {
             if (value == null) {
                 throw new NullPointerException();
             }
@@ -911,13 +951,50 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>bytes imageBase64 = 3;</code>
+         * <code>string imageBase64 = 3;</code>
+         *
+         * @return The bytes for imageBase64.
+         */
+        public com.google.protobuf.ByteString
+        getImageBase64Bytes() {
+            java.lang.Object ref = imageBase64_;
+            if (ref instanceof String) {
+                com.google.protobuf.ByteString b =
+                        com.google.protobuf.ByteString.copyFromUtf8(
+                                (java.lang.String) ref);
+                imageBase64_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        /**
+         * <code>string imageBase64 = 3;</code>
+         *
+         * @param value The bytes for imageBase64 to set.
+         * @return This builder for chaining.
+         */
+        public Builder setImageBase64Bytes(
+                com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            imageBase64_ = value;
+            bitField0_ |= 0x00000004;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string imageBase64 = 3;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearImageBase64() {
-            bitField0_ = (bitField0_ & ~0x00000004);
             imageBase64_ = getDefaultInstance().getImageBase64();
+            bitField0_ = (bitField0_ & ~0x00000004);
             onChanged();
             return this;
         }

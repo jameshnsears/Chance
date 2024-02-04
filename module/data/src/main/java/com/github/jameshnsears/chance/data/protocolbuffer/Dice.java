@@ -17,7 +17,7 @@ public final class Dice {
         java.lang.String[] descriptorData = {
                 "\n\ndice.proto\0222com.github.jameshnsears.ch" +
                         "ance.data.protocolbuffer\032\nside.proto\"\302\001\n" +
-                        "\022DiceProtocolBuffer\022\r\n\005epoch\030\001 \001(\004\022T\n\004si" +
+                        "\022DiceProtocolBuffer\022\r\n\005epoch\030\001 \001(\003\022T\n\004si" +
                         "de\030\002 \003(\0132F.com.github.jameshnsears.chanc" +
                         "e.data.protocolbuffer.SideProtocolBuffer" +
                         "\022\r\n\005title\030\003 \001(\t\022\026\n\016titleStringsId\030\004 \001(\005\022" +

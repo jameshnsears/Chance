@@ -16,10 +16,8 @@ public final class Roll {
     static {
         java.lang.String[] descriptorData = {
                 "\n\nroll.proto\0222com.github.jameshnsears.ch" +
-                        "ance.data.protocolbuffer\032\ndice.proto\032\nsi" +
-                        "de.proto\"\300\001\n\022RollProtocolBuffer\022T\n\004dice\030" +
-                        "\001 \001(\0132F.com.github.jameshnsears.chance.d" +
-                        "ata.protocolbuffer.DiceProtocolBuffer\022T\n" +
+                        "ance.data.protocolbuffer\032\nside.proto\"}\n\022" +
+                        "RollProtocolBuffer\022\021\n\tdiceEpoch\030\001 \001(\003\022T\n" +
                         "\004side\030\002 \001(\0132F.com.github.jameshnsears.ch" +
                         "ance.data.protocolbuffer.SideProtocolBuf" +
                         "ferB\002P\001b\006proto3"
@@ -27,7 +25,6 @@ public final class Roll {
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
                 .internalBuildGeneratedFileFrom(descriptorData,
                         new com.google.protobuf.Descriptors.FileDescriptor[]{
-                                com.github.jameshnsears.chance.data.protocolbuffer.Dice.getDescriptor(),
                                 com.github.jameshnsears.chance.data.protocolbuffer.Side.getDescriptor(),
                         });
         internal_static_com_github_jameshnsears_chance_data_protocolbuffer_RollProtocolBuffer_descriptor =
@@ -35,8 +32,7 @@ public final class Roll {
         internal_static_com_github_jameshnsears_chance_data_protocolbuffer_RollProtocolBuffer_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
                 internal_static_com_github_jameshnsears_chance_data_protocolbuffer_RollProtocolBuffer_descriptor,
-                new java.lang.String[]{"Dice", "Side",});
-        com.github.jameshnsears.chance.data.protocolbuffer.Dice.getDescriptor();
+                new java.lang.String[]{"DiceEpoch", "Side",});
         com.github.jameshnsears.chance.data.protocolbuffer.Side.getDescriptor();
     }
 

@@ -7,7 +7,7 @@ package com.github.jameshnsears.chance.data.protocolbuffer;
 import "side.proto";
 
 message DiceProtocolBuffer {
-  uint64 epoch = 1;
+  int64 epoch = 1;
   repeated SideProtocolBuffer side = 2;
   string title = 3;
   int32 titleStringsId = 4;

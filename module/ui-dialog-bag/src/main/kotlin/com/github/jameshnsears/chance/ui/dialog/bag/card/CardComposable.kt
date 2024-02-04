@@ -13,12 +13,12 @@ import androidx.compose.ui.unit.dp
 fun ColourSampleCanvas(sideColour: String) {
     Canvas(
         modifier = Modifier
-            .size(40.dp)
+            .size(40.dp),
     ) {
         drawRect(
             color = Color(android.graphics.Color.parseColor("#${sideColour}")),
             topLeft = Offset(0f, 0f),
-            size = size
+            size = size,
         )
     }
 }

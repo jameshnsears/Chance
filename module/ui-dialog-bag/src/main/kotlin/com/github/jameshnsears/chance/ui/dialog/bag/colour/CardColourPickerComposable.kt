@@ -40,7 +40,7 @@ fun DialogColourPicker(
     showDialog: MutableState<Boolean>,
     dialogTitle: String,
     currentColour: String,
-    setColour: (String) -> Unit
+    setColour: (String) -> Unit,
 ) {
     Dialog(
         onDismissRequest = { showDialog.value = false },
@@ -49,7 +49,7 @@ fun DialogColourPicker(
             showDialog,
             dialogTitle,
             currentColour,
-            setColour
+            setColour,
         )
     }
 }
@@ -59,13 +59,13 @@ fun DialogColourPickerLayout(
     showDialog: MutableState<Boolean>,
     dialogTitle: String,
     currentColour: String,
-    setColour: (String) -> Unit
+    setColour: (String) -> Unit,
 ) {
     val controller = rememberColorPickerController()
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(16.dp),
     ) {
         val configuration = LocalConfiguration.current
 
@@ -76,7 +76,7 @@ fun DialogColourPickerLayout(
                     dialogTitle,
                     currentColour,
                     setColour,
-                    controller
+                    controller,
                 )
             }
 
@@ -86,7 +86,7 @@ fun DialogColourPickerLayout(
                     dialogTitle,
                     currentColour,
                     setColour,
-                    controller
+                    controller,
                 )
             }
         }
@@ -99,7 +99,7 @@ fun DialogColourPickerLayoutLandscape(
     dialogTitle: String,
     currentColour: String,
     setColour: (String) -> Unit,
-    controller: ColorPickerController
+    controller: ColorPickerController,
 ) {
     var hexCode by remember { mutableStateOf("") }
     var textColor by remember { mutableStateOf(Color.Transparent) }
@@ -108,14 +108,14 @@ fun DialogColourPickerLayoutLandscape(
         Column(
             modifier = Modifier
                 .padding(top = 8.dp)
-                .weight(1f)
+                .weight(1f),
         )
         {
             Row(Modifier.align(Alignment.Start)) {
                 Text(
                     modifier = Modifier.padding(start = 24.dp),
                     text = dialogTitle,
-                    fontSize = 24.sp
+                    fontSize = 24.sp,
                 )
             }
 
@@ -136,18 +136,18 @@ fun DialogColourPickerLayoutLandscape(
                         hexCode = colorEnvelope.hexCode
                         textColor = colorEnvelope.color
                     },
-                    initialColor = convertColor(currentColour)
+                    initialColor = convertColor(currentColour),
                 )
 
                 Text(
                     text = hexCode,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
                 )
             }
         }
 
         Column(
-            verticalArrangement = Arrangement.Bottom
+            verticalArrangement = Arrangement.Bottom,
         ) {
 
             AlphaSlider(
@@ -156,7 +156,7 @@ fun DialogColourPickerLayoutLandscape(
                     .height(35.dp)
                     .align(Alignment.CenterHorizontally),
                 controller = controller,
-                initialColor = convertColor(currentColour)
+                initialColor = convertColor(currentColour),
             )
 
             BrightnessSlider(
@@ -165,7 +165,7 @@ fun DialogColourPickerLayoutLandscape(
                     .height(35.dp)
                     .align(Alignment.CenterHorizontally),
                 controller = controller,
-                initialColor = convertColor(currentColour)
+                initialColor = convertColor(currentColour),
             )
 
             ColourPickerCancelOk(showDialog, setColour, hexCode)
@@ -179,7 +179,7 @@ fun DialogColourPickerLayoutPortrait(
     dialogTitle: String,
     currentColour: String,
     setColour: (String) -> Unit,
-    controller: ColorPickerController
+    controller: ColorPickerController,
 ) {
     var hexCode by remember { mutableStateOf("") }
     var textColor by remember { mutableStateOf(Color.Transparent) }
@@ -187,7 +187,7 @@ fun DialogColourPickerLayoutPortrait(
     Column(
         modifier = Modifier
             .padding(top = 8.dp, bottom = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     )
     {
         Text(
@@ -195,14 +195,14 @@ fun DialogColourPickerLayoutPortrait(
                 .align(Alignment.Start)
                 .padding(start = 24.dp, bottom = 12.dp),
             text = dialogTitle,
-            fontSize = 24.sp
+            fontSize = 24.sp,
         )
 
         Box(
             Modifier
                 .height(300.dp)
                 .width(300.dp)
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
         ) {
             HsvColorPicker(
                 modifier = Modifier.padding(1.dp),
@@ -217,7 +217,7 @@ fun DialogColourPickerLayoutPortrait(
                     hexCode = colorEnvelope.hexCode
                     textColor = colorEnvelope.color
                 },
-                initialColor = convertColor(currentColour)
+                initialColor = convertColor(currentColour),
             )
         }
 
@@ -227,7 +227,7 @@ fun DialogColourPickerLayoutPortrait(
                 .height(35.dp)
                 .align(Alignment.CenterHorizontally),
             controller = controller,
-            initialColor = convertColor(currentColour)
+            initialColor = convertColor(currentColour),
         )
 
         BrightnessSlider(
@@ -236,7 +236,7 @@ fun DialogColourPickerLayoutPortrait(
                 .height(35.dp)
                 .align(Alignment.CenterHorizontally),
             controller = controller,
-            initialColor = convertColor(currentColour)
+            initialColor = convertColor(currentColour),
         )
 
         Text(
@@ -257,7 +257,7 @@ fun convertColor(hexColour: String) = Color(android.graphics.Color.parseColor("#
 fun ColourPickerCancelOk(
     showDialog: MutableState<Boolean>,
     setColour: (String) -> Unit,
-    hexCode: String
+    hexCode: String,
 ) {
     Row(
         modifier = Modifier
@@ -267,14 +267,16 @@ fun ColourPickerCancelOk(
     ) {
         TextButton(
             modifier = Modifier.padding(end = 18.dp),
-            onClick = { showDialog.value = false }) {
+            onClick = { showDialog.value = false },
+        ) {
             Text(stringResource(R.string.dialog_bag_colour_picker_cancel))
         }
 
-        TextButton(onClick = {
-            showDialog.value = false
-            setColour(hexCode)
-        }
+        TextButton(
+            onClick = {
+                showDialog.value = false
+                setColour(hexCode)
+            },
         ) {
             Text(stringResource(R.string.dialog_bag_colour_picker_ok))
         }

@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
-import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryTestDouble
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 @SuppressLint("UnrememberedMutableState")
 @Preview(heightDp = 900)
@@ -18,30 +20,34 @@ import io.mockk.mockk
 fun DialogBagComposablePreview() {
     val showDialog = mutableStateOf(true)
 
-    val bagRepository = BagRepositoryTestDouble.getInstance()
-    bagRepository.store(
-        listOf(
-            BagDemoSampleData.diceHeadsTails
+    val bagRepositoryTestDouble = DiceBagRepositoryTestDouble.getInstance()
+    runBlocking(Dispatchers.Main) {
+        bagRepositoryTestDouble.store(
+            listOf(
+                BagDemoSampleData.diceHeadsTails,
+            ),
         )
-    )
+    }
 
-    val dice = bagRepository.fetch()[0]
-    val side = dice.sides[1]
+    val dice = BagDemoSampleData.diceStory
+    val sides = dice.sides[0]
 
-    val dialogBagAndroidViewModelTestDouble = DialogBagAndroidViewModelTestDouble(
-        mockk<Application>(),
-        bagRepository,
-        dice,
-        side
-    )
+    val dialogBagAndroidViewModel = runBlocking {
+        DialogBagAndroidViewModel(
+            mockk<Application>(),
+            bagRepositoryTestDouble,
+            dice,
+            sides,
+        )
+    }
 
     ChanceTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
             DialogBagLayout(
                 showDialog,
-                dialogBagAndroidViewModelTestDouble
+                dialogBagAndroidViewModel,
             )
         }
     }

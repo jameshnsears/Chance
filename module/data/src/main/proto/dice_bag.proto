@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.protocolbuffer;
+
+import "dice.proto";
+
+message DiceBagProtocolBuffer {
+  repeated DiceProtocolBuffer dice = 1;
+}

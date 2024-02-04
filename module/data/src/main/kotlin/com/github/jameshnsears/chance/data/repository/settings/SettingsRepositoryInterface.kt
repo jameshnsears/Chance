@@ -11,7 +11,7 @@ interface SettingsRepositoryInterface : ImportExportRepositoryInterface {
 
     fun mapSettingsIntoSettingsProtocolBufferBuilder(
         settings: Settings,
-        settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder
+        settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder,
     ) {
         settingsProtocolBufferBuilder.setTabRowChance(settings.tabRowChance)
 
@@ -23,5 +23,6 @@ interface SettingsRepositoryInterface : ImportExportRepositoryInterface {
         settingsProtocolBufferBuilder.setRollSideNumber(settings.rollSideNumber)
         settingsProtocolBufferBuilder.setRollScore(settings.rollScore)
         settingsProtocolBufferBuilder.setRollSound(settings.rollSound)
+        settingsProtocolBufferBuilder.build()
     }
 }

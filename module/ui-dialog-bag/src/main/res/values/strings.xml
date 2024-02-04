@@ -4,7 +4,7 @@
 
     <string name="dialog.bag.side">Side</string>
     <string name="dialog.bag.side.colour">Colour…</string>
-    <string name="dialog.bag.side.colour.info">Change colour of side value:</string>
+    <string name="dialog.bag.side.colour.info">Change colour of side number:</string>
     <string name="dialog.bag.side.image">Image…</string>
     <string name="dialog.bag.side.image.info">Attach an SVG to this side</string>
     <string name="dialog.bag.side.description">Description</string>
@@ -20,8 +20,7 @@
         <item>12</item>
         <item>20</item>
     </string-array>
-    <string name="dialog.bag.dice.title">Title</string>
-    <string name="dialog.bag.dice.title.info">Each dice must have a unique title</string>
+    <string name="dialog.bag.dice.title">Name</string>
     <string-array name="dialog.bag.dice.title.mandatory">
         <item>d2</item>
         <item>d4</item>

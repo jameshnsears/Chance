@@ -32,29 +32,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModelInterface
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.ColourSampleCanvas
 import com.github.jameshnsears.chance.ui.dialog.bag.colour.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 class BagCardSideTestTag {
     companion object {
-        const val sideNumber = "sideNumber"
-        const val sideColour = "sideColour"
-        const val sideImage = "sideImage"
-        const val sideDescription = "sideDescription"
-        const val sideDescriptionColour = "sideDescriptionColour"
+        const val SIDE_NUMBER = "SIDE_NUMBER"
+        const val SIDE_COLOUR = "SIDE_COLOUR"
+        const val SIDE_IMAGE = "SIDE_IMAGE"
+        const val SIDE_DESCRIPTION = "SIDE_DESCRIPTION"
+        const val SIDE_DESCRIPTION_COLOUR = "SIDE_DESCRIPTION_COLOUR"
     }
 }
 
 @Composable
-fun BagCardSide(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
+fun BagCardSide(dialogBagAndroidViewModel: DialogBagAndroidViewModel) {
     ElevatedCard(
         modifier = Modifier
             .padding(top = 4.dp, bottom = 8.dp)
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+            defaultElevation = 6.dp,
         ),
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -75,15 +75,15 @@ fun SideNumber() {
         text = stringResource(R.string.dialog_bag_side),
         modifier = Modifier
             .wrapContentSize(Alignment.Center)
-            .testTag(BagCardSideTestTag.sideNumber),
+            .testTag(BagCardSideTestTag.SIDE_NUMBER),
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp
+        fontSize = 18.sp,
     )
 }
 
 @Composable
-fun SideColour(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
+fun SideColour(dialogBagAndroidViewModel: DialogBagAndroidViewModel) {
     val paletteIcon = painterResource(id = R.drawable.palette_fill0_wght400_grad0_opsz24)
 
     val showDialogColourPicker = remember { mutableStateOf(false) }
@@ -96,17 +96,17 @@ fun SideColour(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
     Row(
         modifier = Modifier
             .padding(top = 16.dp, bottom = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
             onClick = { showDialogColourPicker.value = true },
             modifier = Modifier
-                .testTag(BagCardSideTestTag.sideColour)
+                .testTag(BagCardSideTestTag.SIDE_COLOUR),
         ) {
             Icon(
                 paletteIcon,
                 contentDescription = stringResource(R.string.dialog_bag_side_colour),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -122,23 +122,23 @@ fun SideColour(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = Icons.Outlined.Info,
-            contentDescription = ""
+            contentDescription = "",
         )
 
         Text(
             modifier = Modifier
                 .padding(start = 8.dp),
-            text = "${stringResource(R.string.dialog_bag_side_colour_info)} $sideNumber"
+            text = "${stringResource(R.string.dialog_bag_side_colour_info)} $sideNumber",
         )
     }
 
     Divider(
         modifier = Modifier
-            .padding(top = 14.dp, bottom = 4.dp)
+            .padding(top = 14.dp, bottom = 4.dp),
     )
 
     if (showDialogColourPicker.value) {
@@ -152,7 +152,7 @@ fun SideColour(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
 }
 
 @Composable
-fun SideImage(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
+fun SideImage(dialogBagAndroidViewModel: DialogBagAndroidViewModel) {
 
 
     val paletteIcon = painterResource(id = R.drawable.image_fill0_wght400_grad0_opsz24)
@@ -160,16 +160,16 @@ fun SideImage(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
     Row(
         modifier = Modifier
             .padding(top = 4.dp, bottom = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
-            modifier = Modifier.testTag(BagCardSideTestTag.sideImage)
+            modifier = Modifier.testTag(BagCardSideTestTag.SIDE_IMAGE),
         ) {
             Icon(
                 paletteIcon,
                 contentDescription = stringResource(R.string.dialog_bag_side_image),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -184,35 +184,35 @@ fun SideImage(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
             contentDescription = null,
             modifier = Modifier
                 .padding(horizontal = 5.dp, vertical = 5.dp)
-                .size(50.dp)
+                .size(50.dp),
         )
     }
 
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = Icons.Outlined.Info,
-            contentDescription = ""
+            contentDescription = "",
         )
 
         Text(
             modifier = Modifier
                 .padding(start = 8.dp),
-            text = stringResource(R.string.dialog_bag_side_image_info)
+            text = stringResource(R.string.dialog_bag_side_image_info),
         )
     }
 
     Divider(
         modifier = Modifier
-            .padding(top = 12.dp, bottom = 12.dp)
+            .padding(top = 12.dp, bottom = 12.dp),
     )
 }
 
 @Composable
-fun SideDescription(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
+fun SideDescription(dialogBagAndroidViewModel: DialogBagAndroidViewModel) {
     val sideDescription =
         dialogBagAndroidViewModel.sideDescription.collectAsStateWithLifecycle()
 
@@ -222,16 +222,16 @@ fun SideDescription(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterfac
         label = { Text(stringResource(R.string.dialog_bag_side_description)) },
         singleLine = true,
         modifier = Modifier
-            .testTag(BagCardSideTestTag.sideDescription)
+            .testTag(BagCardSideTestTag.SIDE_DESCRIPTION)
             .padding(bottom = 8.dp)
-            .fillMaxWidth()
+            .fillMaxWidth(),
     )
 
     SideDescriptionColour(dialogBagAndroidViewModel)
 }
 
 @Composable
-fun SideDescriptionColour(dialogBagAndroidViewModel: DialogBagAndroidViewModelInterface) {
+fun SideDescriptionColour(dialogBagAndroidViewModel: DialogBagAndroidViewModel) {
     val paletteIcon = painterResource(id = R.drawable.palette_fill0_wght400_grad0_opsz24)
 
     val showDialogColourPicker = remember { mutableStateOf(false) }
@@ -240,17 +240,17 @@ fun SideDescriptionColour(dialogBagAndroidViewModel: DialogBagAndroidViewModelIn
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(top = 4.dp)
+        modifier = Modifier.padding(top = 4.dp),
     ) {
         Button(
             onClick = { showDialogColourPicker.value = true },
             modifier = Modifier
-                .testTag(BagCardSideTestTag.sideDescriptionColour)
+                .testTag(BagCardSideTestTag.SIDE_DESCRIPTION_COLOUR),
         ) {
             Icon(
                 paletteIcon,
                 contentDescription = stringResource(R.string.dialog_bag_side_colour),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))

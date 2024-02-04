@@ -37,10 +37,10 @@ fun ZoomRollAnimationComposablePreview() {
             property = LottieProperty.COLOR_FILTER,
             value = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
                 Color.Red.toArgb(),
-                BlendModeCompat.SRC_ATOP
+                BlendModeCompat.SRC_ATOP,
             ),
-            keyPath = arrayOf("**")
-        )
+            keyPath = arrayOf("**"),
+        ),
     )
 
     Box {
@@ -49,7 +49,7 @@ fun ZoomRollAnimationComposablePreview() {
                 .size(150.dp),
             composition = composition,
             progress = { progress },
-            dynamicProperties = dynamicProperties
+            dynamicProperties = dynamicProperties,
         )
 
         if (progress == 1.0f) {

@@ -6,9 +6,7 @@ package com.github.jameshnsears.chance.data.protocolbuffer;
 
 message SettingsProtocolBuffer {
   int32 tabRowChance = 1;
-
   bool bagDemoBag = 2;
-
   bool rollSequentially = 3;
   bool rollHistory = 4;
   bool rollScore = 5;

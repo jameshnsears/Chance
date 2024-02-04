@@ -25,7 +25,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -44,7 +44,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.4"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
 
     packaging {
@@ -65,17 +65,17 @@ android {
 }
 
 dependencies {
-    implementation(project(":module:ui-dialog-bag"))
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.13")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+    implementation(platform("androidx.compose:compose-bom:2024.01.00"))
     implementation(project(":module:common"))
     implementation(project(":module:data"))
     implementation(project(":module:test"))
+    implementation(project(":module:ui-dialog-bag"))
     implementation(project(":module:ui-tab"))
     implementation(project(":module:ui-zoom"))
 }

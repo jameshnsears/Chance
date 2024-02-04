@@ -44,8 +44,8 @@ import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagViewModel
 
 class TabBagTestTag {
     companion object {
-        const val export = "export"
-        const val import = "import"
+        const val EXPORT = "EXPORT"
+        const val IMPORT = "IMPORT"
     }
 }
 
@@ -64,12 +64,13 @@ fun TabBagLayout(tabBagViewModel: TabBagViewModel) {
         sheetPeekHeight = 32.dp,
         sheetContent = {
             TabBagBottomSheetLayout(tabBagViewModel)
-        }) { innerPadding ->
+        },
+    ) { innerPadding ->
         ZoomBag(
             ZoomBagViewModel(
                 tabBagViewModel.settingsRepository,
-                tabBagViewModel.bagRepository
-            )
+                tabBagViewModel.bagRepository,
+            ),
         )
     }
 }
@@ -85,18 +86,18 @@ fun DemoBag(tabBagViewModel: TabBagViewModel) {
             .padding(bottom = 8.dp)
             .clickable {
                 checked = !checked
-            }
+            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.tab_bag_demo_bag)
+            text = stringResource(R.string.tab_bag_demo_bag),
         )
 
         Switch(
             checked = checked,
             onCheckedChange = {
                 checked = it
-            }
+            },
         )
     }
 }
@@ -110,18 +111,18 @@ fun ImportExport(tabBagViewModel: TabBagViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp, bottom = 8.dp),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         Button(
             onClick = { /* Do something when clicked */ },
             modifier = Modifier
                 .width(150.dp)
-                .testTag(TabBagTestTag.export)
+                .testTag(TabBagTestTag.EXPORT),
         ) {
             Icon(
                 exportIcon,
                 contentDescription = stringResource(R.string.tab_bag_export),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -135,12 +136,12 @@ fun ImportExport(tabBagViewModel: TabBagViewModel) {
             onClick = { /* Do something when clicked */ },
             modifier = Modifier
                 .width(150.dp)
-                .testTag(TabBagTestTag.import)
+                .testTag(TabBagTestTag.IMPORT),
         ) {
             Icon(
                 importIcon,
                 contentDescription = stringResource(R.string.tab_bag_import),
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -160,12 +161,12 @@ fun VersionDetails() {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp)
+            .padding(top = 8.dp),
     ) {
 
         Text(
             text = v + "-" + BuildConfig.FLAVOR,
-            fontSize = 14.sp
+            fontSize = 14.sp,
         )
 
         Spacer(Modifier.weight(1f))
@@ -177,9 +178,9 @@ fun VersionDetails() {
             modifier = Modifier.clickable {
                 openUrlInBrowser(
                     context,
-                    "https://github.com/jameshnsears/chance"
+                    "https://github.com/jameshnsears/chance",
                 )
-            }
+            },
         )
     }
 }

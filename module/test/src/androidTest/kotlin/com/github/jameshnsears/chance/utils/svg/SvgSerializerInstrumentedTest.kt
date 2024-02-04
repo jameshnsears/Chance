@@ -23,14 +23,14 @@ class SvgSerializerInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature()
     fun svg() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        val assetFilename = "SvgSerializer-d2.svg"
+        val assetFilename = "data/svg/dN/d2.svg"
 
         val assetManager = context.assets
         val inputStream = assetManager.open(assetFilename)
         val svgDataByteArray = inputStream.readBytes()
 
         val svgSerializer = SvgSerializer()
-        assertTrue(svgSerializer.isSVG(URL("file:///android_asset/$assetFilename")))
+        assertTrue(svgSerializer.isSVG(URL("file:///android_asset/data/svg/dN/$assetFilename")))
         val encoded = svgSerializer.encode(svgDataByteArray)
         val decodedByteArray = svgSerializer.decode(encoded)
 
@@ -47,11 +47,10 @@ class SvgSerializerInstrumentedTest : LoggingLineNumberTreeInstrumentedFeature()
                         contentDescription = "",
                         modifier = Modifier
                             .size(width = 200.dp, height = 200.dp)
-                            .testTag(assetFilename)
+                            .testTag(assetFilename),
                     )
                 }
             }
-
         }
 
         composeTestRule.waitForIdle()

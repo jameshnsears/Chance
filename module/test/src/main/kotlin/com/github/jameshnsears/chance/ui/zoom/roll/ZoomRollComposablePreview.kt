@@ -4,27 +4,38 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 
-@Preview(heightDp = 750, widthDp = 1000)
+@Preview(heightDp = 1100, widthDp = 900)
 @Composable
 fun ZoomRollComposablePreview() {
-    val settingsRepository = SettingsRepositoryTestDouble.getInstance()
+    val bagRepositoryTestDouble = DiceBagRepositoryTestDouble.getInstance()
+    runBlocking(Dispatchers.Main) {
+        bagRepositoryTestDouble.store(BagDemoSampleData.allDice)
+    }
 
-    val rollRepository = RollRepositoryTestDouble.getInstance()
-    rollRepository.store(RollSampleData.rollHistory)
-
-    val zoomRollViewModel = ZoomRollViewModel(settingsRepository, rollRepository)
+    val rollRepositoryTestDouble = RollRepositoryTestDouble.getInstance()
+    rollRepositoryTestDouble.store(RollSampleData.rollHistory)
 
     ChanceTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.background,
         ) {
-            ZoomRoll(zoomRollViewModel)
+            ZoomRoll(
+                ZoomRollViewModel(
+                    SettingsRepositoryTestDouble.getInstance(),
+                    bagRepositoryTestDouble,
+                    rollRepositoryTestDouble,
+                ),
+            )
         }
     }
 }

@@ -9,7 +9,7 @@ public interface DiceProtocolBufferOrBuilder extends
         com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>uint64 epoch = 1;</code>
+     * <code>int64 epoch = 1;</code>
      *
      * @return The epoch.
      */

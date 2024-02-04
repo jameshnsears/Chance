@@ -3,8 +3,9 @@ package com.github.jameshnsears.chance.ui.tab.roll
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.Dice
+import com.github.jameshnsears.chance.data.domain.DiceBag
 import com.github.jameshnsears.chance.data.domain.Roll
-import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
 import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollViewModel
@@ -16,7 +17,7 @@ import java.security.SecureRandom
 
 class TabRollViewModel(
     val settingsRepository: SettingsRepositoryInterface,
-    val bagRepository: BagRepositoryInterface,
+    val bagRepository: DiceBagRepositoryInterface,
     var rollRepository: RollRepositoryInterface,
 ) : ViewModel() {
     //    var _description = MutableStateFlow(fetchInitialDescription())
@@ -31,12 +32,16 @@ class TabRollViewModel(
 
     private val random: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 
-    val zoomRollModel = ZoomRollViewModel(settingsRepository, rollRepository)
+    val zoomRollModel = ZoomRollViewModel(
+        settingsRepository,
+        bagRepository,
+        rollRepository,
+    )
 
     fun selectedDice() {
     }
 
-    fun roll(dice: List<Dice>) {
+    fun roll(dice: DiceBag) {
         val mutex = Mutex()
 
         viewModelScope.launch {
@@ -46,9 +51,9 @@ class TabRollViewModel(
                 dice.forEach { die ->
                     rollSequence.add(
                         Roll(
-                            die,
-                            randomSide(die)
-                        )
+                            die.epoch,
+                            randomSide(die),
+                        ),
                     )
                 }
 

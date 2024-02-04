@@ -8,5 +8,5 @@ data class Dice(
     var title: String = "",
     var titleStringsId: Int = 0,
     var colour: String = "FF000000",
-    var selected: Boolean = false
+    var selected: Boolean = false,
 )

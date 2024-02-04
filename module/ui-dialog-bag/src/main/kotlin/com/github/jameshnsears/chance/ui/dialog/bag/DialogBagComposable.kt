@@ -29,7 +29,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
-import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.BagCardDice
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.BagCardSide
 import com.github.jameshnsears.chance.ui.dialog.dice.R
@@ -38,16 +38,16 @@ import com.github.jameshnsears.chance.ui.dialog.dice.R
 @Composable
 fun DialogBag(
     showDialog: MutableState<Boolean>,
-    bagRepository: BagRepositoryInterface,
+    bagRepository: DiceBagRepositoryInterface,
     dice: Dice,
-    side: Side
+    side: Side,
 ) {
     val context = LocalContext.current
     val application = context.applicationContext as Application
 
     Dialog(
         onDismissRequest = { showDialog.value = false },
-        properties = DialogProperties(usePlatformDefaultWidth = false)
+        properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         Surface(modifier = Modifier.fillMaxSize()) {
             DialogBagLayout(
@@ -56,7 +56,7 @@ fun DialogBag(
                     application,
                     bagRepository,
                     dice,
-                    side
+                    side,
                 ),
             )
         }
@@ -66,7 +66,7 @@ fun DialogBag(
 @Composable
 fun DialogBagLayout(
     showDialog: MutableState<Boolean>,
-    dialogBagAndroidViewModelInterface: DialogBagAndroidViewModelInterface,
+    dialogBagAndroidViewModel: DialogBagAndroidViewModel,
 ) {
     Column(
         modifier = Modifier
@@ -74,47 +74,49 @@ fun DialogBagLayout(
             .fillMaxSize()
             .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Top,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(top = 4.dp),
         ) {
             IconButton(onClick = { showDialog.value = false }) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
-                    contentDescription = ""
+                    contentDescription = "",
                 )
             }
 
             Text(
                 text = stringResource(R.string.dialog_bag_title),
                 textAlign = TextAlign.Center,
-                fontSize = 22.sp
+                fontSize = 22.sp,
             )
 
-            TextButton(onClick = {
-                dialogBagAndroidViewModelInterface.save()
-                showDialog.value = false
-            }) {
+            TextButton(
+                onClick = {
+                    dialogBagAndroidViewModel.save()
+                    showDialog.value = false
+                },
+            ) {
                 Text(
                     text = stringResource(R.string.dialog_bag_save),
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp),
                     textAlign = TextAlign.End,
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
                 )
             }
         }
 
         Column(
             modifier = Modifier
-                .padding(start = 8.dp, end = 8.dp)
+                .padding(start = 8.dp, end = 8.dp),
         ) {
-            BagCardSide(dialogBagAndroidViewModelInterface)
+            BagCardSide(dialogBagAndroidViewModel)
 
-            BagCardDice(dialogBagAndroidViewModelInterface)
+            BagCardDice(dialogBagAndroidViewModel)
         }
     }
 }

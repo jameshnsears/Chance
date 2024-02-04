@@ -22,12 +22,12 @@ object SettingsProtocolBufferSerializer : Serializer<SettingsProtocolBuffer> {
 
     override suspend fun writeTo(
         t: SettingsProtocolBuffer,
-        output: OutputStream
+        output: OutputStream,
     ) = t.writeTo(output)
 }
 
 val android.content.Context.settingsDataStore: DataStore<SettingsProtocolBuffer> by dataStore(
     // /data/data/com.github.jameshnsears.chance.test.test/files/datastore/settings.pb
     fileName = "settings.pb",
-    serializer = SettingsProtocolBufferSerializer
+    serializer = SettingsProtocolBufferSerializer,
 )

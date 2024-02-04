@@ -186,7 +186,7 @@ public final class DiceProtocolBuffer extends
     }
 
     /**
-     * <code>uint64 epoch = 1;</code>
+     * <code>int64 epoch = 1;</code>
      *
      * @return The epoch.
      */
@@ -349,7 +349,7 @@ public final class DiceProtocolBuffer extends
     public void writeTo(com.google.protobuf.CodedOutputStream output)
             throws java.io.IOException {
         if (epoch_ != 0L) {
-            output.writeUInt64(1, epoch_);
+            output.writeInt64(1, epoch_);
         }
         for (int i = 0; i < side_.size(); i++) {
             output.writeMessage(2, side_.get(i));
@@ -377,7 +377,7 @@ public final class DiceProtocolBuffer extends
         size = 0;
         if (epoch_ != 0L) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeUInt64Size(1, epoch_);
+                    .computeInt64Size(1, epoch_);
         }
         for (int i = 0; i < side_.size(); i++) {
             size += com.google.protobuf.CodedOutputStream
@@ -730,7 +730,7 @@ public final class DiceProtocolBuffer extends
                             done = true;
                             break;
                         case 8: {
-                            epoch_ = input.readUInt64();
+                            epoch_ = input.readInt64();
                             bitField0_ |= 0x00000001;
                             break;
                         } // case 8
@@ -784,7 +784,7 @@ public final class DiceProtocolBuffer extends
         }
 
         /**
-         * <code>uint64 epoch = 1;</code>
+         * <code>int64 epoch = 1;</code>
          *
          * @return The epoch.
          */
@@ -794,7 +794,7 @@ public final class DiceProtocolBuffer extends
         }
 
         /**
-         * <code>uint64 epoch = 1;</code>
+         * <code>int64 epoch = 1;</code>
          *
          * @param value The epoch to set.
          * @return This builder for chaining.
@@ -808,7 +808,7 @@ public final class DiceProtocolBuffer extends
         }
 
         /**
-         * <code>uint64 epoch = 1;</code>
+         * <code>int64 epoch = 1;</code>
          *
          * @return This builder for chaining.
          */

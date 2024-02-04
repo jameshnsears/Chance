@@ -17,14 +17,13 @@ import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.data.domain.Dice
 import com.github.jameshnsears.chance.data.domain.Side
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBag
-import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagViewModel
 import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollViewModel
 
 @Composable
 fun SideOutlineBag(
-    zoomBagViewModel: ZoomBagViewModel,
+    zoomBagViewModel: ZoomViewModel,
     dice: Dice,
-    side: Side
+    side: Side,
 ) {
     val showDialog = remember { mutableStateOf(false) }
 
@@ -38,7 +37,7 @@ fun SideOutlineBag(
                 .clickable {
                     showDialog.value = true
                 },
-            colorFilter = zoomBagViewModel.diceColor(dice.colour)
+            colorFilter = zoomBagViewModel.diceColor(dice.colour),
         )
 
         Text(
@@ -47,7 +46,7 @@ fun SideOutlineBag(
                 .padding(top = zoomBagViewModel.sideNumberPaddingTop(dice)),
             fontSize = zoomBagViewModel.sideNumberFontSize(dice),
             text = "${side.number}",
-            color = zoomBagViewModel.sideColorText(side.colour)
+            color = zoomBagViewModel.sideColorText(side.colour),
         )
 
         if (showDialog.value) {
@@ -55,7 +54,7 @@ fun SideOutlineBag(
                 showDialog,
                 zoomBagViewModel.bagRepository,
                 dice,
-                side
+                side,
             )
         }
     }
@@ -65,7 +64,7 @@ fun SideOutlineBag(
 fun SideOutlineRoll(
     zoomRollViewModel: ZoomRollViewModel,
     dice: Dice,
-    side: Side
+    side: Side,
 ) {
     Box {
         Image(
@@ -74,7 +73,7 @@ fun SideOutlineRoll(
             modifier = Modifier
                 .padding(vertical = 5.dp)
                 .size(zoomRollViewModel.scale()),
-            colorFilter = zoomRollViewModel.diceColor(dice.colour)
+            colorFilter = zoomRollViewModel.diceColor(dice.colour),
         )
 
         Text(
@@ -83,7 +82,7 @@ fun SideOutlineRoll(
                 .padding(top = zoomRollViewModel.sideNumberPaddingTop(dice)),
             fontSize = zoomRollViewModel.sideNumberFontSize(dice),
             text = "${side.number}",
-            color = zoomRollViewModel.sideColorText(side.colour)
+            color = zoomRollViewModel.sideColorText(side.colour),
         )
     }
 }
@@ -97,7 +96,7 @@ fun DiceDescription(dice: Dice) {
 
     Text(
         text = description,
-        modifier = Modifier.padding(top = 8.dp)
+        modifier = Modifier.padding(top = 8.dp),
     )
 }
 
@@ -108,7 +107,7 @@ fun SideImageSVG(zoomViewModel: ZoomViewModel, side: Side) {
             painter = painterResource(id = side.imageDrawableId),
             contentDescription = null,
             modifier = Modifier
-                .size(zoomViewModel.scale())
+                .size(zoomViewModel.scale()),
         )
     }
 }

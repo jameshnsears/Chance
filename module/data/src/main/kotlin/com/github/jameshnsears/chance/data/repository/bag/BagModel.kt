@@ -4,29 +4,51 @@ import com.github.jameshnsears.chance.data.domain.Dice
 import timber.log.Timber
 
 class BagModel(
-    private val bagRepository: BagRepositoryInterface
+    private val bagRepository: DiceBagRepositoryInterface,
 ) {
-    fun diceUpdate(dice: Dice) {
-        Timber.d("dice=$dice")
+    suspend fun save(diceToSave: Dice) {
+        Timber.d("diceToSave=$diceToSave")
 
-        val diceBag = bagRepository.fetch().map { it.copy() }.toList()
+        val diceBag = bagRepository.fetch()
 
-//        dice[diceIndex].sides = (sides downTo 1).map { sideIndex ->
-//            Side(number = sideIndex)
-//        }
+        for (dice: Dice in diceBag) {
+            if (dice.epoch == diceToSave.epoch) {
+                dice.sides = diceToSave.sides
+                dice.title = diceToSave.title
+                dice.titleStringsId = diceToSave.titleStringsId
+                dice.colour = diceToSave.colour
+                dice.selected = diceToSave.selected
+            }
+        }
 
         bagRepository.store(diceBag)
     }
 
-    fun diceClone(diceToClone: Dice) {
+    suspend fun clone(diceToClone: Dice) {
+        Timber.d("diceToClone=$diceToClone")
+
         var diceBag = bagRepository.fetch()
-        diceBag += diceToClone
+
+        diceBag += Dice(
+            sides = diceToClone.sides,
+            title = diceToClone.title,
+            titleStringsId = diceToClone.titleStringsId,
+            colour = diceToClone.colour,
+            selected = diceToClone.selected,
+        )
+
         bagRepository.store(diceBag)
     }
 
-    fun diceCanBeDeleted() = bagRepository.fetch().size > 1
+    suspend fun canBeDeleted() = bagRepository.fetch().size > 1
 
-    fun diceDelete(dice: Dice) {
-        // TODO
+    suspend fun delete(diceToDelete: Dice) {
+        Timber.d("diceToDelete=$diceToDelete")
+
+        if (canBeDeleted()) {
+            var diceBag = bagRepository.fetch()
+            diceBag -= diceToDelete
+            bagRepository.store(diceBag)
+        }
     }
 }

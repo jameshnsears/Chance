@@ -3,13 +3,11 @@
     <string name="tab.bag.demo.bag">Demo Bag</string>
     <string name="tab.bag.import">Import…</string>
     <string name="tab.bag.export">Export…</string>
-    <string name="tab.bag.zoom">Zoom</string>
 
     <string name="tab.roll">Roll</string>
     <string name="tab.roll.sequentially">Roll sequentially</string>
     <string name="tab.roll.undo">Undo</string>
     <string name="tab.roll.roll">Roll</string>
-    <string name="tab.roll.zoom">Zoom</string>
     <string name="tab.roll.show.dice.title">Dice Title</string>
     <string name="tab.roll.show.side.number">Side #</string>
     <string name="tab.roll.show.score">Score</string>

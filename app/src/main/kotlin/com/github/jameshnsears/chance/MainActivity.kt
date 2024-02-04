@@ -1,6 +1,5 @@
 package com.github.jameshnsears.chance
 
-import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
-import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryInterface
-import com.github.jameshnsears.chance.data.repository.bag.BagRepositoryTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.BagSampleData
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryInterface
+import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
 import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
@@ -24,7 +24,6 @@ import timber.log.Timber
 
 
 class MainActivity : ComponentActivity() {
-    @SuppressLint("UnrememberedMutableState")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,12 +34,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             ChanceTheme {
                 Surface(
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     TabRowChance(
                         settingsRepositoryTestDouble(),
                         bagRepositoryTestDouble(),
-                        rollRepositoryTestDouble()
+                        rollRepositoryTestDouble(),
                     )
                 }
             }
@@ -52,19 +51,28 @@ class MainActivity : ComponentActivity() {
         runBlocking {
             settingsRepository.store(SettingsSampleData.settings)
         }
+
         return settingsRepository
     }
 
-    private fun bagRepositoryTestDouble(): BagRepositoryInterface {
-        val bagRepository = BagRepositoryTestDouble.getInstance()
-        bagRepository.store(BagDemoSampleData.allDice)
+    private fun bagRepositoryTestDouble(): DiceBagRepositoryInterface {
+        val bagRepository = DiceBagRepositoryTestDouble.getInstance()
+
+        runBlocking {
+            bagRepository.store(
+                BagDemoSampleData.allDice + BagSampleData.allDice,
+            )
+        }
 
         return bagRepository
     }
 
     private fun rollRepositoryTestDouble(): RollRepositoryInterface {
         val rollRepository = RollRepositoryTestDouble.getInstance()
-        rollRepository.store(RollSampleData.rollHistory)
+        runBlocking {
+            rollRepository.store(RollSampleData.rollHistory)
+        }
+
         return rollRepository
     }
 

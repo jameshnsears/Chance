@@ -1,7 +1,9 @@
-Use this - easy to use - app to give meaning to chance
+Give meaning to Chance
 
-&bull; Assign a picture and / or text to the side of a dice
+&bull; Easily assign a picture and / or text to the side of a dice
 &bull; ...invent unique dice based games
-&bull; Free; No Ads; minimal analytics
+&bull; Choose which dice to roll and in what order
+&bull; Export &amp; Import everything
+&bull; Free; No Ads; Minimal Analytics
 &bull; Open Source
-&bull; User feedback drives development
+&bull; User feedback drives development!

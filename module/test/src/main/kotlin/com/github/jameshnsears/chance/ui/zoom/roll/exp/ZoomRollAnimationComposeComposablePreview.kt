@@ -27,13 +27,13 @@ fun ZoomRollTextAnimationComposablePreview() {
     val scale by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 10f,
-        animationSpec = infiniteRepeatable(tween(1000)),
+        animationSpec = infiniteRepeatable(tween(1000)), label = "",
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .size(width = 200.dp, height = 200.dp)
+            .size(width = 200.dp, height = 200.dp),
     ) {
         Text(
             text = "6",
@@ -46,7 +46,7 @@ fun ZoomRollTextAnimationComposablePreview() {
                 .align(Alignment.Center),
             // Text composable does not take TextMotion as a parameter.
             // Provide it via style argument but make sure that we are copying from current theme
-            style = LocalTextStyle.current.copy(textMotion = TextMotion.Static)
+            style = LocalTextStyle.current.copy(textMotion = TextMotion.Static),
         )
     }
 }

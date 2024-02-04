@@ -16,7 +16,7 @@ fun BagCardColorPickerLayoutPortraitComposePreview() {
         showColourDialog,
         stringResource(R.string.dialog_bag_colour_picker_side),
         "FF000000",
-        fun(_: String) {}
+        fun(_: String) {},
     )
 }
 
@@ -29,7 +29,6 @@ fun BagCardColorPickerLayoutLandscapeComposePreview() {
         showColourDialog,
         stringResource(R.string.dialog_bag_colour_picker_side),
         "00FFFFFF",
-        fun(_: String) {}
+        fun(_: String) {},
     )
 }
-

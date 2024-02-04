@@ -5,7 +5,7 @@ import com.github.jameshnsears.chance.data.domain.Settings
 class SettingsSampleData {
     companion object {
         val settings = Settings(
-            tabRowChance = 0
+            tabRowChance = 0,
         )
     }
 }

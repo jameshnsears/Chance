@@ -9,11 +9,11 @@ class BagSampleData {
         val allDice = listOf(
             Dice(
                 sides = (2 downTo 1).map { index -> Side(number = index) },
-                title = "d2"
+                title = "d2",
             ),
             Dice(
                 sides = (4 downTo 1).map { index -> Side(number = index) },
-                title = "d4"
+                title = "d4",
             ),
             Dice(
                 sides = (6 downTo 1).map { index -> Side(number = index) },
@@ -34,7 +34,7 @@ class BagSampleData {
             Dice(
                 sides = (20 downTo 1).map { index -> Side(number = index) },
                 titleStringsId = R.string.bag_d20,
-            )
+            ),
         )
     }
 }

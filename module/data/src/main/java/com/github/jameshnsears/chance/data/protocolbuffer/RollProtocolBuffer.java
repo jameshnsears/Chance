@@ -11,7 +11,7 @@ public final class RollProtocolBuffer extends
         com.google.protobuf.GeneratedMessageV3 implements
         // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer)
         RollProtocolBufferOrBuilder {
-    public static final int DICE_FIELD_NUMBER = 1;
+    public static final int DICEEPOCH_FIELD_NUMBER = 1;
     public static final int SIDE_FIELD_NUMBER = 2;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer)
@@ -43,7 +43,7 @@ public final class RollProtocolBuffer extends
     }
 
     private int bitField0_;
-    private com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice_;
+    private long diceEpoch_ = 0L;
     private com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer side_;
     private byte memoizedIsInitialized = -1;
 
@@ -173,31 +173,13 @@ public final class RollProtocolBuffer extends
     }
 
     /**
-     * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
+     * <code>int64 diceEpoch = 1;</code>
      *
-     * @return Whether the dice field is set.
+     * @return The diceEpoch.
      */
     @java.lang.Override
-    public boolean hasDice() {
-        return ((bitField0_ & 0x00000001) != 0);
-    }
-
-    /**
-     * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-     *
-     * @return The dice.
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer getDice() {
-        return dice_ == null ? com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.getDefaultInstance() : dice_;
-    }
-
-    /**
-     * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder getDiceOrBuilder() {
-        return dice_ == null ? com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.getDefaultInstance() : dice_;
+    public long getDiceEpoch() {
+        return diceEpoch_;
     }
 
     /**
@@ -207,7 +189,7 @@ public final class RollProtocolBuffer extends
      */
     @java.lang.Override
     public boolean hasSide() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000001) != 0);
     }
 
     /**
@@ -241,10 +223,10 @@ public final class RollProtocolBuffer extends
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
             throws java.io.IOException {
-        if (((bitField0_ & 0x00000001) != 0)) {
-            output.writeMessage(1, getDice());
+        if (diceEpoch_ != 0L) {
+            output.writeInt64(1, diceEpoch_);
         }
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
             output.writeMessage(2, getSide());
         }
         getUnknownFields().writeTo(output);
@@ -256,11 +238,11 @@ public final class RollProtocolBuffer extends
         if (size != -1) return size;
 
         size = 0;
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (diceEpoch_ != 0L) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeMessageSize(1, getDice());
+                    .computeInt64Size(1, diceEpoch_);
         }
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
             size += com.google.protobuf.CodedOutputStream
                     .computeMessageSize(2, getSide());
         }
@@ -279,11 +261,8 @@ public final class RollProtocolBuffer extends
         }
         com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer other = (com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer) obj;
 
-        if (hasDice() != other.hasDice()) return false;
-        if (hasDice()) {
-            if (!getDice()
-                    .equals(other.getDice())) return false;
-        }
+        if (getDiceEpoch()
+                != other.getDiceEpoch()) return false;
         if (hasSide() != other.hasSide()) return false;
         if (hasSide()) {
             if (!getSide()
@@ -300,10 +279,9 @@ public final class RollProtocolBuffer extends
         }
         int hash = 41;
         hash = (19 * hash) + getDescriptor().hashCode();
-        if (hasDice()) {
-            hash = (37 * hash) + DICE_FIELD_NUMBER;
-            hash = (53 * hash) + getDice().hashCode();
-        }
+        hash = (37 * hash) + DICEEPOCH_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+                getDiceEpoch());
         if (hasSide()) {
             hash = (37 * hash) + SIDE_FIELD_NUMBER;
             hash = (53 * hash) + getSide().hashCode();
@@ -349,9 +327,7 @@ public final class RollProtocolBuffer extends
             // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer)
             com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBufferOrBuilder {
         private int bitField0_;
-        private com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice_;
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder> diceBuilder_;
+        private long diceEpoch_;
         private com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer side_;
         private com.google.protobuf.SingleFieldBuilderV3<
                 com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.SideProtocolBufferOrBuilder> sideBuilder_;
@@ -383,7 +359,6 @@ public final class RollProtocolBuffer extends
         private void maybeForceBuilderInitialization() {
             if (com.google.protobuf.GeneratedMessageV3
                     .alwaysUseFieldBuilders) {
-                getDiceFieldBuilder();
                 getSideFieldBuilder();
             }
         }
@@ -392,11 +367,7 @@ public final class RollProtocolBuffer extends
         public Builder clear() {
             super.clear();
             bitField0_ = 0;
-            dice_ = null;
-            if (diceBuilder_ != null) {
-                diceBuilder_.dispose();
-                diceBuilder_ = null;
-            }
+            diceEpoch_ = 0L;
             side_ = null;
             if (sideBuilder_ != null) {
                 sideBuilder_.dispose();
@@ -437,18 +408,15 @@ public final class RollProtocolBuffer extends
 
         private void buildPartial0(com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer result) {
             int from_bitField0_ = bitField0_;
-            int to_bitField0_ = 0;
             if (((from_bitField0_ & 0x00000001) != 0)) {
-                result.dice_ = diceBuilder_ == null
-                        ? dice_
-                        : diceBuilder_.build();
-                to_bitField0_ |= 0x00000001;
+                result.diceEpoch_ = diceEpoch_;
             }
+            int to_bitField0_ = 0;
             if (((from_bitField0_ & 0x00000002) != 0)) {
                 result.side_ = sideBuilder_ == null
                         ? side_
                         : sideBuilder_.build();
-                to_bitField0_ |= 0x00000002;
+                to_bitField0_ |= 0x00000001;
             }
             result.bitField0_ |= to_bitField0_;
         }
@@ -504,8 +472,8 @@ public final class RollProtocolBuffer extends
         public Builder mergeFrom(com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer other) {
             if (other == com.github.jameshnsears.chance.data.protocolbuffer.RollProtocolBuffer.getDefaultInstance())
                 return this;
-            if (other.hasDice()) {
-                mergeDice(other.getDice());
+            if (other.getDiceEpoch() != 0L) {
+                setDiceEpoch(other.getDiceEpoch());
             }
             if (other.hasSide()) {
                 mergeSide(other.getSide());
@@ -536,13 +504,11 @@ public final class RollProtocolBuffer extends
                         case 0:
                             done = true;
                             break;
-                        case 10: {
-                            input.readMessage(
-                                    getDiceFieldBuilder().getBuilder(),
-                                    extensionRegistry);
+                        case 8: {
+                            diceEpoch_ = input.readInt64();
                             bitField0_ |= 0x00000001;
                             break;
-                        } // case 10
+                        } // case 8
                         case 18: {
                             input.readMessage(
                                     getSideFieldBuilder().getBuilder(),
@@ -567,131 +533,39 @@ public final class RollProtocolBuffer extends
         }
 
         /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
+         * <code>int64 diceEpoch = 1;</code>
          *
-         * @return Whether the dice field is set.
+         * @return The diceEpoch.
          */
-        public boolean hasDice() {
-            return ((bitField0_ & 0x00000001) != 0);
+        @java.lang.Override
+        public long getDiceEpoch() {
+            return diceEpoch_;
         }
 
         /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
+         * <code>int64 diceEpoch = 1;</code>
          *
-         * @return The dice.
+         * @param value The diceEpoch to set.
+         * @return This builder for chaining.
          */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer getDice() {
-            if (diceBuilder_ == null) {
-                return dice_ == null ? com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.getDefaultInstance() : dice_;
-            } else {
-                return diceBuilder_.getMessage();
-            }
-        }
+        public Builder setDiceEpoch(long value) {
 
-        /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-         */
-        public Builder setDice(com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer value) {
-            if (diceBuilder_ == null) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                dice_ = value;
-            } else {
-                diceBuilder_.setMessage(value);
-            }
+            diceEpoch_ = value;
             bitField0_ |= 0x00000001;
             onChanged();
             return this;
         }
 
         /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
+         * <code>int64 diceEpoch = 1;</code>
+         *
+         * @return This builder for chaining.
          */
-        public Builder setDice(
-                com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder builderForValue) {
-            if (diceBuilder_ == null) {
-                dice_ = builderForValue.build();
-            } else {
-                diceBuilder_.setMessage(builderForValue.build());
-            }
-            bitField0_ |= 0x00000001;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-         */
-        public Builder mergeDice(com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer value) {
-            if (diceBuilder_ == null) {
-                if (((bitField0_ & 0x00000001) != 0) &&
-                        dice_ != null &&
-                        dice_ != com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.getDefaultInstance()) {
-                    getDiceBuilder().mergeFrom(value);
-                } else {
-                    dice_ = value;
-                }
-            } else {
-                diceBuilder_.mergeFrom(value);
-            }
-            if (dice_ != null) {
-                bitField0_ |= 0x00000001;
-                onChanged();
-            }
-            return this;
-        }
-
-        /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-         */
-        public Builder clearDice() {
+        public Builder clearDiceEpoch() {
             bitField0_ = (bitField0_ & ~0x00000001);
-            dice_ = null;
-            if (diceBuilder_ != null) {
-                diceBuilder_.dispose();
-                diceBuilder_ = null;
-            }
+            diceEpoch_ = 0L;
             onChanged();
             return this;
-        }
-
-        /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-         */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder getDiceBuilder() {
-            bitField0_ |= 0x00000001;
-            onChanged();
-            return getDiceFieldBuilder().getBuilder();
-        }
-
-        /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-         */
-        public com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder getDiceOrBuilder() {
-            if (diceBuilder_ != null) {
-                return diceBuilder_.getMessageOrBuilder();
-            } else {
-                return dice_ == null ?
-                        com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.getDefaultInstance() : dice_;
-            }
-        }
-
-        /**
-         * <code>.com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer dice = 1;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilderV3<
-                com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder>
-        getDiceFieldBuilder() {
-            if (diceBuilder_ == null) {
-                diceBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-                        com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.protocolbuffer.DiceProtocolBufferOrBuilder>(
-                        getDice(),
-                        getParentForChildren(),
-                        isClean());
-                dice_ = null;
-            }
-            return diceBuilder_;
         }
 
         /**

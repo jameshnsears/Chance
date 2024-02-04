@@ -19,7 +19,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -49,10 +49,12 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.datastore:datastore-core:1.0.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
     implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.protobuf:protobuf-java:3.25.1")
-    implementation("com.google.protobuf:protobuf-java-util:3.25.1")
-    implementation("com.google.protobuf:protobuf-kotlin:3.25.1")
+    implementation("com.google.protobuf:protobuf-java:3.25.2")
+    implementation("com.google.protobuf:protobuf-java-util:3.25.2")
+    implementation("com.google.protobuf:protobuf-kotlin:3.25.2")
     implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation("net.pwall.json:json-kotlin-schema:0.44")
     implementation(project(":module:common"))
 }

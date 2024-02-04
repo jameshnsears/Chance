@@ -3,8 +3,11 @@ package com.github.jameshnsears.chance.data.repository.settings
 import com.github.jameshnsears.chance.data.domain.Settings
 import com.github.jameshnsears.chance.data.protocolbuffer.SettingsProtocolBuffer
 import com.google.protobuf.util.JsonFormat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 
 class SettingsRepositoryTestDouble private constructor() :
     SettingsRepositoryInterface {
@@ -26,7 +29,9 @@ class SettingsRepositoryTestDouble private constructor() :
     }
 
     override suspend fun store(newSettings: Settings) {
-        settings = newSettings
+        CoroutineScope(Dispatchers.IO).launch {
+            settings = newSettings
+        }
     }
 
     override suspend fun export(): String {
@@ -35,7 +40,8 @@ class SettingsRepositoryTestDouble private constructor() :
 
         mapSettingsIntoSettingsProtocolBufferBuilder(settings, settingsProtocolBufferBuilder)
 
-        return JsonFormat.printer().print(settingsProtocolBufferBuilder.build())
+        return JsonFormat.printer().includingDefaultValueFields()
+            .print(settingsProtocolBufferBuilder.build())
     }
 
     override suspend fun import(json: String) {

@@ -18,7 +18,7 @@ public final class Side {
                 "\n\nside.proto\0222com.github.jameshnsears.ch" +
                         "ance.data.protocolbuffer\"\260\001\n\022SideProtoco" +
                         "lBuffer\022\016\n\006number\030\001 \001(\005\022\016\n\006colour\030\002 \001(\t\022" +
-                        "\023\n\013imageBase64\030\003 \001(\014\022\027\n\017imageDrawableId\030" +
+                        "\023\n\013imageBase64\030\003 \001(\t\022\027\n\017imageDrawableId\030" +
                         "\004 \001(\005\022\023\n\013description\030\005 \001(\t\022\034\n\024descriptio" +
                         "nStringsId\030\006 \001(\005\022\031\n\021descriptionColour\030\007 " +
                         "\001(\tB\002P\001b\006proto3"

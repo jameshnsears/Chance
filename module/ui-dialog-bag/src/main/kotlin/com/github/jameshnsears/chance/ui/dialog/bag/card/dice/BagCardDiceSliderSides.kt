@@ -5,7 +5,7 @@ import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 class BagCardDiceSliderSides(
     private val context: Context,
-    override val defaultValue: Float = 2.0f
+    override val defaultValue: Float = 2.0f,
 ) :
     BagCardDiceSliderValues() {
     override fun values(): List<String> {

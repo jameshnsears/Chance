@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 
-class SettingsRepository private constructor(val context: Context) :
+class SettingsRepository private constructor(private val context: Context) :
     SettingsRepositoryInterface {
     companion object {
         private var instance: SettingsRepository? = null
@@ -35,7 +35,7 @@ class SettingsRepository private constructor(val context: Context) :
                     rollScore = settingsProtocolBuffer.rollScore,
                     rollDiceTitle = settingsProtocolBuffer.rollDiceTitle,
                     rollSideNumber = settingsProtocolBuffer.rollSideNumber,
-                    rollSound = settingsProtocolBuffer.rollSound
+                    rollSound = settingsProtocolBuffer.rollSound,
                 )
             }.first()
 
@@ -50,7 +50,7 @@ class SettingsRepository private constructor(val context: Context) :
 
     fun mapSeetingsIntoSettingsProtocolBuffer(
         settings: Settings,
-        settingsProtocolBuffer: SettingsProtocolBuffer
+        settingsProtocolBuffer: SettingsProtocolBuffer,
     ): SettingsProtocolBuffer.Builder {
         var settingsProtocolBufferBuilder = settingsProtocolBuffer.toBuilder()
         mapSettingsIntoSettingsProtocolBufferBuilder(settings, settingsProtocolBufferBuilder)
@@ -58,7 +58,8 @@ class SettingsRepository private constructor(val context: Context) :
     }
 
     override suspend fun export(): String =
-        JsonFormat.printer().print(context.settingsDataStore.data.first())
+        JsonFormat.printer().includingDefaultValueFields()
+            .print(context.settingsDataStore.data.first())
 
     override suspend fun import(json: String) {
         context.settingsDataStore.updateData {
