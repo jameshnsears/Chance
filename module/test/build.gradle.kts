@@ -98,7 +98,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("io.coil-kt:coil-svg:2.5.0")
     implementation("io.mockk:mockk:1.13.9")
-    implementation("org.slf4j:slf4j-simple:2.0.11")
+    implementation("org.slf4j:slf4j-simple:2.0.12")
     implementation(platform("androidx.compose:compose-bom:2024.01.00"))
     implementation(project(":module:common"))
     implementation(project(":module:data"))
