@@ -66,7 +66,7 @@ dependencies {
     implementation("androidx.vectordrawable:vectordrawable")
     implementation("com.github.skydoves:colorpicker-compose:1.0.7")
     implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation(platform("androidx.compose:compose-bom:2024.01.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.02.01"))
     implementation(project(":module:common"))
     implementation(project(":module:data"))
 }
