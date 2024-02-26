@@ -95,7 +95,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-kotlin:3.25.2")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("io.coil-kt:coil-svg:2.5.0")
     implementation("io.mockk:mockk:1.13.9")
     implementation("org.slf4j:slf4j-simple:2.0.11")
