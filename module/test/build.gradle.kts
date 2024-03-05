@@ -87,7 +87,7 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
-    implementation("com.airbnb.android:lottie-compose:6.3.0")
+    implementation("com.airbnb.android:lottie-compose:6.4.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
     implementation("com.github.victools:jsonschema-generator:4.33.1")
     implementation("com.google.protobuf:protobuf-java:3.25.2")
