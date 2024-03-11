@@ -1,0 +1,18 @@
+general todo:
+
+when I rotate resize / scale value is lost
+
+move the colour hex code a bit more to the rhs
+
+--
+
+test SampleSettings in app some!
+
+if all roll settings disabled then do not display a blank row with nothing in it - i.e. if none of the dice in roll sequence do not have a SideImageSVG
+
+make roll work!
+= adjust score
+= make roll zoom display roll icons if selected
+= implement roll sound
+
+make undo work

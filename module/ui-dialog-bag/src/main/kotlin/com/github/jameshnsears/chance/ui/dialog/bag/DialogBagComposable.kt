@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,34 +28,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.github.jameshnsears.chance.data.domain.Dice
-import com.github.jameshnsears.chance.data.domain.Side
-import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryInterface
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.github.jameshnsears.chance.data.domain.state.Dice
+import com.github.jameshnsears.chance.data.domain.state.Side
+import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.BagCardDice
+import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.BagCardRoll
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.BagCardSide
 import com.github.jameshnsears.chance.ui.dialog.dice.R
-
 
 @Composable
 fun DialogBag(
     showDialog: MutableState<Boolean>,
-    bagRepository: DiceBagRepositoryInterface,
+    repositoryBag: RepositoryBagInterface,
     dice: Dice,
     side: Side,
 ) {
-    val context = LocalContext.current
-    val application = context.applicationContext as Application
+    val application = LocalContext.current.applicationContext as Application
 
     Dialog(
         onDismissRequest = { showDialog.value = false },
         properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
-        Surface(modifier = Modifier.fillMaxSize()) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+        ) {
             DialogBagLayout(
                 showDialog,
                 DialogBagAndroidViewModel(
                     application,
-                    bagRepository,
+                    repositoryBag,
                     dice,
                     side,
                 ),
@@ -66,8 +69,13 @@ fun DialogBag(
 @Composable
 fun DialogBagLayout(
     showDialog: MutableState<Boolean>,
-    dialogBagAndroidViewModel: DialogBagAndroidViewModel,
+    dialogBagAndroidViewModel: DialogBagAndroidViewModel
 ) {
+    val stateFlow =
+        dialogBagAndroidViewModel.bagCardDiceAndroidViewModel.stateFlowDice.collectAsStateWithLifecycle()
+
+    val diceTitleIsUnique = stateFlow.value.diceTitleIsUnique
+
     Column(
         modifier = Modifier
             .padding(8.dp)
@@ -78,7 +86,7 @@ fun DialogBagLayout(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(top = 4.dp),
+            modifier = Modifier.padding(top = 4.dp, end = 8.dp),
         ) {
             IconButton(onClick = { showDialog.value = false }) {
                 Icon(
@@ -87,13 +95,10 @@ fun DialogBagLayout(
                 )
             }
 
-            Text(
-                text = stringResource(R.string.dialog_bag_title),
-                textAlign = TextAlign.Center,
-                fontSize = 22.sp,
-            )
+            Spacer(Modifier.weight(1f))
 
             TextButton(
+                enabled = diceTitleIsUnique,
                 onClick = {
                     dialogBagAndroidViewModel.save()
                     showDialog.value = false
@@ -101,11 +106,8 @@ fun DialogBagLayout(
             ) {
                 Text(
                     text = stringResource(R.string.dialog_bag_save),
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp),
                     textAlign = TextAlign.End,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                 )
             }
         }
@@ -114,9 +116,11 @@ fun DialogBagLayout(
             modifier = Modifier
                 .padding(start = 8.dp, end = 8.dp),
         ) {
-            BagCardSide(dialogBagAndroidViewModel)
+            BagCardSide(dialogBagAndroidViewModel.bagCardSideAndroidViewModel)
 
-            BagCardDice(dialogBagAndroidViewModel)
+            BagCardDice(dialogBagAndroidViewModel.bagCardDiceAndroidViewModel)
+
+            BagCardRoll(dialogBagAndroidViewModel.bagCardRollViewModel)
         }
     }
 }

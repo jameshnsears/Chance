@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 
-package com.github.jameshnsears.chance.data.protocolbuffer;
+package com.github.jameshnsears.chance.data.domain.proto;
 
 import "side.proto";
 

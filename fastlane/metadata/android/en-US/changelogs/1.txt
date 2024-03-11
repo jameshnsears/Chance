@@ -1,3 +1,2 @@
-&bull; ? 
-&bull; ?
-&bull; ?
+&bull; 1.0.0 Release
+&bull; IDE: Android Studio Hedgehog | 2023.1.1 Patch 2

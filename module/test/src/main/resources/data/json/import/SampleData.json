@@ -1,7 +1,6 @@
 [
   {
     "tabRowChance": 0,
-    "bagDemoBag": true,
     "rollSequentially": false,
     "rollHistory": false,
     "rollScore": false,

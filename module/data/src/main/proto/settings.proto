@@ -2,13 +2,13 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 
-package com.github.jameshnsears.chance.data.protocolbuffer;
+package com.github.jameshnsears.chance.data.domain.proto;
 
 message SettingsProtocolBuffer {
   int32 tabRowChance = 1;
-  bool bagDemoBag = 2;
+  float resize = 2;
   bool rollSequentially = 3;
-  bool rollHistory = 4;
+  bool rollTime = 4;
   bool rollScore = 5;
   bool rollDiceTitle = 6;
   bool rollSideNumber = 7;

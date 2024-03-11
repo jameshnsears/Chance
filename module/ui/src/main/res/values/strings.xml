@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab.bag">Bag</string>
+    <string name="tab.bag.scale">Resize</string>
+    <string name="tab.bag.import">Import…</string>
+    <string name="tab.bag.export">Export…</string>
+
+    <string name="tab.roll">Roll</string>
+    <string name="tab.roll.undo">Undo</string>
+    <string name="tab.roll.roll">Roll</string>
+    <string name="tab.roll.sequentially">Sequential</string>
+
+    <string name="tab.roll.settings">Settings</string>
+    <string name="tab.roll.settings.roll.time">Time</string>
+    <string name="tab.roll.settings.score">Score</string>
+    <string name="tab.roll.settings.dice.title">Dice Title</string>
+    <string name="tab.roll.settings.side.number">Side #</string>
+    <string name="tab.roll.settings.use.sound">Roll Sound</string>
+</resources>

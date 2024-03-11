@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 
-package com.github.jameshnsears.chance.data.protocolbuffer;
+package com.github.jameshnsears.chance.data.domain.proto;
 
 import "side.proto";
 
@@ -13,4 +13,14 @@ message DiceProtocolBuffer {
   int32 titleStringsId = 4;
   string colour = 5;
   bool selected = 6;
+
+  bool multiplier = 7;
+  int32 multiplierValue = 8;
+
+  bool explode = 9;
+  string explodeWhen = 10;
+  int32 explodeValue = 11;
+
+  bool modifyScore = 12;
+  int32 modifyScoreValue = 13;
 }

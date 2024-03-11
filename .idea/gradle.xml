@@ -14,9 +14,8 @@
             <option value="$PROJECT_DIR$/module/common" />
             <option value="$PROJECT_DIR$/module/data" />
             <option value="$PROJECT_DIR$/module/test" />
+            <option value="$PROJECT_DIR$/module/ui" />
             <option value="$PROJECT_DIR$/module/ui-dialog-bag" />
-            <option value="$PROJECT_DIR$/module/ui-tab" />
-            <option value="$PROJECT_DIR$/module/ui-zoom" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

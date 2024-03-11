@@ -1,16 +1,17 @@
 <resources>
-    <string name="dialog.bag.title">Configure Bag</string>
     <string name="dialog.bag.save">Save</string>
 
-    <string name="dialog.bag.side">Side</string>
+    <string name="dialog.bag.side">Side # </string>
     <string name="dialog.bag.side.colour">Colour…</string>
-    <string name="dialog.bag.side.colour.info">Change colour of side number:</string>
-    <string name="dialog.bag.side.image">Image…</string>
-    <string name="dialog.bag.side.image.info">Attach an SVG to this side</string>
+    <string name="dialog.bag.side.image">SVG…</string>
     <string name="dialog.bag.side.description">Description</string>
+    <string name="dialog.bag.side.description.colour">Colour…</string>
+    <string name="dialog.bag.side.reset">Reset</string>
 
     <string name="dialog.bag.dice">Dice</string>
-    <string name="dialog.bag.dice.sides">Sides</string>
+    <string name="dialog.bag.dice.title">Title</string>
+    <string name="dialog.bag.dice.title.info">Must be unique; 30 characters maximum</string>
+    <string name="dialog.bag.dice.sides"># of Sides</string>
     <string-array name="dialog.bag.dice.sides">
         <item>2</item>
         <item>4</item>
@@ -20,23 +21,22 @@
         <item>12</item>
         <item>20</item>
     </string-array>
-    <string name="dialog.bag.dice.title">Name</string>
-    <string-array name="dialog.bag.dice.title.mandatory">
-        <item>d2</item>
-        <item>d4</item>
-        <item>d6</item>
-        <item>d8</item>
-        <item>d10</item>
-        <item>d12</item>
-        <item>d20</item>
-    </string-array>
+    <string name="dialog.bag.dice.title.d">d</string>
     <string name="dialog.bag.dice.colour">Colour…</string>
     <string name="dialog.bag.dice.clone">Clone</string>
     <string name="dialog.bag.dice.delete">Delete</string>
 
-    <string name="dialog.bag.colour.picker.side">Side value</string>
-    <string name="dialog.bag.colour.picker.description">Description</string>
+    <string name="dialog.bag.roll">Roll</string>
+    <string name="dialog.bag.roll.repeat">Multiplier</string>
+    <string name="dialog.bag.roll.explode.when">Explode if Side #</string>
+    <string name="dialog.bag.roll.equals">=</string>
+    <string name="dialog.bag.roll.less.than">&lt;</string>
+    <string name="dialog.bag.roll.greater.than">&gt;</string>
+    <string name="dialog.bag.roll.value">the value</string>
+    <string name="dialog.bag.roll.explode.depth">Depth limited to # of Sides</string>
+    <string name="dialog.bag.roll.score">Modify Score</string>
+
+    <string name="dialog.bag.colour.picker.side">Side #</string>
+    <string name="dialog.bag.colour.picker.description">Side Description</string>
     <string name="dialog.bag.colour.picker.dice">Dice</string>
-    <string name="dialog.bag.colour.picker.cancel">Cancel</string>
-    <string name="dialog.bag.colour.picker.ok">OK</string>
 </resources>

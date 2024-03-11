@@ -1,0 +1,8 @@
+<resources>
+    <string name="dialog.cancel">Cancel</string>
+    <string name="dialog.ok">OK</string>
+
+    <string name="tab.roll.feature.repeat">Repeat</string>
+    <string name="tab.roll.feature.explode">Explode</string>
+    <string name="tab.roll.feature.modify.score">Modify Score</string>
+</resources>

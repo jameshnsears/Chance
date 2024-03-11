@@ -1,84 +1,100 @@
 package com.github.jameshnsears.chance
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import com.github.jameshnsears.chance.data.repository.bag.BagDemoSampleData
-import com.github.jameshnsears.chance.data.repository.bag.BagSampleData
-import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryInterface
-import com.github.jameshnsears.chance.data.repository.bag.DiceBagRepositoryTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryInterface
-import com.github.jameshnsears.chance.data.repository.roll.RollRepositoryTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.RollSampleData
-import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryInterface
-import com.github.jameshnsears.chance.data.repository.settings.SettingsRepositoryTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.SettingsSampleData
-import com.github.jameshnsears.chance.ui.tab.TabRowChance
+import com.github.jameshnsears.chance.data.domain.state.Dice
+import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollTestDouble
+import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsTestDouble
+import com.github.jameshnsears.chance.data.sample.bag.SampleBag
+import com.github.jameshnsears.chance.data.sample.roll.SampleRollSampleBag
+import com.github.jameshnsears.chance.data.sample.settings.SampleSettings
+import com.github.jameshnsears.chance.ui.BuildConfig
+import com.github.jameshnsears.chance.ui.tab.TabRow
+import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
-import com.github.jameshnsears.chance.utils.logging.LoggingLineNumberTree
+import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTree
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
-        initLogging()
+        plantLoggingTree()
 
         setContent {
             ChanceTheme {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    TabRowChance(
-                        settingsRepositoryTestDouble(),
-                        bagRepositoryTestDouble(),
-                        rollRepositoryTestDouble(),
+                    TabRow(
+                        TabBagAndroidViewModel(
+                            application,
+                            repositorySettings(),
+                            repositoryBag(),
+                            repositoryRoll(),
+                        ),
+                        TabRollViewModel(
+                            repositorySettings(),
+                            repositoryBag(),
+                            repositoryRoll(),
+                        ),
+                        ZoomAndroidViewModel(
+                            application,
+                            repositoryBag(),
+                            repositoryRoll()
+                        ),
                     )
                 }
             }
         }
     }
 
-    private fun settingsRepositoryTestDouble(): SettingsRepositoryInterface {
-        val settingsRepository = SettingsRepositoryTestDouble.getInstance()
+    private fun repositorySettings(): RepositorySettingsInterface {
+        val repositorySettings = RepositorySettingsTestDouble.getInstance()
         runBlocking {
-            settingsRepository.store(SettingsSampleData.settings)
+            repositorySettings.store(SampleSettings.settings)
         }
 
-        return settingsRepository
+        return repositorySettings
     }
 
-    private fun bagRepositoryTestDouble(): DiceBagRepositoryInterface {
-        val bagRepository = DiceBagRepositoryTestDouble.getInstance()
+    private fun repositoryBag(): RepositoryBagInterface {
+        val repositoryBag = RepositoryBagTestDouble.getInstance()
+
+        val allDice = mutableListOf<Dice>()
+        allDice.addAll(SampleBag.allDice)
 
         runBlocking {
-            bagRepository.store(
-                BagDemoSampleData.allDice + BagSampleData.allDice,
+            repositoryBag.store(
+                allDice,
             )
         }
 
-        return bagRepository
+        return repositoryBag
     }
 
-    private fun rollRepositoryTestDouble(): RollRepositoryInterface {
-        val rollRepository = RollRepositoryTestDouble.getInstance()
+    private fun repositoryRoll(): RepositoryRollInterface {
+        val repositoryRoll = RepositoryRollTestDouble.getInstance()
         runBlocking {
-            rollRepository.store(RollSampleData.rollHistory)
+            repositoryRoll.store(SampleRollSampleBag.rollHistory)
         }
 
-        return rollRepository
+        return repositoryRoll
     }
 
-    private fun initLogging() {
-        if (Timber.treeCount == 0) {
-            Timber.plant(LoggingLineNumberTree())
+    private fun plantLoggingTree() {
+        if (Timber.treeCount == 0 && BuildConfig.DEBUG) {
+            Timber.plant(UtilityLoggingLineNumberTree())
         }
     }
 }

@@ -1,7 +1,4 @@
-Give meaning to Chance
-
-&bull; Easily assign a picture and / or text to the side of a dice
-&bull; ...invent unique dice based games
-&bull; Choose which dice to roll and in what order
-&bull; Export &amp; Import everything
-&bull; User feedback drives development!
+&bull; Create custom dice: attach a SVG and / or text to the side of a dice
+&bull; Roll dice in different ways
+&bull; Export &amp; Import
+&bull; Feedback drives development

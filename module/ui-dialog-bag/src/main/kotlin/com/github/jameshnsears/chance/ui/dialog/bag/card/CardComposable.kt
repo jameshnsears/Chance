@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun ColourSampleCanvas(sideColour: String) {
+fun BgCardColourSample(sideColour: String) {
     Canvas(
         modifier = Modifier
             .size(40.dp),
