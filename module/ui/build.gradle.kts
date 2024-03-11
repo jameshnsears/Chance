@@ -75,7 +75,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.2")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation(platform("androidx.compose:compose-bom:2024.02.02"))
