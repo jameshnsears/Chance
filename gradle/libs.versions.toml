@@ -3,10 +3,14 @@ activity-compose = "1.8.2"
 appcompat = "1.6.1"
 coil-svg = "2.6.0"
 colorpicker-compose = "1.0.7"
+com-android-application = "8.2.2"
+com-android-library = "8.2.2"
+com-diffplug-spotless = "6.25.0"
 compose-bom = "2024.02.02"
 core-ktx = "1.12.0"
 datastore-core = "1.0.0"
 espresso-core = "3.5.1"
+io-gitlab-arturbosch-detekt = "1.23.3"
 jackson-module-kotlin = "2.16.2"
 json-kotlin-schema = "0.47"
 jsonschema-generator = "4.33.1"
@@ -19,6 +23,8 @@ lifecycle-runtime-compose = "2.7.0"
 lifecycle-runtime-ktx = "2.7.0"
 material = "1.11.0"
 mockk = "1.13.10"
+org-jetbrains-kotlin-android = "1.9.22"
+org-jlleitschuh-gradle-ktlint = "12.1.0"
 protobuf-java = "3.25.3"
 slf4j-simple = "2.0.12"
 timber = "5.0.1"
@@ -63,3 +69,9 @@ slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple"
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [plugins]
+com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
+com-android-library = { id = "com.android.library", version.ref = "com-android-library" }
+com-diffplug-spotless = { id = "com.diffplug.spotless", version.ref = "com-diffplug-spotless" }
+io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+org-jlleitschuh-gradle-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "org-jlleitschuh-gradle-ktlint" }
