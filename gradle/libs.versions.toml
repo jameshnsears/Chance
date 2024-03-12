@@ -1,18 +1,66 @@
 [versions]
 activity-compose = "1.8.2"
+appcompat = "1.6.1"
+coil-svg = "2.6.0"
+core-ktx = "1.12.0"
+datastore-core = "1.0.0"
+espresso-core = "3.5.1"
+jackson-module-kotlin = "2.16.2"
+json-kotlin-schema = "0.47"
+jsonschema-generator = "4.33.1"
+junit = "1.1.5"
 leakcanary-android = "2.13"
 lifecycle-runtime-ktx = "2.7.0"
+material = "1.11.0"
+mockk = "1.13.10"
+protobuf-java = "3.25.3"
+slf4j-simple = "2.0.12"
 timber = "5.0.1"
 compose-bom = "2024.02.02"
+kotlinx-coroutines-test = "1.8.0"
+junit-bom = "5.10.2"
+junit-jupiter = "5.10.2"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore-core" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-core" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
+androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junit" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-svg" }
+coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil-svg" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson-module-kotlin" }
+json-kotlin-schema = { module = "net.pwall.json:json-kotlin-schema", version.ref = "json-kotlin-schema" }
+jsonschema-generator = { module = "com.github.victools:jsonschema-generator", version.ref = "jsonschema-generator" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary-android" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf-java" }
+protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf-java" }
+protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-java" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+
+org-jetbrains-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
+
+org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit-bom" }
+
+org-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit-jupiter" }
+
+
+
 
 [plugins]

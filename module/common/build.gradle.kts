@@ -58,6 +58,6 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.timber)
-    implementation("io.coil-kt:coil-svg:2.6.0")
-    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
+    implementation(libs.coil.svg)
+    implementation(platform(libs.androidx.compose.bom))
 }

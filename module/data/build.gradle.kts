@@ -45,16 +45,16 @@ android {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.datastore:datastore-core:1.0.0")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.2")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.protobuf:protobuf-java:3.25.3")
-    implementation("com.google.protobuf:protobuf-java-util:3.25.3")
-    implementation("com.google.protobuf:protobuf-kotlin:3.25.3")
-    implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("net.pwall.json:json-kotlin-schema:0.47")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.material)
+    implementation(libs.protobuf.java)
+    implementation(libs.protobuf.java.util)
+    implementation(libs.protobuf.kotlin)
+    implementation(libs.timber)
+    implementation(libs.json.kotlin.schema)
     implementation(project(":module:common"))
 }
