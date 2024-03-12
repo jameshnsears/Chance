@@ -50,11 +50,11 @@ dependencies {
     implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.jackson.module.kotlin)
+    implementation(libs.json.kotlin.schema)
     implementation(libs.material)
     implementation(libs.protobuf.java)
     implementation(libs.protobuf.java.util)
     implementation(libs.protobuf.kotlin)
     implementation(libs.timber)
-    implementation(libs.json.kotlin.schema)
     implementation(project(":module:common"))
 }
