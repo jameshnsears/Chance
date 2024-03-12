@@ -77,8 +77,4 @@ dependencies {
     implementation(project(":module:test"))
     implementation(project(":module:ui"))
     implementation(project(":module:ui-dialog-bag"))
-
-
-
-
 }
