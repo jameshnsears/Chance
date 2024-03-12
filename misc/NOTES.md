@@ -150,6 +150,12 @@ Layout Inspector
 = red flash when a recompisition
 = expand tree in inspector and see recompisition count & what skipped
 
-/////////////////
+///////////////////////////////////////////////////
+
+you can flowN.collect / .collectLatest in a viewmodel (as well as ui stateflow)
+
+///////////////////////////////////////////////////
+
+
 
 */
