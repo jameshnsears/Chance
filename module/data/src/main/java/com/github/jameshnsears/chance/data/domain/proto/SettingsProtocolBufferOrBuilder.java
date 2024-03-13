@@ -5,54 +5,62 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface SettingsProtocolBufferOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>int32 tabRowChance = 1;</code>
-   * @return The tabRowChance.
-   */
-  int getTabRowChance();
+    /**
+     * <code>int32 tabRowChance = 1;</code>
+     *
+     * @return The tabRowChance.
+     */
+    int getTabRowChance();
 
-  /**
-   * <code>float resize = 2;</code>
-   * @return The resize.
-   */
-  float getResize();
+    /**
+     * <code>float resize = 2;</code>
+     *
+     * @return The resize.
+     */
+    float getResize();
 
-  /**
-   * <code>bool rollSequentially = 3;</code>
-   * @return The rollSequentially.
-   */
-  boolean getRollSequentially();
+    /**
+     * <code>bool rollSequentially = 3;</code>
+     *
+     * @return The rollSequentially.
+     */
+    boolean getRollSequentially();
 
-  /**
-   * <code>bool rollTime = 4;</code>
-   * @return The rollTime.
-   */
-  boolean getRollTime();
+    /**
+     * <code>bool rollTime = 4;</code>
+     *
+     * @return The rollTime.
+     */
+    boolean getRollTime();
 
-  /**
-   * <code>bool rollScore = 5;</code>
-   * @return The rollScore.
-   */
-  boolean getRollScore();
+    /**
+     * <code>bool rollScore = 5;</code>
+     *
+     * @return The rollScore.
+     */
+    boolean getRollScore();
 
-  /**
-   * <code>bool rollDiceTitle = 6;</code>
-   * @return The rollDiceTitle.
-   */
-  boolean getRollDiceTitle();
+    /**
+     * <code>bool rollDiceTitle = 6;</code>
+     *
+     * @return The rollDiceTitle.
+     */
+    boolean getRollDiceTitle();
 
-  /**
-   * <code>bool rollSideNumber = 7;</code>
-   * @return The rollSideNumber.
-   */
-  boolean getRollSideNumber();
+    /**
+     * <code>bool rollSideNumber = 7;</code>
+     *
+     * @return The rollSideNumber.
+     */
+    boolean getRollSideNumber();
 
-  /**
-   * <code>bool rollSound = 8;</code>
-   * @return The rollSound.
-   */
-  boolean getRollSound();
+    /**
+     * <code>bool rollSound = 8;</code>
+     *
+     * @return The rollSound.
+     */
+    boolean getRollSound();
 }

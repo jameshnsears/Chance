@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -29,6 +30,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -78,7 +80,7 @@ fun TabBagLayout(
             TabBagBottomSheetLayout(tabBagAndroidViewModel, zoomAndroidViewModel)
         },
     ) {
-        ZoomBag(tabBagAndroidViewModel, zoomAndroidViewModel)
+        ZoomBag(zoomAndroidViewModel)
     }
 }
 
@@ -87,17 +89,27 @@ fun TabBagBottomSheetLayout(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
     zoomAndroidViewModel: ZoomAndroidViewModel
 ) {
+    val stateFlow =
+        tabBagAndroidViewModel.stateFlow.collectAsStateWithLifecycle()
+
     Column(
         Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .height(150.dp),
     ) {
-        Resize(tabBagAndroidViewModel, zoomAndroidViewModel)
+        Resize(
+            stateFlow,
+            tabBagAndroidViewModel::resizeSlider,
+            zoomAndroidViewModel::resizeView
+        )
 
         HorizontalDivider()
 
-        ImportExport(tabBagAndroidViewModel)
+        ImportExport(
+            tabBagAndroidViewModel::importFileJson,
+            tabBagAndroidViewModel::exportFileJson,
+        )
 
         HorizontalDivider()
 
@@ -107,14 +119,11 @@ fun TabBagBottomSheetLayout(
 
 @Composable
 fun Resize(
-    tabBagAndroidViewModel: TabBagAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    state: State<TabBagState>,
+    tabBagSlider: (Float) -> Unit,
+    zoomResize: (Int) -> Unit
 ) {
-    val stateFlow =
-        tabBagAndroidViewModel.stateFlow.collectAsStateWithLifecycle()
-
-    var scaleSlider = stateFlow.value.resize
-
+    var resize = state.value.resize
 
     Row(
         modifier = Modifier
@@ -127,11 +136,11 @@ fun Resize(
         Spacer(modifier = Modifier.width(10.dp))
 
         Slider(
-            value = scaleSlider,
+            value = resize,
             onValueChange = {
-                scaleSlider = it
-                tabBagAndroidViewModel.resizeSlider(it)
-                zoomAndroidViewModel.resize(round(it).toInt())
+                resize = it
+                tabBagSlider(it)
+                zoomResize(round(it).toInt())
             },
             valueRange = 1f..7f,
             steps = 5,
@@ -147,7 +156,8 @@ fun Resize(
 
 @Composable
 fun ImportExport(
-    tabBagAndroidViewModel: TabBagAndroidViewModel,
+    importFileJson: (Uri) -> Unit,
+    exportFileJson: (Uri) -> Unit
 ) {
     val launcherImportResult = remember { mutableStateOf<Uri?>(null) }
     val launcherImport =
@@ -155,13 +165,13 @@ fun ImportExport(
             launcherImportResult.value = uri
         }
     launcherImportResult.value?.let { uri ->
-        tabBagAndroidViewModel.importFileJson(uri)
+        importFileJson(uri)
     }
 
     val launcherExport =
         rememberLauncherForActivityResult(contract = CreateDocument("*/json")) { uri: Uri? ->
             uri?.let {
-                tabBagAndroidViewModel.exportFileJson(uri)
+                exportFileJson(uri)
             }
         }
 
@@ -225,10 +235,12 @@ fun Version() {
             .fillMaxWidth()
             .padding(top = 8.dp),
     ) {
-        Text(
-            text = gitHash + "-" + BuildConfig.FLAVOR,
-            fontSize = 14.sp,
-        )
+        SelectionContainer {
+            Text(
+                text = gitHash + "-" + BuildConfig.FLAVOR,
+                fontSize = 14.sp,
+            )
+        }
 
         Spacer(Modifier.weight(1f))
 

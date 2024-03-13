@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.ui.dialog.bag.colour
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
@@ -10,7 +10,7 @@ import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
 @Composable
 @UtilityPreview
 fun BagCardColorPickerLayoutPortraitPreview() {
-    val showColourDialog = remember { mutableStateOf(true) }
+    val showColourDialog = rememberSaveable { mutableStateOf(true) }
 
     DialogColourPickerLayout(
         showColourDialog,
@@ -23,7 +23,7 @@ fun BagCardColorPickerLayoutPortraitPreview() {
 @Composable
 @UtilityPreview
 fun BagCardColorPickerLayoutLandscapePreview() {
-    val showColourDialog = remember { mutableStateOf(true) }
+    val showColourDialog = rememberSaveable { mutableStateOf(true) }
 
     DialogColourPickerLayout(
         showColourDialog,

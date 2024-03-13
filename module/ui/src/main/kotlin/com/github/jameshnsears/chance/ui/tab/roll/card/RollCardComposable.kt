@@ -21,7 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -90,7 +90,8 @@ fun RollCards(tabRollViewModel: TabRollViewModel, dice: Dice) {
 fun DiceRollChipLandscape(tabRollViewModel: TabRollViewModel, dice: Dice) {
     Row(
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically)
+        verticalAlignment = Alignment.CenterVertically
+    )
     {
         DiceRollFilterChip(tabRollViewModel, dice)
 
@@ -100,7 +101,7 @@ fun DiceRollChipLandscape(tabRollViewModel: TabRollViewModel, dice: Dice) {
 
 @Composable
 fun DiceRollFilterChip(tabRollViewModel: TabRollViewModel, dice: Dice) {
-    val selected = remember { mutableStateOf(dice.selected) }
+    val selected = rememberSaveable { mutableStateOf(dice.selected) }
 
     val title = if (dice.title != "")
         dice.title

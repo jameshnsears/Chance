@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -95,7 +96,7 @@ fun SideNumber(bagCardSideAndroidViewModel: BagCardSideAndroidViewModel) {
 fun SideColour(
     bagCardSideAndroidViewModel: BagCardSideAndroidViewModel
 ) {
-    val showDialogColourPicker = remember { mutableStateOf(false) }
+    val showDialogColourPicker = rememberSaveable { mutableStateOf(false) }
 
     val stateFlow =
         bagCardSideAndroidViewModel.stateFlowSide.collectAsStateWithLifecycle()
@@ -188,7 +189,7 @@ fun SideDescription(
 
 @Composable
 fun SideDescriptionColour(bagCardSideAndroidViewModel: BagCardSideAndroidViewModel) {
-    val showDialogColourPicker = remember { mutableStateOf(false) }
+    val showDialogColourPicker = rememberSaveable { mutableStateOf(false) }
 
     val stateFlow =
         bagCardSideAndroidViewModel.stateFlowSide.collectAsStateWithLifecycle()

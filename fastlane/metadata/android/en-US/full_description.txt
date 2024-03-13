@@ -1,4 +1,4 @@
 &bull; Create custom dice: attach a SVG and / or text to the side of a dice
 &bull; Roll dice in different ways
 &bull; Export &amp; Import
-&bull; Feedback drives development
+&bull; Feedback drives development!

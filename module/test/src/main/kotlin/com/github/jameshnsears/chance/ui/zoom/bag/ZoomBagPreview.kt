@@ -1,6 +1,5 @@
 package com.github.jameshnsears.chance.ui.zoom.bag
 
-
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -17,7 +16,7 @@ fun ZoomBagPreview() {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
-            ZoomBag(tabBagViewModel, zoomViewModel)
+            ZoomBag(zoomViewModel)
         }
     }
 }

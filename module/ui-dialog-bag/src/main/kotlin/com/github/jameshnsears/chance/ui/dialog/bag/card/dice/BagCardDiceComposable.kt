@@ -28,7 +28,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -188,7 +188,7 @@ fun DiceTitle(bagCardDiceAndroidViewModel: BagCardDiceAndroidViewModel) {
 
 @Composable
 fun DiceColour(bagCardDiceAndroidViewModel: BagCardDiceAndroidViewModel) {
-    val showDialogColourPicker = remember { mutableStateOf(false) }
+    val showDialogColourPicker = rememberSaveable { mutableStateOf(false) }
 
     val stateFlow =
         bagCardDiceAndroidViewModel.stateFlowDice.collectAsStateWithLifecycle()
@@ -275,8 +275,6 @@ fun DiceCloneDelete(
                 modifier = Modifier.testTag(BagCardDiceTestTag.DICE_CLONE)
             )
 
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-
             Icon(
                 painterResource(id = R.drawable.content_copy_fill0_wght400_grad0_opsz24),
                 contentDescription = stringResource(R.string.dialog_bag_dice_clone),
@@ -293,7 +291,8 @@ fun DiceCloneDelete(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(end = 14.dp)
             ) {
                 Checkbox(
                     checked = diceDelete,
@@ -303,8 +302,6 @@ fun DiceCloneDelete(
                     },
                     modifier = Modifier.testTag(BagCardDiceTestTag.DICE_DELETE)
                 )
-
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
                 Icon(
                     Icons.Outlined.Delete,

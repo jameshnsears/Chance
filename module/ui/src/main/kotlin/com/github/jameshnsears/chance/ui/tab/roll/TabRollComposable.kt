@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,7 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -36,6 +38,7 @@ import com.github.jameshnsears.chance.ui.dialog.roll.DialogRoll
 import com.github.jameshnsears.chance.ui.tab.roll.card.RollCards
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRoll
+import kotlinx.coroutines.launch
 
 class TabRollTestTag {
     companion object {
@@ -60,16 +63,22 @@ fun TabRollLayout(
     tabRollViewModel: TabRollViewModel,
     zoomAndroidViewModel: ZoomAndroidViewModel,
 ) {
-    val scaffoldState = rememberBottomSheetScaffoldState()
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 
     BottomSheetScaffold(
-        scaffoldState = scaffoldState,
+        scaffoldState = bottomSheetScaffoldState,
         sheetPeekHeight = 110.dp,
         sheetContent = {
-            TabRollBottomSheetLayout(tabRollViewModel)
+            TabRollBottomSheetLayout(
+                tabRollViewModel,
+                bottomSheetScaffoldState
+            )
         },
     ) {
-        ZoomRoll(tabRollViewModel, zoomAndroidViewModel)
+        ZoomRoll(
+            tabRollViewModel,
+            zoomAndroidViewModel
+        )
     }
 }
 
@@ -137,7 +146,7 @@ fun Roll(tabRollViewModel: TabRollViewModel) {
 @Composable
 fun RollSequential(tabRollViewModel: TabRollViewModel) {
     val stateSequential =
-        remember { mutableStateOf(tabRollViewModel.stateSequential.value) }
+        rememberSaveable { mutableStateOf(tabRollViewModel.stateSequential.value) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -165,9 +174,15 @@ fun RollSequential(tabRollViewModel: TabRollViewModel) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Settings(tabRollViewModel: TabRollViewModel) {
-    val showDialog = remember { mutableStateOf(false) }
+fun Settings(
+    tabRollViewModel: TabRollViewModel,
+    bottomSheetScaffoldState: BottomSheetScaffoldState
+) {
+    val showDialog = rememberSaveable { mutableStateOf(false) }
+
+    val coroutineScope = rememberCoroutineScope()
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -175,9 +190,6 @@ fun Settings(tabRollViewModel: TabRollViewModel) {
             .fillMaxWidth()
             .padding(top = 8.dp)
             .testTag(TabRollTestTag.SETTINGS)
-            .clickable {
-                showDialog.value = true
-            },
     ) {
         Text(
             modifier = Modifier.weight(1f),
@@ -185,7 +197,13 @@ fun Settings(tabRollViewModel: TabRollViewModel) {
         )
 
         IconButton(
-            onClick = { showDialog.value = true }
+            onClick = {
+                showDialog.value = true
+
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                }
+            }
         ) {
             Icon(
                 Icons.Outlined.Settings,
@@ -202,8 +220,12 @@ fun Settings(tabRollViewModel: TabRollViewModel) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TabRollBottomSheetLayout(tabRollViewModel: TabRollViewModel) {
+fun TabRollBottomSheetLayout(
+    tabRollViewModel: TabRollViewModel,
+    bottomSheetScaffoldState: BottomSheetScaffoldState
+) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -220,6 +242,9 @@ fun TabRollBottomSheetLayout(tabRollViewModel: TabRollViewModel) {
 
         HorizontalDivider()
 
-        Settings(tabRollViewModel)
+        Settings(
+            tabRollViewModel,
+            bottomSheetScaffoldState
+        )
     }
 }

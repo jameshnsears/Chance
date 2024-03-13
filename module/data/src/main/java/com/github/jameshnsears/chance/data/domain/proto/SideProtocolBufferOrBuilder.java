@@ -5,72 +5,87 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface SideProtocolBufferOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>int32 number = 1;</code>
-   * @return The number.
-   */
-  int getNumber();
+    /**
+     * <code>int32 number = 1;</code>
+     *
+     * @return The number.
+     */
+    int getNumber();
 
-  /**
-   * <code>string numberColour = 2;</code>
-   * @return The numberColour.
-   */
-  java.lang.String getNumberColour();
-  /**
-   * <code>string numberColour = 2;</code>
-   * @return The bytes for numberColour.
-   */
-  com.google.protobuf.ByteString
-      getNumberColourBytes();
+    /**
+     * <code>string numberColour = 2;</code>
+     *
+     * @return The numberColour.
+     */
+    java.lang.String getNumberColour();
 
-  /**
-   * <code>string imageBase64 = 3;</code>
-   * @return The imageBase64.
-   */
-  java.lang.String getImageBase64();
-  /**
-   * <code>string imageBase64 = 3;</code>
-   * @return The bytes for imageBase64.
-   */
-  com.google.protobuf.ByteString
-      getImageBase64Bytes();
+    /**
+     * <code>string numberColour = 2;</code>
+     *
+     * @return The bytes for numberColour.
+     */
+    com.google.protobuf.ByteString
+    getNumberColourBytes();
 
-  /**
-   * <code>int32 imageDrawableId = 4;</code>
-   * @return The imageDrawableId.
-   */
-  int getImageDrawableId();
+    /**
+     * <code>string imageBase64 = 3;</code>
+     *
+     * @return The imageBase64.
+     */
+    java.lang.String getImageBase64();
 
-  /**
-   * <code>string description = 5;</code>
-   * @return The description.
-   */
-  java.lang.String getDescription();
-  /**
-   * <code>string description = 5;</code>
-   * @return The bytes for description.
-   */
-  com.google.protobuf.ByteString
-      getDescriptionBytes();
+    /**
+     * <code>string imageBase64 = 3;</code>
+     *
+     * @return The bytes for imageBase64.
+     */
+    com.google.protobuf.ByteString
+    getImageBase64Bytes();
 
-  /**
-   * <code>int32 descriptionStringsId = 6;</code>
-   * @return The descriptionStringsId.
-   */
-  int getDescriptionStringsId();
+    /**
+     * <code>int32 imageDrawableId = 4;</code>
+     *
+     * @return The imageDrawableId.
+     */
+    int getImageDrawableId();
 
-  /**
-   * <code>string descriptionColour = 7;</code>
-   * @return The descriptionColour.
-   */
-  java.lang.String getDescriptionColour();
-  /**
-   * <code>string descriptionColour = 7;</code>
-   * @return The bytes for descriptionColour.
-   */
-  com.google.protobuf.ByteString
-      getDescriptionColourBytes();
+    /**
+     * <code>string description = 5;</code>
+     *
+     * @return The description.
+     */
+    java.lang.String getDescription();
+
+    /**
+     * <code>string description = 5;</code>
+     *
+     * @return The bytes for description.
+     */
+    com.google.protobuf.ByteString
+    getDescriptionBytes();
+
+    /**
+     * <code>int32 descriptionStringsId = 6;</code>
+     *
+     * @return The descriptionStringsId.
+     */
+    int getDescriptionStringsId();
+
+    /**
+     * <code>string descriptionColour = 7;</code>
+     *
+     * @return The descriptionColour.
+     */
+    java.lang.String getDescriptionColour();
+
+    /**
+     * <code>string descriptionColour = 7;</code>
+     *
+     * @return The bytes for descriptionColour.
+     */
+    com.google.protobuf.ByteString
+    getDescriptionColourBytes();
 }

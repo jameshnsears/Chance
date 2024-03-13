@@ -1,6 +1,6 @@
 &bull; Create custom dice: attach a SVG and / or text to the side of a dice
 &bull; Roll dice in different ways
 &bull; Export &amp; Import
-&bull; Free; No Ads; Crashalytics only
+&bull; Free; No Ads; Crashlytics only
 &bull; Open Source
-&bull; Feedback drives development
+&bull; Feedback drives development!

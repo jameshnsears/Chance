@@ -20,6 +20,7 @@ junit-jupiter = "5.10.2"
 kotlinx-coroutines-test = "1.8.0"
 leakcanary-android = "2.13"
 lifecycle-runtime-compose = "2.7.0"
+lifecycle-viewmodel-compose = "2.7.0"
 lifecycle-runtime-ktx = "2.7.0"
 material = "1.11.0"
 mockk = "1.13.10"
@@ -48,6 +49,7 @@ androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", vers
 androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junit" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-svg" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil-svg" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil-svg" }

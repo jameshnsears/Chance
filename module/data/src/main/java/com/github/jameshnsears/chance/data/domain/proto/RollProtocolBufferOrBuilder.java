@@ -5,27 +5,32 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface RollProtocolBufferOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
+        com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>int64 diceEpoch = 1;</code>
-   * @return The diceEpoch.
-   */
-  long getDiceEpoch();
+    /**
+     * <code>int64 diceEpoch = 1;</code>
+     *
+     * @return The diceEpoch.
+     */
+    long getDiceEpoch();
 
-  /**
-   * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-   * @return Whether the side field is set.
-   */
-  boolean hasSide();
-  /**
-   * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-   * @return The side.
-   */
-  com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getSide();
-  /**
-   * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-   */
-  com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder();
+    /**
+     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     *
+     * @return Whether the side field is set.
+     */
+    boolean hasSide();
+
+    /**
+     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     *
+     * @return The side.
+     */
+    com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getSide();
+
+    /**
+     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     */
+    com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder();
 }

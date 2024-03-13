@@ -107,8 +107,6 @@ private fun RollMultiplier(bagCardRollViewModel: BagCardRollViewModel) {
             }
         )
 
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-
         Icon(
             painterResource(id = com.github.jameshnsears.chance.common.R.drawable.roll_repeat_fill0_wght400_grad0_opsz24),
             contentDescription = stringResource(R.string.dialog_bag_roll_repeat),
@@ -129,32 +127,6 @@ private fun RollMultiplier(bagCardRollViewModel: BagCardRollViewModel) {
         )
     }
 }
-
-/*
-        val configuration = LocalConfiguration.current
-
-        when (configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                DialogColourPickerLayoutLandscape(
-                    showDialog,
-                    dialogTitle,
-                    currentColour,
-                    setColour,
-                    controller,
-                )
-            }
-
-            else -> {
-                DialogColourPickerLayoutPortrait(
-                    showDialog,
-                    dialogTitle,
-                    currentColour,
-                    setColour,
-                    controller,
-                )
-            }
-        }
- */
 
 @Composable
 private fun RollExplode(bagCardRollViewModel: BagCardRollViewModel) {
@@ -182,8 +154,6 @@ private fun RollExplode(bagCardRollViewModel: BagCardRollViewModel) {
                 }
             )
 
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-
             Icon(
                 painterResource(id = com.github.jameshnsears.chance.common.R.drawable.roll_explode_fill0_wght400_grad0_opsz24),
                 contentDescription = stringResource(R.string.dialog_bag_roll_explode_when),
@@ -197,6 +167,7 @@ private fun RollExplode(bagCardRollViewModel: BagCardRollViewModel) {
             Configuration.ORIENTATION_LANDSCAPE -> {
                 RollExplodeLandscape(bagCardRollViewModel)
             }
+
             else -> {
                 RollExplodePortrait(bagCardRollViewModel)
             }
@@ -332,8 +303,6 @@ fun RollScore(bagCardRollViewModel: BagCardRollViewModel) {
                 bagCardRollViewModel.rollModifyScore(it)
             }
         )
-
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
         Icon(
             painterResource(id = com.github.jameshnsears.chance.common.R.drawable.roll_add_subtract_fill0_wght400_grad0_opsz24),

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -27,9 +27,9 @@ fun SideImageNumberDialog(
     dice: Dice,
     side: Side,
 ) {
-    val showDialog = remember { mutableStateOf(false) }
+    val showDialog = rememberSaveable { mutableStateOf(false) }
 
-    val resize = zoomAndroidViewModel.resize.collectAsStateWithLifecycle()
+    val resize = zoomAndroidViewModel.resizeView.collectAsStateWithLifecycle()
 
     Box {
         Image(
@@ -69,7 +69,7 @@ fun SideImageNumber(
     dice: Dice,
     side: Side,
 ) {
-    val resize = zoomAndroidViewModel.resize.collectAsStateWithLifecycle()
+    val resize = zoomAndroidViewModel.resizeView.collectAsStateWithLifecycle()
 
     Box {
         Image(
@@ -109,7 +109,7 @@ fun SideImageSVG(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     side: Side
 ) {
-    val resize = zoomAndroidViewModel.resize.collectAsStateWithLifecycle()
+    val resize = zoomAndroidViewModel.resizeView.collectAsStateWithLifecycle()
 
     if (side.imageDrawableId != 0) {
         Image(
@@ -129,16 +129,45 @@ fun SideImageSVG(
 }
 
 @Composable
-fun SideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, side: Side) {
+fun SideDescriptionBag(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, side: Side) {
     if (side.description != "") {
-        Text(
-            text = side.description,
-            color = zoomAndroidViewModel.sideColor(side.descriptionColour),
-        )
+        SideDescriptionFromUser(side, zoomAndroidViewModel)
     } else if (side.descriptionStringsId != 0) {
-        Text(
-            text = stringResource(id = side.descriptionStringsId),
-            color = zoomAndroidViewModel.sideColor(side.descriptionColour),
-        )
+        SideDescriptionFromResources(side, zoomAndroidViewModel)
+    } else if (zoomAndroidViewModel.diceContainsAtLeastOneSideWithDescription(dice)) {
+        Text(text = " ")
     }
+}
+
+@Composable
+fun SideDescriptionRoll(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, side: Side) {
+    if (side.description != "") {
+        SideDescriptionFromUser(side, zoomAndroidViewModel)
+    } else if (side.descriptionStringsId != 0) {
+        SideDescriptionFromResources(side, zoomAndroidViewModel)
+    } else if (side.imageDrawableId != 0 || side.imageBase64 != "") {
+        Text(text = " ")
+    }
+}
+
+@Composable
+private fun SideDescriptionFromResources(
+    side: Side,
+    zoomAndroidViewModel: ZoomAndroidViewModel
+) {
+    Text(
+        text = stringResource(id = side.descriptionStringsId),
+        color = zoomAndroidViewModel.sideColor(side.descriptionColour),
+    )
+}
+
+@Composable
+private fun SideDescriptionFromUser(
+    side: Side,
+    zoomAndroidViewModel: ZoomAndroidViewModel
+) {
+    Text(
+        text = side.description,
+        color = zoomAndroidViewModel.sideColor(side.descriptionColour),
+    )
 }

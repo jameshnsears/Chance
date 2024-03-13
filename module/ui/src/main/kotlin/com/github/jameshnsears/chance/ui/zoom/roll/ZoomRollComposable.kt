@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -22,7 +23,7 @@ import com.github.jameshnsears.chance.data.domain.state.Roll
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollViewModel
 import com.github.jameshnsears.chance.ui.zoom.DiceTitle
-import com.github.jameshnsears.chance.ui.zoom.SideDescription
+import com.github.jameshnsears.chance.ui.zoom.SideDescriptionRoll
 import com.github.jameshnsears.chance.ui.zoom.SideImageNumber
 import com.github.jameshnsears.chance.ui.zoom.SideImageSVG
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
@@ -31,11 +32,11 @@ import timber.log.Timber
 @Composable
 fun ZoomRoll(
     tabRollViewModel: TabRollViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    zoomAndroidViewModel: ZoomAndroidViewModel,
 ) {
     val diceBag = zoomAndroidViewModel.diceBag.collectAsStateWithLifecycle()
 
-    val resize = zoomAndroidViewModel.resize.collectAsStateWithLifecycle()
+    val resize = zoomAndroidViewModel.resizeView.collectAsStateWithLifecycle()
 
     val rollHistory by zoomAndroidViewModel.rollHistory.collectAsStateWithLifecycle()
 
@@ -50,30 +51,25 @@ fun ZoomRoll(
 
     LazyColumn(
         state = listState,
-        modifier = Modifier.padding(top = 8.dp, bottom = 110.dp),
+        modifier = Modifier.padding(top = 8.dp, start = 8.dp, bottom = 110.dp, end = 8.dp),
     ) {
         Timber.d("resize.Roll=${resize.value}")
 
-        var rollSequenceIndex = 0
-
-        items(rollHistory.entries.toList()) { rollSequence ->
-            rollSequenceIndex += 1
-
+        itemsIndexed(rollHistory.entries.toList()) { index, rollSequence ->
             if (settingsTime)
                 Row {
                     RollTime(rollSequence)
                 }
 
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(end = 8.dp)
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 if (settingsScore) RollScore(rollSequence)
 
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.Top,
-                    modifier = Modifier.padding(bottom = 5.dp),
+                    modifier = Modifier.padding(bottom = 12.dp),
                 ) {
                     items(rollSequence.value) { roll ->
                         for (dice: Dice in diceBag.value) {
@@ -86,7 +82,7 @@ fun ZoomRoll(
                 }
             }
 
-            if (rollSequenceIndex < rollHistory.entries.size)
+            if (index < rollHistory.entries.size)
                 HorizontalDivider(Modifier.padding(top = 8.dp, bottom = 8.dp))
         }
     }
@@ -101,7 +97,7 @@ private fun RollTime(rollHistory: MutableMap.MutableEntry<Long, List<Roll>>) {
                     rollHistory.key
                 )
             }",
-            modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
+            modifier = Modifier.padding(bottom = 4.dp),
         )
     }
 }
@@ -109,7 +105,7 @@ private fun RollTime(rollHistory: MutableMap.MutableEntry<Long, List<Roll>>) {
 @Composable
 private fun RollScore(rollHistory: MutableMap.MutableEntry<Long, List<Roll>>) {
     Column(
-        Modifier.padding(start = 10.dp, end = 8.dp),
+        Modifier.padding(start = 4.dp, end = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
@@ -142,7 +138,7 @@ private fun RollDetails(
 
         if (settingsSideNumber) SideImageNumber(zoomAndroidViewModel, dice, roll.side)
 
-        SideDescription(zoomAndroidViewModel, roll.side)
+        SideDescriptionRoll(zoomAndroidViewModel, dice, roll.side)
 
         SideImageSVG(zoomAndroidViewModel, roll.side)
     }

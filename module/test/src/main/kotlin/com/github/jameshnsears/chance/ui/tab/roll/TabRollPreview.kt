@@ -2,6 +2,8 @@ package com.github.jameshnsears.chance.ui.tab.roll
 
 
 import android.app.Application
+import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -52,6 +54,7 @@ fun TabRollPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @UtilityPreview
 @Composable
 fun TabRollBottomSheetLayoutPreview() {
@@ -77,6 +80,7 @@ fun TabRollBottomSheetLayoutPreview() {
                     repositoryBag,
                     repositoryRoll,
                 ),
+                mockk<BottomSheetScaffoldState>()
             )
         }
     }
