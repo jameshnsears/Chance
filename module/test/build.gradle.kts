@@ -91,7 +91,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
     implementation("com.github.victools:jsonschema-generator:4.33.1")
     implementation("com.google.protobuf:protobuf-java:3.25.3")
-    implementation("com.google.protobuf:protobuf-java-util:3.25.3")
+    implementation("com.google.protobuf:protobuf-java-util:4.26.0")
     implementation("com.google.protobuf:protobuf-kotlin:3.25.3")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("io.coil-kt:coil-compose:2.6.0")
