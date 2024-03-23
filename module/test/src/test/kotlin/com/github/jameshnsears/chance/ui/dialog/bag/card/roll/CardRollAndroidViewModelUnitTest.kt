@@ -9,7 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Test
 
-class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
+class CardRollAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     /*
     multiplier:
 
@@ -45,7 +45,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
             diceInDialogBag, diceInDialogBag.sides[0]
         )
 
-        val cardRollViewModel = dialogBagAndroidViewModel.cardRollViewModel
+        val cardRollViewModel = dialogBagAndroidViewModel.cardRollAndroidViewModel
 
         fail("todo")
     }
@@ -84,7 +84,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
         dice: Dice
     ) {
         val stateFlowRoll =
-            dialogBagAndroidViewModel.cardRollViewModel.stateFlowCardRoll.value
+            dialogBagAndroidViewModel.cardRollAndroidViewModel.stateFlowCardRoll.value
 
         assertEquals(dice.multiplier, stateFlowRoll.rollMultiplier)
         assertEquals(dice.multiplierValue, stateFlowRoll.rollMultiplierValue)

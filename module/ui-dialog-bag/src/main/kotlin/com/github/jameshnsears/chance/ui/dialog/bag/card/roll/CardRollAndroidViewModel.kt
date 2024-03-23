@@ -1,7 +1,9 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.roll
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
 import com.github.jameshnsears.chance.data.domain.state.Dice
+import com.github.jameshnsears.chance.ui.dialog.bag.card.CardAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.dice.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -11,14 +13,16 @@ data class CardRollState(
     var rollMultiplierValue: Int,
     var rollExplode: Boolean,
     var rollExplodeWhen: String,
+    var rollExplodeAvailableValues: List<String>,
     var rollExplodeValue: Int,
     var rollModifyScore: Boolean,
     var rollModifyScoreValue: Int
 )
 
-class CardRollViewModel(
+class CardRollAndroidViewModel(
+    application: Application,
     val dice: Dice
-) : ViewModel() {
+) : CardAndroidViewModel(application) {
 
     private val _stateFlow = MutableStateFlow(
         CardRollState(
@@ -26,11 +30,13 @@ class CardRollViewModel(
             rollMultiplierValue = dice.multiplierValue,
             rollExplode = dice.explode,
             rollExplodeWhen = dice.explodeWhen,
+            rollExplodeAvailableValues = rollExplodeSidesEquals(),
             rollExplodeValue = dice.explodeValue,
             rollModifyScore = dice.modifyScore,
             rollModifyScoreValue = dice.modifyScoreValue
         )
     )
+
     val stateFlowCardRoll: StateFlow<CardRollState> = _stateFlow
 
     fun rollMultiplier(ticked: Boolean) {
@@ -45,8 +51,34 @@ class CardRollViewModel(
         _stateFlow.update { it.copy(rollExplode = ticked) }
     }
 
-    fun rollExplodeWhen(value: String) {
-        _stateFlow.update { it.copy(rollExplodeWhen = value) }
+    private fun rollExplodeSidesEquals()
+        = (1..dice.sides.size).toList().map { it.toString() }
+
+    fun rollExplodeWhen(equalityValue: String) {
+        when (equalityValue) {
+            getString(R.string.dialog_bag_roll_less_than) -> {
+                _stateFlow.update {
+                    it.copy(
+                        rollExplodeWhen = equalityValue,
+                        rollExplodeAvailableValues = (2..dice.sides.size).toList()
+                            .map { it.toString() })
+                }
+            }
+
+            getString(R.string.dialog_bag_roll_greater_than) -> {
+                _stateFlow.update {
+                    it.copy(
+                        rollExplodeWhen = equalityValue,
+                        rollExplodeAvailableValues = (1..(dice.sides.size - 1)).toList()
+                            .map { it.toString() })
+                }            }
+
+            else -> {
+                _stateFlow.update { it.copy(
+                    rollExplodeWhen = equalityValue,
+                    rollExplodeAvailableValues = rollExplodeSidesEquals()) }
+            }
+        }
     }
 
     fun rollExplodeValue(value: String) {

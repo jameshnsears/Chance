@@ -19,40 +19,39 @@ import androidx.compose.ui.unit.Dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenericExposedDropdownMenuBox(
-    resultFun: (String) -> Unit,
+    valueChanged: (String) -> Unit,
     testTag: String,
-    options: List<String>,
+    dropdownContents: List<String>,
+    selectedDropdownContent: String,
     width: Dp
 ) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
-    var selectedOptionText by rememberSaveable { mutableStateOf(options[0]) }
+    var isDropdownExpanded by rememberSaveable { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = it },
+        expanded = isDropdownExpanded,
+        onExpandedChange = { isDropdownExpanded = it },
     ) {
         TextField(
             modifier = Modifier
                 .menuAnchor()
                 .width(width),
             readOnly = true,
-            value = selectedOptionText,
-            onValueChange = {},
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            value = selectedDropdownContent,
+            onValueChange = { },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isDropdownExpanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
         )
         ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
+            expanded = isDropdownExpanded,
+            onDismissRequest = { isDropdownExpanded = false },
         ) {
-            options.forEach { selectionOption ->
+            dropdownContents.forEach { selectionOption ->
                 DropdownMenuItem(
                     modifier = Modifier.testTag(testTag),
                     text = { Text(selectionOption) },
                     onClick = {
-                        selectedOptionText = selectionOption
-                        expanded = false
-                        resultFun(selectionOption)
+                        isDropdownExpanded = false
+                        valueChanged(selectionOption)
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )

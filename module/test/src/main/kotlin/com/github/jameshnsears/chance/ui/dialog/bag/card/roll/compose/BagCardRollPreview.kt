@@ -1,13 +1,15 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.roll.compose
 
+import android.app.Application
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagStartup
-import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
@@ -25,8 +27,9 @@ fun BagCardRollPreview() {
 
     val dice = SampleBagStartup.diceStory
 
-    val cardRollViewModel = runBlocking {
-        CardRollViewModel(
+    val cardRollAndroidViewModel = runBlocking {
+        CardRollAndroidViewModel(
+            mockk<Application>(),
             dice
         )
     }
@@ -36,7 +39,7 @@ fun BagCardRollPreview() {
             color = MaterialTheme.colorScheme.background,
         ) {
             BagCardRoll(
-                cardRollViewModel,
+                cardRollAndroidViewModel,
             )
         }
     }

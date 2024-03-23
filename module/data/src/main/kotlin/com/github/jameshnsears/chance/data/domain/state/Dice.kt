@@ -11,12 +11,12 @@ data class Dice(
     var selected: Boolean = false,
 
     var multiplier: Boolean = false,
-    var multiplierValue: Int = 0,
+    var multiplierValue: Int = 2,
 
     var explode: Boolean = false,
-    var explodeWhen: String = "",
-    var explodeValue: Int = 0,
+    var explodeWhen: String = "=",
+    var explodeValue: Int = 1,
 
     var modifyScore: Boolean = false,
-    var modifyScoreValue: Int = 0
+    var modifyScoreValue: Int = -5
 )
