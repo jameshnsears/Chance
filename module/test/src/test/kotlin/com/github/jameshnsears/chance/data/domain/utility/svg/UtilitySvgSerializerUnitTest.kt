@@ -8,18 +8,18 @@ import org.junit.Test
 
 class UtilitySvgSerializerUnitTest : UtilityAndroid() {
     @Test
-    fun isSVG() {
+    fun isUrlSvg() {
         val url = this::class.java.getResource("/data/svg/dN/d2.svg")
-        assertTrue(UtilitySvgSerializer.isSVG(url!!))
+        assertTrue(UtilitySvgSerializer.isUrlSvg(url!!))
     }
 
     @Test
     fun encodeDecode() {
         val svgByteArray = getResourceAsByteArray("/data/svg/dN/d2.svg")
 
-        val base64String = UtilitySvgSerializer.encode(svgByteArray)
+        val base64String = UtilitySvgSerializer.encodeIntoBase64String(svgByteArray)
 
-        val decodedByteArray = UtilitySvgSerializer.decode(base64String)
+        val decodedByteArray = UtilitySvgSerializer.decodeBase64StringIntoByteArray(base64String)
 
         assertArrayEquals(svgByteArray, decodedByteArray)
     }
@@ -51,7 +51,8 @@ class UtilitySvgSerializerUnitTest : UtilityAndroid() {
 //            file.writeText(UtilitySvgSerializer.encode(svgFileAsByteArray))
 
             val base64File = getResourceAsString("/data/base64/$diceFilename.base64")
-            val base64FileAsByteArray = UtilitySvgSerializer.decode(base64File)
+            val base64FileAsByteArray =
+                UtilitySvgSerializer.decodeBase64StringIntoByteArray(base64File)
 
             assertArrayEquals(svgFileAsByteArray, base64FileAsByteArray)
         }

@@ -150,6 +150,20 @@ Layout Inspector
 = red flash when a recompisition
 = expand tree in inspector and see recompisition count & what skipped
 
-/////////////////
+///////////////////////////////////////////////////
+
+you can flowN.collect / .collectLatest in a viewmodel (as well as ui stateflow)
+
+///////////////////////////////////////////////////
+
+lazyColumns improvements:
+
+always test release build to see if lag applicable
+
+how to check if coil is caching an image?
+
+use layout inspector to see LazyColumn and scroll in the emulator to see red flashes
+= you do not want to see these red flashes (unnecessary compositions)
+= mark data class as @stable / @Immutable
 
 */

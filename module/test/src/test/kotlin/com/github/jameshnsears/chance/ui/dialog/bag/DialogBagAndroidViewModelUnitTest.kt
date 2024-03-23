@@ -24,6 +24,6 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagSaveWithDeleteTicked() = runTest {
-        fail("todo")
+        fail("todo + include androidTest for all of the above")
     }
 }

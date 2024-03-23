@@ -105,6 +105,7 @@
                   <entry key="Pixel_6_API_30" value="120" />
                   <entry key="Pixel_6_API_34" value="120" />
                   <entry key="Tests" value="360" />
+                  <entry key="samsung SM-A528B" value="120" />
                 </map>
               </option>
             </AndroidTestResultsTableState>

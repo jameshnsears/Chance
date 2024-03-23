@@ -32,7 +32,7 @@ class TabRollViewModel(
 ) : ViewModel() {
     private val _stateFlow = MutableStateFlow(
         TabRollState(
-            settingsTime = false,
+            settingsTime = true,
             settingsScore = false,
             settingsDiceTitle = false,
             settingsSideNumber = true

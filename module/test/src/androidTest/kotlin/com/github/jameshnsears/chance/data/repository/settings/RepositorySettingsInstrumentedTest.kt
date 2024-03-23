@@ -1,8 +1,10 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
 import androidx.test.platform.app.InstrumentationRegistry
+import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySettings
+import com.github.jameshnsears.chance.data.repository.settings.impl.settingsDataStore
 import com.github.jameshnsears.chance.data.sample.settings.SampleSettings
-import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagInstrumented
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagInstrumentedHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -11,7 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class RepositorySettingsInstrumentedTest : DialogBagInstrumented() {
+class RepositorySettingsInstrumentedTest : DialogBagInstrumentedHelper() {
     @Before
     fun emptyDataStore() = runTest {
         RepositorySettings.getInstance(

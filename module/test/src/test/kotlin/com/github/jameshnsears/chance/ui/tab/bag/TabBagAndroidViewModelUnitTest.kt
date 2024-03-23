@@ -2,9 +2,9 @@ package com.github.jameshnsears.chance.ui.tab.bag
 
 import android.app.Application
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.roll.mock.RepositoryRollTestDouble
+import com.github.jameshnsears.chance.data.repository.settings.mock.RepositorySettingsTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBag
 import com.github.jameshnsears.chance.data.sample.roll.SampleRollSampleBagStartup
 import com.github.jameshnsears.chance.data.sample.settings.SampleSettings

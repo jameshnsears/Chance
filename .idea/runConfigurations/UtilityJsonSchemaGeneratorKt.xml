@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="UtilityJsonSchemaGeneratorKt" type="JetRunConfigurationType" folderName="JSON Schema Generator" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="com.github.jameshnsears.chance.data.domain.utility.json.UtilityJsonSchemaGeneratorKt" />
+    <module name="Chance.module.test.main" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

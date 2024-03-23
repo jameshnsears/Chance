@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.com.android.library)
+    alias(libs.plugins.org.jetbrains.kotlin.android)
 }
 
 android {
@@ -65,20 +65,20 @@ android {
 }
 
 dependencies {
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material-icons-core")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.test.ext:junit-ktx:1.1.5")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
-    implementation("com.jakewharton.timber:timber:5.0.1")
-    implementation("io.coil-kt:coil-compose:2.6.0")
-    implementation(platform("androidx.compose:compose-bom:2024.02.02"))
+    implementation(libs.activity.compose)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.timber)
+    implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))
     implementation(project(":module:data"))
     implementation(project(":module:ui-dialog-bag"))

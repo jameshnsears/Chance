@@ -5,11 +5,12 @@ option java_multiple_files = true;
 package com.github.jameshnsears.chance.data.domain.proto;
 
 message SideProtocolBuffer {
-  int32 number = 1;
-  string numberColour = 2;
-  string imageBase64 = 3;
-  int32 imageDrawableId = 4;
-  string description = 5;
-  int32 descriptionStringsId = 6;
-  string descriptionColour = 7;
+  string uuid = 1;
+  int32 number = 2;
+  string numberColour = 3;
+  string imageBase64 = 4;
+  int32 imageDrawableId = 5;
+  string description = 6;
+  int32 descriptionStringsId = 7;
+  string descriptionColour = 8;
 }

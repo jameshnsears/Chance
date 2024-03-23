@@ -42,9 +42,8 @@ class ZoomAndroidViewModel(
     )
     val tabRollStateFlow: StateFlow<ZoomState> = _stateFlow
 
-
-    private var _resize: MutableStateFlow<Dp> = MutableStateFlow(resizeInitialPosition())
-    var resize: StateFlow<Dp> = _resize
+    private var _resizeView: MutableStateFlow<Dp> = MutableStateFlow(resizeViewInitialPosition())
+    var resizeView: StateFlow<Dp> = _resizeView
 
     private var _diceBag: MutableStateFlow<DiceBag> = MutableStateFlow(mutableListOf())
     var diceBag: StateFlow<DiceBag> = _diceBag
@@ -64,19 +63,19 @@ class ZoomAndroidViewModel(
 
     ////////////////////////////////
 
-    private val resizeDefault = 80.dp
+    private val resizeViewDefault = 80.dp
 
-    private fun resizeInitialPosition() = 80.dp
+    private fun resizeViewInitialPosition() = 80.dp
 
-    fun resize(zoom: Int) {
+    fun resizeView(zoom: Int) {
         when (zoom) {
-            1 -> _resize.value = resizeDefault * 0.4f
-            2 -> _resize.value = resizeDefault * 0.6f
-            3 -> _resize.value = resizeDefault * 0.8f
-            5 -> _resize.value = resizeDefault * 1.2f
-            6 -> _resize.value = resizeDefault * 1.4f
-            7 -> _resize.value = resizeDefault * 1.6f
-            else -> _resize.value = resizeDefault
+            1 -> _resizeView.value = resizeViewDefault * 0.4f
+            2 -> _resizeView.value = resizeViewDefault * 0.6f
+            3 -> _resizeView.value = resizeViewDefault * 0.8f
+            5 -> _resizeView.value = resizeViewDefault * 1.2f
+            6 -> _resizeView.value = resizeViewDefault * 1.4f
+            7 -> _resizeView.value = resizeViewDefault * 1.6f
+            else -> _resizeView.value = resizeViewDefault
         }
     }
 
@@ -85,25 +84,17 @@ class ZoomAndroidViewModel(
     fun sideImageNumberPaddingTop(dice: Dice): Dp {
         return when (dice.sides.size) {
             2 -> 0.dp
-            4 -> (22.dp * resize.value.value / 100)
+            4 -> (22.dp * resizeView.value.value / 100)
             6 -> 0.dp
-            8 -> (25.dp * resize.value.value / 100)
-            10 -> (10.dp * resize.value.value / 100)
-            12 -> (10.dp * resize.value.value / 100)
-            else -> (42.dp * resize.value.value / 100)
+            8 -> (28.dp * resizeView.value.value / 100)
+            10 -> (20.dp * resizeView.value.value / 100)
+            12 -> (18.dp * resizeView.value.value / 100)
+            else -> (42.dp * resizeView.value.value / 100)
         }
     }
 
     fun sideImageNumberFontSize(dice: Dice): TextUnit {
-        return when (dice.sides.size) {
-            2 -> (72.sp * resize.value.value / 100)
-            4 -> (60.sp * resize.value.value / 100)
-            6 -> (60.sp * resize.value.value / 100)
-            8 -> (50.sp * resize.value.value / 100)
-            10 -> (44.sp * resize.value.value / 100)
-            20 -> (40.sp * resize.value.value / 100)
-            else -> (48.sp * resize.value.value / 100)
-        }
+        return (40.sp * resizeView.value.value / 100)
     }
 
     fun sideImageNumberShape(dice: Dice): Int {
@@ -130,9 +121,19 @@ class ZoomAndroidViewModel(
             makeColour(hexColour)
     }
 
+    fun diceContainsAtLeastOneSideWithDescription(dice: Dice): Boolean {
+        dice.sides.forEach {
+            it.description
+            if (it.descriptionStringsId != 0 || it.description != "")
+                return true
+        }
+
+        return false
+    }
+
     private fun makeColour(hexColour: String) =
         Color(android.graphics.Color.parseColor("#${hexColour}"))
 
     fun sideImageSVG(side: Side) =
-        UtilitySvgSerializer.decodeIntoImageRequest(getApplication(), side.imageBase64)
+        UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side.imageBase64)
 }
