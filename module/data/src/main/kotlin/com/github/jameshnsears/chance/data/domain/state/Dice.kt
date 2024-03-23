@@ -11,12 +11,19 @@ data class Dice(
     var selected: Boolean = false,
 
     var multiplier: Boolean = false,
-    var multiplierValue: Int = 2,
+    var multiplierValue: Int = DiceRollValues.multiplierValues[0].toInt(),
 
     var explode: Boolean = false,
     var explodeWhen: String = "=",
     var explodeValue: Int = 1,
 
     var modifyScore: Boolean = false,
-    var modifyScoreValue: Int = -5
+    var modifyScoreValue: Int = DiceRollValues.modifyScoreValues[0].toInt(),
 )
+
+class DiceRollValues {
+    companion object {
+        val multiplierValues = listOf("2", "3", "4", "5")
+        val modifyScoreValues = listOf("-5", "-4", "-3", "-2", "-1", "1", "2", "3", "4", "5")
+    }
+}
