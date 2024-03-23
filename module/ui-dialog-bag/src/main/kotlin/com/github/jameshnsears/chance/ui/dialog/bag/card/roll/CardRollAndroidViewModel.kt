@@ -61,7 +61,9 @@ class CardRollAndroidViewModel(
                     it.copy(
                         rollExplodeWhen = equalityValue,
                         rollExplodeAvailableValues = (2..dice.sides.size).toList()
-                            .map { it.toString() })
+                            .map { it.toString() },
+                        rollExplodeValue = 2
+                    )
                 }
             }
 
@@ -70,13 +72,20 @@ class CardRollAndroidViewModel(
                     it.copy(
                         rollExplodeWhen = equalityValue,
                         rollExplodeAvailableValues = (1..(dice.sides.size - 1)).toList()
-                            .map { it.toString() })
-                }            }
+                            .map { it.toString() },
+                        rollExplodeValue = 1
+                    )
+                }
+            }
 
             else -> {
-                _stateFlow.update { it.copy(
+                _stateFlow.update {
+                    it.copy(
                     rollExplodeWhen = equalityValue,
-                    rollExplodeAvailableValues = rollExplodeSidesEquals()) }
+                        rollExplodeAvailableValues = rollExplodeSidesEquals(),
+                        rollExplodeValue = 1
+                    )
+                }
             }
         }
     }
