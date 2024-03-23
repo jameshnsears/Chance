@@ -3,17 +3,17 @@ activity-compose = "1.8.2"
 appcompat = "1.6.1"
 coil-svg = "2.6.0"
 colorpicker-compose = "1.0.7"
-com-android-application = "8.2.2"
-com-android-library = "8.2.2"
+com-android-application = "8.3.1"
+com-android-library = "8.3.1"
 com-diffplug-spotless = "6.25.0"
 compose-bom = "2024.02.02"
 core-ktx = "1.12.0"
 datastore-core = "1.0.0"
 espresso-core = "3.5.1"
-io-gitlab-arturbosch-detekt = "1.23.3"
-jackson-module-kotlin = "2.16.2"
+io-gitlab-arturbosch-detekt = "1.23.5"
+jackson-module-kotlin = "2.17.0"
 json-kotlin-schema = "0.47"
-jsonschema-generator = "4.33.1"
+jsonschema-generator = "4.34.0"
 junit = "1.1.5"
 junit-bom = "5.10.2"
 junit-jupiter = "5.10.2"
@@ -26,7 +26,13 @@ material = "1.11.0"
 mockk = "1.13.10"
 org-jetbrains-kotlin-android = "1.9.22"
 org-jlleitschuh-gradle-ktlint = "12.1.0"
-protobuf-java = "3.25.3"
+#noinspection GradleDependency
+protobuf-java = "3.25.3"            # stay on 3.25.3
+#noinspection GradleDependency
+protobuf-java-util = "3.25.3"       # stay on 3.25.3
+#noinspection GradleDependency
+protobuf-kotlin = "3.25.3"          # stay on 3.25.3
+
 slf4j-simple = "2.0.12"
 timber = "5.0.1"
 
@@ -65,8 +71,8 @@ org-jetbrains-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name 
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit-bom" }
 org-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit-jupiter" }
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf-java" }
-protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf-java" }
-protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-java" }
+protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf-java-util" }
+protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-kotlin" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 

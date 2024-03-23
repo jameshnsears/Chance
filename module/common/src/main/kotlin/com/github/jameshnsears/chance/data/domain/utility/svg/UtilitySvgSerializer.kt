@@ -9,26 +9,36 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 
 class UtilitySvgSerializer {
     companion object {
-        fun isSVG(url: URL): Boolean {
+        fun isUrlSvg(url: URL): Boolean {
             val contentType = url.toURI().toURL().openConnection().contentType
 
             return if (contentType.matches(Regex("^image/svg\\+xml$")))
                 true
             else {
-                val fileContent = url.readText()
-                fileContent.contains("<svg ") && fileContent.contains("</svg>")
+                isStringSvg(url.readText())
             }
         }
 
-        @OptIn(ExperimentalEncodingApi::class)
-        fun encode(byteArray: ByteArray) = Base64.encode(byteArray)
+        fun isStringSvg(text: String) = text.contains("<svg ") && text.contains("</svg>")
 
         @OptIn(ExperimentalEncodingApi::class)
-        fun decode(encodedString: String) = Base64.decode(encodedString)
+        fun encodeIntoBase64String(string: String) = Base64.encode(string.toByteArray())
 
-        fun decodeIntoImageRequest(application: Application, imageBase64: String) =
+        @OptIn(ExperimentalEncodingApi::class)
+        fun encodeIntoBase64String(byteArray: ByteArray) = Base64.encode(byteArray)
+
+        @OptIn(ExperimentalEncodingApi::class)
+        fun decodeBase64StringIntoByteArray(base64String: String) = Base64.decode(base64String)
+
+        fun imageRequestFromBase64String(application: Application, base64String: String) =
             ImageRequest.Builder(application)
-                .data(decode(imageBase64))
+                .data(decodeBase64StringIntoByteArray(base64String))
+                .decoderFactory(SvgDecoder.Factory())
+                .build()
+
+        fun imageRequestFromSvgString(application: Application, svgString: String) =
+            ImageRequest.Builder(application)
+                .data(svgString.toByteArray())
                 .decoderFactory(SvgDecoder.Factory())
                 .build()
     }

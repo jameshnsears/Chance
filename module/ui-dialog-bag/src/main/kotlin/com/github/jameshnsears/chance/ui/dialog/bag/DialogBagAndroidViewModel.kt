@@ -8,9 +8,9 @@ import com.github.jameshnsears.chance.data.domain.state.DiceBag
 import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
-import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.BagCardDiceAndroidViewModel
-import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.BagCardRollViewModel
-import com.github.jameshnsears.chance.ui.dialog.bag.card.side.BagCardSideAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -20,14 +20,14 @@ class DialogBagAndroidViewModel(
     val dice: Dice,
     val side: Side,
 ) : AndroidViewModel(application) {
-    var bagCardSideAndroidViewModel = BagCardSideAndroidViewModel(application, side)
-    var bagCardDiceAndroidViewModel = BagCardDiceAndroidViewModel(application, repositoryBag, dice)
-    var bagCardRollViewModel = BagCardRollViewModel(dice)
+    var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
+    var cardDiceAndroidViewModel = CardDiceAndroidViewModel(application, repositoryBag, dice)
+    var cardRollViewModel = CardRollViewModel(dice)
 
     fun save() {
-        if (bagCardDiceAndroidViewModel.stateFlowDice.value.diceClone) {
+        if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceClone) {
             Timber.d("clone")
-        } else if (bagCardDiceAndroidViewModel.stateFlowDice.value.diceDelete) {
+        } else if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceDelete) {
             Timber.d("delete")
         } else {
             Timber.d("update")
@@ -43,16 +43,16 @@ class DialogBagAndroidViewModel(
             val updatedDiceBag: DiceBag = mutableListOf()
 
             currentDiceBag.collect {
-                it.forEach { dice ->
-                    if (dice.epoch == dice.epoch) {
-                        dice.sides = dice.sides
-                        dice.title = dice.title
-                        dice.titleStringsId = dice.titleStringsId
-                        dice.colour = dice.colour
-                        dice.selected = dice.selected
+                it.forEach { diceUpdated ->
+                    if (diceUpdated.epoch == dice.epoch) {
+                        diceUpdated.sides = dice.sides
+                        diceUpdated.title = dice.title
+                        diceUpdated.titleStringsId = dice.titleStringsId
+                        diceUpdated.colour = dice.colour
+                        diceUpdated.selected = dice.selected
                     }
 
-                    updatedDiceBag.add(dice)
+                    updatedDiceBag.add(diceUpdated)
                 }
             }
 

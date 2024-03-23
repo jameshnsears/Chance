@@ -13,23 +13,23 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTreeInstrumented
+import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.net.URL
 
-class UtilitySvgSerializerInstrumentedTest : UtilityLoggingLineNumberTreeInstrumented() {
+class UtilitySvgSerializerInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @Test
     fun encodeDecodeDisplaySvgFile() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
         val assetFilename = "data/svg/dN/d2.svg"
-        assertTrue(UtilitySvgSerializer.isSVG(URL("file:///android_asset/$assetFilename")))
+        assertTrue(UtilitySvgSerializer.isUrlSvg(URL("file:///android_asset/$assetFilename")))
 
-        val encoded = UtilitySvgSerializer.encode(
+        val encoded = UtilitySvgSerializer.encodeIntoBase64String(
             context.assets.open(assetFilename).readBytes()
         )
-        val decodedByteArray = UtilitySvgSerializer.decode(encoded)
+        val decodedByteArray = UtilitySvgSerializer.decodeBase64StringIntoByteArray(encoded)
 
         composeTestRule.setContent {
             val model = ImageRequest.Builder(LocalContext.current)

@@ -13,12 +13,12 @@ class SampleBag {
                 Side(
                     number = 2,
                     imageBase64 = d2ImageBase64,
-                    description = "d2 Side # 2"
+                    description = "d2.2"
                 ),
                 Side(
                     number = 1,
                     imageBase64 = d2ImageBase64,
-                    description = "d2 Side # 1"
+                    description = "d2.1"
                 ),
             ),
             titleStringsId = R.string.d2,
@@ -32,19 +32,23 @@ class SampleBag {
             sides = listOf(
                 Side(
                     number = 4,
-                    imageBase64 = d4ImageBase64
+                    imageBase64 = d4ImageBase64,
+                    description = "d4s4"
                 ),
                 Side(
                     number = 3,
-                    imageBase64 = d4ImageBase64
+                    imageBase64 = d4ImageBase64,
+                    description = "d4s3"
                 ),
                 Side(
                     number = 2,
-                    imageBase64 = d4ImageBase64
+                    imageBase64 = d4ImageBase64,
+                    description = "d4s2"
                 ),
                 Side(
                     number = 1,
-                    imageBase64 = d4ImageBase64
+                    imageBase64 = d4ImageBase64,
+                    description = "d4s1"
                 ),
             ),
             titleStringsId = R.string.d4,

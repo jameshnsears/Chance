@@ -1,5 +1,6 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
+import com.github.jameshnsears.chance.data.repository.settings.mock.RepositorySettingsTestDouble
 import com.github.jameshnsears.chance.data.sample.settings.SampleSettings
 import com.github.jameshnsears.chance.utility.android.UtilityAndroid
 import kotlinx.coroutines.flow.first

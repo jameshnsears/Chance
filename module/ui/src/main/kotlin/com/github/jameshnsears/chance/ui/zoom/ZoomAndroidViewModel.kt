@@ -135,5 +135,5 @@ class ZoomAndroidViewModel(
         Color(android.graphics.Color.parseColor("#${hexColour}"))
 
     fun sideImageSVG(side: Side) =
-        UtilitySvgSerializer.decodeIntoImageRequest(getApplication(), side.imageBase64)
+        UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side.imageBase64)
 }

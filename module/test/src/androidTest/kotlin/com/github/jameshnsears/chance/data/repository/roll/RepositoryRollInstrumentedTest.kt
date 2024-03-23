@@ -1,15 +1,16 @@
 package com.github.jameshnsears.chance.data.repository.roll
 
 import androidx.test.platform.app.InstrumentationRegistry
+import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRoll
 import com.github.jameshnsears.chance.data.sample.roll.SampleRollSampleBagStartup
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTreeInstrumented
+import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class RepositoryRollInstrumentedTest : UtilityLoggingLineNumberTreeInstrumented() {
+class RepositoryRollInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @Before
     fun emptyDataStore() = runTest {
         RepositoryRoll.getInstance(

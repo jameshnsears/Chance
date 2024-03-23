@@ -11,12 +11,8 @@ class UtilityEpochTimeGenerator {
             return System.currentTimeMillis()
         }
 
-        fun formatDay(timeMillis: Long): String =
-            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                .format(Date(timeMillis))
-
-        fun formatTime(timeMillis: Long): String =
-            SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault())
+        fun format(timeMillis: Long): String =
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
                 .format(Date(timeMillis))
     }
 }

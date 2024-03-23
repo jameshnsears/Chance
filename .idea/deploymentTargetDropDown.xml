@@ -8,21 +8,6 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="module.common">
-        <State />
-      </entry>
-      <entry key="module.data">
-        <State />
-      </entry>
-      <entry key="module.test">
-        <State />
-      </entry>
-      <entry key="module.ui">
-        <State />
-      </entry>
-      <entry key="module.ui-dialog-bag">
-        <State />
-      </entry>
     </value>
   </component>
 </project>
