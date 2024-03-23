@@ -34,7 +34,7 @@
     <string name="dialog.bag.roll.less.than">&lt;</string>
     <string name="dialog.bag.roll.greater.than">&gt;</string>
     <string name="dialog.bag.roll.value">the value</string>
-    <string name="dialog.bag.roll.explode.depth">Depth limited to # of Sides</string>
+    <string name="dialog.bag.roll.explode.depth">Depth limited to # of dice Sides</string>
     <string name="dialog.bag.roll.score">Modify Score</string>
 
     <string name="dialog.bag.colour.picker.side">Side #</string>

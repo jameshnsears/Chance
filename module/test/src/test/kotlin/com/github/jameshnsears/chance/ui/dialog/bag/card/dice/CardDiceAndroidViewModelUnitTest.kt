@@ -11,7 +11,6 @@ import org.junit.Test
 class CardDiceAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun diceCardModify() = runTest {
-        // leaving sides as is, for other tests
         val diceInDialogBag = SampleBag.d4
 
         val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(

@@ -177,7 +177,7 @@ private fun RollExplode(cardRollViewModel: CardRollViewModel) {
 
     Row(
         modifier = Modifier
-            .padding(top = 4.dp, bottom = 12.dp)
+            .padding(start = 12.dp, top = 4.dp, bottom = 12.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
