@@ -11,6 +11,8 @@ import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceAndroidViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -20,11 +22,19 @@ class DialogBagAndroidViewModel(
     val dice: Dice,
     val side: Side,
 ) : AndroidViewModel(application) {
-
-
     var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
-    var cardDiceAndroidViewModel = CardDiceAndroidViewModel(application, repositoryBag, dice)
-    var cardRollViewModel = CardRollViewModel(dice)
+
+    val _diceSides = MutableSharedFlow<Int>()
+    val diceSides: SharedFlow<Int> = _diceSides
+
+    var cardDiceAndroidViewModel = CardDiceAndroidViewModel(
+        application,
+        repositoryBag,
+        dice)
+
+    var cardRollViewModel = CardRollViewModel(
+        dice
+    )
 
     fun save() {
         if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceClone) {
