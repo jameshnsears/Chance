@@ -53,10 +53,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
         fail("todo")
     }
 
-    @Test
-    fun rollCardExplodeAfterChangeInDiceSides() = runTest {
-        fail("todo")
-    }
+
 
     @Test
     fun rollCardExplodeLessThan() = runTest {

@@ -6,9 +6,13 @@ import org.junit.Test
 
 class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
+    fun dialogBagRollCardExplodeAfterChangeInDiceSides() = runTest {
+        fail("todo")
+    }
+
+    @Test
     fun dialogBagSaveAfterModifyingAllCards() = runTest {
         // need to check saved to repository!
-
         fail("todo")
     }
 
