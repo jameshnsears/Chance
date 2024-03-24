@@ -20,6 +20,8 @@ class DialogBagAndroidViewModel(
     val dice: Dice,
     val side: Side,
 ) : AndroidViewModel(application) {
+
+
     var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
     var cardDiceAndroidViewModel = CardDiceAndroidViewModel(application, repositoryBag, dice)
     var cardRollViewModel = CardRollViewModel(dice)

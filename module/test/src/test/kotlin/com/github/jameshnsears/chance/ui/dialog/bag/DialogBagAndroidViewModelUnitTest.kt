@@ -41,6 +41,83 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
                 .rollExplodeAvailableValues.size == 8
         )
 
+        /*
+SharedFlow is a type of Flow that allows multiple subscribers to receive values produced by a flow producer.
+Unlike regular Flows, SharedFlows do not have a single owner, meaning that multiple collectors can collect
+values from a SharedFlow at the same time.
+
+
+// EventBus.kt
+object EventBus {
+
+    private val _events = MutableSharedFlow<Event>()
+
+    val events: SharedFlow<Event> = _events
+
+    fun emitEvent(event: Event) {
+        _events.tryEmit(event)
+    }
+}
+
+// Event.kt (data class for events)
+data class Event(val type: String, val data: Any?)
+
+//////////////////////////////////////////////////
+
+// SomeViewModel.kt
+class SomeViewModel(val viewModelScope: CoroutineScope) {
+
+    init {
+        viewModelScope.launch {
+            EventBus.events.collect { event ->
+                when (event.type) {
+                    "EVENT_TYPE_1" -> {
+                        // Handle event type 1
+                        processData(event.data)
+                    }
+                    "EVENT_TYPE_2" -> {
+                        // Handle event type 2
+                        updateData(event.data)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun processData(data: Any?) {
+        // Handle data related to event type 1
+    }
+
+    private fun updateData(data: Any?) {
+        // Handle data related to event type 2
+    }
+
+    // Function to trigger event from this ViewModel
+    fun triggerEvent(type: String, data: Any? = null) {
+        EventBus.emitEvent(Event(type, data))
+    }
+}
+
+//////////////////////////////////////////////////
+
+// AnotherViewModel.kt
+class AnotherViewModel(val viewModelScope: CoroutineScope) {
+
+    init {
+        viewModelScope.launch {
+            EventBus.events.collect { event ->
+                // Handle all events here (optional)
+            }
+        }
+    }
+
+    // Function to trigger event from this ViewModel
+    fun triggerAnotherEvent(type: String, data: Any? = null) {
+        EventBus.emitEvent(Event(type, data))
+    }
+}
+         */
+
         fail("todo -- use a flow to emit diceSidesSize that cardRollViewModel collects?")
     }
 
