@@ -63,7 +63,7 @@ class CardSideAndroidViewModel(
         sideImageSvgImport(getApplication<Application>().contentResolver.openInputStream(uri))
 
     fun sideImageSvgImport(inputStream: InputStream?) {
-        val candidateSvgString = readCandidateSvgString(inputStream)
+        val candidateSvgString = sideImageSvgImportReadFile(inputStream)
 
         if (UtilitySvgSerializer.isStringSvg(candidateSvgString)) {
             _stateFlow.update {
@@ -82,13 +82,14 @@ class CardSideAndroidViewModel(
         }
     }
 
-    private fun readCandidateSvgString(inputStream: InputStream?): String {
-        var possibleSvgString: String
+    private fun sideImageSvgImportReadFile(inputStream: InputStream?): String {
+        var fileContents: String
+
         inputStream.use {
             val reader = it?.bufferedReader(Charsets.UTF_8)
-            possibleSvgString = reader!!.readText()
+            fileContents = reader!!.readText()
         }
 
-        return possibleSvgString
+        return fileContents
     }
 }
