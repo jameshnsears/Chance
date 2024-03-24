@@ -65,7 +65,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
         // if < then value drop down list must remove lowest side #
         val (_, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(SampleBag.d20)
 
-        var (cardRollViewModel, _) = cardRollViewModelCardRollStatePair(
+        val (cardRollViewModel, _) = cardRollViewModelCardRollStatePair(
             dialogBagAndroidViewModel
         )
 
@@ -83,7 +83,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
         // if > then value drop down list must remove highest side #
         val (_, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(SampleBag.d20)
 
-        var (cardRollViewModel, _) = cardRollViewModelCardRollStatePair(
+        val (cardRollViewModel, _) = cardRollViewModelCardRollStatePair(
             dialogBagAndroidViewModel
         )
 
