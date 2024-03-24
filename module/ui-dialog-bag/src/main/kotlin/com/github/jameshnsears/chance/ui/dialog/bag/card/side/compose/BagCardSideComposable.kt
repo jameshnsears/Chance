@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -51,7 +50,6 @@ class BagCardSideTestTag {
         const val SIDE_DESCRIPTION = "SIDE_DESCRIPTION"
         const val SIDE_DESCRIPTION_COLOUR = "SIDE_DESCRIPTION_COLOUR"
         const val SIDE_IMAGE_SVG = "SIDE_IMAGE_SVG"
-        const val SIDE_RESET = "SIDE_RESET"
     }
 }
 

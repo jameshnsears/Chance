@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
-import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollState
+import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 class BagCardRollTestTag {

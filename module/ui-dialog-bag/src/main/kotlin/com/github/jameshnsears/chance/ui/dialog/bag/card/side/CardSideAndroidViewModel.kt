@@ -2,7 +2,6 @@ package com.github.jameshnsears.chance.ui.dialog.bag.card.side
 
 import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.viewModelScope
 import coil.request.ImageRequest
 import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.domain.utility.svg.UtilitySvgSerializer
@@ -10,7 +9,6 @@ import com.github.jameshnsears.chance.ui.dialog.bag.card.CardAndroidViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import java.io.InputStream
 
 data class CardSideState(
@@ -61,7 +59,7 @@ class CardSideAndroidViewModel(
         _stateFlow.update { it.copy(sideDescriptionColour = colour) }
     }
 
-    fun sideImageSvgImport(uri: Uri)  =
+    fun sideImageSvgImport(uri: Uri) =
         sideImageSvgImport(getApplication<Application>().contentResolver.openInputStream(uri))
 
     fun sideImageSvgImport(inputStream: InputStream?) {

@@ -49,8 +49,7 @@ class CardRollViewModel(
         _stateFlow.update { it.copy(rollExplode = ticked) }
     }
 
-    private fun rollExplodeSidesEquals()
-        = (1..dice.sides.size).toList().map { it.toString() }
+    private fun rollExplodeSidesEquals() = (1..dice.sides.size).toList().map { it.toString() }
 
     fun rollExplodeWhen(equalityValue: String) {
         when (equalityValue) {
@@ -79,7 +78,7 @@ class CardRollViewModel(
             else -> {
                 _stateFlow.update {
                     it.copy(
-                    rollExplodeWhen = equalityValue,
+                        rollExplodeWhen = equalityValue,
                         rollExplodeAvailableValues = rollExplodeSidesEquals(),
                         rollExplodeValue = 1
                     )
