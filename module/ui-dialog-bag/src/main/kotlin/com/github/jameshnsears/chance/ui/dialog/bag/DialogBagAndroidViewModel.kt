@@ -24,8 +24,8 @@ class DialogBagAndroidViewModel(
 ) : AndroidViewModel(application) {
     var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
 
-    val _diceSides = MutableSharedFlow<Int>()
-    val diceSides: SharedFlow<Int> = _diceSides
+    private val _sharedFlowDiceSides = MutableSharedFlow<Int>(dice.sides.size)
+    val sharedFlowDiceSides: SharedFlow<Int> = _sharedFlowDiceSides
 
     var cardDiceAndroidViewModel = CardDiceAndroidViewModel(
         application,

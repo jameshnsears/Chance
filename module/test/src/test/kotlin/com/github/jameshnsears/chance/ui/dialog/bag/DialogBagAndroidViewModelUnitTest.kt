@@ -116,6 +116,49 @@ class AnotherViewModel(val viewModelScope: CoroutineScope) {
         EventBus.emitEvent(Event(type, data))
     }
 }
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
+
+// FirstViewModel.kt
+class FirstViewModel {
+    private val _eventFlow = MutableSharedFlow<Unit>()
+    val eventFlow: SharedFlow<Unit> = _eventFlow
+
+    fun triggerEvent() {
+        _eventFlow.tryEmit(Unit)
+    }
+}
+
+// SecondViewModel.kt
+class SecondViewModel {
+    fun observeEvents(eventFlow: SharedFlow<Unit>) {
+        viewModelScope.launch {
+            eventFlow.collect {
+                // Handle event emitted by FirstViewModel
+            }
+        }
+    }
+}
+
+// Composable.kt
+@Composable
+fun MyComposable(firstViewModel: FirstViewModel, secondViewModel: SecondViewModel) {
+    // Observe events from FirstViewModel in SecondViewModel
+    LaunchedEffect(Unit) {
+        secondViewModel.observeEvents(firstViewModel.eventFlow)
+    }
+
+    // Trigger event from FirstViewModel
+    Button(onClick = { firstViewModel.triggerEvent() }) {
+        Text("Trigger Event")
+    }
+}
+
          */
 
         fail("todo -- use a flow to emit diceSidesSize that cardRollViewModel collects?")
