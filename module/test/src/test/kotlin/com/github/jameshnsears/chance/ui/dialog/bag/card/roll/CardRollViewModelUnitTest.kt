@@ -9,17 +9,6 @@ import org.junit.Assert.fail
 import org.junit.Test
 
 class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
-    /*
-    explode:
-
-    ticked
-
-    value drop down list must == # of sides of dice
-
-    if < then value drop down list must remove lowest side #
-
-    if > then value drop down list must remove highest side #
-     */
     @Test
     fun rollCardMultiplier() = runTest {
         val diceInDialogBag = SampleBag.d4
@@ -49,22 +38,43 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
     }
 
     @Test
-    fun rollCardExplode() = runTest {
-        fail("todo")
+    fun rollCardExplodeEquals() = runTest {
+        val diceInDialogBag = SampleBag.d6
+
+        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(
+            diceInDialogBag, diceInDialogBag.sides[0]
+        )
+
+        val cardRollViewModel = dialogBagAndroidViewModel.cardRollViewModel
+
+        var stateFlow = cardRollViewModel.stateFlowCardRoll.value
+
+        assertTrue(stateFlow.rollExplode == diceInDialogBag.explode)
+        assertTrue(stateFlow.rollExplodeWhen == DiceRollValues.explodeWhenValues[0])
+        assertTrue(stateFlow.rollExplodeValue == 1)
+        assertTrue(stateFlow.rollExplodeAvailableValues.size == 6)
+
+        val newExplode = true
+        val newExplodeValue = 3
+
+        cardRollViewModel.rollExplode(newExplode)
+        cardRollViewModel.rollExplodeValue(newExplodeValue.toString())
+
+        stateFlow = cardRollViewModel.stateFlowCardRoll.value
+
+        assertTrue(stateFlow.rollExplode == newExplode)
+        assertTrue(stateFlow.rollExplodeValue == newExplodeValue)
     }
-
-
 
     @Test
     fun rollCardExplodeLessThan() = runTest {
-        // update explode if < then change value range to exclude 1
+        // if < then value drop down list must remove lowest side #
         fail("todo")
     }
 
     @Test
     fun rollCardExplodeGreaterThan() = runTest {
-        // update explode if > then change value range to exclude max side number
-
+        // if > then value drop down list must remove highest side #
         fail("todo")
     }
 
