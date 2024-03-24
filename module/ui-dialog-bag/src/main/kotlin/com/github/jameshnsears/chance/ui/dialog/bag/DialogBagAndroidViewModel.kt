@@ -9,7 +9,7 @@ import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceAndroidViewModel
-import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -22,7 +22,7 @@ class DialogBagAndroidViewModel(
 ) : AndroidViewModel(application) {
     var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
     var cardDiceAndroidViewModel = CardDiceAndroidViewModel(application, repositoryBag, dice)
-    var cardRollAndroidViewModel = CardRollAndroidViewModel(application, dice)
+    var cardRollViewModel = CardRollViewModel(dice)
 
     fun save() {
         if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceClone) {

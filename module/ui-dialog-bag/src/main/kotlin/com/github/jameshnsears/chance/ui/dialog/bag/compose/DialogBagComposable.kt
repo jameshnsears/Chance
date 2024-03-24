@@ -121,7 +121,7 @@ fun DialogBagLayout(
 
             BagCardDice(dialogBagAndroidViewModel.cardDiceAndroidViewModel)
 
-            BagCardRoll(dialogBagAndroidViewModel.cardRollAndroidViewModel)
+            BagCardRoll(dialogBagAndroidViewModel.cardRollViewModel)
         }
     }
 }

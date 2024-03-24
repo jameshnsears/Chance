@@ -14,7 +14,7 @@ data class Dice(
     var multiplierValue: Int = DiceRollValues.multiplierValues[0].toInt(),
 
     var explode: Boolean = false,
-    var explodeWhen: String = "=",
+    var explodeWhen: String = DiceRollValues.explodeWhenValues[0],
     var explodeValue: Int = 1,
 
     var modifyScore: Boolean = false,
@@ -24,6 +24,7 @@ data class Dice(
 class DiceRollValues {
     companion object {
         val multiplierValues = listOf("2", "3", "4", "5")
+        val explodeWhenValues = listOf("=", "<", ">")
         val modifyScoreValues = listOf("-5", "-4", "-3", "-2", "-1", "1", "2", "3", "4", "5")
     }
 }

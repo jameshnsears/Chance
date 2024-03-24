@@ -30,9 +30,6 @@
     <string name="dialog.bag.roll">Roll</string>
     <string name="dialog.bag.roll.repeat">Multiplier</string>
     <string name="dialog.bag.roll.explode.when">Explode if Side #</string>
-    <string name="dialog.bag.roll.equals">=</string>
-    <string name="dialog.bag.roll.less.than">&lt;</string>
-    <string name="dialog.bag.roll.greater.than">&gt;</string>
     <string name="dialog.bag.roll.value">the value</string>
     <string name="dialog.bag.roll.explode.depth">Depth limited to # of dice Sides</string>
     <string name="dialog.bag.roll.score">Modify Score</string>

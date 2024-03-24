@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
-import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollState
 import com.github.jameshnsears.chance.ui.dialog.dice.R
 
@@ -49,7 +49,7 @@ class BagCardRollTestTag {
 
 @Composable
 fun BagCardRoll(
-    cardRollAndroidViewModel: CardRollAndroidViewModel,
+    cardRollViewModel: CardRollViewModel,
 ) {
     ElevatedCard(
         modifier = Modifier
@@ -69,30 +69,30 @@ fun BagCardRoll(
                 fontSize = 18.sp,
             )
 
-            Roll(cardRollAndroidViewModel)
+            Roll(cardRollViewModel)
         }
     }
 }
 
 @Composable
-fun Roll(cardRollAndroidViewModel: CardRollAndroidViewModel) {
+fun Roll(cardRollViewModel: CardRollViewModel) {
     Column {
-        RollMultiplier(cardRollAndroidViewModel)
+        RollMultiplier(cardRollViewModel)
 
         HorizontalDivider()
 
-        RollExplode(cardRollAndroidViewModel)
+        RollExplode(cardRollViewModel)
 
         HorizontalDivider()
 
-        RollScore(cardRollAndroidViewModel)
+        RollScore(cardRollViewModel)
     }
 }
 
 @Composable
-private fun RollMultiplier(cardRollAndroidViewModel: CardRollAndroidViewModel) {
+private fun RollMultiplier(cardRollViewModel: CardRollViewModel) {
     val stateFlow =
-        cardRollAndroidViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
+        cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
 
     var rollMultiplier = stateFlow.value.rollMultiplier
 
@@ -107,7 +107,7 @@ private fun RollMultiplier(cardRollAndroidViewModel: CardRollAndroidViewModel) {
             checked = rollMultiplier,
             onCheckedChange = {
                 rollMultiplier = it
-                cardRollAndroidViewModel.rollMultiplier(it)
+                cardRollViewModel.rollMultiplier(it)
             }
         )
 
@@ -124,7 +124,7 @@ private fun RollMultiplier(cardRollAndroidViewModel: CardRollAndroidViewModel) {
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
         GenericExposedDropdownMenuBox(
-            cardRollAndroidViewModel::rollMultiplierValue,
+            cardRollViewModel::rollMultiplierValue,
             BagCardRollTestTag.ROLL_MULTIPLIER_VALUE,
             DiceRollValues.multiplierValues,
             stateFlow.value.rollMultiplierValue.toString(),
@@ -134,9 +134,9 @@ private fun RollMultiplier(cardRollAndroidViewModel: CardRollAndroidViewModel) {
 }
 
 @Composable
-private fun RollExplode(cardRollAndroidViewModel: CardRollAndroidViewModel) {
+private fun RollExplode(cardRollViewModel: CardRollViewModel) {
     val stateFlow =
-        cardRollAndroidViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
+        cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
 
     var rollExplode = stateFlow.value.rollExplode
 
@@ -155,7 +155,7 @@ private fun RollExplode(cardRollAndroidViewModel: CardRollAndroidViewModel) {
                 checked = rollExplode,
                 onCheckedChange = {
                     rollExplode = it
-                    cardRollAndroidViewModel.rollExplode(it)
+                    cardRollViewModel.rollExplode(it)
                 }
             )
 
@@ -170,11 +170,11 @@ private fun RollExplode(cardRollAndroidViewModel: CardRollAndroidViewModel) {
 
         when (configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> {
-                RollExplodeLandscape(cardRollAndroidViewModel)
+                RollExplodeLandscape(cardRollViewModel)
             }
 
             else -> {
-                RollExplodePortrait(cardRollAndroidViewModel)
+                RollExplodePortrait(cardRollViewModel)
             }
         }
     }
@@ -199,9 +199,9 @@ private fun RollExplode(cardRollAndroidViewModel: CardRollAndroidViewModel) {
 }
 
 @Composable
-fun RollExplodeLandscape(cardRollAndroidViewModel: CardRollAndroidViewModel) {
+fun RollExplodeLandscape(cardRollViewModel: CardRollViewModel) {
     val stateFlow =
-        cardRollAndroidViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
+        cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
 
     Column {
         Row(
@@ -214,7 +214,7 @@ fun RollExplodeLandscape(cardRollAndroidViewModel: CardRollAndroidViewModel) {
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
-            RollExplodeDropdownWhen(cardRollAndroidViewModel, stateFlow)
+            RollExplodeDropdownWhen(cardRollViewModel, stateFlow)
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
@@ -222,15 +222,15 @@ fun RollExplodeLandscape(cardRollAndroidViewModel: CardRollAndroidViewModel) {
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
-            RollExplodeDropwonValue(cardRollAndroidViewModel, stateFlow)
+            RollExplodeDropwonValue(cardRollViewModel, stateFlow)
         }
     }
 }
 
 @Composable
-fun RollExplodePortrait(cardRollAndroidViewModel: CardRollAndroidViewModel) {
+fun RollExplodePortrait(cardRollViewModel: CardRollViewModel) {
     val stateFlow =
-        cardRollAndroidViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
+        cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
 
     Column {
         Row(
@@ -243,7 +243,7 @@ fun RollExplodePortrait(cardRollAndroidViewModel: CardRollAndroidViewModel) {
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
-            RollExplodeDropdownWhen(cardRollAndroidViewModel, stateFlow)
+            RollExplodeDropdownWhen(cardRollViewModel, stateFlow)
         }
 
         Row(
@@ -256,18 +256,18 @@ fun RollExplodePortrait(cardRollAndroidViewModel: CardRollAndroidViewModel) {
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
-            RollExplodeDropwonValue(cardRollAndroidViewModel, stateFlow)
+            RollExplodeDropwonValue(cardRollViewModel, stateFlow)
         }
     }
 }
 
 @Composable
 private fun RollExplodeDropwonValue(
-    cardRollAndroidViewModel: CardRollAndroidViewModel,
+    cardRollViewModel: CardRollViewModel,
     stateFlow: State<CardRollState>
 ) {
     GenericExposedDropdownMenuBox(
-        cardRollAndroidViewModel::rollExplodeValue,
+        cardRollViewModel::rollExplodeValue,
         BagCardRollTestTag.ROLL_EXPLODE_SIDE,
         stateFlow.value.rollExplodeAvailableValues,
         stateFlow.value.rollExplodeValue.toString(),
@@ -277,26 +277,22 @@ private fun RollExplodeDropwonValue(
 
 @Composable
 private fun RollExplodeDropdownWhen(
-    cardRollAndroidViewModel: CardRollAndroidViewModel,
+    cardRollViewModel: CardRollViewModel,
     stateFlow: State<CardRollState>
 ) {
     GenericExposedDropdownMenuBox(
-        cardRollAndroidViewModel::rollExplodeWhen,
+        cardRollViewModel::rollExplodeWhen,
         BagCardRollTestTag.ROLL_EXPLODE_EQUALITY,
-        listOf(
-            stringResource(R.string.dialog_bag_roll_equals),
-            stringResource(R.string.dialog_bag_roll_less_than),
-            stringResource(R.string.dialog_bag_roll_greater_than)
-        ),
+        DiceRollValues.explodeWhenValues,
         stateFlow.value.rollExplodeWhen,
         80.dp
     )
 }
 
 @Composable
-fun RollScore(cardRollAndroidViewModel: CardRollAndroidViewModel) {
+fun RollScore(cardRollViewModel: CardRollViewModel) {
     val stateFlow =
-        cardRollAndroidViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
+        cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle()
 
     var rollModifyScore = stateFlow.value.rollModifyScore
 
@@ -311,7 +307,7 @@ fun RollScore(cardRollAndroidViewModel: CardRollAndroidViewModel) {
             checked = rollModifyScore,
             onCheckedChange = {
                 rollModifyScore = it
-                cardRollAndroidViewModel.rollModifyScore(it)
+                cardRollViewModel.rollModifyScore(it)
             }
         )
 
@@ -328,7 +324,7 @@ fun RollScore(cardRollAndroidViewModel: CardRollAndroidViewModel) {
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
         GenericExposedDropdownMenuBox(
-            cardRollAndroidViewModel::rollModifyScoreValue,
+            cardRollViewModel::rollModifyScoreValue,
             BagCardRollTestTag.ROLL_SCORE_VALUE,
             DiceRollValues.modifyScoreValues,
             stateFlow.value.rollModifyScoreValue.toString(),

@@ -1,9 +1,8 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.roll
 
-import android.app.Application
+import androidx.lifecycle.ViewModel
 import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.ui.dialog.bag.card.CardAndroidViewModel
-import com.github.jameshnsears.chance.ui.dialog.dice.R
+import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -19,10 +18,9 @@ data class CardRollState(
     var rollModifyScoreValue: Int
 )
 
-class CardRollAndroidViewModel(
-    application: Application,
+class CardRollViewModel(
     val dice: Dice
-) : CardAndroidViewModel(application) {
+) : ViewModel() {
 
     private val _stateFlow = MutableStateFlow(
         CardRollState(
@@ -56,7 +54,7 @@ class CardRollAndroidViewModel(
 
     fun rollExplodeWhen(equalityValue: String) {
         when (equalityValue) {
-            getString(R.string.dialog_bag_roll_less_than) -> {
+            DiceRollValues.explodeWhenValues[1] -> {
                 _stateFlow.update {
                     it.copy(
                         rollExplodeWhen = equalityValue,
@@ -67,7 +65,7 @@ class CardRollAndroidViewModel(
                 }
             }
 
-            getString(R.string.dialog_bag_roll_greater_than) -> {
+            DiceRollValues.explodeWhenValues[2] -> {
                 _stateFlow.update {
                     it.copy(
                         rollExplodeWhen = equalityValue,
