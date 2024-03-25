@@ -4,6 +4,7 @@ import android.app.Application
 import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBag
 import io.mockk.mockk
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -18,7 +19,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         repositoryBag.store(mutableListOf(SampleBag.d12))
 
         val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
-            mockk<Application>(),
+            getApplication(),
             repositoryBag,
             originalDice,
             originalDice.sides[0]
@@ -37,8 +38,6 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
                 .stateFlowCardRoll.value
                 .rollExplodeAvailableValues.size == 8
         )
-
-        fail("todo -- use a flow to emit diceSidesSize that cardRollViewModel collects?")
     }
 
     @Test
