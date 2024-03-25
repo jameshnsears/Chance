@@ -1,11 +1,15 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.roll
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.state.Dice
 import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
+import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceSideSizeEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 data class CardRollState(
     var rollMultiplier: Boolean,
@@ -19,23 +23,35 @@ data class CardRollState(
 )
 
 class CardRollViewModel(
-    val dice: Dice
+    val dice: Dice,
+    var diceSidesSize: Int = dice.sides.size
 ) : ViewModel() {
-
     private val _stateFlow = MutableStateFlow(
         CardRollState(
             rollMultiplier = dice.multiplier,
             rollMultiplierValue = dice.multiplierValue,
+
             rollExplode = dice.explode,
             rollExplodeWhen = dice.explodeWhen,
             rollExplodeAvailableValues = rollExplodeSidesEquals(),
             rollExplodeValue = dice.explodeValue,
+
             rollModifyScore = dice.modifyScore,
             rollModifyScoreValue = dice.modifyScoreValue
         )
     )
 
     val stateFlowCardRoll: StateFlow<CardRollState> = _stateFlow
+
+    init {
+        viewModelScope.launch {
+            CardDiceSideSizeEvent.sharedFlowDiceSidesSize.collect {
+                Timber.d("sideSize.collect=$it")
+                diceSidesSize = it
+                rollExplodeWhen(stateFlowCardRoll.value.rollExplodeWhen)
+            }
+        }
+    }
 
     fun rollMultiplier(ticked: Boolean) {
         _stateFlow.update { it.copy(rollMultiplier = ticked) }
@@ -49,7 +65,7 @@ class CardRollViewModel(
         _stateFlow.update { it.copy(rollExplode = ticked) }
     }
 
-    private fun rollExplodeSidesEquals() = (1..dice.sides.size).toList().map { it.toString() }
+    private fun rollExplodeSidesEquals() = (1..diceSidesSize).toList().map { it.toString() }
 
     fun rollExplodeWhen(equalityValue: String) {
         when (equalityValue) {
@@ -57,7 +73,7 @@ class CardRollViewModel(
                 _stateFlow.update {
                     it.copy(
                         rollExplodeWhen = equalityValue,
-                        rollExplodeAvailableValues = (2..dice.sides.size).toList()
+                        rollExplodeAvailableValues = (2..diceSidesSize).toList()
                             .map { it.toString() },
                         rollExplodeValue = 2
                     )
@@ -68,7 +84,7 @@ class CardRollViewModel(
                 _stateFlow.update {
                     it.copy(
                         rollExplodeWhen = equalityValue,
-                        rollExplodeAvailableValues = (1..(dice.sides.size - 1)).toList()
+                        rollExplodeAvailableValues = (1..(diceSidesSize - 1)).toList()
                             .map { it.toString() },
                         rollExplodeValue = 1
                     )

@@ -11,8 +11,6 @@ import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceAndroidViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -24,13 +22,11 @@ class DialogBagAndroidViewModel(
 ) : AndroidViewModel(application) {
     var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
 
-    private val _sharedFlowDiceSides = MutableSharedFlow<Int>(dice.sides.size)
-    val sharedFlowDiceSides: SharedFlow<Int> = _sharedFlowDiceSides
-
     var cardDiceAndroidViewModel = CardDiceAndroidViewModel(
         application,
         repositoryBag,
-        dice)
+        dice
+    )
 
     var cardRollViewModel = CardRollViewModel(
         dice

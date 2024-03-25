@@ -166,4 +166,13 @@ use layout inspector to see LazyColumn and scroll in the emulator to see red fla
 = you do not want to see these red flashes (unnecessary compositions)
 = mark data class as @stable / @Immutable
 
+///////////////////////////////////////////////////
+
+design functions for "main safety"
+= you can even call your function from the main thread!
+
+= only use 1 context in a suspend fun?
+
+= use withContext(Dispatchers.IO) { ... } // prevent blocking and "main safe"
+
 */

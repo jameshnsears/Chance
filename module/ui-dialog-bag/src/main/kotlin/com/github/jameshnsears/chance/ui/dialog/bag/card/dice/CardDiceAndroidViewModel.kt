@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 data class CardDiceState(
     val diceTitle: String,
@@ -88,12 +87,16 @@ class CardDiceAndroidViewModel(
     }
 
     fun diceSidesSize(sideSize: String) {
-        Timber.d("sideSize=$sideSize")
+        val sideSizeInt = sideSize.toInt()
         _stateFlow.update {
             it.copy(
-                diceSidesSize = sideSize.toInt(),
-                diceSidesPosition = diceSidesPosition(sideSize.toInt())
+                diceSidesSize = sideSizeInt,
+                diceSidesPosition = diceSidesPosition(sideSizeInt)
             )
+        }
+
+        viewModelScope.launch {
+            CardDiceSideSizeEvent.emitSideSize(sideSizeInt)
         }
     }
 
