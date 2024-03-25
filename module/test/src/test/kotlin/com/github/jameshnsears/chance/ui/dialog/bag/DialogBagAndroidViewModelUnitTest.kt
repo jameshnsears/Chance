@@ -1,10 +1,8 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
-import android.app.Application
+import com.github.jameshnsears.chance.data.domain.state.Dice
 import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBag
-import io.mockk.mockk
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -13,17 +11,7 @@ import org.junit.Test
 class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun dialogBagRollCardExplodeAfterChangeInDiceSides() = runTest {
-        val originalDice = SampleBag.d12
-
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
-        repositoryBag.store(mutableListOf(SampleBag.d12))
-
-        val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
-            getApplication(),
-            repositoryBag,
-            originalDice,
-            originalDice.sides[0]
-        )
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(SampleBag.d12)
 
         assertTrue(
             dialogBagAndroidViewModel.cardRollViewModel
@@ -41,8 +29,8 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     }
 
     @Test
-    fun dialogBagSaveAfterModifyingAllCards() = runTest {
-        // need to check saved to repository!
+    fun dialogBagSaveAfterNotModifyingAnything() = runTest {
+        // save possible, to repo, even if nothing changed!
         fail("todo")
     }
 
@@ -59,5 +47,17 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun dialogBagSaveWithDeleteTicked() = runTest {
         fail("todo + include androidTest for all of the above")
+    }
+
+    private suspend fun dialogBagAndroidViewModel(dice: Dice): DialogBagAndroidViewModel {
+        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        repositoryBag.store(mutableListOf(dice))
+
+        return DialogBagAndroidViewModel(
+            getApplication(),
+            repositoryBag,
+            dice,
+            dice.sides[0]
+        )
     }
 }
