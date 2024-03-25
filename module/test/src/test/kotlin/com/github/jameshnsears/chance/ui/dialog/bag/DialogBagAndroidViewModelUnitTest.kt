@@ -26,8 +26,8 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         assertTrue(
             dialogBagAndroidViewModel.cardRollViewModel
-            .stateFlowCardRoll.value
-            .rollExplodeAvailableValues.size == 12
+                .stateFlowCardRoll.value
+                .rollExplodeAvailableValues.size == 12
         )
 
         dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceSidesSize("8")
