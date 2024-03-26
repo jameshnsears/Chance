@@ -33,18 +33,20 @@ class DialogBagAndroidViewModel(
     )
 
     fun save() {
-        if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceClone) {
-            Timber.d("clone")
-        } else if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceDelete) {
+        if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceDelete) {
             Timber.d("delete")
         } else {
-            Timber.d("update")
+            update()
+
+            if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceClone) {
+                Timber.d("clone")
+            }
         }
     }
 
-    fun update() {
+    private fun update() {
         viewModelScope.launch {
-            Timber.d("dice=$dice")
+            Timber.d("update: dice=$dice")
 
             val currentDiceBag = repositoryBag.fetch()
 
@@ -53,10 +55,10 @@ class DialogBagAndroidViewModel(
             currentDiceBag.collect {
                 it.forEach { diceUpdated ->
                     if (diceUpdated.epoch == dice.epoch) {
-                        diceUpdated.sides = dice.sides
-                        diceUpdated.title = dice.title
+                        diceUpdated.sides = alignDiceSidesWithDiceBag()
+                        diceUpdated.title = cardDiceAndroidViewModel.stateFlowCardDice.value.diceTitle
                         diceUpdated.titleStringsId = dice.titleStringsId
-                        diceUpdated.colour = dice.colour
+                        diceUpdated.colour = cardDiceAndroidViewModel.stateFlowCardDice.value.diceColour
                         diceUpdated.selected = dice.selected
                     }
 
@@ -66,6 +68,37 @@ class DialogBagAndroidViewModel(
 
             repositoryBag.store(updatedDiceBag)
         }
+    }
+
+    fun alignDiceSidesWithDiceBag(): List<Side> {
+        var alignedSides = emptyList<Side>()
+
+        val originalDiceSides = dice.sides
+        val dialogBagDiceSides = cardDiceAndroidViewModel.stateFlowCardDice.value.diceSidesSize
+
+        if (dialogBagDiceSides == originalDiceSides.size) {
+            alignedSides = originalDiceSides
+        } else if (dialogBagDiceSides < originalDiceSides.size) {
+            for (originalDiceSidesIndex in 1..dialogBagDiceSides) {
+                alignedSides.plus(originalDiceSides[originalDiceSidesIndex])
+            }
+        } else {
+            for (dialogBagDiceSidesIndex in 1..dialogBagDiceSides) {
+                if (dialogBagDiceSidesIndex < originalDiceSides.size) {
+                    alignedSides.plus(originalDiceSides[dialogBagDiceSidesIndex])
+                } else {
+                    alignedSides.plus(Side(
+                        number = dialogBagDiceSides -  dialogBagDiceSidesIndex,
+                        numberColour = dice.sides[0].numberColour,
+                        imageBase64 = dice.sides[0].imageBase64,
+                        descriptionColour = dice.sides[0].descriptionColour
+                        )
+                    )
+                }
+            }
+        }
+
+        return alignedSides
     }
 
     suspend fun clone(diceToClone: Dice) {
