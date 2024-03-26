@@ -41,8 +41,6 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val newSides = dialogBagAndroidViewModel.alignDiceSidesWithDiceBag()
 
-        assertEquals(12, newSides.size)
-
         assertEquals(newSides, originalSides)
     }
 
