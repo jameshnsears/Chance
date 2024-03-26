@@ -71,32 +71,44 @@ class DialogBagAndroidViewModel(
     }
 
     fun alignDiceSidesWithDiceBag(): List<Side> {
-        var alignedSides = emptyList<Side>()
+        var alignedSides = mutableListOf<Side>()
 
         val originalDiceSides = dice.sides
         val dialogBagDiceSides = cardDiceAndroidViewModel.stateFlowCardDice.value.diceSidesSize
 
         if (dialogBagDiceSides == originalDiceSides.size) {
-            alignedSides = originalDiceSides
+            // same sides
+            alignedSides = originalDiceSides.toMutableList()
         } else if (dialogBagDiceSides < originalDiceSides.size) {
-            for (originalDiceSidesIndex in 1..dialogBagDiceSides) {
-                alignedSides.plus(originalDiceSides[originalDiceSidesIndex])
+            // fewer sides
+            var workingSides = mutableListOf<Side>()
+
+            val originalDiceSidesOrdered = originalDiceSides.reversed()
+
+            for (index in 0 .. dialogBagDiceSides - 1) {
+                workingSides.add(originalDiceSidesOrdered[index])
             }
+
+            alignedSides = workingSides.reversed().toMutableList()
         } else {
-            for (dialogBagDiceSidesIndex in 1..dialogBagDiceSides) {
-                if (dialogBagDiceSidesIndex < originalDiceSides.size) {
-                    alignedSides.plus(originalDiceSides[dialogBagDiceSidesIndex])
-                } else {
-                    alignedSides.plus(Side(
-                        number = dialogBagDiceSides -  dialogBagDiceSidesIndex,
-                        numberColour = dice.sides[0].numberColour,
-                        imageBase64 = dice.sides[0].imageBase64,
-                        descriptionColour = dice.sides[0].descriptionColour
-                        )
-                    )
-                }
-            }
+            // more sides
+
+//            for (sideIndex in originalDiceSides.size downTo dialogBagDiceSides) {
+//                alignedSides.plus(
+//                    Side(
+//                        number = sideIndex,
+//                        numberColour = originalDiceSides[sideIndex].numberColour,
+//                        imageBase64 = originalDiceSides[sideIndex].imageBase64,
+//                        imageDrawableId = originalDiceSides[sideIndex].imageDrawableId,
+//                        description = originalDiceSides[sideIndex].description,
+//                        descriptionStringsId = originalDiceSides[sideIndex].descriptionStringsId,
+//                        descriptionColour = originalDiceSides[sideIndex].descriptionColour
+//                    )
+//                )
+//            }
         }
+
+        // TODO in ui block out Side card of there are fewer sides than currently selected!
 
         return alignedSides
     }
