@@ -159,7 +159,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     }
 
     @Test
-    fun dialogBagSaveWithDeleteTicked() = runTest {
+    fun dialogBagSaveWithDeleteTickedAgainstDiceMiddle() = runTest {
         val startingDice = SampleBag.allDice
         val repositoryBag = RepositoryBagTestDouble.getInstance()
         repositoryBag.store(startingDice)
@@ -184,6 +184,37 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         assertEquals(startingDice[0], remainingDice[0])
         assertEquals(startingDice[1], remainingDice[1])
         assertEquals(startingDice[2], remainingDice[2])
+        assertEquals(startingDice[4], remainingDice[3])
+        assertEquals(startingDice[5], remainingDice[4])
+        assertEquals(startingDice[6], remainingDice[5])
+    }
+
+    @Test
+    fun dialogBagSaveWithDeleteTickedAgainstDiceFirst() = runTest {
+        val startingDice = SampleBag.allDice
+        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        repositoryBag.store(startingDice)
+
+        val diceToDelete = SampleBag.d2
+
+        val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
+            getApplication(),
+            repositoryBag,
+            diceToDelete,
+            diceToDelete.sides[0]
+        )
+
+        assertEquals(7, dialogBagAndroidViewModel.repositoryBag.fetch().first().size)
+
+        dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceDelete(true)
+        dialogBagAndroidViewModel.save()
+
+        val remainingDice = dialogBagAndroidViewModel.repositoryBag.fetch().first()
+
+        assertEquals(6, remainingDice.size)
+        assertEquals(startingDice[1], remainingDice[0])
+        assertEquals(startingDice[2], remainingDice[1])
+        assertEquals(startingDice[3], remainingDice[2])
         assertEquals(startingDice[4], remainingDice[3])
         assertEquals(startingDice[5], remainingDice[4])
         assertEquals(startingDice[6], remainingDice[5])
