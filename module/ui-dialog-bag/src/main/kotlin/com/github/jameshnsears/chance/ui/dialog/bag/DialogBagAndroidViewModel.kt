@@ -87,20 +87,15 @@ class DialogBagAndroidViewModel(
                 .toMutableList()
         } else {
             // more sides
-
-//            for (sideIndex in originalDiceSides.size downTo dialogBagDiceSides) {
-//                alignedSides.plus(
-//                    Side(
-//                        number = sideIndex,
-//                        numberColour = originalDiceSides[sideIndex].numberColour,
-//                        imageBase64 = originalDiceSides[sideIndex].imageBase64,
-//                        imageDrawableId = originalDiceSides[sideIndex].imageDrawableId,
-//                        description = originalDiceSides[sideIndex].description,
-//                        descriptionStringsId = originalDiceSides[sideIndex].descriptionStringsId,
-//                        descriptionColour = originalDiceSides[sideIndex].descriptionColour
-//                    )
-//                )
-//            }
+            alignedSides = originalDiceSides.toMutableList()
+            for (newSideIndex in alignedSides.size + 1 .. dialogBagDiceSides) {
+                alignedSides.add(
+                    0,
+                    Side(
+                        number = newSideIndex,
+                    )
+                )
+            }
         }
 
         // TODO in ui block out Side card of there are fewer sides than currently selected!

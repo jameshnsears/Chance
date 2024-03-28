@@ -74,7 +74,28 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun alignDiceSidesWithDiceBagWithSidesGreater() = runTest {
-        fail("todo wip")
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(SampleBag.d6)
+
+        val originalDice =
+            dialogBagAndroidViewModel.repositoryBag.fetch(SampleBag.d6.epoch).first()
+        val originalSides = originalDice.sides
+
+        assertEquals(6, originalSides.size)
+
+        dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceSidesSize("12")
+
+        val newSides = dialogBagAndroidViewModel.alignDiceSidesWithDiceBag()
+
+        assertEquals(12, newSides.size)
+
+        for(newSidesIndex in 0 .. originalSides.size - 1) {
+            assertEquals(newSides[newSidesIndex].numberColour, originalSides[newSidesIndex].numberColour)
+            assertEquals(newSides[newSidesIndex].imageBase64, originalSides[newSidesIndex].imageBase64)
+            assertEquals(newSides[newSidesIndex].imageDrawableId, originalSides[newSidesIndex].imageDrawableId)
+            assertEquals(newSides[newSidesIndex].description, originalSides[newSidesIndex].description)
+            assertEquals(newSides[newSidesIndex].descriptionStringsId, originalSides[newSidesIndex].descriptionStringsId)
+            assertEquals(newSides[newSidesIndex].descriptionColour, originalSides[newSidesIndex].descriptionColour)
+        }
     }
 
     @Test
