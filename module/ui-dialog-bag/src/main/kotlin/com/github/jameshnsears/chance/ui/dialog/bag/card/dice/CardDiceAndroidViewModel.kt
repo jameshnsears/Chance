@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.state.Dice
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.CardAndroidViewModel
-import com.github.jameshnsears.chance.ui.dialog.dice.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -52,17 +51,15 @@ class CardDiceAndroidViewModel(
                     diceCanBeDeleted = diceCanBeDeleted(),
                 )
             }
-            diceTitlesHeldByOtherDice = diceTitlesHeldByOtherDice()
+            diceTitlesHeldByOtherDice = diceTitlesUsedByOtherDice()
         }
     }
 
     private fun diceTitleInit(): String {
-        return if (dice.title != "")
-            dice.title
-        else if (dice.titleStringsId != 0)
+        return if (dice.titleStringsId != 0)
             getString(dice.titleStringsId)
         else
-            "${getString(R.string.dialog_bag_dice_title_d)}$dice.sides.size"
+            dice.title
     }
 
     fun diceTitle(title: String) {
@@ -114,7 +111,7 @@ class CardDiceAndroidViewModel(
         _stateFlow.update { it.copy(diceDelete = delete) }
     }
 
-    private suspend fun diceTitlesHeldByOtherDice(): List<String> {
+    private suspend fun diceTitlesUsedByOtherDice(): List<String> {
         val diceTitlesAlreadyPresent = mutableListOf<String>()
 
         repositoryBag.fetch().first().forEach {

@@ -43,12 +43,10 @@ class CardSideAndroidViewModel(
     }
 
     private fun sideDescriptionInit(): String {
-        return if (side.description != "")
-            side.description
-        else if (side.descriptionStringsId != 0)
+        return if (side.descriptionStringsId != 0)
             getString(side.descriptionStringsId)
         else
-            ""
+            side.description
     }
 
     fun sideDescription(description: String) {

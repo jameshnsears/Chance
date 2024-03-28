@@ -28,9 +28,7 @@ class DialogBagAndroidViewModel(
         dice
     )
 
-    var cardRollViewModel = CardRollViewModel(
-        dice
-    )
+    var cardRollViewModel = CardRollViewModel(dice)
 
     fun save() {
         if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceTitleIsUnique) {

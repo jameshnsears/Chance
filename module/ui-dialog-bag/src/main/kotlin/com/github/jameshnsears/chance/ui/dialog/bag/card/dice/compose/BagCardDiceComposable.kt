@@ -60,7 +60,6 @@ class BagCardDiceTestTag {
 fun BagCardDice(
     cardDiceAndroidViewModel: CardDiceAndroidViewModel,
 ) {
-
     ElevatedCard(
         modifier = Modifier
             .padding(top = 16.dp, bottom = 16.dp)

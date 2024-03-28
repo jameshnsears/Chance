@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Test
 import kotlin.test.assertNotEquals
 
@@ -149,7 +148,6 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceClone(true)
         val newTitle = SampleBag.d2.title + " clone"
         dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceTitle(newTitle)
-
         dialogBagAndroidViewModel.save()
 
         val savedDice = dialogBagAndroidViewModel.repositoryBag.fetch().first()
@@ -162,7 +160,33 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagSaveWithDeleteTicked() = runTest {
-        fail("todo + include androidTest for all of the above")
+        val startingDice = SampleBag.allDice
+        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        repositoryBag.store(startingDice)
+
+        val diceToDelete = SampleBag.d8
+
+        val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
+            getApplication(),
+            repositoryBag,
+            diceToDelete,
+            diceToDelete.sides[0]
+        )
+
+        assertEquals(7, dialogBagAndroidViewModel.repositoryBag.fetch().first().size)
+
+        dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceDelete(true)
+        dialogBagAndroidViewModel.save()
+
+        val remainingDice = dialogBagAndroidViewModel.repositoryBag.fetch().first()
+
+        assertEquals(6, remainingDice.size)
+        assertEquals(startingDice[0], remainingDice[0])
+        assertEquals(startingDice[1], remainingDice[1])
+        assertEquals(startingDice[2], remainingDice[2])
+        assertEquals(startingDice[4], remainingDice[3])
+        assertEquals(startingDice[5], remainingDice[4])
+        assertEquals(startingDice[6], remainingDice[5])
     }
 
     private suspend fun dialogBagAndroidViewModel(dice: Dice): DialogBagAndroidViewModel {
