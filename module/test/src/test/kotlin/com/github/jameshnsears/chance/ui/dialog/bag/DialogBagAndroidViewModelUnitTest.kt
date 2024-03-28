@@ -34,7 +34,8 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     fun alignDiceSidesWithDiceBagWithSidesEqual() = runTest {
         val dialogBagAndroidViewModel = dialogBagAndroidViewModel(SampleBag.d12)
 
-        val originalDice = dialogBagAndroidViewModel.repositoryBag.fetch(SampleBag.d12.epoch).first()
+        val originalDice =
+            dialogBagAndroidViewModel.repositoryBag.fetch(SampleBag.d12.epoch).first()
         val originalSides = originalDice.sides
 
         assertEquals(12, originalSides.size)
@@ -60,15 +61,33 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         assertEquals(8, newSides.size)
 
-        for(newSidesIndex in 0 .. newSides.size - 1) {
+        for (newSidesIndex in 0..newSides.size - 1) {
             val originalSidesIndex = (originalSides.size - newSides.size) + newSidesIndex
 
-            assertEquals(newSides[newSidesIndex].numberColour, originalSides[originalSidesIndex].numberColour)
-            assertEquals(newSides[newSidesIndex].imageBase64, originalSides[originalSidesIndex].imageBase64)
-            assertEquals(newSides[newSidesIndex].imageDrawableId, originalSides[originalSidesIndex].imageDrawableId)
-            assertEquals(newSides[newSidesIndex].description, originalSides[originalSidesIndex].description)
-            assertEquals(newSides[newSidesIndex].descriptionStringsId, originalSides[originalSidesIndex].descriptionStringsId)
-            assertEquals(newSides[newSidesIndex].descriptionColour, originalSides[originalSidesIndex].descriptionColour)
+            assertEquals(
+                newSides[newSidesIndex].numberColour,
+                originalSides[originalSidesIndex].numberColour
+            )
+            assertEquals(
+                newSides[newSidesIndex].imageBase64,
+                originalSides[originalSidesIndex].imageBase64
+            )
+            assertEquals(
+                newSides[newSidesIndex].imageDrawableId,
+                originalSides[originalSidesIndex].imageDrawableId
+            )
+            assertEquals(
+                newSides[newSidesIndex].description,
+                originalSides[originalSidesIndex].description
+            )
+            assertEquals(
+                newSides[newSidesIndex].descriptionStringsId,
+                originalSides[originalSidesIndex].descriptionStringsId
+            )
+            assertEquals(
+                newSides[newSidesIndex].descriptionColour,
+                originalSides[originalSidesIndex].descriptionColour
+            )
         }
     }
 
@@ -88,13 +107,31 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         assertEquals(12, newSides.size)
 
-        for(newSidesIndex in 0 .. originalSides.size - 1) {
-            assertEquals(newSides[newSidesIndex].numberColour, originalSides[newSidesIndex].numberColour)
-            assertEquals(newSides[newSidesIndex].imageBase64, originalSides[newSidesIndex].imageBase64)
-            assertEquals(newSides[newSidesIndex].imageDrawableId, originalSides[newSidesIndex].imageDrawableId)
-            assertEquals(newSides[newSidesIndex].description, originalSides[newSidesIndex].description)
-            assertEquals(newSides[newSidesIndex].descriptionStringsId, originalSides[newSidesIndex].descriptionStringsId)
-            assertEquals(newSides[newSidesIndex].descriptionColour, originalSides[newSidesIndex].descriptionColour)
+        for (newSidesIndex in 0..originalSides.size - 1) {
+            assertEquals(
+                newSides[newSidesIndex].numberColour,
+                originalSides[newSidesIndex].numberColour
+            )
+            assertEquals(
+                newSides[newSidesIndex].imageBase64,
+                originalSides[newSidesIndex].imageBase64
+            )
+            assertEquals(
+                newSides[newSidesIndex].imageDrawableId,
+                originalSides[newSidesIndex].imageDrawableId
+            )
+            assertEquals(
+                newSides[newSidesIndex].description,
+                originalSides[newSidesIndex].description
+            )
+            assertEquals(
+                newSides[newSidesIndex].descriptionStringsId,
+                originalSides[newSidesIndex].descriptionStringsId
+            )
+            assertEquals(
+                newSides[newSidesIndex].descriptionColour,
+                originalSides[newSidesIndex].descriptionColour
+            )
         }
     }
 
@@ -102,7 +139,8 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     fun dialogBagSaveAfterNotModifyingAnything() = runTest {
         val dialogBagAndroidViewModel = dialogBagAndroidViewModel(SampleBag.d12)
 
-        val originalDice = dialogBagAndroidViewModel.repositoryBag.fetch(SampleBag.d12.epoch).first()
+        val originalDice =
+            dialogBagAndroidViewModel.repositoryBag.fetch(SampleBag.d12.epoch).first()
 
         assertEquals(SampleBag.d12.title, originalDice.title)
 

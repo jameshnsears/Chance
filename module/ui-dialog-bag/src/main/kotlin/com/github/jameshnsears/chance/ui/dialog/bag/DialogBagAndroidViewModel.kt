@@ -57,9 +57,11 @@ class DialogBagAndroidViewModel(
                 it.forEach { diceUpdated ->
                     if (diceUpdated.epoch == dice.epoch) {
                         diceUpdated.sides = alignDiceSidesWithDiceBag()
-                        diceUpdated.title = cardDiceAndroidViewModel.stateFlowCardDice.value.diceTitle
+                        diceUpdated.title =
+                            cardDiceAndroidViewModel.stateFlowCardDice.value.diceTitle
                         diceUpdated.titleStringsId = dice.titleStringsId
-                        diceUpdated.colour = cardDiceAndroidViewModel.stateFlowCardDice.value.diceColour
+                        diceUpdated.colour =
+                            cardDiceAndroidViewModel.stateFlowCardDice.value.diceColour
                         diceUpdated.selected = dice.selected
                     }
 
@@ -89,7 +91,7 @@ class DialogBagAndroidViewModel(
         } else {
             // more sides
             alignedSides = originalDiceSides.toMutableList()
-            for (newSideIndex in alignedSides.size + 1 .. dialogBagDiceSides) {
+            for (newSideIndex in alignedSides.size + 1..dialogBagDiceSides) {
                 alignedSides.add(
                     0,
                     Side(
