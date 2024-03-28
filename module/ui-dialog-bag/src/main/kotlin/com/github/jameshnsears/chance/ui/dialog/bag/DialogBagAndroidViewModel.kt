@@ -33,20 +33,23 @@ class DialogBagAndroidViewModel(
     )
 
     fun save() {
-        if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceDelete) {
-            Timber.d("delete")
-        } else {
-            update()
+        if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceTitleIsUnique) {
+            if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceDelete) {
+                delete(dice)
+            } else {
+                update()
 
-            if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceClone) {
-                Timber.d("clone")
+                if (cardDiceAndroidViewModel.stateFlowCardDice.value.diceClone) {
+                    clone(dice)
+                }
             }
         }
     }
 
     private fun update() {
+        Timber.d("update: dice=$dice")
+
         viewModelScope.launch {
-            Timber.d("update: dice=$dice")
 
             val currentDiceBag = repositoryBag.fetch()
 
@@ -98,35 +101,36 @@ class DialogBagAndroidViewModel(
             }
         }
 
-        // TODO in ui block out Side card of there are fewer sides than currently selected!
-
         return alignedSides
     }
 
-    suspend fun clone(diceToClone: Dice) {
+    private fun clone(diceToClone: Dice) {
         Timber.d("diceToClone=$diceToClone")
 
-        val clonedDiceBag: DiceBag = mutableListOf()
+        viewModelScope.launch {
 
-        repositoryBag.fetch().collect {
-            it.forEach { dice ->
-                clonedDiceBag.add(dice)
+            val clonedDiceBag: DiceBag = mutableListOf()
 
-                if (dice.epoch == diceToClone.epoch) {
-                    clonedDiceBag.add(
-                        diceToClone.copy(
-                            epoch = UtilityEpochTimeGenerator.now(),
-                            title = dice.title + "+"
+            repositoryBag.fetch().collect {
+                it.forEach { dice ->
+                    clonedDiceBag.add(dice)
+
+                    if (dice.epoch == diceToClone.epoch) {
+                        clonedDiceBag.add(
+                            diceToClone.copy(
+                                epoch = UtilityEpochTimeGenerator.now(),
+                                title = dice.title + "+"
+                            )
                         )
-                    )
+                    }
                 }
-            }
 
-            repositoryBag.store(clonedDiceBag)
+                repositoryBag.store(clonedDiceBag)
+            }
         }
     }
 
-    suspend fun delete(diceToDelete: Dice) {
+    private fun delete(diceToDelete: Dice) {
         Timber.d("diceToDelete=$diceToDelete")
 
         viewModelScope.launch {

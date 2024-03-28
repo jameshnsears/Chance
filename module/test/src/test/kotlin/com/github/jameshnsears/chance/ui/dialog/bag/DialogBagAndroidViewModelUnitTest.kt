@@ -117,7 +117,26 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagSaveNotPossibleAsTitleNotUnique() = runTest {
-        fail("todo")
+        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        repositoryBag.store(SampleBag.allDice)
+
+        val diceToSave = SampleBag.d2
+
+        val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
+            getApplication(),
+            repositoryBag,
+            diceToSave,
+            diceToSave.sides[0]
+        )
+
+        dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceTitle(SampleBag.d4.title)
+
+        dialogBagAndroidViewModel.save()
+
+        assertEquals(
+            diceToSave,
+            dialogBagAndroidViewModel.repositoryBag.fetch(diceToSave.epoch).first()
+        )
     }
 
     @Test
