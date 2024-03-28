@@ -41,6 +41,10 @@ class DialogBagAndroidViewModel(
                     clone(dice)
                 }
             }
+
+            viewModelScope.launch {
+                DialogBagSaveEvent.emitSave()
+            }
         }
     }
 

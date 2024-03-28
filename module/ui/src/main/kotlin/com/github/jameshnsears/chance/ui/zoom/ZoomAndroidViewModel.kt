@@ -17,10 +17,12 @@ import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.domain.utility.svg.UtilitySvgSerializer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagSaveEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 data class ZoomState(
     var resize: Dp,
@@ -58,10 +60,14 @@ class ZoomAndroidViewModel(
 
             _rollHistory.value = repositoryRoll.fetch().first()
             rollHistory = _rollHistory
+
+            DialogBagSaveEvent.sharedFlowDialogBagSave.collect {
+                Timber.d("saveCollect")
+                _diceBag.value = repositoryBag.fetch().first()
+                diceBag = _diceBag
+            }
         }
     }
-
-    ////////////////////////////////
 
     private val resizeViewDefault = 80.dp
 
@@ -78,8 +84,6 @@ class ZoomAndroidViewModel(
             else -> _resizeView.value = resizeViewDefault
         }
     }
-
-    ////////////////////////////////
 
     fun sideImageNumberPaddingTop(dice: Dice): Dp {
         return when (dice.sides.size) {

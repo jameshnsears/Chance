@@ -9,6 +9,8 @@ import com.github.jameshnsears.chance.data.repository.RepositoryImportValidation
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagSaveEvent
+import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceSideSizeEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -25,7 +27,6 @@ class TabBagAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
 ) : AndroidViewModel(application) {
-
     private val _stateFlow = MutableStateFlow(
         TabBagState(
             resize = resizeSliderInit()
@@ -83,8 +84,6 @@ class TabBagAndroidViewModel(
 //                outputStream.write("Hello, World!".toByteArray())
 //            }
     }
-
-    ////////////////////////////////
 
     fun resizeSlider(scale: Float) {
         _stateFlow.update { it.copy(resize = scale) }
