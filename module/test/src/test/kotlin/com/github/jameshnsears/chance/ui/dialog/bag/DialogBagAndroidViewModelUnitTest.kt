@@ -9,6 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
+import kotlin.test.assertNotEquals
 
 class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
@@ -141,7 +142,22 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagSaveWithCloneTicked() = runTest {
-        fail("todo")
+        val originalDice = SampleBag.d2
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(originalDice)
+        assertEquals(1, dialogBagAndroidViewModel.repositoryBag.fetch().first().size)
+
+        dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceClone(true)
+        val newTitle = SampleBag.d2.title + " clone"
+        dialogBagAndroidViewModel.cardDiceAndroidViewModel.diceTitle(newTitle)
+
+        dialogBagAndroidViewModel.save()
+
+        val savedDice = dialogBagAndroidViewModel.repositoryBag.fetch().first()
+
+        assertEquals(2, savedDice.size)
+        assertEquals(savedDice[0], originalDice)
+        assertNotEquals(savedDice[0], savedDice[1])
+        assertEquals(newTitle, savedDice[1].title)
     }
 
     @Test

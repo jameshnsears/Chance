@@ -118,8 +118,7 @@ class DialogBagAndroidViewModel(
                     if (dice.epoch == diceToClone.epoch) {
                         clonedDiceBag.add(
                             diceToClone.copy(
-                                epoch = UtilityEpochTimeGenerator.now(),
-                                title = dice.title + "+"
+                                epoch = UtilityEpochTimeGenerator.now()
                             )
                         )
                     }
