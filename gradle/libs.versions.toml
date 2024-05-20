@@ -23,7 +23,7 @@ lifecycle-runtime-compose = "2.7.0"
 lifecycle-viewmodel-compose = "2.7.0"
 lifecycle-runtime-ktx = "2.7.0"
 material = "1.11.0"
-mockk = "1.13.10"
+mockk = "1.13.11"
 org-jetbrains-kotlin-android = "1.9.22"
 org-jlleitschuh-gradle-ktlint = "12.1.0"
 #noinspection GradleDependency
