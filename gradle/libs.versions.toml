@@ -24,7 +24,7 @@ lifecycle-viewmodel-compose = "2.7.0"
 lifecycle-runtime-ktx = "2.7.0"
 material = "1.11.0"
 mockk = "1.13.10"
-org-jetbrains-kotlin-android = "1.9.22"
+org-jetbrains-kotlin-android = "2.0.0"
 org-jlleitschuh-gradle-ktlint = "12.1.0"
 #noinspection GradleDependency
 protobuf-java = "3.25.3"            # stay on 3.25.3
