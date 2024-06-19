@@ -27,7 +27,7 @@ mockk = "1.13.10"
 org-jetbrains-kotlin-android = "1.9.22"
 org-jlleitschuh-gradle-ktlint = "12.1.0"
 #noinspection GradleDependency
-protobuf-java = "3.25.3"            # stay on 3.25.3
+protobuf-java = "4.27.1"            # stay on 3.25.3
 #noinspection GradleDependency
 protobuf-java-util = "3.25.3"       # stay on 3.25.3
 #noinspection GradleDependency
