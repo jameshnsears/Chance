@@ -1,6 +1,6 @@
 [versions]
 activity-compose = "1.8.2"
-appcompat = "1.6.1"
+appcompat = "1.7.0"
 coil-svg = "2.6.0"
 colorpicker-compose = "1.0.7"
 com-android-application = "8.3.1"
