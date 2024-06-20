@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.domain.proto;
+
+import "side.proto";
+
+message DiceProtocolBuffer {
+  int64 epoch = 1;
+  repeated SideProtocolBuffer side = 2;
+  string title = 3;
+  string colour = 4;
+  bool selected = 5;
+
+  int32 multiplierValue = 6;
+
+  bool explode = 7;
+  string explodeWhen = 8;
+  int32 explodeValue = 9;
+
+  bool modifyScore = 10;
+  int32 modifyScoreValue = 11;
+}

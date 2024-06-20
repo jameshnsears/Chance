@@ -1,0 +1,2 @@
+&bull; 1.0.0
+&bull; IDE: Android Studio Koala | 2024.1.1

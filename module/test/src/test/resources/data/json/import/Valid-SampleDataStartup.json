@@ -1,0 +1,333 @@
+[
+  {
+    "tabRowChance": 0,
+    "resize": 0.0,
+    "rollTime": false,
+    "rollScore": false,
+    "rollSound": false,
+    "diceTitle": false,
+    "sideNumber": false,
+    "sideDescription": false,
+    "sideSVG": false
+  },
+  {
+    "dice": [
+      {
+        "epoch": "1713862644606",
+        "side": [
+          {
+            "uuid": "",
+            "number": 2,
+            "numberColour": "FF272B22",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "Even",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 1,
+            "numberColour": "FF272B22",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "Odd",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "Coin Flip",
+        "colour": "FFE1B530",
+        "selected": false,
+        "multiplierValue": 2,
+        "explode": true,
+        "explodeWhen": "\u003d",
+        "explodeValue": 2,
+        "modifyScore": true,
+        "modifyScoreValue": 1
+      },
+      {
+        "epoch": "1713862644610",
+        "side": [
+          {
+            "uuid": "",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 2131230858,
+            "description": "Knight",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 2131230859,
+            "description": "Lion",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 2131230860,
+            "description": "Pirate",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 2131230857,
+            "description": "Crocodile",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 2131230861,
+            "description": "Queen",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 2131230862,
+            "description": "Spaceship",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "Story",
+        "colour": "FF000000",
+        "selected": true,
+        "multiplierValue": 3,
+        "explode": true,
+        "explodeWhen": "\u003d",
+        "explodeValue": 3,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1713862644615",
+        "side": [
+          {
+            "uuid": "",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageBase64": "",
+            "imageDrawableId": 0,
+            "description": "",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "d6",
+        "colour": "FF000000",
+        "selected": false,
+        "multiplierValue": 4,
+        "explode": false,
+        "explodeWhen": "\u003d",
+        "explodeValue": 1,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      }
+    ]
+  },
+  {
+    "values": {
+      "1713862644627": {
+        "roll": [
+          {
+            "diceEpoch": "1713862644610",
+            "side": {
+              "uuid": "",
+              "number": 6,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 2131230858,
+              "description": "Knight",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644606",
+            "side": {
+              "uuid": "",
+              "number": 1,
+              "numberColour": "FF272B22",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "Odd",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644610",
+            "side": {
+              "uuid": "",
+              "number": 5,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 2131230859,
+              "description": "Lion",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644606",
+            "side": {
+              "uuid": "",
+              "number": 2,
+              "numberColour": "FF272B22",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "Even",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644610",
+            "side": {
+              "uuid": "",
+              "number": 4,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 2131230860,
+              "description": "Pirate",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644606",
+            "side": {
+              "uuid": "",
+              "number": 1,
+              "numberColour": "FF272B22",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "Odd",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644610",
+            "side": {
+              "uuid": "",
+              "number": 3,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 2131230857,
+              "description": "Crocodile",
+              "descriptionColour": "FF000000"
+            }
+          }
+        ]
+      },
+      "1713862644625": {
+        "roll": [
+          {
+            "diceEpoch": "1713862644606",
+            "side": {
+              "uuid": "",
+              "number": 2,
+              "numberColour": "FF272B22",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "Even",
+              "descriptionColour": "FF000000"
+            }
+          }
+        ]
+      },
+      "1713862644623": {
+        "roll": [
+          {
+            "diceEpoch": "1713862644615",
+            "side": {
+              "uuid": "",
+              "number": 6,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644615",
+            "side": {
+              "uuid": "",
+              "number": 5,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            }
+          },
+          {
+            "diceEpoch": "1713862644615",
+            "side": {
+              "uuid": "",
+              "number": 4,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            }
+          }
+        ]
+      }
+    }
+  }
+]

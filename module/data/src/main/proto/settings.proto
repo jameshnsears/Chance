@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.domain.proto;
+
+message SettingsProtocolBuffer {
+  int32 tabRowChance = 1;
+
+  float resize = 2;
+
+  bool rollIndexTime = 3;
+  bool rollScore = 4;
+
+  bool diceTitle = 5;
+  bool sideNumber = 6;
+  bool behaviour = 7;
+  bool sideDescription = 8;
+  bool sideSVG = 9;
+
+  bool rollSound = 10;
+}

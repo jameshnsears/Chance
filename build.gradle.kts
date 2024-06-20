@@ -1,22 +1,30 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version "8.1.4" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.20" apply false
-    id("com.android.library") version "8.1.4" apply false
-
-    id("io.gitlab.arturbosch.detekt").version("1.23.3")
-    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
-    id("com.diffplug.spotless") version "6.23.2"
+    alias(libs.plugins.com.android.application) apply false
+    alias(libs.plugins.com.android.library) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.plugin.compose) apply false
+    alias(libs.plugins.com.diffplug.spotless)
+    alias(libs.plugins.com.google.gms.google.services) apply false
+    alias(libs.plugins.com.google.firebase.crashlytics) apply false
+    alias(libs.plugins.io.gitlab.arturbosch.detekt)
+    alias(libs.plugins.org.jetbrains.kotlin.android) apply false
+    alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
 }
 
 spotless {
     kotlin {
         target("**/*.kt")
-        ktlint()
+        ktlint().setEditorConfigPath("$projectDir/.editorconfig")
     }
 }
 
 detekt {
     // https://detekt.dev/docs/gettingstarted/gradle
     parallel = false
+}
+
+ktlint {
+    android.set(true)
+    outputColorName.set("RED")
+    outputToConsole.set(true)
 }

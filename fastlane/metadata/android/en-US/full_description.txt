@@ -1,0 +1,5 @@
+&bull; Create custom dice
+&bull; Tap the side # of a dice to change almost every facet
+&bull; Apply different behaviour to dice rolls
+&bull; Full export &amp; import
+&bull; User feedback drives development!

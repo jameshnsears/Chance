@@ -1,0 +1,198 @@
+name: static-analysis
+
+on:
+  push:
+    branches:
+      - "*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CACHE_VERSION: 1
+
+jobs:
+  detekt:
+    name: detekt
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: set up jdk
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+      - run: ./ci_clear_gradle_cache.sh
+
+      - name: gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: google-services.json
+        env:
+          GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
+        run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: gradlew
+        run: |
+          set -x
+          ./gradlew detekt
+
+  ktlint:
+    name: ktlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: set up jdk
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+      - run: ./ci_clear_gradle_cache.sh
+
+      - name: gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: google-services.json
+        env:
+          GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
+        run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: gradlew
+        run: |
+          set -x
+          ./gradlew ktlintCheck
+
+  lintGooglePlayDebug:
+    name: lintGooglePlayDebug
+    needs: [ detekt, ktlint ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: set up jdk
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+      - run: ./ci_clear_gradle_cache.sh
+
+      - name: gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: google-services.json
+        env:
+          GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
+        run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: gradlew
+        run: |
+          set -x
+          ./gradlew lintGooglePlayDebug
+
+  lintFdroidDebug:
+    name: lintFdroidDebug
+    needs: [ detekt, ktlint ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: set up jdk
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+      - run: ./ci_clear_gradle_cache.sh
+
+      - name: gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: google-services.json
+        env:
+          GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
+        run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
+
+      - name: gradlew
+        run: |
+          set -x
+          ./gradlew lintFdroidDebug

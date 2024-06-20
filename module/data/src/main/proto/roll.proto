@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.domain.proto;
+
+import "side.proto";
+
+message RollProtocolBuffer {
+  int64 diceEpoch = 1;
+  SideProtocolBuffer side = 2;
+  int32 multiplierIndex = 3;
+  int32 explodeIndex = 4;
+  int32 scoreAdjustment = 5;
+  int32 score = 6;
+}
