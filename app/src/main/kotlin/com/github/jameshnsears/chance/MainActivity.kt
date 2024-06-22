@@ -46,15 +46,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ChanceTheme {
-                // Consider using a Scaffold to provide a standard app structure
-                Scaffold(
-                    topBar = { /* Add an AppBar here if needed */ }
-                ) { paddingValues -> // Use paddingValues for content padding
+                Scaffold { paddingValues ->
                     Surface(
-                        modifier = Modifier.padding(paddingValues), // Apply padding
+                        modifier = Modifier.padding(paddingValues),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        // Use more descriptive names for ViewModels
                         TabRow(
                             tabBagAndroidViewModel(
                                 sampleBagTestData,
@@ -80,10 +76,9 @@ class MainActivity : ComponentActivity() {
         sampleBagTestData: SampleBagTestData,
         sampleRollTestData: SampleRollTestData
     ): ZoomAndroidViewModel {
-        // Use the 'viewModel()' function with a more concise syntax
         return viewModel {
             ZoomAndroidViewModel(
-                application, // Assuming 'application' is available in this scope
+                application,
                 repositoryBag(sampleBagTestData),
                 repositoryRoll(sampleRollTestData)
             )
