@@ -24,7 +24,9 @@ data class CardSideState(
     var sideImageAvailable: Boolean,
     var sideDescription: String,
     var sideDescriptionColour: String,
-    var sideApplyToAll: Boolean,
+    var sideApplyToAllNumberColour: Boolean,
+    var sideApplyToAllDescription: Boolean,
+    var sideApplyToAllSvg: Boolean,
     var diceSidesFewerThanSdeNumber: Boolean
 )
 
@@ -46,7 +48,9 @@ class CardSideAndroidViewModel(
         sideImageAvailable = sideImageAvailableInit(),
         sideDescription = sideDescriptionInit(),
         sideDescriptionColour = side.descriptionColour,
-        sideApplyToAll = false,
+        sideApplyToAllNumberColour = false,
+        sideApplyToAllDescription = false,
+        sideApplyToAllSvg = false,
         diceSidesFewerThanSdeNumber = false
     )
 
@@ -114,8 +118,19 @@ class CardSideAndroidViewModel(
         return fileContents
     }
 
-    fun sideApplyToAll(switch: Boolean) {
-        _stateFlowCardSide.update { it.copy(sideApplyToAll = switch) }
+    fun sideApplyToAllNumberColour(switch: Boolean) {
+        Timber.d("sideApplyToAllNumberColour=$switch")
+        _stateFlowCardSide.update { it.copy(sideApplyToAllNumberColour = switch) }
+    }
+
+    fun sideApplyToAllDescription(switch: Boolean) {
+        Timber.d("sideApplyToAllDescription=$switch")
+        _stateFlowCardSide.update { it.copy(sideApplyToAllDescription = switch) }
+    }
+
+    fun sideApplyToAllSvg(switch: Boolean) {
+        Timber.d("sideApplyToAllSvg=$switch")
+        _stateFlowCardSide.update { it.copy(sideApplyToAllSvg = switch) }
     }
 
     fun sideImageSvgClear() {

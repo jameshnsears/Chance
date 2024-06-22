@@ -51,10 +51,12 @@ class BagCardSideTestTag {
     companion object {
         const val SIDE_NUMBER = "SIDE_NUMBER"
         const val SIDE_COLOUR = "SIDE_COLOUR"
+        const val SIDE_APPLY_NUMBER_COLOUR = "SIDE_APPLY_NUMBER_COLOUR"
         const val SIDE_DESCRIPTION = "SIDE_DESCRIPTION"
         const val SIDE_DESCRIPTION_COLOUR = "SIDE_DESCRIPTION_COLOUR"
+        const val SIDE_APPLY_DESCRIPTION = "SIDE_APPLY_DESCRIPTION"
         const val SIDE_IMAGE_SVG = "SIDE_IMAGE_SVG"
-        const val SIDE_APPLY = "SIDE_APPLY"
+        const val SIDE_APPLY_SVG = "SIDE_APPLY_SVG"
     }
 }
 
@@ -86,13 +88,6 @@ fun BagCardSide(cardSideAndroidViewModel: CardSideAndroidViewModel) {
             )
 
             SideImageSVG(cardSideAndroidViewModel)
-
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(top = 12.dp, bottom = 12.dp)
-            )
-
-            SideApplyToAll(cardSideAndroidViewModel)
         }
     }
 }
@@ -161,6 +156,14 @@ fun SideColour(
         }
     }
 
+    SideApplyToAll(
+        cardSideAndroidViewModel,
+        stateFlowCardSide.value.sideApplyToAllNumberColour,
+        BagCardSideTestTag.SIDE_APPLY_NUMBER_COLOUR,
+        cardSideAndroidViewModel::sideApplyToAllNumberColour,
+        R.string.dialog_bag_side_apply_to_all_colour
+    )
+
     if (showDialogColourPicker.value) {
         DialogColourPicker(
             showDialogColourPicker,
@@ -213,6 +216,16 @@ fun SideDescription(
         }
     )
 
+    SideDescriptionColour(cardSideAndroidViewModel)
+
+    SideApplyToAll(
+        cardSideAndroidViewModel,
+        stateFlowCardSide.value.sideApplyToAllDescription,
+        BagCardSideTestTag.SIDE_APPLY_DESCRIPTION,
+        cardSideAndroidViewModel::sideApplyToAllDescription,
+        R.string.dialog_bag_side_apply_to_all_colour
+    )
+
     Row(
         modifier = Modifier
             .padding(top = 8.dp, bottom = 8.dp)
@@ -235,8 +248,6 @@ fun SideDescription(
             text = stringResource(R.string.dialog_bag_side_description_info),
         )
     }
-
-    SideDescriptionColour(cardSideAndroidViewModel)
 }
 
 @Composable
@@ -255,7 +266,7 @@ fun SideDescriptionColour(cardSideAndroidViewModel: CardSideAndroidViewModel) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp),
+            .padding(top = 12.dp, bottom = 8.dp),
     ) {
         Button(
             onClick = { showDialogColourPicker.value = true },
@@ -329,7 +340,7 @@ fun SideImageSVG(
 
     Row(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp),
+            .padding(top = 8.dp, bottom = 0.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
@@ -339,7 +350,7 @@ fun SideImageSVG(
                 },
                 modifier = Modifier
                     .width(160.dp)
-                    .padding(bottom = 4.dp)
+                    .padding(bottom = 6.dp)
                     .testTag(BagCardSideTestTag.SIDE_IMAGE_SVG),
                 enabled = !diceSidesFewerThanSdeNumber
             ) {
@@ -360,7 +371,7 @@ fun SideImageSVG(
                 },
                 modifier = Modifier
                     .width(160.dp)
-                    .padding(top = 4.dp)
+                    .padding(top = 6.dp)
                     .testTag(BagCardSideTestTag.SIDE_IMAGE_SVG),
                 enabled = cardSideAndroidViewModel.sideImageAvailable() && !diceSidesFewerThanSdeNumber
             ) {
@@ -382,30 +393,43 @@ fun SideImageSVG(
             Image(
                 painter = painterResource(id = sideImageDrawableId),
                 contentDescription = "",
-                modifier = Modifier.size(100.dp),
+                modifier = Modifier
+                    .size(100.dp)
             )
         } else {
             if (sideImageBase64Request != null) {
                 AsyncImage(
                     model = sideImageBase64Request,
                     contentDescription = "",
-                    modifier = Modifier.size(100.dp),
+                    modifier = Modifier
+                        .size(100.dp)
                 )
             }
         }
+
+        Spacer(modifier = Modifier.weight(1f))
     }
+
+    SideApplyToAll(
+        cardSideAndroidViewModel,
+        stateFlowCardSide.value.sideApplyToAllSvg,
+        BagCardSideTestTag.SIDE_APPLY_SVG,
+        cardSideAndroidViewModel::sideApplyToAllSvg
+    )
 }
 
 @Composable
 fun SideApplyToAll(
-    cardSideAndroidViewModel: CardSideAndroidViewModel
+    cardSideAndroidViewModel: CardSideAndroidViewModel,
+    sideApplyToAll: Boolean,
+    testTag: String,
+    sideApplyToAllFunction: (Boolean) -> Unit,
+    stringResourceId: Int = R.string.dialog_bag_side_apply_to_all_svg
 ) {
     val stateFlowCardSide =
         cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
-
-    val sideApplyToAll = stateFlowCardSide.value.sideApplyToAll
 
     val switched = rememberSaveable { mutableStateOf(sideApplyToAll) }
 
@@ -415,16 +439,16 @@ fun SideApplyToAll(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp)
+            .padding(top = 8.dp, bottom = 0.dp, end = 2.dp)
             .clickable {
                 if (!diceSidesFewerThanSdeNumber)
                     switched.value = !switched.value
             }
-            .testTag(BagCardSideTestTag.SIDE_APPLY),
+            .testTag(testTag),
     ) {
         Text(
             modifier = Modifier.weight(1f),
-            text = stringResource(R.string.dialog_bag_side_apply_to_all)
+            text = stringResource(stringResourceId)
         )
 
         Switch(
@@ -432,31 +456,8 @@ fun SideApplyToAll(
             enabled = !diceSidesFewerThanSdeNumber,
             onCheckedChange = {
                 switched.value = it
-                cardSideAndroidViewModel.sideApplyToAll(switched.value)
+                sideApplyToAllFunction(switched.value)
             },
-        )
-    }
-
-    Row(
-        modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.Info,
-            contentDescription = "",
-        )
-    }
-
-    Row(
-        modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(R.string.dialog_bag_side_apply_to_all_info),
         )
     }
 }

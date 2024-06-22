@@ -178,18 +178,28 @@ class DialogBagAndroidViewModel(
         val cardSide = cardSideAndroidViewModel.stateFlowCardSide.value
 
         for (alignedSide in alignedSides) {
-            if (alignedSide.uuid == side.uuid || cardSideAndroidViewModel.stateFlowCardSide.value.sideApplyToAll) {
-                // force  compose recomposition
+            if (alignedSide.uuid == side.uuid) {
+                // force compose recomposition
                 alignedSide.uuid = UUID.randomUUID().toString()
 
                 alignedSide.numberColour = cardSide.sideNumberColour
                 alignedSide.imageDrawableId = cardSide.sideImageDrawableId
                 alignedSide.imageBase64 = cardSide.sideImageBase64
-
-                if (!cardSideAndroidViewModel.stateFlowCardSide.value.sideApplyToAll)
-                    alignedSide.description = cardSide.sideDescription
-
+                alignedSide.description = cardSide.sideDescription
                 alignedSide.descriptionColour = cardSide.sideDescriptionColour
+            }
+
+            if (cardSideAndroidViewModel.stateFlowCardSide.value.sideApplyToAllNumberColour)
+                alignedSide.numberColour = cardSide.sideNumberColour
+
+            if (cardSideAndroidViewModel.stateFlowCardSide.value.sideApplyToAllDescription) {
+                alignedSide.descriptionColour = cardSide.sideDescriptionColour
+            }
+
+            if (cardSideAndroidViewModel.stateFlowCardSide.value.sideApplyToAllSvg) {
+                if (cardSide.sideImageDrawableId != 0)
+                    alignedSide.imageDrawableId = cardSide.sideImageDrawableId
+                alignedSide.imageBase64 = cardSide.sideImageBase64
             }
         }
     }

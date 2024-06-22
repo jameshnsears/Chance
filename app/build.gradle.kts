@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.LintOptions
-
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)

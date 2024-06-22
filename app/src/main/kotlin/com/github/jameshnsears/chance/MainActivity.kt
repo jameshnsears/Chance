@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            ChanceTheme{
+            ChanceTheme {
                 // Consider using a Scaffold to provide a standard app structure
                 Scaffold(
                     topBar = { /* Add an AppBar here if needed */ }
@@ -78,20 +78,23 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun zoomAndroidViewModel(
         sampleBagTestData: SampleBagTestData,
-        sampleRollTestData: SampleRollTestData): ZoomAndroidViewModel {
+        sampleRollTestData: SampleRollTestData
+    ): ZoomAndroidViewModel {
         // Use the 'viewModel()' function with a more concise syntax
         return viewModel {
             ZoomAndroidViewModel(
                 application, // Assuming 'application' is available in this scope
                 repositoryBag(sampleBagTestData),
-                repositoryRoll(sampleRollTestData))
+                repositoryRoll(sampleRollTestData)
+            )
         }
     }
 
     @Composable
     private fun tabRollViewModel(
         sampleBagTestData: SampleBagTestData,
-        sampleRollTestData: SampleRollTestData): TabRollAndroidViewModel {
+        sampleRollTestData: SampleRollTestData
+    ): TabRollAndroidViewModel {
         return viewModel {
             TabRollAndroidViewModel(
                 application,

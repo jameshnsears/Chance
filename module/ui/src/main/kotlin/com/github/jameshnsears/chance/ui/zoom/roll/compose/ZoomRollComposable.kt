@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -122,13 +123,14 @@ private fun RollScore(
     Column(
         Modifier
             .padding(start = 4.dp, end = 4.dp)
-            .width(60.dp),
+            .width(70.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
             text = tabRollAndroidViewModel.diceSequenceScore(rollSequence),
             fontSize = 24.sp,
+            textAlign = TextAlign.Center
         )
     }
 }

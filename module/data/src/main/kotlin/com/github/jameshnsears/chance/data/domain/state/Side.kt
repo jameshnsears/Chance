@@ -11,4 +11,16 @@ data class Side(
     var imageBase64: String = "",
     var description: String = "",
     var descriptionColour: String = "FF000000"
-)
+) {
+    fun copy(): Side {
+        return Side(
+            uuid,
+            number,
+            numberColour,
+            imageDrawableId,
+            imageBase64,
+            description,
+            descriptionColour
+        )
+    }
+}

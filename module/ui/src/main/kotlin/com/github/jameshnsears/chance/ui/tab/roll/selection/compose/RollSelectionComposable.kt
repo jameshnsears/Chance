@@ -64,14 +64,14 @@ fun RollSelectionButton(tabRollAndroidViewModel: TabRollAndroidViewModel, dice: 
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            modifier = Modifier.padding(bottom = 14.dp),
+            modifier = Modifier.padding(bottom = 18.dp),
             text = dice.title,
             fontSize = 14.sp
         )
 
         Box(
             modifier = Modifier
-                .size(100.dp)
+                .size(95.dp)
                 .rotate(45f)
                 .background(MaterialTheme.colorScheme.primary, shape = MaterialTheme.shapes.medium)
                 .clickable(onClick = {

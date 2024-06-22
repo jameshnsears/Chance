@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
 import com.github.jameshnsears.chance.data.domain.state.Dice
+import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import kotlinx.coroutines.flow.first
@@ -45,6 +46,76 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         val newSides = dialogBagAndroidViewModel.alignDiceSidesWithCardDice()
 
         assertEquals(newSides, originalSides)
+    }
+
+    fun List<Side>.deepCopy(): List<Side> {
+        return this.map { it.copy() }
+    }
+
+    @Test
+    fun dialogBagAlignDiceSidesWithDiceBagWithSidesEqualApplyToAll() = runTest {
+        val sampleBagTestData = SampleBagTestData()
+
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.d6)
+
+        val originalDice =
+            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d6.epoch).first()
+
+        val originalSides = originalDice.sides.deepCopy()
+
+        assertEquals(6, originalSides.size)
+
+        val newSideNumberColour = "newSideNumberColour"
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideNumberColour(newSideNumberColour)
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideApplyToAllNumberColour(true)
+
+        val newDescription = "newDescription"
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideDescription(newDescription)
+        val newDescriptionColour = "newDescriptionColour"
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideDescriptionColour(newDescriptionColour)
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideApplyToAllDescription(true)
+
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideImageSvgClear()
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideApplyToAllSvg(true)
+
+        val newSides = dialogBagAndroidViewModel.alignDiceSidesWithCardDice()
+
+        for (newSide in newSides.indices) {
+            assertEquals(newSideNumberColour, newSides[newSide].numberColour)
+            assertEquals("", newSides[newSide].imageBase64)
+            assertEquals(0, newSides[newSide].imageDrawableId)
+            assertEquals(newDescription, newSides[newSide].description)
+            assertEquals(newDescriptionColour, newSides[newSide].descriptionColour)
+        }
+    }
+
+    @Test
+    fun dialogBagAlignDiceSidesWithDiceBagWithSidesEqualApplyToAllNumberColour() = runTest {
+        val sampleBagTestData = SampleBagTestData()
+
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.diceStory)
+
+        val originalDice =
+            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.diceStory.epoch).first()
+
+        val originalSides = originalDice.sides.deepCopy()
+
+        assertEquals(6, originalSides.size)
+
+        val newSideNumberColour = "newSideNumberColour"
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideNumberColour(newSideNumberColour)
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideApplyToAllNumberColour(true)
+
+        val newSides = dialogBagAndroidViewModel.alignDiceSidesWithCardDice()
+
+        for (newSide in newSides.indices) {
+            assertEquals(newSideNumberColour, newSides[newSide].numberColour)
+
+            assertEquals(originalSides[newSide].imageBase64, newSides[newSide].imageBase64)
+            assertEquals(originalSides[newSide].imageDrawableId, newSides[newSide].imageDrawableId)
+            assertEquals(originalSides[newSide].description, newSides[newSide].description)
+            assertEquals(originalSides[newSide].descriptionColour, newSides[newSide].descriptionColour)
+        }
     }
 
     @Test
@@ -122,7 +193,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
                 newSides[newSidesIndex].imageDrawableId,
                 originalSides[newSidesIndex].imageDrawableId
             )
-            assertEquals(
+            assertNotEquals(
                 newSides[newSidesIndex].description,
                 originalSides[newSidesIndex].description
             )
@@ -139,7 +210,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val newSideNumberColour = "FF112233"
         dialogBagAndroidViewModel.cardSideAndroidViewModel.sideNumberColour(newSideNumberColour)
-        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideApplyToAll(true)
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideApplyToAllSvg(true)
 
         dialogBagAndroidViewModel.save()
 

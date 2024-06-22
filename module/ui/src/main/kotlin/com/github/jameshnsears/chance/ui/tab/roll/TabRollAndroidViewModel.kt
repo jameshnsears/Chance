@@ -141,7 +141,7 @@ class TabRollAndroidViewModel(
         viewModelScope.launch {
             if (_stateFlowTabRoll.value.rollSound) {
                 mediaPlayerRollSound()
-                delay(500)
+                delay(750)
             }
 
             val mutex = Mutex()
@@ -321,7 +321,7 @@ class TabRollAndroidViewModel(
         rollSequence.value.forEach {
             score += it.score
         }
-        return "$score".padStart(4, ' ')
+        return "$score"
     }
 
     fun settingsDiceTitle(checked: Boolean) {
