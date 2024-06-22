@@ -122,7 +122,7 @@ private fun RollScore(
 ) {
     Column(
         Modifier
-            .padding(start = 4.dp, end = 4.dp)
+            .padding(start = 4.dp, end = 4.dp, bottom= 8.dp)
             .width(70.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -166,10 +166,10 @@ private fun RollDetails(
 
         if (settingsSideNumber) SideImageNumber(zoomAndroidViewModel, dice, roll.side)
 
-        if (settingsBehaviour) SideRollBehaviour(zoomAndroidViewModel, dice, roll)
+        if (settingsBehaviour) SideRollBehaviour(zoomAndroidViewModel, roll)
 
         if (settingsSideDescription) SideDescriptionRoll(zoomAndroidViewModel, roll.side)
 
-        if (settingsSideSVG) SideImageSVG(zoomAndroidViewModel, roll.side)
+        if (settingsSideSVG) SideImageSVG(zoomAndroidViewModel, dice, roll.side)
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +24,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.data.domain.state.Dice
 import com.github.jameshnsears.chance.data.domain.state.Roll
@@ -124,7 +127,6 @@ fun SideImageNumber(
 @Composable
 fun SideRollBehaviour(
     zoomAndroidViewModel: ZoomAndroidViewModel,
-    dice: Dice,
     roll: Roll
 ) {
     val rollSelectionIconColour = if (isSystemInDarkTheme()) Color.White else Color.Black
@@ -203,8 +205,11 @@ fun DiceTitle(dice: Dice) {
 @Composable
 fun SideImageSVG(
     zoomAndroidViewModel: ZoomAndroidViewModel,
+    dice: Dice,
     side: Side
 ) {
+    val showDialog = rememberSaveable { mutableStateOf(false) }
+
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
@@ -216,16 +221,33 @@ fun SideImageSVG(
         Image(
             painter = painterResource(id = side.imageDrawableId),
             contentDescription = "",
-            modifier = Modifier.size(resizeView),
+            modifier = Modifier
+                .size(resizeView)
+                .clickable { showDialog.value = true },
         )
     } else {
         if (side.imageBase64 != "") {
+            val imageRequest: ImageRequest = remember {
+                zoomAndroidViewModel.sideImageSVG(side)
+            }
+
             AsyncImage(
-                model = zoomAndroidViewModel.sideImageSVG(side),
+                model = imageRequest,
                 contentDescription = "",
-                modifier = Modifier.size(resizeView),
-            )
+                modifier = Modifier
+                    .size(resizeView)
+                    .clickable { showDialog.value = true },
+                )
         }
+    }
+
+    if (showDialog.value) {
+        DialogBag(
+            showDialog,
+            zoomAndroidViewModel.repositoryBag,
+            dice,
+            side,
+        )
     }
 }
 

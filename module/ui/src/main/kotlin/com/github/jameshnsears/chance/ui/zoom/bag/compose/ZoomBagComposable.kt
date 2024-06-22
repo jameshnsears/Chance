@@ -70,7 +70,7 @@ fun ZoomBag(
 
                         SideDescription(zoomAndroidViewModel, dice, side)
 
-                        SideImageSVG(zoomAndroidViewModel, side)
+                        SideImageSVG(zoomAndroidViewModel, dice, side)
                     }
                 }
             }
