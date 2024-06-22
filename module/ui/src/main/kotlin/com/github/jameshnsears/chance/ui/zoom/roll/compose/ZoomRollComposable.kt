@@ -54,7 +54,8 @@ fun ZoomRoll(
         modifier = Modifier.padding(top = 8.dp, start = 0.dp, bottom = 110.dp, end = 8.dp),
     ) {
         itemsIndexed(
-            stateFlowZoom.value.rollHistory.entries.toList()
+            items = stateFlowZoom.value.rollHistory.entries.toList(),
+            key = { _, item -> item.key }
         ) { index, rollSequence ->
             if (settingsTime)
                 Row {
