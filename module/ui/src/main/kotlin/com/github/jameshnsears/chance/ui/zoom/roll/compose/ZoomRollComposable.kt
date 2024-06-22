@@ -9,9 +9,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -50,8 +52,15 @@ fun ZoomRoll(
     val settingsTime = stateFlowTabRoll.value.rollTime
     val settingsScore = stateFlowTabRoll.value.rollScore
 
+    val listState = rememberLazyListState()
+    // runs at every recomposition
+    LaunchedEffect(stateFlowZoom.value.rollHistory.entries.toList()) {
+        listState.scrollToItem(0)
+    }
+
     LazyColumn(
         modifier = Modifier.padding(top = 8.dp, start = 0.dp, bottom = 110.dp, end = 8.dp),
+        state = listState
     ) {
         itemsIndexed(
             items = stateFlowZoom.value.rollHistory.entries.toList(),
