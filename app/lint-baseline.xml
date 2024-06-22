@@ -3,87 +3,79 @@
     type="baseline" variant="all" version="8.4.2">
 
     <issue errorLine1="com-android-application = &quot;8.4.2&quot;"
-        errorLine2="                          ~~~~~~~"
-        id="AndroidGradlePluginVersion"
+        errorLine2="                          ~~~~~~~" id="AndroidGradlePluginVersion"
         message="A newer version of com.android.application than 8.4.2 is available: 8.5.0">
         <location column="27" file="$HOME/GIT_REPOS/Chance/gradle/libs.versions.toml" line="6" />
     </issue>
 
     <issue errorLine1="com-android-application = &quot;8.4.2&quot;"
-        errorLine2="                          ~~~~~~~"
-        id="AndroidGradlePluginVersion"
+        errorLine2="                          ~~~~~~~" id="AndroidGradlePluginVersion"
         message="A newer version of com.android.application than 8.4.2 is available: 8.5.0">
         <location column="27" file="$HOME/GIT_REPOS/Chance/gradle/libs.versions.toml" line="6" />
     </issue>
 
     <issue errorLine1="com-android-application = &quot;8.4.2&quot;"
-        errorLine2="                          ~~~~~~~"
-        id="AndroidGradlePluginVersion"
+        errorLine2="                          ~~~~~~~" id="AndroidGradlePluginVersion"
         message="A newer version of com.android.application than 8.4.2 is available: 8.5.0">
         <location column="27" file="$HOME/GIT_REPOS/Chance/gradle/libs.versions.toml" line="6" />
     </issue>
 
     <issue errorLine1="com-android-library = &quot;8.4.2&quot;"
-        errorLine2="                      ~~~~~~~"
-        id="AndroidGradlePluginVersion"
+        errorLine2="                      ~~~~~~~" id="AndroidGradlePluginVersion"
         message="A newer version of com.android.library than 8.4.2 is available: 8.5.0">
         <location column="23" file="$HOME/GIT_REPOS/Chance/gradle/libs.versions.toml" line="7" />
     </issue>
 
     <issue errorLine1="com-android-library = &quot;8.4.2&quot;"
-        errorLine2="                      ~~~~~~~"
-        id="AndroidGradlePluginVersion"
+        errorLine2="                      ~~~~~~~" id="AndroidGradlePluginVersion"
         message="A newer version of com.android.library than 8.4.2 is available: 8.5.0">
         <location column="23" file="$HOME/GIT_REPOS/Chance/gradle/libs.versions.toml" line="7" />
     </issue>
 
     <issue errorLine1="com-android-library = &quot;8.4.2&quot;"
-        errorLine2="                      ~~~~~~~"
-        id="AndroidGradlePluginVersion"
+        errorLine2="                      ~~~~~~~" id="AndroidGradlePluginVersion"
         message="A newer version of com.android.library than 8.4.2 is available: 8.5.0">
         <location column="23" file="$HOME/GIT_REPOS/Chance/gradle/libs.versions.toml" line="7" />
     </issue>
 
     <issue errorLine1="            android:screenOrientation=&quot;portrait&quot;"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        id="LockedOrientationActivity"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" id="LockedOrientationActivity"
         message="Expecting `android:screenOrientation=&quot;unspecified&quot;` or `&quot;fullSensor&quot;` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices">
         <location column="13" file="src/main/AndroidManifest.xml" line="17" />
     </issue>
 
     <issue errorLine1="            android:screenOrientation=&quot;portrait&quot;"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        id="DiscouragedApi"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" id="DiscouragedApi"
         message="Should not restrict activity to fixed orientation. This may not be suitable for different form factors, causing the app to be letterboxed.">
         <location column="13" file="src/main/AndroidManifest.xml" line="17" />
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;purple_200&quot;>#FFBB86FC&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~~~"
-        id="UnusedResources"
+    <issue errorLine1="    &lt;color name=&quot;purple_200&quot;>#FFBB86FC&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~" id="UnusedResources"
         message="The resource `R.color.purple_200` appears to be unused">
         <location column="12" file="src/main/res/values/colors.xml" line="3" />
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;purple_500&quot;>#FF6200EE&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~~~"
-        id="UnusedResources"
+    <issue errorLine1="    &lt;color name=&quot;purple_500&quot;>#FF6200EE&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~" id="UnusedResources"
         message="The resource `R.color.purple_500` appears to be unused">
         <location column="12" file="src/main/res/values/colors.xml" line="4" />
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;purple_700&quot;>#FF3700B3&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~~~"
-        id="UnusedResources"
+    <issue errorLine1="    &lt;color name=&quot;purple_700&quot;>#FF3700B3&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~" id="UnusedResources"
         message="The resource `R.color.purple_700` appears to be unused">
         <location column="12" file="src/main/res/values/colors.xml" line="5" />
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;teal_200&quot;>#FF03DAC5&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~"
-        id="UnusedResources"
+    <issue errorLine1="    &lt;color name=&quot;teal_200&quot;>#FF03DAC5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~" id="UnusedResources"
         message="The resource `R.color.teal_200` appears to be unused">
         <location column="12" file="src/main/res/values/colors.xml" line="6" />
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;teal_700&quot;>#FF018786&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~"
-        id="UnusedResources"
+    <issue errorLine1="    &lt;color name=&quot;teal_700&quot;>#FF018786&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~" id="UnusedResources"
         message="The resource `R.color.teal_700` appears to be unused">
         <location column="12" file="src/main/res/values/colors.xml" line="7" />
     </issue>
@@ -93,9 +85,9 @@
         <location file="src/main/res/mipmap-hdpi/ic_launcher_round.webp" />
     </issue>
 
-    <issue errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^"
-        id="MonochromeLauncherIcon"
+    <issue
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^" id="MonochromeLauncherIcon"
         message="The application adaptive icon is missing a monochrome tag">
         <location column="1" file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml" line="2" />
     </issue>

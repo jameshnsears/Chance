@@ -72,7 +72,9 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         val newDescription = "newDescription"
         dialogBagAndroidViewModel.cardSideAndroidViewModel.sideDescription(newDescription)
         val newDescriptionColour = "newDescriptionColour"
-        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideDescriptionColour(newDescriptionColour)
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideDescriptionColour(
+            newDescriptionColour
+        )
         dialogBagAndroidViewModel.cardSideAndroidViewModel.sideApplyToAllDescription(true)
 
         dialogBagAndroidViewModel.cardSideAndroidViewModel.sideImageSvgClear()
@@ -114,7 +116,10 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
             assertEquals(originalSides[newSide].imageBase64, newSides[newSide].imageBase64)
             assertEquals(originalSides[newSide].imageDrawableId, newSides[newSide].imageDrawableId)
             assertEquals(originalSides[newSide].description, newSides[newSide].description)
-            assertEquals(originalSides[newSide].descriptionColour, newSides[newSide].descriptionColour)
+            assertEquals(
+                originalSides[newSide].descriptionColour,
+                newSides[newSide].descriptionColour
+            )
         }
     }
 

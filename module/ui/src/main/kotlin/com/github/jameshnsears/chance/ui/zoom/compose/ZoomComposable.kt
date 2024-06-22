@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.data.domain.state.Dice
@@ -237,7 +236,7 @@ fun SideImageSVG(
                 modifier = Modifier
                     .size(resizeView)
                     .clickable { showDialog.value = true },
-                )
+            )
         }
     }
 
