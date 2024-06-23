@@ -3,7 +3,6 @@
 /bin/envvars.sh
 /build
 /captures
-/docs/github-env.txt
 .cxx
 .DS_Store
 .externalNativeBuild
