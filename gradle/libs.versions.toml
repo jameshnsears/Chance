@@ -2,7 +2,7 @@
 activity-compose = "1.9.0"
 appcompat = "1.7.0"
 coil-svg = "2.6.0"
-colorpicker-compose = "1.0.8"
+colorpicker-compose = "1.0.9"
 com-android-application = "8.5.0"
 com-android-library = "8.5.0"
 com-diffplug-spotless = "6.25.0"
