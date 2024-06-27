@@ -100,7 +100,7 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew :app:connectedFdroidDebugAndroidTest --stacktrace
+            ./gradlew :module:test:connectedFdroidDebugAndroidTest --stacktrace
 
       - name: artifact logcat
         if: always()
@@ -203,7 +203,7 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew :app:connectedGoogleplayDebugAndroidTest --stacktrace
+            ./gradlew :module:test:connectedGoogleplayDebugAndroidTest --stacktrace
 
       - name: artifact logcat
         if: always()

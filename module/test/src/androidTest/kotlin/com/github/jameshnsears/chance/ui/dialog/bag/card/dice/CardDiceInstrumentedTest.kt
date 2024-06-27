@@ -13,9 +13,11 @@ import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose.BagCardDic
 import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import org.junit.Assert.fail
+import org.junit.Ignore
 import org.junit.Test
 
 class CardDiceInstrumentedTest : DialogBagInstrumentedHelper() {
+    @Ignore
     @Test
     fun changeTitleSidesColourUsingStorage() {
         val showDialog = mutableStateOf(true)

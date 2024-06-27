@@ -49,12 +49,6 @@ jobs:
           GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
-      - name: local.properties
-        env:
-          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
-        run: |
-          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
-
       - name: gradlew
         run: |
           set -x
@@ -95,12 +89,6 @@ jobs:
         env:
           GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
-
-      - name: local.properties
-        env:
-          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
-        run: |
-          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
 
       - name: gradlew
         run: |
@@ -143,12 +131,6 @@ jobs:
         env:
           GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
-
-      - name: local.properties
-        env:
-          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
-        run: |
-          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
 
       - name: gradlew
         run: |

@@ -102,15 +102,6 @@ class RepositoryImportValidation {
 
         private fun validateRepositoryRoll(jsonRoll: JsonNode) {
             jsonRoll.forEach { rollHistory ->
-                val rollEpoch = rollHistory.fields().next().key
-                if (rollEpoch.length != 13) {
-                    logSchemaValidationFailure(
-                        rollEpoch,
-                        RepositoryImportSchema.schemaDice,
-                        RepositoryImportStatus.ERROR_SCHEMA_ROLL
-                    )
-                }
-
                 rollHistory.forEach { rollSequence ->
                     rollSequence.forEach { roll ->
                         roll.forEach { diceAndSide ->

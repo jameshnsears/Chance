@@ -25,18 +25,18 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         val tabBagViewModel = tabBagViewModel()
 
         assertEquals(
-            """
+            """           
             {
               "tabRowChance": ${Settings().tabRowChance},
               "resize": ${Settings().resize},
-              "rollTime": ${Settings().rollIndexTime},
+              "rollIndexTime": ${Settings().rollIndexTime},
               "rollScore": ${Settings().rollScore},
-              "rollSound": ${Settings().rollSound},
               "diceTitle": ${Settings().diceTitle},
               "sideNumber": ${Settings().sideNumber},
+              "behaviour": ${Settings().behaviour},
               "sideDescription": ${Settings().sideDescription},
               "sideSVG": ${Settings().sideSVG},
-              "behaviour": ${Settings().behaviour}
+              "rollSound": ${Settings().rollSound}
             }
             """.trimIndent(),
             tabBagViewModel.repositorySettings.exportJson()
@@ -188,21 +188,6 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         )
         assertEquals(
             RepositoryImportStatus.ERROR_SCHEMA_DICE,
-            tabBagViewModel.stateFlowTabBagImport.value.importDetail
-        )
-    }
-
-    @Test
-    fun importInvalidRoll() = runTest {
-        val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(getResourceAsString("/data/json/import/Invalid-Roll.json"))
-
-        assertEquals(
-            ExportImportStatus.FAILURE,
-            tabBagViewModel.stateFlowTabBagImport.value.importStatus
-        )
-        assertEquals(
-            RepositoryImportStatus.ERROR_SCHEMA_ROLL,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }

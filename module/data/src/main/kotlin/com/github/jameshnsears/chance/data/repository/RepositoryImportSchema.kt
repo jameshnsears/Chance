@@ -6,50 +6,54 @@ class RepositoryImportSchema {
     companion object {
         val schemaSettings = JSONSchema.parse(
             """
-                {
-                  "type" : "object",
-                  "properties" : {
-                    "tabRowChance" : {
-                      "type" : "integer",
-                      "enum": [0, 1]
-                    },
-                    "resize" : {
-                      "type" : "number"
-                    },
-                    "rollTime" : {
-                      "type" : "boolean"
-                    },
-                    "rollScore" : {
-                      "type" : "boolean"
-                    },
-                    "rollSound" : {
-                      "type" : "boolean"
-                    },
-                    "diceTitle" : {
-                      "type" : "boolean"
-                    },
-                    "sideNumber" : {
-                      "type" : "boolean"
-                    },
-                    "sideDescription" : {
-                      "type" : "boolean"
-                    },
-                    "sideSVG" : {
-                      "type" : "boolean"
-                    }
-                  },
-                  "required": [
-                    "tabRowChance",
-                    "resize", 
-                    "rollTime",
-                    "rollScore", 
-                    "rollSound",
-                    "diceTitle",
-                    "sideNumber",
-                    "sideDescription",
-                    "sideSVG"
-                    ]
-                }                    
+            {
+              "type": "object",
+              "properties": {
+                "tabRowChance": {
+                  "type": "integer",
+                  "enum": [0, 1]
+                },
+                "resize": {
+                  "type": "number"
+                },
+                "rollIndexTime": {
+                  "type": "boolean"
+                },
+                "rollScore": {
+                  "type": "boolean"
+                },
+                "diceTitle": {
+                  "type": "boolean"
+                },
+                "sideNumber": {
+                  "type": "boolean"
+                },
+                "behaviour": {
+                  "type": "boolean"
+                },
+                "sideDescription": {
+                  "type": "boolean"
+                },
+                "sideSVG": {
+                  "type": "boolean"
+                },
+                "rollSound": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "tabRowChance",
+                "resize",
+                "rollIndexTime",
+                "rollScore",
+                "diceTitle",
+                "sideNumber",
+                "behaviour",
+                "sideDescription",
+                "sideSVG",
+                "rollSound"
+              ]
+            }                 
                 """.trimIndent()
         )
 
@@ -145,8 +149,13 @@ class RepositoryImportSchema {
                       "maxLength": 8,
                       "minLength": 8
                     }
-                  }
-                }
+                  },
+                  "required": [
+                    "number", 
+                    "numberColour", 
+                    "descriptionColour"
+                    ]
+                }  
                 """.trimIndent()
         )
     }

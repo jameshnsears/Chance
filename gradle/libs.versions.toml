@@ -11,16 +11,17 @@ compose-bom = "2024.06.00"
 core-ktx = "1.13.1"
 core-splashscreen = "1.0.1"
 datastore-core = "1.1.1"
-espresso-core = "3.5.1"
+espresso-core = "3.6.1"
 firebase-bom = "33.1.1"
 firebase-crashalytics-plugin = "3.0.2"
 io-gitlab-arturbosch-detekt = "1.23.6"
 jackson-module-kotlin = "2.17.1"
 json-kotlin-schema = "0.47"
 jsonschema-generator = "4.35.0"
-junit = "1.1.5"
+junit = "1.2.1"
 junit-bom = "5.10.2"
 junit-jupiter = "5.10.2"
+kotlin-test = "2.0.0"
 kotlinx-coroutines-test = "1.8.1"
 leakcanary-android = "2.14"
 lifecycle-runtime-compose = "2.8.2"
@@ -31,6 +32,7 @@ org-jlleitschuh-gradle-ktlint = "12.1.1"
 protobuf-java = "3.25.3"            # stay on 3.25.3
 protobuf-java-util = "3.25.3"       # stay on 3.25.3
 protobuf-kotlin = "3.25.3"          # stay on 3.25.3
+org-sonarqube = "5.0.0.4638"
 slf4j-simple = "2.0.13"
 timber = "5.0.1"
 
@@ -60,6 +62,7 @@ com-google-firebase-crashlytics = { group = "com.google.firebase", name = "fireb
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson-module-kotlin" }
 json-kotlin-schema = { module = "net.pwall.json:json-kotlin-schema", version.ref = "json-kotlin-schema" }
 jsonschema-generator = { module = "com.github.victools:jsonschema-generator", version.ref = "jsonschema-generator" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin-test" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary-android" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 org-jetbrains-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }

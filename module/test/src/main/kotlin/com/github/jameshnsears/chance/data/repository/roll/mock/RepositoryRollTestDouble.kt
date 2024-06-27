@@ -66,7 +66,14 @@ class RepositoryRollTestDouble private constructor() :
                 side.descriptionColour = it.side.descriptionColour
 
                 rollList.add(
-                    Roll(diceEpoch = it.diceEpoch, side = side)
+                    Roll(
+                        diceEpoch = it.diceEpoch,
+                        side = side,
+                        multiplierIndex = it.multiplierIndex,
+                        explodeIndex = it.explodeIndex,
+                        scoreAdjustment = it.scoreAdjustment,
+                        score = it.score
+                    )
                 )
             }
 

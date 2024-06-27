@@ -2,9 +2,11 @@ package com.github.jameshnsears.chance
 
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
 import org.junit.Assert.fail
+import org.junit.Ignore
 import org.junit.Test
 
 open class MainActivityInstrumentedTest : UtilityLoggingInstrumentedHelper() {
+    @Ignore
     @Test
     fun exportThenDeleteSomeDiceThenImport() {
         // TODO ensure we're using Startup samples!

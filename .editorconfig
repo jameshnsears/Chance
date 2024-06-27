@@ -12,6 +12,9 @@ indent_size = 4
 ij_kotlin_allow_trailing_comma = false
 ij_kotlin_allow_trailing_comma_on_call_site = true
 
+[kotlin]
+ktlint_max_line_length = 250
+
 
 [*.{yml,yaml}]
 indent_size = 2

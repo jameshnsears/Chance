@@ -15,5 +15,4 @@ enum class RepositoryImportStatus {
     ERROR_SCHEMA_SETTINGS,
     ERROR_SCHEMA_DICE,
     ERROR_SCHEMA_SIDE,
-    ERROR_SCHEMA_ROLL
 }

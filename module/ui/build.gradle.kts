@@ -64,6 +64,10 @@ android {
             dimension = "store"
         }
     }
+
+    lint {
+        xmlReport = true
+    }
 }
 
 dependencies {

@@ -98,7 +98,7 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew :app:testFdroidDebugUnitTest --stacktrace
+            ./gradlew :module:test:testFdroidDebugUnitTest --stacktrace
 
       - name: artifact logcat
         if: always()
@@ -201,7 +201,7 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew :app:testGoogleplayDebugUnitTest --stacktrace
+            ./gradlew :module:test:testGoogleplayDebugUnitTest --stacktrace
 
       - name: artifact logcat
         if: always()

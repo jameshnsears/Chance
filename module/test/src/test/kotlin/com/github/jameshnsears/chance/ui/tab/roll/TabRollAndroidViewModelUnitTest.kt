@@ -81,7 +81,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
             mutableMapOf(1L to rolls.toList()).entries.first()
 
         assertEquals(
-            " 36", tabRollViewModel.diceSequenceScore(
+            "36", tabRollViewModel.diceSequenceScore(
                 rollSequence
             )
         )
@@ -153,7 +153,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
             mutableMapOf(1L to rolls.toList()).entries.first()
 
         assertEquals(
-            "  1", tabRollViewModel.diceSequenceScore(
+            "1", tabRollViewModel.diceSequenceScore(
                 rollSequence
             )
         )

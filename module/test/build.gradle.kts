@@ -70,6 +70,10 @@ android {
             dimension = "store"
         }
     }
+
+    lint {
+        xmlReport = true
+    }
 }
 
 dependencies {
@@ -100,7 +104,7 @@ dependencies {
     implementation(project(":module:data"))
     implementation(project(":module:ui"))
     implementation(project(":module:ui-dialog-bag"))
-    testImplementation("org.jetbrains.kotlin:kotlin-test:2.0.0")
+    testImplementation(libs.kotlin.test)
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.org.junit.jupiter)
     testImplementation(platform(libs.org.junit.bom))

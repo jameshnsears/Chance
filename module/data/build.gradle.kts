@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.org.jetbrains.kotlin.plugin.compose) apply false
 }
 
 android {
@@ -41,6 +40,10 @@ android {
         create("googleplay") {
             dimension = "store"
         }
+    }
+
+    lint {
+        xmlReport = true
     }
 }
 
