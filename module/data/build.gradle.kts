@@ -45,6 +45,13 @@ android {
     lint {
         xmlReport = true
     }
+
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("src/main/java")
+            kotlin.srcDirs("src/main/kotlin")
+        }
+    }
 }
 
 dependencies {
