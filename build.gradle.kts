@@ -69,8 +69,10 @@ subprojects {
 
                 classDirectories.setFrom(
                     files(
-                        fileTree("build/tmp/kotlin-classes") {
-                            include("**/*.class")
+                        fileTree("build") {
+                            include(
+                                "intermediates/javac/fdroidDebug/**/*.class",
+                                "tmp/kotlin-classes/**/*.class")
                             exclude(exclusions)
                         },
                     ),
@@ -99,7 +101,7 @@ sonar {
         property("sonar.host.url", "https://sonarcloud.io")
         property(
             "sonar.sources",
-            "./module/common/src/main/kotlin/**/*.kt,./module/data/src/main/kotlin/**/*.kt,./module/test/src/main/kotlin/**/*.kt,./module/ui/src/main/kotlin/**/*.kt,./module/ui-dialog-bag/src/main/kotlin/**/*.kt",
+            "./module/common/src/main/kotlin/**/*.kt,./module/data/src/main/java/**/*.kt,./module/data/src/main/kotlin/**/*.kt,./module/test/src/main/kotlin/**/*.kt,./module/ui/src/main/kotlin/**/*.kt,./module/ui-dialog-bag/src/main/kotlin/**/*.kt",
         )
         property("sonar.exclusions", "module/data/src/res/**/*.xml,module/data/src/main/java/**/*.java,**/androidTest/**/*.kt")
         property("sonar.tests", "./module/test/src/test/kotlin")
