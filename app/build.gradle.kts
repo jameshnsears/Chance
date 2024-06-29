@@ -33,7 +33,7 @@ android {
         }
 
         debug {
-            enableUnitTestCoverage = true
+            enableAndroidTestCoverage = true
             isMinifyEnabled = false
         }
     }

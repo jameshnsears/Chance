@@ -34,6 +34,7 @@ android {
         debug {
             buildConfigField("String", "VERSION", "\"${versionName}\"")
             buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
+            enableUnitTestCoverage = true
         }
     }
 
