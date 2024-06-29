@@ -1,0 +1,9 @@
+# jacocoAndroidTestReport
+./gradlew clean jacocoTestReport
+
+bash <(curl https://codecov.io/bash) \
+  -t $CODECOV_TOKEN \
+  -f ./module/ui/build/reports/jacoco/TEST-report.xml -F test.ui \
+  -f ./module/data/build/reports/jacoco/TEST-report.xml -F test.data \
+  -f ./module/ui-dialog-bag/build/reports/jacoco/TEST-report.xml -F test.ui-dialog-bag
+

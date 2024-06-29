@@ -35,10 +35,17 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
+        }
     }
 
     flavorDimensions += listOf("store")
@@ -46,6 +53,7 @@ android {
         create("fdroid") {
             dimension = "store"
         }
+
         create("googleplay") {
             dimension = "store"
         }
@@ -57,9 +65,16 @@ android {
 }
 
 dependencies {
-    implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.timber)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.coil.compose)
     implementation(libs.coil.svg)
+    implementation(libs.mockk)
+    implementation(libs.org.jetbrains.kotlinx.coroutines.test)
+    implementation(libs.org.junit.jupiter)
+    implementation(libs.slf4j.simple)
+    implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.org.junit.bom))
 }

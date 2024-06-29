@@ -41,11 +41,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.github.jameshnsears.chance.ui.dialog.bag.R
+import com.github.jameshnsears.chance.ui.dialog.bag.card.colour.compose.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.bag.card.compose.BagCardColourSample
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideSvgImportException
-import com.github.jameshnsears.chance.ui.dialog.colour.compose.DialogColourPicker
-import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 class BagCardSideTestTag {
     companion object {

@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose
 
 import android.content.Context
-import com.github.jameshnsears.chance.ui.dialog.dice.R
+import com.github.jameshnsears.chance.ui.dialog.bag.R
 
 class BagCardDiceSliderSides(
     private val context: Context

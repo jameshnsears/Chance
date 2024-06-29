@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$/module" />
             <option value="$PROJECT_DIR$/module/common" />
             <option value="$PROJECT_DIR$/module/data" />
-            <option value="$PROJECT_DIR$/module/test" />
             <option value="$PROJECT_DIR$/module/ui" />
             <option value="$PROJECT_DIR$/module/ui-dialog-bag" />
           </set>

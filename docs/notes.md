@@ -178,10 +178,3 @@ design functions for "main safety"
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 */
-
-~/bin/sonarqube-10.6.0.92116/bin/linux-x86-64$ ./sonar.sh console
-
-http://localhost:9000 using System Administrator credentials:
-
-login: admin
-password: admin

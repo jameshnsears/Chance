@@ -37,10 +37,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.github.jameshnsears.chance.ui.dialog.bag.R
+import com.github.jameshnsears.chance.ui.dialog.bag.card.colour.compose.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.bag.card.compose.BagCardColourSample
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceViewModel
-import com.github.jameshnsears.chance.ui.dialog.colour.compose.DialogColourPicker
-import com.github.jameshnsears.chance.ui.dialog.dice.R
 import kotlin.math.roundToInt
 
 class BagCardDiceTestTag {

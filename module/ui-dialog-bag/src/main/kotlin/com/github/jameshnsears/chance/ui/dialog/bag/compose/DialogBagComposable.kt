@@ -33,10 +33,10 @@ import com.github.jameshnsears.chance.data.domain.state.Dice
 import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.R
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose.BagCardDice
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.compose.BagCardRoll
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.compose.BagCardSide
-import com.github.jameshnsears.chance.ui.dialog.dice.R
 
 @Composable
 fun DialogBag(
