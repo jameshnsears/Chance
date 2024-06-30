@@ -105,9 +105,8 @@ jobs:
       - name: codecov
         run: |
           set -x
-          xml=$(ls ./app/build/outputs/androidTest-results/connected/debug/flavors/fdroid/TEST-*.xml)
           bash <(curl https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} \
-          -f $xml -F androidTest.app
+          -f "./app/build/outputs/androidTest-results/connected/debug/flavors/fdroid/TEST-emulator-5554 - 14-_app-fdroid.xml -F androidTest.app
 
       - name: artifact logcat
         if: always()
