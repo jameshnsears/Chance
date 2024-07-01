@@ -100,14 +100,13 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew jacocoAndroidTestReport
+            ./gradlew createFdroidDebugAndroidTestCoverageReport
 
       - name: codecov
         run: |
           set -x
-          ls -al ./app/build/outputs/androidTest-results/connected/debug/flavors/fdroid
           bash <(curl https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} \
-          -f "./app/build/outputs/androidTest-results/connected/debug/flavors/fdroid/TEST-emulator-5554 - 14-_app-fdroid.xml" -F androidTest.app
+          -f "./app/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml" -F androidTest.app
 
       - name: artifact logcat
         if: always()
