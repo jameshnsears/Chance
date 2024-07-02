@@ -3,11 +3,17 @@ ignore:
   - "**/*Preview.kt"
 
 flags:
-  androidTest.app:
+  data.androidTest:
     carryforward: false
-  test.data:
+  data.test:
     carryforward: false
-  test.ui:
+
+  ui.androidTest:
     carryforward: false
-  test.ui-dialog-bag:
+  ui.test:
+    carryforward: false
+
+  ui-dialog-bag.androidTest:
+    carryforward: false
+  ui-dialog-bag.test:
     carryforward: false

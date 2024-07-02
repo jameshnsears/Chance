@@ -53,8 +53,36 @@ jobs:
         run: |
           set -x
           ./gradlew jacocoTestReport
-          bash <(curl https://codecov.io/bash) \
-          -t ${{ secrets.CODECOV_TOKEN }} \
-          -f ./module/ui/build/reports/jacoco/TEST-report.xml -F test.ui \
-          -f ./module/data/build/reports/jacoco/TEST-report.xml -F test.data \
-          -f ./module/ui-dialog-bag/build/reports/jacoco/TEST-report.xml -F test.ui-dialog-bag
+          ls -al ./module/data/build/reports/jacoco/test.xml
+          ls -al ./module/ui/build/reports/jacoco/test.xml
+          ls -al ./module/ui-dialog-bag/build/reports/jacoco/test.xml
+
+      - name: codecov - data.test
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./module/data/build/reports/jacoco/test.xml
+          flags: data.test
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: codecov - ui.test
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./module/ui/build/reports/jacoco/test.xml
+          flags: ui.test
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: codecov - ui-dialog-bag.test
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./module/ui-dialog-bag/build/reports/jacoco/test.xml
+          flags: ui-dialog-bag.test
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

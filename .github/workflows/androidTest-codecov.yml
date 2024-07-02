@@ -88,6 +88,7 @@ jobs:
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
       - name: jacocoAndroidTestReport
+        if: matrix.api-level == 24
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -100,13 +101,31 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew createFdroidDebugAndroidTestCoverageReport
+            ./gradlew :module:data:jacocoAndroidTestReport
+            ./gradlew :module:ui-dialog-bag:jacocoAndroidTestReport
+            find . -ls
 
-      - name: codecov
-        run: |
-          set -x
-          bash <(curl https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }} \
-          -f "./app/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml" -F androidTest.app
+      - name: codecov - data.androidTest
+        if: matrix.api-level == 24
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./module/data/build/reports/jacoco/androidTest.xml
+          flags: data.androidTest
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: codecov - ui-data-dialog.androidTest
+        if: matrix.api-level == 24
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./module/ui-data-dialog/build/reports/jacoco/androidTest.xml
+          flags: ui-data-dialog.androidTest
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: artifact logcat
         if: always()

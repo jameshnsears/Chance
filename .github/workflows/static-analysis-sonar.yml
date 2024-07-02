@@ -97,7 +97,6 @@ jobs:
 
   lintFdroidDebug:
     name: lintFdroidDebug
-    needs: [ detekt, ktlint ]
     runs-on: ubuntu-latest
     steps:
       - name: clone
@@ -139,7 +138,7 @@ jobs:
 
   sonar:
     name: sonar
-    needs: [ lintFdroidDebug ]
+    needs: [ detekt, ktlint ]
     runs-on: ubuntu-latest
     steps:
       - name: clone
@@ -180,4 +179,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -x
-          ./gradlew clean jacocoTestReport sonar
+          ./gradlew testFdroidDebugUnitTest sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }} --info

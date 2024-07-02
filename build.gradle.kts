@@ -48,15 +48,21 @@ subprojects {
                     listOf(
                         "**/BuildConfig.*",
                         "**/compose/*.*",
+                        "**/*Preview.*",
+                        "**/impl/*.*",
+                        "**/domain/proto/*.*",
+                        "**/UtilityJsonSchemaGenerator*.*",
+                        "**/R.class",
+                        "**/R\$*.class",
+                        "**/Manifest*.*",
                     )
 
                 sourceDirectories.setFrom(
                     files(
-                        fileTree("src") {
+                        fileTree("src/main") {
                             include(
-                                "main/kotlin/**/*.kt",
-                                "main/java/**/*.java",
-                                "androidTest/kotlin/**/*.kt",
+                                "**/*.kt",
+                                "**/*.java",
                             )
                             exclude(exclusions)
                         },
@@ -67,7 +73,7 @@ subprojects {
                     files(
                         fileTree("build") {
                             include(
-                                "intermediates/javac/fdroidDebug/**/*.class",
+                                "intermediates/javac/**/*.class",
                                 "tmp/kotlin-classes/**/*.class"
                             )
                             exclude(exclusions)
@@ -77,16 +83,85 @@ subprojects {
 
                 executionData.setFrom(
                     fileTree("build/outputs") {
-                        include("unit_test_code_coverage/**/*.exec")
+                        include("**/*.exec")
                     },
                 )
 
                 reports {
                     xml.required.set(true)
-                    xml.outputLocation.set(file("build/reports/jacoco/TEST-report.xml"))
+                    xml.outputLocation.set(file("build/reports/jacoco/test.xml"))
                     html.required.set(true)
                 }
             }
+
+            //////////////////////////////////////////////////////
+
+            tasks.register<JacocoReport>("jacocoAndroidTestReport") {
+                group = "chance"
+                description = "coverage - androidTest"
+
+                dependsOn("connectedFdroidDebugAndroidTest")
+
+                val exclusions =
+                    listOf(
+                        "**/BuildConfig.*",
+                        "**/*Preview.*",
+                        "**/mock/*.*",
+                        "**/domain/proto/*.*",
+                        "**/UtilityJsonSchemaGenerator*.*",
+                        "**/R.class",
+                        "**/R\$*.class",
+                        "**/Manifest*.*",
+                    )
+
+                sourceDirectories.setFrom(
+                    files(
+                        fileTree("src/main") {
+                            include(
+                                "**/*.kt",
+                                "**/*.java",
+                            )
+                            exclude(exclusions)
+                        },
+                    ),
+                )
+
+                classDirectories.setFrom(
+                    files(
+                        fileTree("build") {
+                            include(
+                                "intermediates/javac/**/*.class",
+                                "tmp/kotlin-classes/**/*.class"
+                            )
+                            exclude(exclusions)
+                        },
+                    ),
+                )
+
+                executionData.setFrom(
+                    fileTree("build/outputs") {
+                        include("**/coverage.ec")
+                    },
+                )
+
+                reports {
+                    xml.required.set(true)
+                    xml.outputLocation.set(file("build/reports/jacoco/androidTest.xml"))
+                    html.required.set(true)
+                }
+            }
+
         }
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "jameshnsears-github_chance")
+        property("sonar.organization", "jameshnsears-github")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.sources", "app/src/**/*.*,module/**/src/**/*.*")
+        property("sonar.classes", "app/build/**/*.class,module/build/**/*.class")
+        property("sonar.exclusions", "**/*.java")
     }
 }

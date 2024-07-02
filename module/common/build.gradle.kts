@@ -70,6 +70,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui.test.junit4)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.junit.ktx)
     implementation(libs.coil.compose)
