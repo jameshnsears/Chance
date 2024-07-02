@@ -1,4 +1,4 @@
-name: static-analysis-sonar
+name: static-analysis
 
 on:
   push:
