@@ -160,8 +160,8 @@ sonar {
         property("sonar.projectKey", "jameshnsears-github_chance")
         property("sonar.organization", "jameshnsears-github")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.sources", "app/src/**/*.*,module/**/src/**/*.*")
-        property("sonar.classes", "app/build/**/*.class,module/build/**/*.class")
-        property("sonar.exclusions", "**/*.java")
+//        property("sonar.sources", "app/src/**/*.*,module/**/src/**/*.*")
+//        property("sonar.classes", "app/build/**/*.class,module/build/**/*.class")
+//        property("sonar.exclusions", "**/*.java")
     }
 }

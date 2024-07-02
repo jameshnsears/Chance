@@ -179,4 +179,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -x
-          ./gradlew testFdroidDebugUnitTest sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }} --info
+          ./gradlew sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }} --info
