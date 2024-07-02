@@ -1,4 +1,4 @@
-name: androidTest-codecov
+name: androidTest
 
 on:
   push:
