@@ -88,7 +88,7 @@ jobs:
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
       - name: jacocoAndroidTestReport
-        if: matrix.api-level == 24
+        if: matrix.api-level == 34
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -110,7 +110,7 @@ jobs:
             echo "+++++"
 
 #      - name: codecov - data.androidTest
-#        if: matrix.api-level == 24
+#        if: matrix.api-level == 34
 #        uses: codecov/codecov-action@v4
 #        with:
 #          fail_ci_if_error: true
@@ -121,7 +121,7 @@ jobs:
 #          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 #
 #      - name: codecov - ui-data-dialog.androidTest
-#        if: matrix.api-level == 24
+#        if: matrix.api-level == 34
 #        uses: codecov/codecov-action@v4
 #        with:
 #          fail_ci_if_error: true
