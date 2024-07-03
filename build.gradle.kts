@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.io.gitlab.arturbosch.detekt)
     alias(libs.plugins.org.jetbrains.kotlin.android) apply false
     alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
-    id("org.sonarqube") version libs.versions.org.sonarqube
 }
 
 spotless {
@@ -150,7 +149,6 @@ subprojects {
                     html.required.set(true)
                 }
             }
-
         }
     }
 }
