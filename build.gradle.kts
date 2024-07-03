@@ -59,6 +59,7 @@ subprojects {
                         "**/*$*.class",
                         "**/*Companion*.class",
                         "**/*\$Lambda\$*.class",
+                        "**/\$\$Lambda\$*.class",
                         "**/*\$WhenMappings*.class",
                         "**/*\$DefaultImpls*.class",
                         "**/META-INF/versions/**",
@@ -125,6 +126,7 @@ subprojects {
                         "**/*$*.class",
                         "**/*Companion*.class",
                         "**/*\$Lambda\$*.class",
+                        "**/\$\$Lambda\$*.class",
                         "**/*\$WhenMappings*.class",
                         "**/*\$DefaultImpls*.class",
                         "**/META-INF/versions/**",
@@ -156,7 +158,9 @@ subprojects {
 
                 executionData.setFrom(
                     fileTree("build/outputs") {
-                        include("**/coverage.ec")
+                        include(
+                            "**/coverage.ec",
+                            "**/testFdroidDebugUnitTest.exec"                            )
                     },
                 )
 
@@ -191,6 +195,7 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
             "**/*$*.class",
             "**/*Companion*.class",
             "**/*\$Lambda\$*.class",
+            "**/\$\$Lambda\$*.class",
             "**/*\$WhenMappings*.class",
             "**/*\$DefaultImpls*.class",
             "**/META-INF/versions/**",
@@ -222,7 +227,10 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
 
     executionData.setFrom(
         fileTree(".") {
-            include("**/coverage.ec", "**/testFdroidDebugUnitTest.exec")
+            include(
+                "**/coverage.ec", 
+                "**/testFdroidDebugUnitTest.exec"
+                )
         },
     )
 
