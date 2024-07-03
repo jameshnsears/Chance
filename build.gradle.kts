@@ -32,9 +32,8 @@ ktlint {
     }
 }
 
-apply(plugin = "jacoco")
-
 subprojects {
+    apply(plugin = "jacoco")
     afterEvaluate {
         if (plugins.hasPlugin("com.android.application") || plugins.hasPlugin("com.android.library")) {
             tasks.register<JacocoReport>("jacocoTestReport") {
@@ -54,6 +53,15 @@ subprojects {
                         "**/R.class",
                         "**/R\$*.class",
                         "**/Manifest*.*",
+                        "**/kotlin/**",
+                        "**/kotlinx/**",
+                        "**/generated/**",
+                        "**/*$*.class",
+                        "**/*Companion*.class",
+                        "**/*\$Lambda\$*.class",
+                        "**/*\$WhenMappings*.class",
+                        "**/*\$DefaultImpls*.class",
+                        "**/META-INF/versions/**",
                     )
 
                 sourceDirectories.setFrom(
@@ -97,7 +105,7 @@ subprojects {
 
             tasks.register<JacocoReport>("jacocoAndroidTestReport") {
                 group = "chance"
-                description = "coverage - androidTest"
+                description = "coverage - androidTest API 33"
 
                 dependsOn("connectedFdroidDebugAndroidTest")
 
@@ -111,6 +119,15 @@ subprojects {
                         "**/R.class",
                         "**/R\$*.class",
                         "**/Manifest*.*",
+                        "**/kotlin/**",
+                        "**/kotlinx/**",
+                        "**/generated/**",
+                        "**/*$*.class",
+                        "**/*Companion*.class",
+                        "**/*\$Lambda\$*.class",
+                        "**/*\$WhenMappings*.class",
+                        "**/*\$DefaultImpls*.class",
+                        "**/META-INF/versions/**",
                     )
 
                 sourceDirectories.setFrom(
@@ -153,6 +170,7 @@ subprojects {
     }
 }
 
+apply(plugin = "jacoco")
 tasks.register<JacocoReport>("jacocoCombinedReport") {
     group = "chance"
     description = "coverage - combined"
@@ -167,6 +185,15 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
             "**/R.class",
             "**/R\$*.class",
             "**/Manifest*.*",
+            "**/kotlin/**",
+            "**/kotlinx/**",
+            "**/generated/**",
+            "**/*$*.class",
+            "**/*Companion*.class",
+            "**/*\$Lambda\$*.class",
+            "**/*\$WhenMappings*.class",
+            "**/*\$DefaultImpls*.class",
+            "**/META-INF/versions/**",
         )
 
     sourceDirectories.setFrom(
