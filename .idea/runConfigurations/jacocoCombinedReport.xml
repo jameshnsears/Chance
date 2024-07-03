@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="jacocoAndroidTestReport" type="GradleRunConfiguration" factoryName="Gradle" folderName="jacoco">
+  <configuration default="false" name="jacocoCombinedReport" type="GradleRunConfiguration" factoryName="Gradle" folderName="jacoco">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value="jacocoAndroidTestReport" />
+          <option value="jacocoCombinedReport" />
         </list>
       </option>
       <option name="vmOptions" />

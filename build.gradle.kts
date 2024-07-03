@@ -32,9 +32,9 @@ ktlint {
     }
 }
 
-subprojects {
-    apply(plugin = "jacoco")
+apply(plugin = "jacoco")
 
+subprojects {
     afterEvaluate {
         if (plugins.hasPlugin("com.android.application") || plugins.hasPlugin("com.android.library")) {
             tasks.register<JacocoReport>("jacocoTestReport") {
@@ -150,5 +150,58 @@ subprojects {
                 }
             }
         }
+    }
+}
+
+tasks.register<JacocoReport>("jacocoCombinedReport") {
+    group = "chance"
+    description = "coverage - combined"
+
+    val exclusions =
+        listOf(
+            "**/BuildConfig.*",
+            "**/*Preview.*",
+            "**/mock/*.*",
+            "**/domain/proto/*.*",
+            "**/UtilityJsonSchemaGenerator*.*",
+            "**/R.class",
+            "**/R\$*.class",
+            "**/Manifest*.*",
+        )
+
+    sourceDirectories.setFrom(
+        files(
+            fileTree("module") {
+                include(
+                    "**/src/main/**/*.kt",
+                    "**/src/main/**/*.java",
+                )
+                exclude(exclusions)
+            },
+        ),
+    )
+
+    classDirectories.setFrom(
+        files(
+            fileTree(".") {
+                include(
+                    "**/build/intermediates/javac/**/*.class",
+                    "**/build/tmp/kotlin-classes/**/*.class"
+                )
+                exclude(exclusions)
+            },
+        ),
+    )
+
+    executionData.setFrom(
+        fileTree(".") {
+            include("**/coverage.ec", "**/testFdroidDebugUnitTest.exec")
+        },
+    )
+
+    reports {
+        xml.required.set(false)
+        html.outputLocation.set(file("build/reports/jacoco/combined"))
+        html.required.set(true)
     }
 }
