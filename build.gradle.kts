@@ -58,11 +58,11 @@ subprojects {
                         "**/generated/**",
                         "**/*$*.class",
                         "**/*Companion*.class",
-                        "**/*\$Lambda\$*.class",
-                        "**/\$\$Lambda\$*.class",
+                        "**/*Lambda*.class",
                         "**/*\$WhenMappings*.class",
                         "**/*\$DefaultImpls*.class",
                         "**/META-INF/versions/**",
+                        "**/*\$lambda\$*.class"
                     )
 
                 sourceDirectories.setFrom(
@@ -125,11 +125,12 @@ subprojects {
                         "**/generated/**",
                         "**/*$*.class",
                         "**/*Companion*.class",
-                        "**/*\$Lambda\$*.class",
-                        "**/\$\$Lambda\$*.class",
+                        "**/*Lambda*.class",
                         "**/*\$WhenMappings*.class",
                         "**/*\$DefaultImpls*.class",
                         "**/META-INF/versions/**",
+                        "**/*\$lambda\$*.class",
+                        "**/*ComposableKt.class",
                     )
 
                 sourceDirectories.setFrom(
@@ -194,11 +195,12 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
             "**/generated/**",
             "**/*$*.class",
             "**/*Companion*.class",
-            "**/*\$Lambda\$*.class",
-            "**/\$\$Lambda\$*.class",
+            "**/*Lambda*.class",
             "**/*\$WhenMappings*.class",
             "**/*\$DefaultImpls*.class",
             "**/META-INF/versions/**",
+            "**/*\$lambda\$*.class",
+            "**/*ComposableKt.class",
         )
 
     sourceDirectories.setFrom(

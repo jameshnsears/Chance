@@ -1,4 +1,4 @@
-name: androidTest
+name: androidTest-codecov
 
 on:
   push:
@@ -105,27 +105,27 @@ jobs:
             ./gradlew :module:ui-dialog-bag:jacocoAndroidTestReport
             find . -ls | grep androidTest.xml
 
-#      - name: codecov - data.androidTest
-#        if: matrix.api-level == 34
-#        uses: codecov/codecov-action@v4
-#        with:
-#          fail_ci_if_error: true
-#          files: ./module/data/build/reports/jacoco/androidTest.xml
-#          flags: data.androidTest
-#          verbose: true
-#        env:
-#          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-#
-#      - name: codecov - ui-data-dialog.androidTest
-#        if: matrix.api-level == 34
-#        uses: codecov/codecov-action@v4
-#        with:
-#          fail_ci_if_error: true
-#          files: ./module/ui-data-dialog/build/reports/jacoco/androidTest.xml
-#          flags: ui-data-dialog.androidTest
-#          verbose: true
-#        env:
-#          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: codecov - data.androidTest
+        if: matrix.api-level == 34
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./module/data/build/reports/jacoco/androidTest.xml
+          flags: data.androidTest
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: codecov - ui-data-dialog.androidTest
+        if: matrix.api-level == 34
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          files: ./module/ui-data-dialog/build/reports/jacoco/androidTest.xml
+          flags: ui-data-dialog.androidTest
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: artifact logcat
         if: always()
