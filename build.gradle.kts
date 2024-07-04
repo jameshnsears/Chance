@@ -106,7 +106,7 @@ subprojects {
 
             tasks.register<JacocoReport>("jacocoAndroidTestReport") {
                 group = "chance"
-                description = "coverage - androidTest API 33"
+                description = "coverage - androidTest API 33+"
 
                 dependsOn("connectedFdroidDebugAndroidTest")
 
