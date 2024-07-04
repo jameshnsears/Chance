@@ -33,6 +33,7 @@ android {
         }
 
         debug {
+            enableAndroidTestCoverage = true
             isMinifyEnabled = false
         }
     }
@@ -78,6 +79,21 @@ android {
 }
 
 dependencies {
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.compose.ui.test.manifest)
+    androidTestImplementation(libs.androidx.datastore.core)
+    androidTestImplementation(libs.androidx.datastore.preferences)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.coil.compose)
+    androidTestImplementation(libs.coil.svg)
+    androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
+    androidTestImplementation(libs.protobuf.kotlin)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(project(":module:common"))
+    androidTestImplementation(project(":module:data"))
+    androidTestImplementation(project(":module:ui"))
+    androidTestImplementation(project(":module:ui-dialog-bag"))
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.leakcanary.android)
     "googleplayImplementation"(platform(libs.com.google.firebase.bom))
