@@ -7,7 +7,7 @@ import timber.log.Timber
 
 open class UtilityLoggingInstrumentedHelper {
     @get:Rule
-    val composeTestRule = createComposeRule()
+    val composeRule = createComposeRule()
 
     companion object {
         @BeforeClass

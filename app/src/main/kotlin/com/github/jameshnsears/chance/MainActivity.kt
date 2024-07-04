@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         installSplashScreen()
+
         plantLoggingTree()
 
         val sampleBagTestData = SampleBagTestData()

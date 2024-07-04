@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import com.github.jameshnsears.chance.ui.R
@@ -15,6 +17,12 @@ import com.github.jameshnsears.chance.ui.tab.bag.compose.TabBag
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.compose.TabRoll
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+
+class TabRowTestTag {
+    companion object {
+        const val TAB_ROW = "TAB_ROW"
+    }
+}
 
 @Composable
 fun TabRow(
@@ -33,6 +41,7 @@ fun TabRow(
 
     Column {
         TabRow(
+            modifier = Modifier.testTag(TabRowTestTag.TAB_ROW),
             selectedTabIndex = selectedTabIndex.intValue,
         ) {
             tabs.forEachIndexed { index, tabName ->

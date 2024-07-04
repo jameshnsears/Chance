@@ -24,7 +24,7 @@ class CardDiceInstrumentedTest :
 
         val diceInDialogBag = SampleBagTestData()
 
-        composeTestRule.setContent {
+        composeRule.setContent {
             ChanceTheme {
                 DialogBag(
                     showDialog,
@@ -35,13 +35,13 @@ class CardDiceInstrumentedTest :
             }
         }
 
-        val diceTitle = composeTestRule.onNodeWithTag(BagCardDiceTestTag.DICE_TITLE)
+        val diceTitle = composeRule.onNodeWithTag(BagCardDiceTestTag.DICE_TITLE)
         diceTitle.assertTextContains(diceInDialogBag.d2.title)
 
         diceTitle.performTextClearance()
         val newTitle = "heads / tails"
         diceTitle.performTextInput(newTitle)
-        composeTestRule.waitForIdle()
+        composeRule.waitForIdle()
 
         diceTitle.assert(hasText(newTitle))
 

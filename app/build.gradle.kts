@@ -18,6 +18,7 @@ android {
         extra["versionName"] = versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -35,6 +36,12 @@ android {
         debug {
             enableAndroidTestCoverage = true
             isMinifyEnabled = false
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
 
@@ -90,10 +97,6 @@ dependencies {
     androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(project(":module:common"))
-    androidTestImplementation(project(":module:data"))
-    androidTestImplementation(project(":module:ui"))
-    androidTestImplementation(project(":module:ui-dialog-bag"))
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.leakcanary.android)
     "googleplayImplementation"(platform(libs.com.google.firebase.bom))

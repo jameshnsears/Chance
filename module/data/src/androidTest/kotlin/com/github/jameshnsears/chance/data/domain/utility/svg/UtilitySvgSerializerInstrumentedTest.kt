@@ -31,7 +31,7 @@ class UtilitySvgSerializerInstrumentedTest : UtilityLoggingInstrumentedHelper() 
         )
         val decodedByteArray = UtilitySvgSerializer.decodeBase64StringIntoByteArray(encoded)
 
-        composeTestRule.setContent {
+        composeRule.setContent {
             val model = ImageRequest.Builder(LocalContext.current)
                 .data(decodedByteArray)
                 .decoderFactory(SvgDecoder.Factory())
@@ -50,8 +50,8 @@ class UtilitySvgSerializerInstrumentedTest : UtilityLoggingInstrumentedHelper() 
             }
         }
 
-        composeTestRule.waitForIdle()
-        composeTestRule.onNodeWithTag(assetFilename).assertIsDisplayed()
+        composeRule.waitForIdle()
+        composeRule.onNodeWithTag(assetFilename).assertIsDisplayed()
         Thread.sleep(1000)
     }
 }
