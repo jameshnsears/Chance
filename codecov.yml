@@ -17,3 +17,6 @@ flags:
     carryforward: false
   ui-dialog-bag.test:
     carryforward: false
+
+  app.androidTest:
+    carryforward: false
