@@ -62,7 +62,11 @@ subprojects {
                         "**/*\$WhenMappings*.class",
                         "**/*\$DefaultImpls*.class",
                         "**/META-INF/versions/**",
-                        "**/*\$lambda\$*.class"
+                        "**/*\$lambda\$*.class",
+                        "**/*Test.class",
+                        "**/*Test*.class",
+                        "**/*TestTag.class",
+                        "**/*Instrumented*.class",
                     )
 
                 sourceDirectories.setFrom(
@@ -131,6 +135,10 @@ subprojects {
                         "**/META-INF/versions/**",
                         "**/*\$lambda\$*.class",
                         "**/*ComposableKt.class",
+                        "**/*Test.class",
+                        "**/*Test*.class",
+                        "**/*TestTag.class",
+                        "**/*Instrumented*.class",
                     )
 
                 sourceDirectories.setFrom(
@@ -201,6 +209,10 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
             "**/META-INF/versions/**",
             "**/*\$lambda\$*.class",
             "**/*ComposableKt.class",
+            "**/*Test.class",
+            "**/*Test*.class",
+            "**/*TestTag.class",
+            "**/*Instrumented*.class",
         )
 
     sourceDirectories.setFrom(
