@@ -101,9 +101,7 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew :app:androidTest
-            ./gradlew :module:data:jacocoAndroidTestReport
-            ./gradlew :module:ui-dialog-bag:jacocoAndroidTestReport
+            ./gradlew jacocoAndroidTestReport
             find . -ls | grep androidTest.xml
 
       - name: codecov - app.androidTest
