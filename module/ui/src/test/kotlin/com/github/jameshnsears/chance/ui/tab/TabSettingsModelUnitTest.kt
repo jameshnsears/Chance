@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.ui.tab
 
-import com.github.jameshnsears.chance.data.repository.settings.mock.RepositorySettingsTestDouble
+import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
 import com.github.jameshnsears.chance.data.sample.settings.SampleSettingsStartup
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

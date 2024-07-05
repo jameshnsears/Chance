@@ -34,6 +34,7 @@ protobuf-java-util = "3.25.3"       # stay on 3.25.3
 protobuf-kotlin = "3.25.3"          # stay on 3.25.3
 slf4j-simple = "2.0.13"
 timber = "5.0.1"
+ui-tooling = "1.6.8"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -72,6 +73,7 @@ protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", versio
 protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-kotlin" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "ui-tooling" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }

@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.data.repository.bag.mock
+package com.github.jameshnsears.chance.data.repository.bag.testdouble
 
 import com.github.jameshnsears.chance.data.domain.proto.DiceBagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.state.Dice

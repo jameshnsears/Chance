@@ -108,4 +108,5 @@ dependencies {
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.org.junit.jupiter)
     testImplementation(platform(libs.org.junit.bom))
+    debugImplementation(libs.androidx.ui.tooling)
 }

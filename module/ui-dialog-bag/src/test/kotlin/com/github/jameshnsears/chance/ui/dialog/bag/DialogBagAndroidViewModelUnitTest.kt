@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.ui.dialog.bag
 
 import com.github.jameshnsears.chance.data.domain.state.Dice
 import com.github.jameshnsears.chance.data.domain.state.Side
-import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

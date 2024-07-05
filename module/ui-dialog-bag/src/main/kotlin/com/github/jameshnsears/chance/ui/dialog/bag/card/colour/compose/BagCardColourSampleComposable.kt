@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.ui.dialog.bag.card.compose
+package com.github.jameshnsears.chance.ui.dialog.bag.card.colour.compose
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size

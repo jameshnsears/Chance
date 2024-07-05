@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.data.repository.bag
 
-import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import kotlinx.coroutines.flow.first

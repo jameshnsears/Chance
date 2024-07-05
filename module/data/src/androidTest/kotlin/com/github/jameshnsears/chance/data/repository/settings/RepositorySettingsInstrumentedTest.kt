@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySettings
 import com.github.jameshnsears.chance.data.repository.settings.impl.settingsDataStore
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData

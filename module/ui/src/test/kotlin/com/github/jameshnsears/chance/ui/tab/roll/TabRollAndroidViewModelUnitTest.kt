@@ -4,9 +4,9 @@ import com.github.jameshnsears.chance.data.domain.state.Dice
 import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.state.Roll
 import com.github.jameshnsears.chance.data.domain.state.Settings
-import com.github.jameshnsears.chance.data.repository.bag.mock.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.mock.RepositoryRollTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.mock.RepositorySettingsTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollTestDouble
+import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.data.sample.roll.SampleRollTestData
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper

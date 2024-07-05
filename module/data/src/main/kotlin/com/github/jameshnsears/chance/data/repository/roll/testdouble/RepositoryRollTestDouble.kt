@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.data.repository.roll.mock
+package com.github.jameshnsears.chance.data.repository.roll.testdouble
 
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.state.Roll

@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.data.repository.settings.mock
+package com.github.jameshnsears.chance.data.repository.settings.testdouble
 
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.state.Settings
