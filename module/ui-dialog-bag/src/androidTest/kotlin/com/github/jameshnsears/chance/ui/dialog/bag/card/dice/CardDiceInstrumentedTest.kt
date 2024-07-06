@@ -11,15 +11,12 @@ import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose.BagCardDiceTestTag
 import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
-import org.junit.Assert.fail
-import org.junit.Ignore
 import org.junit.Test
 
 class CardDiceInstrumentedTest :
     com.github.jameshnsears.chance.ui.dialog.bag.DialogBagInstrumentedHelper() {
-    @Ignore
     @Test
-    fun changeTitleSidesColourUsingStorage() {
+    fun changeTitle() {
         val showDialog = mutableStateOf(true)
 
         val diceInDialogBag = SampleBagTestData()
@@ -44,20 +41,5 @@ class CardDiceInstrumentedTest :
         composeRule.waitForIdle()
 
         diceTitle.assert(hasText(newTitle))
-
-        /*
-        confirm what title + sides + colour are, via proto3 storage
-
-        use following to change fields:
-
-        BagCardDiceTestTag.DICE_SIDES
-
-
-        BagCardDiceTestTag.DICE_COLOUR
-
-
-         */
-
-        fail("todo - test that change to diceTitle saved into context storage")
     }
 }

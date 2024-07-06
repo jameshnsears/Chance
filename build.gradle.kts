@@ -169,7 +169,8 @@ subprojects {
                     fileTree("build/outputs") {
                         include(
                             "**/coverage.ec",
-                            "**/testFdroidDebugUnitTest.exec"                            )
+                            "**/testFdroidDebugUnitTest.exec"
+                        )
                     },
                 )
 
@@ -242,9 +243,9 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
     executionData.setFrom(
         fileTree(".") {
             include(
-                "**/coverage.ec", 
+                "**/coverage.ec",
                 "**/testFdroidDebugUnitTest.exec"
-                )
+            )
         },
     )
 

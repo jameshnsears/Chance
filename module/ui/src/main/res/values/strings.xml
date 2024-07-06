@@ -17,7 +17,7 @@
 
     <string name="tab.roll.settings.dice.title">Dice Title</string>
     <string name="tab.roll.settings.side.number">Side #</string>>
-    <string name="tab.roll.settings.behaviour">Behaviour</string>>
+    <string name="tab.roll.settings.behaviour">Roll Behaviour</string>>
     <string name="tab.roll.settings.side.description">Side Description</string>
     <string name="tab.roll.settings.side.svg">Side SVG</string>
 

@@ -86,7 +86,8 @@ fun TabBagBottomSheetPreview() {
                     mockk<Application>(),
                     repositoryBag,
                     repositoryRoll
-                )             )
+                )
+            )
         }
     }
 }

@@ -35,13 +35,12 @@ import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 
 class BagCardRollTestTag {
     companion object {
-        const val ROLL_MULTIPLIER = "ROLL_MULTIPLIER"
         const val ROLL_MULTIPLIER_VALUE = "ROLL_MULTIPLIER_VALUE"
         const val ROLL_EXPLODE = "ROLL_EXPLODE"
-        const val ROLL_EXPLODE_EQUALITY = "ROLL_EXPLODE_EQUALITY"
-        const val ROLL_EXPLODE_SIDE = "ROLL_EXPLODE_SIDE"
-        const val ROLL_SCORE = "ROLL_SCORE"
-        const val ROLL_SCORE_VALUE = "ROLL_SCORE_VALUE"
+        const val ROLL_EXPLODE_WHEN = "ROLL_EXPLODE_WHEN"
+        const val ROLL_EXPLODE_VALUE = "ROLL_EXPLODE_VALUE"
+        const val ROLL_MODIFY_SCORE = "ROLL_MODIFY_SCORE"
+        const val ROLL_MODIFY_SCORE_VALUE = "ROLL_MODIFY_SCORE_VALUE"
     }
 }
 
@@ -102,8 +101,7 @@ private fun RollMultiplier(cardRollViewModel: CardRollViewModel) {
     Row(
         modifier = Modifier
             .padding(start = 12.dp, top = 8.dp, bottom = 8.dp)
-            .fillMaxWidth()
-            .testTag(BagCardRollTestTag.ROLL_MULTIPLIER),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
@@ -140,7 +138,7 @@ private fun RollExplode(cardRollViewModel: CardRollViewModel) {
     Row(
         modifier = Modifier
             .padding(top = 8.dp)
-            .testTag(BagCardRollTestTag.ROLL_EXPLODE_SIDE)
+            .testTag(BagCardRollTestTag.ROLL_EXPLODE_VALUE)
             .fillMaxWidth()
             .testTag(BagCardRollTestTag.ROLL_EXPLODE),
         verticalAlignment = Alignment.CenterVertically
@@ -219,7 +217,7 @@ private fun RollExplodeDropwonValue(
 ) {
     GenericExposedDropdownMenuBox(
         cardRollViewModel::rollExplodeValue,
-        BagCardRollTestTag.ROLL_EXPLODE_SIDE,
+        BagCardRollTestTag.ROLL_EXPLODE_VALUE,
         stateFlow.value.rollExplodeAvailableValues,
         stateFlow.value.rollExplodeValue.toString(),
         90.dp
@@ -233,7 +231,7 @@ private fun RollExplodeDropdownWhen(
 ) {
     GenericExposedDropdownMenuBox(
         cardRollViewModel::rollExplodeWhen,
-        BagCardRollTestTag.ROLL_EXPLODE_EQUALITY,
+        BagCardRollTestTag.ROLL_EXPLODE_WHEN,
         DiceRollValues.explodeWhenValues,
         stateFlow.value.rollExplodeWhen,
         80.dp
@@ -253,7 +251,7 @@ fun RollScore(cardRollViewModel: CardRollViewModel) {
         modifier = Modifier
             .padding(top = 8.dp, bottom = 8.dp)
             .fillMaxWidth()
-            .testTag(BagCardRollTestTag.ROLL_SCORE),
+            .testTag(BagCardRollTestTag.ROLL_MODIFY_SCORE),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
@@ -278,7 +276,7 @@ fun RollScore(cardRollViewModel: CardRollViewModel) {
 
         GenericExposedDropdownMenuBox(
             cardRollViewModel::rollModifyScoreValue,
-            BagCardRollTestTag.ROLL_SCORE_VALUE,
+            BagCardRollTestTag.ROLL_MODIFY_SCORE_VALUE,
             DiceRollValues.modifyScoreValues,
             stateFlowCardRoll.value.rollModifyScoreValue.toString(),
             90.dp

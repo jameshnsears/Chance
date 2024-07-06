@@ -31,7 +31,7 @@
     </string-array>
     <string name="dialog.bag.dice.colour">Colour…</string>
 
-    <string name="dialog.bag.roll">Behaviour</string>
+    <string name="dialog.bag.roll">Roll Behaviour</string>
     <string name="dialog.bag.roll.repeat">Multiplier</string>
     <string name="dialog.bag.roll.explode.depth">A maximum of 5 explosions per side</string>
     <string name="dialog.bag.roll.score">Score</string>

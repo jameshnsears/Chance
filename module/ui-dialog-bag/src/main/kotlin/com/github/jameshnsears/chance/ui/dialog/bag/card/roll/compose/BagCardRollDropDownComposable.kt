@@ -34,7 +34,8 @@ fun GenericExposedDropdownMenuBox(
         TextField(
             modifier = Modifier
                 .menuAnchor()
-                .width(width),
+                .width(width)
+                .testTag(testTag),
             readOnly = true,
             value = selectedDropdownContent,
             onValueChange = { },
@@ -47,7 +48,6 @@ fun GenericExposedDropdownMenuBox(
         ) {
             dropdownContents.forEach { selectionOption ->
                 DropdownMenuItem(
-                    modifier = Modifier.testTag(testTag),
                     text = { Text(selectionOption) },
                     onClick = {
                         isDropdownExpanded = false
