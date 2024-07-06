@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
     alias(libs.plugins.com.google.gms.google.services)
+    alias(libs.plugins.com.google.firebase.crashlytics)
 }
 
 android {
@@ -101,6 +102,7 @@ dependencies {
     debugImplementation(libs.leakcanary.android)
     "googleplayImplementation"(platform(libs.com.google.firebase.bom))
     "googleplayImplementation"(platform(libs.com.google.firebase.crashlytics))
+    "googleplayImplementation"(platform(libs.com.google.firebase.analytics))
     implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.core.ktx)
