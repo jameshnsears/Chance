@@ -76,26 +76,30 @@ class TabRollAndroidViewModel(
 
     init {
         viewModelScope.launch {
-            _diceBag.value = repositoryBag.fetch().first()
-
-            _undoEnabled.value = isUndoPossible()
-
-            _rollEnabled.value = isRollPossible()
+            alignFunctionsWithDiceBag()
         }
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
                 Timber.d("collect")
-                _diceBag.value = repositoryBag.fetch().first()
+                alignFunctionsWithDiceBag()
             }
         }
 
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect")
-                _diceBag.value = repositoryBag.fetch().first()
+                alignFunctionsWithDiceBag()
             }
         }
+    }
+
+    private suspend fun TabRollAndroidViewModel.alignFunctionsWithDiceBag() {
+        _diceBag.value = repositoryBag.fetch().first()
+
+        _undoEnabled.value = isUndoPossible()
+
+        _rollEnabled.value = isRollPossible()
     }
 
     private fun isRollPossible(): Boolean {
