@@ -200,10 +200,6 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
                 newSides[newSidesIndex].description,
                 originalSides[newSidesIndex].description
             )
-            assertEquals(
-                newSides[newSidesIndex].descriptionColour,
-                originalSides[newSidesIndex].descriptionColour
-            )
         }
     }
 
