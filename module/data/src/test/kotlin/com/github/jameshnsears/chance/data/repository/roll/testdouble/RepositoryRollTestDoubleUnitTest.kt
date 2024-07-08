@@ -1,6 +1,5 @@
-package com.github.jameshnsears.chance.data.repository.roll
+package com.github.jameshnsears.chance.data.repository.roll.testdouble
 
-import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.data.sample.roll.SampleRollTestData
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
@@ -9,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class RepositoryRollUnitTest : UtilityAndroidHelper() {
+class RepositoryRollTestDoubleUnitTest : UtilityAndroidHelper() {
     @Test
     fun storeAndFetch() = runTest {
         val repositoryRoll = RepositoryRollTestDouble.getInstance()

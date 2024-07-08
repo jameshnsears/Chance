@@ -17,15 +17,15 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
-class RepositoryBag private constructor(private val context: Context) :
+class RepositoryBagImpl private constructor(private val context: Context) :
     RepositoryBagInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private var instance: RepositoryBag? = null
+        private var instance: RepositoryBagImpl? = null
 
-        fun getInstance(context: Context): RepositoryBag {
+        fun getInstance(context: Context): RepositoryBagImpl {
             if (instance == null) {
-                instance = RepositoryBag(context)
+                instance = RepositoryBagImpl(context)
             }
             return instance!!
         }

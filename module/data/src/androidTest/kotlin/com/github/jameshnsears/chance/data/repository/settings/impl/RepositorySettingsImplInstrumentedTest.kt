@@ -1,9 +1,7 @@
-package com.github.jameshnsears.chance.data.repository.settings
+package com.github.jameshnsears.chance.data.repository.settings.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySettings
-import com.github.jameshnsears.chance.data.repository.settings.impl.settingsDataStore
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.data.sample.settings.SampleSettingsStartup
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
@@ -17,7 +15,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class RepositorySettingsInstrumentedTest : UtilityLoggingInstrumentedHelper() {
+class RepositorySettingsImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     private val repositoryBag = RepositoryBagTestDouble.getInstance()
 
     init {
@@ -34,7 +32,7 @@ class RepositorySettingsInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
     @Before
     fun emptyDataStore() = runTest {
-        RepositorySettings.getInstance(
+        RepositorySettingsImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         ).clear()
     }
@@ -66,7 +64,7 @@ class RepositorySettingsInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
     @Test
     fun storeAndFetch() = runTest {
-        val repositorySettings = RepositorySettings.getInstance(
+        val repositorySettingsImpl = RepositorySettingsImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
@@ -82,9 +80,9 @@ class RepositorySettingsInstrumentedTest : UtilityLoggingInstrumentedHelper() {
         originalSettings.sideSVG = false
         originalSettings.rollSound = true
 
-        repositorySettings.store(originalSettings)
+        repositorySettingsImpl.store(originalSettings)
 
-        val fetchedSettings = repositorySettings.fetch().first()
+        val fetchedSettings = repositorySettingsImpl.fetch().first()
 
         assertEquals(originalSettings.tabRowChance, fetchedSettings.tabRowChance)
 
@@ -104,22 +102,22 @@ class RepositorySettingsInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
     @Test
     fun importAndExport() = runTest {
-        val repositorySettings = RepositorySettings.getInstance(
+        val repositorySettingsImpl = RepositorySettingsImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
         val originalSettings = SampleSettingsStartup().settings
 
-        repositorySettings.store(originalSettings)
+        repositorySettingsImpl.store(originalSettings)
 
-        val json = repositorySettings.exportJson()
+        val json = repositorySettingsImpl.exportJson()
 
-        repositorySettings.clear()
+        repositorySettingsImpl.clear()
 
-        repositorySettings.importJson(json)
+        repositorySettingsImpl.importJson(json)
 
-        assertEquals(json, repositorySettings.exportJson())
+        assertEquals(json, repositorySettingsImpl.exportJson())
 
-        assertEquals(originalSettings, repositorySettings.fetch().first())
+        assertEquals(originalSettings, repositorySettingsImpl.fetch().first())
     }
 }

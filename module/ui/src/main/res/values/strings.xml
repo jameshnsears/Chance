@@ -1,10 +1,10 @@
 <resources>
     <string name="tab.bag">Dice</string>
     <string name="tab.bag.import">Import…</string>
-    <string name="tab.bag.import.success">Import completed</string>
+    <string name="tab.bag.import.success">Import successful</string>
     <string name="tab.bag.import.failure">Import failed: %s</string>
     <string name="tab.bag.export">Export…</string>
-    <string name="tab.bag.export.success">Export completed</string>
+    <string name="tab.bag.export.success">Export successful</string>
 
     <string name="tab.roll">Rolls</string>
     <string name="tab.roll.undo">Undo</string>

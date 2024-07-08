@@ -1,6 +1,5 @@
-package com.github.jameshnsears.chance.data.repository.settings
+package com.github.jameshnsears.chance.data.repository.settings.testdouble
 
-import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
 import com.github.jameshnsears.chance.data.sample.settings.SampleSettingsStartup
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import kotlinx.coroutines.flow.first
@@ -8,7 +7,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class RepositorySettingsUnitTest : UtilityAndroidHelper() {
+class RepositorySettingsTestDoubleUnitTest : UtilityAndroidHelper() {
     @Test
     fun storeAndFetch() = runTest {
         val repositorySettingsTestDouble = RepositorySettingsTestDouble.getInstance()

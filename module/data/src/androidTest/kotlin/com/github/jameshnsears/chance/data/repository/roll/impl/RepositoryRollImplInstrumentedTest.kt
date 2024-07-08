@@ -1,7 +1,6 @@
-package com.github.jameshnsears.chance.data.repository.roll
+package com.github.jameshnsears.chance.data.repository.roll.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRoll
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.data.sample.roll.SampleRollTestData
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
@@ -14,10 +13,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class RepositoryRollInstrumentedTest : UtilityLoggingInstrumentedHelper() {
+class RepositoryRollImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @Before
     fun emptyDataStore() = runTest {
-        RepositoryRoll.getInstance(
+        RepositoryRollImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         ).clear()
     }
@@ -25,7 +24,7 @@ class RepositoryRollInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun storeAndFetch() = runTest {
-        val repositoryRoll = RepositoryRoll.getInstance(
+        val repositoryRollImpl = RepositoryRollImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
@@ -34,11 +33,11 @@ class RepositoryRollInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
         val originalRollHistory = sampleRollTestData.rollHistory
 
-        repositoryRoll.store(originalRollHistory)
+        repositoryRollImpl.store(originalRollHistory)
 
         advanceUntilIdle()
 
-        val fetchedRollHistory = repositoryRoll.fetch().first()
+        val fetchedRollHistory = repositoryRollImpl.fetch().first()
 
         advanceUntilIdle()
 
@@ -73,7 +72,7 @@ class RepositoryRollInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun importAndExport() = runTest {
-        val repositoryRoll = RepositoryRoll.getInstance(
+        val repositoryRollImpl = RepositoryRollImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
@@ -82,17 +81,17 @@ class RepositoryRollInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
         val originalRollHistory = sampleRollTestData.rollHistory
 
-        repositoryRoll.store(originalRollHistory)
+        repositoryRollImpl.store(originalRollHistory)
 
-        val originalRollHistoryJson = repositoryRoll.exportJson()
+        val originalRollHistoryJson = repositoryRollImpl.exportJson()
 
-        repositoryRoll.clear()
+        repositoryRollImpl.clear()
 
-        repositoryRoll.importJson(originalRollHistoryJson)
+        repositoryRollImpl.importJson(originalRollHistoryJson)
 
         advanceUntilIdle()
 
-        val fetchedRollHistoryJson = repositoryRoll.exportJson()
+        val fetchedRollHistoryJson = repositoryRollImpl.exportJson()
 
         assertEquals(originalRollHistoryJson, fetchedRollHistoryJson)
     }

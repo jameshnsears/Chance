@@ -164,10 +164,8 @@ class TabBagAndroidViewModel(
             )
         }
 
-        val context = getContext()
-
         viewModelScope.launch {
-            context.contentResolver.openInputStream(uri)?.use { inputStream ->
+            getContext().contentResolver.openInputStream(uri)?.use { inputStream ->
                 import(inputStream.reader().readText())
             }
         }

@@ -1,7 +1,6 @@
-package com.github.jameshnsears.chance.data.repository.bag
+package com.github.jameshnsears.chance.data.repository.bag.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.repository.bag.impl.RepositoryBag
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,17 +12,17 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class RepositoryBagInstrumentedTest : UtilityLoggingInstrumentedHelper() {
+class RepositoryBagImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @Before
     fun emptyDataStore() = runTest {
-        RepositoryBag.getInstance(
+        RepositoryBagImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         ).clear()
     }
 
     @Test
     fun storeAndFetch() = runTest {
-        val repositoryBag = RepositoryBag.getInstance(
+        val repositoryBagImpl = RepositoryBagImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
@@ -31,9 +30,9 @@ class RepositoryBagInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
         val originalDiceBag = sampleBagTestData.allDice
 
-        repositoryBag.store(originalDiceBag)
+        repositoryBagImpl.store(originalDiceBag)
 
-        val fetchedDiceBag = repositoryBag.fetch().first()
+        val fetchedDiceBag = repositoryBagImpl.fetch().first()
 
         originalDiceBag.forEachIndexed { indexDice, originalDice ->
             val fetchedDice = fetchedDiceBag[indexDice]
@@ -73,7 +72,7 @@ class RepositoryBagInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun importAndExport() = runTest {
-        val repositoryBag = RepositoryBag.getInstance(
+        val repositoryBagImpl = RepositoryBagImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
@@ -81,21 +80,21 @@ class RepositoryBagInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
         val originalDieBag = sampleBagTestData.allDice
 
-        repositoryBag.store(originalDieBag)
+        repositoryBagImpl.store(originalDieBag)
 
-        val json = repositoryBag.exportJson()
+        val json = repositoryBagImpl.exportJson()
 
-        repositoryBag.clear()
+        repositoryBagImpl.clear()
 
-        repositoryBag.importJson(json)
-
-        advanceUntilIdle()
-
-        assertEquals(json, repositoryBag.exportJson())
+        repositoryBagImpl.importJson(json)
 
         advanceUntilIdle()
 
-        val fetchedDiceBag = repositoryBag.fetch().first()
+        assertEquals(json, repositoryBagImpl.exportJson())
+
+        advanceUntilIdle()
+
+        val fetchedDiceBag = repositoryBagImpl.fetch().first()
 
         advanceUntilIdle()
 

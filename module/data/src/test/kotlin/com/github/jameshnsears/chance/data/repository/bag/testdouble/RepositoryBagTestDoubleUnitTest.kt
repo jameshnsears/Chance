@@ -1,6 +1,5 @@
-package com.github.jameshnsears.chance.data.repository.bag
+package com.github.jameshnsears.chance.data.repository.bag.testdouble
 
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import kotlinx.coroutines.flow.first
@@ -8,7 +7,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 
-class RepositoryBagUnitTest : UtilityAndroidHelper() {
+class RepositoryBagTestDoubleUnitTest : UtilityAndroidHelper() {
     @Test
     fun storeAndFetch() = runTest {
         val repositoryBag = RepositoryBagTestDouble.getInstance()

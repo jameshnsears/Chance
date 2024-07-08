@@ -94,6 +94,7 @@ dependencies {
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(project(":module:common"))
+    androidTestImplementation(project(":module:ui"))
     implementation(libs.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.material3)

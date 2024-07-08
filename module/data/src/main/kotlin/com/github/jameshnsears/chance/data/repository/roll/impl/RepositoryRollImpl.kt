@@ -16,15 +16,15 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
-class RepositoryRoll private constructor(private val context: Context) :
+class RepositoryRollImpl private constructor(private val context: Context) :
     RepositoryRollInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private var instance: RepositoryRoll? = null
+        private var instance: RepositoryRollImpl? = null
 
-        fun getInstance(context: Context): RepositoryRoll {
+        fun getInstance(context: Context): RepositoryRollImpl {
             if (instance == null) {
-                instance = RepositoryRoll(context)
+                instance = RepositoryRollImpl(context)
             }
             return instance!!
         }

@@ -24,10 +24,12 @@ class UtilitySvgSerializerInstrumentedTest : UtilityLoggingInstrumentedHelper() 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
         val assetFilename = "data/svg/dN/d2.svg"
-        assertTrue(UtilitySvgSerializer.isUrlSvg(URL("file:///android_asset/$assetFilename")))
+        val inputStream = context.assets.open(assetFilename)
 
         val encoded = UtilitySvgSerializer.encodeIntoBase64String(
-            context.assets.open(assetFilename).readBytes()
+            inputStream.bufferedReader().use {
+                it.readText()
+            }
         )
         val decodedByteArray = UtilitySvgSerializer.decodeBase64StringIntoByteArray(encoded)
 

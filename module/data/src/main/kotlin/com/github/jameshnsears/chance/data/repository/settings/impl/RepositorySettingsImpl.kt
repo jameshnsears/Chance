@@ -15,15 +15,15 @@ import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 
-class RepositorySettings private constructor(private val context: Context) :
+class RepositorySettingsImpl private constructor(private val context: Context) :
     RepositorySettingsInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
-        private var instance: RepositorySettings? = null
+        private var instance: RepositorySettingsImpl? = null
 
-        fun getInstance(context: Context): RepositorySettings {
+        fun getInstance(context: Context): RepositorySettingsImpl {
             if (instance == null) {
-                instance = RepositorySettings(context)
+                instance = RepositorySettingsImpl(context)
             }
             return instance!!
         }
