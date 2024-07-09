@@ -59,7 +59,7 @@ class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHel
             )
         ))
 
-        Thread.sleep(1000)
+        Thread.sleep(5000)
 
         val stateFlowTabBagImport = tabBagAndroidViewModel.stateFlowTabBagImport.value
         assertEquals(ExportImportStatus.SUCCESS, stateFlowTabBagImport.importStatus)
