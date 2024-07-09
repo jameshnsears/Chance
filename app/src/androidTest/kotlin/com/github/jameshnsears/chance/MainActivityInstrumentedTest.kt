@@ -6,6 +6,7 @@ import com.github.jameshnsears.chance.ui.tab.compose.TabRowTestTag
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.fail
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -16,19 +17,19 @@ class MainActivityInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @Test
     fun displayAppForFirstTime() = runTest {
         androidComposeTestRule.onNodeWithTag(TabRowTestTag.TAB_ROW).assertExists()
+    }
+
+    @Ignore
+    @Test
+    fun importDiceBagThatInvalid() = runTest {
+        fail("todo - check that appropriate toast is displayed")
 
         fail("todo - confirm correct # of dice in bag & that roll is empty")
     }
 
-    @Test
-    fun importDiceBagThatInvalid() = runTest {
-
-        fail("todo - check that appropriate toast is displayed")
-    }
-
+    @Ignore
     @Test
     fun importDiceBagThatValid() = runTest {
-
         fail("todo - check that appropriate toast is displayed")
     }
 }
