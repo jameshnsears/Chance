@@ -36,12 +36,14 @@ class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHel
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun importInvalidEmptyJsonFile() = runTest {
-        tabBagAndroidViewModel.importFileJson(Uri.fromFile(
-            createTmpFileFromAssetFile(
-                context,
-                "data/json/import/Invalid-Empty.json"
+        tabBagAndroidViewModel.importFileJson(
+            Uri.fromFile(
+                createTmpFileFromAssetFile(
+                    context,
+                    "data/json/import/Invalid-Empty.json"
+                )
             )
-        ))
+        )
 
         Thread.sleep(1000)
 
@@ -52,12 +54,14 @@ class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHel
 
     @Test
     fun importValidSampleDataJsonFile() = runTest {
-        tabBagAndroidViewModel.importFileJson(Uri.fromFile(
-            createTmpFileFromAssetFile(
-                context,
-                "data/json/import/Valid-SampleBagStartup.json"
+        tabBagAndroidViewModel.importFileJson(
+            Uri.fromFile(
+                createTmpFileFromAssetFile(
+                    context,
+                    "data/json/import/Valid-SampleBagStartup.json"
+                )
             )
-        ))
+        )
 
         Thread.sleep(5000)
 

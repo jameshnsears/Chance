@@ -14,9 +14,7 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
-import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.net.URL
 
 class UtilitySvgSerializerInstrumentedTest : UtilityLoggingInstrumentedHelper() {
     @Test
