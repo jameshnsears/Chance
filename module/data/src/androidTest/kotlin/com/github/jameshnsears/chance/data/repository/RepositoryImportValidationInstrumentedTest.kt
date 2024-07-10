@@ -45,11 +45,19 @@ class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHel
             )
         )
 
-        Thread.sleep(10000) // GitHub CI needs a long timeout
+        waitForCI()
 
         val stateFlowTabBagImport = tabBagAndroidViewModel.stateFlowTabBagImport.value
         assertEquals(ExportImportStatus.FAILURE, stateFlowTabBagImport.importStatus)
         assertEquals(RepositoryImportStatus.ERROR_IMPORT_EMPTY, stateFlowTabBagImport.importDetail)
+    }
+
+    private fun waitForCI() {
+        repeat(10) {
+            if (tabBagAndroidViewModel.stateFlowTabBagImport.value.importStatus == ExportImportStatus.IMPORT_STARTED) Thread.sleep(
+                2000
+            )
+        }
     }
 
     @Test
@@ -63,7 +71,7 @@ class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHel
             )
         )
 
-        Thread.sleep(10000)
+        waitForCI()
 
         val stateFlowTabBagImport = tabBagAndroidViewModel.stateFlowTabBagImport.value
         assertEquals(ExportImportStatus.SUCCESS, stateFlowTabBagImport.importStatus)
