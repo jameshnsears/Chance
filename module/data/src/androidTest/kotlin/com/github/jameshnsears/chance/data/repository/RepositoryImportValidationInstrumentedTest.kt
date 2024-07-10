@@ -10,7 +10,6 @@ import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySe
 import com.github.jameshnsears.chance.ui.tab.bag.ExportImportStatus
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -33,7 +32,6 @@ class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHel
         )
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun importInvalidEmptyJsonFile() = runTest {
         tabBagAndroidViewModel.importFileJson(
