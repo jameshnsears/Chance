@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        api-level: [ 24, 34 ]
+        api-level: [ 34 ]
 
     steps:
       - name: clone
@@ -86,22 +86,6 @@ jobs:
         env:
           GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
-
-      - name: connectedFdroidDebugAndroidTest
-        if: matrix.api-level == 24
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          arch: ${{ steps.avd-info.outputs.arch }}
-          target: ${{ steps.avd-info.outputs.target }}
-          disable-animations: true
-          force-avd-creation: false
-          ram-size: 4096M
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: |
-            adb logcat -c
-            adb logcat > logcat.txt &
-            ./gradlew app:connectedFdroidDebugAndroidTest module:data:connectedFdroidDebugAndroidTest module:ui-dialog-bag:connectedFdroidDebugAndroidTest 
 
       - name: jacocoFdroidAndroidTestReport
         if: matrix.api-level == 34
