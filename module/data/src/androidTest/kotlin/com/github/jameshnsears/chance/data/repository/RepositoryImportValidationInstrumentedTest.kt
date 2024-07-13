@@ -50,9 +50,9 @@ class RepositoryImportValidationInstrumentedTest : RepositoryInstrumentedHelper(
     }
 
     private fun waitForCI() {
-        repeat(10) {
+        repeat(60) {
             if (tabBagAndroidViewModel.stateFlowTabBagImport.value.importStatus == ExportImportStatus.IMPORT_STARTED) Thread.sleep(
-                2000
+                1000
             )
         }
     }
