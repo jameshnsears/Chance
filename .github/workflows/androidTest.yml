@@ -88,7 +88,6 @@ jobs:
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
       - name: connectedFdroidDebugAndroidTest
-        if: matrix.api-level == 24
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -176,7 +175,6 @@ jobs:
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
       - name: connectedFdroidDebugAndroidTest
-        if: matrix.api-level == 24
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -264,7 +262,6 @@ jobs:
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
       - name: connectedFdroidDebugAndroidTest
-        if: matrix.api-level == 24
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
