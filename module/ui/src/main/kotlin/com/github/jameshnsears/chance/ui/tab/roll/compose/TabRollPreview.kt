@@ -7,35 +7,21 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
-import com.github.jameshnsears.chance.data.sample.roll.SampleRollTestData
+import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 
 @UtilityPreview
 @Composable
 fun TabRollPreview() {
-    val repositorySettings = RepositorySettingsTestDouble.getInstance()
+    val repositorySettings = UtilityDataHelper().repositorySettings
 
-    val sampleBagTestData = SampleBagTestData()
-    val repositoryBag = RepositoryBagTestDouble.getInstance()
-    runBlocking(Dispatchers.Main) {
-        repositoryBag.store(sampleBagTestData.allDice)
-    }
+    val repositoryBag = UtilityDataHelper().repositoryBag
 
-    val sampleRollTestData = SampleRollTestData(sampleBagTestData)
-    val repositoryRoll = RepositoryRollTestDouble.getInstance()
-    runBlocking(Dispatchers.Main) {
-        repositoryRoll.store(sampleRollTestData.rollHistory)
-    }
+    val repositoryRoll = UtilityDataHelper().repositoryRoll
 
     ChanceTheme {
         Surface(
@@ -62,19 +48,11 @@ fun TabRollPreview() {
 @UtilityPreview
 @Composable
 fun TabRollBottomSheetPreview() {
-    val repositorySettings = RepositorySettingsTestDouble.getInstance()
+    val repositorySettings = UtilityDataHelper().repositorySettings
 
-    val sampleBagTestData = SampleBagTestData()
-    val repositoryBag = RepositoryBagTestDouble.getInstance()
-    runBlocking(Dispatchers.Main) {
-        repositoryBag.store(sampleBagTestData.allDice)
-    }
+    val repositoryBag = UtilityDataHelper().repositoryBag
 
-    val sampleRollTestData = SampleRollTestData(sampleBagTestData)
-    val repositoryRoll = RepositoryRollTestDouble.getInstance()
-    runBlocking(Dispatchers.Main) {
-        repositoryRoll.store(sampleRollTestData.rollHistory)
-    }
+    val repositoryRoll = UtilityDataHelper().repositoryRoll
 
     ChanceTheme {
         Surface(

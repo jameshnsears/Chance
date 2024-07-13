@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.dice
 
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagUnitTestHelper
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -11,7 +11,7 @@ import org.junit.Test
 class CardDiceViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun diceCardModify() = runTest {
-        val diceInDialogBag = SampleBagTestData().d4
+        val diceInDialogBag = BagDataTestDouble().d4
 
         val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(
             diceInDialogBag, diceInDialogBag.sides[0]
@@ -50,14 +50,14 @@ class CardDiceViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val bagCardDiceAndroidViewModel = dialogBagAndroidViewModel.cardDiceViewModel
 
-        bagCardDiceAndroidViewModel.diceTitle(SampleBagTestData().d8.title)
+        bagCardDiceAndroidViewModel.diceTitle(BagDataTestDouble().d8.title)
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeCloned)
 
         bagCardDiceAndroidViewModel.diceTitle("")
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeCloned)
 
-        bagCardDiceAndroidViewModel.diceTitle(SampleBagTestData().d10.title)
+        bagCardDiceAndroidViewModel.diceTitle(BagDataTestDouble().d10.title)
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeCloned)
     }
@@ -87,12 +87,12 @@ class CardDiceViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun diceCardDeleteNotPossible() = runTest {
         val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(
-            SampleBagTestData().d2, SampleBagTestData().d2.sides[0]
+            BagDataTestDouble().d2, BagDataTestDouble().d2.sides[0]
         )
 
         dialogBagAndroidViewModel.repositoryBag.store(
             mutableListOf(
-                SampleBagTestData().d2,
+                BagDataTestDouble().d2,
             ),
         )
 

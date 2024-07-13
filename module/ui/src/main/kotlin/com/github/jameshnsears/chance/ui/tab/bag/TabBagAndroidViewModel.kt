@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.jameshnsears.chance.data.domain.state.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.repository.RepositoryImportException
 import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
 import com.github.jameshnsears.chance.data.repository.RepositoryImportValidation

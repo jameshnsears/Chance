@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.data.repository.settings.testdouble
 
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Settings
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
@@ -13,9 +13,10 @@ class RepositorySettingsTestDouble private constructor() :
     companion object {
         private var instance: RepositorySettingsTestDouble? = null
 
-        fun getInstance(): RepositorySettingsTestDouble {
+        fun getInstance(settings: Settings = Settings()): RepositorySettingsTestDouble {
             if (instance == null) {
                 instance = RepositorySettingsTestDouble()
+                instance!!.settings = settings
             }
             return instance!!
         }

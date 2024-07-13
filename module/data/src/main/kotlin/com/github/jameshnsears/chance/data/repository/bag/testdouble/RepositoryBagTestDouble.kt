@@ -1,9 +1,9 @@
 package com.github.jameshnsears.chance.data.repository.bag.testdouble
 
-import com.github.jameshnsears.chance.data.domain.proto.DiceBagProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.DiceBag
-import com.github.jameshnsears.chance.data.domain.state.Side
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
+import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
@@ -15,9 +15,10 @@ class RepositoryBagTestDouble private constructor() :
     companion object {
         private var instance: RepositoryBagTestDouble? = null
 
-        fun getInstance(): RepositoryBagTestDouble {
+        fun getInstance(diceBag: DiceBag): RepositoryBagTestDouble {
             if (instance == null) {
                 instance = RepositoryBagTestDouble()
+                instance!!.diceBag = diceBag
             }
             return instance!!
         }
@@ -26,26 +27,26 @@ class RepositoryBagTestDouble private constructor() :
     private lateinit var diceBag: DiceBag
 
     override suspend fun exportJson(): String {
-        val diceBagProtocolBufferBuilder: DiceBagProtocolBuffer.Builder =
-            DiceBagProtocolBuffer.newBuilder()
+        val BagProtocolBufferBuilder: BagProtocolBuffer.Builder =
+            BagProtocolBuffer.newBuilder()
 
-        mapDiceBagIntoDiceBagProtocolBufferBuilder(diceBag, diceBagProtocolBufferBuilder)
+        mapDiceBagIntoBagProtocolBufferBuilder(diceBag, BagProtocolBufferBuilder)
 
         return JsonFormat.printer().includingDefaultValueFields()
-            .print(diceBagProtocolBufferBuilder.build())
+            .print(BagProtocolBufferBuilder.build())
     }
 
     override suspend fun importJson(json: String) {
         diceBag = mutableListOf()
 
-        val diceBagProtocolBufferBuilder: DiceBagProtocolBuffer.Builder =
-            DiceBagProtocolBuffer.newBuilder()
+        val BagProtocolBufferBuilder: BagProtocolBuffer.Builder =
+            BagProtocolBuffer.newBuilder()
 
-        JsonFormat.parser().merge(json, diceBagProtocolBufferBuilder)
+        JsonFormat.parser().merge(json, BagProtocolBufferBuilder)
 
         val newDiceBag = mutableListOf<Dice>()
 
-        diceBagProtocolBufferBuilder.diceList.forEach { diceProtocolBuffer ->
+        BagProtocolBufferBuilder.diceList.forEach { diceProtocolBuffer ->
             val dice = Dice()
             dice.epoch = diceProtocolBuffer.epoch
 

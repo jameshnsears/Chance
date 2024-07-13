@@ -1,9 +1,9 @@
 package com.github.jameshnsears.chance.data.repository.roll.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
-import com.github.jameshnsears.chance.data.sample.roll.SampleRollTestData
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryInstrumentedHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -13,7 +13,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class RepositoryRollImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
+class RepositoryRollImplInstrumentedTest : RepositoryInstrumentedHelper() {
     @Before
     fun emptyDataStore() = runTest {
         RepositoryRollImpl.getInstance(
@@ -28,10 +28,10 @@ class RepositoryRollImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val sampleBagTestData = SampleBagTestData()
-        val sampleRollTestData = SampleRollTestData(sampleBagTestData)
+        val bagDataTestDouble = BagDataTestDouble()
+        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
 
-        val originalRollHistory = sampleRollTestData.rollHistory
+        val originalRollHistory = rollDataTestDouble.rollHistory
 
         repositoryRollImpl.store(originalRollHistory)
 
@@ -76,10 +76,10 @@ class RepositoryRollImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val sampleBagTestData = SampleBagTestData()
-        val sampleRollTestData = SampleRollTestData(sampleBagTestData)
+        val bagDataTestDouble = BagDataTestDouble()
+        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
 
-        val originalRollHistory = sampleRollTestData.rollHistory
+        val originalRollHistory = rollDataTestDouble.rollHistory
 
         repositoryRollImpl.store(originalRollHistory)
 

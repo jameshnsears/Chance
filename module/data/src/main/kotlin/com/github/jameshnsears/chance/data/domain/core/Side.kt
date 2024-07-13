@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.data.domain.state
+package com.github.jameshnsears.chance.data.domain.core
 
 import java.util.UUID
 

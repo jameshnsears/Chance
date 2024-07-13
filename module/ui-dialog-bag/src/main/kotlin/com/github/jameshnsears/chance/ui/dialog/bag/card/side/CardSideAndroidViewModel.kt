@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import coil.request.ImageRequest
-import com.github.jameshnsears.chance.data.domain.state.Side
+import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.utility.svg.UtilitySvgSerializer
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceSideEvent
 import kotlinx.coroutines.flow.MutableStateFlow

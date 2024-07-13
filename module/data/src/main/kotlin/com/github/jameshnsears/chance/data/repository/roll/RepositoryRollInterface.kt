@@ -1,10 +1,10 @@
 package com.github.jameshnsears.chance.data.repository.roll
 
+import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.RollHistory
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface
 import kotlinx.coroutines.flow.Flow
 

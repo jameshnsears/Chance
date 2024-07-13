@@ -2,14 +2,9 @@ package com.github.jameshnsears.chance.ui.tab.bag
 
 import android.app.Application
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.jameshnsears.chance.data.domain.state.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
-import com.github.jameshnsears.chance.data.sample.roll.SampleRollTestData
-import com.github.jameshnsears.chance.data.sample.settings.SampleSettingsStartup
+import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
@@ -85,7 +80,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
             tabBagViewModel.stateFlowTabBagExport.value.exportStatus
         )
 
-        tabBagViewModel.import(getResourceAsString("/data/json/import/Valid-SampleData.json"))
+        tabBagViewModel.import(getResourceAsString("/data/json/import/Valid-BagDataImpl.json"))
 
         val exportedJson = tabBagViewModel.exportRepositoriesAsJson()
 
@@ -121,7 +116,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
 
-        tabBagViewModel.import(getResourceAsString("/data/json/import/Valid-SampleData.json"))
+        tabBagViewModel.import(getResourceAsString("/data/json/import/Valid-BagDataImpl.json"))
         assertEquals(
             ExportImportStatus.SUCCESS,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
@@ -265,23 +260,13 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         assertTrue(tabBagViewModel.repositorySettings.fetch().first().tabRowChance == 0)
     }
 
-    private suspend fun tabBagViewModel(
-        sampleBagTestData: SampleBagTestData = SampleBagTestData()
+    private fun tabBagViewModel(
     ): TabBagAndroidViewModel {
-        val repositorySettings = RepositorySettingsTestDouble.getInstance()
-        repositorySettings.store(
-            SampleSettingsStartup().settings,
-        )
+        val repositorySettings = UtilityDataHelper().repositorySettings
 
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
-        repositoryBag.store(
-            sampleBagTestData.allDice,
-        )
+        val repositoryBag = UtilityDataHelper().repositoryBag
 
-        val repositoryRoll = RepositoryRollTestDouble.getInstance()
-        repositoryRoll.store(
-            SampleRollTestData(sampleBagTestData).rollHistory
-        )
+        val repositoryRoll = UtilityDataHelper().repositoryRoll
 
         return TabBagAndroidViewModel(
             mockk<Application>(),

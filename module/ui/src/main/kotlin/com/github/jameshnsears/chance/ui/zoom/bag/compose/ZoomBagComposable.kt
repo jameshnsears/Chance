@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.github.jameshnsears.chance.data.domain.state.Dice
+import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.compose.DiceTitle
 import com.github.jameshnsears.chance.ui.zoom.compose.SideDescription

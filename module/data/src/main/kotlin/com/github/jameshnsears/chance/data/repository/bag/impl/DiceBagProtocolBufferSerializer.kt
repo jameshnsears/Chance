@@ -2,24 +2,24 @@ package com.github.jameshnsears.chance.data.repository.bag.impl
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.github.jameshnsears.chance.data.domain.proto.DiceBagProtocolBuffer
+import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
 
-object DiceBagProtocolBufferSerializer : Serializer<DiceBagProtocolBuffer> {
-    override val defaultValue: DiceBagProtocolBuffer = DiceBagProtocolBuffer.getDefaultInstance()
+object BagProtocolBufferSerializer : Serializer<BagProtocolBuffer> {
+    override val defaultValue: BagProtocolBuffer = BagProtocolBuffer.getDefaultInstance()
 
-    override suspend fun readFrom(input: InputStream): DiceBagProtocolBuffer {
+    override suspend fun readFrom(input: InputStream): BagProtocolBuffer {
         try {
-            return DiceBagProtocolBuffer.parseFrom(input)
+            return BagProtocolBuffer.parseFrom(input)
         } catch (exception: InvalidProtocolBufferException) {
             throw CorruptionException("Cannot read proto.", exception)
         }
     }
 
     override suspend fun writeTo(
-        t: DiceBagProtocolBuffer,
+        t: BagProtocolBuffer,
         output: OutputStream,
     ) = t.writeTo(output)
 }

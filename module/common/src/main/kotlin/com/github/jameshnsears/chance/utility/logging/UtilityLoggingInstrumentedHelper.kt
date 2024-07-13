@@ -1,14 +1,10 @@
 package com.github.jameshnsears.chance.utility.logging
 
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.BeforeClass
-import org.junit.Rule
 import timber.log.Timber
 
 open class UtilityLoggingInstrumentedHelper {
-    @get:Rule
-    val composeRule = createComposeRule()
-
     companion object {
         @BeforeClass
         @JvmStatic
@@ -17,5 +13,8 @@ open class UtilityLoggingInstrumentedHelper {
                 Timber.plant(UtilityLoggingLineNumberTree())
             }
         }
+
+        fun getString(id: Int) =
+            InstrumentationRegistry.getInstrumentation().targetContext.getString(id)
     }
 }

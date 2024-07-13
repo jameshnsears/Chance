@@ -2,8 +2,8 @@ package com.github.jameshnsears.chance.ui.dialog.bag.card.roll
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceSideEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

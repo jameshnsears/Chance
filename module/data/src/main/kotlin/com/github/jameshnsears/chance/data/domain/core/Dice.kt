@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.data.domain.state
+package com.github.jameshnsears.chance.data.domain.core
 
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import java.util.UUID

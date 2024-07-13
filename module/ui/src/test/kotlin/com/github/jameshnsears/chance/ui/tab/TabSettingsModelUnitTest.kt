@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.ui.tab
 
-import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
-import com.github.jameshnsears.chance.data.sample.settings.SampleSettingsStartup
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -9,10 +9,10 @@ import org.junit.Test
 class TabSettingsModelUnitTest {
     @Test
     fun resize() = runTest {
-        val repositorySettings = repositorySettingsTestDouble()
+        val repositorySettings = UtilityDataHelper().repositorySettings
 
         assertEquals(
-            SampleSettingsStartup().settings.resize,
+            Settings().resize,
             TabSettingsModel.resize(repositorySettings)
         )
 
@@ -24,12 +24,12 @@ class TabSettingsModelUnitTest {
             TabSettingsModel.resize(repositorySettings)
         )
 
-        TabSettingsModel.resize(repositorySettings, SampleSettingsStartup().settings.resize)
+        TabSettingsModel.resize(repositorySettings, Settings().resize)
     }
 
     @Test
     fun tabRowChance() = runTest {
-        val repositorySettings = repositorySettingsTestDouble()
+        val repositorySettings = UtilityDataHelper().repositorySettings
 
         assertEquals(
             0,
@@ -44,13 +44,5 @@ class TabSettingsModelUnitTest {
         )
 
         TabSettingsModel.markTabAsCurrentInSettings(repositorySettings, SettingsTab.TAB_DICE)
-    }
-
-    private suspend fun repositorySettingsTestDouble(): RepositorySettingsTestDouble {
-        val repositorySettings = RepositorySettingsTestDouble.getInstance()
-        repositorySettings.store(
-            SampleSettingsStartup().settings,
-        )
-        return repositorySettings
     }
 }

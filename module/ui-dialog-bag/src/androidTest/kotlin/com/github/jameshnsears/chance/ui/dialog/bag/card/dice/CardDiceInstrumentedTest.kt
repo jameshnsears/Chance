@@ -7,19 +7,20 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagInstrumentedHelper
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose.BagCardDiceTestTag
 import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-class CardDiceInstrumentedTest :
-    com.github.jameshnsears.chance.ui.dialog.bag.DialogBagInstrumentedHelper() {
+class CardDiceInstrumentedTest : DialogBagInstrumentedHelper() {
     @Test
-    fun changeTitle() {
+    fun changeTitle() = runTest {
         val showDialog = mutableStateOf(true)
 
-        val diceInDialogBag = SampleBagTestData()
+        val diceInDialogBag = BagDataTestDouble()
 
         composeRule.setContent {
             ChanceTheme {
@@ -33,6 +34,7 @@ class CardDiceInstrumentedTest :
         }
 
         val diceTitle = composeRule.onNodeWithTag(BagCardDiceTestTag.DICE_TITLE)
+        composeRule.waitForIdle()
         diceTitle.assertTextContains(diceInDialogBag.d2.title)
 
         diceTitle.performTextClearance()

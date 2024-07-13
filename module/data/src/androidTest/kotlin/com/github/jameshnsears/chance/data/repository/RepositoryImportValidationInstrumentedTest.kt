@@ -9,7 +9,6 @@ import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRollIm
 import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySettingsImpl
 import com.github.jameshnsears.chance.ui.tab.bag.ExportImportStatus
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -17,7 +16,7 @@ import org.junit.Test
 import java.io.File
 import java.io.FileOutputStream
 
-class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHelper() {
+class RepositoryImportValidationInstrumentedTest : RepositoryInstrumentedHelper() {
     private val context = InstrumentationRegistry.getInstrumentation().context
 
     private lateinit var tabBagAndroidViewModel: TabBagAndroidViewModel
@@ -64,7 +63,7 @@ class RepositoryImportValidationInstrumentedTest : UtilityLoggingInstrumentedHel
             Uri.fromFile(
                 createTmpFileFromAssetFile(
                     context,
-                    "data/json/import/Valid-SampleBagStartup.json"
+                    "data/json/import/Valid-BagDataImpl.json"
                 )
             )
         )

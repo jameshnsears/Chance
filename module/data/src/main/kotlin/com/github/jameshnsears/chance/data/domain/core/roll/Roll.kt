@@ -1,4 +1,6 @@
-package com.github.jameshnsears.chance.data.domain.state
+package com.github.jameshnsears.chance.data.domain.core.roll
+
+import com.github.jameshnsears.chance.data.domain.core.Side
 
 data class Roll(
     val diceEpoch: Long,

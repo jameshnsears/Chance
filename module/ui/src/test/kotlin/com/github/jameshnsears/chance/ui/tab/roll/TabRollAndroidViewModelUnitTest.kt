@@ -1,14 +1,11 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
-import com.github.jameshnsears.chance.data.domain.state.Roll
-import com.github.jameshnsears.chance.data.domain.state.Settings
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
-import com.github.jameshnsears.chance.data.sample.roll.SampleRollTestData
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
+import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.every
 import io.mockk.slot
@@ -58,7 +55,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
     @Test
     fun diceSequenceRollWithExplosionEquals() = runTest {
-        val diceBag = SampleBagTestData()
+        val diceBag = BagDataTestDouble()
 
         // d6
         diceBag.allDice.forEach {
@@ -89,7 +86,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
     @Test
     fun diceSequenceRollWithExplosionLessThan() = runTest {
-        val diceBag = SampleBagTestData()
+        val diceBag = BagDataTestDouble()
 
         // d6
         diceBag.allDice.forEach {
@@ -111,7 +108,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
     @Test
     fun diceSequenceRollWithExplosionGreaterThan() = runTest {
-        val diceBag = SampleBagTestData()
+        val diceBag = BagDataTestDouble()
 
         // d6
         diceBag.allDice.forEach {
@@ -133,7 +130,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
     @Test
     fun diceSequenceRollWithScore() = runTest {
-        val diceBag = SampleBagTestData()
+        val diceBag = BagDataTestDouble()
 
         // d6 only
         diceBag.allDice.forEach {
@@ -242,24 +239,19 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     }
 
     private fun tabRollViewModel(
-        sampleBagTestData: SampleBagTestData = SampleBagTestData(),
+        bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): TabRollAndroidViewModel {
+        val repositorySettings = UtilityDataHelper().repositorySettings
 
-        val repositorySettings = RepositorySettingsTestDouble.getInstance()
+        val repositoryBag = UtilityDataHelper().repositoryBag
         runBlocking(Dispatchers.Main) {
-            repositorySettings.store(Settings())
+            repositoryBag.store(bagDataTestDouble.allDice)
         }
 
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        val repositoryRoll = UtilityDataHelper().repositoryRoll
+        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
         runBlocking(Dispatchers.Main) {
-            repositoryBag.store(sampleBagTestData.allDice)
-        }
-
-        val sampleRollTestData = SampleRollTestData(sampleBagTestData)
-
-        val repositoryRoll = RepositoryRollTestDouble.getInstance()
-        runBlocking(Dispatchers.Main) {
-            repositoryRoll.store(sampleRollTestData.rollHistory)
+            repositoryRoll.store(rollDataTestDouble.rollHistory)
         }
 
         return spyk<TabRollAndroidViewModel>(
@@ -272,7 +264,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         )
     }
 
-    private fun deterministicTabRollViewModel(diceBag: SampleBagTestData): TabRollAndroidViewModel {
+    private fun deterministicTabRollViewModel(diceBag: BagDataTestDouble): TabRollAndroidViewModel {
         val tabRollViewModel = tabRollViewModel(diceBag)
 
         val diceSlot = slot<Dice>()

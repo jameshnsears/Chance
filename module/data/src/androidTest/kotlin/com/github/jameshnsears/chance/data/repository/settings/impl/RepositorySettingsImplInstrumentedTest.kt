@@ -1,10 +1,10 @@
 package com.github.jameshnsears.chance.data.repository.settings.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
-import com.github.jameshnsears.chance.data.sample.settings.SampleSettingsStartup
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.repository.RepositoryInstrumentedHelper
+import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -15,16 +15,16 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class RepositorySettingsImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
-    private val repositoryBag = RepositoryBagTestDouble.getInstance()
+class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
+    private val repositoryBag = UtilityDataHelper().repositoryBag
 
     init {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
         runBlocking(Dispatchers.Main) {
             repositoryBag.store(
                 mutableListOf(
-                    sampleBagTestData.d2,
+                    bagDataTestDouble.d2,
                 ),
             )
         }
@@ -68,7 +68,7 @@ class RepositorySettingsImplInstrumentedTest : UtilityLoggingInstrumentedHelper(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val originalSettings = SampleSettingsStartup().settings
+        val originalSettings = Settings()
         originalSettings.tabRowChance = 1
         originalSettings.resize = 2f
         originalSettings.rollIndexTime = false
@@ -106,7 +106,7 @@ class RepositorySettingsImplInstrumentedTest : UtilityLoggingInstrumentedHelper(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val originalSettings = SampleSettingsStartup().settings
+        val originalSettings = Settings()
 
         repositorySettingsImpl.store(originalSettings)
 

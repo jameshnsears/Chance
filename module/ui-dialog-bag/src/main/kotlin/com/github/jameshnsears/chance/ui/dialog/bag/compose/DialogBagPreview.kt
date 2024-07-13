@@ -6,8 +6,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
+import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
@@ -21,16 +22,17 @@ import kotlinx.coroutines.runBlocking
 fun DialogBagPreview() {
     val showDialog = mutableStateOf(true)
 
-    val repositoryBagTestDouble = RepositoryBagTestDouble.getInstance()
+    val repositoryBagTestDouble =
+        RepositoryBagTestDouble.getInstance(UtilityDataHelper().bagDataTestDouble.allDice)
     runBlocking(Dispatchers.Main) {
         repositoryBagTestDouble.store(
             mutableListOf(
-                SampleBagTestData().d2,
+                BagDataTestDouble().d2,
             )
         )
     }
 
-    val dice = SampleBagTestData().d2
+    val dice = BagDataTestDouble().d2
     val sides = dice.sides[0]
 
     val dialogBagAndroidViewModel = runBlocking {

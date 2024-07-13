@@ -1,8 +1,8 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.roll
 
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.DiceRollValues
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagUnitTestHelper
 import kotlinx.coroutines.test.runTest
@@ -13,7 +13,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun rollCardMultiplier() = runTest {
         val (diceInDialogBag, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(
-            SampleBagTestData().d4
+            BagDataTestDouble().d4
         )
 
         val pair = cardRollViewModelCardRollStatePair(dialogBagAndroidViewModel)
@@ -35,7 +35,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun rollCardExplodeEquals() = runTest {
         val (diceInDialogBag, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(
-            SampleBagTestData().d6
+            BagDataTestDouble().d6
         )
 
         var (cardRollViewModel, stateFlow) = cardRollViewModelCardRollStatePair(
@@ -63,7 +63,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun rollCardExplodeLessThan() = runTest {
         // if < then value drop down list must remove lowest side #
-        val (_, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(SampleBagTestData().d20)
+        val (_, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(BagDataTestDouble().d20)
 
         val (cardRollViewModel, _) = cardRollViewModelCardRollStatePair(
             dialogBagAndroidViewModel
@@ -73,7 +73,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val stateFlow = cardRollViewModel.stateFlowCardRoll.value
 
-        assertTrue(stateFlow.rollExplodeAvailableValues.size == SampleBagTestData().d20.sides.size - 1)
+        assertTrue(stateFlow.rollExplodeAvailableValues.size == BagDataTestDouble().d20.sides.size - 1)
         assertTrue(stateFlow.rollExplodeAvailableValues.first() == "2")
         assertTrue(stateFlow.rollExplodeAvailableValues.last() == "20")
     }
@@ -81,7 +81,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun rollCardExplodeGreaterThan() = runTest {
         // if > then value drop down list must remove highest side #
-        val (_, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(SampleBagTestData().d20)
+        val (_, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(BagDataTestDouble().d20)
 
         val (cardRollViewModel, _) = cardRollViewModelCardRollStatePair(
             dialogBagAndroidViewModel
@@ -91,7 +91,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val stateFlow = cardRollViewModel.stateFlowCardRoll.value
 
-        assertTrue(stateFlow.rollExplodeAvailableValues.size == SampleBagTestData().d20.sides.size - 1)
+        assertTrue(stateFlow.rollExplodeAvailableValues.size == BagDataTestDouble().d20.sides.size - 1)
         assertTrue(stateFlow.rollExplodeAvailableValues.first() == "1")
         assertTrue(stateFlow.rollExplodeAvailableValues.last() == "19")
     }
@@ -99,7 +99,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun rollCardScore() = runTest {
         val (diceInDialogBag, dialogBagAndroidViewModel) = getDialogBagAndroidViewModel(
-            SampleBagTestData().d4
+            BagDataTestDouble().d4
         )
 
         var (cardRollViewModel, stateFlow) = cardRollViewModelCardRollStatePair(

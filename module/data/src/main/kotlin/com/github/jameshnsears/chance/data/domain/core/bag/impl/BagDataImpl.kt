@@ -1,10 +1,11 @@
-package com.github.jameshnsears.chance.data.sample.bag
+package com.github.jameshnsears.chance.data.domain.core.bag.impl
 
 import com.github.jameshnsears.chance.data.R
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.Side
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.bag.BagDataInterface
 
-class SampleBagStartup {
+class BagDataImpl : BagDataInterface {
     val d6 = Dice(
         sides = listOf(
             Side(
@@ -92,7 +93,7 @@ class SampleBagStartup {
         multiplierValue = 4,
     )
 
-    val allDice = mutableListOf(
+    override val allDice = mutableListOf(
         d6,
         diceStory
     )

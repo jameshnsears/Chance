@@ -4,17 +4,19 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.github.jameshnsears.chance.data.domain.proto.DiceBagProtocolBuffer
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
+import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
+import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.DiceBag
-import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 class RepositoryBagImpl private constructor(private val context: Context) :
@@ -23,9 +25,17 @@ class RepositoryBagImpl private constructor(private val context: Context) :
         @SuppressLint("StaticFieldLeak")
         private var instance: RepositoryBagImpl? = null
 
-        fun getInstance(context: Context): RepositoryBagImpl {
+        fun getInstance(
+            context: Context,
+            diceBag: DiceBag = BagDataImpl().allDice
+        ): RepositoryBagImpl {
             if (instance == null) {
                 instance = RepositoryBagImpl(context)
+                runBlocking {
+                    instance!!.store(
+                        diceBag,
+                    )
+                }
             }
             return instance!!
         }
@@ -35,8 +45,8 @@ class RepositoryBagImpl private constructor(private val context: Context) :
         val diceBag = mutableListOf<Dice>()
 
         context.diceBagDataStore.data
-            .map { diceBagProtocolBuffer ->
-                diceBagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
+            .map { BagProtocolBuffer ->
+                BagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
                     diceBag.add(
                         Dice(
                             epoch = diceProtocolBuffer.epoch,
@@ -61,8 +71,8 @@ class RepositoryBagImpl private constructor(private val context: Context) :
     override suspend fun fetch(epoch: Long): Flow<Dice> = flow {
         val dice = Dice()
         context.diceBagDataStore.data
-            .map { diceBagProtocolBuffer ->
-                diceBagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
+            .map { BagProtocolBuffer ->
+                BagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
 
                     if (epoch == diceProtocolBuffer.epoch) {
                         dice.epoch = diceProtocolBuffer.epoch
@@ -105,12 +115,12 @@ class RepositoryBagImpl private constructor(private val context: Context) :
         Timber.d(newDiceBag.toString())
 
         context.diceBagDataStore.updateData {
-            val diceBagProtocolBufferBuilder = it.toBuilder()
-            mapDiceBagIntoDiceBagProtocolBufferBuilder(
+            val BagProtocolBufferBuilder = it.toBuilder()
+            mapDiceBagIntoBagProtocolBufferBuilder(
                 newDiceBag,
-                diceBagProtocolBufferBuilder
+                BagProtocolBufferBuilder
             )
-            diceBagProtocolBufferBuilder.build()
+            BagProtocolBufferBuilder.build()
         }
     }
 
@@ -120,22 +130,22 @@ class RepositoryBagImpl private constructor(private val context: Context) :
 
     override suspend fun importJson(json: String) {
         context.diceBagDataStore.updateData {
-            val diceBagProtocolBuffer: DiceBagProtocolBuffer.Builder =
-                DiceBagProtocolBuffer.newBuilder()
-            JsonFormat.parser().merge(json, diceBagProtocolBuffer)
-            diceBagProtocolBuffer.build()
+            val BagProtocolBuffer: BagProtocolBuffer.Builder =
+                BagProtocolBuffer.newBuilder()
+            JsonFormat.parser().merge(json, BagProtocolBuffer)
+            BagProtocolBuffer.build()
         }
     }
 
     override suspend fun clear() {
         context.diceBagDataStore.updateData {
-            DiceBagProtocolBuffer.newBuilder().build()
+            BagProtocolBuffer.newBuilder().build()
         }
     }
 }
 
-val Context.diceBagDataStore: DataStore<DiceBagProtocolBuffer> by dataStore(
+val Context.diceBagDataStore: DataStore<BagProtocolBuffer> by dataStore(
     // /data/data/com.github.jameshnsears.chance.test.test/files/datastore
     fileName = "bag.pb",
-    serializer = DiceBagProtocolBufferSerializer,
+    serializer = BagProtocolBufferSerializer,
 )

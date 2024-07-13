@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Settings
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface
 import kotlinx.coroutines.flow.Flow
 

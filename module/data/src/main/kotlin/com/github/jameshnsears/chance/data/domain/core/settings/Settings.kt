@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.data.domain.state
+package com.github.jameshnsears.chance.data.domain.core.settings
 
 data class Settings(
     var tabRowChance: Int = 0,

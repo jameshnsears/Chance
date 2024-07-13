@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.data.repository.settings.testdouble
 
-import com.github.jameshnsears.chance.data.sample.settings.SampleSettingsStartup
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -12,9 +12,7 @@ class RepositorySettingsTestDoubleUnitTest : UtilityAndroidHelper() {
     fun storeAndFetch() = runTest {
         val repositorySettingsTestDouble = RepositorySettingsTestDouble.getInstance()
 
-        val settings = SampleSettingsStartup().settings
-
-        repositorySettingsTestDouble.store(settings)
+        val settings = Settings()
 
         val fetchedSettings = repositorySettingsTestDouble.fetch().first()
 

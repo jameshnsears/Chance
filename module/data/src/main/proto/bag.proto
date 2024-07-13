@@ -6,6 +6,6 @@ package com.github.jameshnsears.chance.data.domain.proto;
 
 import "dice.proto";
 
-message DiceBagProtocolBuffer {
+message BagProtocolBuffer {
   repeated DiceProtocolBuffer dice = 1;
 }

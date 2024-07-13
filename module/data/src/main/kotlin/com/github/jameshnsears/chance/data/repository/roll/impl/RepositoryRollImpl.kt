@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
+import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Roll
-import com.github.jameshnsears.chance.data.domain.state.RollHistory
-import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow

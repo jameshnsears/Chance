@@ -1,10 +1,10 @@
 package com.github.jameshnsears.chance.data.repository.bag
 
-import com.github.jameshnsears.chance.data.domain.proto.DiceBagProtocolBuffer
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
+import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.DiceBag
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface
 import kotlinx.coroutines.flow.Flow
 
@@ -13,9 +13,9 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
     suspend fun fetch(epoch: Long): Flow<Dice>
     suspend fun store(newDiceBag: DiceBag)
 
-    fun mapDiceBagIntoDiceBagProtocolBufferBuilder(
+    fun mapDiceBagIntoBagProtocolBufferBuilder(
         diceBag: DiceBag,
-        diceBagProtocolBufferBuilder: DiceBagProtocolBuffer.Builder,
+        BagProtocolBufferBuilder: BagProtocolBuffer.Builder,
     ) {
         for (dice in diceBag) {
             val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
@@ -48,7 +48,7 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
             diceProtocolBuffer.setModifyScore(dice.modifyScore)
             diceProtocolBuffer.setModifyScoreValue(dice.modifyScoreValue)
 
-            diceBagProtocolBufferBuilder
+            BagProtocolBufferBuilder
                 .addDice(diceProtocolBuffer)
                 .build()
         }

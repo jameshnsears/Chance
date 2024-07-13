@@ -1,13 +1,14 @@
 package com.github.jameshnsears.chance.data.repository.roll.testdouble
 
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
+import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Roll
-import com.github.jameshnsears.chance.data.domain.state.RollHistory
-import com.github.jameshnsears.chance.data.domain.state.Side
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 class RepositoryRollTestDouble private constructor() :
@@ -15,9 +16,16 @@ class RepositoryRollTestDouble private constructor() :
     companion object {
         private var instance: RepositoryRollTestDouble? = null
 
-        fun getInstance(): RepositoryRollTestDouble {
+        fun getInstance(
+            rollHistory: RollHistory
+        ): RepositoryRollTestDouble {
             if (instance == null) {
                 instance = RepositoryRollTestDouble()
+                runBlocking {
+                    instance!!.store(
+                        rollHistory,
+                    )
+                }
             }
             return instance!!
         }

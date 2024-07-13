@@ -108,7 +108,7 @@ subprojects {
 
             //////////////////////////////////////////////////////
 
-            tasks.register<JacocoReport>("jacocoAndroidTestReport") {
+            tasks.register<JacocoReport>("jacocoFdroidAndroidTestReport") {
                 group = "chance"
                 description = "coverage - androidTest API 33+"
 

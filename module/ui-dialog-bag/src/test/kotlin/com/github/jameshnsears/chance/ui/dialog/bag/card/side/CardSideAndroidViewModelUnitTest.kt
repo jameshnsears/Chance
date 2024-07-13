@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.side
 
-import com.github.jameshnsears.chance.data.domain.state.Side
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagUnitTestHelper
 import kotlinx.coroutines.test.runTest
@@ -16,7 +16,7 @@ import kotlin.test.assertNotNull
 class CardSideAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun sideCardSideDescriptionInit() = runTest {
-        val diceInDialogBag = SampleBagTestData().d2
+        val diceInDialogBag = BagDataTestDouble().d2
         val sideInDialogBag = diceInDialogBag.sides[0]
 
         val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(
@@ -34,7 +34,7 @@ class CardSideAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun sideCardModifyAndReset() = runTest {
-        val diceInDialogBag = SampleBagTestData().d2
+        val diceInDialogBag = BagDataTestDouble().d2
         val sideInDialogBag = diceInDialogBag.sides[0]
 
         val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(
@@ -78,7 +78,7 @@ class CardSideAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun sideCardSvgClear() {
-        val diceInDialogBag = SampleBagTestData().d6
+        val diceInDialogBag = BagDataTestDouble().d6
         val sideInDialogBag = diceInDialogBag.sides[0]
 
         val dialogBagAndroidViewModel = getDialogBagAndroidViewModel(

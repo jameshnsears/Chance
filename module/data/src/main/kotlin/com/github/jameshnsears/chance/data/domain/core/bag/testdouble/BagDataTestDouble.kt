@@ -1,9 +1,11 @@
-package com.github.jameshnsears.chance.data.sample.bag
+package com.github.jameshnsears.chance.data.domain.core.bag.testdouble
 
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.Side
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.bag.BagDataInterface
+import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
 
-class SampleBagTestData {
+class BagDataTestDouble : BagDataInterface {
     val d2 = Dice(
         sides = listOf(
             Side(
@@ -38,9 +40,9 @@ class SampleBagTestData {
         multiplierValue = 2
     )
 
-    val d6 = SampleBagStartup().d6
+    val d6 = BagDataImpl().d6
 
-    val diceStory = SampleBagStartup().diceStory
+    val diceStory = BagDataImpl().diceStory
 
     val d8 = Dice(
         sides = (8 downTo 1).map { index -> Side(number = index) },
@@ -68,7 +70,7 @@ class SampleBagTestData {
         modifyScoreValue = -5
     )
 
-    val allDice = mutableListOf(
+    override val allDice = mutableListOf(
         d2,
         d4,
         d6,

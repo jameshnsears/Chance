@@ -1,8 +1,8 @@
 package com.github.jameshnsears.chance.data.repository.bag.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryInstrumentedHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -12,7 +12,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class RepositoryBagImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
+class RepositoryBagImplInstrumentedTest : RepositoryInstrumentedHelper() {
     @Before
     fun emptyDataStore() = runTest {
         RepositoryBagImpl.getInstance(
@@ -26,9 +26,9 @@ class RepositoryBagImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val originalDiceBag = sampleBagTestData.allDice
+        val originalDiceBag = bagDataTestDouble.allDice
 
         repositoryBagImpl.store(originalDiceBag)
 
@@ -76,9 +76,9 @@ class RepositoryBagImplInstrumentedTest : UtilityLoggingInstrumentedHelper() {
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val originalDieBag = sampleBagTestData.allDice
+        val originalDieBag = bagDataTestDouble.allDice
 
         repositoryBagImpl.store(originalDieBag)
 

@@ -1,9 +1,10 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
-import com.github.jameshnsears.chance.data.domain.state.Dice
-import com.github.jameshnsears.chance.data.domain.state.Side
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
+import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -14,7 +15,7 @@ import org.junit.Test
 class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun dialogBagRollCardExplodeValueAfterChangeInDiceSides() = runTest {
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(SampleBagTestData().d12)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(BagDataTestDouble().d12)
 
         assertTrue(
             dialogBagAndroidViewModel.cardRollViewModel
@@ -33,12 +34,12 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagAlignDiceSidesWithDiceBagWithSidesEqual() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.d12)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(bagDataTestDouble.d12)
 
         val originalDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d12.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.d12.epoch).first()
         val originalSides = originalDice.sides
 
         assertEquals(12, originalSides.size)
@@ -54,12 +55,12 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagAlignDiceSidesWithDiceBagWithSidesEqualApplyToAll() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.d6)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(bagDataTestDouble.d6)
 
         val originalDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d6.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.d6.epoch).first()
 
         val originalSides = originalDice.sides.deepCopy()
 
@@ -91,12 +92,12 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagAlignDiceSidesWithDiceBagWithSidesEqualApplyToAllNumberColour() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.diceStory)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(bagDataTestDouble.diceStory)
 
         val originalDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.diceStory.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.diceStory.epoch).first()
 
         val originalSides = originalDice.sides.deepCopy()
 
@@ -123,12 +124,12 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagAlignDiceSidesWithDiceBagWithSidesFewer() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.d20)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(bagDataTestDouble.d20)
 
         val originalDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d20.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.d20.epoch).first()
         val originalSides = originalDice.sides
 
         assertEquals(20, originalSides.size)
@@ -167,12 +168,12 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagAlignDiceSidesWithDiceBagWithSidesGreater() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.d6)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(bagDataTestDouble.d6)
 
         val originalDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d6.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.d6.epoch).first()
         val originalSides = originalDice.sides
 
         assertEquals(6, originalSides.size)
@@ -205,7 +206,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagSaveWithApplyToAll() = runTest {
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(SampleBagTestData().d12)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(BagDataTestDouble().d12)
 
         val newSideNumberColour = "FF112233"
         dialogBagAndroidViewModel.cardSideAndroidViewModel.sideNumberColour(newSideNumberColour)
@@ -214,7 +215,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         dialogBagAndroidViewModel.save()
 
         val d12 =
-            dialogBagAndroidViewModel.repositoryBag.fetch(SampleBagTestData().d12.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(BagDataTestDouble().d12.epoch).first()
         d12.sides.forEach {
             assertTrue(it.numberColour == newSideNumberColour)
         }
@@ -222,14 +223,14 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagSaveAfterNotModifyingAnythingSingleDice() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.d12)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(bagDataTestDouble.d12)
 
         val originalDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d12.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.d12.epoch).first()
 
-        assertEquals(sampleBagTestData.d12.title, originalDice.title)
+        assertEquals(bagDataTestDouble.d12.title, originalDice.title)
 
         val newDiceTitle = "newDiceTitle"
         dialogBagAndroidViewModel.cardDiceViewModel.diceTitle(newDiceTitle)
@@ -237,19 +238,19 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         dialogBagAndroidViewModel.save()
 
         val savedDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d12.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.d12.epoch).first()
         assertEquals(newDiceTitle, savedDice.title)
 
     }
 
     @Test
     fun dialogBagSaveAfterModifyingNumberOfSides() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(sampleBagTestData.d12)
+        val dialogBagAndroidViewModel = dialogBagAndroidViewModel(bagDataTestDouble.d12)
 
         val originalDice =
-            dialogBagAndroidViewModel.repositoryBag.fetch(sampleBagTestData.d12.epoch).first()
+            dialogBagAndroidViewModel.repositoryBag.fetch(bagDataTestDouble.d12.epoch).first()
 
         dialogBagAndroidViewModel.cardDiceViewModel.diceSidesSize("6")
 
@@ -261,12 +262,11 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagSaveAfterNotModifyingAnythingMultipleDice() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val sampleBagTestDataAllDice = sampleBagTestData.allDice
+        val sampleBagTestDataAllDice = bagDataTestDouble.allDice
 
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
-        repositoryBag.store(sampleBagTestDataAllDice)
+        val repositoryBag = RepositoryBagTestDouble.getInstance(sampleBagTestDataAllDice)
 
         val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
             getApplication(),
@@ -286,16 +286,15 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
     @Test
     fun dialogBagDelete() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val diceToDelete = sampleBagTestData.d4
+        val diceToDelete = bagDataTestDouble.d4
 
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
-        repositoryBag.store(
+        val repositoryBag = RepositoryBagTestDouble.getInstance(
             mutableListOf(
-                sampleBagTestData.d2,
+                bagDataTestDouble.d2,
                 diceToDelete,
-                sampleBagTestData.d6
+                bagDataTestDouble.d6
             )
         )
 
@@ -312,22 +311,22 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         assertEquals(2, remainingDice.size)
 
-        assertEquals(sampleBagTestData.d2, remainingDice[0])
-        assertEquals(sampleBagTestData.d6, remainingDice[1])
+        assertEquals(bagDataTestDouble.d2, remainingDice[0])
+        assertEquals(bagDataTestDouble.d6, remainingDice[1])
     }
 
     @Test
     fun dialogBagCloneWithSidesSame() = runTest {
-        val sampleBagTestData = SampleBagTestData()
+        val bagDataTestDouble = BagDataTestDouble()
 
-        val diceToClone = sampleBagTestData.d12
+        val diceToClone = bagDataTestDouble.d12
 
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        val repositoryBag = UtilityDataHelper().repositoryBag
         repositoryBag.store(
             mutableListOf(
-                sampleBagTestData.d10,
+                bagDataTestDouble.d10,
                 diceToClone,
-                sampleBagTestData.d20
+                bagDataTestDouble.d20
             )
         )
 
@@ -338,7 +337,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
             diceToClone.sides[0]
         )
 
-        val newTitleForClonedDice = sampleBagTestData.d12.title + " clone"
+        val newTitleForClonedDice = bagDataTestDouble.d12.title + " clone"
         dialogBagAndroidViewModel.cardDiceViewModel.diceTitle(newTitleForClonedDice)
         dialogBagAndroidViewModel.clone()
 
@@ -346,17 +345,17 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         assertEquals(4, diceBagWithClonedDice.size)
 
-        assertEquals(sampleBagTestData.d10, diceBagWithClonedDice[0])
+        assertEquals(bagDataTestDouble.d10, diceBagWithClonedDice[0])
         assertEquals(diceToClone, diceBagWithClonedDice[1])
 
         assertNotEquals(diceToClone, diceBagWithClonedDice[2])
         assertEquals(newTitleForClonedDice, diceBagWithClonedDice[2].title)
 
-        assertEquals(sampleBagTestData.d20, diceBagWithClonedDice[3])
+        assertEquals(bagDataTestDouble.d20, diceBagWithClonedDice[3])
     }
 
     private suspend fun dialogBagAndroidViewModel(dice: Dice): DialogBagAndroidViewModel {
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        val repositoryBag = UtilityDataHelper().repositoryBag
         repositoryBag.store(mutableListOf(dice))
 
         return DialogBagAndroidViewModel(

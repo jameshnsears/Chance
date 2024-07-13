@@ -4,16 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.state.Settings
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.google.protobuf.util.JsonFormat
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-
 
 class RepositorySettingsImpl private constructor(private val context: Context) :
     RepositorySettingsInterface {
@@ -21,15 +22,37 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         @SuppressLint("StaticFieldLeak")
         private var instance: RepositorySettingsImpl? = null
 
-        fun getInstance(context: Context): RepositorySettingsImpl {
+        fun getInstance(
+            context: Context,
+            settings: Settings = Settings()
+        ): RepositorySettingsImpl {
             if (instance == null) {
                 instance = RepositorySettingsImpl(context)
+                runBlocking(Dispatchers.Main) {
+                    instance!!.store(settings)
+                }
             }
             return instance!!
         }
     }
 
     override suspend fun fetch(): Flow<Settings> = flow {
+        /*
+        if the store is empty it returns:
+
+            Settings(
+                tabRowChance=0,
+                resize=0.0,
+                rollIndexTime=false,
+                rollScore=false,
+                diceTitle=false,
+                sideNumber=false,
+                behaviour=false,
+                sideDescription=false,
+                sideSVG=false,
+                rollSound=false
+            )
+         */
         val settings: Settings = context.settingsDataStore.data
             .map { settingsProtocolBuffer ->
                 Settings(

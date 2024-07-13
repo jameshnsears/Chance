@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.data.domain.utility.json
 
-import com.github.jameshnsears.chance.data.domain.state.Roll
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.victools.jsonschema.generator.OptionPreset
 import com.github.victools.jsonschema.generator.SchemaGenerator
 import com.github.victools.jsonschema.generator.SchemaGeneratorConfigBuilder

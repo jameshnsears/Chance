@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.data.repository.bag.testdouble
 
-import com.github.jameshnsears.chance.data.sample.bag.SampleBagTestData
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -10,11 +10,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 class RepositoryBagTestDoubleUnitTest : UtilityAndroidHelper() {
     @Test
     fun storeAndFetch() = runTest {
-        val repositoryBag = RepositoryBagTestDouble.getInstance()
+        val diceBag = BagDataTestDouble().allDice
 
-        val diceBag = SampleBagTestData().allDice
-
-        repositoryBag.store(diceBag)
+        val repositoryBag = RepositoryBagTestDouble.getInstance(diceBag)
 
         val fetchedBag = repositoryBag.fetch().first()
         assertEquals(diceBag, fetchedBag)
