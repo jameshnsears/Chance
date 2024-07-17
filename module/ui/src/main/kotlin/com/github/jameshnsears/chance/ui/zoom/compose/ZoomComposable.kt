@@ -189,7 +189,11 @@ fun SideImageSVG(
                 contentDescription = "",
                 modifier = Modifier
                     .size(resizeView)
-                    .clickable { showDialog.value = true },
+                    .clickable {
+                        dialogDice.value = dice
+                        dialogSide.value = side
+                        showDialog.value = true
+                    }
             )
         }
     }
