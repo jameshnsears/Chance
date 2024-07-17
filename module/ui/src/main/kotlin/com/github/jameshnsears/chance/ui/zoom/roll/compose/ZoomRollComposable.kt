@@ -14,6 +14,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -21,13 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
+import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.compose.DiceTitle
 import com.github.jameshnsears.chance.ui.zoom.compose.SideDescriptionRoll
-import com.github.jameshnsears.chance.ui.zoom.compose.SideImageNumber
 import com.github.jameshnsears.chance.ui.zoom.compose.SideImageSVG
+import com.github.jameshnsears.chance.ui.zoom.compose.SideImageShape
 import com.github.jameshnsears.chance.ui.zoom.compose.SideRollBehaviour
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -167,6 +171,10 @@ private fun RollDetails(
 
     val settingsSideSVG = stateFlowTabRoll.value.sideSVG
 
+    val showDialog = remember { mutableStateOf(false) }
+    val dialogDice = remember { mutableStateOf(Dice()) }
+    val dialogSide = remember { mutableStateOf(Side()) }
+
     Column(
         Modifier.padding(start = 9.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -174,12 +182,36 @@ private fun RollDetails(
     ) {
         if (settingsDiceTitle) DiceTitle(dice)
 
-        if (settingsSideNumber) SideImageNumber(zoomAndroidViewModel, dice, roll.side)
+        if (settingsSideNumber) SideImageShape(
+            zoomAndroidViewModel,
+            dice,
+            roll.side,
+            showDialog,
+            dialogDice,
+            dialogSide
+        )
 
         if (settingsBehaviour) SideRollBehaviour(zoomAndroidViewModel, roll)
 
         if (settingsSideDescription) SideDescriptionRoll(zoomAndroidViewModel, roll.side)
 
-        if (settingsSideSVG) SideImageSVG(zoomAndroidViewModel, dice, roll.side)
+        if (settingsSideSVG) SideImageSVG(
+            zoomAndroidViewModel,
+            dice,
+            roll.side,
+            showDialog,
+            dialogDice,
+            dialogSide
+        )
+    }
+
+
+    if (showDialog.value) {
+        DialogBag(
+            showDialog,
+            zoomAndroidViewModel.repositoryBag,
+            dialogDice.value,
+            dialogSide.value,
+        )
     }
 }

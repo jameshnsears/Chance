@@ -50,7 +50,7 @@ fun BagCardRoll(
 ) {
     ElevatedCard(
         modifier = Modifier
-            .padding(bottom = 12.dp)
+            .padding(bottom = 4.dp)
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp,

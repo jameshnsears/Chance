@@ -6,18 +6,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
-import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 @SuppressLint("UnrememberedMutableState")
-@UtilityPreview
+@Preview(widthDp = 700, heightDp = 1800)
 @Composable
 fun DialogBagPreview() {
     val showDialog = mutableStateOf(true)

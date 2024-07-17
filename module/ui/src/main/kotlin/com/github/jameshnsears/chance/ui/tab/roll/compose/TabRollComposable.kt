@@ -66,7 +66,7 @@ fun TabRollLayout(
 
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
-        sheetPeekHeight = 115.dp,
+        sheetPeekHeight = 110.dp,
         sheetContent = {
             TabRollBottomSheetLayout(
                 tabRollAndroidViewModel,

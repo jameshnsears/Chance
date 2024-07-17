@@ -2,8 +2,10 @@ package com.github.jameshnsears.chance.ui.zoom
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.spyk
@@ -51,10 +53,10 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-    fun sideImageNumberFontSize() = runTest {
+    fun sideImageShapeNumberFontSize() = runTest {
         assertEquals(
             17.0.sp,
-            zoomAndroidViewModel().sideImageNumberFontSize()
+            zoomAndroidViewModel().sideImageShapeNumberFontSize()
         )
     }
 
@@ -62,19 +64,50 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
     fun removeRollSequenceWithDiceThatBeenDeleted() = runTest {
         val zoomAndroidViewModel = zoomAndroidViewModel()
 
-        assertEquals(2, zoomAndroidViewModel.repositoryRoll.fetch().first().size)
-
         val diceBag = zoomAndroidViewModel.repositoryBag.fetch().first()
         assertEquals(8, diceBag.size)
 
-        diceBag.removeAt(0)
+        val rollHistory = zoomAndroidViewModel.repositoryRoll.fetch().first()
+        assertEquals(2, rollHistory.size)
+
+        diceBag.removeAt(1)     // d4
         zoomAndroidViewModel.repositoryBag.store(diceBag)
 
         zoomAndroidViewModel.removeRollSequenceWithDiceThatBeenDeleted()
 
         assertEquals(7, zoomAndroidViewModel.repositoryBag.fetch().first().size)
 
-        assertEquals(1, zoomAndroidViewModel.repositoryRoll.fetch().first().size)
+        assertEquals(0, zoomAndroidViewModel.repositoryRoll.fetch().first().size)
+    }
+
+    @Test
+    fun removeRollSequenceWithDiceWhereNumberOfSidesChanged() = runTest {
+        val zoomAndroidViewModel = zoomAndroidViewModel()
+
+        val diceBag = zoomAndroidViewModel.repositoryBag.fetch().first()
+        assertEquals(8, diceBag.size)
+
+        val rollHistory = zoomAndroidViewModel.repositoryRoll.fetch().first()
+        assertEquals(2, rollHistory.size)
+
+        // change the number of sides of d4, from 4 to 2
+        val newDiceEpoch = UtilityEpochTimeGenerator.now()
+        diceBag[1].epoch = newDiceEpoch
+        diceBag[1].sides = listOf(
+            Side(number = 2),
+            Side(number = 1)
+        )
+        zoomAndroidViewModel.repositoryBag.store(diceBag)
+
+        assertEquals(8, zoomAndroidViewModel.repositoryBag.fetch().first().size)
+
+        assertTrue(zoomAndroidViewModel.diceBagEpochs().contains(newDiceEpoch))
+
+        assertFalse(zoomAndroidViewModel.diceRollEpochs().contains(newDiceEpoch))
+
+        zoomAndroidViewModel.removeRollSequenceWithDiceWhereNumberOfSidesChanged()
+
+        assertEquals(0, zoomAndroidViewModel.repositoryRoll.fetch().first().size)
     }
 
     @Test
@@ -91,30 +124,30 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-    fun sideImageNumberShape() = runTest {
+    fun sideImageShapeNumberShape() = runTest {
         assertEquals(
             com.github.jameshnsears.chance.data.R.drawable.d2,
-            zoomAndroidViewModel().sideImageNumberShape(BagDataTestDouble().d2)
+            zoomAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d2)
         )
 
         assertEquals(
             com.github.jameshnsears.chance.data.R.drawable.d6,
-            zoomAndroidViewModel().sideImageNumberShape(BagDataTestDouble().d6)
+            zoomAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d6)
         )
 
         assertEquals(
             com.github.jameshnsears.chance.data.R.drawable.d10,
-            zoomAndroidViewModel().sideImageNumberShape(BagDataTestDouble().d10)
+            zoomAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d10)
         )
 
         assertEquals(
             com.github.jameshnsears.chance.data.R.drawable.d12,
-            zoomAndroidViewModel().sideImageNumberShape(BagDataTestDouble().d12)
+            zoomAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d12)
         )
 
         assertEquals(
             com.github.jameshnsears.chance.data.R.drawable.d4_d8_d20,
-            zoomAndroidViewModel().sideImageNumberShape(BagDataTestDouble().d4)
+            zoomAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d4)
         )
     }
 
@@ -123,11 +156,24 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
     ): ZoomAndroidViewModel {
         val repositoryBag = UtilityDataHelper().repositoryBag
         runBlocking(Dispatchers.Main) {
+            // 8 dice = .allDice
             repositoryBag.store(bagDataTestDouble.allDice)
         }
 
         val repositoryRoll = UtilityDataHelper().repositoryRoll
         runBlocking(Dispatchers.Main) {
+            // 2 rolls:
+            //      1st roll:
+            //              d2
+            //              d4
+            //              d8
+            //              d10
+            //              d12
+            //              d20
+            //      2nd roll:
+            //              d4
+            //              d4
+            //              d4
             repositoryRoll.store(RollHistoryDataTestDouble(bagDataTestDouble).rollHistory)
         }
 

@@ -18,7 +18,7 @@
     <string name="dialog.bag.dice.title">Title</string>
     <string name="dialog.bag.dice.title.info">Title must be unique and can be a maximum of 25 characters</string>
     <string name="dialog.bag.dice.sides">Sides</string>
-    <string name="dialog.bag.dice.sides.info">Changing the number of sides will undo associated rolls</string>
+    <string name="dialog.bag.dice.sides.info">Changing the number of sides will undo associated roll sequences</string>
 
     <string-array name="dialog.bag.dice.sides">
         <item>2</item>

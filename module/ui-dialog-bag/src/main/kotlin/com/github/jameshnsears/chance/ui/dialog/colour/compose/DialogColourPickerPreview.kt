@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.ui.dialog.bag.card.colour.compose
+package com.github.jameshnsears.chance.ui.dialog.colour.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf

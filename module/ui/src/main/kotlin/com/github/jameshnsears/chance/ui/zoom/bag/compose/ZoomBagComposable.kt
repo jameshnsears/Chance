@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
@@ -18,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.compose.DiceTitle
 import com.github.jameshnsears.chance.ui.zoom.compose.SideDescription
@@ -40,6 +43,10 @@ fun ZoomBag(
 
     val diceListState = remember { mutableStateListOf<Dice>() }
     diceListState.swapList(stateFlowZoom.value.diceBag)
+
+    val showDialog = remember { mutableStateOf(false) }
+    val dialogDice = remember { mutableStateOf(Dice()) }
+    val dialogSide = remember { mutableStateOf(Side()) }
 
     LazyColumn(
         modifier = Modifier.padding(top = 8.dp, start = 8.dp, bottom = 110.dp, end = 8.dp),
@@ -67,11 +74,25 @@ fun ZoomBag(
                         Modifier.padding(start = 9.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        SideImageShape(zoomAndroidViewModel, dice, side)
+                        SideImageShape(
+                            zoomAndroidViewModel,
+                            dice,
+                            side,
+                            showDialog,
+                            dialogDice,
+                            dialogSide
+                        )
 
                         SideDescription(zoomAndroidViewModel, dice, side)
 
-                        SideImageSVG(zoomAndroidViewModel, dice, side)
+                        SideImageSVG(
+                            zoomAndroidViewModel,
+                            dice,
+                            side,
+                            showDialog,
+                            dialogDice,
+                            dialogSide
+                        )
                     }
                 }
             }
@@ -79,5 +100,14 @@ fun ZoomBag(
             if (index < stateFlowZoom.value.diceBag.size)
                 HorizontalDivider(Modifier.padding(bottom = 12.dp))
         }
+    }
+
+    if (showDialog.value) {
+        DialogBag(
+            showDialog,
+            zoomAndroidViewModel.repositoryBag,
+            dialogDice.value,
+            dialogSide.value,
+        )
     }
 }

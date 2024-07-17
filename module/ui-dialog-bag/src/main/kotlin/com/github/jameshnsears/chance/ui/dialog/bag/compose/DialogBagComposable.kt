@@ -48,7 +48,9 @@ fun DialogBag(
     val application = LocalContext.current.applicationContext as Application
 
     Dialog(
-        onDismissRequest = { showDialog.value = false },
+        onDismissRequest = {
+            showDialog.value = false
+        },
         properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         Surface(
@@ -95,7 +97,9 @@ fun DialogBagLayout(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(top = 4.dp, end = 4.dp),
         ) {
-            IconButton(onClick = { showDialog.value = false }) {
+            IconButton(onClick = {
+                showDialog.value = false
+            }) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
                     contentDescription = "",

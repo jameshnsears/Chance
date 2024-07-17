@@ -12,9 +12,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +28,6 @@ import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
-import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 
 @Composable
@@ -37,9 +35,10 @@ fun SideImageShape(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     dice: Dice,
     side: Side,
+    showDialog: MutableState<Boolean>,
+    dialogDice: MutableState<Dice>,
+    dialogSide: MutableState<Side>
 ) {
-    val showDialog = rememberSaveable { mutableStateOf(false) }
-
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
@@ -49,10 +48,14 @@ fun SideImageShape(
 
     Box {
         Image(
-            painter = painterResource(zoomAndroidViewModel.sideImageNumberShape(dice)),
+            painter = painterResource(zoomAndroidViewModel.sideImageShapeNumberShape(dice)),
             contentDescription = "",
             modifier = Modifier
-                .clickable { showDialog.value = true }
+                .clickable {
+                    dialogDice.value = dice
+                    dialogSide.value = side
+                    showDialog.value = true
+                }
                 .size(resizeView),
             colorFilter = zoomAndroidViewModel.sideColourFilter(dice.colour),
             contentScale = ContentScale.Crop
@@ -62,63 +65,9 @@ fun SideImageShape(
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(top = 0.dp),
-            fontSize = zoomAndroidViewModel.sideImageNumberFontSize(),
+            fontSize = zoomAndroidViewModel.sideImageShapeNumberFontSize(),
             text = "${side.number}",
             color = zoomAndroidViewModel.sideColor(side.numberColour),
-        )
-    }
-
-    if (showDialog.value) {
-        DialogBag(
-            showDialog,
-            zoomAndroidViewModel.repositoryBag,
-            dice,
-            side,
-        )
-    }
-}
-
-@Composable
-fun SideImageNumber(
-    zoomAndroidViewModel: ZoomAndroidViewModel,
-    dice: Dice,
-    side: Side,
-) {
-    val showDialog = rememberSaveable { mutableStateOf(false) }
-
-    val stateFlowZoom =
-        zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-        )
-
-    val resizeView = stateFlowZoom.value.resizeView
-
-    Box {
-        Image(
-            painter = painterResource(zoomAndroidViewModel.sideImageNumberShape(dice)),
-            contentDescription = "",
-            modifier = Modifier
-                .clickable { showDialog.value = true }
-                .size(resizeView),
-            colorFilter = zoomAndroidViewModel.sideColourFilter(dice.colour),
-        )
-
-        Text(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(top = 0.dp),
-            fontSize = zoomAndroidViewModel.sideImageNumberFontSize(),
-            text = "${side.number}",
-            color = zoomAndroidViewModel.sideColor(side.numberColour),
-        )
-    }
-
-    if (showDialog.value) {
-        DialogBag(
-            showDialog,
-            zoomAndroidViewModel.repositoryBag,
-            dice,
-            side,
         )
     }
 }
@@ -188,7 +137,7 @@ private fun SideRollBehaviourIcon(
     )
 
     Text(
-        fontSize = zoomAndroidViewModel.sideImageNumberFontSize(),
+        fontSize = zoomAndroidViewModel.sideImageShapeNumberFontSize(),
         text = text,
         color = rollSelectionIconColour,
     )
@@ -205,10 +154,11 @@ fun DiceTitle(dice: Dice) {
 fun SideImageSVG(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     dice: Dice,
-    side: Side
+    side: Side,
+    showDialog: MutableState<Boolean>,
+    dialogDice: MutableState<Dice>,
+    dialogSide: MutableState<Side>
 ) {
-    val showDialog = rememberSaveable { mutableStateOf(false) }
-
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
@@ -222,7 +172,11 @@ fun SideImageSVG(
             contentDescription = "",
             modifier = Modifier
                 .size(resizeView)
-                .clickable { showDialog.value = true },
+                .clickable {
+                    dialogDice.value = dice
+                    dialogSide.value = side
+                    showDialog.value = true
+                }
         )
     } else {
         if (side.imageBase64 != "") {
@@ -238,15 +192,6 @@ fun SideImageSVG(
                     .clickable { showDialog.value = true },
             )
         }
-    }
-
-    if (showDialog.value) {
-        DialogBag(
-            showDialog,
-            zoomAndroidViewModel.repositoryBag,
-            dice,
-            side,
-        )
     }
 }
 
