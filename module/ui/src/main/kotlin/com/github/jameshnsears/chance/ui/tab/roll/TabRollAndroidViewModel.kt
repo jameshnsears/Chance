@@ -76,25 +76,25 @@ class TabRollAndroidViewModel(
 
     init {
         viewModelScope.launch {
-            alignFunctionsWithDiceBag()
+            alignUndoAndRollButtonsWithDiceBag()
         }
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
                 Timber.d("collect")
-                alignFunctionsWithDiceBag()
+                alignUndoAndRollButtonsWithDiceBag()
             }
         }
 
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect")
-                alignFunctionsWithDiceBag()
+                alignUndoAndRollButtonsWithDiceBag()
             }
         }
     }
 
-    private suspend fun TabRollAndroidViewModel.alignFunctionsWithDiceBag() {
+    private suspend fun TabRollAndroidViewModel.alignUndoAndRollButtonsWithDiceBag() {
         _diceBag.value = repositoryBag.fetch().first()
 
         _undoEnabled.value = isUndoPossible()

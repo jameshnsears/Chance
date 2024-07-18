@@ -36,6 +36,7 @@ fun TabRollPreview() {
                 ),
                 ZoomAndroidViewModel(
                     mockk<Application>(),
+                    repositorySettings,
                     repositoryBag,
                     repositoryRoll
                 )

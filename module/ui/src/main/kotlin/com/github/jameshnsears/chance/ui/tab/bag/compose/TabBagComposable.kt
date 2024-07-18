@@ -134,7 +134,7 @@ fun TabBagBottomSheetLayout(
 fun Resize(
     state: State<TabBagState>,
     tabBagSlider: (Float) -> Unit,
-    zoomResize: (Int) -> Unit
+    zoomResize: (Float) -> Unit
 ) {
     var resize = state.value.resize
 
@@ -149,7 +149,7 @@ fun Resize(
             onValueChange = {
                 resize = it
                 tabBagSlider(it)
-                zoomResize(round(it).toInt())
+                zoomResize(round(it))
             },
             valueRange = 1f..7f,
             steps = 5,

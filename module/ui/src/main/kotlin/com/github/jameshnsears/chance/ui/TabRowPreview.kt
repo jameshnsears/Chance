@@ -40,6 +40,7 @@ fun TabRowPreview() {
                 ),
                 ZoomAndroidViewModel(
                     mockk<Application>(),
+                    repositorySettings,
                     repositoryBag,
                     repositoryRoll
                 )

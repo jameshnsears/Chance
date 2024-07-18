@@ -49,6 +49,7 @@ fun MainActivityComposable(
                     ),
                     ZoomAndroidViewModel(
                         application,
+                        repositorySettings,
                         repositoryBag,
                         repositoryRoll,
                     )

@@ -13,6 +13,8 @@ import io.mockk.mockk
 @UtilityPreview
 @Composable
 fun ZoomBagPreview() {
+    val repositorySettings = UtilityDataHelper().repositorySettings
+
     val repositoryBag = UtilityDataHelper().repositoryBag
 
     val repositoryRoll = UtilityDataHelper().repositoryRoll
@@ -24,6 +26,7 @@ fun ZoomBagPreview() {
             ZoomBag(
                 ZoomAndroidViewModel(
                     mockk<Application>(),
+                    repositorySettings,
                     repositoryBag,
                     repositoryRoll
                 ),

@@ -16,7 +16,9 @@ import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.utility.svg.UtilitySvgSerializer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
+import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollEvent
 import com.github.jameshnsears.chance.ui.utility.colour.UtilityColour
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +37,7 @@ data class ZoomState(
 
 class ZoomAndroidViewModel(
     application: Application,
+    val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
 ) : AndroidViewModel(application) {
@@ -72,6 +75,14 @@ class ZoomAndroidViewModel(
                         rollHistory = repositoryRoll.fetch().first()
                     )
                 }
+            }
+        }
+
+        viewModelScope.launch {
+            TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
+                Timber.d("collect")
+
+                resizeView(repositorySettings.fetch().first().resize)
             }
         }
 
@@ -175,18 +186,18 @@ class ZoomAndroidViewModel(
         }
     }
 
-    fun resizeView(zoom: Int) {
+    fun resizeView(zoom: Float) {
         val defaultViewSize = 80.dp
 
         _stateFlowZoom.update {
             it.copy(
                 resizeView = when (zoom) {
-                    1 -> defaultViewSize * 0.75f
-                    2 -> defaultViewSize * 0.8f
-                    3 -> defaultViewSize * 0.9f
-                    5 -> defaultViewSize * 1.1f
-                    6 -> defaultViewSize * 1.2f
-                    7 -> defaultViewSize * 1.25f
+                    1.0f -> defaultViewSize * 0.75f
+                    2.0f -> defaultViewSize * 0.8f
+                    3.0f -> defaultViewSize * 0.9f
+                    5.0f -> defaultViewSize * 1.1f
+                    6.0f -> defaultViewSize * 1.2f
+                    7.0f -> defaultViewSize * 1.25f
                     else -> defaultViewSize
                 }
             )

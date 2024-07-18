@@ -33,6 +33,7 @@ fun TabBagPreview() {
                 ),
                 ZoomAndroidViewModel(
                     mockk<Application>(),
+                    repositorySettings,
                     repositoryBag,
                     repositoryRoll
                 )
@@ -63,6 +64,7 @@ fun TabBagBottomSheetPreview() {
                 ),
                 ZoomAndroidViewModel(
                     mockk<Application>(),
+                    repositorySettings,
                     repositoryBag,
                     repositoryRoll
                 )

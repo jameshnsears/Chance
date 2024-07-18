@@ -34,6 +34,7 @@ fun ZoomRollPreview() {
                 ),
                 ZoomAndroidViewModel(
                     mockk<Application>(),
+                    repositorySettings,
                     repositoryBag,
                     repositoryRoll
                 ),

@@ -139,6 +139,12 @@ class TabBagAndroidViewModel(
                     )
                 }
 
+                _stateFlowTabBag.update {
+                    it.copy(
+                        resize = TabSettingsModel.resize(repositorySettings),
+                    )
+                }
+
                 TabBagImportEvent.emit()
 
                 Timber.d("import.completed.success")
