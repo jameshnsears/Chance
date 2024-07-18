@@ -12,7 +12,7 @@
     <string name="dialog.bag.side.description.info">Description can be a maximum of 25 characters</string>
     <string name="dialog.bag.side.description.colour">Text…</string>
     <string name="dialog.bag.side.apply.to.all.svg">Apply SVG to all sides</string>
-    <string name="dialog.bag.side.apply.to.all.colour">Apply colour to all sides</string>
+    <string name="dialog.bag.side.apply.to.all.colour">Apply colour to all side #\'s</string>
 
     <string name="dialog.bag.dice">Dice</string>
     <string name="dialog.bag.dice.title">Title</string>
