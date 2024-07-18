@@ -180,6 +180,7 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
         return spyk<ZoomAndroidViewModel>(
             ZoomAndroidViewModel(
                 getApplication(),
+                UtilityDataHelper().repositorySettings,
                 repositoryBag,
                 repositoryRoll
             )

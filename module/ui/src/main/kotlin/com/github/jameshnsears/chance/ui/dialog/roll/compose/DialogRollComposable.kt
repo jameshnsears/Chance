@@ -71,7 +71,7 @@ fun DialogRollLayout(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
 
-    val rollTime = stateFlow.value.rollTime
+    val rollTime = stateFlow.value.rollIndexTime
     val rollScore = stateFlow.value.rollScore
     val diceTitle = stateFlow.value.diceTitle
     val sideNumber = stateFlow.value.sideNumber
@@ -92,7 +92,7 @@ fun DialogRollLayout(
             CommonSwitch(
                 stringResource(R.string.tab_roll_settings_roll_time),
                 rollTime,
-                tabRollAndroidViewModel::settingsTime,
+                tabRollAndroidViewModel::settingsIndexTime,
                 DialogRollTestTag.SETTINGS_TIME
             )
 

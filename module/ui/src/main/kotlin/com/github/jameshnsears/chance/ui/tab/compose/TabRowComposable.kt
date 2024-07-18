@@ -35,9 +35,7 @@ fun TabRow(
         stringResource(R.string.tab_roll),
     )
 
-    val selectedTabIndex = rememberSaveable {
-        mutableIntStateOf(tabBagAndroidViewModel.stateFlowTabBag.value.tabRowChance)
-    }
+    val selectedTabIndex = rememberSaveable { mutableIntStateOf(0) }
 
     Column {
         TabRow(
@@ -61,7 +59,6 @@ fun TabRow(
         Column {
             when (selectedTabIndex.intValue) {
                 0 -> {
-                    tabBagAndroidViewModel.markTabAsCurrentInSettings()
                     TabBag(
                         tabBagAndroidViewModel,
                         zoomAndroidViewModel
@@ -69,7 +66,6 @@ fun TabRow(
                 }
 
                 else -> {
-                    tabRollAndroidViewModel.markTabAsCurrentInSettings()
                     TabRoll(
                         tabRollAndroidViewModel,
                         zoomAndroidViewModel

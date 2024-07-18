@@ -9,70 +9,63 @@ public interface SettingsProtocolBufferOrBuilder extends
         com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 tabRowChance = 1;</code>
-     *
-     * @return The tabRowChance.
-     */
-    int getTabRowChance();
-
-    /**
-     * <code>float resize = 2;</code>
+     * <code>int32 resize = 1;</code>
      *
      * @return The resize.
      */
-    float getResize();
+    int getResize();
 
     /**
-     * <code>bool rollIndexTime = 3;</code>
+     * <code>bool rollIndexTime = 2;</code>
      *
      * @return The rollIndexTime.
      */
     boolean getRollIndexTime();
 
     /**
-     * <code>bool rollScore = 4;</code>
+     * <code>bool rollScore = 3;</code>
      *
      * @return The rollScore.
      */
     boolean getRollScore();
 
     /**
-     * <code>bool diceTitle = 5;</code>
+     * <code>bool diceTitle = 4;</code>
      *
      * @return The diceTitle.
      */
     boolean getDiceTitle();
 
     /**
-     * <code>bool sideNumber = 6;</code>
+     * <code>bool sideNumber = 5;</code>
      *
      * @return The sideNumber.
      */
     boolean getSideNumber();
 
     /**
-     * <code>bool behaviour = 7;</code>
+     * <code>bool behaviour = 6;</code>
      *
      * @return The behaviour.
      */
     boolean getBehaviour();
 
     /**
-     * <code>bool sideDescription = 8;</code>
+     * <code>bool sideDescription = 7;</code>
      *
      * @return The sideDescription.
      */
     boolean getSideDescription();
 
     /**
-     * <code>bool sideSVG = 9;</code>
+     * <code>bool sideSVG = 8;</code>
      *
      * @return The sideSVG.
      */
     boolean getSideSVG();
 
     /**
-     * <code>bool rollSound = 10;</code>
+     * <code>bool rollSound = 9;</code>
      *
      * @return The rollSound.
      */

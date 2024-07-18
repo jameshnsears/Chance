@@ -179,23 +179,11 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-    fun markTabAsCurrentInSettings() = runTest {
-        val tabRollViewModel = tabRollViewModel()
-
-        tabRollViewModel.markTabAsCurrentInSettings()
-
-        val repositorySettings = tabRollViewModel.repositorySettings.fetch().first()
-        assertEquals(
-            1, repositorySettings.tabRowChance
-        )
-    }
-
-    @Test
     fun dialogSettings() = runTest {
         val tabRollViewModel = tabRollViewModel()
 
-        tabRollViewModel.settingsTime(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.rollTime)
+        tabRollViewModel.settingsIndexTime(false)
+        assertFalse(tabRollViewModel.stateFlowTabRoll.value.rollIndexTime)
 
         tabRollViewModel.settingsRollScore(false)
         assertFalse(tabRollViewModel.stateFlowTabRoll.value.rollScore)

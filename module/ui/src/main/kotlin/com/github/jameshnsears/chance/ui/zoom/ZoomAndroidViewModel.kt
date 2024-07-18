@@ -186,18 +186,18 @@ class ZoomAndroidViewModel(
         }
     }
 
-    fun resizeView(zoom: Float) {
+    fun resizeView(zoom: Int) {
         val defaultViewSize = 80.dp
 
         _stateFlowZoom.update {
             it.copy(
                 resizeView = when (zoom) {
-                    1.0f -> defaultViewSize * 0.75f
-                    2.0f -> defaultViewSize * 0.8f
-                    3.0f -> defaultViewSize * 0.9f
-                    5.0f -> defaultViewSize * 1.1f
-                    6.0f -> defaultViewSize * 1.2f
-                    7.0f -> defaultViewSize * 1.25f
+                    1 -> defaultViewSize * 0.75f
+                    2 -> defaultViewSize * 0.8f
+                    3 -> defaultViewSize * 0.9f
+                    5 -> defaultViewSize * 1.1f
+                    6 -> defaultViewSize * 1.2f
+                    7 -> defaultViewSize * 1.25f
                     else -> defaultViewSize
                 }
             )

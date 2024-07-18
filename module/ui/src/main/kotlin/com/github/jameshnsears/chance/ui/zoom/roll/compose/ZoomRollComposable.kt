@@ -53,7 +53,7 @@ fun ZoomRoll(
         tabRollAndroidViewModel.stateFlowTabRoll.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
-    val settingsTime = stateFlowTabRoll.value.rollTime
+    val settingsTime = stateFlowTabRoll.value.rollIndexTime
     val settingsScore = stateFlowTabRoll.value.rollScore
 
     val listState = rememberLazyListState()

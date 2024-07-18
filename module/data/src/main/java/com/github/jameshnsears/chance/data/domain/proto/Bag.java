@@ -10,7 +10,7 @@ public final class Bag {
     static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.FileDescriptor
+    private static com.google.protobuf.Descriptors.FileDescriptor
             descriptor;
 
     static {
@@ -34,7 +34,6 @@ public final class Bag {
                 new java.lang.String[]{"Dice",});
         com.github.jameshnsears.chance.data.domain.proto.Dice.getDescriptor();
     }
-
     private Bag() {
     }
 

@@ -21,7 +21,7 @@ class UtilityDataHelper(context: Context? = null) {
     else
         RepositorySettingsImpl.getInstance(context!!)
 
-    /////////////////////////////////////
+    ///////////////////////////////////////////////////
 
     val bagDataTestDouble = BagDataTestDouble()
 
@@ -33,7 +33,7 @@ class UtilityDataHelper(context: Context? = null) {
     else
         RepositoryBagImpl.getInstance(context!!)
 
-    /////////////////////////////////////
+    ///////////////////////////////////////////////////
 
     val rollHistoryDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 

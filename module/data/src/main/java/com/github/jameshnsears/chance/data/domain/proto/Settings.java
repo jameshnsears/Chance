@@ -10,19 +10,19 @@ public final class Settings {
     static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.FileDescriptor
+    private static com.google.protobuf.Descriptors.FileDescriptor
             descriptor;
 
     static {
         java.lang.String[] descriptorData = {
                 "\n\016settings.proto\0220com.github.jameshnsear" +
-                        "s.chance.data.domain.proto\"\337\001\n\026SettingsP" +
-                        "rotocolBuffer\022\024\n\014tabRowChance\030\001 \001(\005\022\016\n\006r" +
-                        "esize\030\002 \001(\002\022\025\n\rrollIndexTime\030\003 \001(\010\022\021\n\tro" +
-                        "llScore\030\004 \001(\010\022\021\n\tdiceTitle\030\005 \001(\010\022\022\n\nside" +
-                        "Number\030\006 \001(\010\022\021\n\tbehaviour\030\007 \001(\010\022\027\n\017sideD" +
-                        "escription\030\010 \001(\010\022\017\n\007sideSVG\030\t \001(\010\022\021\n\trol" +
-                        "lSound\030\n \001(\010B\002P\001b\006proto3"
+                        "s.chance.data.domain.proto\"\311\001\n\026SettingsP" +
+                        "rotocolBuffer\022\016\n\006resize\030\001 \001(\005\022\025\n\rrollInd" +
+                        "exTime\030\002 \001(\010\022\021\n\trollScore\030\003 \001(\010\022\021\n\tdiceT" +
+                        "itle\030\004 \001(\010\022\022\n\nsideNumber\030\005 \001(\010\022\021\n\tbehavi" +
+                        "our\030\006 \001(\010\022\027\n\017sideDescription\030\007 \001(\010\022\017\n\007si" +
+                        "deSVG\030\010 \001(\010\022\021\n\trollSound\030\t \001(\010B\002P\001b\006prot" +
+                        "o3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
                 .internalBuildGeneratedFileFrom(descriptorData,
@@ -33,9 +33,8 @@ public final class Settings {
         internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
                 internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor,
-                new java.lang.String[]{"TabRowChance", "Resize", "RollIndexTime", "RollScore", "DiceTitle", "SideNumber", "Behaviour", "SideDescription", "SideSVG", "RollSound",});
+                new java.lang.String[]{"Resize", "RollIndexTime", "RollScore", "DiceTitle", "SideNumber", "Behaviour", "SideDescription", "SideSVG", "RollSound",});
     }
-
     private Settings() {
     }
 

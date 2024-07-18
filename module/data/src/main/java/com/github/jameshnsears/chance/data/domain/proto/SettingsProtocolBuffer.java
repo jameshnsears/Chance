@@ -11,16 +11,15 @@ public final class SettingsProtocolBuffer extends
         com.google.protobuf.GeneratedMessageV3 implements
         // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
         SettingsProtocolBufferOrBuilder {
-    public static final int TABROWCHANCE_FIELD_NUMBER = 1;
-    public static final int RESIZE_FIELD_NUMBER = 2;
-    public static final int ROLLINDEXTIME_FIELD_NUMBER = 3;
-    public static final int ROLLSCORE_FIELD_NUMBER = 4;
-    public static final int DICETITLE_FIELD_NUMBER = 5;
-    public static final int SIDENUMBER_FIELD_NUMBER = 6;
-    public static final int BEHAVIOUR_FIELD_NUMBER = 7;
-    public static final int SIDEDESCRIPTION_FIELD_NUMBER = 8;
-    public static final int SIDESVG_FIELD_NUMBER = 9;
-    public static final int ROLLSOUND_FIELD_NUMBER = 10;
+    public static final int RESIZE_FIELD_NUMBER = 1;
+    public static final int ROLLINDEXTIME_FIELD_NUMBER = 2;
+    public static final int ROLLSCORE_FIELD_NUMBER = 3;
+    public static final int DICETITLE_FIELD_NUMBER = 4;
+    public static final int SIDENUMBER_FIELD_NUMBER = 5;
+    public static final int BEHAVIOUR_FIELD_NUMBER = 6;
+    public static final int SIDEDESCRIPTION_FIELD_NUMBER = 7;
+    public static final int SIDESVG_FIELD_NUMBER = 8;
+    public static final int ROLLSOUND_FIELD_NUMBER = 9;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer DEFAULT_INSTANCE;
@@ -50,8 +49,7 @@ public final class SettingsProtocolBuffer extends
         DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer();
     }
 
-    private int tabRowChance_ = 0;
-    private float resize_ = 0F;
+    private int resize_ = 0;
     private boolean rollIndexTime_ = false;
     private boolean rollScore_ = false;
     private boolean diceTitle_ = false;
@@ -70,7 +68,7 @@ public final class SettingsProtocolBuffer extends
     private SettingsProtocolBuffer() {
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
     }
@@ -188,27 +186,17 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>int32 tabRowChance = 1;</code>
-     *
-     * @return The tabRowChance.
-     */
-    @java.lang.Override
-    public int getTabRowChance() {
-        return tabRowChance_;
-    }
-
-    /**
-     * <code>float resize = 2;</code>
+     * <code>int32 resize = 1;</code>
      *
      * @return The resize.
      */
     @java.lang.Override
-    public float getResize() {
+    public int getResize() {
         return resize_;
     }
 
     /**
-     * <code>bool rollIndexTime = 3;</code>
+     * <code>bool rollIndexTime = 2;</code>
      *
      * @return The rollIndexTime.
      */
@@ -218,7 +206,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollScore = 4;</code>
+     * <code>bool rollScore = 3;</code>
      *
      * @return The rollScore.
      */
@@ -228,7 +216,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool diceTitle = 5;</code>
+     * <code>bool diceTitle = 4;</code>
      *
      * @return The diceTitle.
      */
@@ -238,7 +226,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool sideNumber = 6;</code>
+     * <code>bool sideNumber = 5;</code>
      *
      * @return The sideNumber.
      */
@@ -248,7 +236,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool behaviour = 7;</code>
+     * <code>bool behaviour = 6;</code>
      *
      * @return The behaviour.
      */
@@ -258,7 +246,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool sideDescription = 8;</code>
+     * <code>bool sideDescription = 7;</code>
      *
      * @return The sideDescription.
      */
@@ -268,7 +256,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool sideSVG = 9;</code>
+     * <code>bool sideSVG = 8;</code>
      *
      * @return The sideSVG.
      */
@@ -278,7 +266,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool rollSound = 10;</code>
+     * <code>bool rollSound = 9;</code>
      *
      * @return The rollSound.
      */
@@ -288,7 +276,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     @java.lang.Override
-    public boolean isInitialized() {
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -300,35 +288,32 @@ public final class SettingsProtocolBuffer extends
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
             throws java.io.IOException {
-        if (tabRowChance_ != 0) {
-            output.writeInt32(1, tabRowChance_);
+        if (resize_ != 0) {
+            output.writeInt32(1, resize_);
         }
-        if (java.lang.Float.floatToRawIntBits(resize_) != 0) {
-            output.writeFloat(2, resize_);
+        if (rollIndexTime_ != false) {
+            output.writeBool(2, rollIndexTime_);
         }
-        if (rollIndexTime_) {
-            output.writeBool(3, rollIndexTime_);
+        if (rollScore_ != false) {
+            output.writeBool(3, rollScore_);
         }
-        if (rollScore_) {
-            output.writeBool(4, rollScore_);
+        if (diceTitle_ != false) {
+            output.writeBool(4, diceTitle_);
         }
-        if (diceTitle_) {
-            output.writeBool(5, diceTitle_);
+        if (sideNumber_ != false) {
+            output.writeBool(5, sideNumber_);
         }
-        if (sideNumber_) {
-            output.writeBool(6, sideNumber_);
+        if (behaviour_ != false) {
+            output.writeBool(6, behaviour_);
         }
-        if (behaviour_) {
-            output.writeBool(7, behaviour_);
+        if (sideDescription_ != false) {
+            output.writeBool(7, sideDescription_);
         }
-        if (sideDescription_) {
-            output.writeBool(8, sideDescription_);
+        if (sideSVG_ != false) {
+            output.writeBool(8, sideSVG_);
         }
-        if (sideSVG_) {
-            output.writeBool(9, sideSVG_);
-        }
-        if (rollSound_) {
-            output.writeBool(10, rollSound_);
+        if (rollSound_ != false) {
+            output.writeBool(9, rollSound_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -339,45 +324,41 @@ public final class SettingsProtocolBuffer extends
         if (size != -1) return size;
 
         size = 0;
-        if (tabRowChance_ != 0) {
+        if (resize_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(1, tabRowChance_);
+                    .computeInt32Size(1, resize_);
         }
-        if (java.lang.Float.floatToRawIntBits(resize_) != 0) {
+        if (rollIndexTime_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeFloatSize(2, resize_);
+                    .computeBoolSize(2, rollIndexTime_);
         }
-        if (rollIndexTime_) {
+        if (rollScore_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(3, rollIndexTime_);
+                    .computeBoolSize(3, rollScore_);
         }
-        if (rollScore_) {
+        if (diceTitle_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(4, rollScore_);
+                    .computeBoolSize(4, diceTitle_);
         }
-        if (diceTitle_) {
+        if (sideNumber_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(5, diceTitle_);
+                    .computeBoolSize(5, sideNumber_);
         }
-        if (sideNumber_) {
+        if (behaviour_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(6, sideNumber_);
+                    .computeBoolSize(6, behaviour_);
         }
-        if (behaviour_) {
+        if (sideDescription_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(7, behaviour_);
+                    .computeBoolSize(7, sideDescription_);
         }
-        if (sideDescription_) {
+        if (sideSVG_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(8, sideDescription_);
+                    .computeBoolSize(8, sideSVG_);
         }
-        if (sideSVG_) {
+        if (rollSound_ != false) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(9, sideSVG_);
-        }
-        if (rollSound_) {
-            size += com.google.protobuf.CodedOutputStream
-                    .computeBoolSize(10, rollSound_);
+                    .computeBoolSize(9, rollSound_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -389,15 +370,13 @@ public final class SettingsProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof SettingsProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer) obj;
 
-        if (getTabRowChance()
-                != other.getTabRowChance()) return false;
-        if (java.lang.Float.floatToIntBits(getResize())
-                != java.lang.Float.floatToIntBits(
-                other.getResize())) return false;
+        if (getResize()
+                != other.getResize()) return false;
         if (getRollIndexTime()
                 != other.getRollIndexTime()) return false;
         if (getRollScore()
@@ -414,7 +393,8 @@ public final class SettingsProtocolBuffer extends
                 != other.getSideSVG()) return false;
         if (getRollSound()
                 != other.getRollSound()) return false;
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -424,11 +404,8 @@ public final class SettingsProtocolBuffer extends
         }
         int hash = 41;
         hash = (19 * hash) + getDescriptor().hashCode();
-        hash = (37 * hash) + TABROWCHANCE_FIELD_NUMBER;
-        hash = (53 * hash) + getTabRowChance();
         hash = (37 * hash) + RESIZE_FIELD_NUMBER;
-        hash = (53 * hash) + java.lang.Float.floatToIntBits(
-                getResize());
+        hash = (53 * hash) + getResize();
         hash = (37 * hash) + ROLLINDEXTIME_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
                 getRollIndexTime());
@@ -494,8 +471,7 @@ public final class SettingsProtocolBuffer extends
             // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
             com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBufferOrBuilder {
         private int bitField0_;
-        private int tabRowChance_;
-        private float resize_;
+        private int resize_;
         private boolean rollIndexTime_;
         private boolean rollScore_;
         private boolean diceTitle_;
@@ -516,7 +492,7 @@ public final class SettingsProtocolBuffer extends
 
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
         }
@@ -533,8 +509,7 @@ public final class SettingsProtocolBuffer extends
         public Builder clear() {
             super.clear();
             bitField0_ = 0;
-            tabRowChance_ = 0;
-            resize_ = 0F;
+            resize_ = 0;
             rollIndexTime_ = false;
             rollScore_ = false;
             diceTitle_ = false;
@@ -579,33 +554,30 @@ public final class SettingsProtocolBuffer extends
         private void buildPartial0(com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer result) {
             int from_bitField0_ = bitField0_;
             if (((from_bitField0_ & 0x00000001) != 0)) {
-                result.tabRowChance_ = tabRowChance_;
-            }
-            if (((from_bitField0_ & 0x00000002) != 0)) {
                 result.resize_ = resize_;
             }
-            if (((from_bitField0_ & 0x00000004) != 0)) {
+            if (((from_bitField0_ & 0x00000002) != 0)) {
                 result.rollIndexTime_ = rollIndexTime_;
             }
-            if (((from_bitField0_ & 0x00000008) != 0)) {
+            if (((from_bitField0_ & 0x00000004) != 0)) {
                 result.rollScore_ = rollScore_;
             }
-            if (((from_bitField0_ & 0x00000010) != 0)) {
+            if (((from_bitField0_ & 0x00000008) != 0)) {
                 result.diceTitle_ = diceTitle_;
             }
-            if (((from_bitField0_ & 0x00000020) != 0)) {
+            if (((from_bitField0_ & 0x00000010) != 0)) {
                 result.sideNumber_ = sideNumber_;
             }
-            if (((from_bitField0_ & 0x00000040) != 0)) {
+            if (((from_bitField0_ & 0x00000020) != 0)) {
                 result.behaviour_ = behaviour_;
             }
-            if (((from_bitField0_ & 0x00000080) != 0)) {
+            if (((from_bitField0_ & 0x00000040) != 0)) {
                 result.sideDescription_ = sideDescription_;
             }
-            if (((from_bitField0_ & 0x00000100) != 0)) {
+            if (((from_bitField0_ & 0x00000080) != 0)) {
                 result.sideSVG_ = sideSVG_;
             }
-            if (((from_bitField0_ & 0x00000200) != 0)) {
+            if (((from_bitField0_ & 0x00000100) != 0)) {
                 result.rollSound_ = rollSound_;
             }
         }
@@ -661,34 +633,31 @@ public final class SettingsProtocolBuffer extends
         public Builder mergeFrom(com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer other) {
             if (other == com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.getDefaultInstance())
                 return this;
-            if (other.getTabRowChance() != 0) {
-                setTabRowChance(other.getTabRowChance());
-            }
-            if (other.getResize() != 0F) {
+            if (other.getResize() != 0) {
                 setResize(other.getResize());
             }
-            if (other.getRollIndexTime()) {
+            if (other.getRollIndexTime() != false) {
                 setRollIndexTime(other.getRollIndexTime());
             }
-            if (other.getRollScore()) {
+            if (other.getRollScore() != false) {
                 setRollScore(other.getRollScore());
             }
-            if (other.getDiceTitle()) {
+            if (other.getDiceTitle() != false) {
                 setDiceTitle(other.getDiceTitle());
             }
-            if (other.getSideNumber()) {
+            if (other.getSideNumber() != false) {
                 setSideNumber(other.getSideNumber());
             }
-            if (other.getBehaviour()) {
+            if (other.getBehaviour() != false) {
                 setBehaviour(other.getBehaviour());
             }
-            if (other.getSideDescription()) {
+            if (other.getSideDescription() != false) {
                 setSideDescription(other.getSideDescription());
             }
-            if (other.getSideSVG()) {
+            if (other.getSideSVG() != false) {
                 setSideSVG(other.getSideSVG());
             }
-            if (other.getRollSound()) {
+            if (other.getRollSound() != false) {
                 setRollSound(other.getRollSound());
             }
             this.mergeUnknownFields(other.getUnknownFields());
@@ -697,7 +666,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
 
@@ -718,55 +687,50 @@ public final class SettingsProtocolBuffer extends
                             done = true;
                             break;
                         case 8: {
-                            tabRowChance_ = input.readInt32();
+                            resize_ = input.readInt32();
                             bitField0_ |= 0x00000001;
                             break;
                         } // case 8
-                        case 21: {
-                            resize_ = input.readFloat();
+                        case 16: {
+                            rollIndexTime_ = input.readBool();
                             bitField0_ |= 0x00000002;
                             break;
-                        } // case 21
+                        } // case 16
                         case 24: {
-                            rollIndexTime_ = input.readBool();
+                            rollScore_ = input.readBool();
                             bitField0_ |= 0x00000004;
                             break;
                         } // case 24
                         case 32: {
-                            rollScore_ = input.readBool();
+                            diceTitle_ = input.readBool();
                             bitField0_ |= 0x00000008;
                             break;
                         } // case 32
                         case 40: {
-                            diceTitle_ = input.readBool();
+                            sideNumber_ = input.readBool();
                             bitField0_ |= 0x00000010;
                             break;
                         } // case 40
                         case 48: {
-                            sideNumber_ = input.readBool();
+                            behaviour_ = input.readBool();
                             bitField0_ |= 0x00000020;
                             break;
                         } // case 48
                         case 56: {
-                            behaviour_ = input.readBool();
+                            sideDescription_ = input.readBool();
                             bitField0_ |= 0x00000040;
                             break;
                         } // case 56
                         case 64: {
-                            sideDescription_ = input.readBool();
+                            sideSVG_ = input.readBool();
                             bitField0_ |= 0x00000080;
                             break;
                         } // case 64
                         case 72: {
-                            sideSVG_ = input.readBool();
+                            rollSound_ = input.readBool();
                             bitField0_ |= 0x00000100;
                             break;
                         } // case 72
-                        case 80: {
-                            rollSound_ = input.readBool();
-                            bitField0_ |= 0x00000200;
-                            break;
-                        } // case 80
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -784,79 +748,43 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>int32 tabRowChance = 1;</code>
+         * <code>int32 resize = 1;</code>
          *
-         * @return The tabRowChance.
+         * @return The resize.
          */
         @java.lang.Override
-        public int getTabRowChance() {
-            return tabRowChance_;
+        public int getResize() {
+            return resize_;
         }
 
         /**
-         * <code>int32 tabRowChance = 1;</code>
+         * <code>int32 resize = 1;</code>
          *
-         * @param value The tabRowChance to set.
+         * @param value The resize to set.
          * @return This builder for chaining.
          */
-        public Builder setTabRowChance(int value) {
+        public Builder setResize(int value) {
 
-            tabRowChance_ = value;
+            resize_ = value;
             bitField0_ |= 0x00000001;
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 tabRowChance = 1;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearTabRowChance() {
-            bitField0_ = (bitField0_ & ~0x00000001);
-            tabRowChance_ = 0;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>float resize = 2;</code>
-         *
-         * @return The resize.
-         */
-        @java.lang.Override
-        public float getResize() {
-            return resize_;
-        }
-
-        /**
-         * <code>float resize = 2;</code>
-         *
-         * @param value The resize to set.
-         * @return This builder for chaining.
-         */
-        public Builder setResize(float value) {
-
-            resize_ = value;
-            bitField0_ |= 0x00000002;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>float resize = 2;</code>
+         * <code>int32 resize = 1;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearResize() {
-            bitField0_ = (bitField0_ & ~0x00000002);
-            resize_ = 0F;
+            bitField0_ = (bitField0_ & ~0x00000001);
+            resize_ = 0;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollIndexTime = 3;</code>
+         * <code>bool rollIndexTime = 2;</code>
          *
          * @return The rollIndexTime.
          */
@@ -866,7 +794,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollIndexTime = 3;</code>
+         * <code>bool rollIndexTime = 2;</code>
          *
          * @param value The rollIndexTime to set.
          * @return This builder for chaining.
@@ -874,25 +802,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollIndexTime(boolean value) {
 
             rollIndexTime_ = value;
-            bitField0_ |= 0x00000004;
+            bitField0_ |= 0x00000002;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollIndexTime = 3;</code>
+         * <code>bool rollIndexTime = 2;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollIndexTime() {
-            bitField0_ = (bitField0_ & ~0x00000004);
+            bitField0_ = (bitField0_ & ~0x00000002);
             rollIndexTime_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollScore = 4;</code>
+         * <code>bool rollScore = 3;</code>
          *
          * @return The rollScore.
          */
@@ -902,7 +830,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollScore = 4;</code>
+         * <code>bool rollScore = 3;</code>
          *
          * @param value The rollScore to set.
          * @return This builder for chaining.
@@ -910,25 +838,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollScore(boolean value) {
 
             rollScore_ = value;
-            bitField0_ |= 0x00000008;
+            bitField0_ |= 0x00000004;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollScore = 4;</code>
+         * <code>bool rollScore = 3;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollScore() {
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000004);
             rollScore_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool diceTitle = 5;</code>
+         * <code>bool diceTitle = 4;</code>
          *
          * @return The diceTitle.
          */
@@ -938,7 +866,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool diceTitle = 5;</code>
+         * <code>bool diceTitle = 4;</code>
          *
          * @param value The diceTitle to set.
          * @return This builder for chaining.
@@ -946,25 +874,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setDiceTitle(boolean value) {
 
             diceTitle_ = value;
-            bitField0_ |= 0x00000010;
+            bitField0_ |= 0x00000008;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool diceTitle = 5;</code>
+         * <code>bool diceTitle = 4;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearDiceTitle() {
-            bitField0_ = (bitField0_ & ~0x00000010);
+            bitField0_ = (bitField0_ & ~0x00000008);
             diceTitle_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool sideNumber = 6;</code>
+         * <code>bool sideNumber = 5;</code>
          *
          * @return The sideNumber.
          */
@@ -974,7 +902,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool sideNumber = 6;</code>
+         * <code>bool sideNumber = 5;</code>
          *
          * @param value The sideNumber to set.
          * @return This builder for chaining.
@@ -982,25 +910,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setSideNumber(boolean value) {
 
             sideNumber_ = value;
-            bitField0_ |= 0x00000020;
+            bitField0_ |= 0x00000010;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool sideNumber = 6;</code>
+         * <code>bool sideNumber = 5;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearSideNumber() {
-            bitField0_ = (bitField0_ & ~0x00000020);
+            bitField0_ = (bitField0_ & ~0x00000010);
             sideNumber_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool behaviour = 7;</code>
+         * <code>bool behaviour = 6;</code>
          *
          * @return The behaviour.
          */
@@ -1010,7 +938,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool behaviour = 7;</code>
+         * <code>bool behaviour = 6;</code>
          *
          * @param value The behaviour to set.
          * @return This builder for chaining.
@@ -1018,25 +946,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setBehaviour(boolean value) {
 
             behaviour_ = value;
-            bitField0_ |= 0x00000040;
+            bitField0_ |= 0x00000020;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool behaviour = 7;</code>
+         * <code>bool behaviour = 6;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearBehaviour() {
-            bitField0_ = (bitField0_ & ~0x00000040);
+            bitField0_ = (bitField0_ & ~0x00000020);
             behaviour_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool sideDescription = 8;</code>
+         * <code>bool sideDescription = 7;</code>
          *
          * @return The sideDescription.
          */
@@ -1046,7 +974,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool sideDescription = 8;</code>
+         * <code>bool sideDescription = 7;</code>
          *
          * @param value The sideDescription to set.
          * @return This builder for chaining.
@@ -1054,25 +982,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setSideDescription(boolean value) {
 
             sideDescription_ = value;
-            bitField0_ |= 0x00000080;
+            bitField0_ |= 0x00000040;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool sideDescription = 8;</code>
+         * <code>bool sideDescription = 7;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearSideDescription() {
-            bitField0_ = (bitField0_ & ~0x00000080);
+            bitField0_ = (bitField0_ & ~0x00000040);
             sideDescription_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool sideSVG = 9;</code>
+         * <code>bool sideSVG = 8;</code>
          *
          * @return The sideSVG.
          */
@@ -1082,7 +1010,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool sideSVG = 9;</code>
+         * <code>bool sideSVG = 8;</code>
          *
          * @param value The sideSVG to set.
          * @return This builder for chaining.
@@ -1090,25 +1018,25 @@ public final class SettingsProtocolBuffer extends
         public Builder setSideSVG(boolean value) {
 
             sideSVG_ = value;
-            bitField0_ |= 0x00000100;
+            bitField0_ |= 0x00000080;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool sideSVG = 9;</code>
+         * <code>bool sideSVG = 8;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearSideSVG() {
-            bitField0_ = (bitField0_ & ~0x00000100);
+            bitField0_ = (bitField0_ & ~0x00000080);
             sideSVG_ = false;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollSound = 10;</code>
+         * <code>bool rollSound = 9;</code>
          *
          * @return The rollSound.
          */
@@ -1118,7 +1046,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool rollSound = 10;</code>
+         * <code>bool rollSound = 9;</code>
          *
          * @param value The rollSound to set.
          * @return This builder for chaining.
@@ -1126,31 +1054,31 @@ public final class SettingsProtocolBuffer extends
         public Builder setRollSound(boolean value) {
 
             rollSound_ = value;
-            bitField0_ |= 0x00000200;
+            bitField0_ |= 0x00000100;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool rollSound = 10;</code>
+         * <code>bool rollSound = 9;</code>
          *
          * @return This builder for chaining.
          */
         public Builder clearRollSound() {
-            bitField0_ = (bitField0_ & ~0x00000200);
+            bitField0_ = (bitField0_ & ~0x00000100);
             rollSound_ = false;
             onChanged();
             return this;
         }
 
         @java.lang.Override
-        public Builder setUnknownFields(
+        public final Builder setUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.setUnknownFields(unknownFields);
         }
 
         @java.lang.Override
-        public Builder mergeUnknownFields(
+        public final Builder mergeUnknownFields(
                 final com.google.protobuf.UnknownFieldSet unknownFields) {
             return super.mergeUnknownFields(unknownFields);
         }

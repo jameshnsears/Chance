@@ -12,8 +12,6 @@ import com.github.jameshnsears.chance.data.repository.RepositoryImportValidation
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
-import com.github.jameshnsears.chance.ui.tab.SettingsTab
-import com.github.jameshnsears.chance.ui.tab.TabSettingsInterface
 import com.github.jameshnsears.chance.ui.tab.TabSettingsModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,8 +21,7 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 data class TabBagState(
-    var resize: Float,
-    var tabRowChance: Int
+    var resize: Int,
 )
 
 enum class ExportImportStatus {
@@ -48,11 +45,10 @@ class TabBagAndroidViewModel(
     val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
-) : AndroidViewModel(application), TabSettingsInterface {
+) : AndroidViewModel(application) {
     private val _stateFlowTabBag = MutableStateFlow(
         TabBagState(
             resize = Settings().resize,
-            tabRowChance = Settings().tabRowChance
         )
     )
     val stateFlowTabBag: StateFlow<TabBagState> = _stateFlowTabBag
@@ -62,7 +58,6 @@ class TabBagAndroidViewModel(
             _stateFlowTabBag.update {
                 it.copy(
                     resize = TabSettingsModel.resize(repositorySettings),
-                    tabRowChance = TabSettingsModel.markTabAsCurrentInSettings(repositorySettings)
                 )
             }
         }
@@ -159,6 +154,17 @@ class TabBagAndroidViewModel(
                 }
 
                 Timber.e("import.completed.failure")
+            } catch (e: Exception) {
+                Timber.e(e.message.toString())
+
+                _stateFlowTabBagImport.update {
+                    it.copy(
+                        importStatus = ExportImportStatus.FAILURE,
+                        importDetail = RepositoryImportStatus.ERROR_PROTO
+                    )
+                }
+
+                Timber.e("import.completed.failure")
             }
         }
     }
@@ -193,7 +199,7 @@ class TabBagAndroidViewModel(
         }
     }
 
-    fun resize(newResize: Float) {
+    fun resize(newResize: Int) {
         viewModelScope.launch {
             _stateFlowTabBag.update {
                 it.copy(
@@ -202,12 +208,6 @@ class TabBagAndroidViewModel(
             }
 
             TabSettingsModel.resize(repositorySettings, newResize)
-        }
-    }
-
-    override fun markTabAsCurrentInSettings() {
-        viewModelScope.launch {
-            TabSettingsModel.markTabAsCurrentInSettings(repositorySettings, SettingsTab.TAB_DICE)
         }
     }
 }

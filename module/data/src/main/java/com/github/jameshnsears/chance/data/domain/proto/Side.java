@@ -10,7 +10,7 @@ public final class Side {
     static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.FileDescriptor
+    private static com.google.protobuf.Descriptors.FileDescriptor
             descriptor;
 
     static {
@@ -34,7 +34,6 @@ public final class Side {
                 internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor,
                 new java.lang.String[]{"Uuid", "Number", "NumberColour", "ImageBase64", "ImageDrawableId", "Description", "DescriptionColour",});
     }
-
     private Side() {
     }
 

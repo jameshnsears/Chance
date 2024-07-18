@@ -41,7 +41,6 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         if the store is empty it returns:
 
             Settings(
-                tabRowChance=0,
                 resize=0.0,
                 rollIndexTime=false,
                 rollScore=false,
@@ -56,8 +55,6 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         val settings: Settings = context.settingsDataStore.data
             .map { settingsProtocolBuffer ->
                 Settings(
-                    tabRowChance = settingsProtocolBuffer.tabRowChance,
-
                     resize = settingsProtocolBuffer.resize,
 
                     rollIndexTime = settingsProtocolBuffer.rollIndexTime,

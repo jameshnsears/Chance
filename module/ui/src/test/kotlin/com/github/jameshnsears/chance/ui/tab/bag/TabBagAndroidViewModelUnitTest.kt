@@ -7,7 +7,6 @@ import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
 import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.mockk
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -22,7 +21,6 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         assertEquals(
             """           
             {
-              "tabRowChance": ${Settings().tabRowChance},
               "resize": ${Settings().resize},
               "rollIndexTime": ${Settings().rollIndexTime},
               "rollScore": ${Settings().rollScore},
@@ -247,17 +245,10 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun resize() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        assertEquals(4.0f, tabBagViewModel.stateFlowTabBag.value.resize)
+        assertEquals(4, tabBagViewModel.stateFlowTabBag.value.resize)
 
-        tabBagViewModel.resize(5f)
-        assertEquals(5f, tabBagViewModel.stateFlowTabBag.value.resize)
-    }
-
-    @Test
-    fun markTabAsCurrentInSettings() = runTest {
-        val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.markTabAsCurrentInSettings()
-        assertTrue(tabBagViewModel.repositorySettings.fetch().first().tabRowChance == 0)
+        tabBagViewModel.resize(5)
+        assertEquals(5, tabBagViewModel.stateFlowTabBag.value.resize)
     }
 
     private fun tabBagViewModel(

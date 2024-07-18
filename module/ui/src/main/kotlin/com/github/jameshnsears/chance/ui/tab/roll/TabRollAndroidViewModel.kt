@@ -17,9 +17,6 @@ import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterfa
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.R
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
-import com.github.jameshnsears.chance.ui.tab.SettingsTab
-import com.github.jameshnsears.chance.ui.tab.TabSettingsInterface
-import com.github.jameshnsears.chance.ui.tab.TabSettingsModel
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +30,7 @@ import timber.log.Timber
 import java.security.SecureRandom
 
 data class TabRollState(
-    var rollTime: Boolean,
+    var rollIndexTime: Boolean,
     var rollScore: Boolean,
 
     var diceTitle: Boolean,
@@ -50,10 +47,10 @@ class TabRollAndroidViewModel(
     val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
-) : AndroidViewModel(application), TabSettingsInterface {
+) : AndroidViewModel(application) {
     private val _stateFlowTabRoll = MutableStateFlow(
         TabRollState(
-            rollTime = Settings().rollIndexTime,
+            rollIndexTime = Settings().rollIndexTime,
             rollScore = Settings().rollScore,
             diceTitle = Settings().diceTitle,
             sideNumber = Settings().sideNumber,
@@ -90,16 +87,36 @@ class TabRollAndroidViewModel(
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect")
                 alignUndoAndRollButtonsWithDiceBag()
+                alignSettings()
             }
         }
     }
 
-    private suspend fun TabRollAndroidViewModel.alignUndoAndRollButtonsWithDiceBag() {
+    private suspend fun alignUndoAndRollButtonsWithDiceBag() {
         _diceBag.value = repositoryBag.fetch().first()
 
         _undoEnabled.value = isUndoPossible()
 
         _rollEnabled.value = isRollPossible()
+    }
+
+    private suspend fun alignSettings() {
+        viewModelScope.launch {
+            val settings = repositorySettings.fetch().first()
+
+            _stateFlowTabRoll.update {
+                it.copy(
+                    rollIndexTime = settings.rollIndexTime,
+                    rollScore = settings.rollScore,
+                    diceTitle = settings.diceTitle,
+                    sideNumber = settings.sideNumber,
+                    behaviour = settings.behaviour,
+                    sideDescription = settings.sideDescription,
+                    sideSVG = settings.sideSVG,
+                    rollSound = settings.rollSound
+                )
+            }
+        }
     }
 
     private fun isRollPossible(): Boolean {
@@ -134,12 +151,6 @@ class TabRollAndroidViewModel(
     }
 
     private val secureRandom: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
-
-    override fun markTabAsCurrentInSettings() {
-        viewModelScope.launch {
-            TabSettingsModel.markTabAsCurrentInSettings(repositorySettings, SettingsTab.TAB_ROLLS)
-        }
-    }
 
     fun diceSequenceRoll() {
         viewModelScope.launch {
@@ -300,9 +311,9 @@ class TabRollAndroidViewModel(
         }
     }
 
-    fun settingsTime(checked: Boolean) {
+    fun settingsIndexTime(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowTabRoll.update { it.copy(rollTime = checked) }
+            _stateFlowTabRoll.update { it.copy(rollIndexTime = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.rollIndexTime = checked
@@ -401,7 +412,7 @@ class TabRollAndroidViewModel(
                 descriptionExists = true
         }
 
-        return (stateFlowTabRollValue.rollTime
+        return (stateFlowTabRollValue.rollIndexTime
                 ||
                 stateFlowTabRollValue.rollScore
                 ||

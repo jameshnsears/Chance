@@ -55,8 +55,6 @@ class RepositorySettingsTestDouble private constructor() :
 
         val newSettings = Settings()
 
-        newSettings.tabRowChance = settingsProtocolBuffer.tabRowChance
-
         newSettings.resize = settingsProtocolBuffer.resize
 
         newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
@@ -64,6 +62,7 @@ class RepositorySettingsTestDouble private constructor() :
 
         newSettings.diceTitle = settingsProtocolBuffer.diceTitle
         newSettings.sideNumber = settingsProtocolBuffer.sideNumber
+        newSettings.behaviour = settingsProtocolBuffer.behaviour
         newSettings.sideDescription = settingsProtocolBuffer.sideDescription
         newSettings.sideSVG = settingsProtocolBuffer.sideSVG
 

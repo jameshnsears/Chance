@@ -1,9 +1,7 @@
 package com.github.jameshnsears.chance.data.domain.core.settings
 
 data class Settings(
-    var tabRowChance: Int = 0,
-
-    var resize: Float = 4f,
+    var resize: Int = 4,
 
     var rollIndexTime: Boolean = false,
     var rollScore: Boolean = true,

@@ -43,23 +43,23 @@ class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
 
         val before: Flow<Int> = context.settingsDataStore.data
             .map { settingsProtocolBuffer ->
-                settingsProtocolBuffer.tabRowChance
+                settingsProtocolBuffer.resize
             }
 
         assertEquals(0, before.first())
 
         context.settingsDataStore.updateData { currentSettingsProtocolBuffer ->
             currentSettingsProtocolBuffer.toBuilder()
-                .setTabRowChance(1)
+                .setResize(7)
                 .build()
         }
 
         val after: Flow<Int> = context.settingsDataStore.data
             .map { currentSettingsProtocolBuffer ->
-                currentSettingsProtocolBuffer.tabRowChance
+                currentSettingsProtocolBuffer.resize
             }
 
-        assertEquals(1, after.first())
+        assertEquals(7, after.first())
     }
 
     @Test
@@ -69,8 +69,7 @@ class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
         )
 
         val originalSettings = Settings()
-        originalSettings.tabRowChance = 1
-        originalSettings.resize = 2f
+        originalSettings.resize = 2
         originalSettings.rollIndexTime = false
         originalSettings.rollScore = false
         originalSettings.diceTitle = true
@@ -83,8 +82,6 @@ class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
         repositorySettingsImpl.store(originalSettings)
 
         val fetchedSettings = repositorySettingsImpl.fetch().first()
-
-        assertEquals(originalSettings.tabRowChance, fetchedSettings.tabRowChance)
 
         assertEquals(originalSettings.resize, fetchedSettings.resize)
 

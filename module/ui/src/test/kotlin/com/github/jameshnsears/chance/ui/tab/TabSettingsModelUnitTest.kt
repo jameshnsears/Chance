@@ -16,7 +16,7 @@ class TabSettingsModelUnitTest {
             TabSettingsModel.resize(repositorySettings)
         )
 
-        val newResize = 100f
+        val newResize = 100
         TabSettingsModel.resize(repositorySettings, newResize)
 
         assertEquals(
@@ -25,24 +25,5 @@ class TabSettingsModelUnitTest {
         )
 
         TabSettingsModel.resize(repositorySettings, Settings().resize)
-    }
-
-    @Test
-    fun tabRowChance() = runTest {
-        val repositorySettings = UtilityDataHelper().repositorySettings
-
-        assertEquals(
-            0,
-            TabSettingsModel.markTabAsCurrentInSettings(repositorySettings)
-        )
-
-        TabSettingsModel.markTabAsCurrentInSettings(repositorySettings, SettingsTab.TAB_ROLLS)
-
-        assertEquals(
-            1,
-            TabSettingsModel.markTabAsCurrentInSettings(repositorySettings)
-        )
-
-        TabSettingsModel.markTabAsCurrentInSettings(repositorySettings, SettingsTab.TAB_DICE)
     }
 }

@@ -13,8 +13,6 @@ interface RepositorySettingsInterface : RepositoryImportExportInterface {
         settings: Settings,
         settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder,
     ) {
-        settingsProtocolBufferBuilder.setTabRowChance(settings.tabRowChance)
-
         settingsProtocolBufferBuilder.setResize(settings.resize)
 
         settingsProtocolBufferBuilder.setRollIndexTime(settings.rollIndexTime)

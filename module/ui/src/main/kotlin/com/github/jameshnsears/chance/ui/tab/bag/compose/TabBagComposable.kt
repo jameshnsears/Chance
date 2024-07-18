@@ -53,7 +53,6 @@ import com.github.jameshnsears.chance.ui.zoom.bag.compose.ZoomBag
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.math.round
 
 class TabBagTestTag {
     companion object {
@@ -133,8 +132,8 @@ fun TabBagBottomSheetLayout(
 @Composable
 fun Resize(
     state: State<TabBagState>,
-    tabBagSlider: (Float) -> Unit,
-    zoomResize: (Float) -> Unit
+    tabBagSlider: (Int) -> Unit,
+    zoomResize: (Int) -> Unit
 ) {
     var resize = state.value.resize
 
@@ -145,11 +144,11 @@ fun Resize(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Slider(
-            value = resize,
+            value = resize.toFloat(),
             onValueChange = {
-                resize = it
-                tabBagSlider(it)
-                zoomResize(round(it))
+                resize = it.toInt()
+                tabBagSlider(it.toInt())
+                zoomResize(it.toInt())
             },
             valueRange = 1f..7f,
             steps = 5,

@@ -9,10 +9,6 @@ class RepositoryImportSchema {
             {
               "type": "object",
               "properties": {
-                "tabRowChance": {
-                  "type": "integer",
-                  "enum": [0, 1]
-                },
                 "resize": {
                   "type": "number"
                 },
@@ -42,7 +38,6 @@ class RepositoryImportSchema {
                 }
               },
               "required": [
-                "tabRowChance",
                 "resize",
                 "rollIndexTime",
                 "rollScore",

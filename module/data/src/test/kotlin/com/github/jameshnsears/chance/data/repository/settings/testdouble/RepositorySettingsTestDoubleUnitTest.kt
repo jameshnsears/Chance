@@ -18,8 +18,6 @@ class RepositorySettingsTestDoubleUnitTest : UtilityAndroidHelper() {
 
         assertEquals(settings, fetchedSettings)
 
-        assertEquals(settings.tabRowChance, fetchedSettings.tabRowChance)
-
         assertEquals(settings.resize, fetchedSettings.resize)
 
         assertEquals(settings.rollIndexTime, fetchedSettings.rollIndexTime)
