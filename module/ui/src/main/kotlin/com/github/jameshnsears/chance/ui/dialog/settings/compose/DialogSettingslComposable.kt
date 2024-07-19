@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.ui.dialog.roll.compose
+package com.github.jameshnsears.chance.ui.dialog.settings.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -27,7 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.R
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 
-class DialogRollTestTag {
+class DialogSettingsTestTag {
     companion object {
         const val SETTINGS_TIME = "SETTINGS_TIME"
         const val SETTINGS_SCORE = "SETTINGS_SCORE"
@@ -43,7 +43,7 @@ class DialogRollTestTag {
 }
 
 @Composable
-fun DialogRoll(
+fun DialogSettings(
     showDialog: MutableState<Boolean>,
     tabRollAndroidViewModel: TabRollAndroidViewModel
 ) {
@@ -55,7 +55,7 @@ fun DialogRoll(
         },
     ) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
-            DialogRollLayout(
+            DialogSettingsLayout(
                 tabRollAndroidViewModel
             )
         }
@@ -63,7 +63,7 @@ fun DialogRoll(
 }
 
 @Composable
-fun DialogRollLayout(
+fun DialogSettingsLayout(
     tabRollAndroidViewModel: TabRollAndroidViewModel
 ) {
     val stateFlow =
@@ -93,14 +93,14 @@ fun DialogRollLayout(
                 stringResource(R.string.tab_roll_settings_roll_time),
                 rollTime,
                 tabRollAndroidViewModel::settingsIndexTime,
-                DialogRollTestTag.SETTINGS_TIME
+                DialogSettingsTestTag.SETTINGS_TIME
             )
 
             CommonSwitch(
                 stringResource(R.string.tab_roll_settings_score),
                 rollScore,
                 tabRollAndroidViewModel::settingsRollScore,
-                DialogRollTestTag.SETTINGS_SCORE
+                DialogSettingsTestTag.SETTINGS_SCORE
             )
 
             HorizontalDivider(
@@ -113,35 +113,35 @@ fun DialogRollLayout(
                 stringResource(R.string.tab_roll_settings_dice_title),
                 diceTitle,
                 tabRollAndroidViewModel::settingsDiceTitle,
-                DialogRollTestTag.SETTINGS_DICE_TITLE
+                DialogSettingsTestTag.SETTINGS_DICE_TITLE
             )
 
             CommonSwitch(
                 stringResource(R.string.tab_roll_settings_side_number),
                 sideNumber,
                 tabRollAndroidViewModel::settingsSideNumber,
-                DialogRollTestTag.SETTINGS_SIDE_NUMBER
+                DialogSettingsTestTag.SETTINGS_SIDE_NUMBER
             )
 
             CommonSwitch(
                 stringResource(R.string.tab_roll_settings_behaviour),
                 behaviour,
                 tabRollAndroidViewModel::settingsBehaviour,
-                DialogRollTestTag.SETTINGS_BEHAVIOUR
+                DialogSettingsTestTag.SETTINGS_BEHAVIOUR
             )
 
             CommonSwitch(
                 stringResource(R.string.tab_roll_settings_side_description),
                 sideDescription,
                 tabRollAndroidViewModel::settingsSideDescription,
-                DialogRollTestTag.SETTINGS_SIDE_DESCRIPTION
+                DialogSettingsTestTag.SETTINGS_SIDE_DESCRIPTION
             )
 
             CommonSwitch(
                 stringResource(R.string.tab_roll_settings_side_svg),
                 sideSVG,
                 tabRollAndroidViewModel::settingsSideSVG,
-                DialogRollTestTag.SETTINGS_SIDE_SVG
+                DialogSettingsTestTag.SETTINGS_SIDE_SVG
             )
 
             HorizontalDivider(
@@ -154,7 +154,7 @@ fun DialogRollLayout(
                 stringResource(R.string.tab_roll_settings_use_sound),
                 rollSound,
                 tabRollAndroidViewModel::settingsRollSound,
-                DialogRollTestTag.SETTINGS_ROLL_SOUND
+                DialogSettingsTestTag.SETTINGS_ROLL_SOUND
             )
         }
     }

@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.ui.dialog.roll.compose
+package com.github.jameshnsears.chance.ui.dialog.settings.compose
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -17,12 +17,12 @@ import io.mockk.mockk
 @SuppressLint("UnrememberedMutableState")
 @UtilityPreview
 @Composable
-fun DialogRollPreview() {
+fun DialogSettingsPreview() {
     ChanceTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
         ) {
-            DialogRollLayout(
+            DialogSettingsLayout(
                 TabRollAndroidViewModel(
                     mockk<Application>(),
                     RepositorySettingsTestDouble.getInstance(),

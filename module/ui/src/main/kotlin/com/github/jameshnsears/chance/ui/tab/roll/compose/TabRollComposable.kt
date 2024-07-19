@@ -33,7 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.R
-import com.github.jameshnsears.chance.ui.dialog.roll.compose.DialogRoll
+import com.github.jameshnsears.chance.ui.dialog.settings.compose.DialogSettings
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.selection.compose.RollSelectionRow
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
@@ -180,7 +180,7 @@ fun Settings(
     }
 
     if (showDialog.value) {
-        DialogRoll(
+        DialogSettings(
             showDialog,
             tabRollAndroidViewModel
         )

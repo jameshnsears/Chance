@@ -9,7 +9,7 @@ sealed class UtilityFeature {
     companion object {
         private val enabled = setOf(
             Flag.NONE,
-//            Flag.USE_PROD_REPO
+            Flag.USE_PROD_REPO
         )
 
         fun isEnabled(flag: Flag): Boolean {
