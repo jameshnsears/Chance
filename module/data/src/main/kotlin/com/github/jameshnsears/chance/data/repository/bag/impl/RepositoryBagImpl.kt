@@ -40,6 +40,14 @@ class RepositoryBagImpl private constructor(private val context: Context) :
         }
     }
 
+    override suspend fun jsonExport(): String =
+        JsonFormat.printer().includingDefaultValueFields()
+            .print(context.diceBagDataStore.data.first())
+
+    override suspend fun jsonImport(json: String) {
+        store(jsomImportProcess(json))
+    }
+
     override suspend fun fetch(): Flow<DiceBag> = flow {
         val diceBag = mutableListOf<Dice>()
 
@@ -113,22 +121,6 @@ class RepositoryBagImpl private constructor(private val context: Context) :
                 bagProtocolBufferBuilder
             )
             bagProtocolBufferBuilder.build()
-        }
-    }
-
-    override suspend fun jsonExport(): String =
-        JsonFormat.printer().includingDefaultValueFields()
-            .print(context.diceBagDataStore.data.first())
-
-    override suspend fun jsonImport(json: String) {
-        context.diceBagDataStore.updateData {
-
-            val bagProtocolBuffer: BagProtocolBuffer.Builder =
-                BagProtocolBuffer.newBuilder()
-
-            JsonFormat.parser().merge(json, bagProtocolBuffer)
-
-            bagProtocolBuffer.build()
         }
     }
 

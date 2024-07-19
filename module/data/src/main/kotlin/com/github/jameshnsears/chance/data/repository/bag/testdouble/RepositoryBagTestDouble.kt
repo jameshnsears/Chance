@@ -36,8 +36,6 @@ class RepositoryBagTestDouble private constructor() :
     }
 
     override suspend fun jsonImport(json: String) {
-        diceBag.clear()
-
         store(jsomImportProcess(json))
     }
 
@@ -50,7 +48,8 @@ class RepositoryBagTestDouble private constructor() :
     }
 
     override suspend fun store(newDiceBag: DiceBag) {
-        Timber.d(newDiceBag.toString())
+        clear()
+
         diceBag = newDiceBag
     }
 
