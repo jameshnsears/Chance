@@ -74,6 +74,7 @@ class TabRollAndroidViewModel(
     init {
         viewModelScope.launch {
             alignUndoAndRollButtonsWithDiceBag()
+            alignSettings()
         }
 
         viewModelScope.launch {

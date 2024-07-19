@@ -190,7 +190,7 @@ fun DiceTitle(cardDiceViewModel: CardDiceViewModel) {
                 }) {
                     Icon(
                         painterResource(id = R.drawable.cancel_fill0_wght400_grad0_opsz24),
-                        contentDescription = ""
+                        contentDescription = "",
                     )
                 }
             }

@@ -1,6 +1,8 @@
 package com.github.jameshnsears.chance.ui.tab.bag.compose
 
 import android.app.Application
+import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -42,6 +44,7 @@ fun TabBagPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @UtilityPreview
 @Composable
 fun TabBagBottomSheetPreview() {
@@ -56,6 +59,7 @@ fun TabBagBottomSheetPreview() {
             color = MaterialTheme.colorScheme.background,
         ) {
             TabBagBottomSheetLayout(
+                mockk<BottomSheetScaffoldState>(),
                 TabBagAndroidViewModel(
                     mockk<Application>(),
                     repositorySettings,

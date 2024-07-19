@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -50,6 +52,7 @@ import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagState
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.bag.compose.ZoomBag
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -76,21 +79,29 @@ fun TabBagLayout(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
     zoomAndroidViewModel: ZoomAndroidViewModel
 ) {
-    val scaffoldState = rememberBottomSheetScaffoldState()
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 
     BottomSheetScaffold(
-        scaffoldState = scaffoldState,
+        scaffoldState = bottomSheetScaffoldState,
         sheetPeekHeight = 110.dp,
         sheetContent = {
-            TabBagBottomSheetLayout(tabBagAndroidViewModel, zoomAndroidViewModel)
+            TabBagBottomSheetLayout(
+                bottomSheetScaffoldState,
+                tabBagAndroidViewModel,
+                zoomAndroidViewModel,
+            )
         },
     ) {
-        ZoomBag(zoomAndroidViewModel)
+        ZoomBag(
+            zoomAndroidViewModel
+        )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabBagBottomSheetLayout(
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
     tabBagAndroidViewModel: TabBagAndroidViewModel,
     zoomAndroidViewModel: ZoomAndroidViewModel
 ) {
@@ -118,14 +129,18 @@ fun TabBagBottomSheetLayout(
                 .padding(top = 12.dp, bottom = 12.dp)
         )
 
-        Version()
+        Version(bottomSheetScaffoldState)
 
         HorizontalDivider(
             modifier = Modifier
                 .padding(top = 12.dp, bottom = 12.dp)
         )
 
-        ImportExport(tabBagAndroidViewModel, zoomAndroidViewModel)
+        ImportExport(
+            bottomSheetScaffoldState,
+            tabBagAndroidViewModel,
+            zoomAndroidViewModel
+        )
     }
 }
 
@@ -162,8 +177,10 @@ fun Resize(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImportExport(
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
     tabBagAndroidViewModel: TabBagAndroidViewModel,
     zoomAndroidViewModel: ZoomAndroidViewModel
 ) {
@@ -186,6 +203,8 @@ fun ImportExport(
         R.string.tab_bag_import_failure,
         importFailureReason
     )
+
+    val coroutineScope = rememberCoroutineScope()
 
     val context = LocalContext.current
 
@@ -212,6 +231,35 @@ fun ImportExport(
     ) {
         Button(
             onClick = {
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                }
+
+                launcherImport.launch(arrayOf("application/json"))
+            },
+            modifier = Modifier
+                .width(160.dp)
+                .testTag(TabBagTestTag.IMPORT),
+        ) {
+            Icon(
+                painterResource(id = R.drawable.publish_fill0_wght400_grad0_opsz24),
+                contentDescription = "",
+                modifier = Modifier.size(24.dp),
+            )
+
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+
+            Text(stringResource(R.string.tab_bag_import))
+        }
+
+        Spacer(modifier = Modifier.padding(horizontal = 10.dp))
+
+        Button(
+            onClick = {
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                }
+
                 val sdf = SimpleDateFormat("HHmmss", Locale.getDefault())
                 val formattedDate = sdf.format(Date())
                 launcherExport.launch("Chance-${formattedDate}.json")
@@ -229,27 +277,6 @@ fun ImportExport(
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
             Text(stringResource(R.string.tab_bag_export))
-        }
-
-        Spacer(modifier = Modifier.padding(horizontal = 10.dp))
-
-        Button(
-            onClick = {
-                launcherImport.launch(arrayOf("application/json"))
-            },
-            modifier = Modifier
-                .width(160.dp)
-                .testTag(TabBagTestTag.IMPORT),
-        ) {
-            Icon(
-                painterResource(id = R.drawable.publish_fill0_wght400_grad0_opsz24),
-                contentDescription = "",
-                modifier = Modifier.size(24.dp),
-            )
-
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-
-            Text(stringResource(R.string.tab_bag_import))
         }
     }
 
@@ -280,11 +307,19 @@ fun ImportExport(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Version() {
+fun Version(
+    bottomSheetScaffoldState:
+    BottomSheetScaffoldState
+) {
     val context = LocalContext.current
 
     val isDarkTheme = isSystemInDarkTheme()
+
+    val coroutineScope = rememberCoroutineScope()
+
+    val githubProjectUrl = "https://github.com/jameshnsears/chance"
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -308,9 +343,13 @@ fun Version() {
                 modifier = Modifier
                     .height(24.dp)
                     .clickable {
+                        coroutineScope.launch {
+                            bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                        }
+
                         openUrlInBrowser(
                             context,
-                            "https://github.com/jameshnsears/chance",
+                            githubProjectUrl
                         )
                     },
             )
@@ -321,9 +360,13 @@ fun Version() {
                 modifier = Modifier
                     .height(24.dp)
                     .clickable {
+                        coroutineScope.launch {
+                            bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                        }
+
                         openUrlInBrowser(
                             context,
-                            "https://github.com/jameshnsears/chance",
+                            githubProjectUrl
                         )
                     },
             )

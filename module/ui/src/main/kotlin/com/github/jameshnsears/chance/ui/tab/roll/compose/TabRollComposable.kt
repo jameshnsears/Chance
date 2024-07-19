@@ -174,7 +174,7 @@ fun Settings(
         ) {
             Icon(
                 Icons.Outlined.Settings,
-                contentDescription = ""
+                contentDescription = "",
             )
         }
     }
