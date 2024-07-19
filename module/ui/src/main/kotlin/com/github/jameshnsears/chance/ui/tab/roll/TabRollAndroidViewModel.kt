@@ -153,7 +153,7 @@ class TabRollAndroidViewModel(
 
     private val secureRandom: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 
-    fun diceSequenceRoll() {
+    fun rollDiceSequence() {
         viewModelScope.launch {
             if (_stateFlowTabRoll.value.rollSound) {
                 mediaPlayerRollSound()
@@ -165,7 +165,7 @@ class TabRollAndroidViewModel(
             mutex.withLock {
                 val newRollSequence = mutableListOf<Roll>()
 
-                diceSequenceRoll(newRollSequence)
+                rollDiceSequence(newRollSequence)
 
                 diceSequenceStore(newRollSequence)
 
@@ -203,7 +203,7 @@ class TabRollAndroidViewModel(
         _undoEnabled.value = isUndoPossible()
     }
 
-    fun diceSequenceRoll(newRollSequence: MutableList<Roll>) {
+    fun rollDiceSequence(newRollSequence: MutableList<Roll>) {
         diceBag.value.forEach { dice ->
             if (dice.selected) {
 

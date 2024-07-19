@@ -5,6 +5,7 @@ import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.every
@@ -22,7 +23,7 @@ import org.junit.Test
 
 class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
-    fun diceSequenceRollNoExplosionNoScore() = runTest {
+    fun rollDiceSequenceNoExplosionNoScore() = runTest {
         val tabRollViewModel = tabRollViewModel()
 
         val rollHistory = tabRollViewModel.repositoryRoll.fetch().first()
@@ -30,7 +31,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollViewModel.diceSequenceRoll(rolls)
+        tabRollViewModel.rollDiceSequence(rolls)
 
         val diceSelected = mutableListOf<Long>()
         tabRollViewModel.diceBag.value.forEach {
@@ -49,12 +50,12 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         tabRollViewModel.diceSequenceStore(rolls)
         assertEquals(3, tabRollViewModel.repositoryRoll.fetch().first().size)
 
-        tabRollViewModel.diceSequenceRoll()
+        tabRollViewModel.rollDiceSequence()
         assertEquals(4, tabRollViewModel.repositoryRoll.fetch().first().size)
     }
 
     @Test
-    fun diceSequenceRollWithExplosionEquals() = runTest {
+    fun rollDiceSequenceWithExplosionEquals() = runTest {
         val diceBag = BagDataTestDouble()
 
         // d6
@@ -70,7 +71,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollViewModel.diceSequenceRoll(rolls)
+        tabRollViewModel.rollDiceSequence(rolls)
 
         assertEquals(18, rolls.size)
 
@@ -85,7 +86,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-    fun diceSequenceRollWithExplosionLessThan() = runTest {
+    fun rollDiceSequenceWithExplosionLessThan() = runTest {
         val diceBag = BagDataTestDouble()
 
         // d6
@@ -101,13 +102,13 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollViewModel.diceSequenceRoll(rolls)
+        tabRollViewModel.rollDiceSequence(rolls)
 
         assertEquals(18, rolls.size)
     }
 
     @Test
-    fun diceSequenceRollWithExplosionGreaterThan() = runTest {
+    fun rollDiceSequenceWithExplosionGreaterThan() = runTest {
         val diceBag = BagDataTestDouble()
 
         // d6
@@ -123,13 +124,13 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollViewModel.diceSequenceRoll(rolls)
+        tabRollViewModel.rollDiceSequence(rolls)
 
         assertEquals(18, rolls.size)
     }
 
     @Test
-    fun diceSequenceRollWithScore() = runTest {
+    fun rollDiceSequenceWithScore() = runTest {
         val diceBag = BagDataTestDouble()
 
         // d6 only
@@ -144,7 +145,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollViewModel.diceSequenceRoll(rolls)
+        tabRollViewModel.rollDiceSequence(rolls)
 
         val rollSequence: MutableMap.MutableEntry<Long, List<Roll>> =
             mutableMapOf(1L to rolls.toList()).entries.first()
@@ -222,7 +223,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     fun isContentAvailableToDisplay() = runTest {
         val tabRollViewModel = tabRollViewModel()
         val rolls = mutableListOf<Roll>()
-        tabRollViewModel.diceSequenceRoll(rolls)
+        tabRollViewModel.rollDiceSequence(rolls)
         assertTrue(tabRollViewModel.isContentAvailableToDisplay(rolls))
     }
 
@@ -230,6 +231,9 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): TabRollAndroidViewModel {
         val repositorySettings = UtilityDataHelper().repositorySettings
+        runBlocking(Dispatchers.Main) {
+            repositorySettings.store(Settings())
+        }
 
         val repositoryBag = UtilityDataHelper().repositoryBag
         runBlocking(Dispatchers.Main) {

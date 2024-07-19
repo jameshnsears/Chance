@@ -120,7 +120,7 @@ fun Roll(tabRollAndroidViewModel: TabRollAndroidViewModel) {
 
     Button(
         onClick = {
-            tabRollAndroidViewModel.diceSequenceRoll()
+            tabRollAndroidViewModel.rollDiceSequence()
         },
         modifier = Modifier
             .padding(start = 18.dp)
