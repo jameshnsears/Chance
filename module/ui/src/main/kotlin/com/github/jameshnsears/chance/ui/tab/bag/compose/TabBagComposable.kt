@@ -325,7 +325,7 @@ fun Version(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp),
+            .padding(start = 12.dp, top = 8.dp, bottom = 8.dp, end = 12.dp),
     ) {
         SelectionContainer {
             Text(

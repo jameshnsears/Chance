@@ -8,7 +8,6 @@ import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.google.protobuf.util.JsonFormat
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -28,7 +27,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         ): RepositorySettingsImpl {
             if (instance == null) {
                 instance = RepositorySettingsImpl(context)
-                runBlocking(Dispatchers.Main) {
+                runBlocking {
                     instance!!.store(settings)
                 }
             }

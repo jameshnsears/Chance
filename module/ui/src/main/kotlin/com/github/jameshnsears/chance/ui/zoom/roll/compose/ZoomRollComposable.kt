@@ -50,7 +50,7 @@ fun ZoomRoll(
     val rollHistory = stateFlowZoom.value.rollHistory
 
     val stateFlowTabRoll =
-        tabRollAndroidViewModel.stateFlowTabRoll.collectAsStateWithLifecycle(
+        tabRollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
     val settingsTime = stateFlowTabRoll.value.rollIndexTime
@@ -157,7 +157,7 @@ private fun RollDetails(
     dice: Dice
 ) {
     val stateFlowTabRoll =
-        tabRollAndroidViewModel.stateFlowTabRoll.collectAsStateWithLifecycle(
+        tabRollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
 

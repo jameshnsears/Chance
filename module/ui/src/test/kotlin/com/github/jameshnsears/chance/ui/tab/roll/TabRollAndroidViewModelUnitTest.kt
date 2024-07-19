@@ -184,28 +184,28 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         val tabRollViewModel = tabRollViewModel()
 
         tabRollViewModel.settingsIndexTime(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.rollIndexTime)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.rollIndexTime)
 
         tabRollViewModel.settingsRollScore(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.rollScore)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.rollScore)
 
         tabRollViewModel.settingsDiceTitle(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.diceTitle)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.diceTitle)
 
         tabRollViewModel.settingsSideNumber(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.sideNumber)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.sideNumber)
 
         tabRollViewModel.settingsSideDescription(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.sideDescription)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.sideDescription)
 
         tabRollViewModel.settingsSideSVG(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.sideSVG)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.sideSVG)
 
         tabRollViewModel.settingsRollSound(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.rollSound)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.rollSound)
 
         tabRollViewModel.settingsBehaviour(false)
-        assertFalse(tabRollViewModel.stateFlowTabRoll.value.behaviour)
+        assertFalse(tabRollViewModel.stateFlowSettings.value.behaviour)
     }
 
     @Test
