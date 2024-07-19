@@ -32,7 +32,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
               "rollSound": ${Settings().rollSound}
             }
             """.trimIndent(),
-            tabBagViewModel.repositorySettings.exportJson()
+            tabBagViewModel.repositorySettings.jsonExport()
         )
     }
 
@@ -41,7 +41,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
     fun exportBagRepository() = runTest {
         val tabBagViewModel = tabBagViewModel()
 
-        val json = tabBagViewModel.repositoryBag.exportJson()
+        val json = tabBagViewModel.repositoryBag.jsonExport()
 
         val jacksonObjectMapper = jacksonObjectMapper()
         val rootNode =
@@ -53,7 +53,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun exportRollRepository() = runTest {
         val jacksonObjectMapper = jacksonObjectMapper()
-        val exportJson = tabBagViewModel().repositoryRoll.exportJson()
+        val exportJson = tabBagViewModel().repositoryRoll.jsonExport()
         val rootNode = jacksonObjectMapper.readTree(exportJson)
         assertTrue(rootNode.get("values").size() == 2)
 

@@ -6,12 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.github.jameshnsears.chance.compose.MainActivityComposable
 import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
+import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTree
+import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         installSplashScreen()
+
+        installLogging()
 
         val utilityDataHelper = UtilityDataHelper(application)
 
@@ -23,5 +27,10 @@ class MainActivity : ComponentActivity() {
                 utilityDataHelper.repositoryRoll
             )
         }
+    }
+
+    private fun installLogging() {
+        if (Timber.treeCount == 0)
+            Timber.plant(UtilityLoggingLineNumberTree())
     }
 }

@@ -83,11 +83,11 @@ class RepositoryRollImpl private constructor(private val context: Context) :
         return rollHistoryProtocolBufferBuilder
     }
 
-    override suspend fun exportJson(): String =
+    override suspend fun jsonExport(): String =
         JsonFormat.printer().includingDefaultValueFields()
             .print(context.rollDataStore.data.first())
 
-    override suspend fun importJson(json: String) {
+    override suspend fun jsonImport(json: String) {
         context.rollDataStore.updateData {
             val rollHistoryProtocolBuffer: RollHistoryProtocolBuffer.Builder =
                 RollHistoryProtocolBuffer.newBuilder()

@@ -82,11 +82,11 @@ class TabBagAndroidViewModel(
 
     suspend fun exportRepositoriesAsJson(): String {
         return "[" +
-                repositorySettings.exportJson() +
+                repositorySettings.jsonExport() +
                 "," +
-                repositoryBag.exportJson() +
+                repositoryBag.jsonExport() +
                 "," +
-                repositoryRoll.exportJson() +
+                repositoryRoll.jsonExport() +
                 "]"
     }
 
@@ -118,13 +118,13 @@ class TabBagAndroidViewModel(
 
                 runBlocking {
                     repositorySettings.clear()
-                    repositorySettings.importJson(rootNode.get(0).toString())
+                    repositorySettings.jsonImport(rootNode.get(0).toString())
 
                     repositoryBag.clear()
-                    repositoryBag.importJson(rootNode.get(1).toString())
+                    repositoryBag.jsonImport(rootNode.get(1).toString())
 
                     repositoryRoll.clear()
-                    repositoryRoll.importJson(rootNode.get(2).toString())
+                    repositoryRoll.jsonImport(rootNode.get(2).toString())
                 }
 
                 _stateFlowTabBagImport.update {

@@ -33,7 +33,7 @@ class RepositorySettingsTestDouble private constructor() :
         settings = newSettings
     }
 
-    override suspend fun exportJson(): String {
+    override suspend fun jsonExport(): String {
         val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
             SettingsProtocolBuffer.newBuilder()
 
@@ -43,7 +43,7 @@ class RepositorySettingsTestDouble private constructor() :
             .print(settingsProtocolBufferBuilder.build())
     }
 
-    override suspend fun importJson(json: String) {
+    override suspend fun jsonImport(json: String) {
         settings = Settings()
 
         val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =

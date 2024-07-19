@@ -63,6 +63,7 @@ public final class RollHistory {
                 new java.lang.String[]{"Roll",});
         com.github.jameshnsears.chance.data.domain.proto.Roll.getDescriptor();
     }
+
     private RollHistory() {
     }
 

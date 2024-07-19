@@ -34,6 +34,7 @@ public final class Bag {
                 new java.lang.String[]{"Dice",});
         com.github.jameshnsears.chance.data.domain.proto.Dice.getDescriptor();
     }
+
     private Bag() {
     }
 

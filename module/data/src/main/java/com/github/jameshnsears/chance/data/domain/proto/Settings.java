@@ -35,6 +35,7 @@ public final class Settings {
                 internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor,
                 new java.lang.String[]{"Resize", "RollIndexTime", "RollScore", "DiceTitle", "SideNumber", "Behaviour", "SideDescription", "SideSVG", "RollSound",});
     }
+
     private Settings() {
     }
 

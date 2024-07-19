@@ -39,6 +39,7 @@ public final class Dice {
                 new java.lang.String[]{"Epoch", "Side", "Title", "Colour", "Selected", "MultiplierValue", "Explode", "ExplodeWhen", "ExplodeValue", "ModifyScore", "ModifyScoreValue",});
         com.github.jameshnsears.chance.data.domain.proto.Side.getDescriptor();
     }
+
     private Dice() {
     }
 

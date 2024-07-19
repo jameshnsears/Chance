@@ -83,15 +83,15 @@ class RepositoryRollImplInstrumentedTest : RepositoryInstrumentedHelper() {
 
         repositoryRollImpl.store(originalRollHistory)
 
-        val originalRollHistoryJson = repositoryRollImpl.exportJson()
+        val originalRollHistoryJson = repositoryRollImpl.jsonExport()
 
         repositoryRollImpl.clear()
 
-        repositoryRollImpl.importJson(originalRollHistoryJson)
+        repositoryRollImpl.jsonImport(originalRollHistoryJson)
 
         advanceUntilIdle()
 
-        val fetchedRollHistoryJson = repositoryRollImpl.exportJson()
+        val fetchedRollHistoryJson = repositoryRollImpl.jsonExport()
 
         assertEquals(originalRollHistoryJson, fetchedRollHistoryJson)
     }

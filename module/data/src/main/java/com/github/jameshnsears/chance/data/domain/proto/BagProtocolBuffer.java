@@ -44,6 +44,7 @@ public final class BagProtocolBuffer extends
     @SuppressWarnings("serial")
     private java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> dice_;
     private byte memoizedIsInitialized = -1;
+
     // Use BagProtocolBuffer.newBuilder() to construct.
     private BagProtocolBuffer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);

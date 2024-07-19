@@ -72,6 +72,7 @@ public final class DiceProtocolBuffer extends
     private DiceProtocolBuffer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
     }
+
     private DiceProtocolBuffer() {
         side_ = java.util.Collections.emptyList();
         title_ = "";

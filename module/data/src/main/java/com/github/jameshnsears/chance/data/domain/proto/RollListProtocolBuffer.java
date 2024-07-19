@@ -44,6 +44,7 @@ public final class RollListProtocolBuffer extends
     @SuppressWarnings("serial")
     private java.util.List<com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer> roll_;
     private byte memoizedIsInitialized = -1;
+
     // Use RollListProtocolBuffer.newBuilder() to construct.
     private RollListProtocolBuffer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);

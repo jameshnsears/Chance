@@ -107,13 +107,13 @@ class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
 
         repositorySettingsImpl.store(originalSettings)
 
-        val json = repositorySettingsImpl.exportJson()
+        val json = repositorySettingsImpl.jsonExport()
 
         repositorySettingsImpl.clear()
 
-        repositorySettingsImpl.importJson(json)
+        repositorySettingsImpl.jsonImport(json)
 
-        assertEquals(json, repositorySettingsImpl.exportJson())
+        assertEquals(json, repositorySettingsImpl.jsonExport())
 
         assertEquals(originalSettings, repositorySettingsImpl.fetch().first())
     }

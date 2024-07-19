@@ -82,11 +82,11 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         }
     }
 
-    override suspend fun exportJson(): String =
+    override suspend fun jsonExport(): String =
         JsonFormat.printer().includingDefaultValueFields()
             .print(context.settingsDataStore.data.first())
 
-    override suspend fun importJson(json: String) {
+    override suspend fun jsonImport(json: String) {
         context.settingsDataStore.updateData {
             val settingsProtocolBuffer: SettingsProtocolBuffer.Builder =
                 SettingsProtocolBuffer.newBuilder()

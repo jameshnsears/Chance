@@ -15,8 +15,6 @@ import com.github.jameshnsears.chance.ui.tab.compose.TabRow
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTree
-import timber.log.Timber
 
 @Composable
 fun MainActivityComposable(
@@ -25,9 +23,6 @@ fun MainActivityComposable(
     repositoryBag: RepositoryBagInterface,
     repositoryRoll: RepositoryRollInterface
 ) {
-    if (Timber.treeCount == 0)
-        Timber.plant(UtilityLoggingLineNumberTree())
-
     ChanceTheme {
         Scaffold { paddingValues ->
             Surface(

@@ -37,6 +37,7 @@ public final class Roll {
                 new java.lang.String[]{"DiceEpoch", "Side", "MultiplierIndex", "ExplodeIndex", "ScoreAdjustment", "Score",});
         com.github.jameshnsears.chance.data.domain.proto.Side.getDescriptor();
     }
+
     private Roll() {
     }
 

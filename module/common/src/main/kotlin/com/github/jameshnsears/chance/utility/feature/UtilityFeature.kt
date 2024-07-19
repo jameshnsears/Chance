@@ -3,13 +3,13 @@ package com.github.jameshnsears.chance.utility.feature
 sealed class UtilityFeature {
     enum class Flag {
         NONE,
-        USE_PROD_REPO       // debug app from MainActivity only
+        USE_PROTO_REPO       // debug app from MainActivity only
     }
 
     companion object {
         private val enabled = setOf(
             Flag.NONE,
-//            Flag.USE_PROD_REPO
+            Flag.USE_PROTO_REPO
         )
 
         fun isEnabled(flag: Flag): Boolean {

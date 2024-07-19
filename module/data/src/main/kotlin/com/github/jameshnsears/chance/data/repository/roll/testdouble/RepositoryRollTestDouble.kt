@@ -42,7 +42,7 @@ class RepositoryRollTestDouble private constructor() :
         rollHistory = newRollHistory
     }
 
-    override suspend fun exportJson(): String {
+    override suspend fun jsonExport(): String {
         val rollHistoryProtocolBufferBuilder: RollHistoryProtocolBuffer.Builder =
             RollHistoryProtocolBuffer.newBuilder()
 
@@ -52,7 +52,7 @@ class RepositoryRollTestDouble private constructor() :
             .print(rollHistoryProtocolBufferBuilder.build())
     }
 
-    override suspend fun importJson(json: String) {
+    override suspend fun jsonImport(json: String) {
         rollHistory = RollHistory()
 
         val rollHistoryProtocolBufferBuilder: RollHistoryProtocolBuffer.Builder =

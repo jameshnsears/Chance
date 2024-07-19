@@ -59,6 +59,7 @@ public final class RollProtocolBuffer extends
     private RollProtocolBuffer(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
         super(builder);
     }
+
     private RollProtocolBuffer() {
     }
 

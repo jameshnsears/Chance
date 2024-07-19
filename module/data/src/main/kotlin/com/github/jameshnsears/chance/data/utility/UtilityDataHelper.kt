@@ -14,7 +14,7 @@ import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
 class UtilityDataHelper(context: Context? = null) {
     val repositorySettings = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROD_REPO))
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
             RepositorySettingsImpl.getInstance(context!!)
         else
             RepositorySettingsTestDouble.getInstance()
@@ -26,7 +26,7 @@ class UtilityDataHelper(context: Context? = null) {
     val bagDataTestDouble = BagDataTestDouble()
 
     val repositoryBag = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROD_REPO))
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
             RepositoryBagImpl.getInstance(context!!)
         else
             RepositoryBagTestDouble.getInstance(bagDataTestDouble.allDice)
@@ -38,7 +38,7 @@ class UtilityDataHelper(context: Context? = null) {
     val rollHistoryDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 
     val repositoryRoll = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROD_REPO)) {
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
             RepositoryRollImpl.getInstance(context!!)
         } else {
             RepositoryRollTestDouble.getInstance(rollHistoryDataTestDouble)

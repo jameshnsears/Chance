@@ -82,15 +82,15 @@ class RepositoryBagImplInstrumentedTest : RepositoryInstrumentedHelper() {
 
         repositoryBagImpl.store(originalDieBag)
 
-        val json = repositoryBagImpl.exportJson()
+        val json = repositoryBagImpl.jsonExport()
 
         repositoryBagImpl.clear()
 
-        repositoryBagImpl.importJson(json)
+        repositoryBagImpl.jsonImport(json)
 
         advanceUntilIdle()
 
-        assertEquals(json, repositoryBagImpl.exportJson())
+        assertEquals(json, repositoryBagImpl.jsonExport())
 
         advanceUntilIdle()
 

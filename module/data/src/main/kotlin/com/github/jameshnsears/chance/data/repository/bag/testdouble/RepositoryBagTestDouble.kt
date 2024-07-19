@@ -1,7 +1,6 @@
 package com.github.jameshnsears.chance.data.repository.bag.testdouble
 
 import com.github.jameshnsears.chance.data.domain.core.Dice
-import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
@@ -26,62 +25,20 @@ class RepositoryBagTestDouble private constructor() :
 
     private lateinit var diceBag: DiceBag
 
-    override suspend fun exportJson(): String {
-        val BagProtocolBufferBuilder: BagProtocolBuffer.Builder =
+    override suspend fun jsonExport(): String {
+        val bagProtocolBufferBuilder: BagProtocolBuffer.Builder =
             BagProtocolBuffer.newBuilder()
 
-        mapDiceBagIntoBagProtocolBufferBuilder(diceBag, BagProtocolBufferBuilder)
+        mapDiceBagIntoBagProtocolBufferBuilder(diceBag, bagProtocolBufferBuilder)
 
         return JsonFormat.printer().includingDefaultValueFields()
-            .print(BagProtocolBufferBuilder.build())
+            .print(bagProtocolBufferBuilder.build())
     }
 
-    override suspend fun importJson(json: String) {
-        diceBag = mutableListOf()
+    override suspend fun jsonImport(json: String) {
+        diceBag.clear()
 
-        val BagProtocolBufferBuilder: BagProtocolBuffer.Builder =
-            BagProtocolBuffer.newBuilder()
-
-        JsonFormat.parser().merge(json, BagProtocolBufferBuilder)
-
-        val newDiceBag = mutableListOf<Dice>()
-
-        BagProtocolBufferBuilder.diceList.forEach { diceProtocolBuffer ->
-            val dice = Dice()
-            dice.epoch = diceProtocolBuffer.epoch
-
-            val sides = mutableListOf<Side>()
-            diceProtocolBuffer.sideList.forEach { sideProtocolBuffer ->
-                val side = Side()
-                side.number = sideProtocolBuffer.number
-                side.numberColour = sideProtocolBuffer.numberColour
-                side.imageBase64 = sideProtocolBuffer.imageBase64
-                side.imageDrawableId = sideProtocolBuffer.imageDrawableId
-                side.description = sideProtocolBuffer.description
-                side.descriptionColour = sideProtocolBuffer.descriptionColour
-
-                sides.add(side)
-            }
-
-            dice.sides = sides
-
-            dice.title = diceProtocolBuffer.title
-            dice.colour = diceProtocolBuffer.colour
-            dice.selected = diceProtocolBuffer.selected
-
-            dice.multiplierValue = diceProtocolBuffer.multiplierValue
-
-            dice.explode = diceProtocolBuffer.explode
-            dice.explodeWhen = diceProtocolBuffer.explodeWhen
-            dice.explodeValue = diceProtocolBuffer.explodeValue
-
-            dice.modifyScore = diceProtocolBuffer.modifyScore
-            dice.modifyScoreValue = diceProtocolBuffer.modifyScoreValue
-
-            newDiceBag.add(dice)
-        }
-
-        store(newDiceBag)
+        store(jsomImportProcess(json))
     }
 
     override suspend fun fetch(): Flow<DiceBag> = flow {
