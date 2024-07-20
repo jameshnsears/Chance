@@ -145,9 +145,11 @@ private fun SideRollBehaviourIcon(
 
 @Composable
 fun DiceTitle(dice: Dice) {
-    Text(
-        text = dice.title,
-    )
+    Row {
+        Text(
+            text = dice.title,
+        )
+    }
 }
 
 @Composable

@@ -71,9 +71,7 @@ fun ZoomRoll(
             key = { _, item -> item.key }
         ) { index, rollSequence ->
             if (settingsTime)
-                Row {
-                    RollIndexTime(rollHistory.size - index, rollSequence)
-                }
+                RollIndexTime(rollHistory.size - index, rollSequence)
 
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -118,7 +116,9 @@ private fun RollIndexTime(
     position: Int,
     rollHistory: MutableMap.MutableEntry<Long, List<Roll>>
 ) {
-    Row {
+    Row(
+        modifier = Modifier.padding(start = 8.dp),
+        ) {
         Text(
             text = "$position : ${
                 SimpleDateFormat("dd, MMMM HH:mm:ss", Locale.getDefault())

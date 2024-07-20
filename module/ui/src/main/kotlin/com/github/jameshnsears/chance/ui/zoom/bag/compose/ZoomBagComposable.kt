@@ -2,7 +2,6 @@ package com.github.jameshnsears.chance.ui.zoom.bag.compose
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -55,9 +54,7 @@ fun ZoomBag(
             items = diceListState,
             key = { _, item -> item.uuid }
         ) { index, dice ->
-            Row {
-                DiceTitle(dice)
-            }
+            DiceTitle(dice)
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
