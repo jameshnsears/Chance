@@ -29,7 +29,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
                 instance = RepositorySettingsImpl(context)
                 runBlocking {
                     if (instance!!.fetch().first().resize == 0)
-                        Timber.d("RepositorySettingsImpl.default")
+                        Timber.d("default")
                         instance!!.store(settings)
                 }
             }
@@ -72,7 +72,10 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 
         context.settingsDataStore.updateData {
             val settingsProtocolBufferBuilder = it.toBuilder()
-            mapSettingsIntoSettingsProtocolBufferBuilder(newSettings, settingsProtocolBufferBuilder)
+            mapSettingsIntoSettingsProtocolBufferBuilder(
+                newSettings,
+                settingsProtocolBufferBuilder
+            )
             settingsProtocolBufferBuilder.build()
         }
     }

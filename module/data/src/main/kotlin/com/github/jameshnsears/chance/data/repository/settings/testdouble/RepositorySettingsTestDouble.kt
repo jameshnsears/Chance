@@ -24,7 +24,6 @@ class RepositorySettingsTestDouble private constructor() :
 
     private lateinit var settings: Settings
 
-
     override suspend fun jsonExport(): String {
         val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
             SettingsProtocolBuffer.newBuilder()
@@ -44,7 +43,6 @@ class RepositorySettingsTestDouble private constructor() :
     }
 
     override suspend fun store(newSettings: Settings) {
-        Timber.d(newSettings.toString())
         settings = newSettings
     }
 

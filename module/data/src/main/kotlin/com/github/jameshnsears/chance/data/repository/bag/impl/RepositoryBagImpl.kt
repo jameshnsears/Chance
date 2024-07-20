@@ -31,7 +31,7 @@ class RepositoryBagImpl private constructor(private val context: Context) :
                 instance = RepositoryBagImpl(context)
                 runBlocking {
                     if (instance!!.fetch().first().size == 0)
-                        Timber.d("RepositoryBagImpl.default")
+                        Timber.d("default")
                         instance!!.store(defaultBag)
                 }
             }

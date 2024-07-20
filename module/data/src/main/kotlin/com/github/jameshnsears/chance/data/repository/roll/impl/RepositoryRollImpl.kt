@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 class RepositoryRollImpl private constructor(private val context: Context) :
@@ -22,16 +23,33 @@ class RepositoryRollImpl private constructor(private val context: Context) :
         @SuppressLint("StaticFieldLeak")
         private var instance: RepositoryRollImpl? = null
 
-        fun getInstance(context: Context): RepositoryRollImpl {
+        fun getInstance(
+            context: Context,
+            rollHistory: RollHistory = RollHistory()
+        ): RepositoryRollImpl {
             if (instance == null) {
                 instance = RepositoryRollImpl(context)
+                runBlocking {
+                    if (instance!!.fetch().first().size == 0)
+                        Timber.d("default")
+                        instance!!.store(rollHistory)
+                }
             }
             return instance!!
         }
     }
 
+    override suspend fun jsonExport(): String =
+        JsonFormat.printer().includingDefaultValueFields()
+            .print(context.rollDataStore.data.first())
+
+    override suspend fun jsonImport(json: String) {
+        store(jsomImportProcess(json))
+    }
+
     override suspend fun fetch(): Flow<RollHistory> = flow {
         val rollHistory = RollHistory()
+
         context.rollDataStore.data
             .map { rollHistoryProtocolBuffer ->
                 // LinkedHashMap<Long, List<Roll>>
@@ -67,32 +85,15 @@ class RepositoryRollImpl private constructor(private val context: Context) :
     }
 
     override suspend fun store(newRollHistory: RollHistory) {
-        Timber.d(newRollHistory.toString())
+        clear()
 
         context.rollDataStore.updateData {
-            mapRollHistoryIntoRollHistoryProtocolBuffer(newRollHistory, it).build()
-        }
-    }
-
-    private fun mapRollHistoryIntoRollHistoryProtocolBuffer(
-        rollHistory: RollHistory,
-        rollHistoryProtocolBuffer: RollHistoryProtocolBuffer,
-    ): RollHistoryProtocolBuffer.Builder {
-        val rollHistoryProtocolBufferBuilder = rollHistoryProtocolBuffer.toBuilder()
-        mapBagIntoBagProtocolBufferBuilder(rollHistory, rollHistoryProtocolBufferBuilder)
-        return rollHistoryProtocolBufferBuilder
-    }
-
-    override suspend fun jsonExport(): String =
-        JsonFormat.printer().includingDefaultValueFields()
-            .print(context.rollDataStore.data.first())
-
-    override suspend fun jsonImport(json: String) {
-        context.rollDataStore.updateData {
-            val rollHistoryProtocolBuffer: RollHistoryProtocolBuffer.Builder =
-                RollHistoryProtocolBuffer.newBuilder()
-            JsonFormat.parser().merge(json, rollHistoryProtocolBuffer)
-            rollHistoryProtocolBuffer.build()
+            val rollHistoryProtocolBufferBuilder = it.toBuilder()
+            mapRollHistoryIntoRollHistoryProtocolBufferBuilder(
+                newRollHistory,
+                rollHistoryProtocolBufferBuilder
+            )
+            rollHistoryProtocolBufferBuilder.build()
         }
     }
 
