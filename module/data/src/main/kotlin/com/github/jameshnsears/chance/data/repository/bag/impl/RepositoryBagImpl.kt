@@ -9,6 +9,8 @@ import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRollImpl
+import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRollImpl.Companion
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -30,9 +32,12 @@ class RepositoryBagImpl private constructor(private val context: Context) :
             if (instance == null) {
                 instance = RepositoryBagImpl(context)
                 runBlocking {
-                    if (instance!!.fetch().first().size == 0)
+                    val itemsInProtoBuffer = instance!!.fetch().first().size
+                    Timber.d("itemsInProtoBuffer=${itemsInProtoBuffer}")
+                    if (itemsInProtoBuffer == 0) {
                         Timber.d("default")
                         instance!!.store(defaultBag)
+                    }
                 }
             }
             return instance!!

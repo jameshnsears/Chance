@@ -122,6 +122,7 @@ class ZoomAndroidViewModel(
                 rollHistoryWithValidDice[rollSequenceEpoch] = rolls
         }
 
+        if (currentRollHistory.size != rollHistoryWithValidDice.size)
         repositoryRoll.store(rollHistoryWithValidDice)
     }
 
@@ -149,7 +150,8 @@ class ZoomAndroidViewModel(
                 rollHistoryWithValidDice[rollSequenceEpoch] = rolls
         }
 
-        repositoryRoll.store(rollHistoryWithValidDice)
+        if (currentRollHistory.size != rollHistoryWithValidDice.size)
+            repositoryRoll.store(rollHistoryWithValidDice)
     }
 
     suspend fun diceRollEpochs(): MutableList<Long> {

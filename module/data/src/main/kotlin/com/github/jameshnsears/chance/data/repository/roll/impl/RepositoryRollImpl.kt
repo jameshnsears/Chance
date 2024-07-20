@@ -30,9 +30,12 @@ class RepositoryRollImpl private constructor(private val context: Context) :
             if (instance == null) {
                 instance = RepositoryRollImpl(context)
                 runBlocking {
-                    if (instance!!.fetch().first().size == 0)
+                    val itemsInProtoBuffer = instance!!.fetch().first().size
+                    Timber.d("itemsInProtoBuffer=${itemsInProtoBuffer}")
+                    if (itemsInProtoBuffer == 0) {
                         Timber.d("default")
                         instance!!.store(rollHistory)
+                    }
                 }
             }
             return instance!!
