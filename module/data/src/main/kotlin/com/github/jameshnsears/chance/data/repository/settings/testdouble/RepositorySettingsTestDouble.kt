@@ -24,14 +24,6 @@ class RepositorySettingsTestDouble private constructor() :
 
     private lateinit var settings: Settings
 
-    override suspend fun fetch(): Flow<Settings> = flow {
-        emit(settings)
-    }
-
-    override suspend fun store(newSettings: Settings) {
-        Timber.d(newSettings.toString())
-        settings = newSettings
-    }
 
     override suspend fun jsonExport(): String {
         val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
@@ -45,6 +37,15 @@ class RepositorySettingsTestDouble private constructor() :
 
     override suspend fun jsonImport(json: String) {
         store(jsomImportProcess(json))
+    }
+
+    override suspend fun fetch(): Flow<Settings> = flow {
+        emit(settings)
+    }
+
+    override suspend fun store(newSettings: Settings) {
+        Timber.d(newSettings.toString())
+        settings = newSettings
     }
 
     override suspend fun clear() {

@@ -28,9 +28,8 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
             if (instance == null) {
                 instance = RepositorySettingsImpl(context)
                 runBlocking {
-                    val existingSettings = instance!!.fetch().first()
-                    Timber.d("RepositorySettingsImpl.settings=${existingSettings}")
-                    if (existingSettings.resize == 0)
+                    if (instance!!.fetch().first().resize == 0)
+                        Timber.d("RepositorySettingsImpl.default")
                         instance!!.store(settings)
                 }
             }
