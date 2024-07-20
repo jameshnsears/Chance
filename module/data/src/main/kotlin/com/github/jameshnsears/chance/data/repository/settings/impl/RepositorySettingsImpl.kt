@@ -28,29 +28,25 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
             if (instance == null) {
                 instance = RepositorySettingsImpl(context)
                 runBlocking {
-                    instance!!.store(settings)
+                    val existingSettings = instance!!.fetch().first()
+                    Timber.d("RepositorySettingsImpl.settings=${existingSettings}")
+                    if (existingSettings.resize == 0)
+                        instance!!.store(settings)
                 }
             }
             return instance!!
         }
     }
 
-    override suspend fun fetch(): Flow<Settings> = flow {
-        /*
-        if the store is empty it returns:
+    override suspend fun jsonExport(): String =
+        JsonFormat.printer().includingDefaultValueFields()
+            .print(context.settingsDataStore.data.first())
 
-            Settings(
-                resize=0.0,
-                rollIndexTime=false,
-                rollScore=false,
-                diceTitle=false,
-                sideNumber=false,
-                behaviour=false,
-                sideDescription=false,
-                sideSVG=false,
-                rollSound=false
-            )
-         */
+    override suspend fun jsonImport(json: String) {
+        store(jsomImportProcess(json))
+    }
+
+    override suspend fun fetch(): Flow<Settings> = flow {
         val settings: Settings = context.settingsDataStore.data
             .map { settingsProtocolBuffer ->
                 Settings(
@@ -73,25 +69,12 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
     }
 
     override suspend fun store(newSettings: Settings) {
-        Timber.d(newSettings.toString())
+        clear()
 
         context.settingsDataStore.updateData {
             val settingsProtocolBufferBuilder = it.toBuilder()
             mapSettingsIntoSettingsProtocolBufferBuilder(newSettings, settingsProtocolBufferBuilder)
             settingsProtocolBufferBuilder.build()
-        }
-    }
-
-    override suspend fun jsonExport(): String =
-        JsonFormat.printer().includingDefaultValueFields()
-            .print(context.settingsDataStore.data.first())
-
-    override suspend fun jsonImport(json: String) {
-        context.settingsDataStore.updateData {
-            val settingsProtocolBuffer: SettingsProtocolBuffer.Builder =
-                SettingsProtocolBuffer.newBuilder()
-            JsonFormat.parser().merge(json, settingsProtocolBuffer)
-            settingsProtocolBuffer.build()
         }
     }
 

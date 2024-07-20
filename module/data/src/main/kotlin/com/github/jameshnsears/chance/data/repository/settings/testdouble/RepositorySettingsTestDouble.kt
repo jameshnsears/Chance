@@ -44,31 +44,7 @@ class RepositorySettingsTestDouble private constructor() :
     }
 
     override suspend fun jsonImport(json: String) {
-        settings = Settings()
-
-        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
-            SettingsProtocolBuffer.newBuilder()
-
-        JsonFormat.parser().merge(json, settingsProtocolBufferBuilder)
-
-        val settingsProtocolBuffer = settingsProtocolBufferBuilder.build()
-
-        val newSettings = Settings()
-
-        newSettings.resize = settingsProtocolBuffer.resize
-
-        newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
-        newSettings.rollScore = settingsProtocolBuffer.rollScore
-
-        newSettings.diceTitle = settingsProtocolBuffer.diceTitle
-        newSettings.sideNumber = settingsProtocolBuffer.sideNumber
-        newSettings.behaviour = settingsProtocolBuffer.behaviour
-        newSettings.sideDescription = settingsProtocolBuffer.sideDescription
-        newSettings.sideSVG = settingsProtocolBuffer.sideSVG
-
-        newSettings.rollSound = settingsProtocolBuffer.rollSound
-
-        store(newSettings)
+        store(jsomImportProcess(json))
     }
 
     override suspend fun clear() {

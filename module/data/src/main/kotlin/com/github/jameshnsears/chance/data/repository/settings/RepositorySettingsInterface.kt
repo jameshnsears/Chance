@@ -1,8 +1,10 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
+import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface
+import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 
 interface RepositorySettingsInterface : RepositoryImportExportInterface {
@@ -27,5 +29,31 @@ interface RepositorySettingsInterface : RepositoryImportExportInterface {
         settingsProtocolBufferBuilder.setRollSound(settings.rollSound)
 
         settingsProtocolBufferBuilder.build()
+    }
+
+    fun jsomImportProcess(json: String): Settings {
+        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
+            SettingsProtocolBuffer.newBuilder()
+
+        JsonFormat.parser().merge(json, settingsProtocolBufferBuilder)
+
+        val settingsProtocolBuffer = settingsProtocolBufferBuilder.build()
+
+        val newSettings = Settings()
+
+        newSettings.resize = settingsProtocolBuffer.resize
+
+        newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
+        newSettings.rollScore = settingsProtocolBuffer.rollScore
+
+        newSettings.diceTitle = settingsProtocolBuffer.diceTitle
+        newSettings.sideNumber = settingsProtocolBuffer.sideNumber
+        newSettings.behaviour = settingsProtocolBuffer.behaviour
+        newSettings.sideDescription = settingsProtocolBuffer.sideDescription
+        newSettings.sideSVG = settingsProtocolBuffer.sideSVG
+
+        newSettings.rollSound = settingsProtocolBuffer.rollSound
+
+        return newSettings
     }
 }

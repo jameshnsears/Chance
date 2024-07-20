@@ -13,25 +13,5 @@ class TabSettingsModel {
             settings.resize = resize
             repositorySettings.store(settings)
         }
-
-        ///////////////////////////////////////////////////
-
-        // from TabRollAndroidViewModel...
-
-        // settingsIndexTime
-
-        // rollScore
-
-        // diceTitle
-
-        // sideNumber
-
-        // behaviour
-
-        // sideDescription
-
-        // sideSVG
-
-        // rollSound
     }
 }

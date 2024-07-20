@@ -43,7 +43,7 @@ class ZoomAndroidViewModel(
 ) : AndroidViewModel(application) {
     private val _stateFlowZoom = MutableStateFlow(
         ZoomState(
-            resizeView = 80.dp,
+            resizeView = 0.dp,
             diceBag = mutableListOf(),
             diceBagDice = Dice(),
             rollHistory = LinkedHashMap()
@@ -55,6 +55,7 @@ class ZoomAndroidViewModel(
         viewModelScope.launch {
             _stateFlowZoom.update {
                 it.copy(
+                    resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
                     diceBag = repositoryBag.fetch().first(),
                     rollHistory = repositoryRoll.fetch().first()
                 )
@@ -186,21 +187,23 @@ class ZoomAndroidViewModel(
         }
     }
 
-    fun resizeView(zoom: Int) {
+    fun resizeView(resize: Int) {
+        _stateFlowZoom.value = _stateFlowZoom.value.copy(
+            resizeView = resizeViewAsDp(resize)
+        )
+    }
+
+    private fun resizeViewAsDp(resize: Int): Dp {
         val defaultViewSize = 80.dp
 
-        _stateFlowZoom.update {
-            it.copy(
-                resizeView = when (zoom) {
-                    1 -> defaultViewSize * 0.75f
-                    2 -> defaultViewSize * 0.8f
-                    3 -> defaultViewSize * 0.9f
-                    5 -> defaultViewSize * 1.1f
-                    6 -> defaultViewSize * 1.2f
-                    7 -> defaultViewSize * 1.25f
-                    else -> defaultViewSize
-                }
-            )
+        return when (resize) {
+            1 -> defaultViewSize * 0.75f
+            2 -> defaultViewSize * 0.8f
+            3 -> defaultViewSize * 0.9f
+            5 -> defaultViewSize * 1.1f
+            6 -> defaultViewSize * 1.2f
+            7 -> defaultViewSize * 1.25f
+            else -> defaultViewSize
         }
     }
 
