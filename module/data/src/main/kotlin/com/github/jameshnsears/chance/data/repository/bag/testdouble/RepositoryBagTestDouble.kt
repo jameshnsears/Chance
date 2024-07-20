@@ -7,7 +7,6 @@ import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 
 class RepositoryBagTestDouble private constructor() :
     RepositoryBagInterface {

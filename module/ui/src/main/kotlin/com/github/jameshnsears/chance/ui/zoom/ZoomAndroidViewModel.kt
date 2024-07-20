@@ -123,7 +123,7 @@ class ZoomAndroidViewModel(
         }
 
         if (currentRollHistory.size != rollHistoryWithValidDice.size)
-        repositoryRoll.store(rollHistoryWithValidDice)
+            repositoryRoll.store(rollHistoryWithValidDice)
     }
 
     suspend fun removeRollSequenceWithDiceWhereNumberOfSidesChanged() {

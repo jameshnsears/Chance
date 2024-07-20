@@ -42,7 +42,10 @@ class RepositoryRollTestDouble private constructor() :
         val rollHistoryProtocolBufferBuilder: RollHistoryProtocolBuffer.Builder =
             RollHistoryProtocolBuffer.newBuilder()
 
-        mapRollHistoryIntoRollHistoryProtocolBufferBuilder(rollHistory, rollHistoryProtocolBufferBuilder)
+        mapRollHistoryIntoRollHistoryProtocolBufferBuilder(
+            rollHistory,
+            rollHistoryProtocolBufferBuilder
+        )
 
         return JsonFormat.printer().includingDefaultValueFields()
             .print(rollHistoryProtocolBufferBuilder.build())

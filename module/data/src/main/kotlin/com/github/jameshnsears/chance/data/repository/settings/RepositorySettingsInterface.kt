@@ -1,6 +1,5 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
-import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.settings.Settings
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface

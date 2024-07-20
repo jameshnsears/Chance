@@ -6,7 +6,6 @@ import com.github.jameshnsears.chance.data.repository.settings.RepositorySetting
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import timber.log.Timber
 
 class RepositorySettingsTestDouble private constructor() :
     RepositorySettingsInterface {
