@@ -48,8 +48,6 @@ class RepositoryBagTestDouble private constructor() :
     }
 
     override suspend fun store(newDiceBag: DiceBag) {
-        clear()
-
         diceBag = newDiceBag
     }
 
