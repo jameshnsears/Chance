@@ -36,7 +36,7 @@ subprojects {
     apply(plugin = "jacoco")
     afterEvaluate {
         if (plugins.hasPlugin("com.android.application") || plugins.hasPlugin("com.android.library")) {
-            tasks.register<JacocoReport>("jacocoTestReport") {
+            tasks.register<JacocoReport>("jacocoFdroidTestReport") {
                 group = "chance"
                 description = "coverage - test"
 
@@ -110,7 +110,7 @@ subprojects {
 
             tasks.register<JacocoReport>("jacocoFdroidAndroidTestReport") {
                 group = "chance"
-                description = "coverage - androidTest API 33+"
+                description = "coverage - androidTest, API 33+"
 
                 dependsOn("connectedFdroidDebugAndroidTest")
 

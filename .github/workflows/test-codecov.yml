@@ -52,7 +52,7 @@ jobs:
       - name: gradlew
         run: |
           set -x
-          ./gradlew jacocoTestReport
+          ./gradlew jacocoFdroidTestReport
           ls -al ./module/data/build/reports/jacoco/test.xml
           ls -al ./module/ui/build/reports/jacoco/test.xml
           ls -al ./module/ui-dialog-bag/build/reports/jacoco/test.xml
