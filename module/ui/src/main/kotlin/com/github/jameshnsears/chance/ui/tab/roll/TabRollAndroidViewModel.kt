@@ -73,8 +73,8 @@ class TabRollAndroidViewModel(
 
     init {
         viewModelScope.launch {
-            alignUndoAndRollButtonsWithDiceBag()
             alignSettings()
+            alignUndoAndRollButtonsWithDiceBag()
         }
 
         viewModelScope.launch {
@@ -87,18 +87,34 @@ class TabRollAndroidViewModel(
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect")
-                alignUndoAndRollButtonsWithDiceBag()
                 alignSettings()
+                alignUndoAndRollButtonsWithDiceBag()
             }
         }
     }
 
     private suspend fun alignUndoAndRollButtonsWithDiceBag() {
         _diceBag.value = repositoryBag.fetch().first()
+        disableUndoAndRollButtons()
+    }
 
-        _undoEnabled.value = isUndoPossible()
+    private suspend fun disableUndoAndRollButtons() {
+        val settings = _stateFlowSettings.value
 
-        _rollEnabled.value = isRollPossible()
+        if (!settings.rollIndexTime
+            && !settings.rollScore
+            && !settings.diceTitle
+            && !settings.sideNumber
+            && !settings.behaviour
+            && !settings.sideDescription
+            && !settings.sideSVG
+        ) {
+            _undoEnabled.value = false
+            _rollEnabled.value = false
+        } else {
+            _undoEnabled.value = isUndoPossible()
+            _rollEnabled.value = isRollPossible()
+        }
     }
 
     private suspend fun alignSettings() {
@@ -319,6 +335,8 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.rollIndexTime = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
@@ -329,6 +347,8 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.rollScore = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
@@ -347,6 +367,8 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.diceTitle = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
@@ -357,6 +379,8 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.sideNumber = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
@@ -367,6 +391,8 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.sideDescription = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
@@ -377,6 +403,8 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.sideSVG = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
@@ -387,6 +415,8 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.rollSound = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
@@ -397,11 +427,13 @@ class TabRollAndroidViewModel(
             val settings = repositorySettings.fetch().first()
             settings.behaviour = checked
             repositorySettings.store(settings)
+
+            disableUndoAndRollButtons()
         }
     }
 
     fun isContentAvailableToDisplay(rolls: List<Roll>): Boolean {
-        val stateFlowTabRollValue = _stateFlowSettings.value
+        val settings = _stateFlowSettings.value
 
         var svgExists = false
         var descriptionExists = false
@@ -413,17 +445,17 @@ class TabRollAndroidViewModel(
                 descriptionExists = true
         }
 
-        return (stateFlowTabRollValue.rollIndexTime
+        return (settings.rollIndexTime
                 ||
-                stateFlowTabRollValue.rollScore
+                settings.rollScore
                 ||
-                stateFlowTabRollValue.diceTitle
+                settings.diceTitle
                 ||
-                stateFlowTabRollValue.sideNumber
+                settings.sideNumber
                 ||
-                (stateFlowTabRollValue.sideDescription && descriptionExists)
+                (settings.sideDescription && descriptionExists)
                 ||
-                (stateFlowTabRollValue.sideSVG && svgExists)
+                (settings.sideSVG && svgExists)
                 )
     }
 }

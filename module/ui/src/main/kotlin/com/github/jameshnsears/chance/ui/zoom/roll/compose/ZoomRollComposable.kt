@@ -118,7 +118,7 @@ private fun RollIndexTime(
 ) {
     Row(
         modifier = Modifier.padding(start = 8.dp),
-        ) {
+    ) {
         Text(
             text = "$position : ${
                 SimpleDateFormat("dd, MMMM HH:mm:ss", Locale.getDefault())
