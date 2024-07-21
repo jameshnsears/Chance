@@ -5,14 +5,17 @@
 
     <string name="dialog.bag.side">Side # </string>
     <string name="dialog.bag.side.colour">Side #…</string>
+    <string name="dialog.bag.side.colour.apply.to.all">Apply colour to all side #\'s</string>
+
+    <string name="dialog.bag.side.description">Description</string>
+    <string name="dialog.bag.side.description.colour">Description…</string>
+    <string name="dialog.bag.side.description.info">Description can be a maximum of 25 characters</string>
+    <string name="dialog.bag.side.description.apply.to.all">Apply both to all sides</string>
+
     <string name="dialog.bag.side.image">SVG file…</string>
     <string name="dialog.bag.side.image.clear">Drop SVG</string>
+    <string name="dialog.bag.side.image_apply.to.all">Apply SVG to all sides</string>
     <string name="dialog.bag.side.image.error">Invalid SVG</string>
-    <string name="dialog.bag.side.description">Description</string>
-    <string name="dialog.bag.side.description.info">Description can be a maximum of 25 characters</string>
-    <string name="dialog.bag.side.description.colour">Text…</string>
-    <string name="dialog.bag.side.apply.to.all.svg">Apply SVG to all sides</string>
-    <string name="dialog.bag.side.apply.to.all.colour">Apply colour to all side #\'s</string>
 
     <string name="dialog.bag.dice">Dice</string>
     <string name="dialog.bag.dice.title">Title</string>

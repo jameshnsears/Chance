@@ -244,7 +244,7 @@ fun DiceColour(cardDiceViewModel: CardDiceViewModel) {
                 showDialogColourPicker.value = true
             },
             modifier = Modifier
-                .width(140.dp)
+                .width(180.dp)
                 .testTag(BagCardDiceTestTag.DICE_COLOUR),
 
             ) {

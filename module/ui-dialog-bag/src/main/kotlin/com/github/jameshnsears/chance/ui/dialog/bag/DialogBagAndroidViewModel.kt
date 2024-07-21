@@ -193,12 +193,12 @@ class DialogBagAndroidViewModel(
                 alignedSide.numberColour = cardSide.sideNumberColour
 
             if (cardSideAndroidViewModel.stateFlowCardSide.value.sideApplyToAllDescription) {
+                alignedSide.description = cardSide.sideDescription
                 alignedSide.descriptionColour = cardSide.sideDescriptionColour
             }
 
             if (cardSideAndroidViewModel.stateFlowCardSide.value.sideApplyToAllSvg) {
-                if (cardSide.sideImageDrawableId != 0)
-                    alignedSide.imageDrawableId = cardSide.sideImageDrawableId
+                alignedSide.imageDrawableId = cardSide.sideImageDrawableId
                 alignedSide.imageBase64 = cardSide.sideImageBase64
             }
         }

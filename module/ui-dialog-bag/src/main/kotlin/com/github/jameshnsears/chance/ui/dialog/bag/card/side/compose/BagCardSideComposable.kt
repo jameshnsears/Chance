@@ -161,7 +161,7 @@ fun SideColour(
         stateFlowCardSide.value.sideApplyToAllNumberColour,
         BagCardSideTestTag.SIDE_APPLY_NUMBER_COLOUR,
         cardSideAndroidViewModel::sideApplyToAllNumberColour,
-        R.string.dialog_bag_side_apply_to_all_colour
+        R.string.dialog_bag_side_colour_apply_to_all
     )
 
     if (showDialogColourPicker.value) {
@@ -216,16 +216,6 @@ fun SideDescription(
         }
     )
 
-    SideDescriptionColour(cardSideAndroidViewModel)
-
-    SideApplyToAll(
-        cardSideAndroidViewModel,
-        stateFlowCardSide.value.sideApplyToAllDescription,
-        BagCardSideTestTag.SIDE_APPLY_DESCRIPTION,
-        cardSideAndroidViewModel::sideApplyToAllDescription,
-        R.string.dialog_bag_side_apply_to_all_colour
-    )
-
     Row(
         modifier = Modifier
             .padding(top = 8.dp, bottom = 8.dp)
@@ -248,6 +238,16 @@ fun SideDescription(
             text = stringResource(R.string.dialog_bag_side_description_info),
         )
     }
+
+    SideDescriptionColour(cardSideAndroidViewModel)
+
+    SideApplyToAll(
+        cardSideAndroidViewModel,
+        stateFlowCardSide.value.sideApplyToAllDescription,
+        BagCardSideTestTag.SIDE_APPLY_DESCRIPTION,
+        cardSideAndroidViewModel::sideApplyToAllDescription,
+        R.string.dialog_bag_side_description_apply_to_all
+    )
 }
 
 @Composable
@@ -271,7 +271,7 @@ fun SideDescriptionColour(cardSideAndroidViewModel: CardSideAndroidViewModel) {
         Button(
             onClick = { showDialogColourPicker.value = true },
             modifier = Modifier
-                .width(160.dp)
+                .width(180.dp)
                 .testTag(BagCardSideTestTag.SIDE_DESCRIPTION_COLOUR),
             enabled = !diceSidesFewerThanSdeNumber
         ) {
@@ -349,7 +349,7 @@ fun SideImageSVG(
                     launcherImport.launch("image/svg+xml")
                 },
                 modifier = Modifier
-                    .width(160.dp)
+                    .width(180.dp)
                     .padding(bottom = 6.dp)
                     .testTag(BagCardSideTestTag.SIDE_IMAGE_SVG),
                 enabled = !diceSidesFewerThanSdeNumber
@@ -370,7 +370,7 @@ fun SideImageSVG(
                     cardSideAndroidViewModel.sideImageSvgClear()
                 },
                 modifier = Modifier
-                    .width(160.dp)
+                    .width(180.dp)
                     .padding(top = 6.dp)
                     .testTag(BagCardSideTestTag.SIDE_IMAGE_SVG),
                 enabled = cardSideAndroidViewModel.sideImageAvailable() && !diceSidesFewerThanSdeNumber
@@ -424,7 +424,7 @@ fun SideApplyToAll(
     sideApplyToAll: Boolean,
     testTag: String,
     sideApplyToAllFunction: (Boolean) -> Unit,
-    stringResourceId: Int = R.string.dialog_bag_side_apply_to_all_svg
+    stringResourceId: Int = R.string.dialog_bag_side_image_apply_to_all
 ) {
     val stateFlowCardSide =
         cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
