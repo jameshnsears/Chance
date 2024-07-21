@@ -148,20 +148,20 @@ class DialogBagAndroidViewModel(
         val alignedSides: MutableList<Side>
 
         val originalDiceSides = dice.sides
-        val dialogBagDiceSides = cardDiceViewModel.stateFlowCardDice.value.diceSidesSize
+        val diceSidesSize = cardDiceViewModel.stateFlowCardDice.value.diceSidesSize
 
-        if (dialogBagDiceSides == originalDiceSides.size) {
+        if (diceSidesSize == originalDiceSides.size) {
             alignedSides = originalDiceSides.toMutableList()
 
-        } else if (dialogBagDiceSides < originalDiceSides.size) {
+        } else if (diceSidesSize < originalDiceSides.size) {
             alignedSides = originalDiceSides.reversed()
-                .subList(0, dialogBagDiceSides)
+                .subList(0, diceSidesSize)
                 .reversed()
                 .toMutableList()
 
         } else {
             alignedSides = originalDiceSides.toMutableList()
-            for (newSideIndex in alignedSides.size + 1..dialogBagDiceSides) {
+            for (newSideIndex in alignedSides.size + 1..diceSidesSize) {
                 alignedSides.add(
                     0,
                     Side(number = newSideIndex)
