@@ -6,7 +6,7 @@ import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.spyk
 import kotlinx.coroutines.Dispatchers
@@ -154,13 +154,13 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
     private fun zoomAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): ZoomAndroidViewModel {
-        val repositoryBag = UtilityDataHelper().repositoryBag
+        val repositoryBag = RepositoryFactory().repositoryBag
         runBlocking(Dispatchers.Main) {
             // 8 dice = .allDice
             repositoryBag.store(bagDataTestDouble.allDice)
         }
 
-        val repositoryRoll = UtilityDataHelper().repositoryRoll
+        val repositoryRoll = RepositoryFactory().repositoryRoll
         runBlocking(Dispatchers.Main) {
             // 2 rolls:
             //      1st roll:
@@ -180,7 +180,7 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
         return spyk<ZoomAndroidViewModel>(
             ZoomAndroidViewModel(
                 getApplication(),
-                UtilityDataHelper().repositorySettings,
+                RepositoryFactory().repositorySettings,
                 repositoryBag,
                 repositoryRoll
             )

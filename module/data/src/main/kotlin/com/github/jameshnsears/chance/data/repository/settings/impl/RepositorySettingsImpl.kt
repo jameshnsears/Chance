@@ -4,7 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
+import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.google.protobuf.util.JsonFormat
@@ -23,7 +24,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 
         fun getInstance(
             context: Context,
-            settings: Settings = Settings()
+            settings: SettingsDataInterface = SettingsDataImpl()
         ): RepositorySettingsImpl {
             if (instance == null) {
                 instance = RepositorySettingsImpl(context)
@@ -46,10 +47,36 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         store(jsomImportProcess(json))
     }
 
-    override suspend fun fetch(): Flow<Settings> = flow {
-        val settings: Settings = context.settingsDataStore.data
+    override fun jsomImportProcess(json: String): SettingsDataInterface {
+        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
+            SettingsProtocolBuffer.newBuilder()
+
+        JsonFormat.parser().merge(json, settingsProtocolBufferBuilder)
+
+        val settingsProtocolBuffer = settingsProtocolBufferBuilder.build()
+
+        val newSettings = SettingsDataImpl()
+
+        newSettings.resize = settingsProtocolBuffer.resize
+
+        newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
+        newSettings.rollScore = settingsProtocolBuffer.rollScore
+
+        newSettings.diceTitle = settingsProtocolBuffer.diceTitle
+        newSettings.sideNumber = settingsProtocolBuffer.sideNumber
+        newSettings.behaviour = settingsProtocolBuffer.behaviour
+        newSettings.sideDescription = settingsProtocolBuffer.sideDescription
+        newSettings.sideSVG = settingsProtocolBuffer.sideSVG
+
+        newSettings.rollSound = settingsProtocolBuffer.rollSound
+
+        return newSettings
+    }
+
+    override suspend fun fetch(): Flow<SettingsDataImpl> = flow {
+        val settings: SettingsDataImpl = context.settingsDataStore.data
             .map { settingsProtocolBuffer ->
-                Settings(
+                SettingsDataImpl(
                     resize = settingsProtocolBuffer.resize,
 
                     rollIndexTime = settingsProtocolBuffer.rollIndexTime,
@@ -68,13 +95,13 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         emit(settings)
     }
 
-    override suspend fun store(newSettings: Settings) {
+    override suspend fun store(settingsData: SettingsDataInterface) {
         clear()
 
         context.settingsDataStore.updateData {
             val settingsProtocolBufferBuilder = it.toBuilder()
             mapSettingsIntoSettingsProtocolBufferBuilder(
-                newSettings,
+                settingsData,
                 settingsProtocolBufferBuilder
             )
             settingsProtocolBufferBuilder.build()

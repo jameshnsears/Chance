@@ -1,35 +1,17 @@
 package com.github.jameshnsears.chance.data.repository.settings.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.repository.RepositoryInstrumentedHelper
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
-    private val repositoryBag = UtilityDataHelper().repositoryBag
-
-    init {
-        val bagDataTestDouble = BagDataTestDouble()
-
-        runBlocking(Dispatchers.Main) {
-            repositoryBag.store(
-                mutableListOf(
-                    bagDataTestDouble.d2,
-                ),
-            )
-        }
-    }
-
+class RepositorySettingsDataImplInstrumentedTest : RepositoryInstrumentedHelper() {
     @Before
     fun emptyDataStore() = runTest {
         RepositorySettingsImpl.getInstance(
@@ -68,7 +50,7 @@ class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val originalSettings = Settings()
+        val originalSettings = SettingsDataImpl()
         originalSettings.resize = 2
         originalSettings.rollIndexTime = false
         originalSettings.rollScore = false
@@ -99,22 +81,35 @@ class RepositorySettingsImplInstrumentedTest : RepositoryInstrumentedHelper() {
 
     @Test
     fun importAndExport() = runTest {
-        val repositorySettingsImpl = RepositorySettingsImpl.getInstance(
+        val repositorySettings = RepositorySettingsImpl.getInstance(
             InstrumentationRegistry.getInstrumentation().targetContext
         )
 
-        val originalSettings = Settings()
+        val originalSettings = SettingsDataImpl()
 
-        repositorySettingsImpl.store(originalSettings)
+        repositorySettings.store(originalSettings)
 
-        val json = repositorySettingsImpl.jsonExport()
+        val json = repositorySettings.jsonExport()
 
-        repositorySettingsImpl.clear()
+        repositorySettings.clear()
 
-        repositorySettingsImpl.jsonImport(json)
+        repositorySettings.jsonImport(json)
 
-        assertEquals(json, repositorySettingsImpl.jsonExport())
+        assertEquals(json, repositorySettings.jsonExport())
 
-        assertEquals(originalSettings, repositorySettingsImpl.fetch().first())
+        val fetchedSettings = repositorySettings.fetch().first()
+
+        assertEquals(originalSettings.resize, fetchedSettings.resize)
+
+        assertEquals(originalSettings.rollIndexTime, fetchedSettings.rollIndexTime)
+        assertEquals(originalSettings.rollScore, fetchedSettings.rollScore)
+
+        assertEquals(originalSettings.diceTitle, fetchedSettings.diceTitle)
+        assertEquals(originalSettings.sideNumber, fetchedSettings.sideNumber)
+        assertEquals(originalSettings.behaviour, fetchedSettings.behaviour)
+        assertEquals(originalSettings.sideDescription, fetchedSettings.sideDescription)
+        assertEquals(originalSettings.sideSVG, fetchedSettings.sideSVG)
+
+        assertEquals(originalSettings.rollSound, fetchedSettings.rollSound)
     }
 }

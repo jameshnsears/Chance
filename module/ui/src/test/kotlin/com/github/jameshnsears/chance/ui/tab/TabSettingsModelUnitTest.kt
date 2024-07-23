@@ -1,18 +1,19 @@
 package com.github.jameshnsears.chance.ui.tab
 
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
+import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
+import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class TabSettingsModelUnitTest {
+class TabSettingsModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun resize() = runTest {
-        val repositorySettings = UtilityDataHelper().repositorySettings
+        val repositorySettings = RepositoryFactory().repositorySettings
 
         assertEquals(
-            Settings().resize,
+            SettingsDataTestDouble().resize,
             TabSettingsModel.resize(repositorySettings)
         )
 
@@ -24,6 +25,6 @@ class TabSettingsModelUnitTest {
             TabSettingsModel.resize(repositorySettings)
         )
 
-        TabSettingsModel.resize(repositorySettings, Settings().resize)
+        TabSettingsModel.resize(repositorySettings, SettingsDataTestDouble().resize)
     }
 }

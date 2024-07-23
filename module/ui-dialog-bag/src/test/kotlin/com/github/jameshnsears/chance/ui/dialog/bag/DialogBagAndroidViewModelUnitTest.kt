@@ -3,8 +3,8 @@ package com.github.jameshnsears.chance.ui.dialog.bag
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -328,7 +328,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val diceToClone = bagDataTestDouble.d12
 
-        val repositoryBag = UtilityDataHelper().repositoryBag
+        val repositoryBag = RepositoryFactory().repositoryBag
         repositoryBag.store(
             mutableListOf(
                 bagDataTestDouble.d10,
@@ -362,7 +362,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     }
 
     private suspend fun dialogBagAndroidViewModel(dice: Dice): DialogBagAndroidViewModel {
-        val repositoryBag = UtilityDataHelper().repositoryBag
+        val repositoryBag = RepositoryFactory().repositoryBag
         repositoryBag.store(mutableListOf(dice))
 
         return DialogBagAndroidViewModel(

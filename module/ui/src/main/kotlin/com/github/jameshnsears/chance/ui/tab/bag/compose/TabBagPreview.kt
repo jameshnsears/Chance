@@ -6,21 +6,26 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import io.mockk.mockk
 
 @UtilityPreview
 @Composable
 fun TabBagPreview() {
-    val repositorySettings = UtilityDataHelper().repositorySettings
+    UtilityFeature.enabled = setOf(
+        UtilityFeature.Flag.NONE,
+    )
 
-    val repositoryBag = UtilityDataHelper().repositoryBag
+    val repositorySettings = RepositoryFactory().repositorySettings
 
-    val repositoryRoll = UtilityDataHelper().repositoryRoll
+    val repositoryBag = RepositoryFactory().repositoryBag
+
+    val repositoryRoll = RepositoryFactory().repositoryRoll
 
     ChanceTheme {
         Surface(
@@ -48,11 +53,11 @@ fun TabBagPreview() {
 @UtilityPreview
 @Composable
 fun TabBagBottomSheetPreview() {
-    val repositorySettings = UtilityDataHelper().repositorySettings
+    val repositorySettings = RepositoryFactory().repositorySettings
 
-    val repositoryBag = UtilityDataHelper().repositoryBag
+    val repositoryBag = RepositoryFactory().repositoryBag
 
-    val repositoryRoll = UtilityDataHelper().repositoryRoll
+    val repositoryRoll = RepositoryFactory().repositoryRoll
 
     ChanceTheme {
         Surface(

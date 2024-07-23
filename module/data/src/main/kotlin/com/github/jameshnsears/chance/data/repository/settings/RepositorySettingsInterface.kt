@@ -1,58 +1,33 @@
 package com.github.jameshnsears.chance.data.repository.settings
 
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface
-import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 
 interface RepositorySettingsInterface : RepositoryImportExportInterface {
-    suspend fun fetch(): Flow<Settings>
-    suspend fun store(newSettings: Settings)
+    suspend fun fetch(): Flow<SettingsDataInterface>
+    suspend fun store(settingsData: SettingsDataInterface)
 
     fun mapSettingsIntoSettingsProtocolBufferBuilder(
-        settings: Settings,
+        settingsData: SettingsDataInterface,
         settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder,
     ) {
-        settingsProtocolBufferBuilder.setResize(settings.resize)
+        settingsProtocolBufferBuilder.setResize(settingsData.resize)
 
-        settingsProtocolBufferBuilder.setRollIndexTime(settings.rollIndexTime)
-        settingsProtocolBufferBuilder.setRollScore(settings.rollScore)
+        settingsProtocolBufferBuilder.setRollIndexTime(settingsData.rollIndexTime)
+        settingsProtocolBufferBuilder.setRollScore(settingsData.rollScore)
 
-        settingsProtocolBufferBuilder.setDiceTitle(settings.diceTitle)
-        settingsProtocolBufferBuilder.setSideNumber(settings.sideNumber)
-        settingsProtocolBufferBuilder.setBehaviour(settings.behaviour)
-        settingsProtocolBufferBuilder.setSideDescription(settings.sideDescription)
-        settingsProtocolBufferBuilder.setSideSVG(settings.sideSVG)
+        settingsProtocolBufferBuilder.setDiceTitle(settingsData.diceTitle)
+        settingsProtocolBufferBuilder.setSideNumber(settingsData.sideNumber)
+        settingsProtocolBufferBuilder.setBehaviour(settingsData.behaviour)
+        settingsProtocolBufferBuilder.setSideDescription(settingsData.sideDescription)
+        settingsProtocolBufferBuilder.setSideSVG(settingsData.sideSVG)
 
-        settingsProtocolBufferBuilder.setRollSound(settings.rollSound)
+        settingsProtocolBufferBuilder.setRollSound(settingsData.rollSound)
 
         settingsProtocolBufferBuilder.build()
     }
 
-    fun jsomImportProcess(json: String): Settings {
-        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
-            SettingsProtocolBuffer.newBuilder()
-
-        JsonFormat.parser().merge(json, settingsProtocolBufferBuilder)
-
-        val settingsProtocolBuffer = settingsProtocolBufferBuilder.build()
-
-        val newSettings = Settings()
-
-        newSettings.resize = settingsProtocolBuffer.resize
-
-        newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
-        newSettings.rollScore = settingsProtocolBuffer.rollScore
-
-        newSettings.diceTitle = settingsProtocolBuffer.diceTitle
-        newSettings.sideNumber = settingsProtocolBuffer.sideNumber
-        newSettings.behaviour = settingsProtocolBuffer.behaviour
-        newSettings.sideDescription = settingsProtocolBuffer.sideDescription
-        newSettings.sideSVG = settingsProtocolBuffer.sideSVG
-
-        newSettings.rollSound = settingsProtocolBuffer.rollSound
-
-        return newSettings
-    }
+    fun jsomImportProcess(json: String): SettingsDataInterface
 }

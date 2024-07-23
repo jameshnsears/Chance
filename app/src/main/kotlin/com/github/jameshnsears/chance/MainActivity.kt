@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.github.jameshnsears.chance.compose.MainActivityComposable
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTree
 import timber.log.Timber
 
@@ -17,14 +17,14 @@ class MainActivity : ComponentActivity() {
 
         installSplashScreen()
 
-        val utilityDataHelper = UtilityDataHelper(application)
+        val repositoryFactory = RepositoryFactory(application)
 
         setContent {
             MainActivityComposable(
                 application,
-                utilityDataHelper.repositorySettings,
-                utilityDataHelper.repositoryBag,
-                utilityDataHelper.repositoryRoll
+                repositoryFactory.repositorySettings,
+                repositoryFactory.repositoryBag,
+                repositoryFactory.repositoryRoll
             )
         }
     }

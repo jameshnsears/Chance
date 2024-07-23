@@ -10,12 +10,13 @@ import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.R
+import com.github.jameshnsears.chance.ui.dialog.bag.BuildConfig
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
 import kotlinx.coroutines.delay
@@ -48,19 +49,19 @@ class TabRollAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
 ) : AndroidViewModel(application) {
-    private val _stateFlowSettings = MutableStateFlow(
+    private val _stateFlowSettingsData = MutableStateFlow(
         SettingsState(
-            rollIndexTime = Settings().rollIndexTime,
-            rollScore = Settings().rollScore,
-            diceTitle = Settings().diceTitle,
-            sideNumber = Settings().sideNumber,
-            behaviour = Settings().behaviour,
-            sideDescription = Settings().sideDescription,
-            sideSVG = Settings().sideSVG,
-            rollSound = Settings().rollSound
+            rollIndexTime = SettingsDataImpl().rollIndexTime,
+            rollScore = SettingsDataImpl().rollScore,
+            diceTitle = SettingsDataImpl().diceTitle,
+            sideNumber = SettingsDataImpl().sideNumber,
+            behaviour = SettingsDataImpl().behaviour,
+            sideDescription = SettingsDataImpl().sideDescription,
+            sideSVG = SettingsDataImpl().sideSVG,
+            rollSound = SettingsDataImpl().rollSound
         )
     )
-    val stateFlowSettings: StateFlow<SettingsState> = _stateFlowSettings
+    val stateFlowSettings: StateFlow<SettingsState> = _stateFlowSettingsData
 
     private var _diceBag: MutableStateFlow<DiceBag> = MutableStateFlow(mutableListOf())
     var diceBag: StateFlow<DiceBag> = _diceBag
@@ -99,7 +100,7 @@ class TabRollAndroidViewModel(
     }
 
     private suspend fun disableUndoAndRollButtons() {
-        val settings = _stateFlowSettings.value
+        val settings = _stateFlowSettingsData.value
 
         if (!settings.rollIndexTime
             && !settings.rollScore
@@ -121,7 +122,7 @@ class TabRollAndroidViewModel(
         viewModelScope.launch {
             val settings = repositorySettings.fetch().first()
 
-            _stateFlowSettings.update {
+            _stateFlowSettingsData.update {
                 it.copy(
                     rollIndexTime = settings.rollIndexTime,
                     rollScore = settings.rollScore,
@@ -137,7 +138,7 @@ class TabRollAndroidViewModel(
     }
 
     private fun isRollPossible(): Boolean {
-        diceBag.value.forEach {
+        _diceBag.value.forEach {
             if (it.selected)
                 return true
         }
@@ -162,19 +163,22 @@ class TabRollAndroidViewModel(
             repositoryBag.store(updatedDiceBag)
 
             _diceBag.value = repositoryBag.fetch().first()
-        }
 
-        _rollEnabled.value = isRollPossible()
+            val isRollPossible = isRollPossible()
+            Timber.d("isRollPossible=$isRollPossible")
+            _rollEnabled.value = isRollPossible
+        }
     }
 
     private val secureRandom: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 
     fun rollDiceSequence() {
         viewModelScope.launch {
-            if (_stateFlowSettings.value.rollSound) {
-                mediaPlayerRollSound()
-                delay(750)
-            }
+            if (!BuildConfig.DEBUG)
+                if (_stateFlowSettingsData.value.rollSound) {
+                    mediaPlayerRollSound()
+                    delay(750)
+                }
 
             val mutex = Mutex()
 
@@ -330,7 +334,7 @@ class TabRollAndroidViewModel(
 
     fun settingsIndexTime(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(rollIndexTime = checked) }
+            _stateFlowSettingsData.update { it.copy(rollIndexTime = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.rollIndexTime = checked
@@ -342,7 +346,7 @@ class TabRollAndroidViewModel(
 
     fun settingsRollScore(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(rollScore = checked) }
+            _stateFlowSettingsData.update { it.copy(rollScore = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.rollScore = checked
@@ -362,7 +366,7 @@ class TabRollAndroidViewModel(
 
     fun settingsDiceTitle(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(diceTitle = checked) }
+            _stateFlowSettingsData.update { it.copy(diceTitle = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.diceTitle = checked
@@ -374,7 +378,7 @@ class TabRollAndroidViewModel(
 
     fun settingsSideNumber(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(sideNumber = checked) }
+            _stateFlowSettingsData.update { it.copy(sideNumber = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.sideNumber = checked
@@ -386,7 +390,7 @@ class TabRollAndroidViewModel(
 
     fun settingsSideDescription(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(sideDescription = checked) }
+            _stateFlowSettingsData.update { it.copy(sideDescription = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.sideDescription = checked
@@ -398,7 +402,7 @@ class TabRollAndroidViewModel(
 
     fun settingsSideSVG(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(sideSVG = checked) }
+            _stateFlowSettingsData.update { it.copy(sideSVG = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.sideSVG = checked
@@ -410,7 +414,7 @@ class TabRollAndroidViewModel(
 
     fun settingsRollSound(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(rollSound = checked) }
+            _stateFlowSettingsData.update { it.copy(rollSound = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.rollSound = checked
@@ -422,7 +426,7 @@ class TabRollAndroidViewModel(
 
     fun settingsBehaviour(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettings.update { it.copy(behaviour = checked) }
+            _stateFlowSettingsData.update { it.copy(behaviour = checked) }
 
             val settings = repositorySettings.fetch().first()
             settings.behaviour = checked
@@ -433,7 +437,7 @@ class TabRollAndroidViewModel(
     }
 
     fun isContentAvailableToDisplay(rolls: List<Roll>): Boolean {
-        val settings = _stateFlowSettings.value
+        val settings = _stateFlowSettingsData.value
 
         var svgExists = false
         var descriptionExists = false

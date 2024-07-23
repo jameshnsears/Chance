@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.repository.RepositoryImportException
 import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
 import com.github.jameshnsears.chance.data.repository.RepositoryImportValidation
@@ -48,7 +48,7 @@ class TabBagAndroidViewModel(
 ) : AndroidViewModel(application) {
     private val _stateFlowTabBag = MutableStateFlow(
         TabBagState(
-            resize = Settings().resize,
+            resize = SettingsDataImpl().resize,
         )
     )
     val stateFlowTabBag: StateFlow<TabBagState> = _stateFlowTabBag

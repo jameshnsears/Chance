@@ -1,14 +1,14 @@
 [
   {
     "resize": 4.0,
-    "rollIndexTime": false,
+    "rollIndexTime": true,
     "rollScore": true,
-    "diceTitle": false,
+    "diceTitle": true,
     "sideNumber": true,
-    "behaviour": false,
-    "sideDescription": false,
+    "behaviour": true,
+    "sideDescription": true,
     "sideSVG": true,
-    "rollSound": false
+    "rollSound": true
   },
   {
     "dice": [

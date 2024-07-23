@@ -2,9 +2,9 @@ package com.github.jameshnsears.chance.ui.tab.bag
 
 import android.app.Application
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
+import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -21,15 +21,15 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         assertEquals(
             """           
             {
-              "resize": ${Settings().resize},
-              "rollIndexTime": ${Settings().rollIndexTime},
-              "rollScore": ${Settings().rollScore},
-              "diceTitle": ${Settings().diceTitle},
-              "sideNumber": ${Settings().sideNumber},
-              "behaviour": ${Settings().behaviour},
-              "sideDescription": ${Settings().sideDescription},
-              "sideSVG": ${Settings().sideSVG},
-              "rollSound": ${Settings().rollSound}
+              "resize": ${SettingsDataTestDouble().resize},
+              "rollIndexTime": ${SettingsDataTestDouble().rollIndexTime},
+              "rollScore": ${SettingsDataTestDouble().rollScore},
+              "diceTitle": ${SettingsDataTestDouble().diceTitle},
+              "sideNumber": ${SettingsDataTestDouble().sideNumber},
+              "behaviour": ${SettingsDataTestDouble().behaviour},
+              "sideDescription": ${SettingsDataTestDouble().sideDescription},
+              "sideSVG": ${SettingsDataTestDouble().sideSVG},
+              "rollSound": ${SettingsDataTestDouble().rollSound}
             }
             """.trimIndent(),
             tabBagViewModel.repositorySettings.jsonExport()
@@ -37,7 +37,6 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-
     fun exportBagRepository() = runTest {
         val tabBagViewModel = tabBagViewModel()
 
@@ -253,11 +252,11 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
     private fun tabBagViewModel(
     ): TabBagAndroidViewModel {
-        val repositorySettings = UtilityDataHelper().repositorySettings
+        val repositorySettings = RepositoryFactory().repositorySettings
 
-        val repositoryBag = UtilityDataHelper().repositoryBag
+        val repositoryBag = RepositoryFactory().repositoryBag
 
-        val repositoryRoll = UtilityDataHelper().repositoryRoll
+        val repositoryRoll = RepositoryFactory().repositoryRoll
 
         return TabBagAndroidViewModel(
             mockk<Application>(),

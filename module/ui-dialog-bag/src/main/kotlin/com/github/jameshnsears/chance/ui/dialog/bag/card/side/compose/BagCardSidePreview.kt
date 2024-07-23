@@ -6,10 +6,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -17,8 +19,12 @@ import kotlinx.coroutines.runBlocking
 @Preview(widthDp = 400, heightDp = 700)
 @Composable
 fun BagCardSidePreview() {
+    UtilityFeature.enabled = setOf(
+        Flag.NONE,
+    )
+
     val repositoryBagTestDouble =
-        RepositoryBagTestDouble.getInstance(UtilityDataHelper().bagDataTestDouble.allDice)
+        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice)
     runBlocking(Dispatchers.Main) {
         repositoryBagTestDouble.store(
             mutableListOf(

@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.data.utility
+package com.github.jameshnsears.chance.data.repository
 
 import android.content.Context
 import com.github.jameshnsears.chance.common.BuildConfig
@@ -12,7 +12,7 @@ import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySe
 import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
-class UtilityDataHelper(context: Context? = null) {
+class RepositoryFactory(context: Context? = null) {
     val repositorySettings = if (BuildConfig.DEBUG)
         if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
             RepositorySettingsImpl.getInstance(context!!)

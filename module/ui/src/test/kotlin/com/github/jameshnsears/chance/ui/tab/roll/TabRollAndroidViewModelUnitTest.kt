@@ -5,8 +5,8 @@ import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
-import com.github.jameshnsears.chance.data.domain.core.settings.Settings
-import com.github.jameshnsears.chance.data.utility.UtilityDataHelper
+import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.every
 import io.mockk.slot
@@ -230,17 +230,17 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     private fun tabRollViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): TabRollAndroidViewModel {
-        val repositorySettings = UtilityDataHelper().repositorySettings
+        val repositorySettings = RepositoryFactory().repositorySettings
         runBlocking(Dispatchers.Main) {
-            repositorySettings.store(Settings())
+            repositorySettings.store(SettingsDataTestDouble())
         }
 
-        val repositoryBag = UtilityDataHelper().repositoryBag
+        val repositoryBag = RepositoryFactory().repositoryBag
         runBlocking(Dispatchers.Main) {
             repositoryBag.store(bagDataTestDouble.allDice)
         }
 
-        val repositoryRoll = UtilityDataHelper().repositoryRoll
+        val repositoryRoll = RepositoryFactory().repositoryRoll
         val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
         runBlocking(Dispatchers.Main) {
             repositoryRoll.store(rollDataTestDouble.rollHistory)

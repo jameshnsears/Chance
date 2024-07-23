@@ -1,10 +1,18 @@
 package com.github.jameshnsears.chance.utility.logging
 
 import androidx.test.platform.app.InstrumentationRegistry
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import org.junit.BeforeClass
 import timber.log.Timber
 
 open class UtilityLoggingInstrumentedHelper {
+    init {
+        UtilityFeature.enabled = setOf(
+            UtilityFeature.Flag.NONE,
+            UtilityFeature.Flag.USE_PROTO_REPO
+        )
+    }
+
     companion object {
         @BeforeClass
         @JvmStatic

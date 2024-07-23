@@ -2,14 +2,14 @@ package com.github.jameshnsears.chance.utility.feature
 
 sealed class UtilityFeature {
     enum class Flag {
-        NONE,
-        USE_PROTO_REPO       // debug app from MainActivity only
+        NONE,                   // debug unit tests
+        USE_PROTO_REPO          // debug instrumented tests / app
     }
 
     companion object {
-        val enabled = setOf(
+        var enabled = setOf(
             Flag.NONE,
-//            Flag.USE_PROTO_REPO
+            Flag.USE_PROTO_REPO
         )
 
         fun isEnabled(flag: Flag = Flag.NONE): Boolean {
