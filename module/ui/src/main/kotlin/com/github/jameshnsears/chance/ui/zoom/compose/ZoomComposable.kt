@@ -195,7 +195,7 @@ fun SideImageSVG(
                         dialogDice.value = dice
                         dialogSide.value = side
                         showDialog.value = true
-                    }
+                    },
             )
         }
     }

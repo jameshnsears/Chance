@@ -19,6 +19,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,6 +39,7 @@ import com.github.jameshnsears.chance.ui.dialog.bag.R
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose.BagCardDice
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.compose.BagCardRoll
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.compose.BagCardSide
+import com.github.jameshnsears.chance.ui.dialog.confirm.compose.DialogConfirm
 
 @Composable
 fun DialogBag(
@@ -143,17 +146,33 @@ private fun TextButtonDelete(
     dialogBagAndroidViewModel: DialogBagAndroidViewModel,
     showDialog: MutableState<Boolean>
 ) {
+    val showDialogConfirm = remember { mutableStateOf(false) }
+
     TextButton(
         enabled = diceTitleIsUnique,
         onClick = {
-            dialogBagAndroidViewModel.delete()
-            showDialog.value = false
+            showDialogConfirm.value = true
         },
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_delete),
             textAlign = TextAlign.End,
             fontSize = 16.sp,
+        )
+    }
+
+    if (showDialogConfirm.value) {
+        DialogConfirm(
+            openDialog = showDialogConfirm.value,
+            onDismissRequest = {
+                showDialogConfirm.value = false
+            },
+            onConfirmation = {
+                dialogBagAndroidViewModel.delete()
+                showDialog.value = false
+            },
+            title = stringResource(R.string.dialog_bag_delete_confirmation),
+            text = stringResource(R.string.dialog_bag_delete_confirmation_question)
         )
     }
 }

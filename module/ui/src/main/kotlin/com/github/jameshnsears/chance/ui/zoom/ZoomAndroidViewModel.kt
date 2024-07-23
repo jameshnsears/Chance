@@ -245,6 +245,7 @@ class ZoomAndroidViewModel(
         return false
     }
 
+    // TODO cache for
     fun sideImageSVG(side: Side) =
         UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side.imageBase64)
 }

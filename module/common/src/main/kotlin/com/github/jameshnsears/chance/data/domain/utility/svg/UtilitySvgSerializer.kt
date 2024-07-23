@@ -2,6 +2,7 @@ package com.github.jameshnsears.chance.data.domain.utility.svg
 
 import android.app.Application
 import coil.decode.SvgDecoder
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import java.net.URL
 import kotlin.io.encoding.Base64
@@ -34,12 +35,16 @@ class UtilitySvgSerializer {
             ImageRequest.Builder(application)
                 .data(decodeBase64StringIntoByteArray(base64String))
                 .decoderFactory(SvgDecoder.Factory())
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .memoryCacheKey(base64String)
                 .build()
 
         fun imageRequestFromSvgString(application: Application, svgString: String) =
             ImageRequest.Builder(application)
                 .data(svgString.toByteArray())
                 .decoderFactory(SvgDecoder.Factory())
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .memoryCacheKey(svgString)
                 .build()
     }
 }

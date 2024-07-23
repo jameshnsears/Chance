@@ -2,6 +2,10 @@
     <string name="dialog.bag.save">Save</string>
     <string name="dialog.bag.clone">Clone</string>
     <string name="dialog.bag.delete">Delete</string>
+    <string name="dialog.bag.delete.confirmation">Delete Confirmation</string>
+    <string name="dialog.bag.delete.confirmation.question">Are you sure you want to delete the dice?</string>
+    <string name="dialog.bag.delete.confirmation.ok">OK</string>
+    <string name="dialog.bag.delete.confirmation.cancel">Cancel</string>
 
     <string name="dialog.bag.side">Side # </string>
     <string name="dialog.bag.side.colour">Side #…</string>
