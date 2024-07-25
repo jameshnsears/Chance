@@ -1,5 +1,5 @@
 [versions]
-activity-compose = "1.9.0"
+activity-compose = "1.9.1"
 appcompat = "1.7.0"
 coil-svg = "2.7.0"
 colorpicker-compose = "1.1.2"
