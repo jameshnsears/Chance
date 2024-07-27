@@ -11,32 +11,39 @@ class RollHistoryDataTestDouble(bagData: BagDataInterface) : RollHistoryDataInte
             Roll(
                 bagData.allDice[0].epoch,
                 bagData.allDice[0].sides[0],
-                score = 2
+                score = 2,
+                multiplierIndex = 1
+
             ),
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[1],
-                score = 3
+                score = 3,
+                multiplierIndex = 2
             ),
             Roll(
                 bagData.allDice[4].epoch,
                 bagData.allDice[4].sides[3],
-                score = 5
+                score = 5,
+                multiplierIndex = 3
             ),
             Roll(
                 bagData.allDice[5].epoch,
                 bagData.allDice[5].sides[4],
-                score = 6
+                score = 6,
+                multiplierIndex = 4
             ),
             Roll(
                 bagData.allDice[6].epoch,
                 bagData.allDice[6].sides[5],
-                score = 7
+                score = 7,
+                multiplierIndex = 5
             ),
             Roll(
                 bagData.allDice[7].epoch,
                 bagData.allDice[7].sides[6],
-                score = 14
+                score = 14,
+                multiplierIndex = 6
             ),
         ),
 
@@ -44,17 +51,20 @@ class RollHistoryDataTestDouble(bagData: BagDataInterface) : RollHistoryDataInte
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[1],
-                score = 3
+                score = 3,
+                multiplierIndex = 1
             ),
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[2],
-                score = 2
+                score = 2,
+                multiplierIndex = 2
             ),
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[3],
-                score = 1
+                score = 1,
+                multiplierIndex = 3
             ),
         ),
     )

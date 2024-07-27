@@ -12,17 +12,20 @@ class RollHistoryDataImpl(bagData: BagDataInterface) : RollHistoryDataInterface 
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[0],
-                score = 6
+                score = 6,
+                multiplierIndex = 1
             ),
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[1],
-                score = 5
+                score = 5,
+                multiplierIndex = 2
             ),
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[2],
-                score = 4
+                score = 4,
+                multiplierIndex = 3
             ),
         )
     )
