@@ -5,7 +5,7 @@ import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInte
 class SettingsDataImpl(
     override var resize: Int = 4,
 
-    override var rollIndexTime: Boolean = false,
+    override var rollIndexTime: Boolean = true,
     override var rollScore: Boolean = true,
 
     override var diceTitle: Boolean = true,
