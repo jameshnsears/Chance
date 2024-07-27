@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -157,7 +156,6 @@ fun SideColour(
     }
 
     SideApplyToAll(
-        cardSideAndroidViewModel,
         stateFlowCardSide.value.sideApplyToAllNumberColour,
         BagCardSideTestTag.SIDE_APPLY_NUMBER_COLOUR,
         cardSideAndroidViewModel::sideApplyToAllNumberColour,
@@ -242,7 +240,6 @@ fun SideDescription(
     SideDescriptionColour(cardSideAndroidViewModel)
 
     SideApplyToAll(
-        cardSideAndroidViewModel,
         stateFlowCardSide.value.sideApplyToAllDescription,
         BagCardSideTestTag.SIDE_APPLY_DESCRIPTION,
         cardSideAndroidViewModel::sideApplyToAllDescription,
@@ -373,7 +370,7 @@ fun SideImageSVG(
                     .width(180.dp)
                     .padding(top = 6.dp)
                     .testTag(BagCardSideTestTag.SIDE_IMAGE_SVG),
-                enabled = cardSideAndroidViewModel.sideImageAvailable() && !diceSidesFewerThanSdeNumber
+                enabled = cardSideAndroidViewModel.sideImageAvailable()
             ) {
                 Icon(
                     painterResource(id = R.drawable.reset_image_fill0_wght400_grad0_opsz24),
@@ -411,7 +408,6 @@ fun SideImageSVG(
     }
 
     SideApplyToAll(
-        cardSideAndroidViewModel,
         stateFlowCardSide.value.sideApplyToAllSvg,
         BagCardSideTestTag.SIDE_APPLY_SVG,
         cardSideAndroidViewModel::sideApplyToAllSvg
@@ -420,30 +416,18 @@ fun SideImageSVG(
 
 @Composable
 fun SideApplyToAll(
-    cardSideAndroidViewModel: CardSideAndroidViewModel,
     sideApplyToAll: Boolean,
     testTag: String,
     sideApplyToAllFunction: (Boolean) -> Unit,
-    stringResourceId: Int = R.string.dialog_bag_side_image_apply_to_all
+    stringResourceId: Int = R.string.dialog_bag_side_image_apply_to_all,
 ) {
-    val stateFlowCardSide =
-        cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-        )
-
     val switched = rememberSaveable { mutableStateOf(sideApplyToAll) }
-
-    val diceSidesFewerThanSdeNumber = stateFlowCardSide.value.diceSidesFewerThanSdeNumber
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp, bottom = 0.dp, end = 2.dp)
-            .clickable {
-                if (!diceSidesFewerThanSdeNumber)
-                    switched.value = !switched.value
-            }
             .testTag(testTag),
     ) {
         Text(
@@ -453,7 +437,6 @@ fun SideApplyToAll(
 
         Switch(
             checked = switched.value,
-            enabled = !diceSidesFewerThanSdeNumber,
             onCheckedChange = {
                 switched.value = it
                 sideApplyToAllFunction(switched.value)

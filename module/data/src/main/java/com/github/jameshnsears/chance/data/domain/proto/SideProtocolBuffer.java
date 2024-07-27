@@ -14,8 +14,8 @@ public final class SideProtocolBuffer extends
     public static final int UUID_FIELD_NUMBER = 1;
     public static final int NUMBER_FIELD_NUMBER = 2;
     public static final int NUMBERCOLOUR_FIELD_NUMBER = 3;
-    public static final int IMAGEBASE64_FIELD_NUMBER = 4;
-    public static final int IMAGEDRAWABLEID_FIELD_NUMBER = 5;
+    public static final int IMAGEDRAWABLEID_FIELD_NUMBER = 4;
+    public static final int IMAGEBASE64_FIELD_NUMBER = 5;
     public static final int DESCRIPTION_FIELD_NUMBER = 6;
     public static final int DESCRIPTIONCOLOUR_FIELD_NUMBER = 7;
     private static final long serialVersionUID = 0L;
@@ -52,9 +52,9 @@ public final class SideProtocolBuffer extends
     private int number_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object numberColour_ = "";
+    private int imageDrawableId_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object imageBase64_ = "";
-    private int imageDrawableId_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
     @SuppressWarnings("serial")
@@ -280,7 +280,17 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>string imageBase64 = 4;</code>
+     * <code>int32 imageDrawableId = 4;</code>
+     *
+     * @return The imageDrawableId.
+     */
+    @java.lang.Override
+    public int getImageDrawableId() {
+        return imageDrawableId_;
+    }
+
+    /**
+     * <code>string imageBase64 = 5;</code>
      *
      * @return The imageBase64.
      */
@@ -299,7 +309,7 @@ public final class SideProtocolBuffer extends
     }
 
     /**
-     * <code>string imageBase64 = 4;</code>
+     * <code>string imageBase64 = 5;</code>
      *
      * @return The bytes for imageBase64.
      */
@@ -316,16 +326,6 @@ public final class SideProtocolBuffer extends
         } else {
             return (com.google.protobuf.ByteString) ref;
         }
-    }
-
-    /**
-     * <code>int32 imageDrawableId = 5;</code>
-     *
-     * @return The imageDrawableId.
-     */
-    @java.lang.Override
-    public int getImageDrawableId() {
-        return imageDrawableId_;
     }
 
     /**
@@ -428,11 +428,11 @@ public final class SideProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(numberColour_)) {
             com.google.protobuf.GeneratedMessageV3.writeString(output, 3, numberColour_);
         }
-        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageBase64_)) {
-            com.google.protobuf.GeneratedMessageV3.writeString(output, 4, imageBase64_);
-        }
         if (imageDrawableId_ != 0) {
-            output.writeInt32(5, imageDrawableId_);
+            output.writeInt32(4, imageDrawableId_);
+        }
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageBase64_)) {
+            com.google.protobuf.GeneratedMessageV3.writeString(output, 5, imageBase64_);
         }
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
             com.google.protobuf.GeneratedMessageV3.writeString(output, 6, description_);
@@ -459,12 +459,12 @@ public final class SideProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(numberColour_)) {
             size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, numberColour_);
         }
-        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageBase64_)) {
-            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, imageBase64_);
-        }
         if (imageDrawableId_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(5, imageDrawableId_);
+                    .computeInt32Size(4, imageDrawableId_);
+        }
+        if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(imageBase64_)) {
+            size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, imageBase64_);
         }
         if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
             size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, description_);
@@ -493,10 +493,10 @@ public final class SideProtocolBuffer extends
                 != other.getNumber()) return false;
         if (!getNumberColour()
                 .equals(other.getNumberColour())) return false;
-        if (!getImageBase64()
-                .equals(other.getImageBase64())) return false;
         if (getImageDrawableId()
                 != other.getImageDrawableId()) return false;
+        if (!getImageBase64()
+                .equals(other.getImageBase64())) return false;
         if (!getDescription()
                 .equals(other.getDescription())) return false;
         if (!getDescriptionColour()
@@ -518,10 +518,10 @@ public final class SideProtocolBuffer extends
         hash = (53 * hash) + getNumber();
         hash = (37 * hash) + NUMBERCOLOUR_FIELD_NUMBER;
         hash = (53 * hash) + getNumberColour().hashCode();
-        hash = (37 * hash) + IMAGEBASE64_FIELD_NUMBER;
-        hash = (53 * hash) + getImageBase64().hashCode();
         hash = (37 * hash) + IMAGEDRAWABLEID_FIELD_NUMBER;
         hash = (53 * hash) + getImageDrawableId();
+        hash = (37 * hash) + IMAGEBASE64_FIELD_NUMBER;
+        hash = (53 * hash) + getImageBase64().hashCode();
         hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
         hash = (53 * hash) + getDescription().hashCode();
         hash = (37 * hash) + DESCRIPTIONCOLOUR_FIELD_NUMBER;
@@ -570,8 +570,8 @@ public final class SideProtocolBuffer extends
         private java.lang.Object uuid_ = "";
         private int number_;
         private java.lang.Object numberColour_ = "";
-        private java.lang.Object imageBase64_ = "";
         private int imageDrawableId_;
+        private java.lang.Object imageBase64_ = "";
         private java.lang.Object description_ = "";
         private java.lang.Object descriptionColour_ = "";
 
@@ -606,8 +606,8 @@ public final class SideProtocolBuffer extends
             uuid_ = "";
             number_ = 0;
             numberColour_ = "";
-            imageBase64_ = "";
             imageDrawableId_ = 0;
+            imageBase64_ = "";
             description_ = "";
             descriptionColour_ = "";
             return this;
@@ -655,10 +655,10 @@ public final class SideProtocolBuffer extends
                 result.numberColour_ = numberColour_;
             }
             if (((from_bitField0_ & 0x00000008) != 0)) {
-                result.imageBase64_ = imageBase64_;
+                result.imageDrawableId_ = imageDrawableId_;
             }
             if (((from_bitField0_ & 0x00000010) != 0)) {
-                result.imageDrawableId_ = imageDrawableId_;
+                result.imageBase64_ = imageBase64_;
             }
             if (((from_bitField0_ & 0x00000020) != 0)) {
                 result.description_ = description_;
@@ -732,13 +732,13 @@ public final class SideProtocolBuffer extends
                 bitField0_ |= 0x00000004;
                 onChanged();
             }
-            if (!other.getImageBase64().isEmpty()) {
-                imageBase64_ = other.imageBase64_;
-                bitField0_ |= 0x00000008;
-                onChanged();
-            }
             if (other.getImageDrawableId() != 0) {
                 setImageDrawableId(other.getImageDrawableId());
+            }
+            if (!other.getImageBase64().isEmpty()) {
+                imageBase64_ = other.imageBase64_;
+                bitField0_ |= 0x00000010;
+                onChanged();
             }
             if (!other.getDescription().isEmpty()) {
                 description_ = other.description_;
@@ -791,16 +791,16 @@ public final class SideProtocolBuffer extends
                             bitField0_ |= 0x00000004;
                             break;
                         } // case 26
-                        case 34: {
-                            imageBase64_ = input.readStringRequireUtf8();
+                        case 32: {
+                            imageDrawableId_ = input.readInt32();
                             bitField0_ |= 0x00000008;
                             break;
-                        } // case 34
-                        case 40: {
-                            imageDrawableId_ = input.readInt32();
+                        } // case 32
+                        case 42: {
+                            imageBase64_ = input.readStringRequireUtf8();
                             bitField0_ |= 0x00000010;
                             break;
-                        } // case 40
+                        } // case 42
                         case 50: {
                             description_ = input.readStringRequireUtf8();
                             bitField0_ |= 0x00000020;
@@ -1032,7 +1032,43 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>string imageBase64 = 4;</code>
+         * <code>int32 imageDrawableId = 4;</code>
+         *
+         * @return The imageDrawableId.
+         */
+        @java.lang.Override
+        public int getImageDrawableId() {
+            return imageDrawableId_;
+        }
+
+        /**
+         * <code>int32 imageDrawableId = 4;</code>
+         *
+         * @param value The imageDrawableId to set.
+         * @return This builder for chaining.
+         */
+        public Builder setImageDrawableId(int value) {
+
+            imageDrawableId_ = value;
+            bitField0_ |= 0x00000008;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int32 imageDrawableId = 4;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearImageDrawableId() {
+            bitField0_ = (bitField0_ & ~0x00000008);
+            imageDrawableId_ = 0;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string imageBase64 = 5;</code>
          *
          * @return The imageBase64.
          */
@@ -1050,7 +1086,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>string imageBase64 = 4;</code>
+         * <code>string imageBase64 = 5;</code>
          *
          * @param value The imageBase64 to set.
          * @return This builder for chaining.
@@ -1061,13 +1097,13 @@ public final class SideProtocolBuffer extends
                 throw new NullPointerException();
             }
             imageBase64_ = value;
-            bitField0_ |= 0x00000008;
+            bitField0_ |= 0x00000010;
             onChanged();
             return this;
         }
 
         /**
-         * <code>string imageBase64 = 4;</code>
+         * <code>string imageBase64 = 5;</code>
          *
          * @return The bytes for imageBase64.
          */
@@ -1086,7 +1122,7 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>string imageBase64 = 4;</code>
+         * <code>string imageBase64 = 5;</code>
          *
          * @param value The bytes for imageBase64 to set.
          * @return This builder for chaining.
@@ -1098,55 +1134,19 @@ public final class SideProtocolBuffer extends
             }
             checkByteStringIsUtf8(value);
             imageBase64_ = value;
-            bitField0_ |= 0x00000008;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string imageBase64 = 4;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearImageBase64() {
-            imageBase64_ = getDefaultInstance().getImageBase64();
-            bitField0_ = (bitField0_ & ~0x00000008);
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>int32 imageDrawableId = 5;</code>
-         *
-         * @return The imageDrawableId.
-         */
-        @java.lang.Override
-        public int getImageDrawableId() {
-            return imageDrawableId_;
-        }
-
-        /**
-         * <code>int32 imageDrawableId = 5;</code>
-         *
-         * @param value The imageDrawableId to set.
-         * @return This builder for chaining.
-         */
-        public Builder setImageDrawableId(int value) {
-
-            imageDrawableId_ = value;
             bitField0_ |= 0x00000010;
             onChanged();
             return this;
         }
 
         /**
-         * <code>int32 imageDrawableId = 5;</code>
+         * <code>string imageBase64 = 5;</code>
          *
          * @return This builder for chaining.
          */
-        public Builder clearImageDrawableId() {
+        public Builder clearImageBase64() {
+            imageBase64_ = getDefaultInstance().getImageBase64();
             bitField0_ = (bitField0_ & ~0x00000010);
-            imageDrawableId_ = 0;
             onChanged();
             return this;
         }

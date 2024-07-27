@@ -47,7 +47,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
             assertEquals(diceSelected[0], it.diceEpoch)
         }
 
-        tabRollViewModel.diceSequenceStore(rolls)
+        tabRollViewModel.saveDiceSequence(rolls)
         assertEquals(3, tabRollViewModel.repositoryRoll.fetch().first().size)
 
         tabRollViewModel.rollDiceSequence()

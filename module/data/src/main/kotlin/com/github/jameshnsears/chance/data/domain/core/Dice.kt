@@ -7,7 +7,6 @@ import java.util.UUID
 data class Dice(
     var epoch: Long = UtilityEpochTimeGenerator.now(),
 
-    // required for a Side recomposition in compose!
     var uuid: String = UUID.randomUUID().toString(),
 
     var sides: List<Side> = emptyList(),

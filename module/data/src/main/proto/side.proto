@@ -8,8 +8,8 @@ message SideProtocolBuffer {
   string uuid = 1;
   int32 number = 2;
   string numberColour = 3;
-  string imageBase64 = 4;
-  int32 imageDrawableId = 5;
+  int32 imageDrawableId = 4;
+  string imageBase64 = 5;
   string description = 6;
   string descriptionColour = 7;
 }

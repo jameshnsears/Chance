@@ -1,6 +1,5 @@
 package com.github.jameshnsears.chance.ui.dialog.settings.compose
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -117,17 +116,17 @@ fun DialogSettingsLayout(
             )
 
             CommonSwitch(
-                stringResource(R.string.tab_roll_settings_side_number),
-                sideNumber,
-                tabRollAndroidViewModel::settingsSideNumber,
-                DialogSettingsTestTag.SETTINGS_SIDE_NUMBER
-            )
-
-            CommonSwitch(
                 stringResource(R.string.tab_roll_settings_behaviour),
                 behaviour,
                 tabRollAndroidViewModel::settingsBehaviour,
                 DialogSettingsTestTag.SETTINGS_BEHAVIOUR
+            )
+
+            CommonSwitch(
+                stringResource(R.string.tab_roll_settings_side_number),
+                sideNumber,
+                tabRollAndroidViewModel::settingsSideNumber,
+                DialogSettingsTestTag.SETTINGS_SIDE_NUMBER
             )
 
             CommonSwitch(
@@ -174,10 +173,6 @@ fun CommonSwitch(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 4.dp, bottom = 4.dp)
-            .clickable {
-                switched.value = !switched.value
-                dialogRollViewModelMethod(switched.value)
-            }
             .testTag(testTag)
     ) {
         Text(

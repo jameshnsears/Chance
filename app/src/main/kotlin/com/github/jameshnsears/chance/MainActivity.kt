@@ -13,7 +13,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        installLogging()
+        if (Timber.treeCount == 0)
+            Timber.plant(UtilityLoggingLineNumberTree())
 
         installSplashScreen()
 
@@ -27,10 +28,5 @@ class MainActivity : ComponentActivity() {
                 repositoryFactory.repositoryRoll
             )
         }
-    }
-
-    private fun installLogging() {
-        if (Timber.treeCount == 0)
-            Timber.plant(UtilityLoggingLineNumberTree())
     }
 }

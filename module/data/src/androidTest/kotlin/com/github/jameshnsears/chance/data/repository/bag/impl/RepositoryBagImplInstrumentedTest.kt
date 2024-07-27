@@ -2,6 +2,7 @@ package com.github.jameshnsears.chance.data.repository.bag.impl
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.RepositoryInstrumentedHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -9,22 +10,14 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Before
 import org.junit.Test
 
 class RepositoryBagImplInstrumentedTest : RepositoryInstrumentedHelper() {
-    @Before
-    fun emptyDataStore() = runTest {
-        RepositoryBagImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        ).clear()
-    }
-
     @Test
     fun storeAndFetch() = runTest {
-        val repositoryBagImpl = RepositoryBagImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        )
+        val repositoryFactory =
+            RepositoryFactory(InstrumentationRegistry.getInstrumentation().targetContext)
+        val repositoryBagImpl = repositoryFactory.repositoryBag
 
         val bagDataTestDouble = BagDataTestDouble()
 
@@ -72,9 +65,9 @@ class RepositoryBagImplInstrumentedTest : RepositoryInstrumentedHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun importAndExport() = runTest {
-        val repositoryBagImpl = RepositoryBagImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        )
+        val repositoryFactory =
+            RepositoryFactory(InstrumentationRegistry.getInstrumentation().targetContext)
+        val repositoryBagImpl = repositoryFactory.repositoryBag
 
         val bagDataTestDouble = BagDataTestDouble()
 

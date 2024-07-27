@@ -19,10 +19,10 @@ class RepositoryRollTestDouble private constructor() :
             if (instance == null) {
                 instance = RepositoryRollTestDouble()
                 runBlocking {
-                    instance!!.store(
-                        rollHistory,
-                    )
+                    instance!!.store(rollHistory)
                 }
+
+                instance!!.traceUuid(rollHistory)
             }
             return instance!!
         }

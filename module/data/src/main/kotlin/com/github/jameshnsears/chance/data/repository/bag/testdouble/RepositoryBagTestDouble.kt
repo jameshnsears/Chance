@@ -17,6 +17,8 @@ class RepositoryBagTestDouble private constructor() :
             if (instance == null) {
                 instance = RepositoryBagTestDouble()
                 instance!!.diceBag = diceBag
+
+                instance!!.traceUuid(diceBag)
             }
             return instance!!
         }

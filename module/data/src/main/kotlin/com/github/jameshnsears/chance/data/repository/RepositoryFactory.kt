@@ -2,7 +2,9 @@ package com.github.jameshnsears.chance.data.repository
 
 import android.content.Context
 import com.github.jameshnsears.chance.common.BuildConfig
+import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.impl.RollHistoryDataImpl
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.repository.bag.impl.RepositoryBagImpl
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
@@ -23,26 +25,27 @@ class RepositoryFactory(context: Context? = null) {
 
     ///////////////////////////////////////////////////
 
+    private val bagDataImpl = BagDataImpl()
     val bagDataTestDouble = BagDataTestDouble()
 
     val repositoryBag = if (BuildConfig.DEBUG)
         if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
-            RepositoryBagImpl.getInstance(context!!)
+            RepositoryBagImpl.getInstance(context!!, bagDataImpl.allDice)
         else
             RepositoryBagTestDouble.getInstance(bagDataTestDouble.allDice)
     else
-        RepositoryBagImpl.getInstance(context!!)
+        RepositoryBagImpl.getInstance(context!!, bagDataImpl.allDice)
 
     ///////////////////////////////////////////////////
 
+    private val rollHistoryDataImpl = RollHistoryDataImpl(bagDataImpl).rollHistory
     val rollHistoryDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 
     val repositoryRoll = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
-            RepositoryRollImpl.getInstance(context!!)
-        } else {
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
+            RepositoryRollImpl.getInstance(context!!, rollHistoryDataImpl)
+        else
             RepositoryRollTestDouble.getInstance(rollHistoryDataTestDouble)
-        } else {
-        RepositoryRollImpl.getInstance(context!!)
-    }
+    else
+        RepositoryRollImpl.getInstance(context!!, rollHistoryDataImpl)
 }

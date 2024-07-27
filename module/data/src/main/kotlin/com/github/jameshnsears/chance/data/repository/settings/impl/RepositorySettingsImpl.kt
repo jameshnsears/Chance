@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import com.github.jameshnsears.chance.data.BuildConfig
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 
 class RepositorySettingsImpl private constructor(private val context: Context) :
     RepositorySettingsInterface {
@@ -28,13 +28,17 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         ): RepositorySettingsImpl {
             if (instance == null) {
                 instance = RepositorySettingsImpl(context)
+
                 runBlocking {
+                    if (BuildConfig.DEBUG)
+                        instance!!.clear()
+
                     if (instance!!.fetch().first().resize == 0) {
-                        Timber.d("default")
                         instance!!.store(settings)
                     }
                 }
             }
+
             return instance!!
         }
     }
@@ -110,7 +114,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 
     override suspend fun clear() {
         context.settingsDataStore.updateData {
-            SettingsProtocolBuffer.newBuilder().build()
+            it.toBuilder().clear().build()
         }
     }
 }

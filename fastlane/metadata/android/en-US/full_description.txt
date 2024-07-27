@@ -1,5 +1,5 @@
-&bull; Create custom dice from existing dice
-&bull; Tap the side # of a dice to change almost every facet
+&bull; Create custom dice - assign meaning to chance!
+&bull; Tap the side of a dice to change almost every facet
 &bull; Apply different behaviour to dice rolls
-&bull; Full export &amp; import
-&bull; User feedback drives development!
+&bull; Full import &amp; export
+&bull; Contribute! User feedback drives development :-)

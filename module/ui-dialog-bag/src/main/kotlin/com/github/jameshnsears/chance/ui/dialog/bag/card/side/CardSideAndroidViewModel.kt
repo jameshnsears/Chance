@@ -68,6 +68,9 @@ class CardSideAndroidViewModel(
                 }
             }
         }
+
+        Timber.d("card.side: side.uuid=${side.uuid}")
+
     }
 
     fun sideNumberColour(colour: String) {

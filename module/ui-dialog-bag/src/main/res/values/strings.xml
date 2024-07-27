@@ -3,7 +3,7 @@
     <string name="dialog.bag.clone">Clone</string>
     <string name="dialog.bag.delete">Delete</string>
     <string name="dialog.bag.delete.confirmation">Delete Confirmation</string>
-    <string name="dialog.bag.delete.confirmation.question">Are you sure you want to delete the dice?</string>
+    <string name="dialog.bag.delete.confirmation.question">Deleting a dice will undo associated rolls?</string>
     <string name="dialog.bag.delete.confirmation.ok">OK</string>
     <string name="dialog.bag.delete.confirmation.cancel">Cancel</string>
 
@@ -25,7 +25,7 @@
     <string name="dialog.bag.dice.title">Title</string>
     <string name="dialog.bag.dice.title.info">Title must be unique and can be a maximum of 25 characters</string>
     <string name="dialog.bag.dice.sides">Sides</string>
-    <string name="dialog.bag.dice.sides.info">Changing the number of sides will undo associated roll sequences</string>
+    <string name="dialog.bag.dice.sides.info">Changing the number of sides will undo associated rolls</string>
 
     <string-array name="dialog.bag.dice.sides">
         <item>2</item>

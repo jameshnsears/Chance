@@ -8,17 +8,20 @@ import "side.proto";
 
 message DiceProtocolBuffer {
   int64 epoch = 1;
-  repeated SideProtocolBuffer side = 2;
-  string title = 3;
-  string colour = 4;
-  bool selected = 5;
 
-  int32 multiplierValue = 6;
+  string uuid = 2;
 
-  bool explode = 7;
-  string explodeWhen = 8;
-  int32 explodeValue = 9;
+  repeated SideProtocolBuffer side = 3;
+  string title = 4;
+  string colour = 5;
+  bool selected = 6;
 
-  bool modifyScore = 10;
-  int32 modifyScoreValue = 11;
+  int32 multiplierValue = 7;
+
+  bool explode = 8;
+  string explodeWhen = 9;
+  int32 explodeValue = 10;
+
+  bool modifyScore = 11;
+  int32 modifyScoreValue = 12;
 }

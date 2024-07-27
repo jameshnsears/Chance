@@ -9,11 +9,20 @@ import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 
 interface RepositoryBagInterface : RepositoryImportExportInterface {
     suspend fun fetch(): Flow<DiceBag>
     suspend fun fetch(epoch: Long): Flow<Dice>
     suspend fun store(newDiceBag: DiceBag)
+
+    fun traceUuid(diceBag: DiceBag) {
+        diceBag.forEach {
+            it.sides.forEach { side ->
+                Timber.d("bag: dice.uuid=${it.uuid}; dice.epoch=${it.epoch}; side.uuid=${side.uuid}")
+            }
+        }
+    }
 
     fun mapDiceBagIntoBagProtocolBufferBuilder(
         diceBag: DiceBag,
@@ -23,19 +32,31 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
             val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
             diceProtocolBuffer.setEpoch(dice.epoch)
 
-            for (side in dice.sides) {
+            dice.sides.forEachIndexed { index, side ->
+
                 val sideProtocolBuffer = SideProtocolBuffer.newBuilder()
 
-                sideProtocolBuffer.setNumber(side.number)
-                sideProtocolBuffer.setNumberColour(side.numberColour)
-                sideProtocolBuffer.setImageBase64(side.imageBase64)
-                sideProtocolBuffer.setImageDrawableId(side.imageDrawableId)
-                sideProtocolBuffer.setDescription(side.description)
-                sideProtocolBuffer.setDescriptionColour(side.descriptionColour)
-                sideProtocolBuffer.build()
+                sideProtocolBuffer
+                    .setUuid(side.uuid)
+                    .setNumber(side.number)
+                    .setNumberColour(side.numberColour)
+                    .setImageBase64(side.imageBase64)
+                    .setImageDrawableId(side.imageDrawableId)
+                    .setDescription(side.description)
+                    .setDescriptionColour(side.descriptionColour)
+                    .build()
 
                 diceProtocolBuffer.addSide(sideProtocolBuffer)
+
             }
+
+            /*
+    val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
+        .setEpoch(System.currentTimeMillis()) // Set epoch
+        .addSide(SideProtocolBuffer.newBuilder().setValue(1).build()) // Add first side
+        .addSide(SideProtocolBuffer.newBuilder().setValue(2).build()) // Add second side
+        .build()             */
+
 
             diceProtocolBuffer.setTitle(dice.title)
             diceProtocolBuffer.setColour(dice.colour)
@@ -68,10 +89,9 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
             val dice = Dice()
             dice.epoch = diceProtocolBuffer.epoch
 
-            val sides = sides(diceProtocolBuffer)
+            dice.uuid = diceProtocolBuffer.uuid
 
-            dice.sides = sides
-
+            dice.sides = jsomImportProcessSides(diceProtocolBuffer)
             dice.title = diceProtocolBuffer.title
             dice.colour = diceProtocolBuffer.colour
             dice.selected = diceProtocolBuffer.selected
@@ -90,11 +110,12 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
         return newDiceBag
     }
 
-    fun sides(diceProtocolBuffer: DiceProtocolBuffer): MutableList<Side> {
+    fun jsomImportProcessSides(diceProtocolBuffer: DiceProtocolBuffer): MutableList<Side> {
         val sides = mutableListOf<Side>()
 
         diceProtocolBuffer.sideList.forEach { sideProtocolBuffer ->
             val side = Side()
+            side.uuid = sideProtocolBuffer.uuid
             side.number = sideProtocolBuffer.number
             side.numberColour = sideProtocolBuffer.numberColour
             side.imageBase64 = sideProtocolBuffer.imageBase64

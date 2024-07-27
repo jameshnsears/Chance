@@ -53,29 +53,14 @@ class ZoomAndroidViewModel(
 
     init {
         viewModelScope.launch {
-            _stateFlowZoom.update {
-                it.copy(
-                    resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
-                    diceBag = repositoryBag.fetch().first(),
-                    rollHistory = repositoryRoll.fetch().first()
-                )
-            }
+            updateStateFlowZoom()
         }
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
                 Timber.d("collect")
 
-                removeRollSequenceWithDiceThatBeenDeleted()
-
-                removeRollSequenceWithDiceWhereNumberOfSidesChanged()
-
-                _stateFlowZoom.update {
-                    it.copy(
-                        diceBag = repositoryBag.fetch().first(),
-                        rollHistory = repositoryRoll.fetch().first()
-                    )
-                }
+                updateStateFlowZoom()
             }
         }
 
@@ -83,7 +68,7 @@ class ZoomAndroidViewModel(
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect")
 
-                resizeView(repositorySettings.fetch().first().resize)
+                updateStateFlowZoom()
             }
         }
 
@@ -99,83 +84,14 @@ class ZoomAndroidViewModel(
         }
     }
 
-    suspend fun removeRollSequenceWithDiceThatBeenDeleted() {
-        val diceBagEpochs: MutableList<Long> = diceBagEpochs()
-
-        val currentRollHistory = repositoryRoll.fetch().first()
-
-        val rollHistoryWithValidDice = RollHistory()
-
-        currentRollHistory.keys.forEach { rollSequenceEpoch ->
-
-            val rolls = currentRollHistory.getValue(rollSequenceEpoch)
-
-            var diceEpochMissing = false
-            rolls.forEach { roll ->
-                if (!diceBagEpochs.contains(roll.diceEpoch)) {
-                    Timber.d("epoch.missing=${roll.diceEpoch}")
-                    diceEpochMissing = true
-                }
-            }
-
-            if (!diceEpochMissing)
-                rollHistoryWithValidDice[rollSequenceEpoch] = rolls
+    private suspend fun updateStateFlowZoom() {
+        _stateFlowZoom.update {
+            it.copy(
+                resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
+                diceBag = repositoryBag.fetch().first(),
+                rollHistory = repositoryRoll.fetch().first()
+            )
         }
-
-        if (currentRollHistory.size != rollHistoryWithValidDice.size)
-            repositoryRoll.store(rollHistoryWithValidDice)
-    }
-
-    suspend fun removeRollSequenceWithDiceWhereNumberOfSidesChanged() {
-        val diceEpochsThatNoLongerInDiceBag: List<Long> =
-            diceRollEpochs().minus(diceBagEpochs().toSet())
-
-        val currentRollHistory = repositoryRoll.fetch().first()
-
-        val rollHistoryWithValidDice = RollHistory()
-
-        currentRollHistory.keys.forEach { rollSequenceEpoch ->
-
-            val rolls = currentRollHistory.getValue(rollSequenceEpoch)
-
-            var diceEpochMissing = false
-            rolls.forEach { roll ->
-                if (diceEpochsThatNoLongerInDiceBag.contains(roll.diceEpoch)) {
-                    Timber.d("diceRollEpoch.missing=${roll.diceEpoch}")
-                    diceEpochMissing = true
-                }
-            }
-
-            if (!diceEpochMissing)
-                rollHistoryWithValidDice[rollSequenceEpoch] = rolls
-        }
-
-        if (currentRollHistory.size != rollHistoryWithValidDice.size)
-            repositoryRoll.store(rollHistoryWithValidDice)
-    }
-
-    suspend fun diceRollEpochs(): MutableList<Long> {
-        val currentRollHistory = repositoryRoll.fetch().first()
-
-        val diceRollEpochs: MutableList<Long> = mutableListOf()
-
-        currentRollHistory.keys.forEach { rollSequenceEpoch ->
-            val rolls = currentRollHistory.getValue(rollSequenceEpoch)
-            rolls.forEach { roll ->
-                Timber.d("diceRollEpoch=${roll.diceEpoch}")
-                diceRollEpochs.add(roll.diceEpoch)
-            }
-        }
-        return diceRollEpochs
-    }
-
-    suspend fun diceBagEpochs(): MutableList<Long> {
-        val diceBagEpochs: MutableList<Long> = mutableListOf()
-        repositoryBag.fetch().first().forEach {
-            Timber.d("diceBagEpoch=${it.epoch}")
-            diceBagEpochs.add(it.epoch)
-        }
-        return diceBagEpochs
     }
 
     fun refreshAfterImport() {
@@ -245,7 +161,6 @@ class ZoomAndroidViewModel(
         return false
     }
 
-    // TODO cache for
     fun sideImageSVG(side: Side) =
         UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side.imageBase64)
 }

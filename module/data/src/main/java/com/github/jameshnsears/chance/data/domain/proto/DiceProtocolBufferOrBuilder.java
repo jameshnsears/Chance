@@ -16,42 +16,57 @@ public interface DiceProtocolBufferOrBuilder extends
     long getEpoch();
 
     /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     * <code>string uuid = 2;</code>
+     *
+     * @return The uuid.
+     */
+    java.lang.String getUuid();
+
+    /**
+     * <code>string uuid = 2;</code>
+     *
+     * @return The bytes for uuid.
+     */
+    com.google.protobuf.ByteString
+    getUuidBytes();
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
      */
     java.util.List<com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer>
     getSideList();
 
     /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
      */
     com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getSide(int index);
 
     /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
      */
     int getSideCount();
 
     /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
      */
     java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>
     getSideOrBuilderList();
 
     /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
      */
     com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder(
             int index);
 
     /**
-     * <code>string title = 3;</code>
+     * <code>string title = 4;</code>
      *
      * @return The title.
      */
     java.lang.String getTitle();
 
     /**
-     * <code>string title = 3;</code>
+     * <code>string title = 4;</code>
      *
      * @return The bytes for title.
      */
@@ -59,14 +74,14 @@ public interface DiceProtocolBufferOrBuilder extends
     getTitleBytes();
 
     /**
-     * <code>string colour = 4;</code>
+     * <code>string colour = 5;</code>
      *
      * @return The colour.
      */
     java.lang.String getColour();
 
     /**
-     * <code>string colour = 4;</code>
+     * <code>string colour = 5;</code>
      *
      * @return The bytes for colour.
      */
@@ -74,35 +89,35 @@ public interface DiceProtocolBufferOrBuilder extends
     getColourBytes();
 
     /**
-     * <code>bool selected = 5;</code>
+     * <code>bool selected = 6;</code>
      *
      * @return The selected.
      */
     boolean getSelected();
 
     /**
-     * <code>int32 multiplierValue = 6;</code>
+     * <code>int32 multiplierValue = 7;</code>
      *
      * @return The multiplierValue.
      */
     int getMultiplierValue();
 
     /**
-     * <code>bool explode = 7;</code>
+     * <code>bool explode = 8;</code>
      *
      * @return The explode.
      */
     boolean getExplode();
 
     /**
-     * <code>string explodeWhen = 8;</code>
+     * <code>string explodeWhen = 9;</code>
      *
      * @return The explodeWhen.
      */
     java.lang.String getExplodeWhen();
 
     /**
-     * <code>string explodeWhen = 8;</code>
+     * <code>string explodeWhen = 9;</code>
      *
      * @return The bytes for explodeWhen.
      */
@@ -110,21 +125,21 @@ public interface DiceProtocolBufferOrBuilder extends
     getExplodeWhenBytes();
 
     /**
-     * <code>int32 explodeValue = 9;</code>
+     * <code>int32 explodeValue = 10;</code>
      *
      * @return The explodeValue.
      */
     int getExplodeValue();
 
     /**
-     * <code>bool modifyScore = 10;</code>
+     * <code>bool modifyScore = 11;</code>
      *
      * @return The modifyScore.
      */
     boolean getModifyScore();
 
     /**
-     * <code>int32 modifyScoreValue = 11;</code>
+     * <code>int32 modifyScoreValue = 12;</code>
      *
      * @return The modifyScoreValue.
      */

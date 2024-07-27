@@ -40,6 +40,7 @@ import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose.BagCardDic
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.compose.BagCardRoll
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.compose.BagCardSide
 import com.github.jameshnsears.chance.ui.dialog.confirm.compose.DialogConfirm
+import timber.log.Timber
 
 @Composable
 fun DialogBag(
@@ -49,6 +50,8 @@ fun DialogBag(
     side: Side,
 ) {
     val application = LocalContext.current.applicationContext as Application
+
+    Timber.d("DialogBag: dice.epoch=${dice.epoch}; side.uuid=${side.uuid}")
 
     Dialog(
         onDismissRequest = {

@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.data.repository.roll.impl
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.RepositoryInstrumentedHelper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -10,23 +11,15 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Before
 import org.junit.Test
 
 class RepositoryRollImplInstrumentedTest : RepositoryInstrumentedHelper() {
-    @Before
-    fun emptyDataStore() = runTest {
-        RepositoryRollImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        ).clear()
-    }
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun storeAndFetch() = runTest {
-        val repositoryRollImpl = RepositoryRollImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        )
+        val repositoryFactory =
+            RepositoryFactory(InstrumentationRegistry.getInstrumentation().targetContext)
+        val repositoryRollImpl = repositoryFactory.repositoryRoll
 
         val bagDataTestDouble = BagDataTestDouble()
         val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
@@ -72,9 +65,9 @@ class RepositoryRollImplInstrumentedTest : RepositoryInstrumentedHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun importAndExport() = runTest {
-        val repositoryRollImpl = RepositoryRollImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        )
+        val repositoryFactory =
+            RepositoryFactory(InstrumentationRegistry.getInstrumentation().targetContext)
+        val repositoryRollImpl = repositoryFactory.repositoryRoll
 
         val bagDataTestDouble = BagDataTestDouble()
         val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)

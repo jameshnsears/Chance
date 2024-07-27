@@ -3,7 +3,7 @@ package com.github.jameshnsears.chance.utility.feature
 sealed class UtilityFeature {
     enum class Flag {
         NONE,                   // debug unit tests
-        USE_PROTO_REPO          // debug instrumented tests / app
+        USE_PROTO_REPO          // debug instrumented tests = (emulator only) | app
     }
 
     companion object {

@@ -110,7 +110,7 @@ class TabBagAndroidViewModel(
 
         viewModelScope.launch {
             try {
-                val rootNode = jacksonObjectMapper().readTree(json)
+                val rootNode = jacksonObjectMapper().readTree(json)     // doesn't work in API 24
 
                 RepositoryImportValidation.validate(rootNode)
 
@@ -170,13 +170,13 @@ class TabBagAndroidViewModel(
     }
 
     fun importFileJson(uri: Uri) {
-        _stateFlowTabBagImport.update {
-            it.copy(
-                importStatus = ExportImportStatus.IMPORT_STARTED
-            )
-        }
-
         viewModelScope.launch {
+            _stateFlowTabBagImport.update {
+                it.copy(
+                    importStatus = ExportImportStatus.IMPORT_STARTED
+                )
+            }
+
             getContext().contentResolver.openInputStream(uri)?.use { inputStream ->
                 import(inputStream.reader().readText())
             }

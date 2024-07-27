@@ -25,12 +25,14 @@ android {
 
         debug {
             enableUnitTestCoverage = true
+            isMinifyEnabled = false
         }
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        encoding = "UTF-8"
     }
 
     kotlinOptions {

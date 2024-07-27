@@ -10,10 +10,19 @@ import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.RepositoryImportExportInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
+import timber.log.Timber
 
 interface RepositoryRollInterface : RepositoryImportExportInterface {
     suspend fun fetch(): Flow<RollHistory>
     suspend fun store(newRollHistory: RollHistory)
+
+    fun traceUuid(rollHistory: RollHistory) {
+        rollHistory.forEach { (epoch, rollList) ->
+            rollList.forEach { roll ->
+                Timber.d("roll: dice.epoch=${roll.diceEpoch}; side.uuid=${roll.side.uuid}")
+            }
+        }
+    }
 
     fun mapRollHistoryIntoRollHistoryProtocolBufferBuilder(
         rollHistory: RollHistory,
@@ -27,6 +36,7 @@ interface RepositoryRollInterface : RepositoryImportExportInterface {
                 rollProtocolBuffer.setDiceEpoch(roll.diceEpoch)
 
                 val sideProtocolBuffer = SideProtocolBuffer.newBuilder()
+                sideProtocolBuffer.setUuid(roll.side.uuid)
                 sideProtocolBuffer.setNumber(roll.side.number)
                 sideProtocolBuffer.setNumberColour(roll.side.numberColour)
                 sideProtocolBuffer.setImageDrawableId(roll.side.imageDrawableId)
@@ -59,18 +69,18 @@ interface RepositoryRollInterface : RepositoryImportExportInterface {
         rollHistoryProtocolBufferBuilder.valuesMap.forEach { mapEntry ->
             val rollList = mutableListOf<Roll>()
             mapEntry.value.rollList.forEach {
-                val side = Side()
-                side.number = it.side.number
-                side.numberColour = it.side.numberColour
-                side.imageBase64 = it.side.imageBase64
-                side.imageDrawableId = it.side.imageDrawableId
-                side.description = it.side.description
-                side.descriptionColour = it.side.descriptionColour
-
                 rollList.add(
                     Roll(
                         diceEpoch = it.diceEpoch,
-                        side = side,
+                        side = Side(
+                            uuid = it.side.uuid,
+                            number = it.side.number,
+                            numberColour = it.side.numberColour,
+                            imageBase64 = it.side.imageBase64,
+                            imageDrawableId = it.side.imageDrawableId,
+                            description = it.side.description,
+                            descriptionColour = it.side.descriptionColour
+                        ),
                         multiplierIndex = it.multiplierIndex,
                         explodeIndex = it.explodeIndex,
                         scoreAdjustment = it.scoreAdjustment,

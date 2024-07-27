@@ -49,14 +49,12 @@ class RollHistoryDataTestDouble(bagData: BagDataInterface) : RollHistoryDataInte
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[2],
-                score = 2,
-                multiplierIndex = 2
+                score = 2
             ),
             Roll(
                 bagData.allDice[1].epoch,
                 bagData.allDice[1].sides[3],
-                score = 1,
-                multiplierIndex = 3
+                score = 1
             ),
         ),
     )

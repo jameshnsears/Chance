@@ -36,7 +36,7 @@ class UtilitySvgSerializer {
                 .data(decodeBase64StringIntoByteArray(base64String))
                 .decoderFactory(SvgDecoder.Factory())
                 .memoryCachePolicy(CachePolicy.ENABLED)
-                .memoryCacheKey(base64String)
+                .memoryCacheKey(base64String.hashCode().toString())
                 .build()
 
         fun imageRequestFromSvgString(application: Application, svgString: String) =
@@ -44,7 +44,7 @@ class UtilitySvgSerializer {
                 .data(svgString.toByteArray())
                 .decoderFactory(SvgDecoder.Factory())
                 .memoryCachePolicy(CachePolicy.ENABLED)
-                .memoryCacheKey(svgString)
+                .memoryCacheKey(svgString.hashCode().toString())
                 .build()
     }
 }

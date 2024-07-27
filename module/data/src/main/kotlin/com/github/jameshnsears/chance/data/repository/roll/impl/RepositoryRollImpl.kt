@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import com.github.jameshnsears.chance.data.BuildConfig
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
@@ -15,7 +16,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 
 class RepositoryRollImpl private constructor(private val context: Context) :
     RepositoryRollInterface {
@@ -25,19 +25,23 @@ class RepositoryRollImpl private constructor(private val context: Context) :
 
         fun getInstance(
             context: Context,
-            rollHistory: RollHistory = RollHistory()
+            rollHistory: RollHistory
         ): RepositoryRollImpl {
             if (instance == null) {
                 instance = RepositoryRollImpl(context)
+
                 runBlocking {
-                    val itemsInProtoBuffer = instance!!.fetch().first().size
-                    Timber.d("itemsInProtoBuffer=${itemsInProtoBuffer}")
-                    if (itemsInProtoBuffer == 0) {
-                        Timber.d("default")
+                    if (BuildConfig.DEBUG)
+                        instance!!.clear()
+
+                    if (instance!!.fetch().first().size == 0) {
                         instance!!.store(rollHistory)
                     }
+
+                    instance!!.traceUuid(instance!!.fetch().first())
                 }
             }
+
             return instance!!
         }
     }
@@ -66,6 +70,7 @@ class RepositoryRollImpl private constructor(private val context: Context) :
                             Roll(
                                 rollProtocolBuffer.diceEpoch,
                                 Side(
+                                    uuid = sideProtocolBuffer.uuid,
                                     number = sideProtocolBuffer.number,
                                     numberColour = sideProtocolBuffer.numberColour,
                                     imageBase64 = sideProtocolBuffer.imageBase64,
@@ -102,7 +107,7 @@ class RepositoryRollImpl private constructor(private val context: Context) :
 
     override suspend fun clear() {
         context.rollDataStore.updateData {
-            RollHistoryProtocolBuffer.newBuilder().build()
+            it.toBuilder().clear().build()
         }
     }
 }

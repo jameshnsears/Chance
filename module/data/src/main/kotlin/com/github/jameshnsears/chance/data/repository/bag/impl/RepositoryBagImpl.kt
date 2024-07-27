@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
+import com.github.jameshnsears.chance.data.BuildConfig
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
-import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.google.protobuf.util.JsonFormat
@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 
 class RepositoryBagImpl private constructor(private val context: Context) :
     RepositoryBagInterface {
@@ -25,19 +24,23 @@ class RepositoryBagImpl private constructor(private val context: Context) :
 
         fun getInstance(
             context: Context,
-            defaultBag: DiceBag = BagDataImpl().allDice
+            diceBag: DiceBag
         ): RepositoryBagImpl {
             if (instance == null) {
                 instance = RepositoryBagImpl(context)
+
                 runBlocking {
-                    val itemsInProtoBuffer = instance!!.fetch().first().size
-                    Timber.d("itemsInProtoBuffer=${itemsInProtoBuffer}")
-                    if (itemsInProtoBuffer == 0) {
-                        Timber.d("default")
-                        instance!!.store(defaultBag)
+                    if (BuildConfig.DEBUG)
+                        instance!!.clear()
+
+                    if (instance!!.fetch().first().size == 0) {
+                        instance!!.store(diceBag)
                     }
+
+                    instance!!.traceUuid(instance!!.fetch().first())
                 }
             }
+
             return instance!!
         }
     }
@@ -60,7 +63,7 @@ class RepositoryBagImpl private constructor(private val context: Context) :
                         Dice(
                             epoch = diceProtocolBuffer.epoch,
 
-                            sides = sides(diceProtocolBuffer),
+                            sides = jsomImportProcessSides(diceProtocolBuffer),
 
                             title = diceProtocolBuffer.title,
                             colour = diceProtocolBuffer.colour,
@@ -92,7 +95,7 @@ class RepositoryBagImpl private constructor(private val context: Context) :
                     if (epoch == diceProtocolBuffer.epoch) {
                         dice.epoch = diceProtocolBuffer.epoch
 
-                        dice.sides = sides(diceProtocolBuffer)
+                        dice.sides = jsomImportProcessSides(diceProtocolBuffer)
 
                         dice.title = diceProtocolBuffer.title
                         dice.colour = diceProtocolBuffer.colour
@@ -128,7 +131,7 @@ class RepositoryBagImpl private constructor(private val context: Context) :
 
     override suspend fun clear() {
         context.diceBagDataStore.updateData {
-            BagProtocolBuffer.newBuilder().build()
+            it.toBuilder().clear().build()
         }
     }
 }

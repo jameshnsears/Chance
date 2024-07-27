@@ -16,7 +16,6 @@ import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.R
-import com.github.jameshnsears.chance.ui.dialog.bag.BuildConfig
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
 import kotlinx.coroutines.delay
@@ -35,8 +34,8 @@ data class SettingsState(
     var rollScore: Boolean,
 
     var diceTitle: Boolean,
-    var sideNumber: Boolean,
     var behaviour: Boolean,
+    var sideNumber: Boolean,
     var sideDescription: Boolean,
     var sideSVG: Boolean,
 
@@ -54,8 +53,8 @@ class TabRollAndroidViewModel(
             rollIndexTime = SettingsDataImpl().rollIndexTime,
             rollScore = SettingsDataImpl().rollScore,
             diceTitle = SettingsDataImpl().diceTitle,
-            sideNumber = SettingsDataImpl().sideNumber,
             behaviour = SettingsDataImpl().behaviour,
+            sideNumber = SettingsDataImpl().sideNumber,
             sideDescription = SettingsDataImpl().sideDescription,
             sideSVG = SettingsDataImpl().sideSVG,
             rollSound = SettingsDataImpl().rollSound
@@ -72,16 +71,17 @@ class TabRollAndroidViewModel(
     private var _rollEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var rollEnabled: StateFlow<Boolean> = _rollEnabled
 
+    // TODO LeakCanary is currently disabled: test class org.junit.Test was found in classpath
+
     init {
         viewModelScope.launch {
-            alignSettings()
-            alignUndoAndRollButtonsWithDiceBag()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
                 Timber.d("collect")
-                alignUndoAndRollButtonsWithDiceBag()
+                alignUndoAndRollButtonsBasedOnSettings()
             }
         }
 
@@ -89,18 +89,15 @@ class TabRollAndroidViewModel(
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect")
                 alignSettings()
-                alignUndoAndRollButtonsWithDiceBag()
+                alignUndoAndRollButtonsBasedOnSettings()
             }
         }
     }
 
-    private suspend fun alignUndoAndRollButtonsWithDiceBag() {
+    private suspend fun alignUndoAndRollButtonsBasedOnSettings() {
         _diceBag.value = repositoryBag.fetch().first()
-        disableUndoAndRollButtons()
-    }
 
-    private suspend fun disableUndoAndRollButtons() {
-        val settings = _stateFlowSettingsData.value
+        val settings = repositorySettings.fetch().first()
 
         if (!settings.rollIndexTime
             && !settings.rollScore
@@ -162,11 +159,7 @@ class TabRollAndroidViewModel(
 
             repositoryBag.store(updatedDiceBag)
 
-            _diceBag.value = repositoryBag.fetch().first()
-
-            val isRollPossible = isRollPossible()
-            Timber.d("isRollPossible=$isRollPossible")
-            _rollEnabled.value = isRollPossible
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -174,11 +167,7 @@ class TabRollAndroidViewModel(
 
     fun rollDiceSequence() {
         viewModelScope.launch {
-            if (!BuildConfig.DEBUG)
-                if (_stateFlowSettingsData.value.rollSound) {
-                    mediaPlayerRollSound()
-                    delay(750)
-                }
+            playRollSound()
 
             val mutex = Mutex()
 
@@ -187,10 +176,17 @@ class TabRollAndroidViewModel(
 
                 rollDiceSequence(newRollSequence)
 
-                diceSequenceStore(newRollSequence)
+                saveDiceSequence(newRollSequence)
 
                 TabRollEvent.emit()
             }
+        }
+    }
+
+    suspend fun playRollSound() {
+        if (_stateFlowSettingsData.value.rollSound) {
+            mediaPlayerRollSound()
+            delay(750)
         }
     }
 
@@ -210,7 +206,7 @@ class TabRollAndroidViewModel(
         mediaPlayer.start()
     }
 
-    suspend fun diceSequenceStore(
+    suspend fun saveDiceSequence(
         newRollSequence: MutableList<Roll>
     ) {
         val rollHistory: RollHistory = LinkedHashMap()
@@ -340,7 +336,7 @@ class TabRollAndroidViewModel(
             settings.rollIndexTime = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -352,7 +348,7 @@ class TabRollAndroidViewModel(
             settings.rollScore = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -372,7 +368,7 @@ class TabRollAndroidViewModel(
             settings.diceTitle = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -384,7 +380,7 @@ class TabRollAndroidViewModel(
             settings.sideNumber = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -396,7 +392,7 @@ class TabRollAndroidViewModel(
             settings.sideDescription = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -408,7 +404,7 @@ class TabRollAndroidViewModel(
             settings.sideSVG = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -420,7 +416,7 @@ class TabRollAndroidViewModel(
             settings.rollSound = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -432,7 +428,7 @@ class TabRollAndroidViewModel(
             settings.behaviour = checked
             repositorySettings.store(settings)
 
-            disableUndoAndRollButtons()
+            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 

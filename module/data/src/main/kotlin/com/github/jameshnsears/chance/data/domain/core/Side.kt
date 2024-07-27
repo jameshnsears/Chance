@@ -4,7 +4,6 @@ import java.util.UUID
 
 data class Side(
     var uuid: String = UUID.randomUUID().toString(),
-
     var number: Int = 0,
     var numberColour: String = "FFFFFFFF",
     var imageDrawableId: Int = 0,

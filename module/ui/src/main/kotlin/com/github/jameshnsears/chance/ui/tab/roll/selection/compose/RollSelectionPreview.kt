@@ -30,7 +30,7 @@ fun RollSelectionPreview() {
             color = MaterialTheme.colorScheme.background,
         ) {
             Row {
-                RollSelectionButton(
+                RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
                         RepositorySettingsTestDouble.getInstance(),
@@ -39,7 +39,7 @@ fun RollSelectionPreview() {
                     ), BagDataTestDouble().d2
                 )
 
-                RollSelectionButton(
+                RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
                         RepositorySettingsTestDouble.getInstance(),
@@ -48,7 +48,7 @@ fun RollSelectionPreview() {
                     ), BagDataTestDouble().d4
                 )
 
-                RollSelectionButton(
+                RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
                         RepositorySettingsTestDouble.getInstance(),
@@ -57,7 +57,7 @@ fun RollSelectionPreview() {
                     ), BagDataTestDouble().d4
                 )
 
-                RollSelectionButton(
+                RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
                         RepositorySettingsTestDouble.getInstance(),

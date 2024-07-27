@@ -95,7 +95,7 @@ fun Undo(tabRollAndroidViewModel: TabRollAndroidViewModel) {
         },
         enabled = undoEnabled,
         modifier = Modifier
-            .width(120.dp)
+            .width(160.dp)
             .testTag(TabRollTestTag.UNDO),
     ) {
         Icon(
@@ -124,7 +124,7 @@ fun Roll(tabRollAndroidViewModel: TabRollAndroidViewModel) {
         },
         modifier = Modifier
             .padding(start = 18.dp)
-            .width(230.dp)
+            .width(160.dp)
             .testTag(TabRollTestTag.ROLL),
         enabled = rollEnabled
     ) {
@@ -198,7 +198,7 @@ fun TabRollBottomSheetLayout(
             .fillMaxWidth()
             .padding(8.dp)
             .padding(start = 8.dp, end = 8.dp)
-            .height(315.dp),
+            .height(210.dp),
     ) {
         Row(
             modifier = Modifier
@@ -208,14 +208,12 @@ fun TabRollBottomSheetLayout(
         ) {
             Undo(tabRollAndroidViewModel)
 
-            Spacer(modifier = Modifier.width(20.dp))
-
             Roll(tabRollAndroidViewModel)
         }
 
         HorizontalDivider(
             modifier = Modifier
-                .padding(top = 12.dp, bottom = 8.dp)
+                .padding(top = 12.dp, bottom = 12.dp)
         )
 
         RollSelectionRow(tabRollAndroidViewModel)

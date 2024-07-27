@@ -6,14 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
+import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.UUID
 
 class DialogBagAndroidViewModel(
     application: Application,
@@ -21,6 +23,8 @@ class DialogBagAndroidViewModel(
     val dice: Dice,
     val side: Side,
 ) : AndroidViewModel(application) {
+    val repositoryRoll = RepositoryFactory(application).repositoryRoll
+
     var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
 
     var cardDiceViewModel = CardDiceViewModel(
@@ -45,6 +49,8 @@ class DialogBagAndroidViewModel(
 
             repositoryBag.store(updatedDiceBag)
 
+            updateRepositoryRollWithDeletedDice()
+
             DialogBagCloseEvent.emit()
         }
     }
@@ -64,13 +70,13 @@ class DialogBagAndroidViewModel(
 
                         val newClonedDiceEpoch = UtilityEpochTimeGenerator.now()
 
-                        Timber.d("clone.dice.epoch=${dice.epoch} -> $newClonedDiceEpoch")
+                        Timber.d("clone: dice.epoch=${dice.epoch} -> $newClonedDiceEpoch")
 
                         clonedDiceBag.add(
                             Dice(
                                 epoch = newClonedDiceEpoch,
 
-                                sides = alignDiceSidesWithCardDice(),
+                                sides = updateRepositoryBagWithNewSizedDice(dice),
                                 title = cardDice.diceTitle,
                                 colour = cardDice.diceColour,
                                 selected = dice.selected,
@@ -95,71 +101,80 @@ class DialogBagAndroidViewModel(
 
     fun save() {
         viewModelScope.launch {
+            saveRepositoryBag()
 
-            val updatedDiceBag: DiceBag = mutableListOf()
+            updateRepositoryRollWithNewSizedDice()
 
-            repositoryBag.fetch().collect {
-                it.forEach { diceInBag ->
-
-                    if (diceInBag.epoch == dice.epoch) {
-                        Timber.d("save.dice.epoch=${dice.epoch}")
-
-                        val cardDice = cardDiceViewModel.stateFlowCardDice.value
-                        val cardRoll = cardRollViewModel.stateFlowCardRoll.value
-
-                        val modifiedDice = Dice(
-                            epoch = dice.epoch,
-
-                            sides = alignDiceSidesWithCardDice(),
-                            title = cardDice.diceTitle,
-                            colour = cardDice.diceColour,
-
-                            // user might have selected in roll selection
-                            selected = diceInBag.selected,
-
-                            multiplierValue = cardRoll.rollMultiplierValue,
-                            explode = cardRoll.rollExplode,
-                            explodeWhen = cardRoll.rollExplodeWhen,
-                            explodeValue = cardRoll.rollExplodeValue,
-                            modifyScore = cardRoll.rollModifyScore,
-                            modifyScoreValue = cardRoll.rollModifyScoreValue
-                        )
-
-                        // if the # of sides has changed, then we've got a new dice
-                        if (modifiedDice.sides.size != dice.sides.size) {
-                            modifiedDice.epoch = UtilityEpochTimeGenerator.now()
-                            Timber.d("save.dice.epoch=${dice.epoch} -> ${modifiedDice.epoch}")
-                        }
-
-                        updatedDiceBag.add(modifiedDice)
-
-                    } else
-                        updatedDiceBag.add(diceInBag)
-                }
-            }
-
-            repositoryBag.store(updatedDiceBag)
+            updateRepositoryRoll()
 
             DialogBagCloseEvent.emit()
         }
     }
 
-    fun alignDiceSidesWithCardDice(): List<Side> {
+    private suspend fun saveRepositoryBag() {
+        val updatedDiceBag: DiceBag = mutableListOf()
+
+        repositoryBag.fetch().collect {
+            it.forEach { diceInBag ->
+
+                if (diceInBag.epoch == dice.epoch) {
+                    Timber.d("save: dice.epoch=${dice.epoch}")
+
+                    val cardDice = cardDiceViewModel.stateFlowCardDice.value
+                    val cardRoll = cardRollViewModel.stateFlowCardRoll.value
+
+                    val modifiedDice = Dice(
+                        epoch = dice.epoch,
+
+                        sides = updateRepositoryBagWithNewSizedDice(dice),
+                        title = cardDice.diceTitle,
+                        colour = cardDice.diceColour,
+
+                        // user might have selected in roll selection
+                        selected = diceInBag.selected,
+
+                        multiplierValue = cardRoll.rollMultiplierValue,
+                        explode = cardRoll.rollExplode,
+                        explodeWhen = cardRoll.rollExplodeWhen,
+                        explodeValue = cardRoll.rollExplodeValue,
+                        modifyScore = cardRoll.rollModifyScore,
+                        modifyScoreValue = cardRoll.rollModifyScoreValue
+                    )
+
+                    // if the # of sides has changed, then we've got a new dice
+                    if (modifiedDice.sides.size != dice.sides.size) {
+                        modifiedDice.epoch = UtilityEpochTimeGenerator.now()
+                        Timber.d("save.dice.epoch=${dice.epoch} -> ${modifiedDice.epoch}")
+                    }
+
+                    updatedDiceBag.add(modifiedDice)
+
+                } else
+                    updatedDiceBag.add(diceInBag)
+            }
+        }
+
+        repositoryBag.store(updatedDiceBag)
+    }
+
+    fun updateRepositoryBagWithNewSizedDice(dice: Dice): List<Side> {
         val alignedSides: MutableList<Side>
 
         val originalDiceSides = dice.sides
+
+        for (side in originalDiceSides)
+            Timber.d("originalDiceSides: dice.epoch=${dice.epoch}; side.uuid=${side.uuid}")
+
         val diceSidesSize = cardDiceViewModel.stateFlowCardDice.value.diceSidesSize
 
-        if (diceSidesSize == originalDiceSides.size) {
+        if (diceSidesSize == originalDiceSides.size)
             alignedSides = originalDiceSides.toMutableList()
-
-        } else if (diceSidesSize < originalDiceSides.size) {
+        else if (diceSidesSize < originalDiceSides.size)
             alignedSides = originalDiceSides.reversed()
                 .subList(0, diceSidesSize)
                 .reversed()
                 .toMutableList()
-
-        } else {
+        else {
             alignedSides = originalDiceSides.toMutableList()
             for (newSideIndex in alignedSides.size + 1..diceSidesSize) {
                 alignedSides.add(
@@ -169,19 +184,19 @@ class DialogBagAndroidViewModel(
             }
         }
 
-        patchCurrentSideIfExists(alignedSides)
+        updateRepositoryBag(alignedSides)
+
+        for (side in alignedSides)
+            Timber.d("alignedSides: dice.epoch=${dice.epoch}; side.uuid=${side.uuid}")
 
         return alignedSides
     }
 
-    private fun patchCurrentSideIfExists(alignedSides: MutableList<Side>) {
+    private fun updateRepositoryBag(alignedSides: MutableList<Side>) {
         val cardSide = cardSideAndroidViewModel.stateFlowCardSide.value
 
         for (alignedSide in alignedSides) {
             if (alignedSide.uuid == side.uuid) {
-                // force compose recomposition
-                alignedSide.uuid = UUID.randomUUID().toString()
-
                 alignedSide.numberColour = cardSide.sideNumberColour
                 alignedSide.imageDrawableId = cardSide.sideImageDrawableId
                 alignedSide.imageBase64 = cardSide.sideImageBase64
@@ -202,5 +217,106 @@ class DialogBagAndroidViewModel(
                 alignedSide.imageBase64 = cardSide.sideImageBase64
             }
         }
+    }
+
+    private suspend fun updateRepositoryRollWithDeletedDice() {
+        val diceBagEpochs: MutableList<Long> = diceBagEpochs()
+
+        val currentRollHistory = repositoryRoll.fetch().first()
+
+        val rollHistoryWithValidDice = RollHistory()
+
+        currentRollHistory.keys.forEach { rollSequenceEpoch ->
+
+            val rolls = currentRollHistory.getValue(rollSequenceEpoch)
+
+            var diceEpochMissing = false
+            rolls.forEach { roll ->
+                if (!diceBagEpochs.contains(roll.diceEpoch)) {
+                    diceEpochMissing = true
+                }
+            }
+
+            if (!diceEpochMissing)
+                rollHistoryWithValidDice[rollSequenceEpoch] = rolls
+        }
+
+        if (currentRollHistory.size != rollHistoryWithValidDice.size)
+            repositoryRoll.store(rollHistoryWithValidDice)
+    }
+
+    private suspend fun updateRepositoryRollWithNewSizedDice() {
+        val diceEpochsThatNoLongerInDiceBag: List<Long> =
+            diceRollEpochs().minus(diceBagEpochs().toSet())
+
+        val currentRollHistory = repositoryRoll.fetch().first()
+
+        val rollHistoryWithValidDice = RollHistory()
+
+        currentRollHistory.keys.forEach { rollSequenceEpoch ->
+
+            val rolls = currentRollHistory.getValue(rollSequenceEpoch)
+
+            var diceEpochMissing = false
+            rolls.forEach { roll ->
+                if (diceEpochsThatNoLongerInDiceBag.contains(roll.diceEpoch)) {
+                    diceEpochMissing = true
+                }
+            }
+
+            if (!diceEpochMissing)
+                rollHistoryWithValidDice[rollSequenceEpoch] = rolls
+        }
+
+        if (currentRollHistory.size != rollHistoryWithValidDice.size)
+            repositoryRoll.store(rollHistoryWithValidDice)
+    }
+
+    private suspend fun updateRepositoryRoll() {
+        val rollHistory = repositoryRoll.fetch().first()
+
+        rollHistory.keys.forEach { rollSequenceEpoch ->
+            rollHistory.getValue(rollSequenceEpoch).forEach { roll ->
+                val diceSides = repositoryBag.fetch(roll.diceEpoch).first().sides
+
+                for (diceSide in diceSides) {
+                    Timber.d("dice.epoch=${roll.diceEpoch}; diceSide.uuid=${diceSide.uuid}; roll.side.uuid=${roll.side.uuid}")
+
+                    if (diceSide.uuid == roll.side.uuid) {
+                        Timber.d("diceSide.uuid==roll.side.uuid")
+
+                        roll.side.numberColour = diceSide.numberColour
+                        roll.side.imageDrawableId = diceSide.imageDrawableId
+                        roll.side.imageBase64 = diceSide.imageBase64
+                        roll.side.description = diceSide.description
+                        roll.side.descriptionColour = diceSide.descriptionColour
+                        break
+                    }
+                }
+            }
+        }
+
+        repositoryRoll.store(rollHistory)
+    }
+
+    private suspend fun diceBagEpochs(): MutableList<Long> {
+        val diceBagEpochs: MutableList<Long> = mutableListOf()
+        repositoryBag.fetch().first().forEach {
+            diceBagEpochs.add(it.epoch)
+        }
+        return diceBagEpochs
+    }
+
+    private suspend fun diceRollEpochs(): MutableList<Long> {
+        val currentRollHistory = repositoryRoll.fetch().first()
+        val diceRollEpochs: MutableList<Long> = mutableListOf()
+
+        currentRollHistory.keys.forEach { rollSequenceEpoch ->
+            val rolls = currentRollHistory.getValue(rollSequenceEpoch)
+            rolls.forEach { roll ->
+                diceRollEpochs.add(roll.diceEpoch)
+            }
+        }
+        return diceRollEpochs
     }
 }
