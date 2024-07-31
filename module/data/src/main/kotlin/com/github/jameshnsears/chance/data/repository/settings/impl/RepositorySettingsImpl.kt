@@ -20,21 +20,24 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
     RepositorySettingsInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
+        @Volatile
         private var instance: RepositorySettingsImpl? = null
 
         fun getInstance(
             context: Context,
             settings: SettingsDataInterface = SettingsDataImpl()
         ): RepositorySettingsImpl {
-            if (instance == null) {
-                instance = RepositorySettingsImpl(context)
+            synchronized(this) {
+                if (instance == null) {
+                    runBlocking {
+                        instance = RepositorySettingsImpl(context)
 
-                runBlocking {
-                    if (BuildConfig.DEBUG)
-                        instance!!.clear()
+                        if (BuildConfig.DEBUG)
+                            instance!!.clear()
 
-                    if (instance!!.fetch().first().resize == 0) {
-                        instance!!.store(settings)
+                        if (instance!!.fetch().first().resize == 0) {
+                            instance!!.store(settings)
+                        }
                     }
                 }
             }

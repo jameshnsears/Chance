@@ -17,14 +17,16 @@ class TabSettingsModelUnitTest : UtilityAndroidHelper() {
             TabSettingsModel.resize(repositorySettings)
         )
 
+        val tabSettingsModel = TabSettingsModel
+
         val newResize = 100
-        TabSettingsModel.resize(repositorySettings, newResize)
+        tabSettingsModel.resize(repositorySettings, newResize)
 
         assertEquals(
             newResize,
-            TabSettingsModel.resize(repositorySettings)
+            tabSettingsModel.resize(repositorySettings)
         )
 
-        TabSettingsModel.resize(repositorySettings, SettingsDataTestDouble().resize)
+        tabSettingsModel.resize(repositorySettings, SettingsDataTestDouble().resize)
     }
 }

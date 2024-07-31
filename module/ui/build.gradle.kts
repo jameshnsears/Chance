@@ -104,7 +104,6 @@ dependencies {
     implementation(project(":module:ui-dialog-bag"))
     testImplementation(libs.kotlin.test)
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
-    testImplementation(libs.org.junit.jupiter)
     testImplementation(platform(libs.org.junit.bom))
 }
 

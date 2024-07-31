@@ -1,54 +1,18 @@
 package com.github.jameshnsears.chance.data.repository.settings.impl
 
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.RepositoryInstrumentedHelper
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 
 class RepositorySettingsDataImplInstrumentedTest : RepositoryInstrumentedHelper() {
-    @Before
-    fun emptyDataStore() = runTest {
-        RepositorySettingsImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        ).clear()
-    }
-
-    @Test
-    fun demoProtocolBufferUsage() = runTest {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-
-        val before: Flow<Int> = context.settingsDataStore.data
-            .map { settingsProtocolBuffer ->
-                settingsProtocolBuffer.resize
-            }
-
-        assertEquals(0, before.first())
-
-        context.settingsDataStore.updateData { currentSettingsProtocolBuffer ->
-            currentSettingsProtocolBuffer.toBuilder()
-                .setResize(7)
-                .build()
-        }
-
-        val after: Flow<Int> = context.settingsDataStore.data
-            .map { currentSettingsProtocolBuffer ->
-                currentSettingsProtocolBuffer.resize
-            }
-
-        assertEquals(7, after.first())
-    }
-
     @Test
     fun storeAndFetch() = runTest {
-        val repositorySettingsImpl = RepositorySettingsImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        )
+        val repositoryFactory = RepositoryFactory(ApplicationProvider.getApplicationContext())
 
         val originalSettings = SettingsDataImpl()
         originalSettings.resize = 2
@@ -61,9 +25,9 @@ class RepositorySettingsDataImplInstrumentedTest : RepositoryInstrumentedHelper(
         originalSettings.sideSVG = false
         originalSettings.rollSound = true
 
-        repositorySettingsImpl.store(originalSettings)
+        repositoryFactory.repositorySettings.store(originalSettings)
 
-        val fetchedSettings = repositorySettingsImpl.fetch().first()
+        val fetchedSettings = repositoryFactory.repositorySettings.fetch().first()
 
         assertEquals(originalSettings.resize, fetchedSettings.resize)
 
@@ -81,23 +45,21 @@ class RepositorySettingsDataImplInstrumentedTest : RepositoryInstrumentedHelper(
 
     @Test
     fun importAndExport() = runTest {
-        val repositorySettings = RepositorySettingsImpl.getInstance(
-            InstrumentationRegistry.getInstrumentation().targetContext
-        )
+        val repositoryFactory = RepositoryFactory(ApplicationProvider.getApplicationContext())
 
         val originalSettings = SettingsDataImpl()
 
-        repositorySettings.store(originalSettings)
+        repositoryFactory.repositorySettings.store(originalSettings)
 
-        val json = repositorySettings.jsonExport()
+        val json = repositoryFactory.repositorySettings.jsonExport()
 
-        repositorySettings.clear()
+        repositoryFactory.repositorySettings.clear()
 
-        repositorySettings.jsonImport(json)
+        repositoryFactory.repositorySettings.jsonImport(json)
 
-        assertEquals(json, repositorySettings.jsonExport())
+        assertEquals(json, repositoryFactory.repositorySettings.jsonExport())
 
-        val fetchedSettings = repositorySettings.fetch().first()
+        val fetchedSettings = repositoryFactory.repositorySettings.fetch().first()
 
         assertEquals(originalSettings.resize, fetchedSettings.resize)
 

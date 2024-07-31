@@ -16,13 +16,15 @@ class RepositoryRollTestDouble private constructor() :
         fun getInstance(
             rollHistory: RollHistory
         ): RepositoryRollTestDouble {
-            if (instance == null) {
-                instance = RepositoryRollTestDouble()
-                runBlocking {
-                    instance!!.store(rollHistory)
-                }
+            synchronized(this) {
+                if (instance == null) {
+                    runBlocking {
+                        instance = RepositoryRollTestDouble()
 
-                instance!!.traceUuid(rollHistory)
+                        instance!!.store(rollHistory)
+                        instance!!.traceUuid(rollHistory)
+                    }
+                }
             }
             return instance!!
         }

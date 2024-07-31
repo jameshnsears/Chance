@@ -21,6 +21,8 @@ fun DialogColorPickerPreview() {
         showColourDialog,
         stringResource(R.string.dialog_bag_colour_picker_side),
         "FF000000",
-        fun(_: String) {},
+        fun(_: String) {
+            // no need to setColour
+        },
     )
 }

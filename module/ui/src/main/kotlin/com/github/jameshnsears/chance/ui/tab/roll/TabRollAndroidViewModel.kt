@@ -183,7 +183,7 @@ class TabRollAndroidViewModel(
         }
     }
 
-    suspend fun playRollSound() {
+    private suspend fun playRollSound() {
         if (_stateFlowSettingsData.value.rollSound) {
             mediaPlayerRollSound()
             delay(750)

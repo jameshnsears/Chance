@@ -1,4 +1,4 @@
-package com.github.jameshnsears.chance.ui.tab.compose
+package com.github.jameshnsears.chance.ui
 
 import android.app.Application
 import androidx.compose.material3.MaterialTheme
@@ -6,6 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.compose.TabRow
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview

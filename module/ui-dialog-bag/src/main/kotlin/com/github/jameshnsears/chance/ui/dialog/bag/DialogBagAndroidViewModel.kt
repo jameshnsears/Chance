@@ -103,9 +103,9 @@ class DialogBagAndroidViewModel(
         viewModelScope.launch {
             saveRepositoryBag()
 
-            updateRepositoryRollWithNewSizedDice()
+            updateRepositoryRollWhereDiceBeenDeleted()
 
-            updateRepositoryRoll()
+            updateRepositoryRollWhereDiceSizeChanged()
 
             DialogBagCloseEvent.emit()
         }
@@ -245,7 +245,7 @@ class DialogBagAndroidViewModel(
             repositoryRoll.store(rollHistoryWithValidDice)
     }
 
-    private suspend fun updateRepositoryRollWithNewSizedDice() {
+    private suspend fun updateRepositoryRollWhereDiceBeenDeleted() {
         val diceEpochsThatNoLongerInDiceBag: List<Long> =
             diceRollEpochs().minus(diceBagEpochs().toSet())
 
@@ -272,7 +272,7 @@ class DialogBagAndroidViewModel(
             repositoryRoll.store(rollHistoryWithValidDice)
     }
 
-    private suspend fun updateRepositoryRoll() {
+    private suspend fun updateRepositoryRollWhereDiceSizeChanged() {
         val rollHistory = repositoryRoll.fetch().first()
 
         rollHistory.keys.forEach { rollSequenceEpoch ->

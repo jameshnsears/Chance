@@ -21,24 +21,28 @@ class RepositoryRollImpl private constructor(private val context: Context) :
     RepositoryRollInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
+        @Volatile
         private var instance: RepositoryRollImpl? = null
 
         fun getInstance(
             context: Context,
             rollHistory: RollHistory
         ): RepositoryRollImpl {
-            if (instance == null) {
-                instance = RepositoryRollImpl(context)
+            synchronized(this) {
 
-                runBlocking {
-                    if (BuildConfig.DEBUG)
-                        instance!!.clear()
+                if (instance == null) {
+                    instance = RepositoryRollImpl(context)
 
-                    if (instance!!.fetch().first().size == 0) {
-                        instance!!.store(rollHistory)
+                    runBlocking {
+                        if (BuildConfig.DEBUG)
+                            instance!!.clear()
+
+                        if (instance!!.fetch().first().size == 0) {
+                            instance!!.store(rollHistory)
+                        }
+
+                        instance!!.traceUuid(instance!!.fetch().first())
                     }
-
-                    instance!!.traceUuid(instance!!.fetch().first())
                 }
             }
 

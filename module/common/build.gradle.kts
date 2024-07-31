@@ -80,9 +80,7 @@ dependencies {
     implementation(libs.coil.svg)
     implementation(libs.mockk)
     implementation(libs.org.jetbrains.kotlinx.coroutines.test)
-    implementation(libs.org.junit.jupiter)
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(platform(libs.org.junit.bom))
 }

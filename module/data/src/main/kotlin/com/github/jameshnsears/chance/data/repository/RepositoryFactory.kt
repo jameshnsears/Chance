@@ -6,6 +6,8 @@ import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.impl.RollHistoryDataImpl
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
+import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
 import com.github.jameshnsears.chance.data.repository.bag.impl.RepositoryBagImpl
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
 import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRollImpl
@@ -15,17 +17,20 @@ import com.github.jameshnsears.chance.data.repository.settings.testdouble.Reposi
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
 class RepositoryFactory(context: Context? = null) {
+    val settingsImpl = SettingsDataImpl()
+    val settingsTestDouble = SettingsDataTestDouble()
+
     val repositorySettings = if (BuildConfig.DEBUG)
         if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
-            RepositorySettingsImpl.getInstance(context!!)
+            RepositorySettingsImpl.getInstance(context!!, settingsImpl)
         else
-            RepositorySettingsTestDouble.getInstance()
+            RepositorySettingsTestDouble.getInstance(settingsTestDouble)
     else
-        RepositorySettingsImpl.getInstance(context!!)
+        RepositorySettingsImpl.getInstance(context!!, settingsImpl)
 
     ///////////////////////////////////////////////////
 
-    private val bagDataImpl = BagDataImpl()
+    val bagDataImpl = BagDataImpl()
     val bagDataTestDouble = BagDataTestDouble()
 
     val repositoryBag = if (BuildConfig.DEBUG)
@@ -38,7 +43,7 @@ class RepositoryFactory(context: Context? = null) {
 
     ///////////////////////////////////////////////////
 
-    private val rollHistoryDataImpl = RollHistoryDataImpl(bagDataImpl).rollHistory
+    val rollHistoryDataImpl = RollHistoryDataImpl(bagDataImpl).rollHistory
     val rollHistoryDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 
     val repositoryRoll = if (BuildConfig.DEBUG)

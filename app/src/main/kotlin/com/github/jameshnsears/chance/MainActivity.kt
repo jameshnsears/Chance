@@ -13,10 +13,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Timber.treeCount == 0)
-            Timber.plant(UtilityLoggingLineNumberTree())
-
         installSplashScreen()
+
+        installLogging()
 
         val repositoryFactory = RepositoryFactory(application)
 
@@ -28,5 +27,10 @@ class MainActivity : ComponentActivity() {
                 repositoryFactory.repositoryRoll
             )
         }
+    }
+
+    private fun installLogging() {
+        if (Timber.treeCount == 0)
+            Timber.plant(UtilityLoggingLineNumberTree())
     }
 }

@@ -20,6 +20,7 @@ class RepositoryBagImpl private constructor(private val context: Context) :
     RepositoryBagInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
+        @Volatile
         private var instance: RepositoryBagImpl? = null
 
         fun getInstance(
@@ -27,17 +28,19 @@ class RepositoryBagImpl private constructor(private val context: Context) :
             diceBag: DiceBag
         ): RepositoryBagImpl {
             if (instance == null) {
-                instance = RepositoryBagImpl(context)
+                synchronized(this) {
+                    instance = RepositoryBagImpl(context)
 
-                runBlocking {
-                    if (BuildConfig.DEBUG)
-                        instance!!.clear()
+                    runBlocking {
+                        if (BuildConfig.DEBUG)
+                            instance!!.clear()
 
-                    if (instance!!.fetch().first().size == 0) {
-                        instance!!.store(diceBag)
+                        if (instance!!.fetch().first().size == 0) {
+                            instance!!.store(diceBag)
+                        }
+
+                        instance!!.traceUuid(instance!!.fetch().first())
                     }
-
-                    instance!!.traceUuid(instance!!.fetch().first())
                 }
             }
 

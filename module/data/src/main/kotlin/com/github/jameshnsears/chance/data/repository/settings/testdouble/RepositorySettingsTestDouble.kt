@@ -7,6 +7,7 @@ import com.github.jameshnsears.chance.data.repository.settings.RepositorySetting
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 
 class RepositorySettingsTestDouble private constructor() :
     RepositorySettingsInterface {
@@ -14,23 +15,28 @@ class RepositorySettingsTestDouble private constructor() :
         private var instance: RepositorySettingsTestDouble? = null
 
         fun getInstance(
-            settingsData: SettingsDataInterface = SettingsDataTestDouble()
+            settingsData: SettingsDataInterface
         ): RepositorySettingsTestDouble {
-            if (instance == null) {
-                instance = RepositorySettingsTestDouble()
-                instance!!.settings = settingsData
+            synchronized(this) {
+                if (instance == null) {
+                    runBlocking {
+                        instance = RepositorySettingsTestDouble()
+
+                        instance!!.settings = settingsData
+                    }
+                }
             }
             return instance!!
         }
     }
 
-    private lateinit var settings: SettingsDataInterface
+    private var settings: SettingsDataInterface? = null
 
     override suspend fun jsonExport(): String {
         val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
             SettingsProtocolBuffer.newBuilder()
 
-        mapSettingsIntoSettingsProtocolBufferBuilder(settings, settingsProtocolBufferBuilder)
+        mapSettingsIntoSettingsProtocolBufferBuilder(settings!!, settingsProtocolBufferBuilder)
 
         return JsonFormat.printer().includingDefaultValueFields()
             .print(settingsProtocolBufferBuilder.build())
@@ -67,7 +73,7 @@ class RepositorySettingsTestDouble private constructor() :
     }
 
     override suspend fun fetch(): Flow<SettingsDataInterface> = flow {
-        emit(settings)
+        emit(settings!!)
     }
 
     override suspend fun store(settingsData: SettingsDataInterface) {
@@ -75,6 +81,6 @@ class RepositorySettingsTestDouble private constructor() :
     }
 
     override suspend fun clear() {
-        settings = SettingsDataTestDouble()
+        settings = null
     }
 }

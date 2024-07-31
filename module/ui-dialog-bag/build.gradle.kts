@@ -88,6 +88,7 @@ dependencies {
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(project(":module:common"))
+    debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -106,7 +107,5 @@ dependencies {
     implementation(project(":module:data"))
     testImplementation(libs.kotlin.test)
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
-    testImplementation(libs.org.junit.jupiter)
     testImplementation(platform(libs.org.junit.bom))
-    debugImplementation(libs.androidx.ui.tooling)
 }

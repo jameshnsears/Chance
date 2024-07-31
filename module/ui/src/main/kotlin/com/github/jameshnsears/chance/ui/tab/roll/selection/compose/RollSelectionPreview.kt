@@ -8,9 +8,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
@@ -25,6 +22,8 @@ fun RollSelectionPreview() {
         UtilityFeature.Flag.NONE,
     )
 
+    val repositoryFactory = RepositoryFactory()
+
     ChanceTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
@@ -33,36 +32,36 @@ fun RollSelectionPreview() {
                 RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
-                        RepositorySettingsTestDouble.getInstance(),
-                        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice),
-                        RepositoryRollTestDouble.getInstance(RepositoryFactory().rollHistoryDataTestDouble)
+                        repositoryFactory.repositorySettings,
+                        repositoryFactory.repositoryBag,
+                        repositoryFactory.repositoryRoll
                     ), BagDataTestDouble().d2
                 )
 
                 RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
-                        RepositorySettingsTestDouble.getInstance(),
-                        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice),
-                        RepositoryRollTestDouble.getInstance(RepositoryFactory().rollHistoryDataTestDouble)
+                        repositoryFactory.repositorySettings,
+                        repositoryFactory.repositoryBag,
+                        repositoryFactory.repositoryRoll
                     ), BagDataTestDouble().d4
                 )
 
                 RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
-                        RepositorySettingsTestDouble.getInstance(),
-                        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice),
-                        RepositoryRollTestDouble.getInstance(RepositoryFactory().rollHistoryDataTestDouble)
+                        repositoryFactory.repositorySettings,
+                        repositoryFactory.repositoryBag,
+                        repositoryFactory.repositoryRoll
                     ), BagDataTestDouble().d4
                 )
 
                 RollSectionFilterChip(
                     TabRollAndroidViewModel(
                         mockk<Application>(),
-                        RepositorySettingsTestDouble.getInstance(),
-                        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice),
-                        RepositoryRollTestDouble.getInstance(RepositoryFactory().rollHistoryDataTestDouble)
+                        repositoryFactory.repositorySettings,
+                        repositoryFactory.repositoryBag,
+                        repositoryFactory.repositoryRoll
                     ), BagDataTestDouble().d12
                 )
             }

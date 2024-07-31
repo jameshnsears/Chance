@@ -7,18 +7,25 @@ import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 
 class RepositoryBagTestDouble private constructor() :
     RepositoryBagInterface {
     companion object {
         private var instance: RepositoryBagTestDouble? = null
 
-        fun getInstance(diceBag: DiceBag): RepositoryBagTestDouble {
-            if (instance == null) {
-                instance = RepositoryBagTestDouble()
-                instance!!.diceBag = diceBag
+        fun getInstance(
+            diceBag: DiceBag
+        ): RepositoryBagTestDouble {
+            synchronized(this) {
+                if (instance == null) {
+                    runBlocking {
+                        instance = RepositoryBagTestDouble()
 
-                instance!!.traceUuid(diceBag)
+                        instance!!.diceBag = diceBag
+                        instance!!.traceUuid(diceBag)
+                    }
+                }
             }
             return instance!!
         }

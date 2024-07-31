@@ -117,6 +117,5 @@ dependencies {
     testImplementation(libs.kotlin.test)
     testImplementation(libs.mockk)
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
-    testImplementation(libs.org.junit.jupiter)
     testImplementation(platform(libs.org.junit.bom))
 }

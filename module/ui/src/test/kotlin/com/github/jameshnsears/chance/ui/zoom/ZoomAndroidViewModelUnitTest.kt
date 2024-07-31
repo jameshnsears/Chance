@@ -2,21 +2,17 @@ package com.github.jameshnsears.chance.ui.zoom
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
-import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.spyk
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Ignore
 import org.junit.Test
 
 
@@ -59,56 +55,6 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
             17.0.sp,
             zoomAndroidViewModel().sideImageShapeNumberFontSize()
         )
-    }
-
-    @Test
-    @Ignore("todo")
-    fun removeRollSequenceWithDiceThatBeenDeleted() = runTest {
-        val zoomAndroidViewModel = zoomAndroidViewModel()
-
-        val diceBag = zoomAndroidViewModel.repositoryBag.fetch().first()
-        assertEquals(8, diceBag.size)
-
-        val rollHistory = zoomAndroidViewModel.repositoryRoll.fetch().first()
-        assertEquals(2, rollHistory.size)
-
-        diceBag.removeAt(1)     // d4
-        zoomAndroidViewModel.repositoryBag.store(diceBag)
-
-        assertEquals(7, zoomAndroidViewModel.repositoryBag.fetch().first().size)
-
-        assertEquals(0, zoomAndroidViewModel.repositoryRoll.fetch().first().size)
-    }
-
-    @Test
-    @Ignore("todo")
-    fun removeRollSequenceWithDiceWhereNumberOfSidesChanged() = runTest {
-        val zoomAndroidViewModel = zoomAndroidViewModel()
-
-        val diceBag = zoomAndroidViewModel.repositoryBag.fetch().first()
-        assertEquals(8, diceBag.size)
-
-        val rollHistory = zoomAndroidViewModel.repositoryRoll.fetch().first()
-        assertEquals(2, rollHistory.size)
-
-        // change the number of sides of d4, from 4 to 2
-        val newDiceEpoch = UtilityEpochTimeGenerator.now()
-        diceBag[1].epoch = newDiceEpoch
-        diceBag[1].sides = listOf(
-            Side(number = 2),
-            Side(number = 1)
-        )
-        zoomAndroidViewModel.repositoryBag.store(diceBag)
-
-        assertEquals(8, zoomAndroidViewModel.repositoryBag.fetch().first().size)
-
-//        assertTrue(zoomAndroidViewModel.diceBagEpochs().contains(newDiceEpoch))
-//
-//        assertFalse(zoomAndroidViewModel.diceRollEpochs().contains(newDiceEpoch))
-//
-//        zoomAndroidViewModel.removeRollSequenceWithDiceWhereNumberOfSidesChanged()
-//
-//        assertEquals(0, zoomAndroidViewModel.repositoryRoll.fetch().first().size)
     }
 
     @Test

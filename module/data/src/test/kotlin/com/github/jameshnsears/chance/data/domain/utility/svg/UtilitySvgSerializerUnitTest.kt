@@ -54,7 +54,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-    @Ignore("todo")
+    @Ignore("run adhoc manually")
     fun createD6SidesBase64FilesFromSvg() {
         val svgFiles = setOf(
             "d6/d6s1",
