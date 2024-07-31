@@ -9,7 +9,6 @@ open class UtilityLoggingInstrumentedHelper {
     init {
         UtilityFeature.enabled = setOf(
             UtilityFeature.Flag.NONE,
-            UtilityFeature.Flag.USE_PROTO_REPO
         )
     }
 

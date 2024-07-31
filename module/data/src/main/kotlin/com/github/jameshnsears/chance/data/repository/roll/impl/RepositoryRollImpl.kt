@@ -10,6 +10,7 @@ import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -34,11 +35,13 @@ class RepositoryRollImpl private constructor(private val context: Context) :
                     instance = RepositoryRollImpl(context)
 
                     runBlocking {
-                        if (BuildConfig.DEBUG)
-                            instance!!.clear()
+                        if (BuildConfig.DEBUG) {
+                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
+                                instance!!.clear()
 
-                        if (instance!!.fetch().first().size == 0) {
-                            instance!!.store(rollHistory)
+                                if (instance!!.fetch().first().size == 0)
+                                    instance!!.store(rollHistory)
+                            }
                         }
 
                         instance!!.traceUuid(instance!!.fetch().first())

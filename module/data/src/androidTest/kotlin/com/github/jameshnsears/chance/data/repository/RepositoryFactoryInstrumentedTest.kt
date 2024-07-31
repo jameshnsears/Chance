@@ -21,12 +21,12 @@ class RepositoryFactoryInstrumentedTest : RepositoryInstrumentedHelper() {
 
         assertEquals(
             repositoryFactory.repositoryBag.fetch().first().size,
-            repositoryFactory.bagDataImpl.allDice.size
+            repositoryFactory.bagDataTestDouble.allDice.size
         )
 
         assertEquals(
             repositoryFactory.repositoryRoll.fetch().first().size,
-            repositoryFactory.rollHistoryDataImpl.size
+            repositoryFactory.rollHistoryDataTestDouble.size
         )
     }
 }

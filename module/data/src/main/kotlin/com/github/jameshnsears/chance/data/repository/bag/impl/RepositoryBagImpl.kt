@@ -9,6 +9,7 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -32,12 +33,14 @@ class RepositoryBagImpl private constructor(private val context: Context) :
                     instance = RepositoryBagImpl(context)
 
                     runBlocking {
-                        if (BuildConfig.DEBUG)
-                            instance!!.clear()
-
-                        if (instance!!.fetch().first().size == 0) {
-                            instance!!.store(diceBag)
+                        if (BuildConfig.DEBUG) {
+                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
+                                instance!!.clear()
+                            }
                         }
+
+                        if (instance!!.fetch().first().size == 0)
+                            instance!!.store(diceBag)
 
                         instance!!.traceUuid(instance!!.fetch().first())
                     }

@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.data.repository
 
 import android.content.Context
-import com.github.jameshnsears.chance.common.BuildConfig
+import com.github.jameshnsears.chance.data.BuildConfig
 import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.impl.RollHistoryDataImpl

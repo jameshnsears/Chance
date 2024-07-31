@@ -71,10 +71,9 @@ class TabRollAndroidViewModel(
     private var _rollEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var rollEnabled: StateFlow<Boolean> = _rollEnabled
 
-    // TODO LeakCanary is currently disabled: test class org.junit.Test was found in classpath
-
     init {
         viewModelScope.launch {
+            alignSettings()
             alignUndoAndRollButtonsBasedOnSettings()
         }
 
@@ -91,6 +90,23 @@ class TabRollAndroidViewModel(
                 alignSettings()
                 alignUndoAndRollButtonsBasedOnSettings()
             }
+        }
+    }
+
+    private suspend fun alignSettings() {
+        val settings = repositorySettings.fetch().first()
+
+        _stateFlowSettingsData.update {
+            it.copy(
+                rollIndexTime = settings.rollIndexTime,
+                rollScore = settings.rollScore,
+                diceTitle = settings.diceTitle,
+                sideNumber = settings.sideNumber,
+                behaviour = settings.behaviour,
+                sideDescription = settings.sideDescription,
+                sideSVG = settings.sideSVG,
+                rollSound = settings.rollSound
+            )
         }
     }
 
@@ -112,25 +128,6 @@ class TabRollAndroidViewModel(
         } else {
             _undoEnabled.value = isUndoPossible()
             _rollEnabled.value = isRollPossible()
-        }
-    }
-
-    private suspend fun alignSettings() {
-        viewModelScope.launch {
-            val settings = repositorySettings.fetch().first()
-
-            _stateFlowSettingsData.update {
-                it.copy(
-                    rollIndexTime = settings.rollIndexTime,
-                    rollScore = settings.rollScore,
-                    diceTitle = settings.diceTitle,
-                    sideNumber = settings.sideNumber,
-                    behaviour = settings.behaviour,
-                    sideDescription = settings.sideDescription,
-                    sideSVG = settings.sideSVG,
-                    rollSound = settings.rollSound
-                )
-            }
         }
     }
 
@@ -192,7 +189,7 @@ class TabRollAndroidViewModel(
 
     private lateinit var mediaPlayer: MediaPlayer
 
-    private fun mediaPlayerRollSound() {
+    fun mediaPlayerRollSound() {
         if (!::mediaPlayer.isInitialized) {
             mediaPlayer = MediaPlayer.create(getApplication(), R.raw.roll)
         }
@@ -213,7 +210,6 @@ class TabRollAndroidViewModel(
         rollHistory[UtilityEpochTimeGenerator.now()] = newRollSequence
         rollHistory.putAll(repositoryRoll.fetch().first())
 
-        repositoryRoll.clear()
         repositoryRoll.store(rollHistory)
 
         _undoEnabled.value = isUndoPossible()

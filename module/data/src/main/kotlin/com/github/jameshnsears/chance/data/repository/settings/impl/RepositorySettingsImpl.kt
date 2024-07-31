@@ -9,6 +9,7 @@ import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInte
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -32,12 +33,14 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
                     runBlocking {
                         instance = RepositorySettingsImpl(context)
 
-                        if (BuildConfig.DEBUG)
-                            instance!!.clear()
-
-                        if (instance!!.fetch().first().resize == 0) {
-                            instance!!.store(settings)
+                        if (BuildConfig.DEBUG) {
+                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
+                                instance!!.clear()
+                            }
                         }
+
+                        if (instance!!.fetch().first().resize == 0)
+                            instance!!.store(settings)
                     }
                 }
             }

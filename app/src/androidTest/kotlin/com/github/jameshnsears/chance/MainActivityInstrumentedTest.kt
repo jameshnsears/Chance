@@ -7,8 +7,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.github.jameshnsears.chance.ui.tab.compose.TabRowTestTag
 import com.github.jameshnsears.chance.ui.tab.roll.compose.TabRollTestTag
-import com.github.jameshnsears.chance.utility.feature.UtilityFeature
-import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingInstrumentedHelper
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -16,13 +14,6 @@ import org.junit.Test
 
 
 class MainActivityInstrumentedTest : UtilityLoggingInstrumentedHelper() {
-    init {
-        UtilityFeature.enabled = setOf(
-            Flag.NONE,
-            Flag.USE_PROTO_REPO
-        )
-    }
-
     @get:Rule
     val androidComposeTestRule = createAndroidComposeRule<MainActivity>()
 

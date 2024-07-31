@@ -1,112 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="5" by="lint Koala | 2024.1.1" client="gradle" dependencies="false" name="AGP (8.4.2)" type="baseline" variant="all" version="8.4.2">
+<issues name="AGP (8.4.2)" by="lint Koala | 2024.1.1" client="gradle" dependencies="false"
+    format="5" type="baseline" variant="all" version="8.4.2">
 
-    <issue
-        id="LockedOrientationActivity"
+    <issue id="LockedOrientationActivity"
         message="Expecting `android:screenOrientation=&quot;unspecified&quot;` or `&quot;fullSensor&quot;` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices">
-        <location
-            file="src/main/AndroidManifest.xml"
-            line="17"/>
+        <location file="src/main/AndroidManifest.xml" line="17" />
     </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.purple_200` appears to be unused">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="3"/>
+    <issue id="UnusedResources" message="The resource `R.color.purple_200` appears to be unused">
+        <location file="src/main/res/values/colors.xml" line="3" />
     </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.purple_500` appears to be unused">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="4"/>
+    <issue id="UnusedResources" message="The resource `R.color.purple_500` appears to be unused">
+        <location file="src/main/res/values/colors.xml" line="4" />
     </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.purple_700` appears to be unused">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="5"/>
+    <issue id="UnusedResources" message="The resource `R.color.purple_700` appears to be unused">
+        <location file="src/main/res/values/colors.xml" line="5" />
     </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.teal_200` appears to be unused">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="6"/>
+    <issue id="UnusedResources" message="The resource `R.color.teal_200` appears to be unused">
+        <location file="src/main/res/values/colors.xml" line="6" />
     </issue>
 
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.teal_700` appears to be unused">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="7"/>
+    <issue id="UnusedResources" message="The resource `R.color.teal_700` appears to be unused">
+        <location file="src/main/res/values/colors.xml" line="7" />
     </issue>
 
-    <issue
-        id="UnusedResources"
+    <issue id="UnusedResources"
         message="The resource `R.mipmap.ic_launcher_round` appears to be unused">
-        <location
-            file="src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
+        <location file="src/main/res/mipmap-hdpi/ic_launcher_round.webp" />
     </issue>
 
-    <issue
-        id="MonochromeLauncherIcon"
+    <issue id="MonochromeLauncherIcon"
         message="The application adaptive icon is missing a monochrome tag">
-        <location
-            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
-            line="2"/>
+        <location file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml" line="2" />
     </issue>
 
-    <issue
-        id="IconDuplicates"
+    <issue id="IconDuplicates"
         message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location
-            file="src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
-        <location
-            file="src/main/res/mipmap-hdpi/ic_launcher.webp"/>
+        <location file="src/main/res/mipmap-hdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-hdpi/ic_launcher.webp" />
     </issue>
 
-    <issue
-        id="IconDuplicates"
+    <issue id="IconDuplicates"
         message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location
-            file="src/main/res/mipmap-mdpi/ic_launcher_round.webp"/>
-        <location
-            file="src/main/res/mipmap-mdpi/ic_launcher.webp"/>
+        <location file="src/main/res/mipmap-mdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-mdpi/ic_launcher.webp" />
     </issue>
 
-    <issue
-        id="IconDuplicates"
+    <issue id="IconDuplicates"
         message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location
-            file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp"/>
-        <location
-            file="src/main/res/mipmap-xhdpi/ic_launcher.webp"/>
+        <location file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-xhdpi/ic_launcher.webp" />
     </issue>
 
-    <issue
-        id="IconDuplicates"
+    <issue id="IconDuplicates"
         message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location
-            file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"/>
-        <location
-            file="src/main/res/mipmap-xxhdpi/ic_launcher.webp"/>
+        <location file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-xxhdpi/ic_launcher.webp" />
     </issue>
 
-    <issue
-        id="IconDuplicates"
+    <issue id="IconDuplicates"
         message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location
-            file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"/>
-        <location
-            file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp"/>
+        <location file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" />
+        <location file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp" />
     </issue>
 
 </issues>
