@@ -90,7 +90,7 @@ class BagDataImpl : BagDataInterface {
             ),
         ),
         title = "Story",
-        multiplierValue = 4,
+        multiplierValue = 3,
     )
 
     override val allDice = mutableListOf(
