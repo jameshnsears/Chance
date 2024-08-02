@@ -4,7 +4,7 @@ sealed class UtilityFeature {
     enum class Flag {
         NONE,                   // debug unit tests
         USE_PROTO_REPO,         // debug instrumented tests (emulator only) | app
-        CRASHLYTICS             // display a CRASHLYTICS button
+        CRASHLYTICS             // display only a single CRASHLYTICS button in MainActivity
     }
 
     companion object {

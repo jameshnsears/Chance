@@ -40,8 +40,8 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
                     .setUuid(side.uuid)
                     .setNumber(side.number)
                     .setNumberColour(side.numberColour)
-                    .setImageBase64(side.imageBase64)
                     .setImageDrawableId(side.imageDrawableId)
+                    .setImageBase64(side.imageBase64)
                     .setDescription(side.description)
                     .setDescriptionColour(side.descriptionColour)
                     .build()
@@ -49,14 +49,6 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
                 diceProtocolBuffer.addSide(sideProtocolBuffer)
 
             }
-
-            /*
-    val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
-        .setEpoch(System.currentTimeMillis()) // Set epoch
-        .addSide(SideProtocolBuffer.newBuilder().setValue(1).build()) // Add first side
-        .addSide(SideProtocolBuffer.newBuilder().setValue(2).build()) // Add second side
-        .build()             */
-
 
             diceProtocolBuffer.setTitle(dice.title)
             diceProtocolBuffer.setColour(dice.colour)
@@ -118,8 +110,8 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
             side.uuid = sideProtocolBuffer.uuid
             side.number = sideProtocolBuffer.number
             side.numberColour = sideProtocolBuffer.numberColour
-            side.imageBase64 = sideProtocolBuffer.imageBase64
             side.imageDrawableId = sideProtocolBuffer.imageDrawableId
+            side.imageBase64 = sideProtocolBuffer.imageBase64
             side.description = sideProtocolBuffer.description
             side.descriptionColour = sideProtocolBuffer.descriptionColour
 

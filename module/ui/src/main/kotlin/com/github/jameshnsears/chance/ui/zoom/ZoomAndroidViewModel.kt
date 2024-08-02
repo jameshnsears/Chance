@@ -58,24 +58,21 @@ class ZoomAndroidViewModel(
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect")
-
+                Timber.d("collect.DialogBagCloseEvent")
                 updateStateFlowZoom()
             }
         }
 
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                Timber.d("collect")
-
+                Timber.d("collect.TabBagImportEvent")
                 updateStateFlowZoom()
             }
         }
 
         viewModelScope.launch {
             TabRollEvent.sharedFlowTabRollEvent.collect {
-                Timber.d("collect")
-
+                Timber.d("collect.TabRollEvent")
                 updateStateFlowZoom()
             }
         }
@@ -159,5 +156,5 @@ class ZoomAndroidViewModel(
     }
 
     fun sideImageSVG(side: Side) =
-        UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side.imageBase64)
+        UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
 }

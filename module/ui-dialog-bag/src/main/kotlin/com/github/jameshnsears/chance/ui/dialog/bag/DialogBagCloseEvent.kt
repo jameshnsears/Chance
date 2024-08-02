@@ -9,7 +9,7 @@ object DialogBagCloseEvent {
     val sharedFlowDialogBagCloseEvent: SharedFlow<Boolean> = _sharedFlowDialogBagCloseEvent
 
     suspend fun emit() {
-        Timber.d("emit")
+        Timber.d("emit.DialogBagCloseEvent")
         _sharedFlowDialogBagCloseEvent.emit(true)
     }
 }

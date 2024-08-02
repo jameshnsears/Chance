@@ -9,7 +9,7 @@ object TabRollEvent {
     val sharedFlowTabRollEvent: SharedFlow<Boolean> = _sharedFlowTabRollUndoEvent
 
     suspend fun emit() {
-        Timber.d("emit")
+        Timber.d("emit.TabRollEvent")
         _sharedFlowTabRollUndoEvent.emit(true)
     }
 }

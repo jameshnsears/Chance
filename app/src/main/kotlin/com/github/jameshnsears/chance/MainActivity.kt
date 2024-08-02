@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         installSplashScreen()
-
+        
         installLogging()
 
         val repositoryFactory = RepositoryFactory(application)

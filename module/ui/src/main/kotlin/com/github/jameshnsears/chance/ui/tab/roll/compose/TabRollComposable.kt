@@ -116,6 +116,7 @@ fun Roll(tabRollAndroidViewModel: TabRollAndroidViewModel) {
         tabRollAndroidViewModel.rollEnabled.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
+
     val rollEnabled = stateFlowRollEnabled.value
 
     Button(

@@ -309,7 +309,7 @@ fun SideImageSVG(
     val sideImageError = stringResource(R.string.dialog_bag_side_image_error)
 
     val launcherImport = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
+        contract = ActivityResultContracts.OpenDocument()       // file picer without pre
     ) { uri ->
         try {
             if (uri != null) {
@@ -331,7 +331,7 @@ fun SideImageSVG(
 
     val sideImageDrawableId = stateFlowCardSide.value.sideImageDrawableId
 
-    val sideImageBase64Request = stateFlowCardSide.value.sideImageBase64Request
+    val sideImageBase64Request = stateFlowCardSide.value.sideImageRequest
 
     val diceSidesFewerThanSdeNumber = stateFlowCardSide.value.diceSidesFewerThanSdeNumber
 
@@ -343,7 +343,7 @@ fun SideImageSVG(
         Column {
             Button(
                 onClick = {
-                    launcherImport.launch("image/svg+xml")
+                    launcherImport.launch(arrayOf("image/svg+xml"))
                 },
                 modifier = Modifier
                     .width(180.dp)

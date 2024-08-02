@@ -4,6 +4,7 @@ import android.app.Application
 import coil.decode.SvgDecoder
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.github.jameshnsears.chance.data.domain.core.Side
 import java.net.URL
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -31,13 +32,19 @@ class UtilitySvgSerializer {
         @OptIn(ExperimentalEncodingApi::class)
         fun decodeBase64StringIntoByteArray(base64String: String) = Base64.decode(base64String)
 
-        fun imageRequestFromBase64String(application: Application, base64String: String) =
-            ImageRequest.Builder(application)
-                .data(decodeBase64StringIntoByteArray(base64String))
-                .decoderFactory(SvgDecoder.Factory())
-                .memoryCachePolicy(CachePolicy.ENABLED)
-                .memoryCacheKey(base64String.hashCode().toString())
-                .build()
+        fun imageRequestFromBase64String(application: Application, side: Side): ImageRequest {
+            if (side.imageRequest == null) {
+                val imageRequest = ImageRequest.Builder(application)
+                    .data(decodeBase64StringIntoByteArray(side.imageBase64))
+                    .decoderFactory(SvgDecoder.Factory())
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .memoryCacheKey(side.imageBase64.hashCode().toString())
+                    .build()
+                side.imageRequest = imageRequest
+                return side.imageRequest!!
+            } else
+                return side.imageRequest!!
+        }
 
         fun imageRequestFromSvgString(application: Application, svgString: String) =
             ImageRequest.Builder(application)

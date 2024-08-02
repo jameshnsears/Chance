@@ -20,7 +20,7 @@ data class CardSideState(
     var sideNumberColour: String,
     var sideImageDrawableId: Int,
     var sideImageBase64: String,
-    var sideImageBase64Request: ImageRequest?,
+    var sideImageRequest: ImageRequest?,
     var sideImageAvailable: Boolean,
     var sideDescription: String,
     var sideDescriptionColour: String,
@@ -41,9 +41,9 @@ class CardSideAndroidViewModel(
         sideNumberColour = side.numberColour,
         sideImageDrawableId = side.imageDrawableId,
         sideImageBase64 = side.imageBase64,
-        sideImageBase64Request = UtilitySvgSerializer.imageRequestFromBase64String(
+        sideImageRequest = UtilitySvgSerializer.imageRequestFromBase64String(
             getApplication(),
-            side.imageBase64
+            side
         ),
         sideImageAvailable = sideImageAvailableInit(),
         sideDescription = sideDescriptionInit(),
@@ -60,7 +60,7 @@ class CardSideAndroidViewModel(
     init {
         viewModelScope.launch {
             CardDiceSideEvent.sharedFlowDiceSide.collect { itInt ->
-                Timber.d("collect=$itInt; side.number=$side.number")
+                Timber.d("collect.CardDiceSideEvent=$itInt; side.number=$side.number")
 
                 val diceSidesFewer = itInt < side.number
                 _stateFlowCardSide.update {
@@ -98,7 +98,7 @@ class CardSideAndroidViewModel(
                     sideImageBase64 = UtilitySvgSerializer.encodeIntoBase64String(
                         candidateSvgString
                     ),
-                    sideImageBase64Request = UtilitySvgSerializer.imageRequestFromSvgString(
+                    sideImageRequest = UtilitySvgSerializer.imageRequestFromSvgString(
                         getApplication(),
                         candidateSvgString
                     ),
@@ -141,7 +141,7 @@ class CardSideAndroidViewModel(
             it.copy(
                 sideImageDrawableId = 0,
                 sideImageBase64 = "",
-                sideImageBase64Request = null
+                sideImageRequest = null
             )
         }
     }

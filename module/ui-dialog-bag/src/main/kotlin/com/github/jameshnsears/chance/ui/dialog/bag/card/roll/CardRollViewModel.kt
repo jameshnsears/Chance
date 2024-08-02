@@ -44,7 +44,7 @@ class CardRollViewModel(
     init {
         viewModelScope.launch {
             CardDiceSideEvent.sharedFlowDiceSide.collect {
-                Timber.d("collect=$it")
+                Timber.d("collect.CardDiceSideEvent=$it")
                 diceSidesSize = it
                 rollExplodeWhen(stateFlowCardRoll.value.rollExplodeWhen)
             }

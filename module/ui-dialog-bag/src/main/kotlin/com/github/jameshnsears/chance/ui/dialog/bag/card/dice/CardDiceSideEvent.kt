@@ -9,7 +9,7 @@ object CardDiceSideEvent {
     val sharedFlowDiceSide: SharedFlow<Int> = _sharedFlowDiceSide
 
     suspend fun emit(sideSize: Int) {
-        Timber.d("emit")
+        Timber.d("emit.CardDiceSideEvent")
         _sharedFlowDiceSide.emit(sideSize)
     }
 }

@@ -24,8 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.security.SecureRandom
 
@@ -79,14 +78,14 @@ class TabRollAndroidViewModel(
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect")
+                Timber.d("collect.DialogBagCloseEvent")
                 alignUndoAndRollButtonsBasedOnSettings()
             }
         }
 
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                Timber.d("collect")
+                Timber.d("collect.TabBagImportEvent")
                 alignSettings()
                 alignUndoAndRollButtonsBasedOnSettings()
             }
@@ -164,19 +163,27 @@ class TabRollAndroidViewModel(
 
     fun rollDiceSequence() {
         viewModelScope.launch {
+            _rollEnabled.value = false
+
             playRollSound()
 
-            val mutex = Mutex()
+            val newRollSequence = mutableListOf<Roll>()
 
-            mutex.withLock {
-                val newRollSequence = mutableListOf<Roll>()
+            rollDiceSequence(newRollSequence)
 
-                rollDiceSequence(newRollSequence)
-
+            runBlocking {
                 saveDiceSequence(newRollSequence)
-
-                TabRollEvent.emit()
             }
+
+            if (repositoryRoll.fetch().first().size % 20 == 0)
+                viewModelScope.launch {
+                    Timber.d("System.gc() request")
+                    System.gc()
+                }
+
+            _rollEnabled.value = isRollPossible()
+
+            TabRollEvent.emit()
         }
     }
 
@@ -208,8 +215,8 @@ class TabRollAndroidViewModel(
     ) {
         val rollHistory: RollHistory = LinkedHashMap()
         rollHistory[UtilityEpochTimeGenerator.now()] = newRollSequence
-        rollHistory.putAll(repositoryRoll.fetch().first())
 
+        rollHistory.putAll(repositoryRoll.fetch().first())
         repositoryRoll.store(rollHistory)
 
         _undoEnabled.value = isUndoPossible()
@@ -310,16 +317,26 @@ class TabRollAndroidViewModel(
 
     fun undo() {
         viewModelScope.launch {
-            if (isUndoPossible()) {
-                val rollHistory: RollHistory = LinkedHashMap()
-                rollHistory.putAll(repositoryRoll.fetch().first())
+            val rollHistory = repositoryRoll.fetch().first()
+
+            if (!rollHistory.isEmpty()) {
+                _undoEnabled.value = false
+
                 rollHistory.remove(rollHistory.keys.first())
 
-                repositoryRoll.store(rollHistory)
-
-                _undoEnabled.value = isUndoPossible()
+                runBlocking {
+                    repositoryRoll.store(rollHistory)
+                }
 
                 TabRollEvent.emit()
+
+                _undoEnabled.value = rollHistory.size != 0
+
+                if (rollHistory.size % 10 == 0)
+                    viewModelScope.launch {
+                        Timber.d("System.gc() request")
+                        System.gc()
+                    }
             }
         }
     }

@@ -104,6 +104,8 @@ dependencies {
     implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.json.kotlin.schema)
     implementation(libs.jsonschema.generator)

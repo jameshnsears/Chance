@@ -9,7 +9,7 @@ object TabBagImportEvent {
     val sharedFlowTabBagImportEvent: SharedFlow<Boolean> = _sharedFlowTabBagImportEvent
 
     suspend fun emit() {
-        Timber.d("emit")
+        Timber.d("emit.TabBagImportEvent")
         _sharedFlowTabBagImportEvent.emit(true)
     }
 }

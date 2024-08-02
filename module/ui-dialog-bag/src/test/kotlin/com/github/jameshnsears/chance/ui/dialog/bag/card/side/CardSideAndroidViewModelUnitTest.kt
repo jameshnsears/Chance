@@ -106,7 +106,7 @@ class CardSideAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         assertEquals(side.numberColour, stateFlowSide.sideNumberColour)
         assertEquals(side.description, stateFlowSide.sideDescription)
         assertEquals(side.descriptionColour, stateFlowSide.sideDescriptionColour)
-        assertNotNull(stateFlowSide.sideImageBase64Request?.data)
+        assertNotNull(stateFlowSide.sideImageRequest?.data)
         assertEquals(side.imageBase64, stateFlowSide.sideImageBase64)
     }
 }

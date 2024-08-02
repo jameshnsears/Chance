@@ -1,7 +1,9 @@
-&bull; Create custom dice - assign meaning to chance!
-&bull; Tap the side of a dice to change almost every facet
+&bull; Create custom dice
+&bull; Tap the side of a dice to change almost every facet: colour; text; image (SVG); # of sides
 &bull; Apply different behaviour to dice rolls
-&bull; Full import &amp; export
+&bull; Clone existing dice to quickly create new dice
+&bull; Choose the dice you want to roll
+&bull; Change settings to display only what your interested in seeing
+&bull; Import &amp; export all data
 &bull; Free; no ads; minimal analytics
-&bull; Open Source
-&bull; Contribute! User feedback drives development :-)
+&bull; Open Source: User feedback drives development

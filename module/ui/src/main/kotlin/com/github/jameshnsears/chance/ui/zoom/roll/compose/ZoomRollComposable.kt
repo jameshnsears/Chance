@@ -1,7 +1,6 @@
 package com.github.jameshnsears.chance.ui.zoom.roll.compose
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ButtonDefaults
@@ -22,8 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,10 +37,9 @@ import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
-import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
-import timber.log.Timber
+import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideDescription
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -70,24 +65,19 @@ fun ZoomRoll(
     val settingsTime = stateFlowTabRoll.value.rollIndexTime
     val settingsScore = stateFlowTabRoll.value.rollScore
 
-    val listState = rememberLazyListState()
-    // runs at every recomposition
+    val rollListState = rememberLazyListState()
     LaunchedEffect(stateFlowZoom.value.rollHistory.entries.toList()) {
-        listState.scrollToItem(0)
+        stateFlowZoom.value.rollHistory.entries.toList()
+        rollListState.scrollToItem(0)
     }
-
-    val cardDice = remember { mutableStateOf(Dice()) }
-    val cardSide = remember { mutableStateOf(Side()) }
-
-    val showDialog = remember { mutableStateOf(false) }
 
     LazyColumn(
         modifier = Modifier.padding(top = 8.dp, start = 0.dp, bottom = 110.dp, end = 8.dp),
-        state = listState
+        state = rollListState
     ) {
         itemsIndexed(
             items = stateFlowZoom.value.rollHistory.entries.toList(),
-            key = { _, item -> item.key }
+            key = { index, item -> "${item.value}_${index}" }
         ) { index, rollSequence ->
             if (settingsTime)
                 RollIndexTime(rollHistory.size - index, rollSequence)
@@ -103,19 +93,19 @@ fun ZoomRoll(
                     verticalAlignment = Alignment.Top,
                     modifier = Modifier.padding(bottom = 12.dp),
                 ) {
-                    items(
+                    itemsIndexed(
                         rollSequence.value,
-                    ) { roll ->
+                        key = { index, item ->
+                            "${item.side}_${index}"
+                        }
+                    ) { _, roll ->
                         for (dice: Dice in diceBag) {
                             if (dice.epoch == roll.diceEpoch) {
                                 RollDetails(
                                     tabRollAndroidViewModel,
                                     zoomAndroidViewModel,
                                     roll,
-                                    dice,
-                                    showDialog,
-                                    cardDice,
-                                    cardSide
+                                    dice
                                 )
                                 break
                             }
@@ -128,19 +118,14 @@ fun ZoomRoll(
                 &&
                 tabRollAndroidViewModel.isContentAvailableToDisplay(rollSequence.value)
             )
-                HorizontalDivider(Modifier.padding(bottom = 12.dp))
+                if (index == 0)
+                    HorizontalDivider(
+                        Modifier.padding(bottom = 12.dp),
+                        thickness = 4.dp
+                    )
+                else
+                    HorizontalDivider(Modifier.padding(bottom = 12.dp))
         }
-    }
-
-    if (showDialog.value) {
-        Timber.d("ZoomBag: dice.epoch=${cardDice.value.epoch}; side.uuid=${cardSide.value.uuid}")
-
-        DialogBag(
-            showDialog,
-            zoomAndroidViewModel.repositoryBag,
-            cardDice.value,
-            cardSide.value,
-        )
     }
 }
 
@@ -156,8 +141,7 @@ private fun RollIndexTime(
             text = "$position : ${
                 SimpleDateFormat("dd, MMMM HH:mm:ss", Locale.getDefault())
                     .format(Date(rollHistory.key))
-            }",
-            modifier = Modifier.padding(bottom = 8.dp),
+            }"
         )
     }
 }
@@ -187,10 +171,7 @@ private fun RollDetails(
     tabRollAndroidViewModel: TabRollAndroidViewModel,
     zoomAndroidViewModel: ZoomAndroidViewModel,
     roll: Roll,
-    dice: Dice,
-    showDialog: MutableState<Boolean>,
-    cardDice: MutableState<Dice>,
-    cardSide: MutableState<Side>
+    dice: Dice
 ) {
     val stateFlowTabRoll =
         tabRollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
@@ -213,38 +194,31 @@ private fun RollDetails(
         verticalArrangement = Arrangement.Center,
     ) {
         if (settingsDiceTitle)
-            Row {
+            Row(Modifier.padding(4.dp)) {
                 Text(
                     text = dice.title,
                 )
             }
 
-        if (settingsBehaviour) SideRollBehaviour(zoomAndroidViewModel, roll)
+        if (settingsBehaviour) ZoomSideRollBehaviour(zoomAndroidViewModel, roll)
 
-        if (settingsSideNumber) SideImageShape(
+        if (settingsSideNumber) ZoomRollSideImageShape(
             zoomAndroidViewModel,
             dice,
-            roll.side,
-            showDialog,
-            cardDice,
-            cardSide
+            roll.side
         )
 
-        if (settingsSideDescription) SideDescriptionRoll(zoomAndroidViewModel, roll.side)
+        if (settingsSideDescription) ZoomSideDescription(zoomAndroidViewModel, dice, roll.side)
 
-        if (settingsSideSVG) SideImageSVG(
+        if (settingsSideSVG) ZoomRollSideImageSVG(
             zoomAndroidViewModel,
-            dice,
-            roll.side,
-            showDialog,
-            cardDice,
-            cardSide
+            roll.side
         )
     }
 }
 
 @Composable
-fun SideRollBehaviour(
+fun ZoomSideRollBehaviour(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     roll: Roll
 ) {
@@ -262,7 +236,7 @@ fun SideRollBehaviour(
             modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            SideRollBehaviourIcon(
+            ZoomSideRollBehaviourIcon(
                 resizeView,
                 rollSelectionIconColour,
                 zoomAndroidViewModel,
@@ -273,7 +247,7 @@ fun SideRollBehaviour(
             if (roll.explodeIndex != 0) {
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
-                SideRollBehaviourIcon(
+                ZoomSideRollBehaviourIcon(
                     resizeView,
                     rollSelectionIconColour,
                     zoomAndroidViewModel,
@@ -283,7 +257,7 @@ fun SideRollBehaviour(
             }
 
             if (roll.scoreAdjustment != 0) {
-                SideRollBehaviourIcon(
+                ZoomSideRollBehaviourIcon(
                     resizeView,
                     rollSelectionIconColour,
                     zoomAndroidViewModel,
@@ -296,7 +270,7 @@ fun SideRollBehaviour(
 }
 
 @Composable
-private fun SideRollBehaviourIcon(
+private fun ZoomSideRollBehaviourIcon(
     resizeView: Dp,
     rollSelectionIconColour: Color,
     zoomAndroidViewModel: ZoomAndroidViewModel,
@@ -318,25 +292,10 @@ private fun SideRollBehaviourIcon(
 }
 
 @Composable
-fun SideDescriptionRoll(zoomAndroidViewModel: ZoomAndroidViewModel, side: Side) {
-    if (side.description != "") {
-        Text(
-            text = side.description,
-            color = zoomAndroidViewModel.sideColor(side.descriptionColour)
-        )
-    } else if (side.imageDrawableId != 0 || side.imageBase64 != "") {
-        Text(text = " ")
-    }
-}
-
-@Composable
-fun SideImageShape(
+fun ZoomRollSideImageShape(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     dice: Dice,
-    side: Side,
-    showDialog: MutableState<Boolean>,
-    cardDice: MutableState<Dice>,
-    cardSide: MutableState<Side>
+    side: Side
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
@@ -351,11 +310,7 @@ fun SideImageShape(
             contentDescription = "",
             modifier = Modifier
                 .size(resizeView)
-                .clickable {
-                    cardDice.value = dice
-                    cardSide.value = side
-                    showDialog.value = true
-                },
+                .padding(top = 8.dp),
             colorFilter = zoomAndroidViewModel.sideColourFilter(dice.colour),
             contentScale = ContentScale.Crop
         )
@@ -372,13 +327,9 @@ fun SideImageShape(
 }
 
 @Composable
-fun SideImageSVG(
+fun ZoomRollSideImageSVG(
     zoomAndroidViewModel: ZoomAndroidViewModel,
-    dice: Dice,
-    side: Side,
-    showDialog: MutableState<Boolean>,
-    cardDice: MutableState<Dice>,
-    cardSide: MutableState<Side>
+    side: Side
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
@@ -390,11 +341,6 @@ fun SideImageSVG(
     val modifier = Modifier
         .size(resizeView)
         .padding(top = 8.dp)
-        .clickable {
-            cardDice.value = dice
-            cardSide.value = side
-            showDialog.value = true
-        }
 
     if (side.imageDrawableId != 0) {
         Image(
