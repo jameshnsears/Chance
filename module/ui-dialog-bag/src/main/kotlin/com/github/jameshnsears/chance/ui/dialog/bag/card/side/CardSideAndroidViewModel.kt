@@ -102,6 +102,7 @@ class CardSideAndroidViewModel(
                         getApplication(),
                         candidateSvgString
                     ),
+                    sideImageDrawableId = 0
                 )
             }
         } else {

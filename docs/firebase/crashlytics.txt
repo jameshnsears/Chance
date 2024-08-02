@@ -1,0 +1,19 @@
+Test with fdroidDebug then googleplayDebug
+
+Before running app:
+
+export PATH=$PATH:$HOME/Android/Sdk/platform-tools
+adb shell setprop log.tag.FirebaseCrashlytics DEBUG
+adb logcat -s FirebaseCrashlytics
+
+===
+
+Flag.CRASHLYTICS
+
+====
+
+https://console.firebase.google.com/project/chance-development/crashlytics/app/android:com.github.jameshnsears.chance/issues
+
+===
+
+adb shell setprop log.tag.FirebaseCrashlytics INFO

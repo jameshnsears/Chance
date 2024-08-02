@@ -14,7 +14,7 @@
       <SelectionState runConfigName="app:androidTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="app - clean">
+      <SelectionState runConfigName="app - uninstall">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

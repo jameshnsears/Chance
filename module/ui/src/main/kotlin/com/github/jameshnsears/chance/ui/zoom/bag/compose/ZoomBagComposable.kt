@@ -144,7 +144,7 @@ fun SideImageShape(
     side: Side,
     showDialog: MutableState<Boolean>,
     cardDice: MutableState<Dice>,
-    dialogSide: MutableState<Side>,
+    cardSide: MutableState<Side>,
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
@@ -162,7 +162,7 @@ fun SideImageShape(
                 .padding(top = 8.dp)
                 .clickable {
                     cardDice.value = dice
-                    dialogSide.value = side
+                    cardSide.value = side
                     showDialog.value = true
                 },
             colorFilter = zoomAndroidViewModel.sideColourFilter(dice.colour),

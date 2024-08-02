@@ -75,11 +75,8 @@ class ZoomAndroidViewModel(
         viewModelScope.launch {
             TabRollEvent.sharedFlowTabRollEvent.collect {
                 Timber.d("collect")
-                _stateFlowZoom.update {
-                    it.copy(
-                        rollHistory = repositoryRoll.fetch().first()
-                    )
-                }
+
+                updateStateFlowZoom()
             }
         }
     }
