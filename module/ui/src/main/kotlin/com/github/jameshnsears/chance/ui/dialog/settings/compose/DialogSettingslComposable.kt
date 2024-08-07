@@ -1,13 +1,21 @@
 package com.github.jameshnsears.chance.ui.dialog.settings.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -15,10 +23,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -38,6 +48,8 @@ class DialogSettingsTestTag {
         const val SETTINGS_BEHAVIOUR = "SETTINGS_BEHAVIOUR"
 
         const val SETTINGS_ROLL_SOUND = "SETTINGS_ROLL_SOUND"
+
+        const val SETTINGS_UNDO_ALL = "SETTINGS_UNDO_ALL"
     }
 }
 
@@ -85,7 +97,9 @@ fun DialogSettingsLayout(
     ) {
         Column(
             modifier = Modifier
-                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 8.dp),
+                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 8.dp)
+                .height(420.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CommonSwitch(
@@ -155,6 +169,47 @@ fun DialogSettingsLayout(
                 tabRollAndroidViewModel::settingsRollSound,
                 DialogSettingsTestTag.SETTINGS_ROLL_SOUND
             )
+
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .padding(top = 12.dp, bottom = 12.dp)
+            )
+
+            UndoAll(tabRollAndroidViewModel)
+        }
+    }
+}
+
+@Composable
+private fun UndoAll(tabRollAndroidViewModel: TabRollAndroidViewModel) {
+    val enabled = remember { mutableStateOf(tabRollAndroidViewModel.undoEnabled.value) }
+
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp, bottom = 4.dp)
+    ) {
+        Button(
+            onClick = {
+                tabRollAndroidViewModel.undoAll()
+                enabled.value = false
+            },
+            modifier = Modifier
+                .width(160.dp)
+                .testTag(DialogSettingsTestTag.SETTINGS_UNDO_ALL),
+            enabled = enabled.value
+        ) {
+            Icon(
+                painterResource(id = R.drawable.undo_fill0_wght400_grad0_opsz24),
+                contentDescription = "",
+                modifier = Modifier.size(24.dp),
+            )
+
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+
+            Text(stringResource(R.string.tab_roll_settings_undo_all))
         }
     }
 }

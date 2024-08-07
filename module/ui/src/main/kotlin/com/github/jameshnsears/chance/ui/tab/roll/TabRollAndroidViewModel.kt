@@ -341,6 +341,14 @@ class TabRollAndroidViewModel(
         }
     }
 
+    fun undoAll() {
+        viewModelScope.launch {
+            repositoryRoll.clear()
+            TabRollEvent.emit()
+            _undoEnabled.value = false
+        }
+    }
+
     fun settingsIndexTime(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollIndexTime = checked) }
