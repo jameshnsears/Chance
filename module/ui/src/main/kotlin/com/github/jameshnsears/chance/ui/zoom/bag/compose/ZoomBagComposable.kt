@@ -58,7 +58,9 @@ fun ZoomBag(
             items = diceListState,
             key = { index, item -> "${item.uuid}_${index}" }
         ) { index, dice ->
-            Row {
+            Row(
+                modifier = Modifier.padding(start = 8.dp),
+            ) {
                 Text(
                     text = dice.title,
                 )
