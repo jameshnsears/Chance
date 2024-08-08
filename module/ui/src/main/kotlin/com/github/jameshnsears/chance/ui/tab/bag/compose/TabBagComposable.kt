@@ -165,7 +165,7 @@ fun Resize(
                 tabBagSlider(it.toInt())
                 zoomResize(it.toInt())
             },
-            valueRange = 1f..7f,
+            valueRange = 1f..5f,
             steps = 0,
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,

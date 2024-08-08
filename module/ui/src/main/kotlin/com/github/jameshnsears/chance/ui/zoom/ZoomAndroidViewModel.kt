@@ -113,13 +113,11 @@ class ZoomAndroidViewModel(
         val defaultViewSize = 80.dp
 
         return when (resize) {
-            1 -> defaultViewSize * 0.5f
-            2 -> defaultViewSize * 0.75f
-            3 -> defaultViewSize * 1.0f
-            4 -> defaultViewSize * 1.25f
-            5 -> defaultViewSize * 1.5f
-            6 -> defaultViewSize * 1.75f
-            7 -> defaultViewSize * 2.0f
+            1 -> defaultViewSize * 0.75f
+            2 -> defaultViewSize * 1.0f
+            3 -> defaultViewSize * 1.25f
+            4 -> defaultViewSize * 1.5f
+            5 -> defaultViewSize * 1.75f
             else -> defaultViewSize
         }
     }
