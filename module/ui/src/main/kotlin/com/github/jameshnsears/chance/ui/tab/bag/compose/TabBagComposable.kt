@@ -166,7 +166,7 @@ fun Resize(
                 zoomResize(it.toInt())
             },
             valueRange = 1f..7f,
-            steps = 5,
+            steps = 0,
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,
                 activeTrackColor = MaterialTheme.colorScheme.secondary,
