@@ -28,25 +28,25 @@ class ZoomAndroidViewModelUnitTest : UtilityAndroidHelper() {
         val zoomAndroidViewModel = zoomAndroidViewModel()
 
         zoomAndroidViewModel.resizeView(1)
-        assertEquals(60.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
+        assertEquals(40.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
 
         zoomAndroidViewModel.resizeView(2)
-        assertEquals(64.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
+        assertEquals(60.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
 
         zoomAndroidViewModel.resizeView(3)
-        assertEquals(72.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
-
-        zoomAndroidViewModel.resizeView(4)
         assertEquals(80.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
 
+        zoomAndroidViewModel.resizeView(4)
+        assertEquals(100.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
+
         zoomAndroidViewModel.resizeView(5)
-        assertEquals(88.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
+        assertEquals(120.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
 
         zoomAndroidViewModel.resizeView(6)
-        assertEquals(96.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
+        assertEquals(140.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
 
         zoomAndroidViewModel.resizeView(7)
-        assertEquals(100.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
+        assertEquals(160.0.dp, zoomAndroidViewModel.stateFlowZoom.value.resizeView)
     }
 
     @Test
