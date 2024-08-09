@@ -70,6 +70,11 @@ class ZoomAndroidViewModel(
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect.TabBagImportEvent")
+                _stateFlowZoom.update {
+                    it.copy(
+                        resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
+                    )
+                }
                 updateStateFlowZoom()
             }
         }
@@ -85,7 +90,6 @@ class ZoomAndroidViewModel(
     private suspend fun updateStateFlowZoom() {
         _stateFlowZoom.update {
             it.copy(
-                resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
                 diceBag = repositoryBag.fetch().first(),
                 rollHistory = repositoryRoll.fetch().first()
             )

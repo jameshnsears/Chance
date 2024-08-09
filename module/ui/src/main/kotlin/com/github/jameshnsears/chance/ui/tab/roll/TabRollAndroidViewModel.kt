@@ -343,9 +343,11 @@ class TabRollAndroidViewModel(
 
     fun undoAll() {
         viewModelScope.launch {
-            repositoryRoll.clear()
-            TabRollEvent.emit()
             _undoEnabled.value = false
+            runBlocking {
+                repositoryRoll.clear()
+            }
+            TabRollEvent.emit()
         }
     }
 
