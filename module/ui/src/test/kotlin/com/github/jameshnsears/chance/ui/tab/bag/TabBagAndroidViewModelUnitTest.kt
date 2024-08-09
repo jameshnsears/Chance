@@ -244,7 +244,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun resize() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        assertEquals(4, tabBagViewModel.stateFlowTabBag.value.resize)
+        assertEquals(3, tabBagViewModel.stateFlowTabBag.value.resize)
 
         tabBagViewModel.resize(5)
         assertEquals(5, tabBagViewModel.stateFlowTabBag.value.resize)
