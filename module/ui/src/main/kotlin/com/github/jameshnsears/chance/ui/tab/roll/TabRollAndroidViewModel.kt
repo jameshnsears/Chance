@@ -110,31 +110,31 @@ class TabRollAndroidViewModel(
     }
 
     private suspend fun alignUndoAndRollButtonsBasedOnSettings() {
-        runBlocking {
-            val settings = repositorySettings.fetch().first()
+        val settings = repositorySettings.fetch().first()
 
-            if (!settings.diceTitle
-                && !settings.rollBehaviour
-                && !settings.sideNumber
-                && !settings.sideDescription
-                && !settings.sideSVG
-            ) {
-                _undoEnabled.value = false
-                _rollEnabled.value = false
-            } else {
-                _undoEnabled.value = isUndoPossible()
-                
-                _diceBag.value = repositoryBag.fetch().first()
+        if (!settings.rollIndexTime
+            && !settings.rollScore
+            && !settings.diceTitle
+            && !settings.rollBehaviour
+            && !settings.sideNumber
+            && !settings.sideDescription
+            && !settings.sideSVG
+        ) {
+            _undoEnabled.value = false
+            _rollEnabled.value = false
+        } else {
+            _undoEnabled.value = isUndoPossible()
 
-                var selected = false
-                _diceBag.value.forEach {
-                    if (it.selected) {
-                        selected = true
-                    }
+            _diceBag.value = repositoryBag.fetch().first()
+
+            var selected = false
+            _diceBag.value.forEach {
+                if (it.selected) {
+                    selected = true
                 }
-
-                _rollEnabled.value = selected
             }
+
+            _rollEnabled.value = selected
         }
     }
 
@@ -153,7 +153,9 @@ class TabRollAndroidViewModel(
                 updatedDiceBag.add(newDice)
             }
 
-            repositoryBag.store(updatedDiceBag)
+            runBlocking {
+                repositoryBag.store(updatedDiceBag)
+            }
 
             alignUndoAndRollButtonsBasedOnSettings()
         }
