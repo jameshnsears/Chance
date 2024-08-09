@@ -120,10 +120,9 @@ class TabRollAndroidViewModel(
                 && !settings.sideNumber
                 && !settings.sideDescription
                 && !settings.sideSVG
-            ) {
+            )
                 _rollEnabled.value = false
-
-            } else
+            else
                 _rollEnabled.value = isRollPossible()
         }
 
@@ -457,5 +456,32 @@ class TabRollAndroidViewModel(
 
             alignUndoAndRollButtonsBasedOnSettings()
         }
+    }
+
+    fun isContentAvailableToDisplay(rolls: List<Roll>): Boolean {
+        val settings = _stateFlowSettingsData.value
+
+        var svgExists = false
+        var descriptionExists = false
+        rolls.forEach {
+            if (it.side.imageBase64 != "" || it.side.imageDrawableId != 0)
+                svgExists = true
+
+            if (it.side.description != "")
+                descriptionExists = true
+        }
+
+        return (settings.rollIndexTime
+                ||
+                settings.rollScore
+                ||
+                settings.diceTitle
+                ||
+                settings.sideNumber
+                ||
+                (settings.sideDescription && descriptionExists)
+                ||
+                (settings.sideSVG && svgExists)
+                )
     }
 }

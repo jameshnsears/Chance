@@ -114,7 +114,10 @@ fun ZoomRoll(
                 }
             }
 
-            if (index < rollHistory.entries.size)
+            if (index < rollHistory.entries.size
+                &&
+                tabRollAndroidViewModel.isContentAvailableToDisplay(rollSequence.value)
+            )
                 if (index == 0)
                     HorizontalDivider(
                         Modifier.padding(bottom = 12.dp),

@@ -229,6 +229,14 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         assertEquals(0, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
     }
 
+    @Test
+    fun isContentAvailableToDisplay() = runTest {
+        val tabRollAndroidViewModel = tabRollAndroidViewModel()
+        val rolls = mutableListOf<Roll>()
+        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        assertTrue(tabRollAndroidViewModel.isContentAvailableToDisplay(rolls))
+    }
+
     private fun tabRollAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): TabRollAndroidViewModel {
