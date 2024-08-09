@@ -110,8 +110,6 @@ class TabRollAndroidViewModel(
     }
 
     private suspend fun alignUndoAndRollButtonsBasedOnSettings() {
-        _undoEnabled.value = isUndoPossible()
-
         runBlocking {
             val settings = repositorySettings.fetch().first()
 
@@ -120,24 +118,24 @@ class TabRollAndroidViewModel(
                 && !settings.sideNumber
                 && !settings.sideDescription
                 && !settings.sideSVG
-            )
+            ) {
+                _undoEnabled.value = false
                 _rollEnabled.value = false
-            else
-                _rollEnabled.value = isRollPossible()
-        }
+            } else {
+                _undoEnabled.value = isUndoPossible()
+                
+                _diceBag.value = repositoryBag.fetch().first()
 
-    }
+                var selected = false
+                _diceBag.value.forEach {
+                    if (it.selected) {
+                        selected = true
+                    }
+                }
 
-    private fun isRollPossible(): Boolean {
-        runBlocking {
-            _diceBag.value = repositoryBag.fetch().first()
+                _rollEnabled.value = selected
+            }
         }
-
-        _diceBag.value.forEach {
-            if (it.selected)
-                return true
-        }
-        return false
     }
 
     fun markDiceAsSelected(dice: Dice, selected: Boolean) {
@@ -183,7 +181,7 @@ class TabRollAndroidViewModel(
                     System.gc()
                 }
 
-            _rollEnabled.value = isRollPossible()
+            _rollEnabled.value = true
 
             TabRollEvent.emit()
         }
