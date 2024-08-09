@@ -57,12 +57,14 @@ class ZoomAndroidViewModel(
 
     init {
         viewModelScope.launch {
+            updateResize()
             updateStateFlowZoom()
         }
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
                 Timber.d("collect.DialogBagCloseEvent")
+                updateResize()
                 updateStateFlowZoom()
             }
         }
@@ -70,11 +72,7 @@ class ZoomAndroidViewModel(
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
                 Timber.d("collect.TabBagImportEvent")
-                _stateFlowZoom.update {
-                    it.copy(
-                        resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
-                    )
-                }
+                updateResize()
                 updateStateFlowZoom()
             }
         }
@@ -84,6 +82,14 @@ class ZoomAndroidViewModel(
                 Timber.d("collect.TabRollEvent")
                 updateStateFlowZoom()
             }
+        }
+    }
+
+    private suspend fun updateResize() {
+        _stateFlowZoom.update {
+            it.copy(
+                resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
+            )
         }
     }
 
