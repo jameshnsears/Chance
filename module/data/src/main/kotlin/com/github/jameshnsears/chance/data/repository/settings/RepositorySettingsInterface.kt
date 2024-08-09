@@ -20,7 +20,7 @@ interface RepositorySettingsInterface : RepositoryImportExportInterface {
 
         settingsProtocolBufferBuilder.setDiceTitle(settingsData.diceTitle)
         settingsProtocolBufferBuilder.setSideNumber(settingsData.sideNumber)
-        settingsProtocolBufferBuilder.setBehaviour(settingsData.behaviour)
+        settingsProtocolBufferBuilder.setBehaviour(settingsData.rollBehaviour)
         settingsProtocolBufferBuilder.setSideDescription(settingsData.sideDescription)
         settingsProtocolBufferBuilder.setSideSVG(settingsData.sideSVG)
 

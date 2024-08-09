@@ -74,7 +74,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 
         newSettings.diceTitle = settingsProtocolBuffer.diceTitle
         newSettings.sideNumber = settingsProtocolBuffer.sideNumber
-        newSettings.behaviour = settingsProtocolBuffer.behaviour
+        newSettings.rollBehaviour = settingsProtocolBuffer.behaviour
         newSettings.sideDescription = settingsProtocolBuffer.sideDescription
         newSettings.sideSVG = settingsProtocolBuffer.sideSVG
 
@@ -94,7 +94,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 
                     diceTitle = settingsProtocolBuffer.diceTitle,
                     sideNumber = settingsProtocolBuffer.sideNumber,
-                    behaviour = settingsProtocolBuffer.behaviour,
+                    rollBehaviour = settingsProtocolBuffer.behaviour,
                     sideDescription = settingsProtocolBuffer.sideDescription,
                     sideSVG = settingsProtocolBuffer.sideSVG,
 

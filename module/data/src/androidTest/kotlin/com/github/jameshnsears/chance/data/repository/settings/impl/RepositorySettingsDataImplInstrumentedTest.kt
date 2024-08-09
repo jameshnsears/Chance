@@ -20,7 +20,7 @@ class RepositorySettingsDataImplInstrumentedTest : RepositoryInstrumentedHelper(
         originalSettings.rollScore = false
         originalSettings.diceTitle = true
         originalSettings.sideNumber = false
-        originalSettings.behaviour = true
+        originalSettings.rollBehaviour = true
         originalSettings.sideDescription = true
         originalSettings.sideSVG = false
         originalSettings.rollSound = true
@@ -36,7 +36,7 @@ class RepositorySettingsDataImplInstrumentedTest : RepositoryInstrumentedHelper(
 
         assertEquals(originalSettings.diceTitle, fetchedSettings.diceTitle)
         assertEquals(originalSettings.sideNumber, fetchedSettings.sideNumber)
-        assertEquals(originalSettings.behaviour, fetchedSettings.behaviour)
+        assertEquals(originalSettings.rollBehaviour, fetchedSettings.rollBehaviour)
         assertEquals(originalSettings.sideDescription, fetchedSettings.sideDescription)
         assertEquals(originalSettings.sideSVG, fetchedSettings.sideSVG)
 
@@ -68,7 +68,7 @@ class RepositorySettingsDataImplInstrumentedTest : RepositoryInstrumentedHelper(
 
         assertEquals(originalSettings.diceTitle, fetchedSettings.diceTitle)
         assertEquals(originalSettings.sideNumber, fetchedSettings.sideNumber)
-        assertEquals(originalSettings.behaviour, fetchedSettings.behaviour)
+        assertEquals(originalSettings.rollBehaviour, fetchedSettings.rollBehaviour)
         assertEquals(originalSettings.sideDescription, fetchedSettings.sideDescription)
         assertEquals(originalSettings.sideSVG, fetchedSettings.sideSVG)
 

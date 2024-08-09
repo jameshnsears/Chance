@@ -52,7 +52,7 @@ class TabRollAndroidViewModel(
             rollIndexTime = SettingsDataImpl().rollIndexTime,
             rollScore = SettingsDataImpl().rollScore,
             diceTitle = SettingsDataImpl().diceTitle,
-            behaviour = SettingsDataImpl().behaviour,
+            behaviour = SettingsDataImpl().rollBehaviour,
             sideNumber = SettingsDataImpl().sideNumber,
             sideDescription = SettingsDataImpl().sideDescription,
             sideSVG = SettingsDataImpl().sideSVG,
@@ -101,7 +101,7 @@ class TabRollAndroidViewModel(
                 rollScore = settings.rollScore,
                 diceTitle = settings.diceTitle,
                 sideNumber = settings.sideNumber,
-                behaviour = settings.behaviour,
+                behaviour = settings.rollBehaviour,
                 sideDescription = settings.sideDescription,
                 sideSVG = settings.sideSVG,
                 rollSound = settings.rollSound
@@ -110,27 +110,28 @@ class TabRollAndroidViewModel(
     }
 
     private suspend fun alignUndoAndRollButtonsBasedOnSettings() {
-        _diceBag.value = repositoryBag.fetch().first()
+        _undoEnabled.value = isUndoPossible()
 
         val settings = repositorySettings.fetch().first()
 
-        if (!settings.rollIndexTime
-            && !settings.rollScore
-            && !settings.diceTitle
+        if (!settings.diceTitle
+            && !settings.rollBehaviour
             && !settings.sideNumber
-            && !settings.behaviour
             && !settings.sideDescription
             && !settings.sideSVG
         ) {
-            _undoEnabled.value = false
             _rollEnabled.value = false
         } else {
-            _undoEnabled.value = isUndoPossible()
+
             _rollEnabled.value = isRollPossible()
         }
     }
 
     private fun isRollPossible(): Boolean {
+        runBlocking {
+            _diceBag.value = repositoryBag.fetch().first()
+        }
+
         _diceBag.value.forEach {
             if (it.selected)
                 return true
@@ -216,10 +217,11 @@ class TabRollAndroidViewModel(
         val rollHistory: RollHistory = LinkedHashMap()
         rollHistory[UtilityEpochTimeGenerator.now()] = newRollSequence
 
-        rollHistory.putAll(repositoryRoll.fetch().first())
-        repositoryRoll.store(rollHistory)
-
-        _undoEnabled.value = isUndoPossible()
+        runBlocking {
+            rollHistory.putAll(repositoryRoll.fetch().first())
+            repositoryRoll.store(rollHistory)
+            _undoEnabled.value = isUndoPossible()
+        }
     }
 
     fun rollDiceSequence(newRollSequence: MutableList<Roll>) {
@@ -448,7 +450,7 @@ class TabRollAndroidViewModel(
             _stateFlowSettingsData.update { it.copy(behaviour = checked) }
 
             val settings = repositorySettings.fetch().first()
-            settings.behaviour = checked
+            settings.rollBehaviour = checked
             repositorySettings.store(settings)
 
             alignUndoAndRollButtonsBasedOnSettings()

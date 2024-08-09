@@ -9,7 +9,7 @@ interface SettingsDataInterface {
 
     var diceTitle: Boolean
     var sideNumber: Boolean
-    var behaviour: Boolean
+    var rollBehaviour: Boolean
     var sideDescription: Boolean
     var sideSVG: Boolean
 

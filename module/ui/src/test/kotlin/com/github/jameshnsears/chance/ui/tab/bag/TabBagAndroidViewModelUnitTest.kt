@@ -26,7 +26,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
               "rollScore": ${SettingsDataTestDouble().rollScore},
               "diceTitle": ${SettingsDataTestDouble().diceTitle},
               "sideNumber": ${SettingsDataTestDouble().sideNumber},
-              "behaviour": ${SettingsDataTestDouble().behaviour},
+              "behaviour": ${SettingsDataTestDouble().rollBehaviour},
               "sideDescription": ${SettingsDataTestDouble().sideDescription},
               "sideSVG": ${SettingsDataTestDouble().sideSVG},
               "rollSound": ${SettingsDataTestDouble().rollSound}

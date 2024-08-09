@@ -10,7 +10,7 @@ class SettingsDataImpl(
 
     override var diceTitle: Boolean = true,
     override var sideNumber: Boolean = true,
-    override var behaviour: Boolean = true,
+    override var rollBehaviour: Boolean = true,
     override var sideDescription: Boolean = true,
     override var sideSVG: Boolean = true,
 
