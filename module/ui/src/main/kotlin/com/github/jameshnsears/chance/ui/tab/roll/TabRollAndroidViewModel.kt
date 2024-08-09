@@ -111,20 +111,7 @@ class TabRollAndroidViewModel(
 
     private suspend fun alignUndoAndRollButtonsBasedOnSettings() {
         _undoEnabled.value = isUndoPossible()
-
-        val settings = repositorySettings.fetch().first()
-
-        if (!settings.diceTitle
-            && !settings.rollBehaviour
-            && !settings.sideNumber
-            && !settings.sideDescription
-            && !settings.sideSVG
-        ) {
-            _rollEnabled.value = false
-        } else {
-
-            _rollEnabled.value = isRollPossible()
-        }
+        _rollEnabled.value = isRollPossible()
     }
 
     private fun isRollPossible(): Boolean {
