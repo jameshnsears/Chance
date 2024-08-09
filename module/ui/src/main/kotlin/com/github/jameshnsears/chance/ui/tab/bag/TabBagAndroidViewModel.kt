@@ -179,6 +179,7 @@ class TabBagAndroidViewModel(
 
             getContext().contentResolver.openInputStream(uri)?.use { inputStream ->
                 import(inputStream.reader().readText())
+                inputStream.close()
             }
         }
     }

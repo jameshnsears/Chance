@@ -153,9 +153,7 @@ class TabRollAndroidViewModel(
                 updatedDiceBag.add(newDice)
             }
 
-            runBlocking {
-                repositoryBag.store(updatedDiceBag)
-            }
+            repositoryBag.store(updatedDiceBag)
 
             alignUndoAndRollButtonsBasedOnSettings()
         }
@@ -183,6 +181,7 @@ class TabRollAndroidViewModel(
                     System.gc()
                 }
 
+            _undoEnabled.value = true
             _rollEnabled.value = true
 
             TabRollEvent.emit()
@@ -218,11 +217,8 @@ class TabRollAndroidViewModel(
         val rollHistory: RollHistory = LinkedHashMap()
         rollHistory[UtilityEpochTimeGenerator.now()] = newRollSequence
 
-        runBlocking {
-            rollHistory.putAll(repositoryRoll.fetch().first())
-            repositoryRoll.store(rollHistory)
-            _undoEnabled.value = isUndoPossible()
-        }
+        rollHistory.putAll(repositoryRoll.fetch().first())
+        repositoryRoll.store(rollHistory)
     }
 
     fun rollDiceSequence(newRollSequence: MutableList<Roll>) {
@@ -347,9 +343,7 @@ class TabRollAndroidViewModel(
     fun undoAll() {
         viewModelScope.launch {
             _undoEnabled.value = false
-            runBlocking {
-                repositoryRoll.clear()
-            }
+            repositoryRoll.clear()
             TabRollEvent.emit()
         }
     }

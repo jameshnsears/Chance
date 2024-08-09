@@ -211,7 +211,6 @@ fun ImportExport(
     val launcherImport =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) { uri: Uri? ->
             uri?.let {
-                // import is a bit too fast to show a "please wait" Toast; for the moment
                 tabBagAndroidViewModel.importFileJson(uri)
             }
         }
@@ -235,7 +234,7 @@ fun ImportExport(
                     bottomSheetScaffoldState.bottomSheetState.partialExpand()
                 }
 
-                launcherImport.launch(arrayOf("application/json"))
+                launcherImport.launch(arrayOf("application/json", "*/json"))
             },
             modifier = Modifier
                 .width(160.dp)
