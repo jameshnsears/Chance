@@ -3,7 +3,7 @@ package com.github.jameshnsears.chance.data.domain.core.settings.impl
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 
 class SettingsDataImpl(
-    override var resize: Int = 4,
+    override var resize: Int = 3,
 
     override var rollIndexTime: Boolean = true,
     override var rollScore: Boolean = true,

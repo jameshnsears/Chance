@@ -13,11 +13,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        installSplashScreen()
-
         installLogging()
 
         val repositoryFactory = RepositoryFactory(application)
+
+        installSplashScreen()
 
         setContent {
             MainActivityComposable(
