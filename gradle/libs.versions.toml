@@ -32,7 +32,7 @@ org-jlleitschuh-gradle-ktlint = "12.1.1"
 protobuf-java = "3.25.3"            # stay on 3.25.3 due to JSON compatability
 protobuf-java-util = "3.25.3"       # stay on 3.25.3 due to JSON compatability
 protobuf-kotlin = "3.25.3"          # stay on 3.25.3 due to JSON compatability
-slf4j-simple = "2.0.14"
+slf4j-simple = "2.0.16"
 timber = "5.0.1"
 ui-tooling = "1.6.8"
 
