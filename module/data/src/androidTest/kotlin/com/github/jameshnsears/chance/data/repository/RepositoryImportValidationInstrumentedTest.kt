@@ -36,6 +36,7 @@ class RepositoryImportValidationInstrumentedTest : RepositoryInstrumentedHelper(
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
+            3
         )
     }
 
