@@ -26,7 +26,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
               "rollScore": ${SettingsDataTestDouble().rollScore},
               "diceTitle": ${SettingsDataTestDouble().diceTitle},
               "sideNumber": ${SettingsDataTestDouble().sideNumber},
-              "behaviour": ${SettingsDataTestDouble().behaviour},
+              "behaviour": ${SettingsDataTestDouble().rollBehaviour},
               "sideDescription": ${SettingsDataTestDouble().sideDescription},
               "sideSVG": ${SettingsDataTestDouble().sideSVG},
               "rollSound": ${SettingsDataTestDouble().rollSound}
@@ -242,12 +242,12 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-    fun resize() = runTest {
+    fun resizeSettings() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        assertEquals(4, tabBagViewModel.stateFlowTabBag.value.resize)
+        assertEquals(3, tabBagViewModel.stateFlowResize.value)
 
-        tabBagViewModel.resize(5)
-        assertEquals(5, tabBagViewModel.stateFlowTabBag.value.resize)
+        tabBagViewModel.resizeSettings(5)
+        assertEquals(5, tabBagViewModel.stateFlowResize.value)
     }
 
     private fun tabBagViewModel(
@@ -263,6 +263,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
             repositorySettings,
             repositoryBag,
             repositoryRoll,
+            3
         )
     }
 }

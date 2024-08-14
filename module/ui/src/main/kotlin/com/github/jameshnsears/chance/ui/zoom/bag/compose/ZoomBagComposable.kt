@@ -26,6 +26,7 @@ import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideDescription
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideImageSVG
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideImageShape
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import timber.log.Timber
 
 fun <T> SnapshotStateList<T>.swapList(list: List<T>) {
@@ -58,10 +59,18 @@ fun ZoomBag(
             items = diceListState,
             key = { index, item -> "${item.uuid}_${index}" }
         ) { index, dice ->
-            Row {
-                Text(
-                    text = dice.title,
-                )
+            Row(
+                modifier = Modifier.padding(start = 8.dp),
+            ) {
+                if (UtilityFeature.isEnabled(UtilityFeature.Flag.SHOW_EPOCH_UUID)) {
+                    Column {
+                        Text(dice.title)
+                        Text("${dice.epoch}")
+                        Text("${dice.uuid}")
+                    }
+                } else {
+                    Text(dice.title)
+                }
             }
 
             LazyRow(

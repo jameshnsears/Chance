@@ -10,7 +10,6 @@ import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
-import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTimeGenerator
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
@@ -24,7 +23,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.security.SecureRandom
 
@@ -33,7 +31,7 @@ data class SettingsState(
     var rollScore: Boolean,
 
     var diceTitle: Boolean,
-    var behaviour: Boolean,
+    var rollBehaviour: Boolean,
     var sideNumber: Boolean,
     var sideDescription: Boolean,
     var sideSVG: Boolean,
@@ -49,14 +47,14 @@ class TabRollAndroidViewModel(
 ) : AndroidViewModel(application) {
     private val _stateFlowSettingsData = MutableStateFlow(
         SettingsState(
-            rollIndexTime = SettingsDataImpl().rollIndexTime,
-            rollScore = SettingsDataImpl().rollScore,
-            diceTitle = SettingsDataImpl().diceTitle,
-            behaviour = SettingsDataImpl().behaviour,
-            sideNumber = SettingsDataImpl().sideNumber,
-            sideDescription = SettingsDataImpl().sideDescription,
-            sideSVG = SettingsDataImpl().sideSVG,
-            rollSound = SettingsDataImpl().rollSound
+            rollIndexTime = false,
+            rollScore = false,
+            diceTitle = false,
+            rollBehaviour = false,
+            sideNumber = false,
+            sideDescription = false,
+            sideSVG = false,
+            rollSound = false,
         )
     )
     val stateFlowSettings: StateFlow<SettingsState> = _stateFlowSettingsData
@@ -78,14 +76,14 @@ class TabRollAndroidViewModel(
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect.DialogBagCloseEvent")
+                Timber.d("collect.DialogBagCloseEvent.TabRollAndroidViewModel")
                 alignUndoAndRollButtonsBasedOnSettings()
             }
         }
 
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                Timber.d("collect.TabBagImportEvent")
+                Timber.d("collect.TabBagImportEvent.TabRollAndroidViewModel")
                 alignSettings()
                 alignUndoAndRollButtonsBasedOnSettings()
             }
@@ -101,41 +99,55 @@ class TabRollAndroidViewModel(
                 rollScore = settings.rollScore,
                 diceTitle = settings.diceTitle,
                 sideNumber = settings.sideNumber,
-                behaviour = settings.behaviour,
+                rollBehaviour = settings.rollBehaviour,
                 sideDescription = settings.sideDescription,
                 sideSVG = settings.sideSVG,
-                rollSound = settings.rollSound
+                rollSound = settings.rollSound,
             )
         }
     }
 
     private suspend fun alignUndoAndRollButtonsBasedOnSettings() {
-        _diceBag.value = repositoryBag.fetch().first()
+        _undoEnabled.value = isUndoPossible()
+        Timber.d("_undoEnabled.value=${_undoEnabled.value}")
 
-        val settings = repositorySettings.fetch().first()
-
-        if (!settings.rollIndexTime
-            && !settings.rollScore
-            && !settings.diceTitle
-            && !settings.sideNumber
-            && !settings.behaviour
-            && !settings.sideDescription
-            && !settings.sideSVG
-        ) {
-            _undoEnabled.value = false
-            _rollEnabled.value = false
-        } else {
-            _undoEnabled.value = isUndoPossible()
-            _rollEnabled.value = isRollPossible()
-        }
+        _rollEnabled.value = isRollPossible()
+        Timber.d("_rollEnabled.value=${_rollEnabled.value}")
     }
 
-    private fun isRollPossible(): Boolean {
+    private suspend fun isUndoPossible(): Boolean {
+        if (!stateFlowSettings.value.rollIndexTime
+            && !stateFlowSettings.value.rollScore
+            && !stateFlowSettings.value.diceTitle
+            && !stateFlowSettings.value.rollBehaviour
+            && !stateFlowSettings.value.sideNumber
+            && !stateFlowSettings.value.sideDescription
+            && !stateFlowSettings.value.sideSVG
+        )
+            return false
+
+        return repositoryRoll.fetch().first().size != 0
+    }
+
+    private suspend fun isRollPossible(): Boolean {
+        if (!stateFlowSettings.value.rollIndexTime
+            && !stateFlowSettings.value.rollScore
+            && !stateFlowSettings.value.diceTitle
+            && !stateFlowSettings.value.rollBehaviour
+            && !stateFlowSettings.value.sideNumber
+            && !stateFlowSettings.value.sideDescription
+            && !stateFlowSettings.value.sideSVG
+        )
+            return false
+
+        _diceBag.value = repositoryBag.fetch().first()
+        var selected = false
         _diceBag.value.forEach {
-            if (it.selected)
-                return true
+            if (it.selected) {
+                selected = true
+            }
         }
-        return false
+        return selected
     }
 
     fun markDiceAsSelected(dice: Dice, selected: Boolean) {
@@ -155,6 +167,10 @@ class TabRollAndroidViewModel(
 
             repositoryBag.store(updatedDiceBag)
 
+            TabRollEvent.emit()
+
+            _diceBag.value = repositoryBag.fetch().first()
+
             alignUndoAndRollButtonsBasedOnSettings()
         }
     }
@@ -171,9 +187,7 @@ class TabRollAndroidViewModel(
 
             rollDiceSequence(newRollSequence)
 
-            runBlocking {
-                saveDiceSequence(newRollSequence)
-            }
+            saveNewRollSequence(newRollSequence)
 
             if (repositoryRoll.fetch().first().size % 20 == 0)
                 viewModelScope.launch {
@@ -181,10 +195,36 @@ class TabRollAndroidViewModel(
                     System.gc()
                 }
 
-            _rollEnabled.value = isRollPossible()
+            _undoEnabled.value = true
+
+            _rollEnabled.value = true
 
             TabRollEvent.emit()
         }
+    }
+
+    fun dismissSettingsDialog() {
+        viewModelScope.launch {
+            saveSettings()
+            alignUndoAndRollButtonsBasedOnSettings()
+        }
+    }
+
+    private suspend fun saveSettings() {
+        val settings = repositorySettings.fetch().first()
+
+        settings.rollIndexTime = _stateFlowSettingsData.value.rollIndexTime
+        settings.rollScore = _stateFlowSettingsData.value.rollScore
+
+        settings.diceTitle = _stateFlowSettingsData.value.diceTitle
+        settings.sideNumber = _stateFlowSettingsData.value.sideNumber
+        settings.rollBehaviour = _stateFlowSettingsData.value.rollBehaviour
+        settings.sideDescription = _stateFlowSettingsData.value.sideDescription
+        settings.sideSVG = _stateFlowSettingsData.value.sideSVG
+
+        settings.rollSound = _stateFlowSettingsData.value.rollSound
+
+        repositorySettings.store(settings)
     }
 
     private suspend fun playRollSound() {
@@ -210,7 +250,7 @@ class TabRollAndroidViewModel(
         mediaPlayer.start()
     }
 
-    suspend fun saveDiceSequence(
+    suspend fun saveNewRollSequence(
         newRollSequence: MutableList<Roll>
     ) {
         val rollHistory: RollHistory = LinkedHashMap()
@@ -218,8 +258,6 @@ class TabRollAndroidViewModel(
 
         rollHistory.putAll(repositoryRoll.fetch().first())
         repositoryRoll.store(rollHistory)
-
-        _undoEnabled.value = isUndoPossible()
     }
 
     fun rollDiceSequence(newRollSequence: MutableList<Roll>) {
@@ -313,20 +351,16 @@ class TabRollAndroidViewModel(
 
     fun randomSide(dice: Dice) = dice.sides[secureRandom.nextInt(dice.sides.size)]
 
-    private suspend fun isUndoPossible() = repositoryRoll.fetch().first().size != 0
-
     fun undo() {
         viewModelScope.launch {
             val rollHistory = repositoryRoll.fetch().first()
 
-            if (!rollHistory.isEmpty()) {
+            if (rollHistory.isNotEmpty()) {
                 _undoEnabled.value = false
 
                 rollHistory.remove(rollHistory.keys.first())
 
-                runBlocking {
-                    repositoryRoll.store(rollHistory)
-                }
+                repositoryRoll.store(rollHistory)
 
                 TabRollEvent.emit()
 
@@ -341,27 +375,23 @@ class TabRollAndroidViewModel(
         }
     }
 
+    fun undoAll() {
+        viewModelScope.launch {
+            _undoEnabled.value = false
+            repositoryRoll.clear()
+            TabRollEvent.emit()
+        }
+    }
+
     fun settingsIndexTime(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollIndexTime = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.rollIndexTime = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
     fun settingsRollScore(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollScore = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.rollScore = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
@@ -376,72 +406,36 @@ class TabRollAndroidViewModel(
     fun settingsDiceTitle(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(diceTitle = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.diceTitle = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
     fun settingsSideNumber(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(sideNumber = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.sideNumber = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
     fun settingsSideDescription(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(sideDescription = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.sideDescription = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
     fun settingsSideSVG(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(sideSVG = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.sideSVG = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
     fun settingsRollSound(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollSound = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.rollSound = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
         }
     }
 
     fun settingsBehaviour(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(behaviour = checked) }
-
-            val settings = repositorySettings.fetch().first()
-            settings.behaviour = checked
-            repositorySettings.store(settings)
-
-            alignUndoAndRollButtonsBasedOnSettings()
+            _stateFlowSettingsData.update { it.copy(rollBehaviour = checked) }
         }
     }
 

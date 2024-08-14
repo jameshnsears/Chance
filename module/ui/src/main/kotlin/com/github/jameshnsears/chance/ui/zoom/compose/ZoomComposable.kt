@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.ui.zoom.compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -20,6 +21,7 @@ import coil.request.ImageRequest
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
 @Composable
 fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, side: Side) {
@@ -48,6 +50,11 @@ fun ZoomSideImageShape(
         )
 
     val resizeView = stateFlowZoom.value.resizeView
+
+    if (UtilityFeature.isEnabled(UtilityFeature.Flag.SHOW_EPOCH_UUID))
+        Row {
+            Text(text = "${side.uuid}")
+        }
 
     Box {
         Image(

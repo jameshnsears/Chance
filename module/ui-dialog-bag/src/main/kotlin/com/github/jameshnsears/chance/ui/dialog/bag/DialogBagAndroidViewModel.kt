@@ -2,6 +2,8 @@ package com.github.jameshnsears.chance.ui.dialog.bag
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
@@ -11,8 +13,11 @@ import com.github.jameshnsears.chance.data.domain.utility.epoch.UtilityEpochTime
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceViewModelFactory
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollViewModelFactory
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideAndroidViewModelFactory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -25,14 +30,28 @@ class DialogBagAndroidViewModel(
 ) : AndroidViewModel(application) {
     val repositoryRoll = RepositoryFactory(application).repositoryRoll
 
-    var cardSideAndroidViewModel = CardSideAndroidViewModel(application, side)
+    var cardSideAndroidViewModel =
+        ViewModelProvider(
+            ViewModelStore(), CardSideAndroidViewModelFactory(
+                application,
+                side
+            )
+        ).get(CardSideAndroidViewModel::class.java)
 
-    var cardDiceViewModel = CardDiceViewModel(
-        repositoryBag,
-        dice
-    )
+    var cardDiceViewModel =
+        ViewModelProvider(
+            ViewModelStore(), CardDiceViewModelFactory(
+                repositoryBag,
+                dice
+            )
+        ).get(CardDiceViewModel::class.java)
 
-    var cardRollViewModel = CardRollViewModel(dice)
+    var cardRollViewModel =
+        ViewModelProvider(
+            ViewModelStore(), CardRollViewModelFactory(
+                dice
+            )
+        ).get(CardRollViewModel::class.java)
 
     fun delete() {
         viewModelScope.launch {
@@ -47,6 +66,7 @@ class DialogBagAndroidViewModel(
                 }
             }
 
+            Timber.d("repositoryBag.store")
             repositoryBag.store(updatedDiceBag)
 
             updateRepositoryRollWithDeletedDice()
@@ -92,6 +112,7 @@ class DialogBagAndroidViewModel(
                     }
                 }
 
+                Timber.d("repositoryBag.store")
                 repositoryBag.store(clonedDiceBag)
             }
 
@@ -154,6 +175,7 @@ class DialogBagAndroidViewModel(
             }
         }
 
+        Timber.d("repositoryBag.store")
         repositoryBag.store(updatedDiceBag)
     }
 
@@ -241,8 +263,10 @@ class DialogBagAndroidViewModel(
                 rollHistoryWithValidDice[rollSequenceEpoch] = rolls
         }
 
-        if (currentRollHistory.size != rollHistoryWithValidDice.size)
+        if (currentRollHistory.size != rollHistoryWithValidDice.size) {
+            Timber.d("repositoryRoll.store")
             repositoryRoll.store(rollHistoryWithValidDice)
+        }
     }
 
     private suspend fun updateRepositoryRollWhereDiceBeenDeleted() {
@@ -268,23 +292,27 @@ class DialogBagAndroidViewModel(
                 rollHistoryWithValidDice[rollSequenceEpoch] = rolls
         }
 
-        if (currentRollHistory.size != rollHistoryWithValidDice.size)
+        if (currentRollHistory.size != rollHistoryWithValidDice.size) {
+            Timber.d("repositoryRoll.store")
             repositoryRoll.store(rollHistoryWithValidDice)
+        }
     }
 
     private suspend fun updateRepositoryRollWhereDiceSizeChanged() {
         val rollHistory = repositoryRoll.fetch().first()
+
+        for (rollSequence in rollHistory) {
+            rollSequence.value.forEach { roll ->
+                Timber.d("roll.diceEpoch=${roll.diceEpoch}; roll.side.uuid=${roll.side.uuid}")
+            }
+        }
 
         rollHistory.keys.forEach { rollSequenceEpoch ->
             rollHistory.getValue(rollSequenceEpoch).forEach { roll ->
                 val diceSides = repositoryBag.fetch(roll.diceEpoch).first().sides
 
                 for (diceSide in diceSides) {
-                    Timber.d("dice.epoch=${roll.diceEpoch}; diceSide.uuid=${diceSide.uuid}; roll.side.uuid=${roll.side.uuid}")
-
                     if (diceSide.uuid == roll.side.uuid) {
-                        Timber.d("diceSide.uuid==roll.side.uuid")
-
                         roll.side.numberColour = diceSide.numberColour
                         roll.side.imageDrawableId = diceSide.imageDrawableId
                         roll.side.imageBase64 = diceSide.imageBase64
@@ -296,7 +324,14 @@ class DialogBagAndroidViewModel(
             }
         }
 
+        Timber.d("repositoryRoll.store")
         repositoryRoll.store(rollHistory)
+
+        for (rollSequence in rollHistory) {
+            rollSequence.value.forEach { roll ->
+                Timber.d("roll.diceEpoch=${roll.diceEpoch}; roll.side.uuid=${roll.side.uuid}")
+            }
+        }
     }
 
     private suspend fun diceBagEpochs(): MutableList<Long> {

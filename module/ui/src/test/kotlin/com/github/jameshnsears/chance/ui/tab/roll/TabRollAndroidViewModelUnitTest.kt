@@ -53,7 +53,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
             assertEquals(diceSelected[0], it.diceEpoch)
         }
 
-        tabRollAndroidViewModel.saveDiceSequence(rolls)
+        tabRollAndroidViewModel.saveNewRollSequence(rolls)
         assertEquals(3, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
 
         val job = GlobalScope.launch {
@@ -215,7 +215,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.rollSound)
 
         tabRollAndroidViewModel.settingsBehaviour(false)
-        assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.behaviour)
+        assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.rollBehaviour)
     }
 
     @Test

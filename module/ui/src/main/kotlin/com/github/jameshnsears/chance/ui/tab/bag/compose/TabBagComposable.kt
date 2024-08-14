@@ -33,7 +33,6 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +48,6 @@ import com.github.jameshnsears.chance.ui.BuildConfig
 import com.github.jameshnsears.chance.ui.R
 import com.github.jameshnsears.chance.ui.tab.bag.ExportImportStatus
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagState
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.bag.compose.ZoomBag
 import kotlinx.coroutines.launch
@@ -105,11 +103,6 @@ fun TabBagBottomSheetLayout(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
     zoomAndroidViewModel: ZoomAndroidViewModel
 ) {
-    val stateFlowTabBag =
-        tabBagAndroidViewModel.stateFlowTabBag.collectAsStateWithLifecycle(
-            // https://issuetracker.google.com/issues/336842920
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
-        )
 
     Column(
         Modifier
@@ -119,9 +112,8 @@ fun TabBagBottomSheetLayout(
             .height(210.dp),
     ) {
         Resize(
-            stateFlowTabBag,
-            tabBagAndroidViewModel::resize,
-            zoomAndroidViewModel::resizeView
+            tabBagAndroidViewModel,
+            zoomAndroidViewModel,
         )
 
         HorizontalDivider(
@@ -146,11 +138,13 @@ fun TabBagBottomSheetLayout(
 
 @Composable
 fun Resize(
-    state: State<TabBagState>,
-    tabBagSlider: (Int) -> Unit,
-    zoomResize: (Int) -> Unit
+    tabBagAndroidViewModel: TabBagAndroidViewModel,
+    zoomAndroidViewModel: ZoomAndroidViewModel,
 ) {
-    var resize = state.value.resize
+    val stateFlowResize =
+        tabBagAndroidViewModel.stateFlowResize.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
 
     Row(
         modifier = Modifier
@@ -159,14 +153,13 @@ fun Resize(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Slider(
-            value = resize.toFloat(),
-            onValueChange = {
-                resize = it.toInt()
-                tabBagSlider(it.toInt())
-                zoomResize(it.toInt())
+            value = stateFlowResize.value.toFloat(),
+            onValueChange = { newValue ->
+                zoomAndroidViewModel.resizeView(newValue.toInt())
+                tabBagAndroidViewModel.resizeSettings(newValue.toInt())
             },
-            valueRange = 1f..7f,
-            steps = 5,
+            valueRange = 1f..5f,
+            steps = 0,
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,
                 activeTrackColor = MaterialTheme.colorScheme.secondary,
@@ -211,7 +204,6 @@ fun ImportExport(
     val launcherImport =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) { uri: Uri? ->
             uri?.let {
-                // import is a bit too fast to show a "please wait" Toast; for the moment
                 tabBagAndroidViewModel.importFileJson(uri)
             }
         }
@@ -235,7 +227,7 @@ fun ImportExport(
                     bottomSheetScaffoldState.bottomSheetState.partialExpand()
                 }
 
-                launcherImport.launch(arrayOf("application/json"))
+                launcherImport.launch(arrayOf("application/json", "*/json"))
             },
             modifier = Modifier
                 .width(160.dp)

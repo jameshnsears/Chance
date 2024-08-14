@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class RepositoryBagImpl private constructor(private val context: Context) :
     RepositoryBagInterface {
@@ -87,6 +88,9 @@ class RepositoryBagImpl private constructor(private val context: Context) :
                     )
                 }
             }.first()
+        
+        Timber.d("repositoryBag.FETCH ============================================")
+        Timber.d("repositoryBag.size=${diceBag.size}")
 
         emit(diceBag)
     }
@@ -124,6 +128,9 @@ class RepositoryBagImpl private constructor(private val context: Context) :
 
     override suspend fun store(newDiceBag: DiceBag) {
         clear()
+
+        Timber.d("repositoryBag.STORE ============================================")
+        Timber.d("repositoryBag.size=${newDiceBag.size}")
 
         context.diceBagDataStore.updateData {
             val bagProtocolBufferBuilder = it.toBuilder()

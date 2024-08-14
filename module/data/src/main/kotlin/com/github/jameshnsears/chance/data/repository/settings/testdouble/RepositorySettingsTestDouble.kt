@@ -63,7 +63,7 @@ class RepositorySettingsTestDouble private constructor() :
 
         newSettings.diceTitle = settingsProtocolBuffer.diceTitle
         newSettings.sideNumber = settingsProtocolBuffer.sideNumber
-        newSettings.behaviour = settingsProtocolBuffer.behaviour
+        newSettings.rollBehaviour = settingsProtocolBuffer.behaviour
         newSettings.sideDescription = settingsProtocolBuffer.sideDescription
         newSettings.sideSVG = settingsProtocolBuffer.sideSVG
 

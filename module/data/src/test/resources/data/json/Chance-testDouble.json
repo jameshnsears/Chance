@@ -1,6 +1,6 @@
 [
   {
-    "resize": 4,
+    "resize": 3,
     "rollIndexTime": true,
     "rollScore": true,
     "diceTitle": true,
@@ -13,11 +13,11 @@
   {
     "dice": [
       {
-        "epoch": "1722103089036",
+        "epoch": "1723185255188",
         "uuid": "",
         "side": [
           {
-            "uuid": "d0051b8b-d687-4f62-a00a-054936750983",
+            "uuid": "68d51c6c-d0f5-4b81-82a5-f1e93948c626",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -26,7 +26,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "261ddad5-8e05-4381-a60a-13cf3942c42f",
+            "uuid": "c5a968bf-6bd0-4333-9b29-220b1e3397df",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -46,11 +46,11 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722103089039",
+        "epoch": "1723185255190",
         "uuid": "",
         "side": [
           {
-            "uuid": "a9129ee6-6b8f-4144-ab35-dc86f2336bdf",
+            "uuid": "a158565f-a209-4670-a77f-99d3487a3ff8",
             "number": 4,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -59,7 +59,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "2779cd91-ff3f-4e46-9785-ab296a9c1979",
+            "uuid": "ee699212-162f-4f26-a1dd-8abeab1b5f2b",
             "number": 3,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -68,7 +68,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "54efbd23-64de-4b7a-b058-1fc8b39a2a86",
+            "uuid": "72c54d41-4ce5-46f1-a65e-2045fb827e69",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -77,7 +77,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "df435b4f-7d9c-4e6f-977b-bdc571d23a1b",
+            "uuid": "e67e11bf-b431-47d6-bfdd-7c48b9d7eac5",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -97,11 +97,11 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722103089042",
+        "epoch": "1723185255193",
         "uuid": "",
         "side": [
           {
-            "uuid": "103609f4-368d-4647-abb6-102613531ed9",
+            "uuid": "45d850a6-a52f-4769-8633-a669d427f023",
             "number": 6,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -110,7 +110,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "63c28872-a990-4056-947d-120e983f9a73",
+            "uuid": "9055d1ce-38e4-4435-bf53-59a884af09d7",
             "number": 5,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -119,7 +119,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "3a63f6f6-a53c-4ecd-8ab6-0755ce1b3a46",
+            "uuid": "1e469779-9dfc-4e54-899b-97347c58330d",
             "number": 4,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -128,7 +128,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "91522f8a-3992-492a-9c0b-29b713c76436",
+            "uuid": "4dd62254-bace-42a4-ae7d-587a59dd88d3",
             "number": 3,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -137,7 +137,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "eae9b6fd-03f0-4d06-ae3c-4cfe59d7c096",
+            "uuid": "48033510-8ff3-47bd-8aac-d5e81840c834",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -146,7 +146,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "b9d7a718-b6c2-4c57-8e97-68afbd0e4023",
+            "uuid": "3ed6454b-d73e-436b-aa40-ab62835d6fbd",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -166,59 +166,59 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722103089050",
+        "epoch": "1723185255200",
         "uuid": "",
         "side": [
           {
-            "uuid": "af6a5b44-ee76-4c11-8bab-a25e6228e1ea",
+            "uuid": "58a7bfe5-d784-4d50-a05a-05eb7250ec6d",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230863,
+            "imageDrawableId": 2131230864,
             "imageBase64": "",
             "description": "Knight",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "00ba6333-ad8a-4268-b68a-0e868e7fb75b",
+            "uuid": "a71e0de4-be63-4345-915e-403c1eb1ec4f",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230864,
+            "imageDrawableId": 2131230865,
             "imageBase64": "",
             "description": "Lion",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "f2ce38b5-57ef-48a6-923d-6caf5948cc20",
+            "uuid": "0d7a0e28-c100-4fd7-8a62-c28677e5066e",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230865,
+            "imageDrawableId": 2131230866,
             "imageBase64": "",
             "description": "Pirate",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "53e84d6e-06b0-48e0-8aa1-264f6836195b",
+            "uuid": "c61ef71c-fe5f-47d3-830f-5ce58553c821",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230862,
+            "imageDrawableId": 2131230863,
             "imageBase64": "",
             "description": "Crocodile",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "9391e5fa-64cb-459f-8713-733d8ffb27c4",
+            "uuid": "0d952e9d-f365-4339-b94a-6490f028f89e",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230866,
+            "imageDrawableId": 2131230867,
             "imageBase64": "",
             "description": "Queen",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "be2f83f7-06fa-4ffb-b9a5-8c61ec68c2d5",
+            "uuid": "2a0c1b9d-a45f-4520-9c13-30cf4c150ca7",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230867,
+            "imageDrawableId": 2131230868,
             "imageBase64": "",
             "description": "Spaceship",
             "descriptionColour": "FF6650a4"
@@ -227,7 +227,7 @@
         "title": "Story",
         "colour": "FF6650a4",
         "selected": false,
-        "multiplierValue": 4,
+        "multiplierValue": 3,
         "explode": false,
         "explodeWhen": "\u003d",
         "explodeValue": 1,
@@ -235,11 +235,11 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722103089055",
+        "epoch": "1723185255204",
         "uuid": "",
         "side": [
           {
-            "uuid": "006a2d00-2eba-4b93-9a21-bc838960b8eb",
+            "uuid": "3be6c2e8-f751-46a3-bc64-1057199db299",
             "number": 8,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -248,7 +248,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "4a2489b6-24de-4e01-aa49-39efbf89caac",
+            "uuid": "a41ee2d1-7692-462a-a803-440265bc16bc",
             "number": 7,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -257,7 +257,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "3c85dcbd-eb05-40c8-a53c-1404687333a4",
+            "uuid": "db986729-b97c-43a3-89d2-ac0c3eaee425",
             "number": 6,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -266,7 +266,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "cfe7243b-e846-4bc8-8ef5-0e5a5b67b1a0",
+            "uuid": "52234ba5-bedc-4e62-a4f8-863cf5c912fc",
             "number": 5,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -275,7 +275,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "b8d3ca63-f93d-49b1-8495-706c03a51085",
+            "uuid": "de701255-91cc-466a-943a-891a3774b48a",
             "number": 4,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -284,7 +284,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "3690db17-05ad-4a27-b959-c444c6e76114",
+            "uuid": "69c97585-1353-4f79-8fe0-ca879e3db9bb",
             "number": 3,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -293,7 +293,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "47038e9b-e0f8-41f2-bf1b-016b5018dbda",
+            "uuid": "eb2ab4c7-3fac-4384-af84-b7c91947ef0b",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -302,7 +302,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "a60d0f7c-1318-4f48-92cd-6fb26e7b87a5",
+            "uuid": "acb8028a-d4a2-462c-8761-d5fb5de2a552",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -322,11 +322,11 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722103089058",
+        "epoch": "1723185255206",
         "uuid": "",
         "side": [
           {
-            "uuid": "bb6433b0-7183-4f48-a557-19c15f4dc75a",
+            "uuid": "0b80807f-eae9-45d8-a724-02747b9c2cec",
             "number": 10,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -335,7 +335,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "6973e39c-0251-41b6-84e5-171303535223",
+            "uuid": "224ed2cb-7f41-4cb2-92a8-a5ce23309d4e",
             "number": 9,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -344,7 +344,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "7eb20f6d-9f96-4e60-85c1-85f5880a863d",
+            "uuid": "0a08b7d5-263d-410e-bd95-4a080ab98bbb",
             "number": 8,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -353,7 +353,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "e9d0f405-e361-44df-8a65-bf28eaca4657",
+            "uuid": "4a906f2a-a674-4a49-9f9f-206e1d61f1a7",
             "number": 7,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -362,7 +362,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "c03e2a1a-fc0b-4ca1-8050-1479214b686b",
+            "uuid": "db94cb85-c041-4e29-bd8f-3a6563351213",
             "number": 6,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -371,7 +371,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "e00a1c77-a893-4bda-9eea-19b3e2207034",
+            "uuid": "0c88c74e-e165-47e2-92b9-00758ca5612d",
             "number": 5,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -380,7 +380,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "c6685b3a-f998-414f-878b-d15774694a03",
+            "uuid": "c6c0f984-9b6f-4636-bce3-289c85d5964c",
             "number": 4,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -389,7 +389,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "2ab01b6a-1440-49bc-a0c0-ed43b5c43048",
+            "uuid": "d0770fe0-1e7f-4929-90ff-a60568afef70",
             "number": 3,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -398,7 +398,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "9d3ac031-ac20-4993-9712-d165d7798c12",
+            "uuid": "b0e7de8f-35ea-4a09-aa1c-ddeeeeac52c6",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -407,7 +407,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "d2a2fba0-948c-4dc6-8642-d48ffb4d79da",
+            "uuid": "321ea8f1-4660-4a37-aff3-928cb0ed934a",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -427,11 +427,11 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722103089061",
+        "epoch": "1723185255209",
         "uuid": "",
         "side": [
           {
-            "uuid": "b3c24c8c-ec57-409f-9369-ff2013912c6c",
+            "uuid": "f3b1be56-fd07-477b-bfca-01b5ad283793",
             "number": 12,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -440,7 +440,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "c99d4f65-2f0e-4850-95b3-88a27f944d05",
+            "uuid": "d0dd7343-f75e-4359-b3ec-5b514740642e",
             "number": 11,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -449,7 +449,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "6d0dc27a-b2bf-40a6-9be7-4327267abed6",
+            "uuid": "2c1cdcdb-a377-4f59-9b0a-71752c2958c9",
             "number": 10,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -458,7 +458,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "461612ac-5654-4fd5-b867-d694a5fe4045",
+            "uuid": "aa38ac07-88d3-4a4c-8179-631d4a5e6ca5",
             "number": 9,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -467,7 +467,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "3e384d6c-8829-4190-8feb-702309726b03",
+            "uuid": "d4396a05-3474-4299-903c-df75791486d0",
             "number": 8,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -476,7 +476,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "8b56997f-5504-4dd4-9f60-135f990ba9c4",
+            "uuid": "765ef592-3bb9-4ff9-bec9-96ace4c0054f",
             "number": 7,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -485,7 +485,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "06eee869-09b0-45d6-9bf1-9deada0759d2",
+            "uuid": "a7232cee-b8a3-4aed-823d-7f8f94ec7f1e",
             "number": 6,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -494,7 +494,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "983438a6-b39a-49eb-aa77-0f143afea522",
+            "uuid": "e4669440-0a3a-452c-bb32-ad0eb4ce9ddb",
             "number": 5,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -503,7 +503,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "c235c174-efeb-4211-a40a-c8b8fd1076f7",
+            "uuid": "d56b6b12-936e-42d3-b379-7230e514909e",
             "number": 4,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -512,7 +512,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "7208cf06-7aa3-4fb3-8042-68d6cd21e59d",
+            "uuid": "a4727638-701c-41a2-bc46-5c2b35530608",
             "number": 3,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -521,7 +521,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "d36794dd-b8fa-4e13-8671-d5e7dcc39557",
+            "uuid": "1ba53182-5c4c-4461-9102-f3a596037c77",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -530,7 +530,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "7149f0ec-4062-4b66-9129-ed746b1284d5",
+            "uuid": "be5e0c0a-7e67-406d-94a8-5e51a6abf0f3",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -550,11 +550,11 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722103089064",
+        "epoch": "1723185255212",
         "uuid": "",
         "side": [
           {
-            "uuid": "e3edad2b-3ef9-48bb-ae35-553474e86296",
+            "uuid": "94fb6e16-e660-4e2e-96e2-2c264ebdf0f6",
             "number": 20,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -563,7 +563,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "75850f01-2fd0-4f36-9204-039ff43f1160",
+            "uuid": "ae9665cd-b185-4884-9e0b-6960744e5d80",
             "number": 19,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -572,7 +572,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "e80a6597-3d0f-49e2-93d5-62b993499c61",
+            "uuid": "74ff3a80-673c-4d2f-b43a-50e294334255",
             "number": 18,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -581,7 +581,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "cbca9298-9245-49c7-a398-56e141d1321d",
+            "uuid": "5e76c1ec-50cb-423a-a3c6-ab2400ac1cc9",
             "number": 17,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -590,7 +590,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "e0d3d4de-5699-4d4e-8da9-6261907dc290",
+            "uuid": "ed882e45-8e31-46f5-9d6c-391a64b638a3",
             "number": 16,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -599,7 +599,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "83a3b9b6-7610-47d2-ba67-30ec70cef41e",
+            "uuid": "4987b7f5-3e57-4ea8-b2ef-fb076e104c5f",
             "number": 15,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -608,7 +608,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "52fb0b60-9186-4565-b7ff-4ef647b38044",
+            "uuid": "23c87103-155e-4fff-a8b3-20c7dab2c8d8",
             "number": 14,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -617,7 +617,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "dfabb276-40cf-407d-a6c6-1344ef91db6a",
+            "uuid": "7d9b04aa-addd-42a8-9511-875790ac3780",
             "number": 13,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -626,7 +626,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "abeb9d2f-bbc3-4ba4-9b1b-4a23fc8733d3",
+            "uuid": "9a615b7e-b58f-487f-9ead-278549a6f1c9",
             "number": 12,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -635,7 +635,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "ae8b74dc-beae-411b-8778-22648fb18e6b",
+            "uuid": "7c6594fe-be71-4f67-8fe8-58f1dfc7e438",
             "number": 11,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -644,7 +644,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "353d579a-9edb-4285-8ea5-1bf2b66ff010",
+            "uuid": "1583392c-41de-4024-804c-6cfefdcde9ed",
             "number": 10,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -653,7 +653,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "9454d75a-e88d-4bcc-ad79-a3f03b25b88f",
+            "uuid": "2cfdd34d-d0ea-4d35-85cb-643c338afa64",
             "number": 9,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -662,7 +662,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "86ee4d14-1c29-4180-a95a-56bf6b734a42",
+            "uuid": "8ceb33c3-1d89-418d-97d5-3e6fc04e3848",
             "number": 8,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -671,7 +671,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "d7c142fa-907e-41a7-94b9-a468857ec538",
+            "uuid": "482ce21f-1efa-4320-b923-566b4fe75f8b",
             "number": 7,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -680,7 +680,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "87738f50-8e63-4a48-ab51-9b0daa236aa3",
+            "uuid": "a6728a11-005c-4740-a7da-41c31af24314",
             "number": 6,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -689,7 +689,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "811fc350-4049-460e-a2bc-e711bc3be95b",
+            "uuid": "569ca7c5-cf45-44b9-b697-13cbf4556317",
             "number": 5,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -698,7 +698,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "e395aded-895d-4f04-bed0-29aceb1a86b3",
+            "uuid": "925c36a2-6360-4ee1-b88b-53dceb71fb85",
             "number": 4,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -707,7 +707,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "0a63b84d-48fc-4383-95be-0a51f23bf028",
+            "uuid": "657fbd5f-9f5b-4172-96e9-acba346db77e",
             "number": 3,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -716,7 +716,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "afea0f50-2ab0-4085-be8a-b16a46b46ab5",
+            "uuid": "5acc1f76-0dca-4f1b-baef-df067f9aff99",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -725,7 +725,7 @@
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "71dff077-15ae-41d4-be79-d5815e9dd22b",
+            "uuid": "565a71ef-3f91-47f1-bd6a-bab8dad86a41",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -748,12 +748,12 @@
   },
   {
     "values": {
-      "1722103089087": {
+      "1723185255234": {
         "roll": [
           {
-            "diceEpoch": "1722103089036",
+            "diceEpoch": "1723185255188",
             "side": {
-              "uuid": "d0051b8b-d687-4f62-a00a-054936750983",
+              "uuid": "68d51c6c-d0f5-4b81-82a5-f1e93948c626",
               "number": 2,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -767,9 +767,9 @@
             "score": 2
           },
           {
-            "diceEpoch": "1722103089039",
+            "diceEpoch": "1723185255190",
             "side": {
-              "uuid": "2779cd91-ff3f-4e46-9785-ab296a9c1979",
+              "uuid": "ee699212-162f-4f26-a1dd-8abeab1b5f2b",
               "number": 3,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -783,9 +783,9 @@
             "score": 3
           },
           {
-            "diceEpoch": "1722103089055",
+            "diceEpoch": "1723185255204",
             "side": {
-              "uuid": "cfe7243b-e846-4bc8-8ef5-0e5a5b67b1a0",
+              "uuid": "52234ba5-bedc-4e62-a4f8-863cf5c912fc",
               "number": 5,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -799,9 +799,9 @@
             "score": 5
           },
           {
-            "diceEpoch": "1722103089058",
+            "diceEpoch": "1723185255206",
             "side": {
-              "uuid": "c03e2a1a-fc0b-4ca1-8050-1479214b686b",
+              "uuid": "db94cb85-c041-4e29-bd8f-3a6563351213",
               "number": 6,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -815,9 +815,9 @@
             "score": 6
           },
           {
-            "diceEpoch": "1722103089061",
+            "diceEpoch": "1723185255209",
             "side": {
-              "uuid": "8b56997f-5504-4dd4-9f60-135f990ba9c4",
+              "uuid": "765ef592-3bb9-4ff9-bec9-96ace4c0054f",
               "number": 7,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -831,9 +831,9 @@
             "score": 7
           },
           {
-            "diceEpoch": "1722103089064",
+            "diceEpoch": "1723185255212",
             "side": {
-              "uuid": "52fb0b60-9186-4565-b7ff-4ef647b38044",
+              "uuid": "23c87103-155e-4fff-a8b3-20c7dab2c8d8",
               "number": 14,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -848,12 +848,12 @@
           }
         ]
       },
-      "1722103089089": {
+      "1723185255236": {
         "roll": [
           {
-            "diceEpoch": "1722103089039",
+            "diceEpoch": "1723185255190",
             "side": {
-              "uuid": "2779cd91-ff3f-4e46-9785-ab296a9c1979",
+              "uuid": "ee699212-162f-4f26-a1dd-8abeab1b5f2b",
               "number": 3,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -867,9 +867,9 @@
             "score": 3
           },
           {
-            "diceEpoch": "1722103089039",
+            "diceEpoch": "1723185255190",
             "side": {
-              "uuid": "54efbd23-64de-4b7a-b058-1fc8b39a2a86",
+              "uuid": "72c54d41-4ce5-46f1-a65e-2045fb827e69",
               "number": 2,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,
@@ -883,9 +883,9 @@
             "score": 2
           },
           {
-            "diceEpoch": "1722103089039",
+            "diceEpoch": "1723185255190",
             "side": {
-              "uuid": "df435b4f-7d9c-4e6f-977b-bdc571d23a1b",
+              "uuid": "e67e11bf-b431-47d6-bfdd-7c48b9d7eac5",
               "number": 1,
               "numberColour": "FFFFFFFF",
               "imageDrawableId": 0,

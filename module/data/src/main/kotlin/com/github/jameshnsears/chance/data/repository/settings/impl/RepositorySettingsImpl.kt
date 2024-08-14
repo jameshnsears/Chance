@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class RepositorySettingsImpl private constructor(private val context: Context) :
     RepositorySettingsInterface {
@@ -28,8 +29,8 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
             context: Context,
             settings: SettingsDataInterface = SettingsDataImpl()
         ): RepositorySettingsImpl {
-            synchronized(this) {
-                if (instance == null) {
+            if (instance == null) {
+                synchronized(this) {
                     runBlocking {
                         instance = RepositorySettingsImpl(context)
 
@@ -39,8 +40,9 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
                             }
                         }
 
-                        if (instance!!.fetch().first().resize == 0)
+                        if (instance!!.fetch().first().resize == 0) {
                             instance!!.store(settings)
+                        }
                     }
                 }
             }
@@ -74,7 +76,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 
         newSettings.diceTitle = settingsProtocolBuffer.diceTitle
         newSettings.sideNumber = settingsProtocolBuffer.sideNumber
-        newSettings.behaviour = settingsProtocolBuffer.behaviour
+        newSettings.rollBehaviour = settingsProtocolBuffer.behaviour
         newSettings.sideDescription = settingsProtocolBuffer.sideDescription
         newSettings.sideSVG = settingsProtocolBuffer.sideSVG
 
@@ -84,7 +86,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
     }
 
     override suspend fun fetch(): Flow<SettingsDataImpl> = flow {
-        val settings: SettingsDataImpl = context.settingsDataStore.data
+        val settings = context.settingsDataStore.data
             .map { settingsProtocolBuffer ->
                 SettingsDataImpl(
                     resize = settingsProtocolBuffer.resize,
@@ -94,7 +96,7 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 
                     diceTitle = settingsProtocolBuffer.diceTitle,
                     sideNumber = settingsProtocolBuffer.sideNumber,
-                    behaviour = settingsProtocolBuffer.behaviour,
+                    rollBehaviour = settingsProtocolBuffer.behaviour,
                     sideDescription = settingsProtocolBuffer.sideDescription,
                     sideSVG = settingsProtocolBuffer.sideSVG,
 
@@ -102,16 +104,20 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
                 )
             }.first()
 
+        Timber.d("repositorySettings.FETCH ============================================")
+        Timber.d("repositorySettings.resize=${settings.resize}")
+
         emit(settings)
     }
 
-    override suspend fun store(settingsData: SettingsDataInterface) {
-        clear()
+    override suspend fun store(newSettingsData: SettingsDataInterface) {
+        Timber.d("repositorySettings.STORE ============================================")
+        Timber.d("repositorySettings.resize=${newSettingsData.resize}")
 
         context.settingsDataStore.updateData {
             val settingsProtocolBufferBuilder = it.toBuilder()
             mapSettingsIntoSettingsProtocolBufferBuilder(
-                settingsData,
+                newSettingsData,
                 settingsProtocolBufferBuilder
             )
             settingsProtocolBufferBuilder.build()

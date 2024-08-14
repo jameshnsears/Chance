@@ -1,13 +1,21 @@
 package com.github.jameshnsears.chance.ui.dialog.settings.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -19,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -38,6 +47,8 @@ class DialogSettingsTestTag {
         const val SETTINGS_BEHAVIOUR = "SETTINGS_BEHAVIOUR"
 
         const val SETTINGS_ROLL_SOUND = "SETTINGS_ROLL_SOUND"
+
+        const val SETTINGS_UNDO_ALL = "SETTINGS_UNDO_ALL"
     }
 }
 
@@ -51,6 +62,7 @@ fun DialogSettings(
     Dialog(
         onDismissRequest = {
             showDialog.value = false
+            tabRollAndroidViewModel.dismissSettingsDialog()
         },
     ) {
         Column(modifier = Modifier.verticalScroll(scrollState)) {
@@ -65,19 +77,19 @@ fun DialogSettings(
 fun DialogSettingsLayout(
     tabRollAndroidViewModel: TabRollAndroidViewModel
 ) {
-    val stateFlow =
+    val stateFlowSettings =
         tabRollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
             lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
         )
 
-    val rollTime = stateFlow.value.rollIndexTime
-    val rollScore = stateFlow.value.rollScore
-    val diceTitle = stateFlow.value.diceTitle
-    val sideNumber = stateFlow.value.sideNumber
-    val behaviour = stateFlow.value.behaviour
-    val sideDescription = stateFlow.value.sideDescription
-    val sideSVG = stateFlow.value.sideSVG
-    val rollSound = stateFlow.value.rollSound
+    val rollTime = stateFlowSettings.value.rollIndexTime
+    val rollScore = stateFlowSettings.value.rollScore
+    val diceTitle = stateFlowSettings.value.diceTitle
+    val rollBehaviour = stateFlowSettings.value.rollBehaviour
+    val sideNumber = stateFlowSettings.value.sideNumber
+    val sideDescription = stateFlowSettings.value.sideDescription
+    val sideSVG = stateFlowSettings.value.sideSVG
+    val rollSound = stateFlowSettings.value.rollSound
 
     Surface(
         color = MaterialTheme.colorScheme.secondaryContainer,
@@ -85,7 +97,9 @@ fun DialogSettingsLayout(
     ) {
         Column(
             modifier = Modifier
-                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 8.dp),
+                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 8.dp)
+                .height(420.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CommonSwitch(
@@ -117,7 +131,7 @@ fun DialogSettingsLayout(
 
             CommonSwitch(
                 stringResource(R.string.tab_roll_settings_behaviour),
-                behaviour,
+                rollBehaviour,
                 tabRollAndroidViewModel::settingsBehaviour,
                 DialogSettingsTestTag.SETTINGS_BEHAVIOUR
             )
@@ -155,6 +169,53 @@ fun DialogSettingsLayout(
                 tabRollAndroidViewModel::settingsRollSound,
                 DialogSettingsTestTag.SETTINGS_ROLL_SOUND
             )
+
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .padding(top = 12.dp, bottom = 12.dp)
+            )
+
+            UndoAll(
+                tabRollAndroidViewModel,
+            )
+        }
+    }
+}
+
+@Composable
+private fun UndoAll(
+    tabRollAndroidViewModel: TabRollAndroidViewModel,
+) {
+    val rollEnabled =
+        tabRollAndroidViewModel.undoEnabled.collectAsStateWithLifecycle(
+            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+        )
+
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp, bottom = 4.dp)
+    ) {
+        Button(
+            onClick = {
+                tabRollAndroidViewModel.undoAll()
+            },
+            modifier = Modifier
+                .width(160.dp)
+                .testTag(DialogSettingsTestTag.SETTINGS_UNDO_ALL),
+            enabled = rollEnabled.value
+        ) {
+            Icon(
+                painterResource(id = R.drawable.undo_fill0_wght400_grad0_opsz24),
+                contentDescription = "",
+                modifier = Modifier.size(24.dp),
+            )
+
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+
+            Text(stringResource(R.string.tab_roll_settings_undo_all))
         }
     }
 }

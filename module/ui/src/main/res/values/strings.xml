@@ -22,4 +22,6 @@
     <string name="tab.roll.settings.side.svg">Side SVG</string>
 
     <string name="tab.roll.settings.use.sound">Sound</string>
+
+    <string name="tab.roll.settings.undo.all">Undo All</string>
 </resources>

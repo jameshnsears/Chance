@@ -5,24 +5,18 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.repository.RepositoryImportException
 import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
 import com.github.jameshnsears.chance.data.repository.RepositoryImportValidation
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
-import com.github.jameshnsears.chance.ui.tab.TabSettingsModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-
-data class TabBagState(
-    var resize: Int,
-)
 
 enum class ExportImportStatus {
     NONE,
@@ -45,23 +39,10 @@ class TabBagAndroidViewModel(
     val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
+    resizeInitialValue: Int,
 ) : AndroidViewModel(application) {
-    private val _stateFlowTabBag = MutableStateFlow(
-        TabBagState(
-            resize = SettingsDataImpl().resize,
-        )
-    )
-    val stateFlowTabBag: StateFlow<TabBagState> = _stateFlowTabBag
-
-    init {
-        viewModelScope.launch {
-            _stateFlowTabBag.update {
-                it.copy(
-                    resize = TabSettingsModel.resize(repositorySettings),
-                )
-            }
-        }
-    }
+    private val _stateFlowResize = MutableStateFlow(resizeInitialValue)
+    val stateFlowResize: StateFlow<Int> = _stateFlowResize
 
     fun resetExportImportStatus() {
         viewModelScope.launch {
@@ -116,16 +97,14 @@ class TabBagAndroidViewModel(
 
                 Timber.d("import.validation completed")
 
-                runBlocking {
-                    repositorySettings.clear()
-                    repositorySettings.jsonImport(rootNode.get(0).toString())
+                repositorySettings.clear()
+                repositorySettings.jsonImport(rootNode.get(0).toString())
 
-                    repositoryBag.clear()
-                    repositoryBag.jsonImport(rootNode.get(1).toString())
+                repositoryBag.clear()
+                repositoryBag.jsonImport(rootNode.get(1).toString())
 
-                    repositoryRoll.clear()
-                    repositoryRoll.jsonImport(rootNode.get(2).toString())
-                }
+                repositoryRoll.clear()
+                repositoryRoll.jsonImport(rootNode.get(2).toString())
 
                 _stateFlowTabBagImport.update {
                     it.copy(
@@ -134,11 +113,7 @@ class TabBagAndroidViewModel(
                     )
                 }
 
-                _stateFlowTabBag.update {
-                    it.copy(
-                        resize = TabSettingsModel.resize(repositorySettings),
-                    )
-                }
+                _stateFlowResize.value = repositorySettings.fetch().first().resize
 
                 TabBagImportEvent.emit()
 
@@ -179,6 +154,7 @@ class TabBagAndroidViewModel(
 
             getContext().contentResolver.openInputStream(uri)?.use { inputStream ->
                 import(inputStream.reader().readText())
+                inputStream.close()
             }
         }
     }
@@ -199,15 +175,15 @@ class TabBagAndroidViewModel(
         }
     }
 
-    fun resize(newResize: Int) {
+    fun resizeSettings(newResize: Int) {
         viewModelScope.launch {
-            _stateFlowTabBag.update {
-                it.copy(
-                    resize = newResize
-                )
-            }
+            if (_stateFlowResize.value != newResize) {
+                _stateFlowResize.value = newResize
 
-            TabSettingsModel.resize(repositorySettings, newResize)
+                val settings = repositorySettings.fetch().first()
+                settings.resize = newResize
+                repositorySettings.store(settings)
+            }
         }
     }
 }

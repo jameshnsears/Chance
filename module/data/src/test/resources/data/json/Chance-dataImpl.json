@@ -1,6 +1,6 @@
 [
   {
-    "resize": 4,
+    "resize": 3,
     "rollIndexTime": true,
     "rollScore": true,
     "diceTitle": true,
@@ -13,11 +13,11 @@
   {
     "dice": [
       {
-        "epoch": "1722102953205",
+        "epoch": "1723185125847",
         "uuid": "",
         "side": [
           {
-            "uuid": "88428f67-d81c-4079-a097-7b4ae753aec6",
+            "uuid": "57964950-e2cf-4be2-8b93-ca1ab07aaa2a",
             "number": 6,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -26,7 +26,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "0a4331d2-7e93-4ca7-9086-b70abc0f6b6f",
+            "uuid": "8c3b274f-6bab-4122-a1ff-14a412831565",
             "number": 5,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -35,7 +35,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "fc4fefcf-5562-4c8b-9b6d-487f25d02837",
+            "uuid": "2300513d-ce37-4464-ba5e-fa1394ba1b27",
             "number": 4,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -44,7 +44,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "ff7e4a59-2989-410c-abab-d8e605544b25",
+            "uuid": "030332d5-249d-4486-9d42-22c82a753902",
             "number": 3,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -53,7 +53,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "08ebe7e5-116a-4335-abf4-27d83fb994d9",
+            "uuid": "95ab108d-bcfb-4b7f-8bc8-53f649701975",
             "number": 2,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -62,7 +62,7 @@
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "19af1183-12fb-4ed1-becf-238bba390740",
+            "uuid": "1b4167c4-4f21-4eb7-b03d-f8f32030b32f",
             "number": 1,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -82,59 +82,59 @@
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1722102953208",
+        "epoch": "1723185125850",
         "uuid": "",
         "side": [
           {
-            "uuid": "15452075-2060-408e-aa02-9a85a80acc06",
+            "uuid": "6aaae6fc-c6a0-41e9-91b3-38525d97290d",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230863,
+            "imageDrawableId": 2131230864,
             "imageBase64": "",
             "description": "Knight",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "bac20f3e-f6a8-4ce6-9a95-5e610634e7da",
+            "uuid": "db57b000-03bf-49f0-9a24-c7549b49fb75",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230864,
+            "imageDrawableId": 2131230865,
             "imageBase64": "",
             "description": "Lion",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "fad781f4-aea1-4975-bc4d-e6653ef2aeff",
+            "uuid": "a17117a5-63c5-45d8-8de6-3a7ff8dda100",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230865,
+            "imageDrawableId": 2131230866,
             "imageBase64": "",
             "description": "Pirate",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "b537e230-8a2c-497f-9aee-cc39c1304041",
+            "uuid": "ee85bc21-6e8c-435f-926b-9746cfaeaab6",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230862,
+            "imageDrawableId": 2131230863,
             "imageBase64": "",
             "description": "Crocodile",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "488f88e1-e5d8-4754-b897-9ba19a00acbb",
+            "uuid": "7bd20a10-30e1-4989-b111-704c604f3872",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230866,
+            "imageDrawableId": 2131230867,
             "imageBase64": "",
             "description": "Queen",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "1864d1dc-da0a-4e2b-8123-542d74f25adc",
+            "uuid": "2c9a5a6b-fdb9-4e42-a27f-96612e156933",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageDrawableId": 2131230867,
+            "imageDrawableId": 2131230868,
             "imageBase64": "",
             "description": "Spaceship",
             "descriptionColour": "FF6650a4"
@@ -143,7 +143,7 @@
         "title": "Story",
         "colour": "FF6650a4",
         "selected": false,
-        "multiplierValue": 4,
+        "multiplierValue": 3,
         "explode": false,
         "explodeWhen": "\u003d",
         "explodeValue": 1,
@@ -154,58 +154,6 @@
   },
   {
     "values": {
-      "1722102953303": {
-        "roll": [
-          {
-            "diceEpoch": "1722102953208",
-            "side": {
-              "uuid": "15452075-2060-408e-aa02-9a85a80acc06",
-              "number": 6,
-              "numberColour": "FFFFFFFF",
-              "imageDrawableId": 2131230863,
-              "imageBase64": "",
-              "description": "Knight",
-              "descriptionColour": "FF6650a4"
-            },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 6
-          },
-          {
-            "diceEpoch": "1722102953208",
-            "side": {
-              "uuid": "bac20f3e-f6a8-4ce6-9a95-5e610634e7da",
-              "number": 5,
-              "numberColour": "FFFFFFFF",
-              "imageDrawableId": 2131230864,
-              "imageBase64": "",
-              "description": "Lion",
-              "descriptionColour": "FF6650a4"
-            },
-            "multiplierIndex": 2,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 5
-          },
-          {
-            "diceEpoch": "1722102953208",
-            "side": {
-              "uuid": "fad781f4-aea1-4975-bc4d-e6653ef2aeff",
-              "number": 4,
-              "numberColour": "FFFFFFFF",
-              "imageDrawableId": 2131230865,
-              "imageBase64": "",
-              "description": "Pirate",
-              "descriptionColour": "FF6650a4"
-            },
-            "multiplierIndex": 3,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 4
-          }
-        ]
-      }
     }
   }
 ]

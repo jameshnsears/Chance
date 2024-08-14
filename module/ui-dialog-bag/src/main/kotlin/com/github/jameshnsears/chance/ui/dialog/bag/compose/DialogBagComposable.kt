@@ -31,10 +31,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModelFactory
 import com.github.jameshnsears.chance.ui.dialog.bag.R
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.compose.BagCardDice
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.compose.BagCardRoll
@@ -53,6 +55,15 @@ fun DialogBag(
 
     Timber.d("DialogBag: dice.epoch=${dice.epoch}; side.uuid=${side.uuid}")
 
+    val dialogBagAndroidViewModel: DialogBagAndroidViewModel = viewModel(
+        factory = DialogBagAndroidViewModelFactory(
+            application,
+            repositoryBag,
+            dice,
+            side,
+        )
+    )
+
     Dialog(
         onDismissRequest = {
             showDialog.value = false
@@ -64,12 +75,7 @@ fun DialogBag(
         ) {
             DialogBagLayout(
                 showDialog,
-                DialogBagAndroidViewModel(
-                    application,
-                    repositoryBag,
-                    dice,
-                    side,
-                ),
+                dialogBagAndroidViewModel
             )
         }
     }

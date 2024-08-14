@@ -36,7 +36,8 @@ fun TabRowPreview() {
                     mockk<Application>(),
                     repositorySettings,
                     repositoryBag,
-                    repositoryRoll
+                    repositoryRoll,
+                    3
                 ),
                 TabRollAndroidViewModel(
                     mockk<Application>(),

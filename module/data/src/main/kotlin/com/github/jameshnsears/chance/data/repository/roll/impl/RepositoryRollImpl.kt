@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 
 class RepositoryRollImpl private constructor(private val context: Context) :
     RepositoryRollInterface {
@@ -96,11 +97,17 @@ class RepositoryRollImpl private constructor(private val context: Context) :
                 }
             }.first()
 
+        Timber.d("repositoryRoll.FETCH ============================================")
+        Timber.d("repositoryRoll.size=${rollHistory.size}")
+
         emit(rollHistory)
     }
 
     override suspend fun store(newRollHistory: RollHistory) {
         clear()
+
+        Timber.d("repositoryRoll.STORE ============================================")
+        Timber.d("repositoryRoll.size=${newRollHistory.size}")
 
         context.rollDataStore.updateData {
             val rollHistoryProtocolBufferBuilder = it.toBuilder()

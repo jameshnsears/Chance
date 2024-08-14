@@ -16,23 +16,23 @@ firebase-bom = "33.1.2"
 firebase-crashalytics-plugin = "3.0.2"
 io-gitlab-arturbosch-detekt = "1.23.6"
 jackson-module-kotlin = "2.17.2"
-json-kotlin-schema = "0.47"
+json-kotlin-schema = "0.48"
 jsonschema-generator = "4.36.0"
 junit = "1.2.1"
 junit-bom = "5.10.3"
 junit-jupiter = "5.10.3"
-kotlin-test = "2.0.0"
+kotlin-test = "2.0.10"
 kotlinx-coroutines-test = "1.8.1"
 leakcanary-android = "2.14"
 lifecycle-runtime-compose = "2.8.4"
 lifecycle-viewmodel-compose = "2.8.4"
 mockk = "1.13.12"
-org-jetbrains-kotlin-android = "2.0.0"
+org-jetbrains-kotlin-android = "2.0.10"
 org-jlleitschuh-gradle-ktlint = "12.1.1"
 protobuf-java = "3.25.3"            # stay on 3.25.3 due to JSON compatability
 protobuf-java-util = "3.25.3"       # stay on 3.25.3 due to JSON compatability
 protobuf-kotlin = "3.25.3"          # stay on 3.25.3 due to JSON compatability
-slf4j-simple = "2.0.13"
+slf4j-simple = "2.0.14"
 timber = "5.0.1"
 ui-tooling = "1.6.8"
 
@@ -68,7 +68,6 @@ leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", ve
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 org-jetbrains-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines-test" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit-bom" }
-org-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit-jupiter" }
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf-java" }
 protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf-java-util" }
 protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-kotlin" }

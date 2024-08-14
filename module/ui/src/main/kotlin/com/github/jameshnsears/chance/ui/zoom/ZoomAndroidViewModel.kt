@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import coil.request.ImageRequest
 import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
@@ -27,6 +28,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 data class ZoomState(
     var resizeView: Dp,
@@ -53,35 +57,45 @@ class ZoomAndroidViewModel(
 
     init {
         viewModelScope.launch {
+            updateResize()
             updateStateFlowZoom()
         }
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect.DialogBagCloseEvent")
+                Timber.d("collect.DialogBagCloseEvent.ZoomAndroidViewModel")
+                updateResize()
                 updateStateFlowZoom()
             }
         }
 
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                Timber.d("collect.TabBagImportEvent")
+                Timber.d("collect.TabBagImportEvent.ZoomAndroidViewModel")
+                updateResize()
                 updateStateFlowZoom()
             }
         }
 
         viewModelScope.launch {
             TabRollEvent.sharedFlowTabRollEvent.collect {
-                Timber.d("collect.TabRollEvent")
+                Timber.d("collect.TabRollEvent.ZoomAndroidViewModel")
                 updateStateFlowZoom()
             }
+        }
+    }
+
+    private suspend fun updateResize() {
+        _stateFlowZoom.update {
+            it.copy(
+                resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
+            )
         }
     }
 
     private suspend fun updateStateFlowZoom() {
         _stateFlowZoom.update {
             it.copy(
-                resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
                 diceBag = repositoryBag.fetch().first(),
                 rollHistory = repositoryRoll.fetch().first()
             )
@@ -110,11 +124,10 @@ class ZoomAndroidViewModel(
 
         return when (resize) {
             1 -> defaultViewSize * 0.75f
-            2 -> defaultViewSize * 0.8f
-            3 -> defaultViewSize * 0.9f
-            5 -> defaultViewSize * 1.1f
-            6 -> defaultViewSize * 1.2f
-            7 -> defaultViewSize * 1.25f
+            2 -> defaultViewSize * 1.0f
+            3 -> defaultViewSize * 1.25f
+            4 -> defaultViewSize * 1.5f
+            5 -> defaultViewSize * 1.75f
             else -> defaultViewSize
         }
     }
@@ -155,6 +168,14 @@ class ZoomAndroidViewModel(
         return false
     }
 
-    fun sideImageSVG(side: Side) =
-        UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
+    private val executor: ExecutorService = Executors.newFixedThreadPool(10)
+
+    fun sideImageSVG(side: Side): ImageRequest {
+        val future = CompletableFuture<ImageRequest>()
+        executor.execute {
+            val result = UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
+            future.complete(result)
+        }
+        return future.join()
+    }
 }

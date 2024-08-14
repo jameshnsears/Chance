@@ -40,6 +40,7 @@ import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideDescription
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -182,7 +183,7 @@ private fun RollDetails(
 
     val settingsSideNumber = stateFlowTabRoll.value.sideNumber
 
-    val settingsBehaviour = stateFlowTabRoll.value.behaviour
+    val settingsBehaviour = stateFlowTabRoll.value.rollBehaviour
 
     val settingsSideDescription = stateFlowTabRoll.value.sideDescription
 
@@ -195,9 +196,16 @@ private fun RollDetails(
     ) {
         if (settingsDiceTitle)
             Row(Modifier.padding(4.dp)) {
-                Text(
-                    text = dice.title,
-                )
+                if (UtilityFeature.isEnabled(UtilityFeature.Flag.SHOW_EPOCH_UUID)) {
+                    Column {
+                        Text(dice.title)
+                        Text("${dice.epoch}")
+                        Text("${dice.uuid}")
+                        Text("${roll.side.uuid}")
+                    }
+                } else {
+                    Text(dice.title)
+                }
             }
 
         if (settingsBehaviour) ZoomSideRollBehaviour(zoomAndroidViewModel, roll)
