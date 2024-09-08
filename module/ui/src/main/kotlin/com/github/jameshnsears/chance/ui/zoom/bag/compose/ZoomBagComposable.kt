@@ -76,7 +76,7 @@ fun ZoomBag(
                     }
                 ) { side ->
                     Column(
-                        Modifier.padding(start = 9.dp),
+                        Modifier.padding(start = 4.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         ZoomSideImageShape(

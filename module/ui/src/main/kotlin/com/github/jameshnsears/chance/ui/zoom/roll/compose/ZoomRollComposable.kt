@@ -143,7 +143,7 @@ private fun RollScore(
 ) {
     Column(
         Modifier
-            .padding(start = 18.dp, end = 12.dp, bottom = 8.dp),
+            .padding(start = 18.dp, end = 6.dp, bottom = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -178,7 +178,7 @@ private fun RollDetails(
     val settingsSideSVG = stateFlowTabRoll.value.sideSVG
 
     Column(
-        Modifier.padding(start = 9.dp),
+        Modifier.padding(start = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
