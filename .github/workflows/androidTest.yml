@@ -100,7 +100,7 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew app:connectedFdroidDebugAndroidTest 
+            ./gradlew app:uninstallAll app:connectedFdroidDebugAndroidTest 
 
   module-data:
     name: module-data
@@ -187,7 +187,7 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew module:data:connectedFdroidDebugAndroidTest 
+            ./gradlew app:uninstallAll module:data:connectedFdroidDebugAndroidTest 
 
   module-ui-dialog-bag:
     name: module-ui-dialog-bag
@@ -274,5 +274,5 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew  module:ui-dialog-bag:connectedFdroidDebugAndroidTest 
+            ./gradlew app:uninstallAll module:ui-dialog-bag:connectedFdroidDebugAndroidTest 
 
