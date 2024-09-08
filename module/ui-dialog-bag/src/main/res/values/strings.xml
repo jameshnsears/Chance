@@ -1,0 +1,50 @@
+<resources>
+    <string name="dialog.bag.save">Save</string>
+    <string name="dialog.bag.clone">Clone</string>
+    <string name="dialog.bag.delete">Delete</string>
+    <string name="dialog.bag.delete.confirmation">Delete Confirmation</string>
+    <string name="dialog.bag.delete.confirmation.question">Delete will undo associated rolls!</string>
+    <string name="dialog.bag.delete.confirmation.ok">OK</string>
+    <string name="dialog.bag.delete.confirmation.cancel">Cancel</string>
+
+    <string name="dialog.bag.side">Side # </string>
+    <string name="dialog.bag.side.colour">Side #…</string>
+    <string name="dialog.bag.side.colour.apply.to.all">Apply colour to all side #\'s</string>
+
+    <string name="dialog.bag.side.description">Description</string>
+    <string name="dialog.bag.side.description.colour">Description…</string>
+    <string name="dialog.bag.side.description.info">Description can be maximum of 25 characters</string>
+    <string name="dialog.bag.side.description.apply.to.all">Apply both to all sides</string>
+
+    <string name="dialog.bag.side.image">SVG file…</string>
+    <string name="dialog.bag.side.image.clear">Drop SVG</string>
+    <string name="dialog.bag.side.image.info">Large SVG files affect display performance</string>
+    <string name="dialog.bag.side.image_apply.to.all">Apply SVG to all sides</string>
+    <string name="dialog.bag.side.image.error">Invalid SVG</string>
+
+    <string name="dialog.bag.dice">Dice</string>
+    <string name="dialog.bag.dice.title">Title</string>
+    <string name="dialog.bag.dice.title.info">Title must be unique and a maximum of 25 characters</string>
+    <string name="dialog.bag.dice.sides">Sides</string>
+    <string name="dialog.bag.dice.sides.info">Changing the number of sides will undo associated rolls</string>
+
+    <string-array name="dialog.bag.dice.sides">
+        <item>2</item>
+        <item>4</item>
+        <item>6</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>20</item>
+    </string-array>
+    <string name="dialog.bag.dice.colour">Colour…</string>
+
+    <string name="dialog.bag.roll">Roll Behaviour</string>
+    <string name="dialog.bag.roll.repeat">Multiplier</string>
+    <string name="dialog.bag.roll.explode.depth">A maximum of 5 explosions per side</string>
+    <string name="dialog.bag.roll.score">Score</string>
+
+    <string name="dialog.bag.colour.picker.side">Side #</string>
+    <string name="dialog.bag.colour.picker.description">Side Description</string>
+    <string name="dialog.bag.colour.picker.dice">Dice</string>
+</resources>

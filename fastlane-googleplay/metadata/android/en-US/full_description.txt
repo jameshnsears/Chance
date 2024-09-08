@@ -1,0 +1,9 @@
+&bull; Create custom dice
+&bull; Tap the side of a dice to change almost every facet: colour; text; image (SVG); # of sides
+&bull; Apply different behaviour to dice rolls
+&bull; Clone existing dice to quickly create new dice
+&bull; Choose which dice you want to roll
+&bull; Settings to display only what your interested in seeing
+&bull; Import &amp; export everything
+&bull; Free; no ads; crashlytics only
+&bull; Open Source: User feedback drives development :-)
