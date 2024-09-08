@@ -143,7 +143,7 @@ private fun RollScore(
 ) {
     Column(
         Modifier
-            .padding(start = 18.dp, end = 6.dp, bottom = 8.dp),
+            .padding(start = 6.dp, end = 12.dp, bottom = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
