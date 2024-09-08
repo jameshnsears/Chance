@@ -30,7 +30,7 @@ class RepositoryFactory(context: Context? = null) {
 
     ///////////////////////////////////////////////////
 
-    val bagDataImpl = BagDataImpl()
+    private val bagDataImpl = BagDataImpl()
     val bagDataTestDouble = BagDataTestDouble()
 
     val repositoryBag = if (BuildConfig.DEBUG)
@@ -43,7 +43,7 @@ class RepositoryFactory(context: Context? = null) {
 
     ///////////////////////////////////////////////////
 
-    val rollHistoryDataImpl = RollHistoryDataImpl(bagDataImpl).rollHistory
+    private val rollHistoryDataImpl = RollHistoryDataImpl(bagDataImpl).rollHistory
     val rollHistoryDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 
     val repositoryRoll = if (BuildConfig.DEBUG)

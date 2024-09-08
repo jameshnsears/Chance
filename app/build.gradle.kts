@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.github.jameshnsears.chance"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.github.jameshnsears.chance"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 12434
         versionName = "1.0.0"
         extra["versionName"] = versionName

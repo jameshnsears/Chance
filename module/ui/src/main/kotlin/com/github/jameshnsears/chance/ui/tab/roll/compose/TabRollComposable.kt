@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.R
 import com.github.jameshnsears.chance.ui.dialog.settings.compose.DialogSettings
@@ -86,7 +87,7 @@ fun TabRollLayout(
 fun Undo(tabRollAndroidViewModel: TabRollAndroidViewModel) {
     val stateFlowUndoEnabled =
         tabRollAndroidViewModel.undoEnabled.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
     val undoEnabled = stateFlowUndoEnabled.value
 
@@ -115,7 +116,7 @@ fun Undo(tabRollAndroidViewModel: TabRollAndroidViewModel) {
 fun Roll(tabRollAndroidViewModel: TabRollAndroidViewModel) {
     val stateFlowRollEnabled =
         tabRollAndroidViewModel.rollEnabled.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val rollEnabled = stateFlowRollEnabled.value

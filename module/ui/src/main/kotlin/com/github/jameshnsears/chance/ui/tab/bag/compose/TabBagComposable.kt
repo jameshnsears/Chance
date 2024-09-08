@@ -43,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.BuildConfig
 import com.github.jameshnsears.chance.ui.R
@@ -143,7 +144,7 @@ fun Resize(
 ) {
     val stateFlowResize =
         tabBagAndroidViewModel.stateFlowResize.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     Row(
@@ -159,7 +160,7 @@ fun Resize(
                 tabBagAndroidViewModel.resizeSettings(newValue.toInt())
             },
             valueRange = 1f..5f,
-            steps = 0,
+            steps = 3,
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,
                 activeTrackColor = MaterialTheme.colorScheme.secondary,
@@ -179,14 +180,14 @@ fun ImportExport(
 ) {
     val stateFlowTabBagExport =
         tabBagAndroidViewModel.stateFlowTabBagExport.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
     val exportStatus = stateFlowTabBagExport.value.exportStatus
     val exportSuccessfulToast = stringResource(R.string.tab_bag_export_success)
 
     val stateFlowTabBagImport =
         tabBagAndroidViewModel.stateFlowTabBagImport.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
     val importStatus = stateFlowTabBagImport.value.importStatus
     val importFailureReason = stateFlowTabBagImport.value.importDetail

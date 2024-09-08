@@ -33,7 +33,6 @@ fun GenericExposedDropdownMenuBox(
     ) {
         TextField(
             modifier = Modifier
-                .menuAnchor()
                 .width(width)
                 .testTag(testTag),
             readOnly = true,

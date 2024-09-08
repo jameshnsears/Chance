@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
@@ -31,7 +32,7 @@ class RollSelectionTestTag {
 fun RollSelectionRow(tabRollAndroidViewModel: TabRollAndroidViewModel) {
     val stateDiceBag =
         tabRollAndroidViewModel.diceBag.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val diceBag = stateDiceBag.value

@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.dialog.bag.R
 import com.github.jameshnsears.chance.ui.dialog.bag.card.compose.BagCardColourSample
@@ -101,7 +102,7 @@ fun DiceSides(
 
     val stateFlowCardDice =
         cardDiceViewModel.stateFlowCardDice.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     var sliderPosition = stateFlowCardDice.value.diceSidesPosition
@@ -163,7 +164,7 @@ fun DiceSides(
 fun DiceTitle(cardDiceViewModel: CardDiceViewModel) {
     val stateFlowCardDice =
         cardDiceViewModel.stateFlowCardDice.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val diceTitle = stateFlowCardDice.value.diceTitle
@@ -227,7 +228,7 @@ fun DiceColour(cardDiceViewModel: CardDiceViewModel) {
 
     val stateFlowCardDice =
         cardDiceViewModel.stateFlowCardDice.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val diceColour = stateFlowCardDice.value.diceColour

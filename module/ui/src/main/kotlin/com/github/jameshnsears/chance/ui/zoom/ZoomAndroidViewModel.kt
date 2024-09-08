@@ -96,7 +96,7 @@ class ZoomAndroidViewModel(
         }
     }
 
-    suspend fun updateStateFlowZoom() {
+    private suspend fun updateStateFlowZoom() {
         _stateFlowZoom.update {
             it.copy(
                 diceBag = repositoryBag.fetch().first(),
@@ -115,7 +115,7 @@ class ZoomAndroidViewModel(
             diceEpochCache.clear()
 
             for (dice in _stateFlowZoom.value.diceBag) {
-                _diceBagList.value = _diceBagList.value + dice
+                _diceBagList.value += dice
                 diceEpochCache[dice.epoch] = dice
             }
         }

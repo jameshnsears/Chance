@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -46,14 +47,14 @@ fun ZoomSideImageShape(
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val resizeView = stateFlowZoom.value.resizeView
 
     if (UtilityFeature.isEnabled(UtilityFeature.Flag.SHOW_EPOCH_UUID))
         Row {
-            Text(text = "${side.uuid}")
+            Text(text = side.uuid)
         }
 
     Box {
@@ -94,7 +95,7 @@ fun ZoomSideImageSVG(
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val resizeView = stateFlowZoom.value.resizeView

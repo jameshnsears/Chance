@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.ui.dialog.bag.R
@@ -95,7 +96,7 @@ fun Roll(cardRollViewModel: CardRollViewModel) {
 private fun RollMultiplier(cardRollViewModel: CardRollViewModel) {
     val stateFlowCardRoll =
         cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     Row(
@@ -130,7 +131,7 @@ private fun RollMultiplier(cardRollViewModel: CardRollViewModel) {
 private fun RollExplode(cardRollViewModel: CardRollViewModel) {
     val stateFlowCardRoll =
         cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     var rollExplode = stateFlowCardRoll.value.rollExplode
@@ -192,7 +193,7 @@ private fun RollExplode(cardRollViewModel: CardRollViewModel) {
 fun RollExplodeLayout(cardRollViewModel: CardRollViewModel) {
     val stateFlowCardRoll =
         cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     Column {
@@ -242,7 +243,7 @@ private fun RollExplodeDropdownWhen(
 fun RollScore(cardRollViewModel: CardRollViewModel) {
     val stateFlowCardRoll =
         cardRollViewModel.stateFlowCardRoll.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     var rollModifyScore = stateFlowCardRoll.value.rollModifyScore

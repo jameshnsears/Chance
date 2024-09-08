@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -51,14 +52,14 @@ fun ZoomRoll(
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val rollHistory = stateFlowZoom.value.rollHistory
 
     val stateFlowTabRoll =
         tabRollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val listState = rememberLazyListState()
@@ -165,7 +166,7 @@ private fun RollDetails(
 ) {
     val stateFlowTabRoll =
         tabRollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val settingsDiceTitle = stateFlowTabRoll.value.diceTitle
@@ -223,7 +224,7 @@ fun ZoomSideRollBehaviour(
 
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val resizeView = stateFlowZoom.value.resizeView
@@ -296,7 +297,7 @@ fun ZoomRollSideImageShape(
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val resizeView = stateFlowZoom.value.resizeView
@@ -330,7 +331,7 @@ fun ZoomRollSideImageSVG(
 ) {
     val stateFlowZoom =
         zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val resizeView = stateFlowZoom.value.resizeView

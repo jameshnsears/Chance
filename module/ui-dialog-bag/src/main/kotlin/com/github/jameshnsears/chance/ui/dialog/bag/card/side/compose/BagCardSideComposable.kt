@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.github.jameshnsears.chance.ui.dialog.bag.R
@@ -96,7 +97,7 @@ fun BagCardSide(cardSideAndroidViewModel: CardSideAndroidViewModel) {
 fun SideNumber(cardSideAndroidViewModel: CardSideAndroidViewModel) {
     val stateFlowCardSide =
         cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     Text(
@@ -119,7 +120,7 @@ fun SideColour(
 
     val stateFlowCardSide =
         cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val sideNumberColour = stateFlowCardSide.value.sideNumberColour
@@ -179,7 +180,7 @@ fun SideDescription(
 ) {
     val stateFlowCardSide =
         cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val sideDescription = stateFlowCardSide.value.sideDescription
@@ -254,7 +255,7 @@ fun SideDescriptionColour(cardSideAndroidViewModel: CardSideAndroidViewModel) {
 
     val stateFlowCardSide =
         cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val descriptionColour = stateFlowCardSide.value.sideDescriptionColour
@@ -327,7 +328,7 @@ fun SideImageSVG(
 
     val stateFlowCardSide =
         cardSideAndroidViewModel.stateFlowCardSide.collectAsStateWithLifecycle(
-            lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+            lifecycleOwner = LocalLifecycleOwner.current
         )
 
     val sideImageDrawableId = stateFlowCardSide.value.sideImageDrawableId
