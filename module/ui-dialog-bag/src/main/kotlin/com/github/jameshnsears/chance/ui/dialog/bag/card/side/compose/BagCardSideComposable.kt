@@ -19,10 +19,10 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -63,7 +63,7 @@ class BagCardSideTestTag {
 
 @Composable
 fun BagCardSide(cardSideAndroidViewModel: CardSideAndroidViewModel) {
-    ElevatedCard(
+    OutlinedCard(
         modifier = Modifier
             .padding(top = 4.dp)
             .fillMaxWidth(),

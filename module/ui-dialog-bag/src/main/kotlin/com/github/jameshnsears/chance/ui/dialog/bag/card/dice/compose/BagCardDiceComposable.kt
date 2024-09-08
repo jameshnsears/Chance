@@ -14,11 +14,11 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -56,7 +56,7 @@ class BagCardDiceTestTag {
 fun BagCardDice(
     cardDiceViewModel: CardDiceViewModel,
 ) {
-    ElevatedCard(
+    OutlinedCard(
         modifier = Modifier
             .padding(top = 24.dp, bottom = 24.dp)
             .fillMaxWidth(),

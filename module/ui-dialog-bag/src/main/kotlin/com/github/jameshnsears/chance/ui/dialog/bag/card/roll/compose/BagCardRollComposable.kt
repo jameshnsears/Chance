@@ -12,9 +12,9 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -49,7 +49,7 @@ class BagCardRollTestTag {
 fun BagCardRoll(
     cardRollViewModel: CardRollViewModel,
 ) {
-    ElevatedCard(
+    OutlinedCard(
         modifier = Modifier
             .padding(bottom = 4.dp)
             .fillMaxWidth(),
