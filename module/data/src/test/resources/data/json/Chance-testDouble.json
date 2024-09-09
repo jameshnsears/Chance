@@ -1,0 +1,905 @@
+[
+  {
+    "resize": 3,
+    "rollIndexTime": true,
+    "rollScore": true,
+    "diceTitle": true,
+    "sideNumber": true,
+    "behaviour": true,
+    "sideDescription": true,
+    "sideSVG": true,
+    "rollSound": true
+  },
+  {
+    "dice": [
+      {
+        "epoch": "1723185255188",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "68d51c6c-d0f5-4b81-82a5-f1e93948c626",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "c5a968bf-6bd0-4333-9b29-220b1e3397df",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "d2",
+        "colour": "FF6650a4",
+        "selected": false,
+        "multiplierValue": 1,
+        "explode": false,
+        "explodeWhen": "\u003d",
+        "explodeValue": 1,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1723185255190",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "a158565f-a209-4670-a77f-99d3487a3ff8",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "ee699212-162f-4f26-a1dd-8abeab1b5f2b",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "72c54d41-4ce5-46f1-a65e-2045fb827e69",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "e67e11bf-b431-47d6-bfdd-7c48b9d7eac5",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "d4",
+        "colour": "FF6650a4",
+        "selected": false,
+        "multiplierValue": 2,
+        "explode": true,
+        "explodeWhen": "\u003d",
+        "explodeValue": 2,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1723185255193",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "45d850a6-a52f-4769-8633-a669d427f023",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnM2LnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTEuNzEzMTM0IgogICAgIGlua3NjYXBlOmN5PSIxNS4wMjM4NjMiCiAgICAgaW5rc2NhcGU6cGFnZWNoZWNrZXJib2FyZD0iMCIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIgogICAgIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6d2luZG93LWhlaWdodD0iMTAwOCIKICAgICBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIxIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTkyMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteD0iMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMCIKICAgICBpbmtzY2FwZTp6b29tPSIyMS44OTg0OTUiCiAgICAgaW5rc2NhcGU6c2hvd3BhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6ZGVza2NvbG9yPSIjZDFkMWQxIiAvPgogIDxwYXRoCiAgICAgZD0ibSAzMDAsLTI0MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAwLC0zNjAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMzYwLDM2MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAwLC0zNjAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gLTQ2MCw0ODAgYyAtMjIsMCAtNDAuODMzMzMsLTcuODMzMzMgLTU2LjUsLTIzLjUgQyAxMjcuODMzMzMsLTE1OS4xNjY2NyAxMjAsLTE3OCAxMjAsLTIwMCB2IC01NjAgYyAwLC0yMiA3LjgzMzMzLC00MC44MzMzMyAyMy41LC01Ni41IDE1LjY2NjY3LC0xNS42NjY2NyAzNC41LC0yMy41IDU2LjUsLTIzLjUgaCA1NjAgYyAyMiwwIDQwLjgzMzMzLDcuODMzMzMgNTYuNSwyMy41IDE1LjY2NjY3LDE1LjY2NjY3IDIzLjUsMzQuNSAyMy41LDU2LjUgdiA1NjAgYyAwLDIyIC03LjgzMzMzLDQwLjgzMzMzIC0yMy41LDU2LjUgLTE1LjY2NjY3LDE1LjY2NjY3IC0zNC41LDIzLjUgLTU2LjUsMjMuNSB6IG0gMCwtODAgSCA3NjAgViAtNzYwIEggMjAwIFogbSAwLC01NjAgdiA1NjAgeiIKICAgICBpZD0icGF0aDIiCiAgICAgc29kaXBvZGk6bm9kZXR5cGVzPSJzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzY2NjY2NjY2MiCiAgICAgc3R5bGU9ImZpbGw6IzdENTI2MDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6IzdENTI2MDtzdHJva2Utb3BhY2l0eToxIiAvPgogIDxwYXRoCiAgICAgc3R5bGU9InN0cm9rZS13aWR0aDo0MDtmaWxsOiM3RDUyNjA7ZmlsbC1vcGFjaXR5OjEiCiAgICAgZD0ibSA2NjAsLTQyMCBjIDE2LjY2NjY4LDAgMzAuODMzMzIsLTUuODMzMzIgNDIuNSwtMTcuNSAxMS42NjY2OCwtMTEuNjY2NjggMTcuNSwtMjUuODMzMzIgMTcuNSwtNDIuNSAwLC0xNi42NjY2OCAtNS44MzMzMiwtMzAuODMzMzIgLTE3LjUsLTQyLjUgLTExLjY2NjY4LC0xMS42NjY2OCAtMjUuODMzMzIsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY4LDAgLTMwLjgzMzMyLDUuODMzMzIgLTQyLjUsMTcuNSAtMTEuNjY2NjgsMTEuNjY2NjggLTE3LjUsMjUuODMzMzIgLTE3LjUsNDIuNSAwLDE2LjY2NjY4IDUuODMzMzIsMzAuODMzMzIgMTcuNSw0Mi41IDExLjY2NjY4LDExLjY2NjY4IDI1LjgzMzMyLDE3LjUgNDIuNSwxNy41IHoiCiAgICAgaWQ9InBhdGgxMTM2IiAvPgogIDxwYXRoCiAgICAgc3R5bGU9InN0cm9rZS13aWR0aDo0MDtmaWxsOiM3RDUyNjA7ZmlsbC1vcGFjaXR5OjEiCiAgICAgZD0ibSAzMDAsLTQyMCBjIDE2LjY2NjY4LDAgMzAuODMzMzIsLTUuODMzMzIgNDIuNSwtMTcuNSAxMS42NjY2OCwtMTEuNjY2NjggMTcuNSwtMjUuODMzMzIgMTcuNSwtNDIuNSAwLC0xNi42NjY2OCAtNS44MzMzMiwtMzAuODMzMzIgLTE3LjUsLTQyLjUgLTExLjY2NjY4LC0xMS42NjY2OCAtMjUuODMzMzIsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY4LDAgLTMwLjgzMzMyLDUuODMzMzIgLTQyLjUsMTcuNSAtMTEuNjY2NjgsMTEuNjY2NjggLTE3LjUsMjUuODMzMzIgLTE3LjUsNDIuNSAwLDE2LjY2NjY4IDUuODMzMzIsMzAuODMzMzIgMTcuNSw0Mi41IDExLjY2NjY4LDExLjY2NjY4IDI1LjgzMzMyLDE3LjUgNDIuNSwxNy41IHoiCiAgICAgaWQ9InBhdGgxMTM2LTYiIC8+Cjwvc3ZnPgo\u003d",
+            "description": "6",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "9055d1ce-38e4-4435-bf53-59a884af09d7",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgdmVyc2lvbj0iMS4xIgogICBpZD0ic3ZnNCIKICAgc29kaXBvZGk6ZG9jbmFtZT0iZDZzNS5zdmciCiAgIGlua3NjYXBlOnZlcnNpb249IjEuMi4yIChiMGE4NDg2NTQxLCAyMDIyLTEyLTAxKSIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgaWQ9Im5hbWVkdmlldzYiCiAgICAgcGFnZWNvbG9yPSIjZmZmZmZmIgogICAgIGJvcmRlcmNvbG9yPSIjMDAwMDAwIgogICAgIGJvcmRlcm9wYWNpdHk9IjAuMjUiCiAgICAgaW5rc2NhcGU6c2hvd3BhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6cGFnZW9wYWNpdHk9IjAuMCIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6em9vbT0iMzQuOTE2NjY3IgogICAgIGlua3NjYXBlOmN4PSIxMi4wMTQzMiIKICAgICBpbmtzY2FwZTpjeT0iMTIiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9IjEwMDgiCiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjAiCiAgICAgaW5rc2NhcGU6d2luZG93LXk9IjAiCiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMSIKICAgICBpbmtzY2FwZTpjdXJyZW50LWxheWVyPSJzdmc0IiAvPgogIDxwYXRoCiAgICAgZD0iTTMwMC0yNDBxMjUgMCA0Mi41LTE3LjVUMzYwLTMwMHEwLTI1LTE3LjUtNDIuNVQzMDAtMzYwcS0yNSAwLTQyLjUgMTcuNVQyNDAtMzAwcTAgMjUgMTcuNSA0Mi41VDMwMC0yNDBabTAtMzYwcTI1IDAgNDIuNS0xNy41VDM2MC02NjBxMC0yNS0xNy41LTQyLjVUMzAwLTcyMHEtMjUgMC00Mi41IDE3LjVUMjQwLTY2MHEwIDI1IDE3LjUgNDIuNVQzMDAtNjAwWm0xODAgMTgwcTI1IDAgNDIuNS0xNy41VDU0MC00ODBxMC0yNS0xNy41LTQyLjVUNDgwLTU0MHEtMjUgMC00Mi41IDE3LjVUNDIwLTQ4MHEwIDI1IDE3LjUgNDIuNVQ0ODAtNDIwWm0xODAgMTgwcTI1IDAgNDIuNS0xNy41VDcyMC0zMDBxMC0yNS0xNy41LTQyLjVUNjYwLTM2MHEtMjUgMC00Mi41IDE3LjVUNjAwLTMwMHEwIDI1IDE3LjUgNDIuNVQ2NjAtMjQwWm0wLTM2MHEyNSAwIDQyLjUtMTcuNVQ3MjAtNjYwcTAtMjUtMTcuNS00Mi41VDY2MC03MjBxLTI1IDAtNDIuNSAxNy41VDYwMC02NjBxMCAyNSAxNy41IDQyLjVUNjYwLTYwMFpNMjAwLTEyMHEtMzMgMC01Ni41LTIzLjVUMTIwLTIwMHYtNTYwcTAtMzMgMjMuNS01Ni41VDIwMC04NDBoNTYwcTMzIDAgNTYuNSAyMy41VDg0MC03NjB2NTYwcTAgMzMtMjMuNSA1Ni41VDc2MC0xMjBIMjAwWm0wLTgwaDU2MHYtNTYwSDIwMHY1NjBabTAtNTYwdjU2MC01NjBaIgogICAgIGlkPSJwYXRoMiIKICAgICBzdHlsZT0iZmlsbDojN0Q1MjYwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTojN0Q1MjYwO3N0cm9rZS1vcGFjaXR5OjEiIC8+Cjwvc3ZnPgo\u003d",
+            "description": "5",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "1e469779-9dfc-4e54-899b-97347c58330d",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnM0LnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iLTMuMzI3NjgxNCIKICAgICBpbmtzY2FwZTpjeT0iMTEuNjYyMTUiCiAgICAgaW5rc2NhcGU6cGFnZWNoZWNrZXJib2FyZD0iMCIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIgogICAgIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6d2luZG93LWhlaWdodD0iMTAwOCIKICAgICBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIxIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTkyMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteD0iMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMCIKICAgICBpbmtzY2FwZTp6b29tPSIxNi4zNzc3NyIKICAgICBpbmtzY2FwZTpzaG93cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTpkZXNrY29sb3I9IiNkMWQxZDEiIC8+CiAgPHBhdGgKICAgICBkPSJtIDMwMCwtMjQwIGMgMTYuNjY2NjcsMCAzMC44MzMzMywtNS44MzMzMyA0Mi41LC0xNy41IDExLjY2NjY3LC0xMS42NjY2NyAxNy41LC0yNS44MzMzMyAxNy41LC00Mi41IDAsLTE2LjY2NjY3IC01LjgzMzMzLC0zMC44MzMzMyAtMTcuNSwtNDIuNSAtMTEuNjY2NjcsLTExLjY2NjY3IC0yNS44MzMzMywtMTcuNSAtNDIuNSwtMTcuNSAtMTYuNjY2NjcsMCAtMzAuODMzMzMsNS44MzMzMyAtNDIuNSwxNy41IC0xMS42NjY2NywxMS42NjY2NyAtMTcuNSwyNS44MzMzMyAtMTcuNSw0Mi41IDAsMTYuNjY2NjcgNS44MzMzMywzMC44MzMzMyAxNy41LDQyLjUgMTEuNjY2NjcsMTEuNjY2NjcgMjUuODMzMzMsMTcuNSA0Mi41LDE3LjUgeiBtIDAsLTM2MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAzNjAsMzYwIGMgMTYuNjY2NjcsMCAzMC44MzMzMywtNS44MzMzMyA0Mi41LC0xNy41IDExLjY2NjY3LC0xMS42NjY2NyAxNy41LC0yNS44MzMzMyAxNy41LC00Mi41IDAsLTE2LjY2NjY3IC01LjgzMzMzLC0zMC44MzMzMyAtMTcuNSwtNDIuNSAtMTEuNjY2NjcsLTExLjY2NjY3IC0yNS44MzMzMywtMTcuNSAtNDIuNSwtMTcuNSAtMTYuNjY2NjcsMCAtMzAuODMzMzMsNS44MzMzMyAtNDIuNSwxNy41IC0xMS42NjY2NywxMS42NjY2NyAtMTcuNSwyNS44MzMzMyAtMTcuNSw0Mi41IDAsMTYuNjY2NjcgNS44MzMzMywzMC44MzMzMyAxNy41LDQyLjUgMTEuNjY2NjcsMTEuNjY2NjcgMjUuODMzMzMsMTcuNSA0Mi41LDE3LjUgeiBtIDAsLTM2MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAtNDYwLDQ4MCBjIC0yMiwwIC00MC44MzMzMywtNy44MzMzMyAtNTYuNSwtMjMuNSBDIDEyNy44MzMzMywtMTU5LjE2NjY3IDEyMCwtMTc4IDEyMCwtMjAwIHYgLTU2MCBjIDAsLTIyIDcuODMzMzMsLTQwLjgzMzMzIDIzLjUsLTU2LjUgMTUuNjY2NjcsLTE1LjY2NjY3IDM0LjUsLTIzLjUgNTYuNSwtMjMuNSBoIDU2MCBjIDIyLDAgNDAuODMzMzMsNy44MzMzMyA1Ni41LDIzLjUgMTUuNjY2NjcsMTUuNjY2NjcgMjMuNSwzNC41IDIzLjUsNTYuNSB2IDU2MCBjIDAsMjIgLTcuODMzMzMsNDAuODMzMzMgLTIzLjUsNTYuNSAtMTUuNjY2NjcsMTUuNjY2NjcgLTM0LjUsMjMuNSAtNTYuNSwyMy41IHogbSAwLC04MCBIIDc2MCBWIC03NjAgSCAyMDAgWiBtIDAsLTU2MCB2IDU2MCB6IgogICAgIGlkPSJwYXRoMiIKICAgICBzb2RpcG9kaTpub2RldHlwZXM9InNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NjY2NjY2NjYyIKICAgICBzdHlsZT0iZmlsbDojN0Q1MjYwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTojN0Q1MjYwO3N0cm9rZS1vcGFjaXR5OjEiIC8+Cjwvc3ZnPgo\u003d",
+            "description": "4",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "4dd62254-bace-42a4-ae7d-587a59dd88d3",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnMzLnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTIuMDIxNTA1IgogICAgIGlua3NjYXBlOmN5PSIxMiIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiCiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSIxMDA4IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy14PSIwIgogICAgIGlua3NjYXBlOndpbmRvdy15PSIwIgogICAgIGlua3NjYXBlOnpvb209IjIzLjI1IgogICAgIGlua3NjYXBlOnNob3dwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIgLz4KICA8cGF0aAogICAgIGQ9Im0gMzAwLC0yNDAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMTgwLC0xODAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMTgwLC0xODAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gLTQ2MCw0ODAgYyAtMjIsMCAtNDAuODMzMzMsLTcuODMzMzMgLTU2LjUsLTIzLjUgQyAxMjcuODMzMzMsLTE1OS4xNjY2NyAxMjAsLTE3OCAxMjAsLTIwMCB2IC01NjAgYyAwLC0yMiA3LjgzMzMzLC00MC44MzMzMyAyMy41LC01Ni41IDE1LjY2NjY3LC0xNS42NjY2NyAzNC41LC0yMy41IDU2LjUsLTIzLjUgaCA1NjAgYyAyMiwwIDQwLjgzMzMzLDcuODMzMzMgNTYuNSwyMy41IDE1LjY2NjY3LDE1LjY2NjY3IDIzLjUsMzQuNSAyMy41LDU2LjUgdiA1NjAgYyAwLDIyIC03LjgzMzMzLDQwLjgzMzMzIC0yMy41LDU2LjUgLTE1LjY2NjY3LDE1LjY2NjY3IC0zNC41LDIzLjUgLTU2LjUsMjMuNSB6IG0gMCwtODAgSCA3NjAgViAtNzYwIEggMjAwIFogbSAwLC01NjAgdiA1NjAgeiIKICAgICBpZD0icGF0aDIiCiAgICAgc29kaXBvZGk6bm9kZXR5cGVzPSJzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzY2NjY2NjY2MiCiAgICAgc3R5bGU9ImZpbGw6IzdENTI2MDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6IzdENTI2MDtzdHJva2Utb3BhY2l0eToxIiAvPgo8L3N2Zz4K",
+            "description": "3",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "48033510-8ff3-47bd-8aac-d5e81840c834",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnMyLnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTIuMDIxNTA1IgogICAgIGlua3NjYXBlOmN5PSIxMiIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiCiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSIxMDA4IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy14PSIwIgogICAgIGlua3NjYXBlOndpbmRvdy15PSIwIgogICAgIGlua3NjYXBlOnpvb209IjIzLjI1IgogICAgIGlua3NjYXBlOnNob3dwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIgLz4KICA8cGF0aAogICAgIGQ9Im0gMzAwLC0yNDAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMzYwLC0zNjAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gLTQ2MCw0ODAgYyAtMjIsMCAtNDAuODMzMzMsLTcuODMzMzMgLTU2LjUsLTIzLjUgQyAxMjcuODMzMzMsLTE1OS4xNjY2NyAxMjAsLTE3OCAxMjAsLTIwMCB2IC01NjAgYyAwLC0yMiA3LjgzMzMzLC00MC44MzMzMyAyMy41LC01Ni41IDE1LjY2NjY3LC0xNS42NjY2NyAzNC41LC0yMy41IDU2LjUsLTIzLjUgaCA1NjAgYyAyMiwwIDQwLjgzMzMzLDcuODMzMzMgNTYuNSwyMy41IDE1LjY2NjY3LDE1LjY2NjY3IDIzLjUsMzQuNSAyMy41LDU2LjUgdiA1NjAgYyAwLDIyIC03LjgzMzMzLDQwLjgzMzMzIC0yMy41LDU2LjUgLTE1LjY2NjY3LDE1LjY2NjY3IC0zNC41LDIzLjUgLTU2LjUsMjMuNSB6IG0gMCwtODAgSCA3NjAgViAtNzYwIEggMjAwIFogbSAwLC01NjAgdiA1NjAgeiIKICAgICBpZD0icGF0aDIiCiAgICAgc29kaXBvZGk6bm9kZXR5cGVzPSJzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzY2NjY2NjY2MiCiAgICAgc3R5bGU9ImZpbGw6IzdENTI2MDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6IzdENTI2MDtzdHJva2Utb3BhY2l0eToxIiAvPgo8L3N2Zz4K",
+            "description": "2",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "3ed6454b-d73e-436b-aa40-ab62835d6fbd",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnMxLnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTIuMzE1MTMyIgogICAgIGlua3NjYXBlOmN5PSIxNC42ODM5MyIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiCiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSIxMDA4IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy14PSIwIgogICAgIGlua3NjYXBlOndpbmRvdy15PSIwIgogICAgIGlua3NjYXBlOnpvb209IjM4LjIwNTAzMSIKICAgICBpbmtzY2FwZTpzaG93cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTpkZXNrY29sb3I9IiNkMWQxZDEiIC8+CiAgPHBhdGgKICAgICBkPSJtIDQ4MCwtNDIwIGMgMTYuNjY2NjcsMCAzMC44MzMzMywtNS44MzMzMyA0Mi41LC0xNy41IDExLjY2NjY3LC0xMS42NjY2NyAxNy41LC0yNS44MzMzMyAxNy41LC00Mi41IDAsLTE2LjY2NjY3IC01LjgzMzMzLC0zMC44MzMzMyAtMTcuNSwtNDIuNSAtMTEuNjY2NjcsLTExLjY2NjY3IC0yNS44MzMzMywtMTcuNSAtNDIuNSwtMTcuNSAtMTYuNjY2NjcsMCAtMzAuODMzMzMsNS44MzMzMyAtNDIuNSwxNy41IC0xMS42NjY2NywxMS42NjY2NyAtMTcuNSwyNS44MzMzMyAtMTcuNSw0Mi41IDAsMTYuNjY2NjcgNS44MzMzMywzMC44MzMzMyAxNy41LDQyLjUgMTEuNjY2NjcsMTEuNjY2NjcgMjUuODMzMzMsMTcuNSA0Mi41LDE3LjUgeiBtIC0yODAsMzAwIGMgLTIyLDAgLTQwLjgzMzMzLC03LjgzMzMzIC01Ni41LC0yMy41IEMgMTI3LjgzMzMzLC0xNTkuMTY2NjcgMTIwLC0xNzggMTIwLC0yMDAgdiAtNTYwIGMgMCwtMjIgNy44MzMzMywtNDAuODMzMzMgMjMuNSwtNTYuNSAxNS42NjY2NywtMTUuNjY2NjcgMzQuNSwtMjMuNSA1Ni41LC0yMy41IGggNTYwIGMgMjIsMCA0MC44MzMzMyw3LjgzMzMzIDU2LjUsMjMuNSAxNS42NjY2NywxNS42NjY2NyAyMy41LDM0LjUgMjMuNSw1Ni41IHYgNTYwIGMgMCwyMiAtNy44MzMzMyw0MC44MzMzMyAtMjMuNSw1Ni41IC0xNS42NjY2NywxNS42NjY2NyAtMzQuNSwyMy41IC01Ni41LDIzLjUgeiBtIDAsLTgwIEggNzYwIFYgLTc2MCBIIDIwMCBaIG0gMCwtNTYwIHYgNTYwIHoiCiAgICAgaWQ9InBhdGgyIgogICAgIHNvZGlwb2RpOm5vZGV0eXBlcz0ic3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc2NjY2NjY2NjIgogICAgIHN0eWxlPSJmaWxsOiM3RDUyNjA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOiM3RDUyNjA7c3Ryb2tlLW9wYWNpdHk6MSIgLz4KPC9zdmc+Cg\u003d\u003d",
+            "description": "1",
+            "descriptionColour": "FF6650a4"
+          }
+        ],
+        "title": "d6",
+        "colour": "FF6650a4",
+        "selected": true,
+        "multiplierValue": 3,
+        "explode": false,
+        "explodeWhen": "\u003d",
+        "explodeValue": 1,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1723185255200",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "58a7bfe5-d784-4d50-a05a-05eb7250ec6d",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 2131230864,
+            "imageBase64": "",
+            "description": "Knight",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "a71e0de4-be63-4345-915e-403c1eb1ec4f",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 2131230865,
+            "imageBase64": "",
+            "description": "Lion",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "0d7a0e28-c100-4fd7-8a62-c28677e5066e",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 2131230866,
+            "imageBase64": "",
+            "description": "Pirate",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "c61ef71c-fe5f-47d3-830f-5ce58553c821",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 2131230863,
+            "imageBase64": "",
+            "description": "Crocodile",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "0d952e9d-f365-4339-b94a-6490f028f89e",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 2131230867,
+            "imageBase64": "",
+            "description": "Queen",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "2a0c1b9d-a45f-4520-9c13-30cf4c150ca7",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 2131230868,
+            "imageBase64": "",
+            "description": "Spaceship",
+            "descriptionColour": "FF6650a4"
+          }
+        ],
+        "title": "Story",
+        "colour": "FF6650a4",
+        "selected": false,
+        "multiplierValue": 3,
+        "explode": false,
+        "explodeWhen": "\u003d",
+        "explodeValue": 1,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1723185255204",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "3be6c2e8-f751-46a3-bc64-1057199db299",
+            "number": 8,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "a41ee2d1-7692-462a-a803-440265bc16bc",
+            "number": 7,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "db986729-b97c-43a3-89d2-ac0c3eaee425",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "52234ba5-bedc-4e62-a4f8-863cf5c912fc",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "de701255-91cc-466a-943a-891a3774b48a",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "69c97585-1353-4f79-8fe0-ca879e3db9bb",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "eb2ab4c7-3fac-4384-af84-b7c91947ef0b",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "acb8028a-d4a2-462c-8761-d5fb5de2a552",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "d8",
+        "colour": "FF6650a4",
+        "selected": false,
+        "multiplierValue": 1,
+        "explode": true,
+        "explodeWhen": "\u003d",
+        "explodeValue": 1,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1723185255206",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "0b80807f-eae9-45d8-a724-02747b9c2cec",
+            "number": 10,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "224ed2cb-7f41-4cb2-92a8-a5ce23309d4e",
+            "number": 9,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "0a08b7d5-263d-410e-bd95-4a080ab98bbb",
+            "number": 8,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "4a906f2a-a674-4a49-9f9f-206e1d61f1a7",
+            "number": 7,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "db94cb85-c041-4e29-bd8f-3a6563351213",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "0c88c74e-e165-47e2-92b9-00758ca5612d",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "c6c0f984-9b6f-4636-bce3-289c85d5964c",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "d0770fe0-1e7f-4929-90ff-a60568afef70",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "b0e7de8f-35ea-4a09-aa1c-ddeeeeac52c6",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "321ea8f1-4660-4a37-aff3-928cb0ed934a",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "d10",
+        "colour": "FF6650a4",
+        "selected": false,
+        "multiplierValue": 1,
+        "explode": false,
+        "explodeWhen": "\u003d",
+        "explodeValue": 1,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1723185255209",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "f3b1be56-fd07-477b-bfca-01b5ad283793",
+            "number": 12,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "d0dd7343-f75e-4359-b3ec-5b514740642e",
+            "number": 11,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "2c1cdcdb-a377-4f59-9b0a-71752c2958c9",
+            "number": 10,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "aa38ac07-88d3-4a4c-8179-631d4a5e6ca5",
+            "number": 9,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "d4396a05-3474-4299-903c-df75791486d0",
+            "number": 8,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "765ef592-3bb9-4ff9-bec9-96ace4c0054f",
+            "number": 7,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "a7232cee-b8a3-4aed-823d-7f8f94ec7f1e",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "e4669440-0a3a-452c-bb32-ad0eb4ce9ddb",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "d56b6b12-936e-42d3-b379-7230e514909e",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "a4727638-701c-41a2-bc46-5c2b35530608",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "1ba53182-5c4c-4461-9102-f3a596037c77",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "be5e0c0a-7e67-406d-94a8-5e51a6abf0f3",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "d12",
+        "colour": "FF6650a4",
+        "selected": false,
+        "multiplierValue": 1,
+        "explode": false,
+        "explodeWhen": "\u003d",
+        "explodeValue": 1,
+        "modifyScore": false,
+        "modifyScoreValue": -5
+      },
+      {
+        "epoch": "1723185255212",
+        "uuid": "",
+        "side": [
+          {
+            "uuid": "94fb6e16-e660-4e2e-96e2-2c264ebdf0f6",
+            "number": 20,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "ae9665cd-b185-4884-9e0b-6960744e5d80",
+            "number": 19,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "74ff3a80-673c-4d2f-b43a-50e294334255",
+            "number": 18,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "5e76c1ec-50cb-423a-a3c6-ab2400ac1cc9",
+            "number": 17,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "ed882e45-8e31-46f5-9d6c-391a64b638a3",
+            "number": 16,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "4987b7f5-3e57-4ea8-b2ef-fb076e104c5f",
+            "number": 15,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "23c87103-155e-4fff-a8b3-20c7dab2c8d8",
+            "number": 14,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "7d9b04aa-addd-42a8-9511-875790ac3780",
+            "number": 13,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "9a615b7e-b58f-487f-9ead-278549a6f1c9",
+            "number": 12,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "7c6594fe-be71-4f67-8fe8-58f1dfc7e438",
+            "number": 11,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "1583392c-41de-4024-804c-6cfefdcde9ed",
+            "number": 10,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "2cfdd34d-d0ea-4d35-85cb-643c338afa64",
+            "number": 9,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "8ceb33c3-1d89-418d-97d5-3e6fc04e3848",
+            "number": 8,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "482ce21f-1efa-4320-b923-566b4fe75f8b",
+            "number": 7,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "a6728a11-005c-4740-a7da-41c31af24314",
+            "number": 6,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "569ca7c5-cf45-44b9-b697-13cbf4556317",
+            "number": 5,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "925c36a2-6360-4ee1-b88b-53dceb71fb85",
+            "number": 4,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "657fbd5f-9f5b-4172-96e9-acba346db77e",
+            "number": 3,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "5acc1f76-0dca-4f1b-baef-df067f9aff99",
+            "number": 2,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          },
+          {
+            "uuid": "565a71ef-3f91-47f1-bd6a-bab8dad86a41",
+            "number": 1,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF000000"
+          }
+        ],
+        "title": "d20",
+        "colour": "FF6650a4",
+        "selected": false,
+        "multiplierValue": 20,
+        "explode": true,
+        "explodeWhen": "\u003d",
+        "explodeValue": 20,
+        "modifyScore": true,
+        "modifyScoreValue": -5
+      }
+    ]
+  },
+  {
+    "values": {
+      "1723185255234": {
+        "roll": [
+          {
+            "diceEpoch": "1723185255188",
+            "side": {
+              "uuid": "68d51c6c-d0f5-4b81-82a5-f1e93948c626",
+              "number": 2,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 2
+          },
+          {
+            "diceEpoch": "1723185255190",
+            "side": {
+              "uuid": "ee699212-162f-4f26-a1dd-8abeab1b5f2b",
+              "number": 3,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 2,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 3
+          },
+          {
+            "diceEpoch": "1723185255204",
+            "side": {
+              "uuid": "52234ba5-bedc-4e62-a4f8-863cf5c912fc",
+              "number": 5,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 3,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 5
+          },
+          {
+            "diceEpoch": "1723185255206",
+            "side": {
+              "uuid": "db94cb85-c041-4e29-bd8f-3a6563351213",
+              "number": 6,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 4,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 6
+          },
+          {
+            "diceEpoch": "1723185255209",
+            "side": {
+              "uuid": "765ef592-3bb9-4ff9-bec9-96ace4c0054f",
+              "number": 7,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 5,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 7
+          },
+          {
+            "diceEpoch": "1723185255212",
+            "side": {
+              "uuid": "23c87103-155e-4fff-a8b3-20c7dab2c8d8",
+              "number": 14,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 6,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 14
+          }
+        ]
+      },
+      "1723185255236": {
+        "roll": [
+          {
+            "diceEpoch": "1723185255190",
+            "side": {
+              "uuid": "ee699212-162f-4f26-a1dd-8abeab1b5f2b",
+              "number": 3,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 3
+          },
+          {
+            "diceEpoch": "1723185255190",
+            "side": {
+              "uuid": "72c54d41-4ce5-46f1-a65e-2045fb827e69",
+              "number": 2,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 2,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 2
+          },
+          {
+            "diceEpoch": "1723185255190",
+            "side": {
+              "uuid": "e67e11bf-b431-47d6-bfdd-7c48b9d7eac5",
+              "number": 1,
+              "numberColour": "FFFFFFFF",
+              "imageDrawableId": 0,
+              "imageBase64": "",
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 3,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 1
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,4 @@
+<resources>
+    <string name="dialog.cancel">Cancel</string>
+    <string name="dialog.ok">OK</string>
+</resources>

@@ -1,0 +1,22 @@
+ignore:
+  - "module/data/src/main/java"
+  - "**/*Preview.kt"
+
+flags:
+  data.androidTest:
+    carryforward: false
+  data.test:
+    carryforward: false
+
+  ui.androidTest:
+    carryforward: false
+  ui.test:
+    carryforward: false
+
+  ui-dialog-bag.androidTest:
+    carryforward: false
+  ui-dialog-bag.test:
+    carryforward: false
+
+  app.androidTest:
+    carryforward: false

@@ -1,0 +1,171 @@
+[
+  {
+    "resize": 3,
+    "rollIndexTime": false,
+    "rollScore": true,
+    "diceTitle": false,
+    "sideNumber": true,
+    "behaviour": false,
+    "sideDescription": false,
+    "sideSVG": true,
+    "rollSound": false
+  },
+  {
+  },
+  {
+    "values": {
+      "171914001692": {
+        "roll": [
+          {
+            "diceEpoch": "1719140016898",
+            "side": {
+              "uuid": "",
+              "number": 2,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 2
+          },
+          {
+            "diceEpoch": "1719140016900",
+            "side": {
+              "uuid": "",
+              "number": 3,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 3
+          },
+          {
+            "diceEpoch": "1719140016911",
+            "side": {
+              "uuid": "",
+              "number": 5,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 5
+          },
+          {
+            "diceEpoch": "1719140016913",
+            "side": {
+              "uuid": "",
+              "number": 6,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 6
+          },
+          {
+            "diceEpoch": "1719140016915",
+            "side": {
+              "uuid": "",
+              "number": 7,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 7
+          },
+          {
+            "diceEpoch": "1719140016917",
+            "side": {
+              "uuid": "",
+              "number": 14,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 14
+          }
+        ]
+      },
+      "1719140016922": {
+        "roll": [
+          {
+            "diceEpoch": "1719140016900",
+            "side": {
+              "uuid": "",
+              "number": 3,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 3
+          },
+          {
+            "diceEpoch": "1719140016900",
+            "side": {
+              "uuid": "",
+              "number": 2,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 2,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 2
+          },
+          {
+            "diceEpoch": "1719140016900",
+            "side": {
+              "uuid": "",
+              "number": 1,
+              "numberColour": "FFFFFFFF",
+              "imageBase64": "",
+              "imageDrawableId": 0,
+              "description": "",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 3,
+            "explodeIndex": 0,
+            "scoreAdjustment": 0,
+            "score": 1
+          }
+        ]
+      }
+    }
+  }
+]
