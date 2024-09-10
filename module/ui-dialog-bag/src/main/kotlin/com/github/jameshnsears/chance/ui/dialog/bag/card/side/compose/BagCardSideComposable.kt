@@ -364,29 +364,6 @@ fun SideImageSVG(
                 Text(stringResource(R.string.dialog_bag_side_image))
             }
 
-            Row(
-                modifier = Modifier
-                    .padding(top = 8.dp, bottom = 8.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.Info,
-                    contentDescription = "",
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .padding(top = 8.dp, bottom = 8.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(R.string.dialog_bag_side_image_info),
-                )
-            }
-
             Button(
                 onClick = {
                     cardSideAndroidViewModel.sideImageSvgClear()

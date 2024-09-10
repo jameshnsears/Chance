@@ -98,7 +98,7 @@ fun ZoomRoll(
                             tabRollAndroidViewModel,
                             zoomAndroidViewModel,
                             roll,
-                            zoomAndroidViewModel.fetchDiceFromEpochCache(roll.diceEpoch)
+                            zoomAndroidViewModel.fetchDiceFromEpochCache(roll.diceEpoch)!!
                         )
                     }
                 }

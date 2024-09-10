@@ -22,11 +22,6 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-
             buildConfigField("String", "VERSION", "\"${versionName}\"")
             buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
         }
