@@ -1,4 +1,4 @@
-name: release-github-fdroid
+name: release-fdroid
 
 on:
   push:
