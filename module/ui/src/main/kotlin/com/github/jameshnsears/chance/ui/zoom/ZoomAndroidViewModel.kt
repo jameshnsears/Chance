@@ -153,7 +153,7 @@ class ZoomAndroidViewModel(
         }
     }
 
-    fun fetchDiceFromEpochCache(rollDiceEpoch: Long) = diceEpochCache[rollDiceEpoch]!!
+    fun fetchDiceFromEpochCache(rollDiceEpoch: Long) = diceEpochCache[rollDiceEpoch]
 
     fun sideImageShapeNumberFontSize() = 17.sp
 

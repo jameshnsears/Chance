@@ -10,7 +10,6 @@ cat $CHANGELOG_FOLDER/$LATEST_CHANGELOG_NUMBER.txt >> $RELEASE_NOTE
 echo ""  >> $RELEASE_NOTE
 echo ""  >> $RELEASE_NOTE
 echo "### Instructions - for using .apk" >> $RELEASE_NOTE
-echo "* **Sync > Backup** your existing data" >> $RELEASE_NOTE
 echo "* Uninstall the App" >> $RELEASE_NOTE
 echo "* Install .apk supplied here" >> $RELEASE_NOTE
 

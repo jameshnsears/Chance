@@ -7,7 +7,7 @@ com-android-application = "8.5.2"
 com-android-library = "8.5.2"
 com-diffplug-spotless = "6.25.0"
 com-google-gms-google-services = "4.4.2"
-compose-bom = "2024.09.00"
+compose-bom = "2024.09.01"
 core-ktx = "1.13.1"
 core-splashscreen = "1.0.1"
 datastore-core = "1.1.1"
@@ -33,7 +33,7 @@ protobuf-java-util = "3.25.3"       # stay on 3.25.3 due to JSON compatability
 protobuf-kotlin = "3.25.3"          # stay on 3.25.3 due to JSON compatability
 slf4j-simple = "2.0.16"
 timber = "5.0.1"
-ui-tooling = "1.7.0"
+ui-tooling = "1.7.1"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
