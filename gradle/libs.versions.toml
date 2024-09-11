@@ -33,7 +33,7 @@ protobuf-java-util = "3.25.3"       # stay on 3.25.3 due to JSON compatability
 protobuf-kotlin = "3.25.3"          # stay on 3.25.3 due to JSON compatability
 slf4j-simple = "2.0.16"
 timber = "5.0.1"
-ui-tooling = "1.7.0"
+ui-tooling = "1.7.1"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
