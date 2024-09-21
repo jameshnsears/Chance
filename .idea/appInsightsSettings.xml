@@ -27,10 +27,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.github.jameshnsears.chance" />
-                  <option name="mobileSdkAppId" value="1:580378297249:android:9d8b36fb63a2ea3967c1e0" />
-                  <option name="projectId" value="chance-development" />
-                  <option name="projectNumber" value="580378297249" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

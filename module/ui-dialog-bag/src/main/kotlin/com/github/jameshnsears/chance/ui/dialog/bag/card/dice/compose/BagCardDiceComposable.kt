@@ -178,7 +178,6 @@ fun DiceTitle(cardDiceViewModel: CardDiceViewModel) {
         label = { Text(stringResource(R.string.dialog_bag_dice_title)) },
         singleLine = true,
         modifier = Modifier
-            .testTag(BagCardDiceTestTag.DICE_TITLE)
             .fillMaxWidth()
             .padding(top = 8.dp, bottom = 8.dp)
             .testTag(BagCardDiceTestTag.DICE_TITLE),

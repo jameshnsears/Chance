@@ -1,0 +1,36 @@
+1. Not Remembering to Use remember Properly
+
+3. Optimizing recompositions by hoisting state, using remember, and avoiding unnecessary recompositions are essential practices.
+
+4. State and MutableState are often confused, especially by beginners. State is read-only, while MutableState allows for changes that trigger recompositions
+
+5. LaunchedEffect is a powerful tool in Jetpack Compose that allows you to execute suspend functions and other side effects in response to changes in your composable's lifecycle or state.
+
+Consider Using DisposableEffect for Cleanup: If you need to perform cleanup when the composable is removed from the composition, DisposableEffect is a better choice than LaunchedEffect.
+
+
+6.Aim to keep your composables as stateless as possible and use remember for caching values that shouldn’t change across recompositions.
+
+8. Not Using Themes and Styling Effectively
+
+@Composable
+fun MyComposable() {
+    Text(
+        "Hello, World!",
+        style = MaterialTheme.typography.h6,
+        color = MaterialTheme.colors.primary
+    )
+}
+
+10. Neglecting Accessibility
+
+@Composable
+fun AccessibleImage() {
+    Image(
+        painter = painterResource(id = R.drawable.my_image),
+        contentDescription = "Description of the image"
+    )
+}
+
+
+

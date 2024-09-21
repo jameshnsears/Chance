@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.io.gitlab.arturbosch.detekt)
     alias(libs.plugins.org.jetbrains.kotlin.android) apply false
     alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.baselineprofile) apply false
 }
 
 spotless {

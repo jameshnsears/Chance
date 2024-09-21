@@ -3,67 +3,100 @@
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.application than 8.5.2 is available: 8.6.0"
+        message="A newer version of com.android.application than 8.5.2 is available: 8.6.1"
         errorLine1="com-android-application = &quot;8.5.2&quot;"
         errorLine2="                          ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="6"
+            line="8"
             column="27"/>
     </issue>
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.application than 8.5.2 is available: 8.6.0"
+        message="A newer version of com.android.application than 8.5.2 is available: 8.6.1"
         errorLine1="com-android-application = &quot;8.5.2&quot;"
         errorLine2="                          ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="6"
+            line="8"
             column="27"/>
     </issue>
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.application than 8.5.2 is available: 8.6.0"
+        message="A newer version of com.android.application than 8.5.2 is available: 8.6.1"
         errorLine1="com-android-application = &quot;8.5.2&quot;"
         errorLine2="                          ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="6"
+            line="8"
             column="27"/>
     </issue>
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.library than 8.5.2 is available: 8.6.0"
+        message="A newer version of com.android.test than 8.5.2 is available: 8.6.1"
+        errorLine1="com-android-application = &quot;8.5.2&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="8"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.test than 8.5.2 is available: 8.6.1"
+        errorLine1="com-android-application = &quot;8.5.2&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="8"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.test than 8.5.2 is available: 8.6.1"
+        errorLine1="com-android-application = &quot;8.5.2&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="8"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.library than 8.5.2 is available: 8.6.1"
         errorLine1="com-android-library = &quot;8.5.2&quot;"
         errorLine2="                      ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="7"
+            line="9"
             column="23"/>
     </issue>
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.library than 8.5.2 is available: 8.6.0"
+        message="A newer version of com.android.library than 8.5.2 is available: 8.6.1"
         errorLine1="com-android-library = &quot;8.5.2&quot;"
         errorLine2="                      ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="7"
+            line="9"
             column="23"/>
     </issue>
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.library than 8.5.2 is available: 8.6.0"
+        message="A newer version of com.android.library than 8.5.2 is available: 8.6.1"
         errorLine1="com-android-library = &quot;8.5.2&quot;"
         errorLine2="                      ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="7"
+            line="9"
             column="23"/>
     </issue>
 
@@ -74,7 +107,7 @@
         errorLine2="                ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="14"
+            line="16"
             column="17"/>
     </issue>
 
@@ -85,7 +118,7 @@
         errorLine2="                ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="14"
+            line="16"
             column="17"/>
     </issue>
 
@@ -96,19 +129,8 @@
         errorLine2="                ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="14"
+            line="16"
             column="17"/>
-    </issue>
-
-    <issue
-        id="LockedOrientationActivity"
-        message="Expecting `android:screenOrientation=&quot;unspecified&quot;` or `&quot;fullSensor&quot;` for this activity so the user can use the application in any orientation and provide a great experience on Chrome OS devices"
-        errorLine1="            android:screenOrientation=&quot;portrait&quot;"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/AndroidManifest.xml"
-            line="17"
-            column="13"/>
     </issue>
 
     <issue

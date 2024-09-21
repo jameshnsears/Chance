@@ -100,7 +100,7 @@ fun DialogSettingsLayout(
         Column(
             modifier = Modifier
                 .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 8.dp)
-                .height(420.dp)
+                .height(590.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

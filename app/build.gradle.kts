@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
+    alias(libs.plugins.baselineprofile)
 }
 
 android {
@@ -12,9 +13,9 @@ android {
         applicationId = "com.github.jameshnsears.chance"
         minSdk = 24
         targetSdk = 35
-        versionCode = 12435
+        versionCode = 22435
         // version | min sdk | max sdk
-        versionName = "1.0.0"
+        versionName = "1.1.0"
         extra["versionName"] = versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -26,12 +27,22 @@ android {
 
     buildTypes {
         release {
+            // The generated .map file, for google play store manual upload, in:
+            // app/build/outputs/mapping/release/
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
 
         debug {
             enableAndroidTestCoverage = true
             isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -82,6 +93,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.profileinstaller)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.compose.ui.test.manifest)
     androidTestImplementation(libs.androidx.datastore.core)
@@ -93,6 +105,7 @@ dependencies {
     androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    "baselineProfile"(project(":module:baselineprofile"))
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.leakcanary.android)
     "googleplayImplementation"(platform(libs.com.google.firebase.bom))

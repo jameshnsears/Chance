@@ -1,71 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   height="24"
-   id="svg22"
-   version="1.1"
-   viewBox="0 -960 960 960"
-   width="24"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   sodipodi:docname="app-icon.svg"
-   inkscape:export-filename="app-icon.png"
-   inkscape:export-xdpi="2048"
-   inkscape:export-ydpi="2048"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     bordercolor="#666666"
-     borderopacity="1.0"
-     id="namedview14"
-     pagecolor="#ffffff"
-     showgrid="false"
-     inkscape:current-layer="g20"
-     inkscape:cx="16.817934"
-     inkscape:cy="20.981062"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:pagecheckerboard="0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:showpageshadow="2"
-     inkscape:window-height="749"
-     inkscape:window-maximized="0"
-     inkscape:window-width="1452"
-     inkscape:window-x="364"
-     inkscape:window-y="372"
-     inkscape:zoom="18.135402" />
-  <defs
-     id="defs26" />
-  <g
-     style="stroke-width:0.952893"
-     id="g20"
-     transform="matrix(0.84054097,0,0,0.8443391,73.259541,-65.339077)">
-    <path
-       style="display:inline;stroke-width:0.950747;paint-order:stroke markers fill"
-       d="m 540.47219,-40.593813 c -15.556,15.486024 -34.413,23.230031 -56.569,23.230031 -22.156,0 -41.012,-7.743211 -56.569,-23.230031 L 31.354192,-434.79257 c -15.556,-15.48602 -23.3350005,-34.2582 -23.3350005,-56.31453 0,-22.05633 7.7782005,-40.82751 23.3350005,-56.31453 L 427.33419,-941.62038 c 15.556,-15.48602 34.413,-23.23003 56.569,-23.23003 22.156,0 41.012,7.74321 56.569,23.23003 l 395.98,394.19875 c 15.556,15.48602 23.335,34.2582 23.335,56.31453 0,22.05633 -7.7782,40.82751 -23.335,56.31453 z m -56.569,-56.314533 395.98,-394.198754 -395.98,-394.19875 L 87.923192,-491.1071 Z M 87.923192,-491.1071 483.90319,-96.908346 Z"
-       id="path16"
-       opacity="0.801"
-       stroke-width="0" />
-    <rect
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke-width:38.3432"
-       id="rect957"
-       width="557.67065"
-       height="557.67065"
-       x="-285.48349"
-       y="-968.28845"
-       ry="0.57189685"
-       transform="matrix(0.70869897,0.705511,-0.70869897,0.705511,0,0)"
-       inkscape:label="White square" />
-    <path
-       style="display:inline;paint-order:fill markers stroke"
-       d="m 502.65292,-379.29463 v -28.233 c 0.59776,-27.031 8.9665,-40.247 47.223,-74.487 44.83203,-40.847 59.77602,-67.27799 59.77602,-107.51999 0,-70.28201 -49.61402,-115.33 -127.32003,-115.33 -86.67603,0 -130.91003,47.45499 -130.91003,140.56 h 50.81 c 0,-64.87501 23.31302,-93.70901 77.11104,-93.70901 46.028,0 76.51402,27.63199 76.51402,68.48001 0,27.63199 -13.15101,51.05899 -44.83202,79.29198 -50.81002,45.05199 -62.16701,62.47301 -62.16701,97.914 v 33.03801 z m 0,57.06599 H 448.8539 v 62.47301 h 53.79902 z"
-       id="path18"
-       opacity="0.801"
-       stroke="#000000"
-       stroke-linecap="round"
-       stroke-linejoin="round"
-       stroke-width="37.985"
-       inkscape:highlight-color="#000000"
-       inkscape:label="Question mark" />
-  </g>
+<svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" height="24" id="svg22"
+    version="1.1" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg"
+    inkscape:export-filename="app-icon.png" inkscape:export-xdpi="2048" inkscape:export-ydpi="2048"
+    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)" sodipodi:docname="app-icon.svg">
+    <sodipodi:namedview bordercolor="#666666" borderopacity="1.0" id="namedview14"
+        pagecolor="#ffffff" showgrid="false" inkscape:current-layer="g20" inkscape:cx="16.817934"
+        inkscape:cy="20.981062" inkscape:deskcolor="#d1d1d1" inkscape:pagecheckerboard="0"
+        inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:showpageshadow="2"
+        inkscape:window-height="749" inkscape:window-maximized="0" inkscape:window-width="1452"
+        inkscape:window-x="364" inkscape:window-y="372" inkscape:zoom="18.135402" />
+    <defs id="defs26" />
+    <g style="stroke-width:0.952893" id="g20"
+        transform="matrix(0.84054097,0,0,0.8443391,73.259541,-65.339077)">
+        <path style="display:inline;stroke-width:0.950747;paint-order:stroke markers fill"
+            d="m 540.47219,-40.593813 c -15.556,15.486024 -34.413,23.230031 -56.569,23.230031 -22.156,0 -41.012,-7.743211 -56.569,-23.230031 L 31.354192,-434.79257 c -15.556,-15.48602 -23.3350005,-34.2582 -23.3350005,-56.31453 0,-22.05633 7.7782005,-40.82751 23.3350005,-56.31453 L 427.33419,-941.62038 c 15.556,-15.48602 34.413,-23.23003 56.569,-23.23003 22.156,0 41.012,7.74321 56.569,23.23003 l 395.98,394.19875 c 15.556,15.48602 23.335,34.2582 23.335,56.31453 0,22.05633 -7.7782,40.82751 -23.335,56.31453 z m -56.569,-56.314533 395.98,-394.198754 -395.98,-394.19875 L 87.923192,-491.1071 Z M 87.923192,-491.1071 483.90319,-96.908346 Z"
+            id="path16" opacity="0.801" stroke-width="0" />
+        <rect style="display:inline;fill:#ffffff;fill-opacity:1;stroke-width:38.3432"
+            height="557.67065" id="rect957" ry="0.57189685"
+            transform="matrix(0.70869897,0.705511,-0.70869897,0.705511,0,0)" width="557.67065"
+            x="-285.48349" y="-968.28845" inkscape:label="White square" />
+        <path style="display:inline;paint-order:fill markers stroke"
+            d="m 502.65292,-379.29463 v -28.233 c 0.59776,-27.031 8.9665,-40.247 47.223,-74.487 44.83203,-40.847 59.77602,-67.27799 59.77602,-107.51999 0,-70.28201 -49.61402,-115.33 -127.32003,-115.33 -86.67603,0 -130.91003,47.45499 -130.91003,140.56 h 50.81 c 0,-64.87501 23.31302,-93.70901 77.11104,-93.70901 46.028,0 76.51402,27.63199 76.51402,68.48001 0,27.63199 -13.15101,51.05899 -44.83202,79.29198 -50.81002,45.05199 -62.16701,62.47301 -62.16701,97.914 v 33.03801 z m 0,57.06599 H 448.8539 v 62.47301 h 53.79902 z"
+            id="path18" opacity="0.801" stroke="#000000" stroke-linecap="round"
+            stroke-linejoin="round" stroke-width="37.985" inkscape:highlight-color="#000000"
+            inkscape:label="Question mark" />
+    </g>
 </svg>
