@@ -13,9 +13,12 @@ android {
         applicationId = "com.github.jameshnsears.chance"
         minSdk = 24
         targetSdk = 35
-        versionCode = 22435
-        // version | min sdk | max sdk
-        versionName = "1.1.0"
+
+        // changelog | min sdk | max sdk
+        versionCode = 32435
+
+        versionName = "1.2.0"
+
         extra["versionName"] = versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -93,7 +96,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.profileinstaller)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.compose.ui.test.manifest)
     androidTestImplementation(libs.androidx.datastore.core)
@@ -108,13 +110,15 @@ dependencies {
     "baselineProfile"(project(":module:baselineprofile"))
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.leakcanary.android)
-    "googleplayImplementation"(platform(libs.com.google.firebase.bom))
     "googleplayImplementation"(libs.com.google.firebase.crashlytics)
+    "googleplayImplementation"(platform(libs.com.google.firebase.bom))
     implementation(libs.activity.compose)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.profileinstaller)
     implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))

@@ -1,7 +1,8 @@
 &bull; Tap the side of a dice to change almost every facet - colour; text; image (SVG); # of sides
 &bull; Clone dice to create new dice
-&bull; Configure roll behaviour
-&bull; Choose which dice to roll
-&bull; Settings to control what is displayed
-&bull; Import &amp; export - create dice bags for different scenarios
-&bull; User feedback drives development
+&bull; Configure roll behaviour for each dice
+&bull; Select which dice to roll
+&bull; Settings to show only what you want to see
+&bull; Import &amp; export everything
+&bull; Small, modern codebase
+&bull; User feedback / contribution drives development

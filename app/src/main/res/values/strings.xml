@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Chance</string>
+    <string name="app_shortcut_yes_no">Yes | No</string>
 </resources>
