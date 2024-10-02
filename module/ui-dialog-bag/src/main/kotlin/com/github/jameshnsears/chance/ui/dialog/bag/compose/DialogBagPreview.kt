@@ -33,12 +33,12 @@ fun DialogBagPreview() {
     runBlocking(Dispatchers.Main) {
         repositoryBagTestDouble.store(
             mutableListOf(
-                BagDataTestDouble().d2,
+                BagDataTestDouble().diceStory,
             )
         )
     }
 
-    val dice = BagDataTestDouble().d2
+    val dice = BagDataTestDouble().diceStory
     val sides = dice.sides[0]
 
     val dialogBagAndroidViewModel = runBlocking {

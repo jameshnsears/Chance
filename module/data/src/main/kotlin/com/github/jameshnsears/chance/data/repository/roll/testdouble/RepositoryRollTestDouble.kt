@@ -49,7 +49,7 @@ class RepositoryRollTestDouble private constructor() :
             rollHistoryProtocolBufferBuilder
         )
 
-        return JsonFormat.printer().includingDefaultValueFields()
+        return JsonFormat.printer()
             .print(rollHistoryProtocolBufferBuilder.build())
     }
 

@@ -1,0 +1,33 @@
+naming:
+  FunctionNaming:
+    active: false
+
+style:
+  MaxLineLength:
+    active: false
+
+  UtilityClassWithPublicConstructor:
+    active: false
+
+  MagicNumber:
+    active: false
+
+  ReturnCount:
+    active: false
+
+complexity:
+  NestedBlockDepth:
+    active: false
+
+  LongParameterList:
+    active: false
+
+  ComplexCondition:
+    active: false
+
+  LongMethod:
+    active: true
+    threshold: 100
+
+  TooManyFunctions:
+    active: false

@@ -1,48 +1,30 @@
 package com.github.jameshnsears.chance.data.domain.core.bag.testdouble
 
+import com.github.jameshnsears.chance.data.R
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.BagDataInterface
-import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
 
 class BagDataTestDouble : BagDataInterface {
     val d2 = Dice(
-        sides = listOf(
-            Side(
-                number = 2,
-            ),
-            Side(
-                number = 1,
-            ),
-        ),
+        sides = (2 downTo 1).map { index -> Side(number = index) },
         title = "d2",
         multiplierValue = 1
     )
 
     val d4 = Dice(
-        sides = listOf(
-            Side(
-                number = 4,
-            ),
-            Side(
-                number = 3,
-            ),
-            Side(
-                number = 2,
-            ),
-            Side(
-                number = 1,
-            ),
-        ),
+        sides = (4 downTo 1).map { index -> Side(number = index) },
         title = "d4",
         explode = true,
         explodeValue = 2,
         multiplierValue = 2
     )
 
-    val d6 = BagDataImpl().d6
-
-    val diceStory = BagDataImpl().diceStory
+    val d6 = Dice(
+        sides = (6 downTo 1).map { index -> Side(number = index) },
+        title = "d6",
+        multiplierValue = 3,
+    )
 
     val d8 = Dice(
         sides = (8 downTo 1).map { index -> Side(number = index) },
@@ -68,6 +50,49 @@ class BagDataTestDouble : BagDataInterface {
         multiplierValue = 20,
         modifyScore = true,
         modifyScoreValue = -5
+    )
+
+    val diceStory = Dice(
+        sides = listOf(
+            Side(
+                number = 6,
+                description = "Knight",
+                descriptionColour = "FF6650a4",
+                imageDrawableId = R.drawable.story_knight,
+            ),
+            Side(
+                number = 5,
+                description = "Lion",
+                descriptionColour = "FF6650a4",
+                imageDrawableId = R.drawable.story_lion,
+            ),
+            Side(
+                number = 4,
+                description = "Pirate",
+                descriptionColour = "FF6650a4",
+                imageDrawableId = R.drawable.story_pirate,
+            ),
+            Side(
+                number = 3,
+                description = "Crocodile",
+                descriptionColour = "FF6650a4",
+                imageDrawableId = R.drawable.story_crocodile,
+            ),
+            Side(
+                number = 2,
+                description = "Queen",
+                descriptionColour = "FF6650a4",
+                imageDrawableId = R.drawable.story_queen,
+            ),
+            Side(
+                number = 1,
+                description = "Spaceship",
+                descriptionColour = "FF6650a4",
+                imageDrawableId = R.drawable.story_spaceship,
+            ),
+        ),
+        title = "Story",
+        multiplierValue = 3,
     )
 
     override val allDice = mutableListOf(

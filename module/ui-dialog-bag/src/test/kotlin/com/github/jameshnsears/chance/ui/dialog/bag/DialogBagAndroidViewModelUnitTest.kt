@@ -216,15 +216,11 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
                 newSides[newSidesIndex].numberColour,
                 originalSides[newSidesIndex].numberColour
             )
-            assertNotEquals(
+            assertEquals(
                 newSides[newSidesIndex].imageBase64,
                 originalSides[newSidesIndex].imageBase64
             )
             assertEquals(
-                newSides[newSidesIndex].imageDrawableId,
-                originalSides[newSidesIndex].imageDrawableId
-            )
-            assertNotEquals(
                 newSides[newSidesIndex].description,
                 originalSides[newSidesIndex].description
             )
@@ -296,7 +292,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         val repositoryBag = RepositoryBagTestDouble.getInstance(sampleBagTestDataAllDice)
 
         val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
-            getApplication(), repositoryBag, sampleBagTestDataAllDice[2],                // d6
+            getApplication(), repositoryBag, sampleBagTestDataAllDice[2],
             sampleBagTestDataAllDice[2].sides[0]
         )
 

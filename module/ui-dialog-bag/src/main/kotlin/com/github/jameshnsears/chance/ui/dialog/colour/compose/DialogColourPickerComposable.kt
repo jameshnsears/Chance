@@ -134,6 +134,7 @@ fun DialogColourPicker(
             modifier = Modifier
                 .padding(top = 12.dp, start = 24.dp, end = 24.dp, bottom = 12.dp)
                 .height(35.dp)
+                .fillMaxWidth(0.80f)
                 .align(Alignment.CenterHorizontally),
             controller = controller,
             initialColor = UtilityColour.makeColor(currentColour),
@@ -143,6 +144,7 @@ fun DialogColourPicker(
             modifier = Modifier
                 .padding(top = 12.dp, start = 24.dp, end = 24.dp, bottom = 12.dp)
                 .height(35.dp)
+                .fillMaxWidth(0.80f)
                 .align(Alignment.CenterHorizontally),
             controller = controller,
             initialColor = UtilityColour.makeColor(currentColour),

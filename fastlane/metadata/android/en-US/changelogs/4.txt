@@ -1,0 +1,3 @@
+&bull; Fix: stop using R.drawable.id values in data (affected inplace .apk updates)
+&bull; Improve f-droid image assets
+&bull; Bump dependencies &amp; IDE: Android Studio Koala | 2024.1.1 Patch 2

@@ -452,7 +452,7 @@ class TabRollAndroidViewModel(
         var svgExists = false
         var descriptionExists = false
         rolls.forEach {
-            if (it.side.imageBase64 != "" || it.side.imageDrawableId != 0)
+            if (it.side.imageBase64 != "")
                 svgExists = true
 
             if (it.side.description != "")

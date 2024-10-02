@@ -32,6 +32,12 @@ android {
             enableUnitTestCoverage = true
             isMinifyEnabled = false
         }
+
+        create("benchmarkRelease") {
+        }
+
+        create("nonMinifiedRelease") {
+        }
     }
 
     compileOptions {

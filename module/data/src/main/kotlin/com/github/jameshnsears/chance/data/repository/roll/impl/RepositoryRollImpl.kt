@@ -55,7 +55,7 @@ class RepositoryRollImpl private constructor(private val context: Context) :
     }
 
     override suspend fun jsonExport(): String =
-        JsonFormat.printer().includingDefaultValueFields()
+        JsonFormat.printer()
             .print(context.rollDataStore.data.first())
 
     override suspend fun jsonImport(json: String) {

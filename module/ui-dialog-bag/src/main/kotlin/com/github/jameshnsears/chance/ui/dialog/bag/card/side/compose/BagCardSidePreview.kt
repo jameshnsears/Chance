@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
@@ -24,11 +25,11 @@ fun BagCardSidePreview() {
     )
 
     val repositoryBagTestDouble =
-        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice)
+        RepositoryBagTestDouble.getInstance(RepositoryFactory(LocalContext.current).bagDataTestDouble.allDice)
     runBlocking(Dispatchers.Main) {
         repositoryBagTestDouble.store(
             mutableListOf(
-                BagDataTestDouble().d6,
+                BagDataTestDouble().diceStory,
             ),
         )
     }

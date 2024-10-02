@@ -67,6 +67,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun rollDiceSequenceWithExplosionEquals() = runTest {
         val diceBag = BagDataTestDouble()
+        diceBag.d6.selected = true
 
         // d6
         diceBag.allDice.forEach {
@@ -98,6 +99,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun rollDiceSequenceWithExplosionLessThan() = runTest {
         val diceBag = BagDataTestDouble()
+        diceBag.d6.selected = true
 
         // d6
         diceBag.allDice.forEach {
@@ -120,6 +122,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun rollDiceSequenceWithExplosionGreaterThan() = runTest {
         val diceBag = BagDataTestDouble()
+        diceBag.d6.selected = true
 
         // d6
         diceBag.allDice.forEach {
@@ -142,6 +145,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun rollDiceSequenceWithScore() = runTest {
         val diceBag = BagDataTestDouble()
+        diceBag.d6.selected = true
 
         // d6 only
         diceBag.allDice.forEach {
@@ -247,6 +251,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
         val repositoryBag = RepositoryFactory().repositoryBag
         runBlocking(Dispatchers.Main) {
+            bagDataTestDouble.d6.selected = true
             repositoryBag.store(bagDataTestDouble.allDice)
         }
 

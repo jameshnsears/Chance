@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-09-22T08:03:42.304662008Z">
+        <DropdownSelection timestamp="2024-09-30T17:32:31.773682299Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/home/jsears/.android/avd/Pixel_6_API_27.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/jsears/.android/avd/Pixel_7a_API_24.avd" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -33,7 +33,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="Generate Baseline Profile for app">
+      <SelectionState runConfigName="Generate Baseline Profile">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

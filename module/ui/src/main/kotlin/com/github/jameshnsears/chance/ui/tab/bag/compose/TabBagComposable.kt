@@ -322,6 +322,8 @@ fun Version(
     ) {
         SelectionContainer {
             Text(
+                // Baseline profile (fdroidRelease + fdroidBenchmarkRelease)
+                // text = "",
                 text = BuildConfig.VERSION + "-" + BuildConfig.FLAVOR + "/" + BuildConfig.GIT_HASH,
                 fontSize = 14.sp,
             )

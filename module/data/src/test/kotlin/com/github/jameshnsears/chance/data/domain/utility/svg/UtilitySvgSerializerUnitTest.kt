@@ -9,15 +9,30 @@ import java.io.File
 
 
 class UtilitySvgSerializerUnitTest : UtilityAndroidHelper() {
+    private val diceResources = setOf(
+        "d6/d6s1",
+        "d6/d6s2",
+        "d6/d6s3",
+        "d6/d6s4",
+        "d6/d6s5",
+        "d6/d6s6",
+        "story/crocodile",
+        "story/knight",
+        "story/lion",
+        "story/pirate",
+        "story/queen",
+        "story/spaceship"
+    )
+
     @Test
     fun isUrlSvg() {
-        val url = this::class.java.getResource("/data/svg/dN/d2.svg")
+        val url = this::class.java.getResource("/data/svg/d6/d6s1.svg")
         assertTrue(UtilitySvgSerializer.isUrlSvg(url!!))
     }
 
     @Test
     fun encodeDecode() {
-        val svgByteArray = getResourceAsByteArray("/data/svg/dN/d2.svg")
+        val svgByteArray = getResourceAsByteArray("/data/svg/d6/d6s1.svg")
 
         val base64String = UtilitySvgSerializer.encodeIntoBase64String(svgByteArray)
 
@@ -28,20 +43,6 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidHelper() {
 
     @Test
     fun checkBase64FilesMatchSvgFiles() {
-        val diceResources = setOf(
-            "dN/d2",
-            "dN/d4_d8_d20",
-            "dN/d6",
-            "dN/d10",
-            "dN/d12",
-            "MrBenn/crocodile",
-            "MrBenn/knight",
-            "MrBenn/lion",
-            "MrBenn/pirate",
-            "MrBenn/queen",
-            "MrBenn/spaceship",
-        )
-
         for (diceFilename: String in diceResources) {
             val svgFileAsByteArray = getResourceAsByteArray("/data/svg/$diceFilename.svg")
 
@@ -54,18 +55,9 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-    @Ignore("run adhoc manually")
-    fun createD6SidesBase64FilesFromSvg() {
-        val svgFiles = setOf(
-            "d6/d6s1",
-            "d6/d6s2",
-            "d6/d6s3",
-            "d6/d6s4",
-            "d6/d6s5",
-            "d6/d6s6",
-        )
-
-        for (svgFile: String in svgFiles) {
+//    @Ignore("run adhoc manually")
+    fun createBase64FileFromSvgFile() {
+        for (svgFile: String in diceResources) {
             val svgFileAsByteArray = getResourceAsByteArray("/data/svg/$svgFile.svg")
 
             val base65FilePath =

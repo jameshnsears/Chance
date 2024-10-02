@@ -4,6 +4,7 @@ import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInte
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -38,7 +39,18 @@ class RepositorySettingsTestDouble private constructor() :
 
         mapSettingsIntoSettingsProtocolBufferBuilder(settings!!, settingsProtocolBufferBuilder)
 
-        return JsonFormat.printer().includingDefaultValueFields()
+        val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("resize"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollIndexTime"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScore"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("diceTitle"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideNumber"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("behaviour"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideDescription"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideSVG"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollSound"))
+
+        return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(settingsProtocolBufferBuilder.build())
     }
 

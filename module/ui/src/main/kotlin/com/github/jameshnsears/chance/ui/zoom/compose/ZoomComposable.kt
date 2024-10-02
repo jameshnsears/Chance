@@ -109,20 +109,20 @@ fun ZoomSideImageSVG(
             showDialog.value = true
         }
 
-    if (side.imageDrawableId != 0) {
-        Image(
-            painter = painterResource(id = side.imageDrawableId),
+    if (side.imageBase64 != "") {
+        val imageRequest: ImageRequest = remember {
+            zoomAndroidViewModel.sideImageSVG(side)
+        }
+
+        AsyncImage(
+            model = imageRequest,
             contentDescription = "",
             modifier = modifier
         )
     } else {
-        if (side.imageBase64 != "") {
-            val imageRequest: ImageRequest = remember {
-                zoomAndroidViewModel.sideImageSVG(side)
-            }
-
-            AsyncImage(
-                model = imageRequest,
+        if (side.imageDrawableId != 0) {
+            Image(
+                painter = painterResource(id = side.imageDrawableId),
                 contentDescription = "",
                 modifier = modifier
             )

@@ -14,7 +14,7 @@
     <string name="dialog.bag.side.description">Description</string>
     <string name="dialog.bag.side.description.colour">Description…</string>
     <string name="dialog.bag.side.description.info">Description can be maximum of 25 characters</string>
-    <string name="dialog.bag.side.description.apply.to.all">Apply both to all sides</string>
+    <string name="dialog.bag.side.description.apply.to.all">Apply description and colour to all sides</string>
 
     <string name="dialog.bag.side.image">SVG file…</string>
     <string name="dialog.bag.side.image.clear">Drop SVG</string>

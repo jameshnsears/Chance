@@ -10,6 +10,7 @@ import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDat
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
+import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -51,9 +52,21 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         }
     }
 
-    override suspend fun jsonExport(): String =
-        JsonFormat.printer().includingDefaultValueFields()
+    override suspend fun jsonExport(): String {
+        val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("resize"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollIndexTime"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScore"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("diceTitle"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideNumber"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("behaviour"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideDescription"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideSVG"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollSound"))
+
+        return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(context.settingsDataStore.data.first())
+    }
 
     override suspend fun jsonImport(json: String) {
         store(jsomImportProcess(json))
@@ -110,14 +123,14 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
         emit(settings)
     }
 
-    override suspend fun store(newSettingsData: SettingsDataInterface) {
+    override suspend fun store(settingsDataInterface: SettingsDataInterface) {
         Timber.d("repositorySettings.STORE ============================================")
-        Timber.d("repositorySettings.resize=${newSettingsData.resize}")
+        Timber.d("repositorySettings.resize=${settingsDataInterface.resize}")
 
         context.settingsDataStore.updateData {
             val settingsProtocolBufferBuilder = it.toBuilder()
             mapSettingsIntoSettingsProtocolBufferBuilder(
-                newSettingsData,
+                settingsDataInterface,
                 settingsProtocolBufferBuilder
             )
             settingsProtocolBufferBuilder.build()

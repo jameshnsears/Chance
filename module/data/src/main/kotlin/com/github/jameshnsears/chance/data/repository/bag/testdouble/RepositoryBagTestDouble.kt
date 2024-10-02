@@ -3,7 +3,9 @@ package com.github.jameshnsears.chance.data.repository.bag.testdouble
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
+import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
+import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -39,7 +41,10 @@ class RepositoryBagTestDouble private constructor() :
 
         mapDiceBagIntoBagProtocolBufferBuilder(diceBag, bagProtocolBufferBuilder)
 
-        return JsonFormat.printer().includingDefaultValueFields()
+        val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("selected"))
+
+        return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(bagProtocolBufferBuilder.build())
     }
 

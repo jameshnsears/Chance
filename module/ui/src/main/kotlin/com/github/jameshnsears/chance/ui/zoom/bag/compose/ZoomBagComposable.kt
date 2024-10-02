@@ -65,7 +65,7 @@ fun ZoomBag(
             }
 
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.Top,
                 modifier = Modifier.padding(bottom = 12.dp),
             ) {

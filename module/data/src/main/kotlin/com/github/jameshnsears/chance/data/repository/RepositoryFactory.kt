@@ -30,7 +30,7 @@ class RepositoryFactory(context: Context? = null) {
 
     ///////////////////////////////////////////////////
 
-    private val bagDataImpl = BagDataImpl()
+    private val bagDataImpl = BagDataImpl(context)
     val bagDataTestDouble = BagDataTestDouble()
 
     val repositoryBag = if (BuildConfig.DEBUG)

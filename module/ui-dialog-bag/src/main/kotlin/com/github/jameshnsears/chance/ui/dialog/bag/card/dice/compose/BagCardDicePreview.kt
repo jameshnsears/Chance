@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
@@ -23,7 +24,7 @@ fun BagCardDicePreview() {
     )
 
     val repositoryBagTestDouble =
-        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice)
+        RepositoryBagTestDouble.getInstance(RepositoryFactory(LocalContext.current).bagDataTestDouble.allDice)
     runBlocking(Dispatchers.Main) {
         repositoryBagTestDouble.store(
             mutableListOf(

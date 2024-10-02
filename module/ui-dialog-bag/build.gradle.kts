@@ -23,6 +23,12 @@ android {
             enableAndroidTestCoverage = true
             isMinifyEnabled = false
         }
+
+        create("benchmarkRelease") {
+        }
+
+        create("nonMinifiedRelease") {
+        }
     }
 
     testOptions {

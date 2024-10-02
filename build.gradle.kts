@@ -22,7 +22,35 @@ spotless {
 
 detekt {
     // https://detekt.dev/docs/gettingstarted/gradle
-    parallel = false
+    parallel = true
+
+    source.setFrom(
+        files(
+            "${rootProject.projectDir}/app/src/androidTest/kotlin",
+            "${rootProject.projectDir}/app/src/main/kotlin",
+            "${rootProject.projectDir}/module/common/src/main/kotlin",
+            "${rootProject.projectDir}/module/data/src/androidTest/kotlin",
+            "${rootProject.projectDir}/module/data/src/main/kotlin",
+            "${rootProject.projectDir}/module/data/src/test/kotlin",
+            "${rootProject.projectDir}/module/ui/src/main/kotlin",
+            "${rootProject.projectDir}/module/ui/src/test/kotlin",
+            "${rootProject.projectDir}/module/ui-dialog-bag/src/androidTest/kotlin",
+            "${rootProject.projectDir}/module/ui-dialog-bag/src/main/kotlin",
+            "${rootProject.projectDir}/module/ui-dialog-bag/src/test/kotlin",
+        )
+    )
+
+    debug = true
+
+    ignoreFailures = false
+
+    buildUponDefaultConfig = true
+
+//    baseline = file("${rootProject.projectDir}/app/detekt-baseline.xml")
+
+    parallel = true
+
+    config.setFrom("${rootProject.projectDir}/detekt.yml")
 }
 
 ktlint {
