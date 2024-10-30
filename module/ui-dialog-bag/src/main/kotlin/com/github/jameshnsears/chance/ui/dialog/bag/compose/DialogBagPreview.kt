@@ -9,7 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagProtocolBufferTestDouble
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
@@ -23,15 +23,15 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun DialogBagPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.NONE,
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
     val showDialog = mutableStateOf(true)
 
-    val repositoryBagTestDouble =
-        RepositoryBagTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice)
+    val repositoryBagProtocolBufferTestDouble =
+        RepositoryBagProtocolBufferTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice)
     runBlocking(Dispatchers.Main) {
-        repositoryBagTestDouble.store(
+        repositoryBagProtocolBufferTestDouble.store(
             mutableListOf(
                 BagDataTestDouble().diceStory,
             )
@@ -44,7 +44,7 @@ fun DialogBagPreview() {
     val dialogBagAndroidViewModel = runBlocking {
         DialogBagAndroidViewModel(
             mockk<Application>(),
-            repositoryBagTestDouble,
+            repositoryBagProtocolBufferTestDouble,
             dice,
             sides,
         )

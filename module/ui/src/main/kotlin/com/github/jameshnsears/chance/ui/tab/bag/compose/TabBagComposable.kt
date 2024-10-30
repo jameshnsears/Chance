@@ -49,7 +49,7 @@ import com.github.jameshnsears.chance.ui.BuildConfig
 import com.github.jameshnsears.chance.ui.R
 import com.github.jameshnsears.chance.ui.tab.bag.ExportImportStatus
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.bag.compose.ZoomBag
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -67,16 +67,16 @@ class TabBagTestTag {
 @Composable
 fun TabBag(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    zoomBagAndroidViewModel: ZoomBagAndroidViewModel
 ) {
-    TabBagLayout(tabBagAndroidViewModel, zoomAndroidViewModel)
+    TabBagLayout(tabBagAndroidViewModel, zoomBagAndroidViewModel)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabBagLayout(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    zoomBagAndroidViewModel: ZoomBagAndroidViewModel
 ) {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 
@@ -87,12 +87,12 @@ fun TabBagLayout(
             TabBagBottomSheetLayout(
                 bottomSheetScaffoldState,
                 tabBagAndroidViewModel,
-                zoomAndroidViewModel,
+                zoomBagAndroidViewModel,
             )
         },
     ) {
         ZoomBag(
-            zoomAndroidViewModel
+            zoomBagAndroidViewModel
         )
     }
 }
@@ -102,7 +102,7 @@ fun TabBagLayout(
 fun TabBagBottomSheetLayout(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     tabBagAndroidViewModel: TabBagAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    zoomBagAndroidViewModel: ZoomBagAndroidViewModel
 ) {
 
     Column(
@@ -114,7 +114,7 @@ fun TabBagBottomSheetLayout(
     ) {
         Resize(
             tabBagAndroidViewModel,
-            zoomAndroidViewModel,
+            zoomBagAndroidViewModel,
         )
 
         HorizontalDivider(
@@ -132,7 +132,7 @@ fun TabBagBottomSheetLayout(
         ImportExport(
             bottomSheetScaffoldState,
             tabBagAndroidViewModel,
-            zoomAndroidViewModel
+            zoomBagAndroidViewModel
         )
     }
 }
@@ -140,7 +140,7 @@ fun TabBagBottomSheetLayout(
 @Composable
 fun Resize(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomBagAndroidViewModel: ZoomBagAndroidViewModel,
 ) {
     val stateFlowResize =
         tabBagAndroidViewModel.stateFlowResize.collectAsStateWithLifecycle(
@@ -156,8 +156,8 @@ fun Resize(
         Slider(
             value = stateFlowResize.value.toFloat(),
             onValueChange = { newValue ->
-                zoomAndroidViewModel.resizeView(newValue.toInt())
                 tabBagAndroidViewModel.resizeSettings(newValue.toInt())
+                zoomBagAndroidViewModel.resizeView(newValue.toInt())
             },
             valueRange = 1f..5f,
             steps = 3,
@@ -176,7 +176,7 @@ fun Resize(
 fun ImportExport(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     tabBagAndroidViewModel: TabBagAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    zoomBagAndroidViewModel: ZoomBagAndroidViewModel
 ) {
     val stateFlowTabBagExport =
         tabBagAndroidViewModel.stateFlowTabBagExport.collectAsStateWithLifecycle(
@@ -281,7 +281,7 @@ fun ImportExport(
 
     if (importStatus == ExportImportStatus.SUCCESS) {
         Toast.makeText(context, importSuccessfulToast, Toast.LENGTH_SHORT).show()
-        zoomAndroidViewModel.refreshAfterImport()
+        zoomBagAndroidViewModel.refreshAfterImport()
     }
 
     if (importStatus == ExportImportStatus.FAILURE) {
@@ -322,7 +322,7 @@ fun Version(
     ) {
         SelectionContainer {
             Text(
-                // Baseline profile (fdroidRelease + fdroidBenchmarkRelease)
+                // Baseline variant (fdroidRelease + fdroidBenchmarkRelease) on API 35 emulator
                 // text = "",
                 text = BuildConfig.VERSION + "-" + BuildConfig.FLAVOR + "/" + BuildConfig.GIT_HASH,
                 fontSize = 14.sp,

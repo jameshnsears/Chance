@@ -8,7 +8,7 @@ import timber.log.Timber
 open class UtilityLoggingInstrumentedHelper {
     init {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.NONE,
+            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
         )
     }
 

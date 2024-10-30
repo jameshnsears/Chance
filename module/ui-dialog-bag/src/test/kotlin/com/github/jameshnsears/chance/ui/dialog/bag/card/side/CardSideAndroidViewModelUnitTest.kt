@@ -64,7 +64,7 @@ class CardSideAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
                 javaClass.classLoader?.getResourceAsStream("data/svg/empty.svg")
             )
             fail()
-        } catch (cardSideSvgImportException: CardSideSvgImportException) {
+        } catch (_: CardSideSvgImportException) {
             // expected
         }
     }
@@ -72,7 +72,8 @@ class CardSideAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
     @Test
     fun sideCardSvgFileImportValid() {
         getDialogBagAndroidViewModel().cardSideAndroidViewModel.sideImageSvgImport(
-            javaClass.classLoader?.getResourceAsStream("data/svg/story/lion.svg")
+            javaClass.classLoader?.getResourceAsStream("data/svg/story/lion.svg"),
+            kiloBytes = 500
         )
     }
 

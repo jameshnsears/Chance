@@ -2,24 +2,24 @@ package com.github.jameshnsears.chance.data.repository.roll.testdouble
 
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
-import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollProtocolBufferInterface
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 
-class RepositoryRollTestDouble private constructor() :
-    RepositoryRollInterface {
+class RepositoryRollProtocolBufferTestDouble private constructor() :
+    RepositoryRollProtocolBufferInterface {
     companion object {
-        private var instance: RepositoryRollTestDouble? = null
+        private var instance: RepositoryRollProtocolBufferTestDouble? = null
 
         fun getInstance(
             rollHistory: RollHistory
-        ): RepositoryRollTestDouble {
+        ): RepositoryRollProtocolBufferTestDouble {
             synchronized(this) {
                 if (instance == null) {
                     runBlocking {
-                        instance = RepositoryRollTestDouble()
+                        instance = RepositoryRollProtocolBufferTestDouble()
 
                         instance!!.store(rollHistory)
                         instance!!.traceUuid(rollHistory)

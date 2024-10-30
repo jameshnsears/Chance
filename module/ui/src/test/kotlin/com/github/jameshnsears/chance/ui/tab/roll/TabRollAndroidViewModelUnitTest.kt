@@ -225,6 +225,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun undo() = runTest {
         val tabRollAndroidViewModel = tabRollAndroidViewModel()
+        tabRollAndroidViewModel._undoEnabled.value = true
 
         assertEquals(2, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
         tabRollAndroidViewModel.undo()
@@ -260,8 +261,6 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         runBlocking(Dispatchers.Main) {
             repositoryRoll.store(rollDataTestDouble.rollHistory)
         }
-
-        // mediaPlayerRollSound
 
         return spyk<TabRollAndroidViewModel>(
             TabRollAndroidViewModel(

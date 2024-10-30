@@ -21,7 +21,15 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidHelper() {
         "story/lion",
         "story/pirate",
         "story/queen",
-        "story/spaceship"
+        "story/spaceship",
+        "civilizations/Chariot",
+        "civilizations/Chinese Dragon",
+        "civilizations/Gladiator Helmet",
+        "civilizations/Hercules Knot",
+        "civilizations/Olive Branch",
+        "civilizations/Ox-Drawn Plow",
+        "civilizations/Pharaoh's Crown",
+        "civilizations/Ship"
     )
 
     @Test
@@ -55,7 +63,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidHelper() {
     }
 
     @Test
-//    @Ignore("run adhoc manually")
+    @Ignore("comment out line - run runtime profile, via utility, svg")
     fun createBase64FileFromSvgFile() {
         for (svgFile: String in diceResources) {
             val svgFileAsByteArray = getResourceAsByteArray("/data/svg/$svgFile.svg")

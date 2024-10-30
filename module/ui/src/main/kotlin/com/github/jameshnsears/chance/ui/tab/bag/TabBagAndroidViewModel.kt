@@ -11,6 +11,7 @@ import com.github.jameshnsears.chance.data.repository.RepositoryImportValidation
 import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.ui.tab.ResizeEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -183,6 +184,8 @@ class TabBagAndroidViewModel(
                 val settings = repositorySettings.fetch().first()
                 settings.resize = newResize
                 repositorySettings.store(settings)
+
+                ResizeEvent.emit()
             }
         }
     }

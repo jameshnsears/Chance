@@ -10,15 +10,16 @@ import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import io.mockk.mockk
 
 @UtilityPreview
 @Composable
 fun TabBagPreview() {
     UtilityFeature.enabled = setOf(
-        UtilityFeature.Flag.NONE,
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
     val repositorySettings = RepositoryFactory().repositorySettings
@@ -39,7 +40,7 @@ fun TabBagPreview() {
                     repositoryRoll,
                     3
                 ),
-                ZoomAndroidViewModel(
+                ZoomBagAndroidViewModel(
                     mockk<Application>(),
                     repositorySettings,
                     repositoryBag,
@@ -54,6 +55,10 @@ fun TabBagPreview() {
 @UtilityPreview
 @Composable
 fun TabBagBottomSheetPreview() {
+    UtilityFeature.enabled = setOf(
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+    )
+
     val repositorySettings = RepositoryFactory().repositorySettings
 
     val repositoryBag = RepositoryFactory().repositoryBag
@@ -73,7 +78,7 @@ fun TabBagBottomSheetPreview() {
                     repositoryRoll,
                     3
                 ),
-                ZoomAndroidViewModel(
+                ZoomBagAndroidViewModel(
                     mockk<Application>(),
                     repositorySettings,
                     repositoryBag,

@@ -414,6 +414,29 @@ fun SideImageSVG(
         BagCardSideTestTag.SIDE_APPLY_SVG,
         cardSideAndroidViewModel::sideApplyToAllSvg
     )
+
+    Row(
+        modifier = Modifier
+            .padding(top = 8.dp, bottom = 8.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = "",
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .padding(top = 8.dp, bottom = 8.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = stringResource(R.string.dialog_bag_side_image_apply_svg_size),
+        )
+    }
 }
 
 @Composable

@@ -9,7 +9,8 @@ import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModel
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import io.mockk.mockk
@@ -18,7 +19,7 @@ import io.mockk.mockk
 @Composable
 fun TabRowPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.NONE,
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
     ChanceTheme {
@@ -45,7 +46,13 @@ fun TabRowPreview() {
                     repositoryBag,
                     repositoryRoll
                 ),
-                ZoomAndroidViewModel(
+                ZoomBagAndroidViewModel(
+                    mockk<Application>(),
+                    repositorySettings,
+                    repositoryBag,
+                    repositoryRoll
+                ),
+                ZoomRollAndroidViewModel(
                     mockk<Application>(),
                     repositorySettings,
                     repositoryBag,

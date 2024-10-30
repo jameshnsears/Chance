@@ -7,7 +7,7 @@ import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
 
-object BagProtocolBufferSerializer : Serializer<BagProtocolBuffer> {
+object RepositoryBagProtocolBufferSerializer : Serializer<BagProtocolBuffer> {
     override val defaultValue: BagProtocolBuffer = BagProtocolBuffer.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): BagProtocolBuffer {

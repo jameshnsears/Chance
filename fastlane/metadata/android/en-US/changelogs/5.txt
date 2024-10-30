@@ -1,0 +1,2 @@
+&bull; Performance improvement &amp; fix
+&bull; Bump dependencies

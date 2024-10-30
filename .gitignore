@@ -24,6 +24,7 @@ misc/uml/chance.vpp.bak*
 /module/dialog/dice/build
 /module/dialog/side/build
 /module/repository/build
+/module/*/.attach*
 /module/zoom/build
 /.kotlin
 /app/google-services.json-production

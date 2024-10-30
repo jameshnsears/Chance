@@ -16,7 +16,8 @@ import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.bag.compose.TabBag
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.compose.TabRoll
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModel
 
 class TabRowTestTag {
     companion object {
@@ -28,7 +29,8 @@ class TabRowTestTag {
 fun TabRow(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
     tabRollAndroidViewModel: TabRollAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    zoomBagAndroidViewModel: ZoomBagAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel
 ) {
     val tabs = listOf(
         stringResource(R.string.tab_bag),
@@ -61,14 +63,14 @@ fun TabRow(
                 0 -> {
                     TabBag(
                         tabBagAndroidViewModel,
-                        zoomAndroidViewModel
+                        zoomBagAndroidViewModel
                     )
                 }
 
                 else -> {
                     TabRoll(
                         tabRollAndroidViewModel,
-                        zoomAndroidViewModel
+                        zoomRollAndroidViewModel
                     )
                 }
             }

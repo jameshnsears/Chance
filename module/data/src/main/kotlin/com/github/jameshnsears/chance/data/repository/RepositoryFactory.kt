@@ -8,12 +8,12 @@ import com.github.jameshnsears.chance.data.domain.core.roll.impl.RollHistoryData
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
-import com.github.jameshnsears.chance.data.repository.bag.impl.RepositoryBagImpl
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
-import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRollImpl
-import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollTestDouble
-import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySettingsImpl
-import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.impl.RepositoryBagProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repository.roll.impl.RepositoryRollProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repository.roll.testdouble.RepositoryRollProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySettingsProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsProtocolBufferTestDouble
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
 class RepositoryFactory(context: Context? = null) {
@@ -21,12 +21,12 @@ class RepositoryFactory(context: Context? = null) {
     val settingsTestDouble = SettingsDataTestDouble()
 
     val repositorySettings = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
-            RepositorySettingsImpl.getInstance(context!!, settingsImpl)
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER))
+            RepositorySettingsProtocolBufferImpl.getInstance(context!!, settingsImpl)
         else
-            RepositorySettingsTestDouble.getInstance(settingsTestDouble)
+            RepositorySettingsProtocolBufferTestDouble.getInstance(settingsTestDouble)
     else
-        RepositorySettingsImpl.getInstance(context!!, settingsImpl)
+        RepositorySettingsProtocolBufferImpl.getInstance(context!!, settingsImpl)
 
     ///////////////////////////////////////////////////
 
@@ -34,12 +34,12 @@ class RepositoryFactory(context: Context? = null) {
     val bagDataTestDouble = BagDataTestDouble()
 
     val repositoryBag = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
-            RepositoryBagImpl.getInstance(context!!, bagDataImpl.allDice)
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER))
+            RepositoryBagProtocolBufferImpl.getInstance(context!!, bagDataImpl.allDice)
         else
-            RepositoryBagTestDouble.getInstance(bagDataTestDouble.allDice)
+            RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDice)
     else
-        RepositoryBagImpl.getInstance(context!!, bagDataImpl.allDice)
+        RepositoryBagProtocolBufferImpl.getInstance(context!!, bagDataImpl.allDice)
 
     ///////////////////////////////////////////////////
 
@@ -47,10 +47,10 @@ class RepositoryFactory(context: Context? = null) {
     val rollHistoryDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 
     val repositoryRoll = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO))
-            RepositoryRollImpl.getInstance(context!!, rollHistoryDataImpl)
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER))
+            RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
         else
-            RepositoryRollTestDouble.getInstance(rollHistoryDataTestDouble)
+            RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryDataTestDouble)
     else
-        RepositoryRollImpl.getInstance(context!!, rollHistoryDataImpl)
+        RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
 }

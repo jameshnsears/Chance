@@ -38,7 +38,7 @@ import com.github.jameshnsears.chance.ui.R
 import com.github.jameshnsears.chance.ui.dialog.settings.compose.DialogSettings
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.selection.compose.RollSelectionRow
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.roll.compose.ZoomRoll
 import kotlinx.coroutines.launch
 
@@ -53,16 +53,16 @@ class TabRollTestTag {
 @Composable
 fun TabRoll(
     tabRollAndroidViewModel: TabRollAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
 ) {
-    TabRollLayout(tabRollAndroidViewModel, zoomAndroidViewModel)
+    TabRollLayout(tabRollAndroidViewModel, zoomRollAndroidViewModel)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabRollLayout(
     tabRollAndroidViewModel: TabRollAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
 ) {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 
@@ -78,7 +78,7 @@ fun TabRollLayout(
     ) {
         ZoomRoll(
             tabRollAndroidViewModel,
-            zoomAndroidViewModel
+            zoomRollAndroidViewModel
         )
     }
 }

@@ -109,8 +109,8 @@ fun DialogColourPicker(
 
         Box(
             Modifier
-                .height(275.dp)
-                .width(275.dp)
+                .height(375.dp)
+                .width(375.dp)
                 .align(Alignment.CenterHorizontally),
         ) {
             HsvColorPicker(

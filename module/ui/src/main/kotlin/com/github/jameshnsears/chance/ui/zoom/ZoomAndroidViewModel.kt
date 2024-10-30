@@ -20,7 +20,6 @@ import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterfa
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
-import com.github.jameshnsears.chance.ui.tab.roll.TabRollEvent
 import com.github.jameshnsears.chance.ui.utility.colour.UtilityColour
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,13 +37,13 @@ data class ZoomState(
     var rollHistory: RollHistory
 )
 
-class ZoomAndroidViewModel(
+abstract class ZoomAndroidViewModel(
     application: Application,
     val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
 ) : AndroidViewModel(application) {
-    private val _stateFlowZoom = MutableStateFlow(
+    protected val _stateFlowZoom = MutableStateFlow(
         ZoomState(
             resizeView = 0.dp,
             diceBag = mutableListOf(),
@@ -56,39 +55,26 @@ class ZoomAndroidViewModel(
     private val _diceBagList = MutableStateFlow<List<Dice>>(emptyList())
     val diceBagList: StateFlow<List<Dice>> = _diceBagList
 
-    private var diceEpochCache: MutableMap<Long, Dice> = mutableMapOf()
+    protected var diceEpochCache: MutableMap<Long, Dice> = mutableMapOf()
 
     init {
         viewModelScope.launch {
-            updateResize()
-            updateStateFlowZoom()
-        }
-
-        viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect.DialogBagCloseEvent.ZoomAndroidViewModel")
-                updateResize()
+                Timber.d("collect.DialogBagCloseEvent")
                 updateStateFlowZoom()
             }
         }
 
         viewModelScope.launch {
             TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                Timber.d("collect.TabBagImportEvent.ZoomAndroidViewModel")
+                Timber.d("collect.TabBagImportEvent")
                 updateResize()
-                updateStateFlowZoom()
-            }
-        }
-
-        viewModelScope.launch {
-            TabRollEvent.sharedFlowTabRollEvent.collect {
-                Timber.d("collect.TabRollEvent.ZoomAndroidViewModel")
                 updateStateFlowZoom()
             }
         }
     }
 
-    private suspend fun updateResize() {
+    protected suspend fun updateResize() {
         _stateFlowZoom.update {
             it.copy(
                 resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
@@ -96,23 +82,16 @@ class ZoomAndroidViewModel(
         }
     }
 
-    private suspend fun updateStateFlowZoom() {
-        _stateFlowZoom.update {
-            it.copy(
-                diceBag = repositoryBag.fetch().first(),
-                rollHistory = repositoryRoll.fetch().first()
-            )
-        }
+    open suspend fun updateStateFlowZoom() {}
 
-        updateDiceBagList()
-    }
-
-    private fun updateDiceBagList() {
-        // done iteratively as makes ui look smoother / faster!
+    protected fun updateDiceBagList() {
         viewModelScope.launch {
             _diceBagList.value = emptyList()
-
             diceEpochCache.clear()
+
+            if (_stateFlowZoom.value.diceBag.size == 0) {
+                _stateFlowZoom.value.diceBag = repositoryBag.fetch().first()
+            }
 
             for (dice in _stateFlowZoom.value.diceBag) {
                 _diceBagList.value += dice
@@ -153,7 +132,9 @@ class ZoomAndroidViewModel(
         }
     }
 
-    fun fetchDiceFromEpochCache(rollDiceEpoch: Long) = diceEpochCache[rollDiceEpoch]
+    fun fetchDiceFromEpochCache(rollDiceEpoch: Long): Dice? {
+        return diceEpochCache[rollDiceEpoch]
+    }
 
     fun sideImageShapeNumberFontSize() = 17.sp
 

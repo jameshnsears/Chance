@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
             installSplashScreen()
         }
 
-        installShortcuts()
+        installShortcut()
 
         val repositoryFactory = RepositoryFactory(application)
 
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
             Timber.plant(UtilityLoggingLineNumberTree())
     }
 
-    private fun installShortcuts() {
+    private fun installShortcut() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val shortcutManager = getSystemService(ShortcutManager::class.java) as ShortcutManager
 

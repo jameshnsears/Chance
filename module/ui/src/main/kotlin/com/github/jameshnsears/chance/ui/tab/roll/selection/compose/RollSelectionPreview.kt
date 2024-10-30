@@ -12,6 +12,7 @@ import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import io.mockk.mockk
 
 @SuppressLint("UnrememberedMutableState")
@@ -19,7 +20,7 @@ import io.mockk.mockk
 @Composable
 fun RollSelectionPreview() {
     UtilityFeature.enabled = setOf(
-        UtilityFeature.Flag.NONE,
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
     val repositoryFactory = RepositoryFactory()

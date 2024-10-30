@@ -62,7 +62,7 @@ class TabRollAndroidViewModel(
     private var _diceBag: MutableStateFlow<DiceBag> = MutableStateFlow(mutableListOf())
     var diceBag: StateFlow<DiceBag> = _diceBag
 
-    private var _undoEnabled = MutableStateFlow(false)
+    var _undoEnabled = MutableStateFlow(false)
     var undoEnabled: StateFlow<Boolean> = _undoEnabled
 
     private var _rollEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -115,7 +115,7 @@ class TabRollAndroidViewModel(
         Timber.d("_rollEnabled.value=${_rollEnabled.value}")
     }
 
-    private suspend fun isUndoPossible(): Boolean {
+    private fun isUndoPossible(): Boolean {
         if (!stateFlowSettings.value.rollIndexTime
             && !stateFlowSettings.value.rollScore
             && !stateFlowSettings.value.diceTitle
@@ -126,7 +126,7 @@ class TabRollAndroidViewModel(
         )
             return false
 
-        return repositoryRoll.fetch().first().size != 0
+        return undoEnabled.value
     }
 
     private suspend fun isRollPossible(): Boolean {
@@ -188,12 +188,6 @@ class TabRollAndroidViewModel(
             rollDiceSequence(newRollSequence)
 
             saveNewRollSequence(newRollSequence)
-
-            if (repositoryRoll.fetch().first().size % 20 == 0)
-                viewModelScope.launch {
-                    Timber.d("System.gc() request")
-                    System.gc()
-                }
 
             _undoEnabled.value = true
 
@@ -353,10 +347,10 @@ class TabRollAndroidViewModel(
 
     fun undo() {
         viewModelScope.launch {
-            val rollHistory = repositoryRoll.fetch().first()
-
-            if (rollHistory.isNotEmpty()) {
+            if (_undoEnabled.value) {
                 _undoEnabled.value = false
+
+                val rollHistory = repositoryRoll.fetch().first()
 
                 rollHistory.remove(rollHistory.keys.first())
 
@@ -365,12 +359,6 @@ class TabRollAndroidViewModel(
                 TabRollEvent.emit()
 
                 _undoEnabled.value = rollHistory.size != 0
-
-                if (rollHistory.size % 10 == 0)
-                    viewModelScope.launch {
-                        Timber.d("System.gc() request")
-                        System.gc()
-                    }
             }
         }
     }

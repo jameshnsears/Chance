@@ -19,8 +19,10 @@ import com.github.jameshnsears.chance.ui.tab.compose.TabRow
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModelFactory
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModelFactory
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
 @Composable
@@ -50,8 +52,17 @@ fun MainActivityComposable(
         )
     )
 
-    val zoomAndroidViewModel: ZoomAndroidViewModel = viewModel(
-        factory = ZoomAndroidViewModelFactory(
+    val zoomBagAndroidViewModel: ZoomBagAndroidViewModel = viewModel(
+        factory = ZoomBagAndroidViewModelFactory(
+            application,
+            repositorySettings,
+            repositoryBag,
+            repositoryRoll
+        )
+    )
+
+    val zoomRollAndroidViewModel: ZoomRollAndroidViewModel = viewModel(
+        factory = ZoomRollAndroidViewModelFactory(
             application,
             repositorySettings,
             repositoryBag,
@@ -65,7 +76,7 @@ fun MainActivityComposable(
                 modifier = Modifier.padding(paddingValues),
                 color = MaterialTheme.colorScheme.background
             ) {
-                if (UtilityFeature.isEnabled(UtilityFeature.Flag.CRASHLYTICS)) {
+                if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_CRASHLYTICS_BUTTON)) {
                     Button(onClick = {
                         throw RuntimeException("Test Crash")
                     }) {
@@ -75,7 +86,8 @@ fun MainActivityComposable(
                     TabRow(
                         tabBagAndroidViewModel,
                         tabRollAndroidViewModel,
-                        zoomAndroidViewModel
+                        zoomBagAndroidViewModel,
+                        zoomRollAndroidViewModel
                     )
                 }
             }

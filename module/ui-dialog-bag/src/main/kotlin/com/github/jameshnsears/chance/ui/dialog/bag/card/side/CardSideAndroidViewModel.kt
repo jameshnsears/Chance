@@ -30,7 +30,13 @@ data class CardSideState(
     var diceSidesFewerThanSdeNumber: Boolean
 )
 
-class CardSideSvgImportException : Exception()
+enum class SvgImportError {
+    NOT_A_SVG,
+    TOO_BIG
+}
+
+class CardSideSvgImportException(svgImportError: SvgImportError) : Exception()
+
 
 class CardSideAndroidViewModel(
     application: Application,
@@ -89,8 +95,15 @@ class CardSideAndroidViewModel(
     fun sideImageSvgImport(uri: Uri) =
         sideImageSvgImport(getApplication<Application>().contentResolver.openInputStream(uri))
 
-    fun sideImageSvgImport(inputStream: InputStream?) {
+    private fun isSbgTooBig(candidateSvgString: String, kiloBytes: Int) {
+        if (candidateSvgString.toByteArray().size / 1024 > kiloBytes)
+            throw CardSideSvgImportException(SvgImportError.TOO_BIG)
+    }
+
+    fun sideImageSvgImport(inputStream: InputStream?, kiloBytes: Int = 250) {
         val candidateSvgString = sideImageSvgImportReadFile(inputStream)
+
+        isSbgTooBig(candidateSvgString, kiloBytes)
 
         if (UtilitySvgSerializer.isStringSvg(candidateSvgString)) {
             _stateFlowCardSide.update {
@@ -106,7 +119,7 @@ class CardSideAndroidViewModel(
                 )
             }
         } else {
-            throw CardSideSvgImportException()
+            throw CardSideSvgImportException(SvgImportError.NOT_A_SVG)
         }
     }
 

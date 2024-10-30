@@ -8,7 +8,7 @@ import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModel
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import io.mockk.mockk
@@ -18,7 +18,7 @@ import io.mockk.mockk
 @Composable
 fun ZoomRollPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.NONE,
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
     val repositorySettings = RepositoryFactory().repositorySettings
@@ -38,7 +38,7 @@ fun ZoomRollPreview() {
                     repositoryBag,
                     repositoryRoll
                 ),
-                ZoomAndroidViewModel(
+                ZoomRollAndroidViewModel(
                     mockk<Application>(),
                     repositorySettings,
                     repositoryBag,

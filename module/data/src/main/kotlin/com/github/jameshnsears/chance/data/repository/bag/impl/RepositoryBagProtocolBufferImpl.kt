@@ -9,7 +9,7 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
-import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagProtocolBufferInterface
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
@@ -21,24 +21,24 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 
-class RepositoryBagImpl private constructor(private val context: Context) :
-    RepositoryBagInterface {
+class RepositoryBagProtocolBufferImpl private constructor(private val context: Context) :
+    RepositoryBagProtocolBufferInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var instance: RepositoryBagImpl? = null
+        private var instance: RepositoryBagProtocolBufferImpl? = null
 
         fun getInstance(
             context: Context,
             diceBag: DiceBag
-        ): RepositoryBagImpl {
+        ): RepositoryBagProtocolBufferImpl {
             if (instance == null) {
                 synchronized(this) {
-                    instance = RepositoryBagImpl(context)
+                    instance = RepositoryBagProtocolBufferImpl(context)
 
                     runBlocking {
                         if (BuildConfig.DEBUG) {
-                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
+                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER)) {
                                 instance!!.clear()
                             }
                         }
@@ -46,7 +46,7 @@ class RepositoryBagImpl private constructor(private val context: Context) :
                         if (instance!!.fetch().first().size == 0)
                             instance!!.store(diceBag)
 
-                        instance!!.traceUuid(instance!!.fetch().first())
+                        // instance!!.traceUuid(instance!!.fetch().first())
                     }
                 }
             }
@@ -159,5 +159,5 @@ class RepositoryBagImpl private constructor(private val context: Context) :
 val Context.diceBagDataStore: DataStore<BagProtocolBuffer> by dataStore(
     // /data/data/com.github.jameshnsears.chance.test.test/files/datastore
     fileName = "bag.pb",
-    serializer = BagProtocolBufferSerializer,
+    serializer = RepositoryBagProtocolBufferSerializer,
 )

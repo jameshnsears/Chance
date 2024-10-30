@@ -7,7 +7,7 @@ import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
 
-object SettingsProtocolBufferSerializer : Serializer<SettingsProtocolBuffer> {
+object RepositorySettingsProtocolBufferSerializer : Serializer<SettingsProtocolBuffer> {
     override val defaultValue: SettingsProtocolBuffer = SettingsProtocolBuffer.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): SettingsProtocolBuffer {

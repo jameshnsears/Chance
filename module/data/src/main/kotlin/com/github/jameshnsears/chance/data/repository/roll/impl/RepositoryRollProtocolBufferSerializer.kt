@@ -7,7 +7,7 @@ import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
 
-object RollHistoryProtocolBufferSerializer : Serializer<RollHistoryProtocolBuffer> {
+object RepositoryRollProtocolBufferSerializer : Serializer<RollHistoryProtocolBuffer> {
     override val defaultValue: RollHistoryProtocolBuffer =
         RollHistoryProtocolBuffer.getDefaultInstance()
 

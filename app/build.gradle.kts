@@ -15,9 +15,9 @@ android {
         targetSdk = 35
 
         // changelog | min sdk | max sdk
-        versionCode = 42435
+        versionCode = 52435
 
-        versionName = "1.2.1"
+        versionName = "1.2.2"
 
         extra["versionName"] = versionName
 
@@ -109,7 +109,13 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     "baselineProfile"(project(":module:baselineprofile"))
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // comment out leakcanary when profiling: fdroidDebug; on API 30+ emulator
+    // run app, via Profiler (complete data)
+    // Profiler > select Track Memory Consumption
+    // Start profiler task (attached to selected process)
     debugImplementation(libs.leakcanary.android)
+
     "googleplayImplementation"(libs.com.google.firebase.crashlytics)
     "googleplayImplementation"(platform(libs.com.google.firebase.bom))
     implementation(libs.activity.compose)

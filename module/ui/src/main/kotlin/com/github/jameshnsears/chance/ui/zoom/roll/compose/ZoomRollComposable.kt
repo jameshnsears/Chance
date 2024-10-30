@@ -37,8 +37,8 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.roll.TabRollAndroidViewModel
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideDescription
+import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModel
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -47,10 +47,10 @@ import java.util.Locale
 @Composable
 fun ZoomRoll(
     tabRollAndroidViewModel: TabRollAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
 ) {
     val stateFlowZoom =
-        zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
+        zoomRollAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
@@ -63,13 +63,15 @@ fun ZoomRoll(
 
     val listState = rememberLazyListState()
 
+    val itemsList = stateFlowZoom.value.rollHistory.entries.toList()
+
     LazyColumn(
         modifier = Modifier.padding(top = 8.dp, start = 0.dp, bottom = 110.dp, end = 8.dp),
         state = listState,
     ) {
         itemsIndexed(
-            items = stateFlowZoom.value.rollHistory.entries.toList(),
-            key = { index, item -> "${item.value}_${index}" }
+            items = itemsList,
+            key = { index, item -> "${item.key}_${index}" }
         ) { index, rollSequence ->
             if (stateFlowTabRoll.value.rollIndexTime)
                 RollIndexTime(
@@ -96,9 +98,9 @@ fun ZoomRoll(
                     ) { _, roll ->
                         RollDetails(
                             tabRollAndroidViewModel,
-                            zoomAndroidViewModel,
+                            zoomRollAndroidViewModel,
                             roll,
-                            zoomAndroidViewModel.fetchDiceFromEpochCache(roll.diceEpoch)!!
+                            zoomRollAndroidViewModel.fetchDiceFromEpochCache(roll.diceEpoch)!!
                         )
                     }
                 }
@@ -108,13 +110,7 @@ fun ZoomRoll(
                 &&
                 tabRollAndroidViewModel.isContentAvailableToDisplay(rollSequence.value)
             )
-                if (index == 0)
-                    HorizontalDivider(
-                        Modifier.padding(bottom = 12.dp),
-                        thickness = 4.dp
-                    )
-                else
-                    HorizontalDivider(Modifier.padding(bottom = 12.dp))
+                HorizontalDivider(Modifier.padding(bottom = 12.dp))
         }
     }
 }
@@ -158,7 +154,7 @@ private fun RollScore(
 @Composable
 private fun RollDetails(
     tabRollAndroidViewModel: TabRollAndroidViewModel,
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
     roll: Roll,
     dice: Dice
 ) {
@@ -184,7 +180,7 @@ private fun RollDetails(
     ) {
         if (settingsDiceTitle)
             Row(Modifier.padding(4.dp)) {
-                if (UtilityFeature.isEnabled(UtilityFeature.Flag.SHOW_EPOCH_UUID)) {
+                if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_EPOCH_UUID)) {
                     Column {
                         Text(dice.title)
                         Text("${dice.epoch}")
@@ -196,18 +192,18 @@ private fun RollDetails(
                 }
             }
 
-        if (settingsBehaviour) ZoomSideRollBehaviour(zoomAndroidViewModel, roll)
+        if (settingsBehaviour) ZoomSideRollBehaviour(zoomRollAndroidViewModel, roll)
 
         if (settingsSideNumber) ZoomRollSideImageShape(
-            zoomAndroidViewModel,
+            zoomRollAndroidViewModel,
             dice,
             roll.side
         )
 
-        if (settingsSideDescription) ZoomSideDescription(zoomAndroidViewModel, dice, roll.side)
+        if (settingsSideDescription) ZoomSideDescription(zoomRollAndroidViewModel, dice, roll.side)
 
         if (settingsSideSVG) ZoomRollSideImageSVG(
-            zoomAndroidViewModel,
+            zoomRollAndroidViewModel,
             roll.side
         )
     }
@@ -215,13 +211,13 @@ private fun RollDetails(
 
 @Composable
 fun ZoomSideRollBehaviour(
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
     roll: Roll
 ) {
     val rollSelectionIconColour = if (isSystemInDarkTheme()) Color.White else Color.Black
 
     val stateFlowZoom =
-        zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
+        zoomRollAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
@@ -235,7 +231,7 @@ fun ZoomSideRollBehaviour(
             ZoomSideRollBehaviourIcon(
                 resizeView,
                 rollSelectionIconColour,
-                zoomAndroidViewModel,
+                zoomRollAndroidViewModel,
                 R.drawable.roll_repeat_fill0_wght400_grad0_opsz24,
                 "${roll.multiplierIndex}"
             )
@@ -246,7 +242,7 @@ fun ZoomSideRollBehaviour(
                 ZoomSideRollBehaviourIcon(
                     resizeView,
                     rollSelectionIconColour,
-                    zoomAndroidViewModel,
+                    zoomRollAndroidViewModel,
                     R.drawable.roll_explode_fill0_wght400_grad0_opsz24,
                     "${roll.explodeIndex}"
                 )
@@ -256,7 +252,7 @@ fun ZoomSideRollBehaviour(
                 ZoomSideRollBehaviourIcon(
                     resizeView,
                     rollSelectionIconColour,
-                    zoomAndroidViewModel,
+                    zoomRollAndroidViewModel,
                     R.drawable.roll_add_subtract_fill0_wght400_grad0_opsz24,
                     "${roll.scoreAdjustment}"
                 )
@@ -269,7 +265,7 @@ fun ZoomSideRollBehaviour(
 private fun ZoomSideRollBehaviourIcon(
     resizeView: Dp,
     rollSelectionIconColour: Color,
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
     drawableId: Int,
     text: String,
 ) {
@@ -281,7 +277,7 @@ private fun ZoomSideRollBehaviourIcon(
     )
 
     Text(
-        fontSize = zoomAndroidViewModel.sideImageShapeNumberFontSize(),
+        fontSize = zoomRollAndroidViewModel.sideImageShapeNumberFontSize(),
         text = text,
         color = rollSelectionIconColour,
     )
@@ -289,12 +285,12 @@ private fun ZoomSideRollBehaviourIcon(
 
 @Composable
 fun ZoomRollSideImageShape(
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
     dice: Dice,
     side: Side
 ) {
     val stateFlowZoom =
-        zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
+        zoomRollAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
@@ -302,12 +298,12 @@ fun ZoomRollSideImageShape(
 
     Box {
         Image(
-            painter = painterResource(zoomAndroidViewModel.sideImageShapeNumberShape(dice)),
+            painter = painterResource(zoomRollAndroidViewModel.sideImageShapeNumberShape(dice)),
             contentDescription = "",
             modifier = Modifier
                 .size(resizeView)
                 .padding(top = 8.dp),
-            colorFilter = zoomAndroidViewModel.sideColourFilter(dice.colour),
+            colorFilter = zoomRollAndroidViewModel.sideColourFilter(dice.colour),
             contentScale = ContentScale.Crop
         )
 
@@ -315,20 +311,20 @@ fun ZoomRollSideImageShape(
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(top = 0.dp),
-            fontSize = zoomAndroidViewModel.sideImageShapeNumberFontSize(),
+            fontSize = zoomRollAndroidViewModel.sideImageShapeNumberFontSize(),
             text = "${side.number}",
-            color = zoomAndroidViewModel.sideColor(side.numberColour),
+            color = zoomRollAndroidViewModel.sideColor(side.numberColour),
         )
     }
 }
 
 @Composable
 fun ZoomRollSideImageSVG(
-    zoomAndroidViewModel: ZoomAndroidViewModel,
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
     side: Side
 ) {
     val stateFlowZoom =
-        zoomAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
+        zoomRollAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
@@ -340,7 +336,7 @@ fun ZoomRollSideImageSVG(
 
     if (side.imageBase64 != "") {
         val imageRequest: ImageRequest = remember {
-            zoomAndroidViewModel.sideImageSVG(side)
+            zoomRollAndroidViewModel.sideImageSVG(side)
         }
 
         AsyncImage(

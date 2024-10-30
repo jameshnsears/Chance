@@ -3,25 +3,25 @@ package com.github.jameshnsears.chance.data.repository.settings.testdouble
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 
-class RepositorySettingsTestDouble private constructor() :
-    RepositorySettingsInterface {
+class RepositorySettingsProtocolBufferTestDouble private constructor() :
+    RepositorySettingsProtocolBufferInterface {
     companion object {
-        private var instance: RepositorySettingsTestDouble? = null
+        private var instance: RepositorySettingsProtocolBufferTestDouble? = null
 
         fun getInstance(
             settingsData: SettingsDataInterface
-        ): RepositorySettingsTestDouble {
+        ): RepositorySettingsProtocolBufferTestDouble {
             synchronized(this) {
                 if (instance == null) {
                     runBlocking {
-                        instance = RepositorySettingsTestDouble()
+                        instance = RepositorySettingsProtocolBufferTestDouble()
 
                         instance!!.settings = settingsData
                     }

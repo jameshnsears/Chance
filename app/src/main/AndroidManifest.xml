@@ -12,6 +12,8 @@
         android:theme="@style/Theme.Chance.Starting"
         tools:targetApi="35">
 
+        <profileable android:shell="true" />
+
         <activity
             android:name=".ShortcutActivity"
             android:excludeFromRecents="true"

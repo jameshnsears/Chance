@@ -7,11 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagProtocolBufferTestDouble
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
@@ -20,13 +21,13 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun BagCardDicePreview() {
     UtilityFeature.enabled = setOf(
-        UtilityFeature.Flag.NONE,
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
-    val repositoryBagTestDouble =
-        RepositoryBagTestDouble.getInstance(RepositoryFactory(LocalContext.current).bagDataTestDouble.allDice)
+    val repositoryBagProtocolBufferTestDouble =
+        RepositoryBagProtocolBufferTestDouble.getInstance(RepositoryFactory(LocalContext.current).bagDataTestDouble.allDice)
     runBlocking(Dispatchers.Main) {
-        repositoryBagTestDouble.store(
+        repositoryBagProtocolBufferTestDouble.store(
             mutableListOf(
                 BagDataTestDouble().d6,
             ),
@@ -35,7 +36,7 @@ fun BagCardDicePreview() {
 
     val cardDiceViewModel = runBlocking {
         CardDiceViewModel(
-            repositoryBagTestDouble,
+            repositoryBagProtocolBufferTestDouble,
             BagDataTestDouble().diceStory
         )
     }

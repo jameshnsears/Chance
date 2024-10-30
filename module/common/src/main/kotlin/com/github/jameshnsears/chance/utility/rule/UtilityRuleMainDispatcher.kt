@@ -9,7 +9,6 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-// https://developer.android.com/kotlin/coroutines/test
 class UtilityRuleMainDispatcher @OptIn(ExperimentalCoroutinesApi::class) constructor(
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ) : TestWatcher() {

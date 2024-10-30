@@ -4,25 +4,25 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
-import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 
-class RepositoryBagTestDouble private constructor() :
-    RepositoryBagInterface {
+class RepositoryBagProtocolBufferTestDouble private constructor() :
+    RepositoryBagProtocolBufferInterface {
     companion object {
-        private var instance: RepositoryBagTestDouble? = null
+        private var instance: RepositoryBagProtocolBufferTestDouble? = null
 
         fun getInstance(
             diceBag: DiceBag
-        ): RepositoryBagTestDouble {
+        ): RepositoryBagProtocolBufferTestDouble {
             synchronized(this) {
                 if (instance == null) {
                     runBlocking {
-                        instance = RepositoryBagTestDouble()
+                        instance = RepositoryBagProtocolBufferTestDouble()
 
                         instance!!.diceBag = diceBag
                         instance!!.traceUuid(diceBag)

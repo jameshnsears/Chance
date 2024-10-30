@@ -8,7 +8,7 @@ import com.github.jameshnsears.chance.data.BuildConfig
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsProtocolBufferInterface
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
@@ -19,24 +19,24 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
-class RepositorySettingsImpl private constructor(private val context: Context) :
-    RepositorySettingsInterface {
+class RepositorySettingsProtocolBufferImpl private constructor(private val context: Context) :
+    RepositorySettingsProtocolBufferInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var instance: RepositorySettingsImpl? = null
+        private var instance: RepositorySettingsProtocolBufferImpl? = null
 
         fun getInstance(
             context: Context,
             settings: SettingsDataInterface = SettingsDataImpl()
-        ): RepositorySettingsImpl {
+        ): RepositorySettingsProtocolBufferImpl {
             if (instance == null) {
                 synchronized(this) {
                     runBlocking {
-                        instance = RepositorySettingsImpl(context)
+                        instance = RepositorySettingsProtocolBufferImpl(context)
 
                         if (BuildConfig.DEBUG) {
-                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
+                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER)) {
                                 instance!!.clear()
                             }
                         }
@@ -147,5 +147,5 @@ class RepositorySettingsImpl private constructor(private val context: Context) :
 val Context.settingsDataStore: DataStore<SettingsProtocolBuffer> by dataStore(
     // /data/data/com.github.jameshnsears.chance.test.test/files/datastore
     fileName = "settings.pb",
-    serializer = SettingsProtocolBufferSerializer,
+    serializer = RepositorySettingsProtocolBufferSerializer,
 )

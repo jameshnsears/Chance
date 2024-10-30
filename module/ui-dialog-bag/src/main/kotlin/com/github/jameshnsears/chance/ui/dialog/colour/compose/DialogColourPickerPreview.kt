@@ -6,15 +6,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import com.github.jameshnsears.chance.ui.dialog.bag.R
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
-import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
 @Composable
 @UtilityPreview
 fun DialogColorPickerPreview() {
-    UtilityFeature.enabled = setOf(
-        UtilityFeature.Flag.NONE,
-    )
-
     val showColourDialog = rememberSaveable { mutableStateOf(true) }
 
     DialogColourPickerLayout(

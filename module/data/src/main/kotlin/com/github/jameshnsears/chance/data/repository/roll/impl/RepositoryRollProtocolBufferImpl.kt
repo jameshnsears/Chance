@@ -9,43 +9,43 @@ import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
-import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollProtocolBufferInterface
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.google.protobuf.util.JsonFormat
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class RepositoryRollImpl private constructor(private val context: Context) :
-    RepositoryRollInterface {
+class RepositoryRollProtocolBufferImpl private constructor(private val context: Context) :
+    RepositoryRollProtocolBufferInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var instance: RepositoryRollImpl? = null
+        private var instance: RepositoryRollProtocolBufferImpl? = null
 
         fun getInstance(
             context: Context,
             rollHistory: RollHistory
-        ): RepositoryRollImpl {
+        ): RepositoryRollProtocolBufferImpl {
             synchronized(this) {
 
                 if (instance == null) {
-                    instance = RepositoryRollImpl(context)
+                    instance = RepositoryRollProtocolBufferImpl(context)
 
                     runBlocking {
                         if (BuildConfig.DEBUG) {
-                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.USE_PROTO_REPO)) {
+                            if (!UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER)) {
                                 instance!!.clear()
 
                                 if (instance!!.fetch().first().size == 0)
                                     instance!!.store(rollHistory)
                             }
                         }
-
-                        instance!!.traceUuid(instance!!.fetch().first())
                     }
                 }
             }
@@ -63,41 +63,44 @@ class RepositoryRollImpl private constructor(private val context: Context) :
     }
 
     override suspend fun fetch(): Flow<RollHistory> = flow {
+        Timber.d("repositoryRoll.FETCH.start ============================================")
+
         val rollHistory = RollHistory()
 
         context.rollDataStore.data
             .map { rollHistoryProtocolBuffer ->
-                // LinkedHashMap<Long, List<Roll>>
-                rollHistoryProtocolBuffer.valuesMap.forEach { mapEntry ->
-                    val rollList = mutableListOf<Roll>()
+                withContext(Dispatchers.IO) {
+                    rollHistoryProtocolBuffer.valuesMap.forEach { mapEntry ->
+                        val rollList = mutableListOf<Roll>()
 
-                    mapEntry.value.rollList.forEach { rollProtocolBuffer ->
-                        val sideProtocolBuffer = rollProtocolBuffer.side
+                        mapEntry.value.rollList.forEach { rollProtocolBuffer ->
+                            val sideProtocolBuffer = rollProtocolBuffer.side
 
-                        rollList.add(
-                            Roll(
-                                rollProtocolBuffer.diceEpoch,
-                                Side(
-                                    uuid = sideProtocolBuffer.uuid,
-                                    number = sideProtocolBuffer.number,
-                                    numberColour = sideProtocolBuffer.numberColour,
-                                    imageBase64 = sideProtocolBuffer.imageBase64,
-                                    imageDrawableId = sideProtocolBuffer.imageDrawableId,
-                                    description = sideProtocolBuffer.description,
-                                    descriptionColour = sideProtocolBuffer.descriptionColour
-                                ),
-                                rollProtocolBuffer.multiplierIndex,
-                                rollProtocolBuffer.explodeIndex,
-                                rollProtocolBuffer.scoreAdjustment,
-                                rollProtocolBuffer.score
+                            rollList.add(
+                                Roll(
+                                    rollProtocolBuffer.diceEpoch,
+                                    Side(
+                                        uuid = sideProtocolBuffer.uuid,
+                                        number = sideProtocolBuffer.number,
+                                        numberColour = sideProtocolBuffer.numberColour,
+                                        imageBase64 = sideProtocolBuffer.imageBase64,
+                                        imageDrawableId = sideProtocolBuffer.imageDrawableId,
+                                        description = sideProtocolBuffer.description,
+                                        descriptionColour = sideProtocolBuffer.descriptionColour
+                                    ),
+                                    rollProtocolBuffer.multiplierIndex,
+                                    rollProtocolBuffer.explodeIndex,
+                                    rollProtocolBuffer.scoreAdjustment,
+                                    rollProtocolBuffer.score
+                                )
                             )
-                        )
+                        }
+                        rollHistory[mapEntry.key] = rollList
                     }
-                    rollHistory[mapEntry.key] = rollList
                 }
             }.first()
 
-        Timber.d("repositoryRoll.FETCH ============================================")
+        Timber.d("repositoryRoll.FETCH.end ============================================")
         Timber.d("repositoryRoll.size=${rollHistory.size}")
 
         emit(rollHistory)
@@ -129,5 +132,5 @@ class RepositoryRollImpl private constructor(private val context: Context) :
 val Context.rollDataStore: DataStore<RollHistoryProtocolBuffer> by dataStore(
     // /data/data/com.github.jameshnsears.chance.test.test/files/datastore
     fileName = "roll.pb",
-    serializer = RollHistoryProtocolBufferSerializer,
+    serializer = RepositoryRollProtocolBufferSerializer,
 )

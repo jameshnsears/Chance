@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideDescription
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideImageSVG
 import com.github.jameshnsears.chance.ui.zoom.compose.ZoomSideImageShape
@@ -31,9 +31,9 @@ import timber.log.Timber
 
 @Composable
 fun ZoomBag(
-    zoomAndroidViewModel: ZoomAndroidViewModel
+    zoomBagAndroidViewModel: ZoomBagAndroidViewModel
 ) {
-    val diceBagListState by zoomAndroidViewModel.diceBagList.collectAsState()
+    val diceBagListState by zoomBagAndroidViewModel.diceBagList.collectAsState()
 
     val cardDice = remember { mutableStateOf(Dice()) }
     val cardSide = remember { mutableStateOf(Side()) }
@@ -53,7 +53,7 @@ fun ZoomBag(
             Row(
                 modifier = Modifier.padding(start = 8.dp),
             ) {
-                if (UtilityFeature.isEnabled(UtilityFeature.Flag.SHOW_EPOCH_UUID)) {
+                if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_EPOCH_UUID)) {
                     Column {
                         Text(dice.title)
                         Text("${dice.epoch}")
@@ -80,7 +80,7 @@ fun ZoomBag(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         ZoomSideImageShape(
-                            zoomAndroidViewModel,
+                            zoomBagAndroidViewModel,
                             dice,
                             side,
                             showDialog,
@@ -88,10 +88,10 @@ fun ZoomBag(
                             cardSide
                         )
 
-                        ZoomSideDescription(zoomAndroidViewModel, dice, side)
+                        ZoomSideDescription(zoomBagAndroidViewModel, dice, side)
 
                         ZoomSideImageSVG(
-                            zoomAndroidViewModel,
+                            zoomBagAndroidViewModel,
                             dice,
                             side,
                             showDialog,
@@ -112,7 +112,7 @@ fun ZoomBag(
 
         DialogBag(
             showDialog,
-            zoomAndroidViewModel.repositoryBag,
+            zoomBagAndroidViewModel.repositoryBag,
             cardDice.value,
             cardSide.value,
         )

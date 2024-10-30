@@ -7,15 +7,16 @@ import androidx.compose.runtime.Composable
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
-import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
+import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import io.mockk.mockk
 
 @UtilityPreview
 @Composable
 fun ZoomBagPreview() {
     UtilityFeature.enabled = setOf(
-        UtilityFeature.Flag.NONE,
+        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
     val repositorySettings = RepositoryFactory().repositorySettings
@@ -29,7 +30,7 @@ fun ZoomBagPreview() {
             color = MaterialTheme.colorScheme.background,
         ) {
             ZoomBag(
-                ZoomAndroidViewModel(
+                ZoomBagAndroidViewModel(
                     mockk<Application>(),
                     repositorySettings,
                     repositoryBag,

@@ -4,7 +4,7 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
-import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagTestDouble
+import com.github.jameshnsears.chance.data.repository.bag.testdouble.RepositoryBagProtocolBufferTestDouble
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -289,7 +289,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val sampleBagTestDataAllDice = bagDataTestDouble.allDice
 
-        val repositoryBag = RepositoryBagTestDouble.getInstance(sampleBagTestDataAllDice)
+        val repositoryBag = RepositoryBagProtocolBufferTestDouble.getInstance(sampleBagTestDataAllDice)
 
         val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
             getApplication(), repositoryBag, sampleBagTestDataAllDice[2],
@@ -298,7 +298,6 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         dialogBagAndroidViewModel.save()
 
-        // each save changes Dice.uui
         assertNotEquals(
             sampleBagTestDataAllDice, dialogBagAndroidViewModel.repositoryBag.fetch().first()
         )
@@ -310,7 +309,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
 
         val diceToDelete = bagDataTestDouble.d4
 
-        val repositoryBag = RepositoryBagTestDouble.getInstance(
+        val repositoryBag = RepositoryBagProtocolBufferTestDouble.getInstance(
             mutableListOf(
                 bagDataTestDouble.d2, diceToDelete, bagDataTestDouble.d6
             )

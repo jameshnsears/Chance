@@ -52,7 +52,7 @@ fun ZoomSideImageShape(
 
     val resizeView = stateFlowZoom.value.resizeView
 
-    if (UtilityFeature.isEnabled(UtilityFeature.Flag.SHOW_EPOCH_UUID))
+    if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_EPOCH_UUID))
         Row {
             Text(text = side.uuid)
         }
