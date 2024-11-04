@@ -1,5 +1,6 @@
 package com.github.jameshnsears.chance
 
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -29,7 +30,7 @@ class MainActivityInstrumentedTest : UtilityLoggingInstrumentedHelper() {
 
         androidComposeTestRule
             .onNodeWithTag(TabRollTestTag.UNDO)
-            .assertIsNotEnabled()
+            .assertIsEnabled()
 
         androidComposeTestRule
             .onNodeWithTag(TabRollTestTag.ROLL)
