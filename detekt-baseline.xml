@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>FunctionParameterNaming:DialogColourPickerPreview.kt$_: String</ID>
     <ID>ImplicitDefaultLocale:UtilityLoggingLineNumberTree.kt$UtilityLoggingLineNumberTree$String.format( "%s, %s", element.lineNumber, element.methodName, )</ID>
@@ -12,8 +13,6 @@
     <ID>MatchingDeclarationName:TabBagComposable.kt$TabBagTestTag</ID>
     <ID>MatchingDeclarationName:TabRollComposable.kt$TabRollTestTag</ID>
     <ID>MatchingDeclarationName:TabRowComposable.kt$TabRowTestTag</ID>
-    <ID>SwallowedException:BagCardSideComposable.kt$cardSideSvgImportException: CardSideSvgImportException</ID>
-    <ID>TooGenericExceptionCaught:BagDataImpl.kt$BagDataImpl$e: Exception</ID>
     <ID>TooGenericExceptionCaught:TabBagAndroidViewModel.kt$TabBagAndroidViewModel$e: Exception</ID>
     <ID>TooGenericExceptionThrown:MainActivityComposable.kt$throw RuntimeException("Test Crash")</ID>
     <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>

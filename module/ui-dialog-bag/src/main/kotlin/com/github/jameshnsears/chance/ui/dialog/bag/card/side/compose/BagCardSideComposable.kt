@@ -71,7 +71,7 @@ fun BagCardSide(cardSideAndroidViewModel: CardSideAndroidViewModel) {
             defaultElevation = 6.dp,
         ),
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(18.dp)) {
             SideNumber(cardSideAndroidViewModel)
 
             SideColour(cardSideAndroidViewModel)
@@ -317,7 +317,7 @@ fun SideImageSVG(
             if (uri != null) {
                 cardSideAndroidViewModel.sideImageSvgImport(uri)
             }
-        } catch (cardSideSvgImportException: CardSideSvgImportException) {
+        } catch (_: CardSideSvgImportException) {
             Toast.makeText(
                 context,
                 sideImageError,

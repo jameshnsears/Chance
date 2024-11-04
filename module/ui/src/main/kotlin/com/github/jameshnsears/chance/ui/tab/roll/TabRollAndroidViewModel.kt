@@ -115,7 +115,7 @@ class TabRollAndroidViewModel(
         Timber.d("_rollEnabled.value=${_rollEnabled.value}")
     }
 
-    private fun isUndoPossible(): Boolean {
+    private suspend fun isUndoPossible(): Boolean {
         if (!stateFlowSettings.value.rollIndexTime
             && !stateFlowSettings.value.rollScore
             && !stateFlowSettings.value.diceTitle
@@ -123,10 +123,15 @@ class TabRollAndroidViewModel(
             && !stateFlowSettings.value.sideNumber
             && !stateFlowSettings.value.sideDescription
             && !stateFlowSettings.value.sideSVG
-        )
+        ) {
             return false
+        }
 
-        return undoEnabled.value
+        if (repositoryRoll.fetch().first().size > 0) {
+            return true
+        }
+
+        return false
     }
 
     private suspend fun isRollPossible(): Boolean {

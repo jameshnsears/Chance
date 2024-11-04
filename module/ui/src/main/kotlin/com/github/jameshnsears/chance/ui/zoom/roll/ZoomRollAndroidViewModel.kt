@@ -48,6 +48,7 @@ class ZoomRollAndroidViewModel(
     override suspend fun updateStateFlowZoom() {
         _stateFlowZoom.update {
             it.copy(
+                diceBag = repositoryBag.fetch().first(),
                 rollHistory = repositoryRoll.fetch().first()
             )
         }

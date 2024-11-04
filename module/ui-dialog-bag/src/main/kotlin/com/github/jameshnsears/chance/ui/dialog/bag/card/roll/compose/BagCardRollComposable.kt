@@ -57,7 +57,7 @@ fun BagCardRoll(
             defaultElevation = 6.dp,
         ),
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(18.dp)) {
             Text(
                 text = stringResource(R.string.dialog_bag_roll),
                 modifier = Modifier

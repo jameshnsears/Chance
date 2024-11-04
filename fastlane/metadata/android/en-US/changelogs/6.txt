@@ -1,0 +1,4 @@
+&bull; Fix Undo button behaviour when app re-entered
+&bull; Fix dice colour change regression
+&bull; Update assets
+&bull; Bump dependencies

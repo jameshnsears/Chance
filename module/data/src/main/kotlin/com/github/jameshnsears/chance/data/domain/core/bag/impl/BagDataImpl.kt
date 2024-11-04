@@ -1,20 +1,17 @@
 package com.github.jameshnsears.chance.data.domain.core.bag.impl
 
 import android.content.Context
-
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.BagDataInterface
-import timber.log.Timber
 
 class BagDataImpl(val context: Context? = null) : BagDataInterface {
     @Synchronized
     private fun readBase64File(fileName: String): String {
         try {
             return context!!.assets.open(fileName).bufferedReader().use { it.readText() }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // caused by unit tests using mock context
-            Timber.w(e.message)
             return ""
         }
     }
@@ -61,42 +58,43 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
             Side(
                 number = 6,
                 description = "Knight",
-                descriptionColour = "FF6650a4",
+                descriptionColour = "ea5068ca",
                 imageBase64 = readBase64File("data/base64/story/knight.base64"),
             ),
             Side(
                 number = 5,
                 description = "Lion",
-                descriptionColour = "FF6650a4",
+                descriptionColour = "ea5068ca",
                 imageBase64 = readBase64File("data/base64/story/lion.base64"),
             ),
             Side(
                 number = 4,
                 description = "Pirate",
-                descriptionColour = "FF6650a4",
+                descriptionColour = "ea5068ca",
                 imageBase64 = readBase64File("data/base64/story/pirate.base64"),
             ),
             Side(
                 number = 3,
                 description = "Crocodile",
-                descriptionColour = "FF6650a4",
+                descriptionColour = "ea5068ca",
                 imageBase64 = readBase64File("data/base64/story/crocodile.base64"),
             ),
             Side(
                 number = 2,
                 description = "Queen",
-                descriptionColour = "FF6650a4",
+                descriptionColour = "ea5068ca",
                 imageBase64 = readBase64File("data/base64/story/queen.base64"),
             ),
             Side(
                 number = 1,
                 description = "Spaceship",
-                descriptionColour = "FF6650a4",
+                descriptionColour = "ea5068ca",
                 imageBase64 = readBase64File("data/base64/story/spaceship.base64"),
             ),
         ),
         title = "Story",
         multiplierValue = 3,
+        colour = "ea5068ca"
     )
 
     override val allDice = mutableListOf(
