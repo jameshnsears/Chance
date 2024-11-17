@@ -9,52 +9,12 @@ package com.github.jameshnsears.chance.data.domain.proto;
  * Protobuf type {@code com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer}
  */
 public final class BagProtocolBuffer extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
-        BagProtocolBufferOrBuilder {
-    public static final int DICE_FIELD_NUMBER = 1;
+    com.google.protobuf.GeneratedMessage implements
+    // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
+    BagProtocolBufferOrBuilder {
     private static final long serialVersionUID = 0L;
-    // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
-    private static final com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer DEFAULT_INSTANCE;
-    private static final com.google.protobuf.Parser<BagProtocolBuffer>
-            PARSER = new com.google.protobuf.AbstractParser<BagProtocolBuffer>() {
-        @java.lang.Override
-        public BagProtocolBuffer parsePartialFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-                builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-                throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                        .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-        }
-    };
 
-    static {
-        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
-                com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
-                /* major= */ 4,
-                /* minor= */ 28,
-                /* patch= */ 2,
-                /* suffix= */ "",
-                BagProtocolBuffer.class.getName());
-    }
-
-    static {
-        DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer();
-    }
-
-    @SuppressWarnings("serial")
-    private java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> dice_;
-    private byte memoizedIsInitialized = -1;
+    public static final int DICE_FIELD_NUMBER = 1;
 
     // Use BagProtocolBuffer.newBuilder() to construct.
     private BagProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
@@ -70,109 +30,38 @@ public final class BagProtocolBuffer extends
         return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_descriptor;
     }
 
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
-            java.nio.ByteBuffer data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
-            java.nio.ByteBuffer data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
-            com.google.protobuf.ByteString data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
-            com.google.protobuf.ByteString data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(byte[] data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
-            byte[] data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(java.io.InputStream input)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseDelimitedFrom(java.io.InputStream input)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseDelimitedFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
-            com.google.protobuf.CodedInputStream input)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+    // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
+    private static final com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer DEFAULT_INSTANCE;
+    private static final com.google.protobuf.Parser<BagProtocolBuffer>
+        PARSER = new com.google.protobuf.AbstractParser<BagProtocolBuffer>() {
+        @java.lang.Override
+        public BagProtocolBuffer parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input, extensionRegistry);
-    }
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            Builder builder = newBuilder();
+            try {
+                builder.mergeFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                throw e.setUnfinishedMessage(builder.buildPartial());
+            } catch (com.google.protobuf.UninitializedMessageException e) {
+                throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+            } catch (java.io.IOException e) {
+                throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                    .setUnfinishedMessage(builder.buildPartial());
+            }
+            return builder.buildPartial();
+        }
+    };
 
-    public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-    }
-
-    public static Builder newBuilder(com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-    }
-
-    public static com.google.protobuf.Parser<BagProtocolBuffer> parser() {
-        return PARSER;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-        return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_fieldAccessorTable
-                .ensureFieldAccessorsInitialized(
-                        com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.Builder.class);
+    static {
+        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+            com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+            /* major= */ 4,
+            /* minor= */ 28,
+            /* patch= */ 2,
+            /* suffix= */ "",
+            BagProtocolBuffer.class.getName());
     }
 
     /**
@@ -208,14 +97,12 @@ public final class BagProtocolBuffer extends
         return dice_.get(index);
     }
 
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder getDiceOrBuilder(
-            int index) {
-        return dice_.get(index);
+    static {
+        DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer();
     }
+
+    @SuppressWarnings("serial")
+    private java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> dice_;
 
     @java.lang.Override
     public final boolean isInitialized() {
@@ -227,44 +114,19 @@ public final class BagProtocolBuffer extends
         return true;
     }
 
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-            throws java.io.IOException {
-        for (int i = 0; i < dice_.size(); i++) {
-            output.writeMessage(1, dice_.get(i));
-        }
-        getUnknownFields().writeTo(output);
+    private byte memoizedIsInitialized = -1;
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
     }
 
-    @java.lang.Override
-    public int getSerializedSize() {
-        int size = memoizedSize;
-        if (size != -1) return size;
-
-        size = 0;
-        for (int i = 0; i < dice_.size(); i++) {
-            size += com.google.protobuf.CodedOutputStream
-                    .computeMessageSize(1, dice_.get(i));
-        }
-        size += getUnknownFields().getSerializedSize();
-        memoizedSize = size;
-        return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)) {
-            return super.equals(obj);
-        }
-        com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer) obj;
-
-        if (!getDiceList()
-                .equals(other.getDiceList())) return false;
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
     }
 
     @java.lang.Override
@@ -283,20 +145,161 @@ public final class BagProtocolBuffer extends
         return hash;
     }
 
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
     @java.lang.Override
     public Builder newBuilderForType() {
         return newBuilder();
     }
 
+    public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+    }
+
+    public static com.google.protobuf.Parser<BagProtocolBuffer> parser() {
+        return PARSER;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+        return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.Builder.class);
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder getDiceOrBuilder(
+        int index) {
+        return dice_.get(index);
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+        throws java.io.IOException {
+        for (int i = 0; i < dice_.size(); i++) {
+            output.writeMessage(1, dice_.get(i));
+        }
+        getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        for (int i = 0; i < dice_.size(); i++) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeMessageSize(1, dice_.get(i));
+        }
+        size += getUnknownFields().getSerializedSize();
+        memoizedSize = size;
+        return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)) {
+            return super.equals(obj);
+        }
+        com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer) obj;
+
+        if (!getDiceList()
+            .equals(other.getDiceList())) return false;
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
+    }
+
     @java.lang.Override
     public Builder toBuilder() {
         return this == DEFAULT_INSTANCE
-                ? new Builder() : new Builder().mergeFrom(this);
+            ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
     }
@@ -315,38 +318,19 @@ public final class BagProtocolBuffer extends
      * Protobuf type {@code com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer}
      */
     public static final class Builder extends
-            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
-            com.github.jameshnsears.chance.data.domain.proto.BagProtocolBufferOrBuilder {
-        private int bitField0_;
-        private java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> dice_ =
-                java.util.Collections.emptyList();
-        private com.google.protobuf.RepeatedFieldBuilder<
-                com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder> diceBuilder_;
-
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.newBuilder()
-        private Builder() {
-
-        }
-
-        private Builder(
-                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-
-        }
-
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
+        com.github.jameshnsears.chance.data.domain.proto.BagProtocolBufferOrBuilder {
         public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_descriptor;
         }
 
-        @java.lang.Override
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-            return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_fieldAccessorTable
-                    .ensureFieldAccessorsInitialized(
-                            com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.Builder.class);
-        }
+        private int bitField0_;
+        private java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> dice_ =
+            java.util.Collections.emptyList();
+        private com.google.protobuf.RepeatedFieldBuilder<
+            com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder> diceBuilder_;
 
         @java.lang.Override
         public Builder clear() {
@@ -419,6 +403,30 @@ public final class BagProtocolBuffer extends
             }
         }
 
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.newBuilder()
+        private Builder() {
+
+        }
+
+        @java.lang.Override
+        public final boolean isInitialized() {
+            return true;
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                    com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.Builder.class);
+        }
+
         public Builder mergeFrom(com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer other) {
             if (other == com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.getDefaultInstance()) return this;
             if (diceBuilder_ == null) {
@@ -440,8 +448,8 @@ public final class BagProtocolBuffer extends
                         dice_ = other.dice_;
                         bitField0_ = (bitField0_ & ~0x00000001);
                         diceBuilder_ =
-                                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                                        getDiceFieldBuilder() : null;
+                            com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                                getDiceFieldBuilder() : null;
                     } else {
                         diceBuilder_.addAllMessages(other.dice_);
                     }
@@ -452,16 +460,18 @@ public final class BagProtocolBuffer extends
             return this;
         }
 
-        @java.lang.Override
-        public final boolean isInitialized() {
-            return true;
+        private void ensureDiceIsMutable() {
+            if (!((bitField0_ & 0x00000001) != 0)) {
+                dice_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer>(dice_);
+                bitField0_ |= 0x00000001;
+            }
         }
 
         @java.lang.Override
         public Builder mergeFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
             if (extensionRegistry == null) {
                 throw new java.lang.NullPointerException();
             }
@@ -475,9 +485,9 @@ public final class BagProtocolBuffer extends
                             break;
                         case 10: {
                             com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer m =
-                                    input.readMessage(
-                                            com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.parser(),
-                                            extensionRegistry);
+                                input.readMessage(
+                                    com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.parser(),
+                                    extensionRegistry);
                             if (diceBuilder_ == null) {
                                 ensureDiceIsMutable();
                                 dice_.add(m);
@@ -500,13 +510,6 @@ public final class BagProtocolBuffer extends
                 onChanged();
             } // finally
             return this;
-        }
-
-        private void ensureDiceIsMutable() {
-            if (!((bitField0_ & 0x00000001) != 0)) {
-                dice_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer>(dice_);
-                bitField0_ |= 0x00000001;
-            }
         }
 
         /**
@@ -546,7 +549,7 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public Builder setDice(
-                int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer value) {
+            int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer value) {
             if (diceBuilder_ == null) {
                 if (value == null) {
                     throw new NullPointerException();
@@ -564,7 +567,7 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public Builder setDice(
-                int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder builderForValue) {
+            int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder builderForValue) {
             if (diceBuilder_ == null) {
                 ensureDiceIsMutable();
                 dice_.set(index, builderForValue.build());
@@ -596,7 +599,7 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public Builder addDice(
-                int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer value) {
+            int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer value) {
             if (diceBuilder_ == null) {
                 if (value == null) {
                     throw new NullPointerException();
@@ -614,7 +617,7 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public Builder addDice(
-                com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder builderForValue) {
+            com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder builderForValue) {
             if (diceBuilder_ == null) {
                 ensureDiceIsMutable();
                 dice_.add(builderForValue.build());
@@ -629,7 +632,7 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public Builder addDice(
-                int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder builderForValue) {
+            int index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder builderForValue) {
             if (diceBuilder_ == null) {
                 ensureDiceIsMutable();
                 dice_.add(index, builderForValue.build());
@@ -644,11 +647,11 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public Builder addAllDice(
-                java.lang.Iterable<? extends com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> values) {
+            java.lang.Iterable<? extends com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> values) {
             if (diceBuilder_ == null) {
                 ensureDiceIsMutable();
                 com.google.protobuf.AbstractMessageLite.Builder.addAll(
-                        values, dice_);
+                    values, dice_);
                 onChanged();
             } else {
                 diceBuilder_.addAllMessages(values);
@@ -688,7 +691,7 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder getDiceBuilder(
-                int index) {
+            int index) {
             return getDiceFieldBuilder().getBuilder(index);
         }
 
@@ -696,7 +699,7 @@ public final class BagProtocolBuffer extends
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder getDiceOrBuilder(
-                int index) {
+            int index) {
             if (diceBuilder_ == null) {
                 return dice_.get(index);
             } else {
@@ -721,16 +724,16 @@ public final class BagProtocolBuffer extends
          */
         public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder addDiceBuilder() {
             return getDiceFieldBuilder().addBuilder(
-                    com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.getDefaultInstance());
+                com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.getDefaultInstance());
         }
 
         /**
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
          */
         public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder addDiceBuilder(
-                int index) {
+            int index) {
             return getDiceFieldBuilder().addBuilder(
-                    index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.getDefaultInstance());
+                index, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.getDefaultInstance());
         }
 
         /**
@@ -742,15 +745,15 @@ public final class BagProtocolBuffer extends
         }
 
         private com.google.protobuf.RepeatedFieldBuilder<
-                com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder>
+            com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder>
         getDiceFieldBuilder() {
             if (diceBuilder_ == null) {
                 diceBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-                        com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder>(
-                        dice_,
-                        ((bitField0_ & 0x00000001) != 0),
-                        getParentForChildren(),
-                        isClean());
+                    com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder>(
+                    dice_,
+                    ((bitField0_ & 0x00000001) != 0),
+                    getParentForChildren(),
+                    isClean());
                 dice_ = null;
             }
             return diceBuilder_;

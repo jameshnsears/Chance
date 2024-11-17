@@ -19,7 +19,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         val tabBagViewModel = tabBagViewModel()
 
         assertEquals(
-            """           
+            """
             {
               "resize": ${SettingsDataTestDouble().resize},
               "rollIndexTime": ${SettingsDataTestDouble().rollIndexTime},
@@ -29,7 +29,8 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
               "behaviour": ${SettingsDataTestDouble().rollBehaviour},
               "sideDescription": ${SettingsDataTestDouble().sideDescription},
               "sideSVG": ${SettingsDataTestDouble().sideSVG},
-              "rollSound": ${SettingsDataTestDouble().rollSound}
+              "rollSound": ${SettingsDataTestDouble().rollSound},
+              "shuffle": ${SettingsDataTestDouble().shuffle}
             }
             """.trimIndent(),
             tabBagViewModel.repositorySettings.jsonExport()

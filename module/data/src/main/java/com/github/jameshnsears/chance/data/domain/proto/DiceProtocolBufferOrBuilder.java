@@ -6,8 +6,8 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface DiceProtocolBufferOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer)
-        com.google.protobuf.MessageOrBuilder {
+    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer)
+    com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>int64 epoch = 1;</code>
@@ -57,7 +57,7 @@ public interface DiceProtocolBufferOrBuilder extends
      * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
      */
     com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder(
-            int index);
+        int index);
 
     /**
      * <code>string title = 4;</code>

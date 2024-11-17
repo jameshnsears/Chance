@@ -14,5 +14,6 @@ class SettingsDataTestDouble(
     override var sideDescription: Boolean = true,
     override var sideSVG: Boolean = true,
 
-    override var rollSound: Boolean = true
+    override var rollSound: Boolean = true,
+    override var shuffle: Boolean = false
 ) : SettingsDataInterface

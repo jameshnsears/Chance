@@ -21,6 +21,7 @@
     <string name="tab.roll.settings.side.description">Side Description</string>
     <string name="tab.roll.settings.side.svg">Side SVG</string>
 
+    <string name="tab.roll.settings.use.shuffle">Shuffle</string>
     <string name="tab.roll.settings.use.sound">Sound</string>
 
     <string name="tab.roll.settings.undo.all">Undo All</string>

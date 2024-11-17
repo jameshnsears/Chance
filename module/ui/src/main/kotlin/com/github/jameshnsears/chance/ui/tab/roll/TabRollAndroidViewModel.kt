@@ -36,6 +36,7 @@ data class SettingsState(
     var sideDescription: Boolean,
     var sideSVG: Boolean,
 
+    var shuffle: Boolean,
     var rollSound: Boolean,
 )
 
@@ -54,6 +55,7 @@ class TabRollAndroidViewModel(
             sideNumber = false,
             sideDescription = false,
             sideSVG = false,
+            shuffle = false,
             rollSound = false,
         )
     )
@@ -191,6 +193,12 @@ class TabRollAndroidViewModel(
             val newRollSequence = mutableListOf<Roll>()
 
             rollDiceSequence(newRollSequence)
+
+            if (_stateFlowSettingsData.value.shuffle) {
+                val selectedCount = diceBag.value.count { it.selected }
+                if (selectedCount > 1)
+                    newRollSequence.shuffle()
+            }
 
             saveNewRollSequence(newRollSequence)
 
@@ -433,6 +441,12 @@ class TabRollAndroidViewModel(
         }
     }
 
+    fun settingsShuffle(checked: Boolean) {
+        viewModelScope.launch {
+            _stateFlowSettingsData.update { it.copy(shuffle = checked) }
+        }
+    }
+
     fun settingsRollSound(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollSound = checked) }
@@ -453,16 +467,16 @@ class TabRollAndroidViewModel(
         }
 
         return (settings.rollIndexTime
-                ||
-                settings.rollScore
-                ||
-                settings.diceTitle
-                ||
-                settings.sideNumber
-                ||
-                (settings.sideDescription && descriptionExists)
-                ||
-                (settings.sideSVG && svgExists)
-                )
+            ||
+            settings.rollScore
+            ||
+            settings.diceTitle
+            ||
+            settings.sideNumber
+            ||
+            (settings.sideDescription && descriptionExists)
+            ||
+            (settings.sideSVG && svgExists)
+            )
     }
 }

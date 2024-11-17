@@ -63,6 +63,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideDescription"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideSVG"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollSound"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shuffle"))
 
         return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(context.settingsDataStore.data.first())
@@ -94,6 +95,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         newSettings.sideSVG = settingsProtocolBuffer.sideSVG
 
         newSettings.rollSound = settingsProtocolBuffer.rollSound
+        newSettings.shuffle = settingsProtocolBuffer.shuffle
 
         return newSettings
     }
@@ -114,6 +116,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
                     sideSVG = settingsProtocolBuffer.sideSVG,
 
                     rollSound = settingsProtocolBuffer.rollSound,
+                    shuffle = settingsProtocolBuffer.shuffle,
                 )
             }.first()
 

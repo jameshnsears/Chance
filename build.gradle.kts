@@ -16,7 +16,7 @@ plugins {
 spotless {
     kotlin {
         target("**/*.kt")
-        ktlint().setEditorConfigPath("$projectDir/.editorconfig")
+        targetExclude("**/composable/**") // Exclude files under composable directories
     }
 }
 

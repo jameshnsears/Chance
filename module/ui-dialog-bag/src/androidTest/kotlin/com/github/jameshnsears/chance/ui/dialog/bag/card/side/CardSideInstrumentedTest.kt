@@ -11,8 +11,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagInstrumentedHelper
-import com.github.jameshnsears.chance.ui.dialog.bag.card.side.compose.BagCardSideTestTag
-import com.github.jameshnsears.chance.ui.dialog.bag.compose.DialogBag
+import com.github.jameshnsears.chance.ui.dialog.bag.card.side.composable.BagCardSideTestTag
+import com.github.jameshnsears.chance.ui.dialog.bag.composable.DialogBag
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking

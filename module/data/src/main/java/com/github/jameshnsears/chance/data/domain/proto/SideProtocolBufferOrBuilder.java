@@ -6,8 +6,8 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface SideProtocolBufferOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
-        com.google.protobuf.MessageOrBuilder {
+    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
+    com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>string uuid = 1;</code>

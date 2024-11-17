@@ -10,7 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.github.jameshnsears.chance.compose.MainActivityComposable
+import com.github.jameshnsears.chance.composable.MainActivityComposable
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTree
 import kotlinx.coroutines.flow.first

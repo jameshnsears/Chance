@@ -20,6 +20,7 @@ interface RepositorySettingsProtocolBufferInterface : RepositorySettingsInterfac
         settingsProtocolBufferBuilder.setSideSVG(settingsData.sideSVG)
 
         settingsProtocolBufferBuilder.setRollSound(settingsData.rollSound)
+        settingsProtocolBufferBuilder.setShuffle(settingsData.shuffle)
 
         settingsProtocolBufferBuilder.build()
     }

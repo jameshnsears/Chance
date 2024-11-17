@@ -1,73 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues name="AGP (8.6.1)" by="lint 8.6.1" client="gradle" dependencies="false" format="6" type="baseline" variant="all" version="8.6.1">
+<issues format="6" by="lint 8.7.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.7.2)" variant="all" version="8.7.2">
 
-    <issue errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to androidx.compose.ui:ui-test-junit4:1.6.8 compatability" errorLine2="                ~~~~~~~" id="GradleDependency" message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1">
-        <location column="17" file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml" line="16" />
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.library than 8.6.1 is available: 8.7.2"
+        errorLine1="com-android-library = &quot;8.6.1&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="9"
+            column="23"/>
     </issue>
 
-    <issue errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to androidx.compose.ui:ui-test-junit4:1.6.8 compatability" errorLine2="                ~~~~~~~" id="GradleDependency" message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1">
-        <location column="17" file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml" line="16" />
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.library than 8.6.1 is available: 8.7.2"
+        errorLine1="com-android-library = &quot;8.6.1&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="9"
+            column="23"/>
     </issue>
 
-    <issue errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to androidx.compose.ui:ui-test-junit4:1.6.8 compatability" errorLine2="                ~~~~~~~" id="GradleDependency" message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1">
-        <location column="17" file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml" line="16" />
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.library than 8.6.1 is available: 8.7.2"
+        errorLine1="com-android-library = &quot;8.6.1&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="9"
+            column="23"/>
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;purple_200&quot;>#FFBB86FC&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~~~" id="UnusedResources" message="The resource `R.color.purple_200` appears to be unused">
-        <location column="12" file="src/main/res/values/colors.xml" line="3" />
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1"
+        errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to androidx.compose.ui:ui-test-junit4:1.6.8 compatability"
+        errorLine2="                ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="16"
+            column="17"/>
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;purple_500&quot;>#FF6200EE&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~~~" id="UnusedResources" message="The resource `R.color.purple_500` appears to be unused">
-        <location column="12" file="src/main/res/values/colors.xml" line="4" />
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1"
+        errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to androidx.compose.ui:ui-test-junit4:1.6.8 compatability"
+        errorLine2="                ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="16"
+            column="17"/>
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;purple_700&quot;>#FF3700B3&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~~~" id="UnusedResources" message="The resource `R.color.purple_700` appears to be unused">
-        <location column="12" file="src/main/res/values/colors.xml" line="5" />
+    <issue
+        id="GradleDependency"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1"
+        errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to androidx.compose.ui:ui-test-junit4:1.6.8 compatability"
+        errorLine2="                ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="16"
+            column="17"/>
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;teal_200&quot;>#FF03DAC5&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~" id="UnusedResources" message="The resource `R.color.teal_200` appears to be unused">
-        <location column="12" file="src/main/res/values/colors.xml" line="6" />
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_200` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_200&quot;>#FFBB86FC&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="3"
+            column="12"/>
     </issue>
 
-    <issue errorLine1="    &lt;color name=&quot;teal_700&quot;>#FF018786&lt;/color>" errorLine2="           ~~~~~~~~~~~~~~~" id="UnusedResources" message="The resource `R.color.teal_700` appears to be unused">
-        <location column="12" file="src/main/res/values/colors.xml" line="7" />
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_500` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_500&quot;>#FF6200EE&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="4"
+            column="12"/>
     </issue>
 
-    <issue errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;" errorLine2="^" id="UnusedResources" message="The resource `R.drawable.ic_launcher_background` appears to be unused">
-        <location column="1" file="src/main/res/drawable/ic_launcher_background.xml" line="2" />
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.purple_700` appears to be unused"
+        errorLine1="    &lt;color name=&quot;purple_700&quot;>#FF3700B3&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="5"
+            column="12"/>
     </issue>
 
-    <issue id="UnusedResources" message="The resource `R.mipmap.ic_launcher_round` appears to be unused">
-        <location file="src/main/res/mipmap-hdpi/ic_launcher_round.webp" />
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_200` appears to be unused"
+        errorLine1="    &lt;color name=&quot;teal_200&quot;>#FF03DAC5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="6"
+            column="12"/>
     </issue>
 
-    <issue id="IconDuplicates" message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location file="src/main/res/mipmap-hdpi/ic_launcher_round.webp" />
-        <location file="src/main/res/mipmap-hdpi/ic_launcher.webp" />
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.teal_700` appears to be unused"
+        errorLine1="    &lt;color name=&quot;teal_700&quot;>#FF018786&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="7"
+            column="12"/>
     </issue>
 
-    <issue id="IconDuplicates" message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location file="src/main/res/mipmap-mdpi/ic_launcher_round.webp" />
-        <location file="src/main/res/mipmap-mdpi/ic_launcher.webp" />
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_launcher_background` appears to be unused"
+        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_launcher_background.xml"
+            line="2"
+            column="1"/>
     </issue>
 
-    <issue id="IconDuplicates" message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp" />
-        <location file="src/main/res/mipmap-xhdpi/ic_launcher.webp" />
+    <issue
+        id="UnusedResources"
+        message="The resource `R.mipmap.ic_launcher_round` appears to be unused">
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
     </issue>
 
-    <issue id="IconDuplicates" message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" />
-        <location file="src/main/res/mipmap-xxhdpi/ic_launcher.webp" />
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-hdpi/ic_launcher.webp"/>
     </issue>
 
-    <issue id="IconDuplicates" message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
-        <location file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" />
-        <location file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp" />
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-mdpi/ic_launcher.webp"/>
     </issue>
 
-    <issue errorLine1="            shortcutManager.dynamicShortcuts = listOf(" errorLine2="            ^" id="ReportShortcutUsage" message="Calling this method indicates use of dynamic shortcuts, but there are no calls to methods that track shortcut usage, such as `pushDynamicShortcut` or `reportShortcutUsed`. Calling these methods is recommended, as they track shortcut usage and allow launchers to adjust which shortcuts appear based on activation history. Please see https://developer.android.com/develop/ui/views/launch/shortcuts/managing-shortcuts#track-usage">
-        <location column="13" file="src/main/kotlin/com/github/jameshnsears/chance/MainActivity.kt" line="59" />
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="IconDuplicates"
+        message="The following unrelated icon files have identical contents: ic_launcher.webp, ic_launcher_round.webp">
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp"/>
+        <location
+            file="src/main/res/mipmap-xxxhdpi/ic_launcher.webp"/>
+    </issue>
+
+    <issue
+        id="ReportShortcutUsage"
+        message="Calling this method indicates use of dynamic shortcuts, but there are no calls to methods that track shortcut usage, such as `pushDynamicShortcut` or `reportShortcutUsed`. Calling these methods is recommended, as they track shortcut usage and allow launchers to adjust which shortcuts appear based on activation history. Please see https://developer.android.com/develop/ui/views/launch/shortcuts/managing-shortcuts#track-usage"
+        errorLine1="            shortcutManager.dynamicShortcuts = listOf("
+        errorLine2="            ^">
+        <location
+            file="src/main/kotlin/com/github/jameshnsears/chance/MainActivity.kt"
+            line="59"
+            column="13"/>
     </issue>
 
 </issues>

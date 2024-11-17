@@ -6,8 +6,8 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface SettingsProtocolBufferOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
-        com.google.protobuf.MessageOrBuilder {
+    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
+    com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>int32 resize = 1;</code>
@@ -71,4 +71,11 @@ public interface SettingsProtocolBufferOrBuilder extends
      * @return The rollSound.
      */
     boolean getRollSound();
+
+    /**
+     * <code>bool shuffle = 10;</code>
+     *
+     * @return The shuffle.
+     */
+    boolean getShuffle();
 }

@@ -9,62 +9,13 @@ package com.github.jameshnsears.chance.data.domain.proto;
  * Protobuf type {@code com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer}
  */
 public final class RollProtocolBuffer extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
-        RollProtocolBufferOrBuilder {
-    public static final int DICEEPOCH_FIELD_NUMBER = 1;
-    public static final int SIDE_FIELD_NUMBER = 2;
-    public static final int MULTIPLIERINDEX_FIELD_NUMBER = 3;
-    public static final int EXPLODEINDEX_FIELD_NUMBER = 4;
-    public static final int SCOREADJUSTMENT_FIELD_NUMBER = 5;
-    public static final int SCORE_FIELD_NUMBER = 6;
+    com.google.protobuf.GeneratedMessage implements
+    // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
+    RollProtocolBufferOrBuilder {
     private static final long serialVersionUID = 0L;
-    // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
-    private static final com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer DEFAULT_INSTANCE;
-    private static final com.google.protobuf.Parser<RollProtocolBuffer>
-            PARSER = new com.google.protobuf.AbstractParser<RollProtocolBuffer>() {
-        @java.lang.Override
-        public RollProtocolBuffer parsePartialFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-                builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-                throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                        .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-        }
-    };
 
-    static {
-        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
-                com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
-                /* major= */ 4,
-                /* minor= */ 28,
-                /* patch= */ 2,
-                /* suffix= */ "",
-                RollProtocolBuffer.class.getName());
-    }
+    public static final int DICEEPOCH_FIELD_NUMBER = 1;
 
-    static {
-        DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer();
-    }
-
-    private int bitField0_;
-    private long diceEpoch_ = 0L;
-    private com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side_;
-    private int multiplierIndex_ = 0;
-    private int explodeIndex_ = 0;
-    private int scoreAdjustment_ = 0;
-    private int score_ = 0;
-    private byte memoizedIsInitialized = -1;
     // Use RollProtocolBuffer.newBuilder() to construct.
     private RollProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -78,110 +29,10 @@ public final class RollProtocolBuffer extends
         return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
     }
 
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            java.nio.ByteBuffer data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            java.nio.ByteBuffer data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            com.google.protobuf.ByteString data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            com.google.protobuf.ByteString data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(byte[] data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            byte[] data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(java.io.InputStream input)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseDelimitedFrom(java.io.InputStream input)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseDelimitedFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            com.google.protobuf.CodedInputStream input)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-    }
-
-    public static Builder newBuilder(com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-    }
-
-    public static com.google.protobuf.Parser<RollProtocolBuffer> parser() {
-        return PARSER;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-    internalGetFieldAccessorTable() {
-        return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_fieldAccessorTable
-                .ensureFieldAccessorsInitialized(
-                        com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.Builder.class);
-    }
+    public static final int SIDE_FIELD_NUMBER = 2;
+    public static final int MULTIPLIERINDEX_FIELD_NUMBER = 3;
+    public static final int EXPLODEINDEX_FIELD_NUMBER = 4;
+    public static final int SCOREADJUSTMENT_FIELD_NUMBER = 5;
 
     /**
      * <code>int64 diceEpoch = 1;</code>
@@ -192,6 +43,10 @@ public final class RollProtocolBuffer extends
     public long getDiceEpoch() {
         return diceEpoch_;
     }
+
+    public static final int SCORE_FIELD_NUMBER = 6;
+    // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
+    private static final com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer DEFAULT_INSTANCE;
 
     /**
      * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
@@ -221,6 +76,38 @@ public final class RollProtocolBuffer extends
         return side_ == null ? com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance() : side_;
     }
 
+    private static final com.google.protobuf.Parser<RollProtocolBuffer>
+        PARSER = new com.google.protobuf.AbstractParser<RollProtocolBuffer>() {
+        @java.lang.Override
+        public RollProtocolBuffer parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException {
+            Builder builder = newBuilder();
+            try {
+                builder.mergeFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                throw e.setUnfinishedMessage(builder.buildPartial());
+            } catch (com.google.protobuf.UninitializedMessageException e) {
+                throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+            } catch (java.io.IOException e) {
+                throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                    .setUnfinishedMessage(builder.buildPartial());
+            }
+            return builder.buildPartial();
+        }
+    };
+
+    static {
+        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+            com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+            /* major= */ 4,
+            /* minor= */ 28,
+            /* patch= */ 2,
+            /* suffix= */ "",
+            RollProtocolBuffer.class.getName());
+    }
+
     /**
      * <code>int32 multiplierIndex = 3;</code>
      *
@@ -230,6 +117,12 @@ public final class RollProtocolBuffer extends
     public int getMultiplierIndex() {
         return multiplierIndex_;
     }
+
+    static {
+        DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer();
+    }
+
+    private int bitField0_;
 
     /**
      * <code>int32 explodeIndex = 4;</code>
@@ -241,6 +134,9 @@ public final class RollProtocolBuffer extends
         return explodeIndex_;
     }
 
+    private long diceEpoch_ = 0L;
+    private com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side_;
+
     /**
      * <code>int32 scoreAdjustment = 5;</code>
      *
@@ -250,6 +146,9 @@ public final class RollProtocolBuffer extends
     public int getScoreAdjustment() {
         return scoreAdjustment_;
     }
+
+    private int multiplierIndex_ = 0;
+    private int explodeIndex_ = 0;
 
     /**
      * <code>int32 score = 6;</code>
@@ -261,6 +160,8 @@ public final class RollProtocolBuffer extends
         return score_;
     }
 
+    private int scoreAdjustment_ = 0;
+
     @java.lang.Override
     public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -271,9 +172,122 @@ public final class RollProtocolBuffer extends
         return true;
     }
 
+    private int score_ = 0;
+    private byte memoizedIsInitialized = -1;
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() {
+        return newBuilder();
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+    }
+
+    public static com.google.protobuf.Parser<RollProtocolBuffer> parser() {
+        return PARSER;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    internalGetFieldAccessorTable() {
+        return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.Builder.class);
+    }
+
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-            throws java.io.IOException {
+        throws java.io.IOException {
         if (diceEpoch_ != 0L) {
             output.writeInt64(1, diceEpoch_);
         }
@@ -303,27 +317,27 @@ public final class RollProtocolBuffer extends
         size = 0;
         if (diceEpoch_ != 0L) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt64Size(1, diceEpoch_);
+                .computeInt64Size(1, diceEpoch_);
         }
         if (((bitField0_ & 0x00000001) != 0)) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeMessageSize(2, getSide());
+                .computeMessageSize(2, getSide());
         }
         if (multiplierIndex_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(3, multiplierIndex_);
+                .computeInt32Size(3, multiplierIndex_);
         }
         if (explodeIndex_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(4, explodeIndex_);
+                .computeInt32Size(4, explodeIndex_);
         }
         if (scoreAdjustment_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(5, scoreAdjustment_);
+                .computeInt32Size(5, scoreAdjustment_);
         }
         if (score_ != 0) {
             size += com.google.protobuf.CodedOutputStream
-                    .computeInt32Size(6, score_);
+                .computeInt32Size(6, score_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -341,20 +355,20 @@ public final class RollProtocolBuffer extends
         com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer) obj;
 
         if (getDiceEpoch()
-                != other.getDiceEpoch()) return false;
+            != other.getDiceEpoch()) return false;
         if (hasSide() != other.hasSide()) return false;
         if (hasSide()) {
             if (!getSide()
-                    .equals(other.getSide())) return false;
+                .equals(other.getSide())) return false;
         }
         if (getMultiplierIndex()
-                != other.getMultiplierIndex()) return false;
+            != other.getMultiplierIndex()) return false;
         if (getExplodeIndex()
-                != other.getExplodeIndex()) return false;
+            != other.getExplodeIndex()) return false;
         if (getScoreAdjustment()
-                != other.getScoreAdjustment()) return false;
+            != other.getScoreAdjustment()) return false;
         if (getScore()
-                != other.getScore()) return false;
+            != other.getScore()) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
     }
@@ -368,7 +382,7 @@ public final class RollProtocolBuffer extends
         hash = (19 * hash) + getDescriptor().hashCode();
         hash = (37 * hash) + DICEEPOCH_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-                getDiceEpoch());
+            getDiceEpoch());
         if (hasSide()) {
             hash = (37 * hash) + SIDE_FIELD_NUMBER;
             hash = (53 * hash) + getSide().hashCode();
@@ -387,19 +401,14 @@ public final class RollProtocolBuffer extends
     }
 
     @java.lang.Override
-    public Builder newBuilderForType() {
-        return newBuilder();
-    }
-
-    @java.lang.Override
     public Builder toBuilder() {
         return this == DEFAULT_INSTANCE
-                ? new Builder() : new Builder().mergeFrom(this);
+            ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
     }
@@ -418,72 +427,17 @@ public final class RollProtocolBuffer extends
      * Protobuf type {@code com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer}
      */
     public static final class Builder extends
-            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
-            com.github.jameshnsears.chance.data.domain.proto.RollProtocolBufferOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
+        com.github.jameshnsears.chance.data.domain.proto.RollProtocolBufferOrBuilder {
         private int bitField0_;
         private long diceEpoch_;
         private com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side_;
         private com.google.protobuf.SingleFieldBuilder<
-                com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder> sideBuilder_;
+            com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder> sideBuilder_;
         private int multiplierIndex_;
         private int explodeIndex_;
         private int scoreAdjustment_;
-        private int score_;
-
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.newBuilder()
-        private Builder() {
-            maybeForceBuilderInitialization();
-        }
-
-        private Builder(
-                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-            maybeForceBuilderInitialization();
-        }
-
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
-        }
-
-        @java.lang.Override
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_fieldAccessorTable
-                    .ensureFieldAccessorsInitialized(
-                            com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.Builder.class);
-        }
-
-        private void maybeForceBuilderInitialization() {
-            if (com.google.protobuf.GeneratedMessage
-                    .alwaysUseFieldBuilders) {
-                getSideFieldBuilder();
-            }
-        }
-
-        @java.lang.Override
-        public Builder clear() {
-            super.clear();
-            bitField0_ = 0;
-            diceEpoch_ = 0L;
-            side_ = null;
-            if (sideBuilder_ != null) {
-                sideBuilder_.dispose();
-                sideBuilder_ = null;
-            }
-            multiplierIndex_ = 0;
-            explodeIndex_ = 0;
-            scoreAdjustment_ = 0;
-            score_ = 0;
-            return this;
-        }
-
-        @java.lang.Override
-        public com.google.protobuf.Descriptors.Descriptor
-        getDescriptorForType() {
-            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
-        }
 
         @java.lang.Override
         public com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer getDefaultInstanceForType() {
@@ -509,32 +463,7 @@ public final class RollProtocolBuffer extends
             return result;
         }
 
-        private void buildPartial0(com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer result) {
-            int from_bitField0_ = bitField0_;
-            if (((from_bitField0_ & 0x00000001) != 0)) {
-                result.diceEpoch_ = diceEpoch_;
-            }
-            int to_bitField0_ = 0;
-            if (((from_bitField0_ & 0x00000002) != 0)) {
-                result.side_ = sideBuilder_ == null
-                        ? side_
-                        : sideBuilder_.build();
-                to_bitField0_ |= 0x00000001;
-            }
-            if (((from_bitField0_ & 0x00000004) != 0)) {
-                result.multiplierIndex_ = multiplierIndex_;
-            }
-            if (((from_bitField0_ & 0x00000008) != 0)) {
-                result.explodeIndex_ = explodeIndex_;
-            }
-            if (((from_bitField0_ & 0x00000010) != 0)) {
-                result.scoreAdjustment_ = scoreAdjustment_;
-            }
-            if (((from_bitField0_ & 0x00000020) != 0)) {
-                result.score_ = score_;
-            }
-            result.bitField0_ |= to_bitField0_;
-        }
+        private int score_;
 
         @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -576,68 +505,20 @@ public final class RollProtocolBuffer extends
             return true;
         }
 
-        @java.lang.Override
-        public Builder mergeFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws java.io.IOException {
-            if (extensionRegistry == null) {
-                throw new java.lang.NullPointerException();
-            }
-            try {
-                boolean done = false;
-                while (!done) {
-                    int tag = input.readTag();
-                    switch (tag) {
-                        case 0:
-                            done = true;
-                            break;
-                        case 8: {
-                            diceEpoch_ = input.readInt64();
-                            bitField0_ |= 0x00000001;
-                            break;
-                        } // case 8
-                        case 18: {
-                            input.readMessage(
-                                    getSideFieldBuilder().getBuilder(),
-                                    extensionRegistry);
-                            bitField0_ |= 0x00000002;
-                            break;
-                        } // case 18
-                        case 24: {
-                            multiplierIndex_ = input.readInt32();
-                            bitField0_ |= 0x00000004;
-                            break;
-                        } // case 24
-                        case 32: {
-                            explodeIndex_ = input.readInt32();
-                            bitField0_ |= 0x00000008;
-                            break;
-                        } // case 32
-                        case 40: {
-                            scoreAdjustment_ = input.readInt32();
-                            bitField0_ |= 0x00000010;
-                            break;
-                        } // case 40
-                        case 48: {
-                            score_ = input.readInt32();
-                            bitField0_ |= 0x00000020;
-                            break;
-                        } // case 48
-                        default: {
-                            if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                                done = true; // was an endgroup tag
-                            }
-                            break;
-                        } // default:
-                    } // switch (tag)
-                } // while (!done)
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.unwrapIOException();
-            } finally {
-                onChanged();
-            } // finally
-            return this;
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.newBuilder()
+        private Builder() {
+            maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
         }
 
         /**
@@ -674,6 +555,21 @@ public final class RollProtocolBuffer extends
             diceEpoch_ = 0L;
             onChanged();
             return this;
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                    com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.Builder.class);
+        }
+
+        private void maybeForceBuilderInitialization() {
+            if (com.google.protobuf.GeneratedMessage
+                .alwaysUseFieldBuilders) {
+                getSideFieldBuilder();
+            }
         }
 
         /**
@@ -715,41 +611,27 @@ public final class RollProtocolBuffer extends
             return this;
         }
 
-        /**
-         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-         */
-        public Builder setSide(
-                com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder builderForValue) {
-            if (sideBuilder_ == null) {
-                side_ = builderForValue.build();
-            } else {
-                sideBuilder_.setMessage(builderForValue.build());
+        @java.lang.Override
+        public Builder clear() {
+            super.clear();
+            bitField0_ = 0;
+            diceEpoch_ = 0L;
+            side_ = null;
+            if (sideBuilder_ != null) {
+                sideBuilder_.dispose();
+                sideBuilder_ = null;
             }
-            bitField0_ |= 0x00000002;
-            onChanged();
+            multiplierIndex_ = 0;
+            explodeIndex_ = 0;
+            scoreAdjustment_ = 0;
+            score_ = 0;
             return this;
         }
 
-        /**
-         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-         */
-        public Builder mergeSide(com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer value) {
-            if (sideBuilder_ == null) {
-                if (((bitField0_ & 0x00000002) != 0) &&
-                        side_ != null &&
-                        side_ != com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance()) {
-                    getSideBuilder().mergeFrom(value);
-                } else {
-                    side_ = value;
-                }
-            } else {
-                sideBuilder_.mergeFrom(value);
-            }
-            if (side_ != null) {
-                bitField0_ |= 0x00000002;
-                onChanged();
-            }
-            return this;
+        @java.lang.Override
+        public com.google.protobuf.Descriptors.Descriptor
+        getDescriptorForType() {
+            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
         }
 
         /**
@@ -775,33 +657,110 @@ public final class RollProtocolBuffer extends
             return getSideFieldBuilder().getBuilder();
         }
 
-        /**
-         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-         */
-        public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder() {
-            if (sideBuilder_ != null) {
-                return sideBuilder_.getMessageOrBuilder();
-            } else {
-                return side_ == null ?
-                        com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance() : side_;
+        private void buildPartial0(com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer result) {
+            int from_bitField0_ = bitField0_;
+            if (((from_bitField0_ & 0x00000001) != 0)) {
+                result.diceEpoch_ = diceEpoch_;
             }
+            int to_bitField0_ = 0;
+            if (((from_bitField0_ & 0x00000002) != 0)) {
+                result.side_ = sideBuilder_ == null
+                    ? side_
+                    : sideBuilder_.build();
+                to_bitField0_ |= 0x00000001;
+            }
+            if (((from_bitField0_ & 0x00000004) != 0)) {
+                result.multiplierIndex_ = multiplierIndex_;
+            }
+            if (((from_bitField0_ & 0x00000008) != 0)) {
+                result.explodeIndex_ = explodeIndex_;
+            }
+            if (((from_bitField0_ & 0x00000010) != 0)) {
+                result.scoreAdjustment_ = scoreAdjustment_;
+            }
+            if (((from_bitField0_ & 0x00000020) != 0)) {
+                result.score_ = score_;
+            }
+            result.bitField0_ |= to_bitField0_;
+        }
+
+        @java.lang.Override
+        public Builder mergeFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
+            if (extensionRegistry == null) {
+                throw new java.lang.NullPointerException();
+            }
+            try {
+                boolean done = false;
+                while (!done) {
+                    int tag = input.readTag();
+                    switch (tag) {
+                        case 0:
+                            done = true;
+                            break;
+                        case 8: {
+                            diceEpoch_ = input.readInt64();
+                            bitField0_ |= 0x00000001;
+                            break;
+                        } // case 8
+                        case 18: {
+                            input.readMessage(
+                                getSideFieldBuilder().getBuilder(),
+                                extensionRegistry);
+                            bitField0_ |= 0x00000002;
+                            break;
+                        } // case 18
+                        case 24: {
+                            multiplierIndex_ = input.readInt32();
+                            bitField0_ |= 0x00000004;
+                            break;
+                        } // case 24
+                        case 32: {
+                            explodeIndex_ = input.readInt32();
+                            bitField0_ |= 0x00000008;
+                            break;
+                        } // case 32
+                        case 40: {
+                            scoreAdjustment_ = input.readInt32();
+                            bitField0_ |= 0x00000010;
+                            break;
+                        } // case 40
+                        case 48: {
+                            score_ = input.readInt32();
+                            bitField0_ |= 0x00000020;
+                            break;
+                        } // case 48
+                        default: {
+                            if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                                done = true; // was an endgroup tag
+                            }
+                            break;
+                        } // default:
+                    } // switch (tag)
+                } // while (!done)
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                throw e.unwrapIOException();
+            } finally {
+                onChanged();
+            } // finally
+            return this;
         }
 
         /**
          * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
          */
-        private com.google.protobuf.SingleFieldBuilder<
-                com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>
-        getSideFieldBuilder() {
+        public Builder setSide(
+            com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder builderForValue) {
             if (sideBuilder_ == null) {
-                sideBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-                        com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>(
-                        getSide(),
-                        getParentForChildren(),
-                        isClean());
-                side_ = null;
+                side_ = builderForValue.build();
+            } else {
+                sideBuilder_.setMessage(builderForValue.build());
             }
-            return sideBuilder_;
+            bitField0_ |= 0x00000002;
+            onChanged();
+            return this;
         }
 
         /**
@@ -837,6 +796,28 @@ public final class RollProtocolBuffer extends
             bitField0_ = (bitField0_ & ~0x00000004);
             multiplierIndex_ = 0;
             onChanged();
+            return this;
+        }
+
+        /**
+         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+         */
+        public Builder mergeSide(com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer value) {
+            if (sideBuilder_ == null) {
+                if (((bitField0_ & 0x00000002) != 0) &&
+                    side_ != null &&
+                    side_ != com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance()) {
+                    getSideBuilder().mergeFrom(value);
+                } else {
+                    side_ = value;
+                }
+            } else {
+                sideBuilder_.mergeFrom(value);
+            }
+            if (side_ != null) {
+                bitField0_ |= 0x00000002;
+                onChanged();
+            }
             return this;
         }
 
@@ -877,6 +858,18 @@ public final class RollProtocolBuffer extends
         }
 
         /**
+         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+         */
+        public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder() {
+            if (sideBuilder_ != null) {
+                return sideBuilder_.getMessageOrBuilder();
+            } else {
+                return side_ == null ?
+                    com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance() : side_;
+            }
+        }
+
+        /**
          * <code>int32 scoreAdjustment = 5;</code>
          *
          * @return The scoreAdjustment.
@@ -910,6 +903,23 @@ public final class RollProtocolBuffer extends
             scoreAdjustment_ = 0;
             onChanged();
             return this;
+        }
+
+        /**
+         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilder<
+            com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>
+        getSideFieldBuilder() {
+            if (sideBuilder_ == null) {
+                sideBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+                    com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>(
+                    getSide(),
+                    getParentForChildren(),
+                    isClean());
+                side_ = null;
+            }
+            return sideBuilder_;
         }
 
         /**

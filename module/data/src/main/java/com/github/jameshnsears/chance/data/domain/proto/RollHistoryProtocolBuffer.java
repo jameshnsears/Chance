@@ -9,53 +9,12 @@ package com.github.jameshnsears.chance.data.domain.proto;
  * Protobuf type {@code com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer}
  */
 public final class RollHistoryProtocolBuffer extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
-        RollHistoryProtocolBufferOrBuilder {
-    public static final int VALUES_FIELD_NUMBER = 1;
+    com.google.protobuf.GeneratedMessage implements
+    // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
+    RollHistoryProtocolBufferOrBuilder {
     private static final long serialVersionUID = 0L;
-    // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
-    private static final com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer DEFAULT_INSTANCE;
-    private static final com.google.protobuf.Parser<RollHistoryProtocolBuffer>
-            PARSER = new com.google.protobuf.AbstractParser<RollHistoryProtocolBuffer>() {
-        @java.lang.Override
-        public RollHistoryProtocolBuffer parsePartialFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws com.google.protobuf.InvalidProtocolBufferException {
-            Builder builder = newBuilder();
-            try {
-                builder.mergeFrom(input, extensionRegistry);
-            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-                throw e.setUnfinishedMessage(builder.buildPartial());
-            } catch (com.google.protobuf.UninitializedMessageException e) {
-                throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-            } catch (java.io.IOException e) {
-                throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                        .setUnfinishedMessage(builder.buildPartial());
-            }
-            return builder.buildPartial();
-        }
-    };
 
-    static {
-        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
-                com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
-                /* major= */ 4,
-                /* minor= */ 28,
-                /* patch= */ 2,
-                /* suffix= */ "",
-                RollHistoryProtocolBuffer.class.getName());
-    }
-
-    static {
-        DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer();
-    }
-
-    @SuppressWarnings("serial")
-    private com.google.protobuf.MapField<
-            java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> values_;
-    private byte memoizedIsInitialized = -1;
+    public static final int VALUES_FIELD_NUMBER = 1;
 
     // Use RollHistoryProtocolBuffer.newBuilder() to construct.
     private RollHistoryProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
@@ -70,85 +29,175 @@ public final class RollHistoryProtocolBuffer extends
         return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor;
     }
 
-    public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            java.nio.ByteBuffer data)
+    // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
+    private static final com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer DEFAULT_INSTANCE;
+    private static final com.google.protobuf.Parser<RollHistoryProtocolBuffer>
+        PARSER = new com.google.protobuf.AbstractParser<RollHistoryProtocolBuffer>() {
+        @java.lang.Override
+        public RollHistoryProtocolBuffer parsePartialFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
+            Builder builder = newBuilder();
+            try {
+                builder.mergeFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+                throw e.setUnfinishedMessage(builder.buildPartial());
+            } catch (com.google.protobuf.UninitializedMessageException e) {
+                throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+            } catch (java.io.IOException e) {
+                throw new com.google.protobuf.InvalidProtocolBufferException(e)
+                    .setUnfinishedMessage(builder.buildPartial());
+            }
+            return builder.buildPartial();
+        }
+    };
+
+    static {
+        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+            com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+            /* major= */ 4,
+            /* minor= */ 28,
+            /* patch= */ 2,
+            /* suffix= */ "",
+            RollHistoryProtocolBuffer.class.getName());
+    }
+
+    static {
+        DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer();
+    }
+
+    @SuppressWarnings("serial")
+    private com.google.protobuf.MapField<
+        java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> values_;
+    private byte memoizedIsInitialized = -1;
+
+    public int getValuesCount() {
+        return internalGetValues().getMap().size();
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            java.nio.ByteBuffer data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+        return PARSER.parseFrom(data);
+    }
+
+    /**
+     * Use {@link #getValuesMap()} instead.
+     */
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> getValues() {
+        return getValuesMap();
+    }
+
+    /**
+     * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> getValuesMap() {
+        return internalGetValues().getMap();
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            com.google.protobuf.ByteString data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            com.google.protobuf.ByteString data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(byte[] data)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+        throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            byte[] data,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(java.io.InputStream input)
-            throws java.io.IOException {
+        throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input);
+            .parseWithIOException(PARSER, input);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        if (memoizedHashCode != 0) {
+            return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (!internalGetValues().getMap().isEmpty()) {
+            hash = (37 * hash) + VALUES_FIELD_NUMBER;
+            hash = (53 * hash) + internalGetValues().hashCode();
+        }
+        hash = (29 * hash) + getUnknownFields().hashCode();
+        memoizedHashCode = hash;
+        return hash;
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input, extensionRegistry);
+            .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseDelimitedFrom(java.io.InputStream input)
-            throws java.io.IOException {
+        throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
-                .parseDelimitedWithIOException(PARSER, input);
+            .parseDelimitedWithIOException(PARSER, input);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseDelimitedFrom(
-            java.io.InputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
-                .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            com.google.protobuf.CodedInputStream input)
-            throws java.io.IOException {
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input);
+            .parseWithIOException(PARSER, input);
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer parseFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
-                .parseWithIOException(PARSER, input, extensionRegistry);
+            .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
     public static Builder newBuilder() {
@@ -170,13 +219,13 @@ public final class RollHistoryProtocolBuffer extends
     @SuppressWarnings({"rawtypes"})
     @java.lang.Override
     protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-            int number) {
+        int number) {
         switch (number) {
             case 1:
                 return internalGetValues();
             default:
                 throw new RuntimeException(
-                        "Invalid map field number: " + number);
+                    "Invalid map field number: " + number);
         }
     }
 
@@ -184,21 +233,22 @@ public final class RollHistoryProtocolBuffer extends
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
     internalGetFieldAccessorTable() {
         return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_fieldAccessorTable
-                .ensureFieldAccessorsInitialized(
-                        com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.Builder.class);
+            .ensureFieldAccessorsInitialized(
+                com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.Builder.class);
     }
 
     private com.google.protobuf.MapField<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer>
     internalGetValues() {
         if (values_ == null) {
             return com.google.protobuf.MapField.emptyMapField(
-                    ValuesDefaultEntryHolder.defaultEntry);
+                ValuesDefaultEntryHolder.defaultEntry);
         }
         return values_;
     }
 
-    public int getValuesCount() {
-        return internalGetValues().getMap().size();
+    @java.lang.Override
+    public Builder newBuilderForType() {
+        return newBuilder();
     }
 
     /**
@@ -206,26 +256,9 @@ public final class RollHistoryProtocolBuffer extends
      */
     @java.lang.Override
     public boolean containsValues(
-            long key) {
+        long key) {
 
         return internalGetValues().getMap().containsKey(key);
-    }
-
-    /**
-     * Use {@link #getValuesMap()} instead.
-     */
-    @java.lang.Override
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> getValues() {
-        return getValuesMap();
-    }
-
-    /**
-     * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
-     */
-    @java.lang.Override
-    public java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> getValuesMap() {
-        return internalGetValues().getMap();
     }
 
     /**
@@ -234,12 +267,12 @@ public final class RollHistoryProtocolBuffer extends
     @java.lang.Override
     public /* nullable */
     com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getValuesOrDefault(
-            long key,
-            /* nullable */
-            com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer defaultValue) {
+        long key,
+        /* nullable */
+        com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer defaultValue) {
 
         java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> map =
-                internalGetValues().getMap();
+            internalGetValues().getMap();
         return map.containsKey(key) ? map.get(key) : defaultValue;
     }
 
@@ -248,10 +281,10 @@ public final class RollHistoryProtocolBuffer extends
      */
     @java.lang.Override
     public com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getValuesOrThrow(
-            long key) {
+        long key) {
 
         java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> map =
-                internalGetValues().getMap();
+            internalGetValues().getMap();
         if (!map.containsKey(key)) {
             throw new java.lang.IllegalArgumentException();
         }
@@ -259,24 +292,14 @@ public final class RollHistoryProtocolBuffer extends
     }
 
     @java.lang.Override
-    public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-    }
-
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
-            throws java.io.IOException {
+        throws java.io.IOException {
         com.google.protobuf.GeneratedMessage
-                .serializeLongMapTo(
-                        output,
-                        internalGetValues(),
-                        ValuesDefaultEntryHolder.defaultEntry,
-                        1);
+            .serializeLongMapTo(
+                output,
+                internalGetValues(),
+                ValuesDefaultEntryHolder.defaultEntry,
+                1);
         getUnknownFields().writeTo(output);
     }
 
@@ -287,14 +310,14 @@ public final class RollHistoryProtocolBuffer extends
 
         size = 0;
         for (java.util.Map.Entry<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> entry
-                : internalGetValues().getMap().entrySet()) {
+            : internalGetValues().getMap().entrySet()) {
             com.google.protobuf.MapEntry<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer>
-                    values__ = ValuesDefaultEntryHolder.defaultEntry.newBuilderForType()
-                    .setKey(entry.getKey())
-                    .setValue(entry.getValue())
-                    .build();
+                values__ = ValuesDefaultEntryHolder.defaultEntry.newBuilderForType()
+                .setKey(entry.getKey())
+                .setValue(entry.getValue())
+                .build();
             size += com.google.protobuf.CodedOutputStream
-                    .computeMessageSize(1, values__);
+                .computeMessageSize(1, values__);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -312,41 +335,20 @@ public final class RollHistoryProtocolBuffer extends
         com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer) obj;
 
         if (!internalGetValues().equals(
-                other.internalGetValues())) return false;
+            other.internalGetValues())) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
     }
 
     @java.lang.Override
-    public int hashCode() {
-        if (memoizedHashCode != 0) {
-            return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        if (!internalGetValues().getMap().isEmpty()) {
-            hash = (37 * hash) + VALUES_FIELD_NUMBER;
-            hash = (53 * hash) + internalGetValues().hashCode();
-        }
-        hash = (29 * hash) + getUnknownFields().hashCode();
-        memoizedHashCode = hash;
-        return hash;
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() {
-        return newBuilder();
-    }
-
-    @java.lang.Override
     public Builder toBuilder() {
         return this == DEFAULT_INSTANCE
-                ? new Builder() : new Builder().mergeFrom(this);
+            ? new Builder() : new Builder().mergeFrom(this);
     }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         Builder builder = new Builder(parent);
         return builder;
     }
@@ -363,27 +365,32 @@ public final class RollHistoryProtocolBuffer extends
 
     private static final class ValuesDefaultEntryHolder {
         static final com.google.protobuf.MapEntry<
-                java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> defaultEntry =
-                com.google.protobuf.MapEntry
-                        .<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer>newDefaultInstance(
-                                com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor,
-                                com.google.protobuf.WireFormat.FieldType.INT64,
-                                0L,
-                                com.google.protobuf.WireFormat.FieldType.MESSAGE,
-                                com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.getDefaultInstance());
+            java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> defaultEntry =
+            com.google.protobuf.MapEntry
+                .<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer>newDefaultInstance(
+                    com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor,
+                    com.google.protobuf.WireFormat.FieldType.INT64,
+                    0L,
+                    com.google.protobuf.WireFormat.FieldType.MESSAGE,
+                    com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.getDefaultInstance());
     }
 
     /**
      * Protobuf type {@code com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer}
      */
     public static final class Builder extends
-            com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-            // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
-            com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBufferOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
+        com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBufferOrBuilder {
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor;
+        }
+
         private static final ValuesConverter valuesConverter = new ValuesConverter();
         private int bitField0_;
         private com.google.protobuf.MapFieldBuilder<
-                java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.Builder> values_;
+            java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.Builder> values_;
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.newBuilder()
         private Builder() {
@@ -391,46 +398,9 @@ public final class RollHistoryProtocolBuffer extends
         }
 
         private Builder(
-                com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
             super(parent);
 
-        }
-
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor;
-        }
-
-        @SuppressWarnings({"rawtypes"})
-        protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
-                int number) {
-            switch (number) {
-                case 1:
-                    return internalGetValues();
-                default:
-                    throw new RuntimeException(
-                            "Invalid map field number: " + number);
-            }
-        }
-
-        @SuppressWarnings({"rawtypes"})
-        protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
-                int number) {
-            switch (number) {
-                case 1:
-                    return internalGetMutableValues();
-                default:
-                    throw new RuntimeException(
-                            "Invalid map field number: " + number);
-            }
-        }
-
-        @java.lang.Override
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-            return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_fieldAccessorTable
-                    .ensureFieldAccessorsInitialized(
-                            com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.Builder.class);
         }
 
         @java.lang.Override
@@ -488,14 +458,16 @@ public final class RollHistoryProtocolBuffer extends
             }
         }
 
-        public Builder mergeFrom(com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer other) {
-            if (other == com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.getDefaultInstance()) return this;
-            internalGetMutableValues().mergeFrom(
-                    other.internalGetValues());
-            bitField0_ |= 0x00000001;
-            this.mergeUnknownFields(other.getUnknownFields());
-            onChanged();
-            return this;
+        @SuppressWarnings({"rawtypes"})
+        protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
+            int number) {
+            switch (number) {
+                case 1:
+                    return internalGetValues();
+                default:
+                    throw new RuntimeException(
+                        "Invalid map field number: " + number);
+            }
         }
 
         @java.lang.Override
@@ -503,13 +475,43 @@ public final class RollHistoryProtocolBuffer extends
             return true;
         }
 
+        @SuppressWarnings({"rawtypes"})
+        protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
+            int number) {
+            switch (number) {
+                case 1:
+                    return internalGetMutableValues();
+                default:
+                    throw new RuntimeException(
+                        "Invalid map field number: " + number);
+            }
+        }
+
+        @java.lang.Override
+        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+            return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                    com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.class, com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.Builder.class);
+        }
+
+        public Builder mergeFrom(com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer other) {
+            if (other == com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer.getDefaultInstance()) return this;
+            internalGetMutableValues().mergeFrom(
+                other.internalGetValues());
+            bitField0_ |= 0x00000001;
+            this.mergeUnknownFields(other.getUnknownFields());
+            onChanged();
+            return this;
+        }
+
         ;
 
         @java.lang.Override
         public Builder mergeFrom(
-                com.google.protobuf.CodedInputStream input,
-                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-                throws java.io.IOException {
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException {
             if (extensionRegistry == null) {
                 throw new java.lang.NullPointerException();
             }
@@ -523,10 +525,10 @@ public final class RollHistoryProtocolBuffer extends
                             break;
                         case 10: {
                             com.google.protobuf.MapEntry<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer>
-                                    values__ = input.readMessage(
-                                    ValuesDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+                                values__ = input.readMessage(
+                                ValuesDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
                             internalGetMutableValues().ensureBuilderMap().put(
-                                    values__.getKey(), values__.getValue());
+                                values__.getKey(), values__.getValue());
                             bitField0_ |= 0x00000001;
                             break;
                         } // case 10
@@ -544,6 +546,16 @@ public final class RollHistoryProtocolBuffer extends
                 onChanged();
             } // finally
             return this;
+        }
+
+        /**
+         * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
+         */
+        @java.lang.Override
+        public boolean containsValues(
+            long key) {
+
+            return internalGetValues().ensureBuilderMap().containsKey(key);
         }
 
         private com.google.protobuf.MapFieldBuilder<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.Builder>
@@ -572,10 +584,14 @@ public final class RollHistoryProtocolBuffer extends
          * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
          */
         @java.lang.Override
-        public boolean containsValues(
-                long key) {
+        public /* nullable */
+        com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getValuesOrDefault(
+            long key,
+            /* nullable */
+            com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer defaultValue) {
 
-            return internalGetValues().ensureBuilderMap().containsKey(key);
+            java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder> map = internalGetMutableValues().ensureBuilderMap();
+            return map.containsKey(key) ? valuesConverter.build(map.get(key)) : defaultValue;
         }
 
         /**
@@ -599,28 +615,25 @@ public final class RollHistoryProtocolBuffer extends
          * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
          */
         @java.lang.Override
-        public /* nullable */
-        com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getValuesOrDefault(
-                long key,
-                /* nullable */
-                com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer defaultValue) {
-
-            java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder> map = internalGetMutableValues().ensureBuilderMap();
-            return map.containsKey(key) ? valuesConverter.build(map.get(key)) : defaultValue;
-        }
-
-        /**
-         * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
-         */
-        @java.lang.Override
         public com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getValuesOrThrow(
-                long key) {
+            long key) {
 
             java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder> map = internalGetMutableValues().ensureBuilderMap();
             if (!map.containsKey(key)) {
                 throw new java.lang.IllegalArgumentException();
             }
             return valuesConverter.build(map.get(key));
+        }
+
+        /**
+         * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
+         */
+        public Builder removeValues(
+            long key) {
+
+            internalGetMutableValues().ensureBuilderMap()
+                .remove(key);
+            return this;
         }
 
         public Builder clearValues() {
@@ -632,11 +645,16 @@ public final class RollHistoryProtocolBuffer extends
         /**
          * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
          */
-        public Builder removeValues(
-                long key) {
+        public Builder putValues(
+            long key,
+            com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer value) {
 
+            if (value == null) {
+                throw new NullPointerException("map value");
+            }
             internalGetMutableValues().ensureBuilderMap()
-                    .remove(key);
+                .put(key, value);
+            bitField0_ |= 0x00000001;
             return this;
         }
 
@@ -653,31 +671,15 @@ public final class RollHistoryProtocolBuffer extends
         /**
          * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
          */
-        public Builder putValues(
-                long key,
-                com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer value) {
-
-            if (value == null) {
-                throw new NullPointerException("map value");
-            }
-            internalGetMutableValues().ensureBuilderMap()
-                    .put(key, value);
-            bitField0_ |= 0x00000001;
-            return this;
-        }
-
-        /**
-         * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
-         */
         public Builder putAllValues(
-                java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> values) {
+            java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> values) {
             for (java.util.Map.Entry<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> e : values.entrySet()) {
                 if (e.getKey() == null || e.getValue() == null) {
                     throw new NullPointerException();
                 }
             }
             internalGetMutableValues().ensureBuilderMap()
-                    .putAll(values);
+                .putAll(values);
             bitField0_ |= 0x00000001;
             return this;
         }
@@ -686,7 +688,7 @@ public final class RollHistoryProtocolBuffer extends
          * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
          */
         public com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.Builder putValuesBuilderIfAbsent(
-                long key) {
+            long key) {
             java.util.Map<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder> builderMap = internalGetMutableValues().ensureBuilderMap();
             com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder entry = builderMap.get(key);
             if (entry == null) {

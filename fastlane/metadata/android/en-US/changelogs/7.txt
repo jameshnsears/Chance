@@ -1,0 +1,2 @@
+&bull; Shuffle multiple dice
+&bull; Bump dependencies &amp; IDE: Android Studio Ladybug | 2024.2.1 Patch 2

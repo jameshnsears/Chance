@@ -6,8 +6,8 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface RollProtocolBufferOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
-        com.google.protobuf.MessageOrBuilder {
+    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
+    com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>int64 diceEpoch = 1;</code>

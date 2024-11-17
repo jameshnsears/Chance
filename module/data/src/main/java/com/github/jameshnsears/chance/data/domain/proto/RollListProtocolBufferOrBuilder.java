@@ -6,8 +6,8 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface RollListProtocolBufferOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer)
-        com.google.protobuf.MessageOrBuilder {
+    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer)
+    com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
@@ -35,5 +35,5 @@ public interface RollListProtocolBufferOrBuilder extends
      * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
      */
     com.github.jameshnsears.chance.data.domain.proto.RollProtocolBufferOrBuilder getRollOrBuilder(
-            int index);
+        int index);
 }

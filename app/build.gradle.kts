@@ -15,9 +15,9 @@ android {
         targetSdk = 35
 
         // changelog | min sdk | max sdk
-        versionCode = 62435
+        versionCode = 72435
 
-        versionName = "1.2.3"
+        versionName = "1.3.0"
 
         extra["versionName"] = versionName
 
@@ -69,7 +69,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 
     packaging {

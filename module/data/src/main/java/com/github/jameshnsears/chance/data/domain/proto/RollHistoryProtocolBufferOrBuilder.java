@@ -6,8 +6,8 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface RollHistoryProtocolBufferOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
-        com.google.protobuf.MessageOrBuilder {
+    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)
+    com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
@@ -18,7 +18,7 @@ public interface RollHistoryProtocolBufferOrBuilder extends
      * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
      */
     boolean containsValues(
-            long key);
+        long key);
 
     /**
      * Use {@link #getValuesMap()} instead.
@@ -38,13 +38,13 @@ public interface RollHistoryProtocolBufferOrBuilder extends
      */
     /* nullable */
     com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getValuesOrDefault(
-            long key,
-            /* nullable */
-            com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer defaultValue);
+        long key,
+        /* nullable */
+        com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer defaultValue);
 
     /**
      * <code>map&lt;int64, .com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer&gt; values = 1;</code>
      */
     com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getValuesOrThrow(
-            long key);
+        long key);
 }

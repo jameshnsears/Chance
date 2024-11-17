@@ -105,7 +105,7 @@ jobs:
 
       - name: codecov - app.androidTest
         if: matrix.api-level == 34
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           files: ./app/build/reports/jacoco/androidTest.xml
@@ -116,7 +116,7 @@ jobs:
 
       - name: codecov - data.androidTest
         if: matrix.api-level == 34
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           files: ./module/data/build/reports/jacoco/androidTest.xml
@@ -127,7 +127,7 @@ jobs:
 
       - name: codecov - ui-data-dialog.androidTest
         if: matrix.api-level == 34
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           files: ./module/ui-data-dialog/build/reports/jacoco/androidTest.xml

@@ -6,8 +6,8 @@
 package com.github.jameshnsears.chance.data.domain.proto;
 
 public interface BagProtocolBufferOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
-        com.google.protobuf.MessageOrBuilder {
+    // @@protoc_insertion_point(interface_extends:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
+    com.google.protobuf.MessageOrBuilder {
 
     /**
      * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
@@ -35,5 +35,5 @@ public interface BagProtocolBufferOrBuilder extends
      * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
      */
     com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder getDiceOrBuilder(
-            int index);
+        int index);
 }

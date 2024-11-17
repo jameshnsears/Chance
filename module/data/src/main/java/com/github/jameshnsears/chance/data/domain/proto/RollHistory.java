@@ -7,85 +7,86 @@ package com.github.jameshnsears.chance.data.domain.proto;
 
 public final class RollHistory {
     static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor;
+        internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor;
     static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_fieldAccessorTable;
+        internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_fieldAccessorTable;
     static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor;
+        internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor;
     static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_fieldAccessorTable;
+        internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_fieldAccessorTable;
     static final com.google.protobuf.Descriptors.Descriptor
-            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor;
+        internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor;
     static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_fieldAccessorTable;
+        internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_fieldAccessorTable;
     private static com.google.protobuf.Descriptors.FileDescriptor
-            descriptor;
+        descriptor;
 
     static {
         com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
-                com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
-                /* major= */ 4,
-                /* minor= */ 28,
-                /* patch= */ 2,
-                /* suffix= */ "",
-                RollHistory.class.getName());
+            com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+            /* major= */ 4,
+            /* minor= */ 28,
+            /* patch= */ 2,
+            /* suffix= */ "",
+            RollHistory.class.getName());
     }
 
     static {
         java.lang.String[] descriptorData = {
-                "\n\022roll_history.proto\0220com.github.jameshn" +
-                        "sears.chance.data.domain.proto\032\nroll.pro" +
-                        "to\"\375\001\n\031RollHistoryProtocolBuffer\022g\n\006valu" +
-                        "es\030\001 \003(\0132W.com.github.jameshnsears.chanc" +
-                        "e.data.domain.proto.RollHistoryProtocolB" +
-                        "uffer.ValuesEntry\032w\n\013ValuesEntry\022\013\n\003key\030" +
-                        "\001 \001(\003\022W\n\005value\030\002 \001(\0132H.com.github.jamesh" +
-                        "nsears.chance.data.domain.proto.RollList" +
-                        "ProtocolBuffer:\0028\001\"l\n\026RollListProtocolBu" +
-                        "ffer\022R\n\004roll\030\001 \003(\0132D.com.github.jameshns" +
-                        "ears.chance.data.domain.proto.RollProtoc" +
-                        "olBufferB\002P\001b\006proto3"
+            "\n\022roll_history.proto\0220com.github.jameshn" +
+                "sears.chance.data.domain.proto\032\nroll.pro" +
+                "to\"\375\001\n\031RollHistoryProtocolBuffer\022g\n\006valu" +
+                "es\030\001 \003(\0132W.com.github.jameshnsears.chanc" +
+                "e.data.domain.proto.RollHistoryProtocolB" +
+                "uffer.ValuesEntry\032w\n\013ValuesEntry\022\013\n\003key\030" +
+                "\001 \001(\003\022W\n\005value\030\002 \001(\0132H.com.github.jamesh" +
+                "nsears.chance.data.domain.proto.RollList" +
+                "ProtocolBuffer:\0028\001\"l\n\026RollListProtocolBu" +
+                "ffer\022R\n\004roll\030\001 \003(\0132D.com.github.jameshns" +
+                "ears.chance.data.domain.proto.RollProtoc" +
+                "olBufferB\002P\001b\006proto3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
-                .internalBuildGeneratedFileFrom(descriptorData,
-                        new com.google.protobuf.Descriptors.FileDescriptor[]{
-                                com.github.jameshnsears.chance.data.domain.proto.Roll.getDescriptor(),
-                        });
+            .internalBuildGeneratedFileFrom(descriptorData,
+                new com.google.protobuf.Descriptors.FileDescriptor[]{
+                    com.github.jameshnsears.chance.data.domain.proto.Roll.getDescriptor(),
+                });
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor =
-                getDescriptor().getMessageTypes().get(0);
+            getDescriptor().getMessageTypes().get(0);
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-                internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor,
-                new java.lang.String[]{"Values",});
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor,
+            new java.lang.String[]{"Values",});
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor =
-                internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor.getNestedTypes().get(0);
+            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor.getNestedTypes().get(0);
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-                internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor,
-                new java.lang.String[]{"Key", "Value",});
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor,
+            new java.lang.String[]{"Key", "Value",});
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor =
-                getDescriptor().getMessageTypes().get(1);
+            getDescriptor().getMessageTypes().get(1);
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-                internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor,
-                new java.lang.String[]{"Roll",});
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+            internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor,
+            new java.lang.String[]{"Roll",});
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Roll.getDescriptor();
     }
+
     private RollHistory() {
     }
 
     public static void registerAllExtensions(
-            com.google.protobuf.ExtensionRegistryLite registry) {
+        com.google.protobuf.ExtensionRegistryLite registry) {
     }
 
     public static void registerAllExtensions(
-            com.google.protobuf.ExtensionRegistry registry) {
+        com.google.protobuf.ExtensionRegistry registry) {
         registerAllExtensions(
-                (com.google.protobuf.ExtensionRegistryLite) registry);
+            (com.google.protobuf.ExtensionRegistryLite) registry);
     }
 
     public static com.google.protobuf.Descriptors.FileDescriptor

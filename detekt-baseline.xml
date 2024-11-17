@@ -5,6 +5,7 @@
     <ID>FunctionParameterNaming:DialogColourPickerPreview.kt$_: String</ID>
     <ID>ImplicitDefaultLocale:UtilityLoggingLineNumberTree.kt$UtilityLoggingLineNumberTree$String.format( "%s, %s", element.lineNumber, element.methodName, )</ID>
     <ID>LongMethod:BagCardSideComposable.kt$@Composable fun SideImageSVG( cardSideAndroidViewModel: CardSideAndroidViewModel )</ID>
+    <ID>LongMethod:DialogSettingslComposable.kt$@Composable fun DialogSettingsLayout( tabRollAndroidViewModel: TabRollAndroidViewModel )</ID>
     <ID>MatchingDeclarationName:BagCardDiceComposable.kt$BagCardDiceTestTag</ID>
     <ID>MatchingDeclarationName:BagCardRollComposable.kt$BagCardRollTestTag</ID>
     <ID>MatchingDeclarationName:BagCardSideComposable.kt$BagCardSideTestTag</ID>

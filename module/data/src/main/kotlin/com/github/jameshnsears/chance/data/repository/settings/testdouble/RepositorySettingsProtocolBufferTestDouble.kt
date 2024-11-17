@@ -49,6 +49,7 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideDescription"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideSVG"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollSound"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shuffle"))
 
         return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(settingsProtocolBufferBuilder.build())
@@ -80,6 +81,7 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         newSettings.sideSVG = settingsProtocolBuffer.sideSVG
 
         newSettings.rollSound = settingsProtocolBuffer.rollSound
+        newSettings.shuffle = settingsProtocolBuffer.shuffle
 
         return newSettings
     }

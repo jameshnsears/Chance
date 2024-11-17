@@ -14,4 +14,5 @@ interface SettingsDataInterface {
     var sideSVG: Boolean
 
     var rollSound: Boolean
+    var shuffle: Boolean
 }

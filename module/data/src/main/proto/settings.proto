@@ -17,4 +17,5 @@ message SettingsProtocolBuffer {
   bool sideSVG = 8;
 
   bool rollSound = 9;
+  bool shuffle = 10;
 }
