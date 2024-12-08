@@ -1,3 +1,0 @@
-&bull; Update image asset
-&bull; Add baseline profile
-&bull; Bump dependencies
