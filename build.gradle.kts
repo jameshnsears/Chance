@@ -11,6 +11,19 @@ plugins {
     alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
     alias(libs.plugins.android.test) apply false
     alias(libs.plugins.baselineprofile) apply false
+    alias(libs.plugins.org.sonarqube)
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "jameshnsears-github_chance")
+        property("sonar.organization", "jameshnsears-github")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.branch.name", "main")
+        property("sonar.sources", "**/src/main/kotlin")
+        property("sonar.exclusions", "**/src/main/java")
+        property("sonar.kotlin.binaries", "**/build/tmp/kotlin-classes/fdroidDebug")
+    }
 }
 
 spotless {

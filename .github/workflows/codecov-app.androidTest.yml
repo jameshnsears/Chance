@@ -1,9 +1,7 @@
-name: androidTest-codecov
+name: codecov-app.androidTest
 
 on:
   push:
-    # This should disable running the workflow on tags, according to the
-    # on.<push|pull_request>.<branches|tags> GitHub Actions docs.
     branches:
       - "*"
 
@@ -18,7 +16,7 @@ jobs:
   fdroid:
     name: fdroid
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     strategy:
       fail-fast: true
       matrix:
@@ -88,7 +86,7 @@ jobs:
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
       - name: jacocoFdroidAndroidTestReport
-        if: matrix.api-level == 34
+        if: matrix.api-level == 31
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -101,37 +99,15 @@ jobs:
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew app:uninstallAll jacocoFdroidAndroidTestReport
+            ./gradlew :app:jacocoFdroidAndroidTestReport --stacktrace
 
       - name: codecov - app.androidTest
-        if: matrix.api-level == 34
+        if: matrix.api-level == 31
         uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true
           files: ./app/build/reports/jacoco/androidTest.xml
           flags: app.androidTest
-          verbose: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: codecov - data.androidTest
-        if: matrix.api-level == 34
-        uses: codecov/codecov-action@v5
-        with:
-          fail_ci_if_error: true
-          files: ./module/data/build/reports/jacoco/androidTest.xml
-          flags: data.androidTest
-          verbose: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-      - name: codecov - ui-data-dialog.androidTest
-        if: matrix.api-level == 34
-        uses: codecov/codecov-action@v5
-        with:
-          fail_ci_if_error: true
-          files: ./module/ui-data-dialog/build/reports/jacoco/androidTest.xml
-          flags: ui-data-dialog.androidTest
           verbose: true
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -143,7 +119,7 @@ jobs:
           name: fdroid-logcat-${{ matrix.api-level }}
           path: logcat.txt
 
-      - name: artifact
+      - name: artifact reports
         if: always()
         uses: actions/upload-artifact@v4
         with:

@@ -42,7 +42,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.BuildConfig
@@ -370,6 +369,5 @@ fun Version(
 }
 
 fun openUrlInBrowser(context: Context, url: String) {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    startActivity(context, intent, null)
+    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
 }

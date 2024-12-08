@@ -1,4 +1,4 @@
-name: test-codecov
+name: codecov-test
 
 on:
   push:
@@ -13,8 +13,8 @@ env:
   CACHE_VERSION: 1
 
 jobs:
-  test-codecov:
-    name: test-codecov
+  fdroid:
+    name: fdroid
     runs-on: ubuntu-latest
     steps:
       - name: clone

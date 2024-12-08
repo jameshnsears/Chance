@@ -3,6 +3,9 @@ ignore:
   - "**/*Preview.kt"
 
 flags:
+  app.androidTest:
+    carryforward: false
+
   data.androidTest:
     carryforward: false
   data.test:
@@ -16,7 +19,4 @@ flags:
   ui-dialog-bag.androidTest:
     carryforward: false
   ui-dialog-bag.test:
-    carryforward: false
-
-  app.androidTest:
     carryforward: false
