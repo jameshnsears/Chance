@@ -112,4 +112,15 @@ class CardSideAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         assertNotNull(stateFlowSide.sideImageRequest?.data)
         assertEquals(side.imageBase64, stateFlowSide.sideImageBase64)
     }
+
+    @Test
+    fun githubIssue216() {
+        try {
+            getDialogBagAndroidViewModel().cardSideAndroidViewModel.sideImageSvgImport(
+                javaClass.classLoader?.getResourceAsStream("github/issue/216/1.svg")
+            )
+        } catch (_: CardSideSvgImportException) {
+            fail()
+        }
+    }
 }

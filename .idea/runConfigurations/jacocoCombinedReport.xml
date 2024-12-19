@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="jacocoCombinedReport" type="GradleRunConfiguration" factoryName="Gradle" folderName="jacoco">
+  <configuration default="false" name="jacocoCombinedReport" type="GradleRunConfiguration" factoryName="Gradle" folderName="jacoco - combined">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />

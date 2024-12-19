@@ -95,7 +95,7 @@ class CardSideAndroidViewModel(
     fun sideImageSvgImport(uri: Uri) =
         sideImageSvgImport(getApplication<Application>().contentResolver.openInputStream(uri))
 
-    private fun isSbgTooBig(candidateSvgString: String, kiloBytes: Int) {
+    private fun isSvgTooBig(candidateSvgString: String, kiloBytes: Int) {
         if (candidateSvgString.toByteArray().size / 1024 > kiloBytes)
             throw CardSideSvgImportException(SvgImportError.TOO_BIG)
     }
@@ -103,7 +103,7 @@ class CardSideAndroidViewModel(
     fun sideImageSvgImport(inputStream: InputStream?, kiloBytes: Int = 250) {
         val candidateSvgString = sideImageSvgImportReadFile(inputStream)
 
-        isSbgTooBig(candidateSvgString, kiloBytes)
+        isSvgTooBig(candidateSvgString, kiloBytes)
 
         if (UtilitySvgSerializer.isStringSvg(candidateSvgString)) {
             _stateFlowCardSide.update {

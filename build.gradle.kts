@@ -75,8 +75,18 @@ ktlint {
     }
 }
 
+val exclusions =
+    listOf(
+        "**/BuildConfig.*",
+        "**/*Instrumented*.*",
+        "**/*Test.*",
+        "**/composable/*.*",
+        "**/domain/proto/*.*"
+    )
+
 subprojects {
     apply(plugin = "jacoco")
+
     afterEvaluate {
         if (plugins.hasPlugin("com.android.application") || plugins.hasPlugin("com.android.library")) {
             tasks.register<JacocoReport>("jacocoFdroidTestReport") {
@@ -85,39 +95,11 @@ subprojects {
 
                 dependsOn("testFdroidDebugUnitTest")
 
-                val exclusions =
-                    listOf(
-                        "**/BuildConfig.*",
-                        "**/compose/*.*",
-                        "**/*Preview.*",
-                        "**/impl/*.*",
-                        "**/domain/proto/*.*",
-                        "**/UtilityJsonSchemaGenerator*.*",
-                        "**/R.class",
-                        "**/R\$*.class",
-                        "**/Manifest*.*",
-                        "**/kotlin/**",
-                        "**/kotlinx/**",
-                        "**/generated/**",
-                        "**/*$*.class",
-                        "**/*Companion*.class",
-                        "**/*Lambda*.class",
-                        "**/*\$WhenMappings*.class",
-                        "**/*\$DefaultImpls*.class",
-                        "**/META-INF/versions/**",
-                        "**/*\$lambda\$*.class",
-                        "**/*Test.class",
-                        "**/*Test*.class",
-                        "**/*TestTag.class",
-                        "**/*Instrumented*.class",
-                    )
-
                 sourceDirectories.setFrom(
                     files(
-                        fileTree("src/main") {
+                        fileTree("src/main/kotlin") {
                             include(
                                 "**/*.kt",
-                                "**/*.java",
                             )
                             exclude(exclusions)
                         },
@@ -157,39 +139,11 @@ subprojects {
 
                 dependsOn("connectedFdroidDebugAndroidTest")
 
-                val exclusions =
-                    listOf(
-                        "**/BuildConfig.*",
-                        "**/*Preview.*",
-                        "**/mock/*.*",
-                        "**/domain/proto/*.*",
-                        "**/UtilityJsonSchemaGenerator*.*",
-                        "**/R.class",
-                        "**/R\$*.class",
-                        "**/Manifest*.*",
-                        "**/kotlin/**",
-                        "**/kotlinx/**",
-                        "**/generated/**",
-                        "**/*$*.class",
-                        "**/*Companion*.class",
-                        "**/*Lambda*.class",
-                        "**/*\$WhenMappings*.class",
-                        "**/*\$DefaultImpls*.class",
-                        "**/META-INF/versions/**",
-                        "**/*\$lambda\$*.class",
-                        "**/*ComposableKt.class",
-                        "**/*Test.class",
-                        "**/*Test*.class",
-                        "**/*TestTag.class",
-                        "**/*Instrumented*.class",
-                    )
-
                 sourceDirectories.setFrom(
                     files(
-                        fileTree("src/main") {
+                        fileTree("src/main/kotlin") {
                             include(
                                 "**/*.kt",
-                                "**/*.java",
                             )
                             exclude(exclusions)
                         },
@@ -232,39 +186,11 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
     group = "chance"
     description = "coverage - combined"
 
-    val exclusions =
-        listOf(
-            "**/BuildConfig.*",
-            "**/*Preview.*",
-            "**/mock/*.*",
-            "**/domain/proto/*.*",
-            "**/UtilityJsonSchemaGenerator*.*",
-            "**/R.class",
-            "**/R\$*.class",
-            "**/Manifest*.*",
-            "**/kotlin/**",
-            "**/kotlinx/**",
-            "**/generated/**",
-            "**/*$*.class",
-            "**/*Companion*.class",
-            "**/*Lambda*.class",
-            "**/*\$WhenMappings*.class",
-            "**/*\$DefaultImpls*.class",
-            "**/META-INF/versions/**",
-            "**/*\$lambda\$*.class",
-            "**/*ComposableKt.class",
-            "**/*Test.class",
-            "**/*Test*.class",
-            "**/*TestTag.class",
-            "**/*Instrumented*.class",
-        )
-
     sourceDirectories.setFrom(
         files(
             fileTree("module") {
                 include(
-                    "**/src/main/**/*.kt",
-                    "**/src/main/**/*.java",
+                    "**/src/main/kotlin/**/*.kt",
                 )
                 exclude(exclusions)
             },

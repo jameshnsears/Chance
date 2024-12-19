@@ -21,7 +21,7 @@ class UtilitySvgSerializer {
             }
         }
 
-        fun isStringSvg(text: String) = text.contains("<svg ") && text.contains("</svg>")
+        fun isStringSvg(text: String) = text.contains("<svg") && text.contains("</svg>")
 
         @OptIn(ExperimentalEncodingApi::class)
         fun encodeIntoBase64String(string: String) = Base64.encode(string.toByteArray())

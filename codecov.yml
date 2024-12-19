@@ -6,17 +6,15 @@ flags:
   app.androidTest:
     carryforward: false
 
-  data.androidTest:
-    carryforward: false
   data.test:
     carryforward: false
-
-  ui.androidTest:
+  data.androidTest:
     carryforward: false
+
   ui.test:
     carryforward: false
 
-  ui-dialog-bag.androidTest:
-    carryforward: false
   ui-dialog-bag.test:
+    carryforward: false
+  ui-dialog-bag.androidTest:
     carryforward: false
