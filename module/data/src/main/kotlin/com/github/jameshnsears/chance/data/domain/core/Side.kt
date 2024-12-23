@@ -25,4 +25,8 @@ data class Side(
             descriptionColour
         )
     }
+
+    override fun toString(): String {
+        return "number=$number"
+    }
 }

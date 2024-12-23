@@ -64,6 +64,71 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         assertEquals(4, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
     }
 
+
+    @OptIn(DelicateCoroutinesApi::class)
+    @Test
+    fun shuffleRollSequence() = runTest {
+        val repositorySettings = RepositoryFactory().repositorySettings
+        runBlocking(Dispatchers.Main) {
+            repositorySettings.store(SettingsDataTestDouble())
+        }
+
+        val bagDataTestDouble = BagDataTestDouble()
+        bagDataTestDouble.d4.selected = true
+        bagDataTestDouble.d4.multiplierValue = 3
+        bagDataTestDouble.d4.explode = false
+        bagDataTestDouble.d6.selected = true
+        bagDataTestDouble.d6.multiplierValue = 5
+        bagDataTestDouble.d6.explode = false
+
+        val repositoryBag = RepositoryFactory().repositoryBag
+        runBlocking(Dispatchers.Main) {
+            repositoryBag.store(
+                mutableListOf(
+                    bagDataTestDouble.d4,
+                    bagDataTestDouble.d6
+                )
+            )
+        }
+
+        val repositoryRoll = RepositoryFactory().repositoryRoll
+        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
+        runBlocking(Dispatchers.Main) {
+            repositoryRoll.store(rollDataTestDouble.rollHistory)
+        }
+
+        val tabRollAndroidViewModel = spyk<TabRollAndroidViewModel>(
+            TabRollAndroidViewModel(
+                getApplication(),
+                repositorySettings,
+                repositoryBag,
+                repositoryRoll
+            )
+        )
+
+        every { tabRollAndroidViewModel.mediaPlayerRollSound() } returns Unit
+
+        ////////////////
+
+        val rolls = mutableListOf<Roll>()
+
+        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        assertEquals(8, rolls.size)
+
+        tabRollAndroidViewModel._stateFlowSettingsData.value.shuffle = true
+        tabRollAndroidViewModel.shuffleRollSequence(rolls)
+
+        assertEquals(8, rolls.size)
+        
+        val diceEpochGroupRolls = rolls.groupBy { it.diceEpoch }
+        diceEpochGroupRolls.forEach { (_, diceEpochGroup) ->
+            val sortedDiceEpochGroup = diceEpochGroup.sortedBy { it.multiplierIndex }
+            for (i in sortedDiceEpochGroup.indices) {
+                assertEquals(i + 1, sortedDiceEpochGroup[i].multiplierIndex)
+            }
+        }
+    }
+
     @Test
     fun rollDiceSequenceWithExplosionEquals() = runTest {
         val diceBag = BagDataTestDouble()

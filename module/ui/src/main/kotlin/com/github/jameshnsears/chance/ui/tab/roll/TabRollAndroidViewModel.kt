@@ -46,7 +46,7 @@ class TabRollAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
 ) : AndroidViewModel(application) {
-    private val _stateFlowSettingsData = MutableStateFlow(
+    val _stateFlowSettingsData = MutableStateFlow(
         SettingsState(
             rollIndexTime = false,
             rollScore = false,
@@ -194,11 +194,7 @@ class TabRollAndroidViewModel(
 
             rollDiceSequence(newRollSequence)
 
-            if (_stateFlowSettingsData.value.shuffle) {
-                val selectedCount = diceBag.value.count { it.selected }
-                if (selectedCount > 1)
-                    newRollSequence.shuffle()
-            }
+            shuffleRollSequence(newRollSequence)
 
             saveNewRollSequence(newRollSequence)
 
@@ -207,6 +203,25 @@ class TabRollAndroidViewModel(
             _rollEnabled.value = true
 
             TabRollEvent.emit()
+        }
+    }
+
+    fun shuffleRollSequence(rollSequence: MutableList<Roll>) {
+        if (_stateFlowSettingsData.value.shuffle) {
+            val selectedCount = diceBag.value.count { it.selected }
+            if (selectedCount > 1) {
+                rollSequence.shuffle()
+
+                // order the multipleIndex into ASC order for any dice cluster
+                rollSequence
+                    .groupBy { it.diceEpoch }
+                    .forEach { (_, rolls) ->
+                        val sortedIndices = rolls.map { it.multiplierIndex }.sorted()
+                        rolls.forEachIndexed { index, roll ->
+                            roll.multiplierIndex = sortedIndices[index]
+                        }
+                    }
+            }
         }
     }
 

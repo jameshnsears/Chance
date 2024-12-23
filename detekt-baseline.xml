@@ -18,6 +18,7 @@
     <ID>TooGenericExceptionThrown:MainActivityComposable.kt$throw RuntimeException("Test Crash")</ID>
     <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>
     <ID>UnusedPrivateProperty:CardSideAndroidViewModel.kt$CardSideSvgImportException$svgImportError: SvgImportError</ID>
+    <ID>VariableNaming:TabRollAndroidViewModel.kt$TabRollAndroidViewModel$val _stateFlowSettingsData = MutableStateFlow( SettingsState( rollIndexTime = false, rollScore = false, diceTitle = false, rollBehaviour = false, sideNumber = false, sideDescription = false, sideSVG = false, shuffle = false, rollSound = false, ) )</ID>
     <ID>VariableNaming:TabRollAndroidViewModel.kt$TabRollAndroidViewModel$var _undoEnabled = MutableStateFlow(false)</ID>
     <ID>VariableNaming:ZoomAndroidViewModel.kt$ZoomAndroidViewModel$protected val _stateFlowZoom = MutableStateFlow( ZoomState( resizeView = 0.dp, diceBag = mutableListOf(), rollHistory = LinkedHashMap() ) )</ID>
   </CurrentIssues>
