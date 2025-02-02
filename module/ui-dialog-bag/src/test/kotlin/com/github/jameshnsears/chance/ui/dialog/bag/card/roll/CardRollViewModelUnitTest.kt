@@ -123,7 +123,7 @@ class CardRollViewModelUnitTest : DialogBagUnitTestHelper() {
     }
 
     private fun cardRollViewModelCardRollStatePair(dialogBagAndroidViewModel: DialogBagAndroidViewModel):
-            Pair<CardRollViewModel, CardRollState> {
+        Pair<CardRollViewModel, CardRollState> {
         return Pair(
             dialogBagAndroidViewModel.cardRollViewModel,
             dialogBagAndroidViewModel.cardRollViewModel.stateFlowCardRoll.value

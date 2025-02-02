@@ -15,9 +15,9 @@ android {
         targetSdk = 35
 
         // changelog | min sdk | max sdk
-        versionCode = 102435
+        versionCode = 112435
 
-        versionName = "1.5.0"
+        versionName = "1.6.0"
 
         extra["versionName"] = versionName
 
@@ -92,6 +92,15 @@ android {
     lint {
         baseline = file("lint-baseline.xml")
         xmlReport = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        if (System.getProperty("idea.active") == "true") {
+            println("Enable coroutine debugging")
+            freeCompilerArgs.add("-Xdebug")
+        }
     }
 }
 

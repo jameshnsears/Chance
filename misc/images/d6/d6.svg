@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg height="210mm" id="svg5" version="1.1" viewBox="0 0 210 210" width="210mm" inkscape:export-filename="d6s4.svg" inkscape:export-xdpi="96" inkscape:export-ydpi="96" inkscape:version="1.2.2 (b0a8486541, 2022-12-01)" sodipodi:docname="d6.svg" xml:space="preserve" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg"><sodipodi:namedview
+<svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" height="210mm" id="svg5" version="1.1" viewBox="0 0 210 210" width="210mm" xmlns="http://www.w3.org/2000/svg" inkscape:export-filename="d6s4.svg" inkscape:export-xdpi="96" inkscape:export-ydpi="96" inkscape:version="1.2.2 (b0a8486541, 2022-12-01)" sodipodi:docname="d6.svg" xml:space="preserve"><sodipodi:namedview
    bordercolor="#000000"
    borderopacity="0.25"
    id="namedview7"
@@ -21,81 +20,47 @@
    inkscape:window-x="26"
    inkscape:window-y="23"
    inkscape:zoom="0.48813923" />
-    <defs
-   id="defs2" />
-    <g
-   style="display:inline;stroke-width:8;stroke-dasharray:none"
-   id="layer9"
-   inkscape:groupmode="layer"
-   inkscape:label="Background"
-   sodipodi:insensitive="true"><rect
+    <defs id="defs2" />
+    <g style="display:inline;stroke-width:8;stroke-dasharray:none" id="layer9" inkscape:groupmode="layer" inkscape:label="Background" sodipodi:insensitive="true"><rect
      style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-dasharray:none"
      height="200"
      id="rect375"
      ry="14.016847"
      width="199.99953"
      x="5.1607342"
-     y="5.1607342" /></g><g
-   inkscape:groupmode="layer"
-   id="layer4"
-   inkscape:label="d1"
-   style="display:none"
-   sodipodi:insensitive="true"><circle
+     y="5.1607342" /></g>
+    <g style="display:none" id="layer4" inkscape:groupmode="layer" inkscape:label="d1" sodipodi:insensitive="true"><circle
      style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="path1150"
      cx="105"
      cy="105"
-     r="24.802572" /></g><g
-   inkscape:groupmode="layer"
-   id="layer1"
-   inkscape:label="d3"
-   style="display:inline"
-   sodipodi:insensitive="true"><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="path1167"
-     cx="165"
-     cy="45"
-     r="24.802572" /><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="path1167-3"
-     cx="45"
-     cy="165"
-     r="24.802572" /></g><g
-   inkscape:groupmode="layer"
-   id="g1349"
-   inkscape:label="d4"
-   style="display:inline"
-   sodipodi:insensitive="true"><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1345"
-     cx="45"
-     cy="45"
-     r="24.802572" /><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1347"
-     cx="165"
-     cy="165"
-     r="24.802572" /></g><g
-   inkscape:groupmode="layer"
-   id="g1381"
-   inkscape:label="d6"
-   style="display:none"
-   sodipodi:insensitive="true"><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1377"
-     cx="45"
-     cy="105"
-     r="24.802572" /><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1379"
-     cx="165"
-     cy="105"
+     id="path1150"
      r="24.802572" /></g>
-    
-    
-    
-    
-    
-    
-    
+    <g style="display:inline" id="layer1" inkscape:groupmode="layer" inkscape:label="d3" sodipodi:insensitive="true"><circle
+     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
+     cx="165"
+     cy="45"
+     id="path1167"
+     r="24.802572" />
+        <circle style="fill:#000000;stroke:#000000;stroke-width:0.394856" cx="45" cy="165" id="path1167-3" r="24.802572" /></g>
+    <g style="display:inline" id="g1349" inkscape:groupmode="layer" inkscape:label="d4" sodipodi:insensitive="true"><circle
+     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
+     cx="45"
+     cy="45"
+     id="circle1345"
+     r="24.802572" />
+        <circle style="fill:#000000;stroke:#000000;stroke-width:0.394856" cx="165" cy="165" id="circle1347" r="24.802572" /></g>
+    <g style="display:none" id="g1381" inkscape:groupmode="layer" inkscape:label="d6" sodipodi:insensitive="true"><circle
+     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
+     cx="45"
+     cy="105"
+     id="circle1377"
+     r="24.802572" />
+        <circle style="fill:#000000;stroke:#000000;stroke-width:0.394856" cx="165" cy="105" id="circle1379" r="24.802572" /></g>
+
+
+
+
+
+
+
     </svg>

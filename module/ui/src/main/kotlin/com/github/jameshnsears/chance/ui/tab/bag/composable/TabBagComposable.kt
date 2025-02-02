@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
@@ -33,6 +35,8 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +50,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.BuildConfig
 import com.github.jameshnsears.chance.ui.R
+import com.github.jameshnsears.chance.ui.dialog.confirm.composable.DialogConfirm
 import com.github.jameshnsears.chance.ui.tab.bag.ExportImportStatus
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
@@ -83,12 +88,17 @@ fun TabBagLayout(
         scaffoldState = bottomSheetScaffoldState,
         sheetPeekHeight = 110.dp,
         sheetContent = {
-            TabBagBottomSheetLayout(
-                bottomSheetScaffoldState,
-                tabBagAndroidViewModel,
-                zoomBagAndroidViewModel,
-            )
-        },
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
+                TabBagBottomSheetLayout(
+                    bottomSheetScaffoldState,
+                    tabBagAndroidViewModel,
+                    zoomBagAndroidViewModel,
+                )
+            }
+        }
     ) {
         ZoomBag(
             zoomBagAndroidViewModel
@@ -109,7 +119,7 @@ fun TabBagBottomSheetLayout(
             .fillMaxWidth()
             .padding(8.dp)
             .padding(start = 8.dp, end = 8.dp)
-            .height(210.dp),
+            .height(300.dp),
     ) {
         Resize(
             tabBagAndroidViewModel,
@@ -132,6 +142,15 @@ fun TabBagBottomSheetLayout(
             bottomSheetScaffoldState,
             tabBagAndroidViewModel,
             zoomBagAndroidViewModel
+        )
+
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(top = 12.dp, bottom = 12.dp)
+        )
+
+        ResetStorage(
+            tabBagAndroidViewModel
         )
     }
 }
@@ -158,14 +177,63 @@ fun Resize(
                 tabBagAndroidViewModel.resizeSettings(newValue.toInt())
                 zoomBagAndroidViewModel.resizeView(newValue.toInt())
             },
-            valueRange = 1f..5f,
-            steps = 3,
+            valueRange = 1f..9f,
+            steps = 7,
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,
                 activeTrackColor = MaterialTheme.colorScheme.secondary,
                 inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
             ),
             modifier = Modifier.testTag(TabBagTestTag.RESIZE)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ResetStorage(
+    tabBagAndroidViewModel: TabBagAndroidViewModel,
+) {
+    val showDialogConfirm = remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, bottom = 8.dp),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Button(
+            onClick = {
+                showDialogConfirm.value = true
+            },
+            modifier = Modifier
+                .width(200.dp)
+                .testTag(TabBagTestTag.IMPORT),
+        ) {
+            Icon(
+                painterResource(id = R.drawable.baseline_restart_alt_24),
+                contentDescription = "",
+                modifier = Modifier.size(24.dp),
+            )
+
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+
+            Text(stringResource(R.string.tab_bag_reset_storage))
+        }
+    }
+
+    if (showDialogConfirm.value) {
+        DialogConfirm(
+            openDialog = showDialogConfirm.value,
+            onDismissRequest = {
+                showDialogConfirm.value = false
+            },
+            onConfirmation = {
+                tabBagAndroidViewModel.resetStorage()
+                showDialogConfirm.value = false
+            },
+            title = stringResource(R.string.tab_bag_reset_storage),
+            text = stringResource(R.string.tab_bag_reset_storage_confirm)
         )
     }
 }

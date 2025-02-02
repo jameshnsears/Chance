@@ -12,70 +12,15 @@ public final class RollProtocolBuffer extends
     com.google.protobuf.GeneratedMessage implements
     // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
     RollProtocolBufferOrBuilder {
-    private static final long serialVersionUID = 0L;
-
     public static final int DICEEPOCH_FIELD_NUMBER = 1;
-
-    // Use RollProtocolBuffer.newBuilder() to construct.
-    private RollProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-        super(builder);
-    }
-
-    private RollProtocolBuffer() {
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
-        return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
-    }
-
     public static final int SIDE_FIELD_NUMBER = 2;
     public static final int MULTIPLIERINDEX_FIELD_NUMBER = 3;
     public static final int EXPLODEINDEX_FIELD_NUMBER = 4;
     public static final int SCOREADJUSTMENT_FIELD_NUMBER = 5;
-
-    /**
-     * <code>int64 diceEpoch = 1;</code>
-     *
-     * @return The diceEpoch.
-     */
-    @java.lang.Override
-    public long getDiceEpoch() {
-        return diceEpoch_;
-    }
-
     public static final int SCORE_FIELD_NUMBER = 6;
+    private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer DEFAULT_INSTANCE;
-
-    /**
-     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-     *
-     * @return Whether the side field is set.
-     */
-    @java.lang.Override
-    public boolean hasSide() {
-        return ((bitField0_ & 0x00000001) != 0);
-    }
-
-    /**
-     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-     *
-     * @return The side.
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getSide() {
-        return side_ == null ? com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance() : side_;
-    }
-
-    /**
-     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder() {
-        return side_ == null ? com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance() : side_;
-    }
-
     private static final com.google.protobuf.Parser<RollProtocolBuffer>
         PARSER = new com.google.protobuf.AbstractParser<RollProtocolBuffer>() {
         @java.lang.Override
@@ -108,72 +53,31 @@ public final class RollProtocolBuffer extends
             RollProtocolBuffer.class.getName());
     }
 
-    /**
-     * <code>int32 multiplierIndex = 3;</code>
-     *
-     * @return The multiplierIndex.
-     */
-    @java.lang.Override
-    public int getMultiplierIndex() {
-        return multiplierIndex_;
-    }
-
     static {
         DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer();
     }
 
     private int bitField0_;
-
-    /**
-     * <code>int32 explodeIndex = 4;</code>
-     *
-     * @return The explodeIndex.
-     */
-    @java.lang.Override
-    public int getExplodeIndex() {
-        return explodeIndex_;
-    }
-
     private long diceEpoch_ = 0L;
     private com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side_;
-
-    /**
-     * <code>int32 scoreAdjustment = 5;</code>
-     *
-     * @return The scoreAdjustment.
-     */
-    @java.lang.Override
-    public int getScoreAdjustment() {
-        return scoreAdjustment_;
-    }
-
     private int multiplierIndex_ = 0;
     private int explodeIndex_ = 0;
-
-    /**
-     * <code>int32 score = 6;</code>
-     *
-     * @return The score.
-     */
-    @java.lang.Override
-    public int getScore() {
-        return score_;
-    }
-
     private int scoreAdjustment_ = 0;
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-    }
-
     private int score_ = 0;
     private byte memoizedIsInitialized = -1;
+
+    // Use RollProtocolBuffer.newBuilder() to construct.
+    private RollProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
+    }
+
+    private RollProtocolBuffer() {
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+        return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
+    }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer parseFrom(
         java.nio.ByteBuffer data)
@@ -264,17 +168,105 @@ public final class RollProtocolBuffer extends
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
-    @java.lang.Override
-    public Builder newBuilderForType() {
-        return newBuilder();
-    }
-
     public static com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer getDefaultInstance() {
         return DEFAULT_INSTANCE;
     }
 
     public static com.google.protobuf.Parser<RollProtocolBuffer> parser() {
         return PARSER;
+    }
+
+    /**
+     * <code>int64 diceEpoch = 1;</code>
+     *
+     * @return The diceEpoch.
+     */
+    @java.lang.Override
+    public long getDiceEpoch() {
+        return diceEpoch_;
+    }
+
+    /**
+     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     *
+     * @return Whether the side field is set.
+     */
+    @java.lang.Override
+    public boolean hasSide() {
+        return ((bitField0_ & 0x00000001) != 0);
+    }
+
+    /**
+     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     *
+     * @return The side.
+     */
+    @java.lang.Override
+    public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getSide() {
+        return side_ == null ? com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance() : side_;
+    }
+
+    /**
+     * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+     */
+    @java.lang.Override
+    public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder getSideOrBuilder() {
+        return side_ == null ? com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.getDefaultInstance() : side_;
+    }
+
+    /**
+     * <code>int32 multiplierIndex = 3;</code>
+     *
+     * @return The multiplierIndex.
+     */
+    @java.lang.Override
+    public int getMultiplierIndex() {
+        return multiplierIndex_;
+    }
+
+    /**
+     * <code>int32 explodeIndex = 4;</code>
+     *
+     * @return The explodeIndex.
+     */
+    @java.lang.Override
+    public int getExplodeIndex() {
+        return explodeIndex_;
+    }
+
+    /**
+     * <code>int32 scoreAdjustment = 5;</code>
+     *
+     * @return The scoreAdjustment.
+     */
+    @java.lang.Override
+    public int getScoreAdjustment() {
+        return scoreAdjustment_;
+    }
+
+    /**
+     * <code>int32 score = 6;</code>
+     *
+     * @return The score.
+     */
+    @java.lang.Override
+    public int getScore() {
+        return score_;
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() {
+        return newBuilder();
     }
 
     @java.lang.Override
@@ -438,6 +430,23 @@ public final class RollProtocolBuffer extends
         private int multiplierIndex_;
         private int explodeIndex_;
         private int scoreAdjustment_;
+        private int score_;
+
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.newBuilder()
+        private Builder() {
+            maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+            maybeForceBuilderInitialization();
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
+        }
 
         @java.lang.Override
         public com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer getDefaultInstanceForType() {
@@ -462,8 +471,6 @@ public final class RollProtocolBuffer extends
             onBuilt();
             return result;
         }
-
-        private int score_;
 
         @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
@@ -503,22 +510,6 @@ public final class RollProtocolBuffer extends
         @java.lang.Override
         public final boolean isInitialized() {
             return true;
-        }
-
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.newBuilder()
-        private Builder() {
-            maybeForceBuilderInitialization();
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-            maybeForceBuilderInitialization();
-        }
-
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.Roll.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor;
         }
 
         /**
@@ -605,6 +596,21 @@ public final class RollProtocolBuffer extends
                 side_ = value;
             } else {
                 sideBuilder_.setMessage(value);
+            }
+            bitField0_ |= 0x00000002;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
+         */
+        public Builder setSide(
+            com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder builderForValue) {
+            if (sideBuilder_ == null) {
+                side_ = builderForValue.build();
+            } else {
+                sideBuilder_.setMessage(builderForValue.build());
             }
             bitField0_ |= 0x00000002;
             onChanged();
@@ -745,21 +751,6 @@ public final class RollProtocolBuffer extends
             } finally {
                 onChanged();
             } // finally
-            return this;
-        }
-
-        /**
-         * <code>.com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 2;</code>
-         */
-        public Builder setSide(
-            com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder builderForValue) {
-            if (sideBuilder_ == null) {
-                side_ = builderForValue.build();
-            } else {
-                sideBuilder_.setMessage(builderForValue.build());
-            }
-            bitField0_ |= 0x00000002;
-            onChanged();
             return this;
         }
 

@@ -1,0 +1,6 @@
+&bull; Dice configuration dialog tabs
+&bull; Reset Storage button
+&bull; Additional resize steps
+&bull; Improve README formatting
+&bull; Align fastlane changelogs with versionCode value
+&bull; Bump dependencies &amp; IDE: Android Studio Ladybug Feature Drop | 2024.2.2

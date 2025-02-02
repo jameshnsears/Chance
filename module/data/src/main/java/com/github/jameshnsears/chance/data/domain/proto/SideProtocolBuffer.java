@@ -12,47 +12,16 @@ public final class SideProtocolBuffer extends
     com.google.protobuf.GeneratedMessage implements
     // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
     SideProtocolBufferOrBuilder {
-    private static final long serialVersionUID = 0L;
-
     public static final int UUID_FIELD_NUMBER = 1;
-
-    // Use SideProtocolBuffer.newBuilder() to construct.
-    private SideProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-        super(builder);
-    }
-
-    private SideProtocolBuffer() {
-        uuid_ = "";
-        numberColour_ = "";
-        imageBase64_ = "";
-        description_ = "";
-        descriptionColour_ = "";
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
-        return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
-    }
-
     public static final int NUMBER_FIELD_NUMBER = 2;
     public static final int NUMBERCOLOUR_FIELD_NUMBER = 3;
     public static final int IMAGEDRAWABLEID_FIELD_NUMBER = 4;
     public static final int IMAGEBASE64_FIELD_NUMBER = 5;
     public static final int DESCRIPTION_FIELD_NUMBER = 6;
     public static final int DESCRIPTIONCOLOUR_FIELD_NUMBER = 7;
+    private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer DEFAULT_INSTANCE;
-
-    /**
-     * <code>int32 number = 2;</code>
-     *
-     * @return The number.
-     */
-    @java.lang.Override
-    public int getNumber() {
-        return number_;
-    }
-
     private static final com.google.protobuf.Parser<SideProtocolBuffer>
         PARSER = new com.google.protobuf.AbstractParser<SideProtocolBuffer>() {
         @java.lang.Override
@@ -94,17 +63,6 @@ public final class SideProtocolBuffer extends
     private int number_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object numberColour_ = "";
-
-    /**
-     * <code>int32 imageDrawableId = 4;</code>
-     *
-     * @return The imageDrawableId.
-     */
-    @java.lang.Override
-    public int getImageDrawableId() {
-        return imageDrawableId_;
-    }
-
     private int imageDrawableId_ = 0;
     @SuppressWarnings("serial")
     private volatile java.lang.Object imageBase64_ = "";
@@ -113,6 +71,24 @@ public final class SideProtocolBuffer extends
     @SuppressWarnings("serial")
     private volatile java.lang.Object descriptionColour_ = "";
     private byte memoizedIsInitialized = -1;
+
+    // Use SideProtocolBuffer.newBuilder() to construct.
+    private SideProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
+    }
+
+    private SideProtocolBuffer() {
+        uuid_ = "";
+        numberColour_ = "";
+        imageBase64_ = "";
+        description_ = "";
+        descriptionColour_ = "";
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+        return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
+    }
 
     public static com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer parseFrom(
         java.nio.ByteBuffer data)
@@ -166,16 +142,6 @@ public final class SideProtocolBuffer extends
             .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
-    public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-    }
-
     public static com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
@@ -195,6 +161,60 @@ public final class SideProtocolBuffer extends
         throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
             .parseWithIOException(PARSER, input);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+        return com.google.protobuf.GeneratedMessage
+            .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() {
+        return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer prototype) {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    public static com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getDefaultInstance() {
+        return DEFAULT_INSTANCE;
+    }
+
+    public static com.google.protobuf.Parser<SideProtocolBuffer> parser() {
+        return PARSER;
+    }
+
+    /**
+     * <code>int32 number = 2;</code>
+     *
+     * @return The number.
+     */
+    @java.lang.Override
+    public int getNumber() {
+        return number_;
+    }
+
+    /**
+     * <code>int32 imageDrawableId = 4;</code>
+     *
+     * @return The imageDrawableId.
+     */
+    @java.lang.Override
+    public int getImageDrawableId() {
+        return imageDrawableId_;
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
     }
 
     @java.lang.Override
@@ -221,30 +241,6 @@ public final class SideProtocolBuffer extends
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-            .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-    }
-
-    public static Builder newBuilder(com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-
-    public static com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-    }
-
-    public static com.google.protobuf.Parser<SideProtocolBuffer> parser() {
-        return PARSER;
     }
 
     @java.lang.Override
@@ -574,15 +570,30 @@ public final class SideProtocolBuffer extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
         com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
-        }
-
         private int bitField0_;
         private java.lang.Object uuid_ = "";
         private int number_;
         private java.lang.Object numberColour_ = "";
+        private int imageDrawableId_;
+        private java.lang.Object imageBase64_ = "";
+        private java.lang.Object description_ = "";
+        private java.lang.Object descriptionColour_ = "";
+
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.newBuilder()
+        private Builder() {
+
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
+        }
 
         @java.lang.Override
         public com.google.protobuf.Descriptors.Descriptor
@@ -690,22 +701,6 @@ public final class SideProtocolBuffer extends
         @java.lang.Override
         public final boolean isInitialized() {
             return true;
-        }
-
-        private int imageDrawableId_;
-        private java.lang.Object imageBase64_ = "";
-        private java.lang.Object description_ = "";
-        private java.lang.Object descriptionColour_ = "";
-
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.newBuilder()
-        private Builder() {
-
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-
         }
 
         /**
@@ -900,18 +895,6 @@ public final class SideProtocolBuffer extends
         }
 
         /**
-         * <code>string numberColour = 3;</code>
-         *
-         * @return This builder for chaining.
-         */
-        public Builder clearNumberColour() {
-            numberColour_ = getDefaultInstance().getNumberColour();
-            bitField0_ = (bitField0_ & ~0x00000004);
-            onChanged();
-            return this;
-        }
-
-        /**
          * <code>string uuid = 1;</code>
          *
          * @param value The bytes for uuid to set.
@@ -932,6 +915,18 @@ public final class SideProtocolBuffer extends
         /**
          * <code>string numberColour = 3;</code>
          *
+         * @return This builder for chaining.
+         */
+        public Builder clearNumberColour() {
+            numberColour_ = getDefaultInstance().getNumberColour();
+            bitField0_ = (bitField0_ & ~0x00000004);
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string numberColour = 3;</code>
+         *
          * @return The numberColour.
          */
         public java.lang.String getNumberColour() {
@@ -945,6 +940,23 @@ public final class SideProtocolBuffer extends
             } else {
                 return (java.lang.String) ref;
             }
+        }
+
+        /**
+         * <code>string numberColour = 3;</code>
+         *
+         * @param value The numberColour to set.
+         * @return This builder for chaining.
+         */
+        public Builder setNumberColour(
+            java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            numberColour_ = value;
+            bitField0_ |= 0x00000004;
+            onChanged();
+            return this;
         }
 
         /**
@@ -979,23 +991,6 @@ public final class SideProtocolBuffer extends
         public Builder clearImageDrawableId() {
             bitField0_ = (bitField0_ & ~0x00000008);
             imageDrawableId_ = 0;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string numberColour = 3;</code>
-         *
-         * @param value The numberColour to set.
-         * @return This builder for chaining.
-         */
-        public Builder setNumberColour(
-            java.lang.String value) {
-            if (value == null) {
-                throw new NullPointerException();
-            }
-            numberColour_ = value;
-            bitField0_ |= 0x00000004;
             onChanged();
             return this;
         }
@@ -1058,18 +1053,6 @@ public final class SideProtocolBuffer extends
         /**
          * <code>string imageBase64 = 5;</code>
          *
-         * @return This builder for chaining.
-         */
-        public Builder clearImageBase64() {
-            imageBase64_ = getDefaultInstance().getImageBase64();
-            bitField0_ = (bitField0_ & ~0x00000010);
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string imageBase64 = 5;</code>
-         *
          * @param value The imageBase64 to set.
          * @return This builder for chaining.
          */
@@ -1080,6 +1063,18 @@ public final class SideProtocolBuffer extends
             }
             imageBase64_ = value;
             bitField0_ |= 0x00000010;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string imageBase64 = 5;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearImageBase64() {
+            imageBase64_ = getDefaultInstance().getImageBase64();
+            bitField0_ = (bitField0_ & ~0x00000010);
             onChanged();
             return this;
         }
@@ -1262,18 +1257,6 @@ public final class SideProtocolBuffer extends
         /**
          * <code>string descriptionColour = 7;</code>
          *
-         * @return This builder for chaining.
-         */
-        public Builder clearDescriptionColour() {
-            descriptionColour_ = getDefaultInstance().getDescriptionColour();
-            bitField0_ = (bitField0_ & ~0x00000040);
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string descriptionColour = 7;</code>
-         *
          * @param value The bytes for descriptionColour to set.
          * @return This builder for chaining.
          */
@@ -1285,6 +1268,18 @@ public final class SideProtocolBuffer extends
             checkByteStringIsUtf8(value);
             descriptionColour_ = value;
             bitField0_ |= 0x00000040;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string descriptionColour = 7;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearDescriptionColour() {
+            descriptionColour_ = getDefaultInstance().getDescriptionColour();
+            bitField0_ = (bitField0_ & ~0x00000040);
             onChanged();
             return this;
         }

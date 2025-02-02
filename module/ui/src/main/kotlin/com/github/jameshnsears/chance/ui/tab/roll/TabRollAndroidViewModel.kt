@@ -17,10 +17,13 @@ import com.github.jameshnsears.chance.data.repository.settings.RepositorySetting
 import com.github.jameshnsears.chance.ui.R
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
+import com.github.jameshnsears.chance.ui.tab.bag.TabBagResetStorageEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -84,8 +87,11 @@ class TabRollAndroidViewModel(
         }
 
         viewModelScope.launch {
-            TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                Timber.d("collect.TabBagImportEvent.TabRollAndroidViewModel")
+            merge(
+                TabBagImportEvent.sharedFlowTabBagImportEvent.map { },
+                TabBagResetStorageEvent.sharedFlowTabBagResetStorageEvent.map { }
+            ).collect {
+                Timber.d("collect.TabBagImportEvent|TabBagResetStorageEvent.TabRollAndroidViewModel")
                 alignSettings()
                 alignBottomSheetWithSettings()
             }

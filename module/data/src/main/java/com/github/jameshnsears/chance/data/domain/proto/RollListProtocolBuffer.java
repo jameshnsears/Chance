@@ -12,24 +12,8 @@ public final class RollListProtocolBuffer extends
     com.google.protobuf.GeneratedMessage implements
     // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer)
     RollListProtocolBufferOrBuilder {
-    private static final long serialVersionUID = 0L;
-
     public static final int ROLL_FIELD_NUMBER = 1;
-
-    // Use RollListProtocolBuffer.newBuilder() to construct.
-    private RollListProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-        super(builder);
-    }
-
-    private RollListProtocolBuffer() {
-        roll_ = java.util.Collections.emptyList();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
-        return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor;
-    }
-
+    private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer DEFAULT_INSTANCE;
     private static final com.google.protobuf.Parser<RollListProtocolBuffer>
@@ -64,57 +48,27 @@ public final class RollListProtocolBuffer extends
             RollListProtocolBuffer.class.getName());
     }
 
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
-     */
-    @java.lang.Override
-    public java.util.List<com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer> getRollList() {
-        return roll_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.RollProtocolBufferOrBuilder>
-    getRollOrBuilderList() {
-        return roll_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
-     */
-    @java.lang.Override
-    public int getRollCount() {
-        return roll_.size();
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer getRoll(int index) {
-        return roll_.get(index);
-    }
-
     static {
         DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer();
     }
 
     @SuppressWarnings("serial")
     private java.util.List<com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer> roll_;
+    private byte memoizedIsInitialized = -1;
 
-    @java.lang.Override
-    public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
+    // Use RollListProtocolBuffer.newBuilder() to construct.
+    private RollListProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
     }
 
-    private byte memoizedIsInitialized = -1;
+    private RollListProtocolBuffer() {
+        roll_ = java.util.Collections.emptyList();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+        return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor;
+    }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer parseFrom(
         java.nio.ByteBuffer data)
@@ -127,22 +81,6 @@ public final class RollListProtocolBuffer extends
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-        if (memoizedHashCode != 0) {
-            return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        if (getRollCount() > 0) {
-            hash = (37 * hash) + ROLL_FIELD_NUMBER;
-            hash = (53 * hash) + getRollList().hashCode();
-        }
-        hash = (29 * hash) + getUnknownFields().hashCode();
-        memoizedHashCode = hash;
-        return hash;
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer parseFrom(
@@ -221,17 +159,76 @@ public final class RollListProtocolBuffer extends
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
-    @java.lang.Override
-    public Builder newBuilderForType() {
-        return newBuilder();
-    }
-
     public static com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer getDefaultInstance() {
         return DEFAULT_INSTANCE;
     }
 
     public static com.google.protobuf.Parser<RollListProtocolBuffer> parser() {
         return PARSER;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer> getRollList() {
+        return roll_;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.RollProtocolBufferOrBuilder>
+    getRollOrBuilderList() {
+        return roll_;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
+     */
+    @java.lang.Override
+    public int getRollCount() {
+        return roll_.size();
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer roll = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer getRoll(int index) {
+        return roll_.get(index);
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        if (memoizedHashCode != 0) {
+            return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (getRollCount() > 0) {
+            hash = (37 * hash) + ROLL_FIELD_NUMBER;
+            hash = (53 * hash) + getRollList().hashCode();
+        }
+        hash = (29 * hash) + getUnknownFields().hashCode();
+        memoizedHashCode = hash;
+        return hash;
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() {
+        return newBuilder();
     }
 
     @java.lang.Override
@@ -321,16 +318,27 @@ public final class RollListProtocolBuffer extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer)
         com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBufferOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor;
-        }
-
         private int bitField0_;
         private java.util.List<com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer> roll_ =
             java.util.Collections.emptyList();
         private com.google.protobuf.RepeatedFieldBuilder<
             com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.RollProtocolBufferOrBuilder> rollBuilder_;
+
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.newBuilder()
+        private Builder() {
+
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollListProtocolBuffer_descriptor;
+        }
 
         @java.lang.Override
         public Builder clear() {
@@ -403,20 +411,9 @@ public final class RollListProtocolBuffer extends
             }
         }
 
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer.newBuilder()
-        private Builder() {
-
-        }
-
         @java.lang.Override
         public final boolean isInitialized() {
             return true;
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-
         }
 
         @java.lang.Override

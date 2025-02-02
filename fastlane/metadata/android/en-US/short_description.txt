@@ -1,1 +1,1 @@
-Create custom dice: assign outcomes to randomness
+Assign outcomes to randomness

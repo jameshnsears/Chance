@@ -119,7 +119,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         tabRollAndroidViewModel.shuffleRollSequence(rolls)
 
         assertEquals(8, rolls.size)
-        
+
         val diceEpochGroupRolls = rolls.groupBy { it.diceEpoch }
         diceEpochGroupRolls.forEach { (_, diceEpochGroup) ->
             val sortedDiceEpochGroup = diceEpochGroup.sortedBy { it.multiplierIndex }

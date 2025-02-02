@@ -16,7 +16,7 @@ import com.github.jameshnsears.chance.data.repository.settings.impl.RepositorySe
 import com.github.jameshnsears.chance.data.repository.settings.testdouble.RepositorySettingsProtocolBufferTestDouble
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 
-class RepositoryFactory(context: Context? = null) {
+class RepositoryFactory(val context: Context? = null) {
     val settingsImpl = SettingsDataImpl()
     val settingsTestDouble = SettingsDataTestDouble()
 
@@ -44,13 +44,33 @@ class RepositoryFactory(context: Context? = null) {
     ///////////////////////////////////////////////////
 
     private val rollHistoryDataImpl = RollHistoryDataImpl(bagDataImpl).rollHistory
-    val rollHistoryDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
+    val rollHistoryTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 
     val repositoryRoll = if (BuildConfig.DEBUG)
         if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER))
             RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
         else
-            RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryDataTestDouble)
+            RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble)
     else
         RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
+
+    ///////////////////////////////////////////////////
+
+    suspend fun resetStorage() {
+        if (BuildConfig.DEBUG)
+            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER)) {
+                repositorySettings.store(settingsImpl)
+                repositoryBag.store(bagDataImpl.allDice)
+                repositoryRoll.store(rollHistoryDataImpl)
+            } else {
+                repositorySettings.store(settingsTestDouble)
+                repositoryBag.store(bagDataTestDouble.allDice)
+                repositoryRoll.store(rollHistoryTestDouble)
+            }
+        else {
+            repositorySettings.store(settingsImpl)
+            repositoryBag.store(bagDataImpl.allDice)
+            repositoryRoll.store(rollHistoryDataImpl)
+        }
+    }
 }

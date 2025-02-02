@@ -23,7 +23,7 @@ class RepositoryFactoryUnitTest : UtilityAndroidHelper() {
 
         assertEquals(
             repositoryFactory.repositoryRoll.fetch().first(),
-            repositoryFactory.rollHistoryDataTestDouble
+            repositoryFactory.rollHistoryTestDouble
         )
     }
 }

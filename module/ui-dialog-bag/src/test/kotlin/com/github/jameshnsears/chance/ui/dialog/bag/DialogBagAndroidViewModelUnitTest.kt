@@ -372,7 +372,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         assertEquals(8, repositoryBag.fetch().first().size)
 
         val repositoryRoll = repositoryFactory.repositoryRoll
-        repositoryRoll.store(repositoryFactory.rollHistoryDataTestDouble)
+        repositoryRoll.store(repositoryFactory.rollHistoryTestDouble)
         assertEquals(2, repositoryRoll.fetch().first().size)
 
         val dialogBagAndroidViewModel = DialogBagAndroidViewModel(
@@ -402,7 +402,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestHelper() {
         assertEquals(8, repositoryBag.fetch().first().size)
 
         val repositoryRoll = repositoryFactory.repositoryRoll
-        repositoryRoll.store(repositoryFactory.rollHistoryDataTestDouble)
+        repositoryRoll.store(repositoryFactory.rollHistoryTestDouble)
         assertEquals(2, repositoryRoll.fetch().first().size)
 
         val dialogBagAndroidViewModel = DialogBagAndroidViewModel(

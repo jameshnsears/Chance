@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        api-level: [ 31 ]
+        api-level: [ 24, 30, 35 ]
 
     steps:
       - name: clone
@@ -86,7 +86,7 @@ jobs:
         run: echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
 
       - name: jacocoFdroidAndroidTestReport
-        if: matrix.api-level == 31
+        if: matrix.api-level == 30
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -102,7 +102,7 @@ jobs:
             ./gradlew :module:ui-dialog-bag:jacocoFdroidAndroidTestReport --stacktrace
 
       - name: codecov - ui.androidTest
-        if: matrix.api-level == 31
+        if: matrix.api-level == 30
         uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: true

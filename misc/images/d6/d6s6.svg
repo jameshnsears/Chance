@@ -1,67 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg height="210mm" id="svg5" version="1.1" viewBox="0 0 210 210" width="210mm" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-    <defs
-   id="defs2" />
-    <g
-   style="display:inline;stroke-width:8;stroke-dasharray:none"
-   id="layer9"><rect
+<svg height="210mm" id="svg5" version="1.1" viewBox="0 0 210 210" width="210mm" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
+    <defs id="defs2" />
+    <g style="display:inline;stroke-width:8;stroke-dasharray:none" id="layer9"><rect
      style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-dasharray:none"
      height="200"
      id="rect375"
      ry="14.016847"
      width="199.99953"
      x="5.1607342"
-     y="5.1607342" /></g><g
-   id="layer4"
-   style="display:none"><circle
+     y="5.1607342" /></g>
+    <g style="display:none" id="layer4"><circle
      style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="path1150"
      cx="105"
      cy="105"
-     r="24.802572" /></g><g
-   id="layer1"
-   style="display:inline"><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="path1167"
-     cx="165"
-     cy="45"
-     r="24.802572" /><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="path1167-3"
-     cx="45"
-     cy="165"
-     r="24.802572" /></g><g
-   id="g1349"
-   style="display:inline"><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1345"
-     cx="45"
-     cy="45"
-     r="24.802572" /><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1347"
-     cx="165"
-     cy="165"
-     r="24.802572" /></g><g
-   id="g1381"
-   style="display:inline"><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1377"
-     cx="45"
-     cy="105"
-     r="24.802572" /><circle
-     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
-     id="circle1379"
-     cx="165"
-     cy="105"
+     id="path1150"
      r="24.802572" /></g>
-    
-    
-    
-    
-    
-    
-    
+    <g style="display:inline" id="layer1"><circle
+     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
+     cx="165"
+     cy="45"
+     id="path1167"
+     r="24.802572" />
+        <circle style="fill:#000000;stroke:#000000;stroke-width:0.394856" cx="45" cy="165" id="path1167-3" r="24.802572" /></g>
+    <g style="display:inline" id="g1349"><circle
+     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
+     cx="45"
+     cy="45"
+     id="circle1345"
+     r="24.802572" />
+        <circle style="fill:#000000;stroke:#000000;stroke-width:0.394856" cx="165" cy="165" id="circle1347" r="24.802572" /></g>
+    <g style="display:inline" id="g1381"><circle
+     style="fill:#000000;stroke:#000000;stroke-width:0.394856"
+     cx="45"
+     cy="105"
+     id="circle1377"
+     r="24.802572" />
+        <circle style="fill:#000000;stroke:#000000;stroke-width:0.394856" cx="165" cy="105" id="circle1379" r="24.802572" /></g>
+
+
+
+
+
+
+
     </svg>

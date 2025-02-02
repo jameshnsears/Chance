@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
@@ -32,10 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.ui.dialog.bag.R
@@ -56,40 +54,36 @@ class BagCardDiceTestTag {
 fun BagCardDice(
     cardDiceViewModel: CardDiceViewModel,
 ) {
-    OutlinedCard(
+    Column(
         modifier = Modifier
-            .padding(top = 24.dp, bottom = 24.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp,
-        ),
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 8.dp)
     ) {
-        Column(modifier = Modifier.padding(18.dp)) {
-            Text(
-                text = stringResource(R.string.dialog_bag_dice),
-                modifier = Modifier
-                    .padding(top = 8.dp, bottom = 8.dp)
-                    .wrapContentSize(Alignment.Center),
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-            )
+        OutlinedCard(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp,
+            ),
+        ) {
+            Column(modifier = Modifier.padding(18.dp)) {
+                DiceTitle(cardDiceViewModel)
 
-            DiceTitle(cardDiceViewModel)
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp)
+                )
 
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(top = 12.dp, bottom = 12.dp)
-            )
+                DiceSides(cardDiceViewModel)
 
-            DiceSides(cardDiceViewModel)
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp)
+                )
 
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(top = 12.dp, bottom = 12.dp)
-            )
-
-            DiceColour(cardDiceViewModel)
+                DiceColour(cardDiceViewModel)
+            }
         }
     }
 }
@@ -217,17 +211,6 @@ fun DiceTitle(cardDiceViewModel: CardDiceViewModel) {
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_dice_title_info),
-        )
-    }
-
-    Row(
-        modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(R.string.dialog_bag_dice_title_clone),
         )
     }
 }

@@ -21,8 +21,9 @@ sonarqube {
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.branch.name", "main")
         property("sonar.sources", "**/src/main/kotlin")
-        property("sonar.exclusions", "**/src/main/java")
+        property("sonar.exclusions", "**/src/main/java/**")
         property("sonar.kotlin.binaries", "**/build/tmp/kotlin-classes/fdroidDebug")
+        property("sonar.cpd.exclusions", "**/src/main/java/**")
     }
 }
 

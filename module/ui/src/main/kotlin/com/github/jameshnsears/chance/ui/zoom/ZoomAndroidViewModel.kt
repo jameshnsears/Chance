@@ -20,10 +20,13 @@ import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterfa
 import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
+import com.github.jameshnsears.chance.ui.tab.bag.TabBagResetStorageEvent
 import com.github.jameshnsears.chance.ui.utility.colour.UtilityColour
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -55,7 +58,7 @@ abstract class ZoomAndroidViewModel(
     private val _diceBagList = MutableStateFlow<List<Dice>>(emptyList())
     val diceBagList: StateFlow<List<Dice>> = _diceBagList
 
-    protected var diceEpochCache: MutableMap<Long, Dice> = mutableMapOf()
+    private var diceEpochCache: MutableMap<Long, Dice> = mutableMapOf()
 
     init {
         viewModelScope.launch {
@@ -66,8 +69,11 @@ abstract class ZoomAndroidViewModel(
         }
 
         viewModelScope.launch {
-            TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                Timber.d("collect.TabBagImportEvent")
+            merge(
+                TabBagImportEvent.sharedFlowTabBagImportEvent.map { },
+                TabBagResetStorageEvent.sharedFlowTabBagResetStorageEvent.map { }
+            ).collect {
+                Timber.d("collect.TabBagImportEvent|TabBagResetStorageEvent.TabRollAndroidViewModel")
                 updateResize()
                 updateStateFlowZoom()
             }
@@ -128,6 +134,10 @@ abstract class ZoomAndroidViewModel(
             3 -> defaultViewSize * 1.25f
             4 -> defaultViewSize * 1.5f
             5 -> defaultViewSize * 1.75f
+            6 -> defaultViewSize * 2.0f
+            7 -> defaultViewSize * 2.25f
+            8 -> defaultViewSize * 2.5f
+            9 -> defaultViewSize * 2.75f
             else -> defaultViewSize
         }
     }

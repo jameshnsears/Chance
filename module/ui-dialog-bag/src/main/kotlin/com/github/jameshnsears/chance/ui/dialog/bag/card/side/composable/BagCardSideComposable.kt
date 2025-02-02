@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
@@ -63,32 +65,41 @@ class BagCardSideTestTag {
 
 @Composable
 fun BagCardSide(cardSideAndroidViewModel: CardSideAndroidViewModel) {
-    OutlinedCard(
+    Column(
         modifier = Modifier
-            .padding(top = 4.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp,
-        ),
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 8.dp)
     ) {
-        Column(modifier = Modifier.padding(18.dp)) {
-            SideNumber(cardSideAndroidViewModel)
-
-            SideColour(cardSideAndroidViewModel)
-
-            HorizontalDivider(
+        OutlinedCard(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp,
+            ),
+        ) {
+            Column(
                 modifier = Modifier
-                    .padding(top = 12.dp, bottom = 12.dp)
-            )
+                    .padding(18.dp)
+            ) {
+                SideNumber(cardSideAndroidViewModel)
 
-            SideDescription(cardSideAndroidViewModel)
+                SideColour(cardSideAndroidViewModel)
 
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(top = 12.dp, bottom = 12.dp)
-            )
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp)
+                )
 
-            SideImageSVG(cardSideAndroidViewModel)
+                SideDescription(cardSideAndroidViewModel)
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp)
+                )
+
+                SideImageSVG(cardSideAndroidViewModel)
+            }
         }
     }
 }
@@ -161,7 +172,8 @@ fun SideColour(
         stateFlowCardSide.value.sideApplyToAllNumberColour,
         BagCardSideTestTag.SIDE_APPLY_NUMBER_COLOUR,
         cardSideAndroidViewModel::sideApplyToAllNumberColour,
-        R.string.dialog_bag_side_colour_apply_to_all
+        R.string.dialog_bag_side_colour_apply_to_all,
+        diceSidesFewerThanSdeNumber
     )
 
     if (showDialogColourPicker.value) {
@@ -245,7 +257,8 @@ fun SideDescription(
         stateFlowCardSide.value.sideApplyToAllDescription,
         BagCardSideTestTag.SIDE_APPLY_DESCRIPTION,
         cardSideAndroidViewModel::sideApplyToAllDescription,
-        R.string.dialog_bag_side_description_apply_to_all
+        R.string.dialog_bag_side_description_apply_to_all,
+        diceSidesFewerThanSdeNumber
     )
 }
 
@@ -372,7 +385,7 @@ fun SideImageSVG(
                     .width(180.dp)
                     .padding(top = 6.dp)
                     .testTag(BagCardSideTestTag.SIDE_IMAGE_SVG),
-                enabled = cardSideAndroidViewModel.sideImageAvailable()
+                enabled = cardSideAndroidViewModel.sideImageAvailable() && !diceSidesFewerThanSdeNumber
             ) {
                 Icon(
                     painterResource(id = R.drawable.reset_image_fill0_wght400_grad0_opsz24),
@@ -412,7 +425,8 @@ fun SideImageSVG(
     SideApplyToAll(
         stateFlowCardSide.value.sideApplyToAllSvg,
         BagCardSideTestTag.SIDE_APPLY_SVG,
-        cardSideAndroidViewModel::sideApplyToAllSvg
+        cardSideAndroidViewModel::sideApplyToAllSvg,
+        diceSidesFewerThanSdeNumber = diceSidesFewerThanSdeNumber
     )
 
     Row(
@@ -445,6 +459,7 @@ fun SideApplyToAll(
     testTag: String,
     sideApplyToAllFunction: (Boolean) -> Unit,
     stringResourceId: Int = R.string.dialog_bag_side_image_apply_to_all,
+    diceSidesFewerThanSdeNumber: Boolean
 ) {
     val switched = rememberSaveable { mutableStateOf(sideApplyToAll) }
 
@@ -471,6 +486,7 @@ fun SideApplyToAll(
                 switched.value = it
                 sideApplyToAllFunction(switched.value)
             },
+            enabled = !diceSidesFewerThanSdeNumber
         )
     }
 }

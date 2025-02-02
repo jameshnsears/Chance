@@ -1,2 +1,0 @@
-&bull; Improve Shuffle behaviour
-&bull; Bump dependencies (where possible)

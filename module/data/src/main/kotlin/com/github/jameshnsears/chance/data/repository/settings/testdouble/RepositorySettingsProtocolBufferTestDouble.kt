@@ -13,7 +13,7 @@ import kotlinx.coroutines.runBlocking
 class RepositorySettingsProtocolBufferTestDouble private constructor() :
     RepositorySettingsProtocolBufferInterface {
     companion object {
-        private var instance: RepositorySettingsProtocolBufferTestDouble? = null
+        var instance: RepositorySettingsProtocolBufferTestDouble? = null
 
         fun getInstance(
             settingsData: SettingsDataInterface

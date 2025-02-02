@@ -12,24 +12,8 @@ public final class BagProtocolBuffer extends
     com.google.protobuf.GeneratedMessage implements
     // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
     BagProtocolBufferOrBuilder {
-    private static final long serialVersionUID = 0L;
-
     public static final int DICE_FIELD_NUMBER = 1;
-
-    // Use BagProtocolBuffer.newBuilder() to construct.
-    private BagProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-        super(builder);
-    }
-
-    private BagProtocolBuffer() {
-        dice_ = java.util.Collections.emptyList();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
-        return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_descriptor;
-    }
-
+    private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer DEFAULT_INSTANCE;
     private static final com.google.protobuf.Parser<BagProtocolBuffer>
@@ -64,57 +48,27 @@ public final class BagProtocolBuffer extends
             BagProtocolBuffer.class.getName());
     }
 
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
-     */
-    @java.lang.Override
-    public java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> getDiceList() {
-        return dice_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder>
-    getDiceOrBuilderList() {
-        return dice_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
-     */
-    @java.lang.Override
-    public int getDiceCount() {
-        return dice_.size();
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer getDice(int index) {
-        return dice_.get(index);
-    }
-
     static {
         DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer();
     }
 
     @SuppressWarnings("serial")
     private java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> dice_;
+    private byte memoizedIsInitialized = -1;
 
-    @java.lang.Override
-    public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
+    // Use BagProtocolBuffer.newBuilder() to construct.
+    private BagProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
     }
 
-    private byte memoizedIsInitialized = -1;
+    private BagProtocolBuffer() {
+        dice_ = java.util.Collections.emptyList();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+        return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_descriptor;
+    }
 
     public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
         java.nio.ByteBuffer data)
@@ -127,22 +81,6 @@ public final class BagProtocolBuffer extends
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-        if (memoizedHashCode != 0) {
-            return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        if (getDiceCount() > 0) {
-            hash = (37 * hash) + DICE_FIELD_NUMBER;
-            hash = (53 * hash) + getDiceList().hashCode();
-        }
-        hash = (29 * hash) + getUnknownFields().hashCode();
-        memoizedHashCode = hash;
-        return hash;
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer parseFrom(
@@ -221,17 +159,76 @@ public final class BagProtocolBuffer extends
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
-    @java.lang.Override
-    public Builder newBuilderForType() {
-        return newBuilder();
-    }
-
     public static com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer getDefaultInstance() {
         return DEFAULT_INSTANCE;
     }
 
     public static com.google.protobuf.Parser<BagProtocolBuffer> parser() {
         return PARSER;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> getDiceList() {
+        return dice_;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder>
+    getDiceOrBuilderList() {
+        return dice_;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
+     */
+    @java.lang.Override
+    public int getDiceCount() {
+        return dice_.size();
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer dice = 1;</code>
+     */
+    @java.lang.Override
+    public com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer getDice(int index) {
+        return dice_.get(index);
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        if (memoizedHashCode != 0) {
+            return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (getDiceCount() > 0) {
+            hash = (37 * hash) + DICE_FIELD_NUMBER;
+            hash = (53 * hash) + getDiceList().hashCode();
+        }
+        hash = (29 * hash) + getUnknownFields().hashCode();
+        memoizedHashCode = hash;
+        return hash;
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() {
+        return newBuilder();
     }
 
     @java.lang.Override
@@ -321,16 +318,27 @@ public final class BagProtocolBuffer extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer)
         com.github.jameshnsears.chance.data.domain.proto.BagProtocolBufferOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_descriptor;
-        }
-
         private int bitField0_;
         private java.util.List<com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer> dice_ =
             java.util.Collections.emptyList();
         private com.google.protobuf.RepeatedFieldBuilder<
             com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder> diceBuilder_;
+
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.newBuilder()
+        private Builder() {
+
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.Bag.internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_descriptor;
+        }
 
         @java.lang.Override
         public Builder clear() {
@@ -403,20 +411,9 @@ public final class BagProtocolBuffer extends
             }
         }
 
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer.newBuilder()
-        private Builder() {
-
-        }
-
         @java.lang.Override
         public final boolean isInitialized() {
             return true;
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-
         }
 
         @java.lang.Override

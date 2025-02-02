@@ -12,84 +12,19 @@ public final class DiceProtocolBuffer extends
     com.google.protobuf.GeneratedMessage implements
     // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer)
     DiceProtocolBufferOrBuilder {
-    private static final long serialVersionUID = 0L;
-
     public static final int EPOCH_FIELD_NUMBER = 1;
-
-    // Use DiceProtocolBuffer.newBuilder() to construct.
-    private DiceProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-        super(builder);
-    }
-
-    private DiceProtocolBuffer() {
-        uuid_ = "";
-        side_ = java.util.Collections.emptyList();
-        title_ = "";
-        colour_ = "";
-        explodeWhen_ = "";
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
-        return com.github.jameshnsears.chance.data.domain.proto.Dice.internal_static_com_github_jameshnsears_chance_data_domain_proto_DiceProtocolBuffer_descriptor;
-    }
-
     public static final int UUID_FIELD_NUMBER = 2;
     public static final int SIDE_FIELD_NUMBER = 3;
     public static final int TITLE_FIELD_NUMBER = 4;
-
-    /**
-     * <code>int64 epoch = 1;</code>
-     *
-     * @return The epoch.
-     */
-    @java.lang.Override
-    public long getEpoch() {
-        return epoch_;
-    }
-
     public static final int COLOUR_FIELD_NUMBER = 5;
     public static final int SELECTED_FIELD_NUMBER = 6;
     public static final int MULTIPLIERVALUE_FIELD_NUMBER = 7;
     public static final int EXPLODE_FIELD_NUMBER = 8;
     public static final int EXPLODEWHEN_FIELD_NUMBER = 9;
     public static final int EXPLODEVALUE_FIELD_NUMBER = 10;
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
-     */
-    @java.lang.Override
-    public java.util.List<com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer> getSideList() {
-        return side_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>
-    getSideOrBuilderList() {
-        return side_;
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
-     */
-    @java.lang.Override
-    public int getSideCount() {
-        return side_.size();
-    }
-
-    /**
-     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
-     */
-    @java.lang.Override
-    public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getSide(int index) {
-        return side_.get(index);
-    }
-
     public static final int MODIFYSCORE_FIELD_NUMBER = 11;
     public static final int MODIFYSCOREVALUE_FIELD_NUMBER = 12;
+    private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer DEFAULT_INSTANCE;
     private static final com.google.protobuf.Parser<DiceProtocolBuffer>
@@ -137,48 +72,33 @@ public final class DiceProtocolBuffer extends
     private volatile java.lang.Object title_ = "";
     @SuppressWarnings("serial")
     private volatile java.lang.Object colour_ = "";
-
-    /**
-     * <code>bool selected = 6;</code>
-     *
-     * @return The selected.
-     */
-    @java.lang.Override
-    public boolean getSelected() {
-        return selected_;
-    }
-
     private boolean selected_ = false;
     private int multiplierValue_ = 0;
-
-    /**
-     * <code>int32 multiplierValue = 7;</code>
-     *
-     * @return The multiplierValue.
-     */
-    @java.lang.Override
-    public int getMultiplierValue() {
-        return multiplierValue_;
-    }
-
     private boolean explode_ = false;
     @SuppressWarnings("serial")
     private volatile java.lang.Object explodeWhen_ = "";
-
-    /**
-     * <code>bool explode = 8;</code>
-     *
-     * @return The explode.
-     */
-    @java.lang.Override
-    public boolean getExplode() {
-        return explode_;
-    }
-
     private int explodeValue_ = 0;
     private boolean modifyScore_ = false;
     private int modifyScoreValue_ = 0;
     private byte memoizedIsInitialized = -1;
+
+    // Use DiceProtocolBuffer.newBuilder() to construct.
+    private DiceProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
+    }
+
+    private DiceProtocolBuffer() {
+        uuid_ = "";
+        side_ = java.util.Collections.emptyList();
+        title_ = "";
+        colour_ = "";
+        explodeWhen_ = "";
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+        return com.github.jameshnsears.chance.data.domain.proto.Dice.internal_static_com_github_jameshnsears_chance_data_domain_proto_DiceProtocolBuffer_descriptor;
+    }
 
     public static com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer parseFrom(
         java.nio.ByteBuffer data)
@@ -191,16 +111,6 @@ public final class DiceProtocolBuffer extends
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data, extensionRegistry);
-    }
-
-    /**
-     * <code>int32 explodeValue = 10;</code>
-     *
-     * @return The explodeValue.
-     */
-    @java.lang.Override
-    public int getExplodeValue() {
-        return explodeValue_;
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer parseFrom(
@@ -216,16 +126,6 @@ public final class DiceProtocolBuffer extends
         return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    /**
-     * <code>bool modifyScore = 11;</code>
-     *
-     * @return The modifyScore.
-     */
-    @java.lang.Override
-    public boolean getModifyScore() {
-        return modifyScore_;
-    }
-
     public static com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
         return PARSER.parseFrom(data);
@@ -238,30 +138,10 @@ public final class DiceProtocolBuffer extends
         return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    /**
-     * <code>int32 modifyScoreValue = 12;</code>
-     *
-     * @return The modifyScoreValue.
-     */
-    @java.lang.Override
-    public int getModifyScoreValue() {
-        return modifyScoreValue_;
-    }
-
     public static com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer parseFrom(java.io.InputStream input)
         throws java.io.IOException {
         return com.google.protobuf.GeneratedMessage
             .parseWithIOException(PARSER, input);
-    }
-
-    @java.lang.Override
-    public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
     }
 
     public static com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer parseFrom(
@@ -315,6 +195,119 @@ public final class DiceProtocolBuffer extends
 
     public static com.google.protobuf.Parser<DiceProtocolBuffer> parser() {
         return PARSER;
+    }
+
+    /**
+     * <code>int64 epoch = 1;</code>
+     *
+     * @return The epoch.
+     */
+    @java.lang.Override
+    public long getEpoch() {
+        return epoch_;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer> getSideList() {
+        return side_;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>
+    getSideOrBuilderList() {
+        return side_;
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
+     */
+    @java.lang.Override
+    public int getSideCount() {
+        return side_.size();
+    }
+
+    /**
+     * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
+     */
+    @java.lang.Override
+    public com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer getSide(int index) {
+        return side_.get(index);
+    }
+
+    /**
+     * <code>bool selected = 6;</code>
+     *
+     * @return The selected.
+     */
+    @java.lang.Override
+    public boolean getSelected() {
+        return selected_;
+    }
+
+    /**
+     * <code>int32 multiplierValue = 7;</code>
+     *
+     * @return The multiplierValue.
+     */
+    @java.lang.Override
+    public int getMultiplierValue() {
+        return multiplierValue_;
+    }
+
+    /**
+     * <code>bool explode = 8;</code>
+     *
+     * @return The explode.
+     */
+    @java.lang.Override
+    public boolean getExplode() {
+        return explode_;
+    }
+
+    /**
+     * <code>int32 explodeValue = 10;</code>
+     *
+     * @return The explodeValue.
+     */
+    @java.lang.Override
+    public int getExplodeValue() {
+        return explodeValue_;
+    }
+
+    /**
+     * <code>bool modifyScore = 11;</code>
+     *
+     * @return The modifyScore.
+     */
+    @java.lang.Override
+    public boolean getModifyScore() {
+        return modifyScore_;
+    }
+
+    /**
+     * <code>int32 modifyScoreValue = 12;</code>
+     *
+     * @return The modifyScoreValue.
+     */
+    @java.lang.Override
+    public int getModifyScoreValue() {
+        return modifyScoreValue_;
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
     }
 
     @java.lang.Override
@@ -702,16 +695,38 @@ public final class DiceProtocolBuffer extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer)
         com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBufferOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.Dice.internal_static_com_github_jameshnsears_chance_data_domain_proto_DiceProtocolBuffer_descriptor;
-        }
-
         private int bitField0_;
         private long epoch_;
         private java.lang.Object uuid_ = "";
         private java.util.List<com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer> side_ =
             java.util.Collections.emptyList();
+        private com.google.protobuf.RepeatedFieldBuilder<
+            com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder> sideBuilder_;
+        private java.lang.Object title_ = "";
+        private java.lang.Object colour_ = "";
+        private boolean selected_;
+        private int multiplierValue_;
+        private boolean explode_;
+        private java.lang.Object explodeWhen_ = "";
+        private int explodeValue_;
+        private boolean modifyScore_;
+        private int modifyScoreValue_;
+
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.newBuilder()
+        private Builder() {
+
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.Dice.internal_static_com_github_jameshnsears_chance_data_domain_proto_DiceProtocolBuffer_descriptor;
+        }
 
         @java.lang.Override
         public com.google.protobuf.Descriptors.Descriptor
@@ -803,17 +818,10 @@ public final class DiceProtocolBuffer extends
             }
         }
 
-        private com.google.protobuf.RepeatedFieldBuilder<
-            com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.Builder, com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder> sideBuilder_;
-
         @java.lang.Override
         public final boolean isInitialized() {
             return true;
         }
-
-        private java.lang.Object title_ = "";
-        private java.lang.Object colour_ = "";
-        private boolean selected_;
 
         /**
          * <code>int64 epoch = 1;</code>
@@ -851,11 +859,6 @@ public final class DiceProtocolBuffer extends
             return this;
         }
 
-        private int multiplierValue_;
-        private boolean explode_;
-        private java.lang.Object explodeWhen_ = "";
-        private int explodeValue_;
-
         /**
          * <code>string uuid = 2;</code>
          *
@@ -868,19 +871,11 @@ public final class DiceProtocolBuffer extends
             return this;
         }
 
-        private boolean modifyScore_;
-        private int modifyScoreValue_;
-
         private void ensureSideIsMutable() {
             if (!((bitField0_ & 0x00000004) != 0)) {
                 side_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer>(side_);
                 bitField0_ |= 0x00000004;
             }
-        }
-
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.newBuilder()
-        private Builder() {
-
         }
 
         /**
@@ -914,12 +909,6 @@ public final class DiceProtocolBuffer extends
             } else {
                 return sideBuilder_.getMessage(index);
             }
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-
         }
 
         @java.lang.Override
@@ -1165,6 +1154,23 @@ public final class DiceProtocolBuffer extends
         }
 
         /**
+         * <code>string uuid = 2;</code>
+         *
+         * @param value The uuid to set.
+         * @return This builder for chaining.
+         */
+        public Builder setUuid(
+            java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            uuid_ = value;
+            bitField0_ |= 0x00000002;
+            onChanged();
+            return this;
+        }
+
+        /**
          * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
          */
         public Builder clearSide() {
@@ -1195,23 +1201,6 @@ public final class DiceProtocolBuffer extends
         /**
          * <code>string uuid = 2;</code>
          *
-         * @param value The uuid to set.
-         * @return This builder for chaining.
-         */
-        public Builder setUuid(
-            java.lang.String value) {
-            if (value == null) {
-                throw new NullPointerException();
-            }
-            uuid_ = value;
-            bitField0_ |= 0x00000002;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string uuid = 2;</code>
-         *
          * @return The bytes for uuid.
          */
         public com.google.protobuf.ByteString
@@ -1225,18 +1214,6 @@ public final class DiceProtocolBuffer extends
                 return b;
             } else {
                 return (com.google.protobuf.ByteString) ref;
-            }
-        }
-
-        /**
-         * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
-         */
-        public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>
-        getSideOrBuilderList() {
-            if (sideBuilder_ != null) {
-                return sideBuilder_.getMessageOrBuilderList();
-            } else {
-                return java.util.Collections.unmodifiableList(side_);
             }
         }
 
@@ -1256,6 +1233,18 @@ public final class DiceProtocolBuffer extends
             bitField0_ |= 0x00000002;
             onChanged();
             return this;
+        }
+
+        /**
+         * <code>repeated .com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer side = 3;</code>
+         */
+        public java.util.List<? extends com.github.jameshnsears.chance.data.domain.proto.SideProtocolBufferOrBuilder>
+        getSideOrBuilderList() {
+            if (sideBuilder_ != null) {
+                return sideBuilder_.getMessageOrBuilderList();
+            } else {
+                return java.util.Collections.unmodifiableList(side_);
+            }
         }
 
         /**
@@ -1530,6 +1519,24 @@ public final class DiceProtocolBuffer extends
         }
 
         /**
+         * <code>string title = 4;</code>
+         *
+         * @param value The bytes for title to set.
+         * @return This builder for chaining.
+         */
+        public Builder setTitleBytes(
+            com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            title_ = value;
+            bitField0_ |= 0x00000008;
+            onChanged();
+            return this;
+        }
+
+        /**
          * <code>int32 multiplierValue = 7;</code>
          *
          * @return The multiplierValue.
@@ -1561,24 +1568,6 @@ public final class DiceProtocolBuffer extends
         public Builder clearMultiplierValue() {
             bitField0_ = (bitField0_ & ~0x00000040);
             multiplierValue_ = 0;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string title = 4;</code>
-         *
-         * @param value The bytes for title to set.
-         * @return This builder for chaining.
-         */
-        public Builder setTitleBytes(
-            com.google.protobuf.ByteString value) {
-            if (value == null) {
-                throw new NullPointerException();
-            }
-            checkByteStringIsUtf8(value);
-            title_ = value;
-            bitField0_ |= 0x00000008;
             onChanged();
             return this;
         }
@@ -1794,6 +1783,24 @@ public final class DiceProtocolBuffer extends
         }
 
         /**
+         * <code>string explodeWhen = 9;</code>
+         *
+         * @param value The bytes for explodeWhen to set.
+         * @return This builder for chaining.
+         */
+        public Builder setExplodeWhenBytes(
+            com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            explodeWhen_ = value;
+            bitField0_ |= 0x00000100;
+            onChanged();
+            return this;
+        }
+
+        /**
          * <code>bool modifyScore = 11;</code>
          *
          * @return The modifyScore.
@@ -1825,24 +1832,6 @@ public final class DiceProtocolBuffer extends
         public Builder clearModifyScore() {
             bitField0_ = (bitField0_ & ~0x00000400);
             modifyScore_ = false;
-            onChanged();
-            return this;
-        }
-
-        /**
-         * <code>string explodeWhen = 9;</code>
-         *
-         * @param value The bytes for explodeWhen to set.
-         * @return This builder for chaining.
-         */
-        public Builder setExplodeWhenBytes(
-            com.google.protobuf.ByteString value) {
-            if (value == null) {
-                throw new NullPointerException();
-            }
-            checkByteStringIsUtf8(value);
-            explodeWhen_ = value;
-            bitField0_ |= 0x00000100;
             onChanged();
             return this;
         }

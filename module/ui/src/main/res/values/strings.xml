@@ -6,6 +6,9 @@
     <string name="tab.bag.export">Export…</string>
     <string name="tab.bag.export.success">Export successful</string>
 
+    <string name="tab.bag.reset.storage">Reset Storage</string>
+    <string name="tab.bag.reset.storage.confirm">This erases all your data and replaces it with the apps default data</string>
+
     <string name="tab.roll">Rolls</string>
     <string name="tab.roll.undo">Undo</string>
     <string name="tab.roll.roll">Roll</string>

@@ -16,4 +16,23 @@ class SettingsDataTestDouble(
 
     override var rollSound: Boolean = true,
     override var shuffle: Boolean = false
-) : SettingsDataInterface
+) : SettingsDataInterface {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+
+        if (other !is SettingsDataTestDouble) return false
+
+        if (resize != other.resize) return false
+        if (rollIndexTime != other.rollIndexTime) return false
+        if (rollScore != other.rollScore) return false
+        if (diceTitle != other.diceTitle) return false
+        if (sideNumber != other.sideNumber) return false
+        if (rollBehaviour != other.rollBehaviour) return false
+        if (sideDescription != other.sideDescription) return false
+        if (sideSVG != other.sideSVG) return false
+        if (rollSound != other.rollSound) return false
+        if (shuffle != other.shuffle) return false
+
+        return true
+    }
+}

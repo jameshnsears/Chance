@@ -1,3 +1,0 @@
-&bull; Fix: App does not accept SVG files created in Inkscape #216
-&bull; Improve coverage
-&bull; Bump dependencies

@@ -2,11 +2,15 @@ package com.github.jameshnsears.chance.ui.tab.bag
 
 import android.app.Application
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
+import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
 import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -251,7 +255,57 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         assertEquals(5, tabBagViewModel.stateFlowResize.value)
     }
 
+    @Test
+    fun resetStorage() = runTest {
+        val tabBagViewModel = tabBagViewModel()
+
+        // modify the default data
+        tabBagViewModel.repositorySettings.store(
+            SettingsDataTestDouble(
+                resize = 1,
+                rollIndexTime = false, rollScore = false,
+                diceTitle = false, sideNumber = false, rollBehaviour = false, sideDescription = false, sideSVG = false,
+                rollSound = false, shuffle = true
+            )
+        )
+
+        val modifiedDiceBag = mutableListOf(BagDataTestDouble().d6)
+        tabBagViewModel.repositoryBag.store(modifiedDiceBag)
+
+        tabBagViewModel.repositoryRoll.store(
+            linkedMapOf(
+                1L to listOf(
+                    Roll(
+                        modifiedDiceBag[0].epoch,
+                        modifiedDiceBag[0].sides[0]
+                    ),
+                )
+            )
+        )
+
+        /////////////////////
+
+        tabBagViewModel.resetStorage()
+
+        /////////////////////
+
+        val initialSettings = SettingsDataTestDouble()
+        val fetchedSettings = tabBagViewModel.repositorySettings.fetch().first()
+        assertEquals(initialSettings, fetchedSettings)
+
+        val initialBag = BagDataTestDouble()
+        val fetchedBag = tabBagViewModel.repositoryBag.fetch().first()
+        assertEquals(initialBag.allDice.size, fetchedBag.size)
+
+        val initialRollHistory = RollHistoryDataTestDouble(initialBag).rollHistory
+        val fetchedRollHistory = tabBagViewModel.repositoryRoll.fetch().first()
+        assertEquals(initialRollHistory.size, fetchedRollHistory.size)
+        assertEquals(initialRollHistory[0]?.size, fetchedRollHistory[0]?.size)
+        assertEquals(initialRollHistory[1]?.size, fetchedRollHistory[1]?.size)
+    }
+
     private fun tabBagViewModel(
+        applicationContext: Application = mockk<Application>()
     ): TabBagAndroidViewModel {
         val repositorySettings = RepositoryFactory().repositorySettings
 
@@ -260,7 +314,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         val repositoryRoll = RepositoryFactory().repositoryRoll
 
         return TabBagAndroidViewModel(
-            mockk<Application>(),
+            applicationContext,
             repositorySettings,
             repositoryBag,
             repositoryRoll,

@@ -6,16 +6,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
 import com.github.jameshnsears.chance.ui.theme.ChanceTheme
-import com.github.jameshnsears.chance.ui.utility.preview.UtilityPreview
 import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.utility.feature.UtilityFeature.Flag
 import io.mockk.mockk
 
-@UtilityPreview
+@Preview
 @Composable
 fun TabBagPreview() {
     UtilityFeature.enabled = setOf(
@@ -52,7 +52,7 @@ fun TabBagPreview() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@UtilityPreview
+@Preview
 @Composable
 fun TabBagBottomSheetPreview() {
     UtilityFeature.enabled = setOf(

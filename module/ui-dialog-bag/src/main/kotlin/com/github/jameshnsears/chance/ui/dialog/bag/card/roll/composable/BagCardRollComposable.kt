@@ -6,7 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ButtonDefaults
@@ -23,10 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
@@ -49,46 +47,35 @@ class BagCardRollTestTag {
 fun BagCardRoll(
     cardRollViewModel: CardRollViewModel,
 ) {
-    OutlinedCard(
+    Column(
         modifier = Modifier
-            .padding(bottom = 4.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp,
-        ),
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 8.dp)
     ) {
-        Column(modifier = Modifier.padding(18.dp)) {
-            Text(
-                text = stringResource(R.string.dialog_bag_roll),
-                modifier = Modifier
-                    .padding(top = 8.dp, bottom = 8.dp)
-                    .wrapContentSize(Alignment.Center),
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-            )
+        OutlinedCard(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .fillMaxWidth(),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 6.dp,
+            ),
+        ) {
+            Column(modifier = Modifier.padding(18.dp)) {
+                RollMultiplier(cardRollViewModel)
 
-            Roll(cardRollViewModel)
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp)
+                )
+                RollExplode(cardRollViewModel)
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp)
+                )
+                RollScore(cardRollViewModel)
+            }
         }
-    }
-}
-
-@Composable
-fun Roll(cardRollViewModel: CardRollViewModel) {
-    Column {
-        RollMultiplier(cardRollViewModel)
-
-        HorizontalDivider(
-            modifier = Modifier
-                .padding(top = 12.dp, bottom = 12.dp)
-        )
-        RollExplode(cardRollViewModel)
-
-        HorizontalDivider(
-            modifier = Modifier
-                .padding(top = 12.dp, bottom = 12.dp)
-        )
-        RollScore(cardRollViewModel)
     }
 }
 
@@ -144,19 +131,22 @@ private fun RollExplode(cardRollViewModel: CardRollViewModel) {
             .testTag(BagCardRollTestTag.ROLL_EXPLODE),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(start = 12.dp)
+        ) {
+            Icon(
+                painterResource(id = com.github.jameshnsears.chance.common.R.drawable.roll_explode_fill0_wght400_grad0_opsz24),
+                contentDescription = "",
+                modifier = Modifier.size(24.dp),
+            )
+
             Checkbox(
                 checked = rollExplode,
                 onCheckedChange = {
                     rollExplode = it
                     cardRollViewModel.rollExplode(it)
                 }
-            )
-
-            Icon(
-                painterResource(id = com.github.jameshnsears.chance.common.R.drawable.roll_explode_fill0_wght400_grad0_opsz24),
-                contentDescription = "",
-                modifier = Modifier.size(24.dp),
             )
 
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
@@ -250,23 +240,23 @@ fun RollScore(cardRollViewModel: CardRollViewModel) {
 
     Row(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp)
+            .padding(start = 12.dp, top = 8.dp, bottom = 8.dp)
             .fillMaxWidth()
             .testTag(BagCardRollTestTag.ROLL_MODIFY_SCORE),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            painterResource(id = com.github.jameshnsears.chance.common.R.drawable.roll_add_subtract_fill0_wght400_grad0_opsz24),
+            contentDescription = "",
+            modifier = Modifier.size(24.dp),
+        )
+
         Checkbox(
             checked = rollModifyScore,
             onCheckedChange = {
                 rollModifyScore = it
                 cardRollViewModel.rollModifyScore(it)
             }
-        )
-
-        Icon(
-            painterResource(id = com.github.jameshnsears.chance.common.R.drawable.roll_add_subtract_fill0_wght400_grad0_opsz24),
-            contentDescription = "",
-            modifier = Modifier.size(24.dp),
         )
 
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))

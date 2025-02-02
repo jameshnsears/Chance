@@ -26,7 +26,7 @@ class RepositoryFactoryInstrumentedTest : RepositoryInstrumentedHelper() {
 
         assertEquals(
             repositoryFactory.repositoryRoll.fetch().first().size,
-            repositoryFactory.rollHistoryDataTestDouble.size
+            repositoryFactory.rollHistoryTestDouble.size
         )
     }
 }

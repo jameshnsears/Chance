@@ -12,76 +12,17 @@ public final class SettingsProtocolBuffer extends
     com.google.protobuf.GeneratedMessage implements
     // @@protoc_insertion_point(message_implements:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     SettingsProtocolBufferOrBuilder {
-    private static final long serialVersionUID = 0L;
-
     public static final int RESIZE_FIELD_NUMBER = 1;
-
-    // Use SettingsProtocolBuffer.newBuilder() to construct.
-    private SettingsProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-        super(builder);
-    }
-
-    private SettingsProtocolBuffer() {
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-    getDescriptor() {
-        return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
-    }
-
     public static final int ROLLINDEXTIME_FIELD_NUMBER = 2;
     public static final int ROLLSCORE_FIELD_NUMBER = 3;
     public static final int DICETITLE_FIELD_NUMBER = 4;
-
-    /**
-     * <code>int32 resize = 1;</code>
-     *
-     * @return The resize.
-     */
-    @java.lang.Override
-    public int getResize() {
-        return resize_;
-    }
-
     public static final int SIDENUMBER_FIELD_NUMBER = 5;
     public static final int BEHAVIOUR_FIELD_NUMBER = 6;
-
-    /**
-     * <code>bool rollIndexTime = 2;</code>
-     *
-     * @return The rollIndexTime.
-     */
-    @java.lang.Override
-    public boolean getRollIndexTime() {
-        return rollIndexTime_;
-    }
-
     public static final int SIDEDESCRIPTION_FIELD_NUMBER = 7;
     public static final int SIDESVG_FIELD_NUMBER = 8;
-
-    /**
-     * <code>bool rollScore = 3;</code>
-     *
-     * @return The rollScore.
-     */
-    @java.lang.Override
-    public boolean getRollScore() {
-        return rollScore_;
-    }
-
     public static final int ROLLSOUND_FIELD_NUMBER = 9;
     public static final int SHUFFLE_FIELD_NUMBER = 10;
-
-    /**
-     * <code>bool diceTitle = 4;</code>
-     *
-     * @return The diceTitle.
-     */
-    @java.lang.Override
-    public boolean getDiceTitle() {
-        return diceTitle_;
-    }
-
+    private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer DEFAULT_INSTANCE;
     private static final com.google.protobuf.Parser<SettingsProtocolBuffer>
@@ -106,16 +47,6 @@ public final class SettingsProtocolBuffer extends
         }
     };
 
-    /**
-     * <code>bool sideNumber = 5;</code>
-     *
-     * @return The sideNumber.
-     */
-    @java.lang.Override
-    public boolean getSideNumber() {
-        return sideNumber_;
-    }
-
     static {
         com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
             com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
@@ -130,71 +61,30 @@ public final class SettingsProtocolBuffer extends
         DEFAULT_INSTANCE = new com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer();
     }
 
-    /**
-     * <code>bool behaviour = 6;</code>
-     *
-     * @return The behaviour.
-     */
-    @java.lang.Override
-    public boolean getBehaviour() {
-        return behaviour_;
-    }
-
     private int resize_ = 0;
     private boolean rollIndexTime_ = false;
-
-    /**
-     * <code>bool sideDescription = 7;</code>
-     *
-     * @return The sideDescription.
-     */
-    @java.lang.Override
-    public boolean getSideDescription() {
-        return sideDescription_;
-    }
-
     private boolean rollScore_ = false;
     private boolean diceTitle_ = false;
-
-    /**
-     * <code>bool sideSVG = 8;</code>
-     *
-     * @return The sideSVG.
-     */
-    @java.lang.Override
-    public boolean getSideSVG() {
-        return sideSVG_;
-    }
-
     private boolean sideNumber_ = false;
     private boolean behaviour_ = false;
-
-    /**
-     * <code>bool rollSound = 9;</code>
-     *
-     * @return The rollSound.
-     */
-    @java.lang.Override
-    public boolean getRollSound() {
-        return rollSound_;
-    }
-
     private boolean sideDescription_ = false;
     private boolean sideSVG_ = false;
     private boolean rollSound_ = false;
     private boolean shuffle_ = false;
+    private byte memoizedIsInitialized = -1;
 
-    @java.lang.Override
-    public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
+    // Use SettingsProtocolBuffer.newBuilder() to construct.
+    private SettingsProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+        super(builder);
     }
 
-    private byte memoizedIsInitialized = -1;
+    private SettingsProtocolBuffer() {
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+    getDescriptor() {
+        return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
+    }
 
     public static com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer parseFrom(
         java.nio.ByteBuffer data)
@@ -289,13 +179,113 @@ public final class SettingsProtocolBuffer extends
         return DEFAULT_INSTANCE;
     }
 
+    public static com.google.protobuf.Parser<SettingsProtocolBuffer> parser() {
+        return PARSER;
+    }
+
+    /**
+     * <code>int32 resize = 1;</code>
+     *
+     * @return The resize.
+     */
+    @java.lang.Override
+    public int getResize() {
+        return resize_;
+    }
+
+    /**
+     * <code>bool rollIndexTime = 2;</code>
+     *
+     * @return The rollIndexTime.
+     */
+    @java.lang.Override
+    public boolean getRollIndexTime() {
+        return rollIndexTime_;
+    }
+
+    /**
+     * <code>bool rollScore = 3;</code>
+     *
+     * @return The rollScore.
+     */
+    @java.lang.Override
+    public boolean getRollScore() {
+        return rollScore_;
+    }
+
+    /**
+     * <code>bool diceTitle = 4;</code>
+     *
+     * @return The diceTitle.
+     */
+    @java.lang.Override
+    public boolean getDiceTitle() {
+        return diceTitle_;
+    }
+
+    /**
+     * <code>bool sideNumber = 5;</code>
+     *
+     * @return The sideNumber.
+     */
+    @java.lang.Override
+    public boolean getSideNumber() {
+        return sideNumber_;
+    }
+
+    /**
+     * <code>bool behaviour = 6;</code>
+     *
+     * @return The behaviour.
+     */
+    @java.lang.Override
+    public boolean getBehaviour() {
+        return behaviour_;
+    }
+
+    /**
+     * <code>bool sideDescription = 7;</code>
+     *
+     * @return The sideDescription.
+     */
+    @java.lang.Override
+    public boolean getSideDescription() {
+        return sideDescription_;
+    }
+
+    /**
+     * <code>bool sideSVG = 8;</code>
+     *
+     * @return The sideSVG.
+     */
+    @java.lang.Override
+    public boolean getSideSVG() {
+        return sideSVG_;
+    }
+
+    /**
+     * <code>bool rollSound = 9;</code>
+     *
+     * @return The rollSound.
+     */
+    @java.lang.Override
+    public boolean getRollSound() {
+        return rollSound_;
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+    }
+
     @java.lang.Override
     public Builder newBuilderForType() {
         return newBuilder();
-    }
-
-    public static com.google.protobuf.Parser<SettingsProtocolBuffer> parser() {
-        return PARSER;
     }
 
     @java.lang.Override
@@ -513,6 +503,28 @@ public final class SettingsProtocolBuffer extends
         private boolean rollIndexTime_;
         private boolean rollScore_;
         private boolean diceTitle_;
+        private boolean sideNumber_;
+        private boolean behaviour_;
+        private boolean sideDescription_;
+        private boolean sideSVG_;
+        private boolean rollSound_;
+        private boolean shuffle_;
+
+        // Construct using com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.newBuilder()
+        private Builder() {
+
+        }
+
+        private Builder(
+            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+            super(parent);
+
+        }
+
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+            return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
+        }
 
         @java.lang.Override
         public com.google.protobuf.Descriptors.Descriptor
@@ -544,8 +556,6 @@ public final class SettingsProtocolBuffer extends
             return result;
         }
 
-        private boolean sideNumber_;
-
         @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
             if (other instanceof com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer) {
@@ -556,16 +566,10 @@ public final class SettingsProtocolBuffer extends
             }
         }
 
-        private boolean behaviour_;
-
         @java.lang.Override
         public final boolean isInitialized() {
             return true;
         }
-
-        private boolean sideDescription_;
-        private boolean sideSVG_;
-        private boolean rollSound_;
 
         /**
          * <code>int32 resize = 1;</code>
@@ -603,8 +607,6 @@ public final class SettingsProtocolBuffer extends
             return this;
         }
 
-        private boolean shuffle_;
-
         /**
          * <code>bool rollIndexTime = 2;</code>
          *
@@ -639,11 +641,6 @@ public final class SettingsProtocolBuffer extends
             rollIndexTime_ = false;
             onChanged();
             return this;
-        }
-
-        // Construct using com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.newBuilder()
-        private Builder() {
-
         }
 
         /**
@@ -682,12 +679,6 @@ public final class SettingsProtocolBuffer extends
             return this;
         }
 
-        private Builder(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-            super(parent);
-
-        }
-
         /**
          * <code>bool diceTitle = 4;</code>
          *
@@ -722,11 +713,6 @@ public final class SettingsProtocolBuffer extends
             diceTitle_ = false;
             onChanged();
             return this;
-        }
-
-        public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-            return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
         }
 
         /**

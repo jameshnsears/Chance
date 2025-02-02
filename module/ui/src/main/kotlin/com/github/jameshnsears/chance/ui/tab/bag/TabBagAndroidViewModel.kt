@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.github.jameshnsears.chance.data.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.repository.RepositoryImportException
 import com.github.jameshnsears.chance.data.repository.RepositoryImportStatus
 import com.github.jameshnsears.chance.data.repository.RepositoryImportValidation
@@ -36,12 +37,12 @@ data class TabBagImportState(
 )
 
 class TabBagAndroidViewModel(
-    application: Application,
+    private val applicationContext: Application,
     val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
     resizeInitialValue: Int,
-) : AndroidViewModel(application) {
+) : AndroidViewModel(applicationContext) {
     private val _stateFlowResize = MutableStateFlow(resizeInitialValue)
     val stateFlowResize: StateFlow<Int> = _stateFlowResize
 
@@ -64,12 +65,12 @@ class TabBagAndroidViewModel(
 
     suspend fun exportRepositoriesAsJson(): String {
         return "[" +
-                repositorySettings.jsonExport() +
-                "," +
-                repositoryBag.jsonExport() +
-                "," +
-                repositoryRoll.jsonExport() +
-                "]"
+            repositorySettings.jsonExport() +
+            "," +
+            repositoryBag.jsonExport() +
+            "," +
+            repositoryRoll.jsonExport() +
+            "]"
     }
 
     private val _stateFlowTabBagExport = MutableStateFlow(
@@ -187,6 +188,16 @@ class TabBagAndroidViewModel(
 
                 ResizeEvent.emit()
             }
+        }
+    }
+
+    fun resetStorage() {
+        viewModelScope.launch {
+            RepositoryFactory(applicationContext).resetStorage()
+
+            _stateFlowResize.value = repositorySettings.fetch().first().resize
+
+            TabBagResetStorageEvent.emit()
         }
     }
 }

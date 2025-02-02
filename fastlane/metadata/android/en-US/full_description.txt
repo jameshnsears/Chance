@@ -4,5 +4,5 @@
 &bull; Select which dice to roll
 &bull; Settings to show only what you want to see
 &bull; Import &amp; export everything
-&bull; Small, modern codebase
+&bull; Small, modern, codebase
 &bull; User feedback / contribution drives development
