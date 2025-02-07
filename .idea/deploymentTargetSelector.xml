@@ -33,7 +33,7 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="Generate Baseline Profile - API 33+">
+      <SelectionState runConfigName="Generate Baseline Profile - API 35">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
