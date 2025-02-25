@@ -11,9 +11,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -84,6 +87,8 @@ fun TabBagLayout(
 ) {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 
+    val coroutineScope = rememberCoroutineScope()
+
     BottomSheetScaffold(
         scaffoldState = bottomSheetScaffoldState,
         sheetPeekHeight = 110.dp,
@@ -100,9 +105,31 @@ fun TabBagLayout(
             }
         }
     ) {
-        ZoomBag(
-            zoomBagAndroidViewModel
-        )
+        Box(
+            Modifier
+                .fillMaxSize()
+
+                .pointerInput(Unit) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            if (event.changes.first().pressed) {
+                                if (bottomSheetScaffoldState.bottomSheetState.hasExpandedState) {
+                                    coroutineScope.launch {
+                                        bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                                    }
+                                }
+                            }
+
+                            // propagate tap...
+                        }
+                    }
+                }
+        ) {
+            ZoomBag(
+                zoomBagAndroidViewModel
+            )
+        }
     }
 }
 
@@ -150,6 +177,7 @@ fun TabBagBottomSheetLayout(
         )
 
         ResetStorage(
+            bottomSheetScaffoldState,
             tabBagAndroidViewModel
         )
     }
@@ -192,9 +220,12 @@ fun Resize(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResetStorage(
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
     tabBagAndroidViewModel: TabBagAndroidViewModel,
 ) {
     val showDialogConfirm = remember { mutableStateOf(false) }
+
+    val coroutineScope = rememberCoroutineScope()
 
     Row(
         modifier = Modifier
@@ -205,6 +236,10 @@ fun ResetStorage(
         Button(
             onClick = {
                 showDialogConfirm.value = true
+
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                }
             },
             modifier = Modifier
                 .width(200.dp)

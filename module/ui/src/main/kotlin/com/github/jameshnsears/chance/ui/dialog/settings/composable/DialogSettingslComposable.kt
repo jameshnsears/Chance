@@ -149,17 +149,17 @@ fun DialogSettingsLayout(
             )
 
             CommonSwitch(
-                stringResource(R.string.tab_roll_settings_side_description),
-                sideDescription,
-                tabRollAndroidViewModel::settingsSideDescription,
-                DialogSettingsTestTag.SETTINGS_SIDE_DESCRIPTION
-            )
-
-            CommonSwitch(
                 stringResource(R.string.tab_roll_settings_side_svg),
                 sideSVG,
                 tabRollAndroidViewModel::settingsSideSVG,
                 DialogSettingsTestTag.SETTINGS_SIDE_SVG
+            )
+
+            CommonSwitch(
+                stringResource(R.string.tab_roll_settings_side_description),
+                sideDescription,
+                tabRollAndroidViewModel::settingsSideDescription,
+                DialogSettingsTestTag.SETTINGS_SIDE_DESCRIPTION
             )
 
             HorizontalDivider(

@@ -92,13 +92,82 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
                 imageBase64 = readBase64File("data/base64/story/spaceship.base64"),
             ),
         ),
-        title = "Story",
+        title = "Mr Benn",
         multiplierValue = 3,
         colour = "ea5068ca"
+    )
+
+    val diceMan = Dice(
+        sides = listOf(
+            Side(
+                number = 10,
+                description = "Draw / Paint your feelings",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 9,
+                description = "Act without introspection",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 8,
+                description = "Practise meditation",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 7,
+                description = "Seek external feedback on behavior",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 6,
+                description = "Spend time journaling",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 5,
+                description = "Work on a professional project",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 4,
+                description = "Talk to your partner",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 3,
+                description = "Visit a neighbour",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 2,
+                description = "Watch a movie",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+            Side(
+                number = 1,
+                description = "Go to bed early, read a book",
+                descriptionColour = "ff000000",
+                imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+            ),
+        ),
+        title = "The Dice Man",
+        multiplierValue = 1,
+        colour = "ff8b0000"
     )
 
     override val allDice = mutableListOf(
         d6,
         diceStory,
+        diceMan
     )
 }

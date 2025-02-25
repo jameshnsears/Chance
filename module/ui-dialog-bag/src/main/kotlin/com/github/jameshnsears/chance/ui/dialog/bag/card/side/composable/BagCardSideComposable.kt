@@ -91,14 +91,14 @@ fun BagCardSide(cardSideAndroidViewModel: CardSideAndroidViewModel) {
                         .padding(top = 12.dp, bottom = 12.dp)
                 )
 
-                SideDescription(cardSideAndroidViewModel)
+                SideImageSVG(cardSideAndroidViewModel)
 
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(top = 12.dp, bottom = 12.dp)
                 )
 
-                SideImageSVG(cardSideAndroidViewModel)
+                SideDescription(cardSideAndroidViewModel)
             }
         }
     }
@@ -418,8 +418,6 @@ fun SideImageSVG(
                 )
             }
         }
-
-        Spacer(modifier = Modifier.weight(1f))
     }
 
     SideApplyToAll(

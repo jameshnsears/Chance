@@ -200,12 +200,12 @@ private fun RollDetails(
             roll.side
         )
 
-        if (settingsSideDescription) ZoomSideDescription(zoomRollAndroidViewModel, dice, roll.side)
-
         if (settingsSideSVG) ZoomRollSideImageSVG(
             zoomRollAndroidViewModel,
             roll.side
         )
+
+        if (settingsSideDescription) ZoomSideDescription(zoomRollAndroidViewModel, dice, roll.side)
     }
 }
 

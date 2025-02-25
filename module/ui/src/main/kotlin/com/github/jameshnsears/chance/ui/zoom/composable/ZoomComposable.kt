@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,12 +29,24 @@ import com.github.jameshnsears.chance.utility.feature.UtilityFeature
 @Composable
 fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, side: Side) {
     if (side.description != "") {
-        Text(
-            text = side.description,
-            color = zoomAndroidViewModel.sideColor(side.descriptionColour)
-        )
+        Box(
+            modifier = Modifier
+                .size(110.dp, 75.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = side.description,
+                color = zoomAndroidViewModel.sideColor(side.descriptionColour),
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center
+            )
+        }
     } else if (zoomAndroidViewModel.diceContainsAtLeastOneSideWithDescription(dice)) {
-        Text(text = " ")
+        Text(
+            text = " ",
+            textAlign = TextAlign.Center
+        )
     }
 }
 

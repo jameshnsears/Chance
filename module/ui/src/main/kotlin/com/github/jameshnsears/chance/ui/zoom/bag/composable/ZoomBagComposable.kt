@@ -88,8 +88,6 @@ fun ZoomBag(
                             cardSide
                         )
 
-                        ZoomSideDescription(zoomBagAndroidViewModel, dice, side)
-
                         ZoomSideImageSVG(
                             zoomBagAndroidViewModel,
                             dice,
@@ -98,6 +96,8 @@ fun ZoomBag(
                             cardDice,
                             cardSide
                         )
+
+                        ZoomSideDescription(zoomBagAndroidViewModel, dice, side)
                     }
                 }
             }

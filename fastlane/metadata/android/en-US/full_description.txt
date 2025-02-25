@@ -1,8 +1,9 @@
 &bull; Tap the side of a dice to change almost every facet - colour; text; image (SVG); # of sides
 &bull; Clone dice to create new dice (d2...d20)
 &bull; Configure roll behaviour of individual dice
-&bull; Select which dice to roll
 &bull; Settings to show only what you want to see
-&bull; Import &amp; export everything
+&bull; Import &amp; export everything, in JSON
+
 &bull; Small, modern, codebase
+
 &bull; User feedback / contribution drives development
