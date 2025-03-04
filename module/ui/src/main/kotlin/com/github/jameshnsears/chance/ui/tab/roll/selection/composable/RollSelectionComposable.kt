@@ -11,6 +11,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -47,14 +48,19 @@ fun RollSelectionRow(tabRollAndroidViewModel: TabRollAndroidViewModel) {
 @Composable
 fun RollSectionFilterChip(tabRollAndroidViewModel: TabRollAndroidViewModel, dice: Dice) {
     var selected by remember { mutableStateOf(dice.selected) }
+    var lastClickTime by remember { mutableLongStateOf(0L) }        // debounce
 
     FilterChip(
         modifier = Modifier
             .padding(start = 12.dp, top = 4.dp, bottom = 4.dp, end = 12.dp)
             .testTag(RollSelectionTestTag.ROLL_BUTTON + dice.title),
         onClick = {
-            selected = !selected
-            tabRollAndroidViewModel.markDiceAsSelected(dice, !dice.selected)
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastClickTime > 750) {
+                selected = !selected
+                tabRollAndroidViewModel.markDiceAsSelected(dice, !dice.selected)
+                lastClickTime = currentTime
+            }
         },
         label = {
             Text(

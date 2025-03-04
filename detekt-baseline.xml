@@ -1,28 +1,28 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>EqualsWithHashCodeExist:SettingsDataTestDouble.kt$SettingsDataTestDouble : SettingsDataInterface</ID>
-    <ID>FunctionParameterNaming:DialogColourPickerPreview.kt$_: String</ID>
-    <ID>ImplicitDefaultLocale:UtilityLoggingLineNumberTree.kt$UtilityLoggingLineNumberTree$String.format( "%s, %s", element.lineNumber, element.methodName, )</ID>
-    <ID>LongMethod:BagCardSideComposable.kt$@Composable fun SideImageSVG( cardSideAndroidViewModel: CardSideAndroidViewModel )</ID>
-    <ID>LongMethod:DialogSettingslComposable.kt$@Composable fun DialogSettingsLayout( tabRollAndroidViewModel: TabRollAndroidViewModel )</ID>
-    <ID>MatchingDeclarationName:BagCardDiceComposable.kt$BagCardDiceTestTag</ID>
-    <ID>MatchingDeclarationName:BagCardRollComposable.kt$BagCardRollTestTag</ID>
-    <ID>MatchingDeclarationName:BagCardSideComposable.kt$BagCardSideTestTag</ID>
-    <ID>MatchingDeclarationName:DialogSettingslComposable.kt$DialogSettingsTestTag</ID>
-    <ID>MatchingDeclarationName:RollSelectionComposable.kt$RollSelectionTestTag</ID>
-    <ID>MatchingDeclarationName:TabBagComposable.kt$TabBagTestTag</ID>
-    <ID>MatchingDeclarationName:TabRollComposable.kt$TabRollTestTag</ID>
-    <ID>MatchingDeclarationName:TabRowComposable.kt$TabRowTestTag</ID>
-    <ID>TooGenericExceptionCaught:TabBagAndroidViewModel.kt$TabBagAndroidViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionThrown:MainActivityComposable.kt$throw RuntimeException("Test Crash")</ID>
-    <ID>UnusedParameter:DialogBagTabLayoutComposable.kt$modifier: Modifier</ID>
-    <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>
-    <ID>UnusedPrivateProperty:CardSideAndroidViewModel.kt$CardSideSvgImportException$svgImportError: SvgImportError</ID>
-    <ID>UnusedPrivateProperty:RollHistoryDataImpl.kt$RollHistoryDataImpl$bagData: BagDataInterface</ID>
-    <ID>VariableNaming:TabRollAndroidViewModel.kt$TabRollAndroidViewModel$val _stateFlowSettingsData = MutableStateFlow( SettingsState( rollIndexTime = false, rollScore = false, diceTitle = false, rollBehaviour = false, sideNumber = false, sideDescription = false, sideSVG = false, shuffle = false, rollSound = false, ) )</ID>
-    <ID>VariableNaming:TabRollAndroidViewModel.kt$TabRollAndroidViewModel$var _undoEnabled = MutableStateFlow(false)</ID>
-    <ID>VariableNaming:ZoomAndroidViewModel.kt$ZoomAndroidViewModel$protected val _stateFlowZoom = MutableStateFlow( ZoomState( resizeView = 0.dp, diceBag = mutableListOf(), rollHistory = LinkedHashMap() ) )</ID>
-  </CurrentIssues>
+    <ManuallySuppressedIssues></ManuallySuppressedIssues>
+    <CurrentIssues>
+        <ID>EqualsWithHashCodeExist:SettingsDataTestDouble.kt$SettingsDataTestDouble : SettingsDataInterface</ID>
+        <ID>FunctionParameterNaming:DialogColourPickerPreview.kt$_: String</ID>
+        <ID>ImplicitDefaultLocale:UtilityLoggingLineNumberTree.kt$UtilityLoggingLineNumberTree$String.format( "%s, %s", element.lineNumber, element.methodName, )</ID>
+        <ID>LongMethod:BagCardSideComposable.kt$@Composable fun SideImageSVG( cardSideAndroidViewModel: CardSideAndroidViewModel )</ID>
+        <ID>LongMethod:DialogSettingslComposable.kt$@Composable fun DialogSettingsLayout( tabRollAndroidViewModel: TabRollAndroidViewModel )</ID>
+        <ID>MatchingDeclarationName:BagCardDiceComposable.kt$BagCardDiceTestTag</ID>
+        <ID>MatchingDeclarationName:BagCardRollComposable.kt$BagCardRollTestTag</ID>
+        <ID>MatchingDeclarationName:BagCardSideComposable.kt$BagCardSideTestTag</ID>
+        <ID>MatchingDeclarationName:DialogSettingslComposable.kt$DialogSettingsTestTag</ID>
+        <ID>MatchingDeclarationName:RollSelectionComposable.kt$RollSelectionTestTag</ID>
+        <ID>MatchingDeclarationName:TabBagComposable.kt$TabBagTestTag</ID>
+        <ID>MatchingDeclarationName:TabRollComposable.kt$TabRollTestTag</ID>
+        <ID>MatchingDeclarationName:TabRowComposable.kt$TabRowTestTag</ID>
+        <ID>TooGenericExceptionCaught:TabBagAndroidViewModel.kt$TabBagAndroidViewModel$e: Exception</ID>
+        <ID>TooGenericExceptionThrown:MainActivityComposable.kt$throw RuntimeException("Test Crash")</ID>
+        <ID>UnusedParameter:DialogBagTabLayoutComposable.kt$modifier: Modifier</ID>
+        <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>
+        <ID>UnusedPrivateProperty:CardSideAndroidViewModel.kt$CardSideSvgImportException$svgImportError: SvgImportError</ID>
+        <ID>UnusedPrivateProperty:RollHistoryDataImpl.kt$RollHistoryDataImpl$bagData: BagDataInterface</ID>
+        <ID>VariableNaming:TabRollAndroidViewModel.kt$TabRollAndroidViewModel$val _stateFlowSettingsData = MutableStateFlow( SettingsState( rollIndexTime = false, rollScore = false, diceTitle = false, rollBehaviour = false, sideNumber = false, sideDescription = false, sideSVG = false, shuffle = false, rollSound = false, ) )</ID>
+        <ID>VariableNaming:TabRollAndroidViewModel.kt$TabRollAndroidViewModel$var _undoEnabled = MutableStateFlow(false)</ID>
+        <ID>VariableNaming:ZoomAndroidViewModel.kt$ZoomAndroidViewModel$protected val _stateFlowZoom = MutableStateFlow( ZoomState( resizeView = 0.dp, diceBag = mutableListOf(), rollHistory = LinkedHashMap() ) )</ID>
+    </CurrentIssues>
 </SmellBaseline>

@@ -1,0 +1,3 @@
+- Update Dice Man dice to support dark theme
+- Improve Roll bottom sheet performance
+- Bump dependencies

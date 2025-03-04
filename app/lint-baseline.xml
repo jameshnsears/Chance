@@ -1,38 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.8.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.8.0)" variant="all" version="8.8.0">
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.compose:compose-bom than 2025.01.00 is available: 2025.01.01"
-        errorLine1="compose-bom = &quot;2025.01.00&quot;"
-        errorLine2="              ~~~~~~~~~~~~">
-        <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="12"
-            column="15"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.compose:compose-bom than 2025.01.00 is available: 2025.01.01"
-        errorLine1="compose-bom = &quot;2025.01.00&quot;"
-        errorLine2="              ~~~~~~~~~~~~">
-        <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="12"
-            column="15"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.compose:compose-bom than 2025.01.00 is available: 2025.01.01"
-        errorLine1="compose-bom = &quot;2025.01.00&quot;"
-        errorLine2="              ~~~~~~~~~~~~">
-        <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="12"
-            column="15"/>
-    </issue>
+<issues format="6" by="lint 8.8.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.8.2)" variant="all" version="8.8.2">
 
     <issue
         id="GradleDependency"
@@ -65,39 +32,6 @@
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
             line="16"
             column="17"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.compose.ui:ui-tooling than 1.7.6 is available: 1.7.7"
-        errorLine1="ui-tooling = &quot;1.7.6&quot;"
-        errorLine2="             ~~~~~~~">
-        <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="41"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.compose.ui:ui-tooling than 1.7.6 is available: 1.7.7"
-        errorLine1="ui-tooling = &quot;1.7.6&quot;"
-        errorLine2="             ~~~~~~~">
-        <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="41"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="GradleDependency"
-        message="A newer version of androidx.compose.ui:ui-tooling than 1.7.6 is available: 1.7.7"
-        errorLine1="ui-tooling = &quot;1.7.6&quot;"
-        errorLine2="             ~~~~~~~">
-        <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="41"
-            column="14"/>
     </issue>
 
     <issue

@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import java.security.SecureRandom
 
@@ -76,13 +78,13 @@ class TabRollAndroidViewModel(
     init {
         viewModelScope.launch {
             alignSettings()
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
 
         viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
                 Timber.d("collect.DialogBagCloseEvent.TabRollAndroidViewModel")
-                alignBottomSheetWithSettings()
+                alignBottomSheetWithStorage()
             }
         }
 
@@ -93,7 +95,7 @@ class TabRollAndroidViewModel(
             ).collect {
                 Timber.d("collect.TabBagImportEvent|TabBagResetStorageEvent.TabRollAndroidViewModel")
                 alignSettings()
-                alignBottomSheetWithSettings()
+                alignBottomSheetWithStorage()
             }
         }
     }
@@ -115,7 +117,7 @@ class TabRollAndroidViewModel(
         }
     }
 
-    private suspend fun alignBottomSheetWithSettings() {
+    private suspend fun alignBottomSheetWithStorage() {
         _undoEnabled.value = isUndoPossible()
         Timber.d("_undoEnabled.value=${_undoEnabled.value}")
 
@@ -124,26 +126,60 @@ class TabRollAndroidViewModel(
     }
 
     private suspend fun isUndoPossible(): Boolean {
-        if (!stateFlowSettings.value.rollIndexTime
-            && !stateFlowSettings.value.rollScore
-            && !stateFlowSettings.value.diceTitle
-            && !stateFlowSettings.value.rollBehaviour
-            && !stateFlowSettings.value.sideNumber
-            && !stateFlowSettings.value.sideDescription
-            && !stateFlowSettings.value.sideSVG
-        ) {
+        if (isSettingsNotEnabled())
             return false
-        }
 
-        if (repositoryRoll.fetch().first().size > 0) {
+        if (repositoryRoll.fetch().first().size > 0)
             return true
-        }
 
         return false
     }
 
     private suspend fun isRollPossible(): Boolean {
-        if (!stateFlowSettings.value.rollIndexTime
+        if (isSettingsNotEnabled())
+            return false
+
+        _diceBag.value = repositoryBag.fetch().first()
+
+        return _diceBag.value.any { it.selected }
+    }
+
+    private val mutex = Mutex()
+
+    fun markDiceAsSelected(dice: Dice, selected: Boolean) {
+        Timber.d("epoch=${dice.epoch}; selected=${selected}")
+
+        viewModelScope.launch {
+            mutex.withLock {
+                val updatedDiceBag: DiceBag = mutableListOf()
+
+                _diceBag.value.forEach {
+                    val existingDice = it.copy()
+
+                    if (dice.epoch == it.epoch) {
+                        existingDice.selected = selected
+                    }
+
+                    updatedDiceBag.add(existingDice)
+                }
+
+                repositoryBag.store(updatedDiceBag)
+
+                _diceBag.value = updatedDiceBag
+
+                _undoEnabled.value = isUndoPossible()
+
+                if (isSettingsNotEnabled())
+                    _rollEnabled.value = false
+                else {
+                    _rollEnabled.value = _diceBag.value.any { it.selected }
+                }
+            }
+        }
+    }
+
+    private fun isSettingsNotEnabled() = (
+        !stateFlowSettings.value.rollIndexTime
             && !stateFlowSettings.value.rollScore
             && !stateFlowSettings.value.diceTitle
             && !stateFlowSettings.value.rollBehaviour
@@ -151,42 +187,6 @@ class TabRollAndroidViewModel(
             && !stateFlowSettings.value.sideDescription
             && !stateFlowSettings.value.sideSVG
         )
-            return false
-
-        _diceBag.value = repositoryBag.fetch().first()
-        var selected = false
-        _diceBag.value.forEach {
-            if (it.selected) {
-                selected = true
-            }
-        }
-        return selected
-    }
-
-    fun markDiceAsSelected(dice: Dice, selected: Boolean) {
-        Timber.d("epoch=${dice.epoch}; selected=${selected}")
-
-        viewModelScope.launch {
-            val updatedDiceBag: DiceBag = mutableListOf()
-
-            _diceBag.value.forEach {
-                val newDice = it.copy()
-
-                if (dice.epoch == it.epoch) {
-                    newDice.selected = selected
-                }
-                updatedDiceBag.add(newDice)
-            }
-
-            repositoryBag.store(updatedDiceBag)
-
-            TabRollEvent.emit()
-
-            _diceBag.value = repositoryBag.fetch().first()
-
-            alignBottomSheetWithSettings()
-        }
-    }
 
     private val secureRandom: SecureRandom = SecureRandom.getInstance("SHA1PRNG")
 
@@ -214,8 +214,7 @@ class TabRollAndroidViewModel(
 
     fun shuffleRollSequence(rollSequence: MutableList<Roll>) {
         if (_stateFlowSettingsData.value.shuffle) {
-            val selectedCount = diceBag.value.count { it.selected }
-            if (selectedCount > 1) {
+            if (_diceBag.value.count { it.selected } > 1) {
                 rollSequence.shuffle()
 
                 // order the multipleIndex into ASC order for any dice cluster
@@ -234,7 +233,7 @@ class TabRollAndroidViewModel(
     fun dismissSettingsDialog() {
         viewModelScope.launch {
             saveSettings()
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
@@ -289,61 +288,64 @@ class TabRollAndroidViewModel(
     }
 
     fun rollDiceSequence(newRollSequence: MutableList<Roll>) {
-        diceBag.value.forEach { dice ->
-            if (dice.selected) {
+        if (_diceBag.value.any { it.selected }) {
 
-                for (indexMultiplier in 1..dice.multiplierValue) {
-                    var randomSide = randomSide(dice)
+            _diceBag.value.forEach { dice ->
+                if (dice.selected) {
 
-                    newRollSequence.add(
-                        0,
-                        Roll(
-                            diceEpoch = dice.epoch,
-                            side = randomSide,
-                            multiplierIndex = indexMultiplier,
-                            score = randomSide.number
-                        ),
-                    )
+                    for (indexMultiplier in 1..dice.multiplierValue) {
+                        var randomSide = randomSide(dice)
 
-                    if (dice.explode) {
-                        var indexExplode = 0
-                        val explosionDepth = 5
+                        newRollSequence.add(
+                            0,
+                            Roll(
+                                diceEpoch = dice.epoch,
+                                side = randomSide,
+                                multiplierIndex = indexMultiplier,
+                                score = randomSide.number
+                            ),
+                        )
 
-                        while (indexExplode != explosionDepth) {
-                            if (diceSequenceCanExplode(dice, randomSide)) {
-                                indexExplode++
+                        if (dice.explode) {
+                            var indexExplode = 0
+                            val explosionDepth = 5
 
-                                randomSide = randomSide(dice)
+                            while (indexExplode != explosionDepth) {
+                                if (diceSequenceCanExplode(dice, randomSide)) {
+                                    indexExplode++
 
-                                newRollSequence.add(
-                                    0,
-                                    Roll(
-                                        diceEpoch = dice.epoch,
-                                        side = randomSide,
-                                        multiplierIndex = indexMultiplier,
-                                        explodeIndex = indexExplode,
-                                        score = randomSide.number
-                                    ),
-                                )
-                            }
+                                    randomSide = randomSide(dice)
 
-                            if (!diceSequenceCanExplode(dice, randomSide))
-                                break
-                            else {
-                                randomSide = randomSide(dice)
+                                    newRollSequence.add(
+                                        0,
+                                        Roll(
+                                            diceEpoch = dice.epoch,
+                                            side = randomSide,
+                                            multiplierIndex = indexMultiplier,
+                                            explodeIndex = indexExplode,
+                                            score = randomSide.number
+                                        ),
+                                    )
+                                }
+
+                                if (!diceSequenceCanExplode(dice, randomSide))
+                                    break
+                                else {
+                                    randomSide = randomSide(dice)
+                                }
                             }
                         }
                     }
-                }
 
-                if (dice.modifyScore) {
-                    newRollSequence[0].scoreAdjustment = dice.modifyScoreValue
-                    newRollSequence[0].score = (newRollSequence[0].score + dice.modifyScoreValue)
+                    if (dice.modifyScore) {
+                        newRollSequence[0].scoreAdjustment = dice.modifyScoreValue
+                        newRollSequence[0].score = (newRollSequence[0].score + dice.modifyScoreValue)
+                    }
                 }
             }
-        }
 
-        newRollSequence.reverse()
+            newRollSequence.reverse()
+        }
     }
 
     private fun diceSequenceCanExplode(
@@ -408,14 +410,14 @@ class TabRollAndroidViewModel(
     fun settingsIndexTime(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollIndexTime = checked) }
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
     fun settingsRollScore(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollScore = checked) }
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
@@ -430,35 +432,35 @@ class TabRollAndroidViewModel(
     fun settingsDiceTitle(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(diceTitle = checked) }
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
     fun settingsSideNumber(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(sideNumber = checked) }
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
     fun settingsSideDescription(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(sideDescription = checked) }
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
     fun settingsSideSVG(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(sideSVG = checked) }
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
     fun settingsBehaviour(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(rollBehaviour = checked) }
-            alignBottomSheetWithSettings()
+            alignBottomSheetWithStorage()
         }
     }
 
