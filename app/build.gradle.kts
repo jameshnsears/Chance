@@ -15,8 +15,8 @@ android {
         targetSdk = 35
 
         // changelog | min sdk | max sdk
-        versionCode = 142435
-        versionName = "1.7.1"
+        versionCode = 152435
+        versionName = "1.7.2"
 
         extra["versionName"] = versionName
 

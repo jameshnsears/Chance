@@ -1,0 +1,2 @@
+- Update image assets
+- Bump dependencies + IDE: Android Studio Meerkat | 2024.3.1
