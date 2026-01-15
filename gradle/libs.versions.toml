@@ -38,7 +38,7 @@ protobuf-kotlin = "4.30.1"
 slf4j-simple = "2.0.17"
 timber = "5.0.1"
 uiautomator = "2.3.0"
-ui-tooling = "1.7.8"
+ui-tooling = "1.10.1"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
