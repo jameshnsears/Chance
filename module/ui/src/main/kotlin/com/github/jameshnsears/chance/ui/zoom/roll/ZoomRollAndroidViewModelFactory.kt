@@ -3,9 +3,9 @@ package com.github.jameshnsears.chance.ui.zoom.roll
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
-import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
-import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 
 class ZoomRollAndroidViewModelFactory(
     private val application: Application,

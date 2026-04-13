@@ -1,23 +1,30 @@
 plugins {
     alias(libs.plugins.com.android.library)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
 }
 
 android {
     namespace = "com.github.jameshnsears.chance.ui"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
+
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    testOptions {
+        execution = "ANDROID_TEST_ORCHESTRATOR"
+
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
 
-    val versionName: String = project(":app").extra["versionName"] as String
+    val versionName = libs.versions.versionName.get()
 
     buildTypes {
         release {
@@ -29,6 +36,7 @@ android {
         debug {
             buildConfigField("String", "VERSION", "\"${versionName}\"")
             buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
+            enableAndroidTestCoverage = true
             enableUnitTestCoverage = true
             isMinifyEnabled = false
         }
@@ -41,12 +49,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     buildFeatures {
@@ -54,13 +58,9 @@ android {
         buildConfig = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
-    }
-
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md,FastDoubleParser-LICENSE,FastDoubleParser-NOTICE,thirdparty-LICENSE}"
         }
     }
 
@@ -76,11 +76,33 @@ android {
     }
 
     lint {
+        baseline = file("lint-baseline.xml")
         xmlReport = true
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+    }
+}
+
 dependencies {
+    androidTestImplementation(libs.androidx.compose.ui.test.manifest)
+    androidTestImplementation(libs.androidx.datastore.core)
+    androidTestImplementation(libs.androidx.datastore.preferences)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.coil.compose)
+    androidTestImplementation(libs.coil.svg)
+    androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.protobuf.kotlin)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(project(":module:data-domain"))
+    androidTestUtil(libs.androidx.test.orchestrator)
+    debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -89,8 +111,12 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.ui.test.junit4)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
+    implementation(libs.colorpicker.compose)
+    implementation(libs.compose.icons.extended)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.jsonschema.generator)
     implementation(libs.mockk)
@@ -101,8 +127,11 @@ dependencies {
     implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))
-    implementation(project(":module:data"))
-    implementation(project(":module:ui-dialog-bag"))
+    implementation(project(":module:data-common"))
+    implementation(project(":module:data-domain"))
+    implementation(project(":module:data-repo-api"))
+    implementation(project(":module:data-repo-impl"))
+    testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     testImplementation(platform(libs.org.junit.bom))

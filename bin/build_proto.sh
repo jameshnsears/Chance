@@ -1,10 +1,11 @@
 set -e
 
-PROTOC_DIR=$PWD
+PROTOC_DIR=$PWD/bin/
+chmod +x $PROTOC_DIR/protoc
 
-cd ../module/data/src/main/proto
+cd ../module/data-repo-impl/src/proto
 
 # we generate java classes; generating kotlin requires manually fixing some of the generated code!
-$PROTOC_DIR/protoc --java_out=../java *.proto
+$PROTOC_DIR/protoc --java_out=../main/java *.proto
 
 cd $PROTOC_DIR

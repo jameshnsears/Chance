@@ -1,0 +1,8 @@
+- Fix all known defects
+- Improve / simplify UI
+- New Hexagram dice
+- Improve performance
+- Refactor codebase into modules
+- Improve GitHub CI Actions
+- Add adi-registration.properties asset
+- Bump dependencies + IDE: Android Studio Panda 3 | 2025.3.3 Patch 1

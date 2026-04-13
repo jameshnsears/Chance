@@ -1,11 +1,15 @@
 package com.github.jameshnsears.chance.ui.zoom.bag
 
 import android.app.Application
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
-import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
-import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagResetStorageEvent
+import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.ui.tab.bag.BagResetEvent
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
@@ -23,6 +27,10 @@ class ZoomBagAndroidViewModel(
     repositoryBag,
     repositoryRoll,
 ) {
+    val showDialog: MutableState<Boolean> = mutableStateOf(false)
+    val cardDice: MutableState<Dice> = mutableStateOf(Dice())
+    val cardSide: MutableState<Side> = mutableStateOf(Side())
+
     init {
         viewModelScope.launch {
             updateResize()
@@ -30,7 +38,7 @@ class ZoomBagAndroidViewModel(
         }
 
         viewModelScope.launch {
-            TabBagResetStorageEvent.sharedFlowTabBagResetStorageEvent.collect {
+            BagResetEvent.sharedFlowTabBagResetEvent.collect {
                 Timber.d("collect.TabBagResetStorageEvent.ZoomBagAndroidViewModel")
                 updateStateFlowZoom()
             }

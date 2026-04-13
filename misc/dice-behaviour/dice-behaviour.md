@@ -201,3 +201,17 @@ Shadowrun 4 - Perform a test using the Shadowrun 4ed system.
 shrun4(roll, poolSize, target, rollAgain, failTarget)
 Shadowrun 5 - Perform a test using the Shadowrun 5ed system.
 shrun5(roll, poolSize, target, rollAgain, failTarget)
+
+=======================
+
+Common Dice Mechanics
+
+Mechanic | Description | Example
+Roll and Add | Roll one or more dice and add modifiers to meet or exceed a target number (TN) | D&D 5e: 1d20 + modifiers ≥ DC
+Dice Pool (Success Count) | Roll several dice, each die is counted as a "success" if it meets a threshold | World of Darkness: 7+ on d10 counts as success
+Roll Under | Roll a die and get equal to or under a stat or skill | Call of Cthulhu: Roll d100 ≤ Skill %
+Exploding Dice | If you roll max value on a die, roll again and add the new roll to the total | Shadowrun: Exploding d6 dice
+Fudge Dice (FATE) | Dice have custom symbols (e.g., +, −, blank) and results range from −4 to +4 | FATE RPG: 4dF + stat vs difficulty
+Keep/Drop Dice | Roll multiple dice, then keep or drop certain ones based on rules | L5R: Roll 10 d10, keep best 5
+Table Lookup / Effect Tables | Roll a die and consult a table for outcomes | Warhammer 40k critical hits
+Opposed Rolls | Each side rolls dice, higher result wins | D&D contests, like Stealth vs Perception

@@ -1,0 +1,69 @@
+name: release.fdroid
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+jobs:
+  release-fdroid:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: clone
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Restore cache gradle
+        uses: ./.github/actions/cache-gradle
+
+      - name: keystore.jks
+        env:
+          KEYSTORE_JKS: ${{ secrets.KEYSTORE_JKS }}
+        run: echo "$KEYSTORE_JKS" | base64 -d > app/keystore.jks
+
+      - name: google-services.json
+        env:
+          GOOGLE_PLAY_JSON_DEVELOPMENT: ${{ secrets.GOOGLE_PLAY_JSON_DEVELOPMENT }}
+        run: |
+          echo "${GOOGLE_PLAY_JSON_DEVELOPMENT}" | base64 -d > app/google-services.json
+          ls -al
+          ls -al app/src
+
+      - name: local.properties
+        env:
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+        run: |
+          echo "${LOCAL_PROPERTIES}" | base64 -d > local.properties
+
+      - name: build
+        run: ./gradlew assembleFdroidRelease
+
+      - name: install apksigner
+        run: sudo apt-get -y install apksigner
+
+      - name: sign
+        env:
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: apksigner sign --ks app/keystore.jks --ks-key-alias $KEYSTORE_ALIAS --ks-pass env:KEYSTORE_PASSWORD --out ./app-fdroid-release-signed.apk ./app/build/outputs/apk/fdroid/release/app-fdroid-release-unsigned.apk
+
+      - name: release note
+        run: |
+          bin/release-note.sh
+
+      - name: release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh repo set-default jameshnsears/chance
+          gh release create ${{ github.ref }} --latest -F release-github-notes.md app-fdroid-release-signed.apk

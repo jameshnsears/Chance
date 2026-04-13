@@ -2,12 +2,12 @@ package com.github.jameshnsears.chance.ui.zoom.roll
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
-import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
-import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
-import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.tab.ResizeEvent
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagResetStorageEvent
-import com.github.jameshnsears.chance.ui.tab.roll.TabRollEvent
+import com.github.jameshnsears.chance.ui.tab.bag.BagResetEvent
+import com.github.jameshnsears.chance.ui.tab.roll.RollEvent
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -35,8 +35,8 @@ class ZoomRollAndroidViewModel(
 
         viewModelScope.launch {
             merge(
-                TabRollEvent.sharedFlowTabRollEvent.map { },
-                TabBagResetStorageEvent.sharedFlowTabBagResetStorageEvent.map { }
+                RollEvent.sharedFlowTabRollEvent.map { },
+                BagResetEvent.sharedFlowTabBagResetEvent.map { }
             ).collect {
                 Timber.d("collect.TabRollEvent|TabBagResetStorageEvent")
                 updateStateFlowZoom()
