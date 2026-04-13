@@ -1,53 +1,60 @@
 [versions]
-activity-compose = "1.10.1"
-appcompat = "1.7.0"
-baselineprofile = "1.3.3"
-benchmark-macro-junit4 = "1.3.3"
+versionCode = "16"
+versionName = "1.8.0"
+minSdk = "28"
+targetSdk = "36"
+compileSdk = "36"
+
+activity-compose = "1.13.0"
+appcompat = "1.7.1"
 coil-svg = "2.7.0"
-colorpicker-compose = "1.1.2"
-com-android-application = "8.9.0"
-com-android-library = "8.9.0"
-com-diffplug-spotless = "7.0.2"
-com-google-gms-google-services = "4.4.2"
-compose-bom = "2025.03.00"
-core-ktx = "1.15.0"
-core-splashscreen = "1.0.1"
-datastore-core = "1.1.3"
-espresso-core = "3.5.0"             # stay on 3.5.0 due to: androidx.compose.ui:ui-test-junit4:1.6.8 compatability
-firebase-bom = "33.10.0"
-firebase-crashalytics-plugin = "3.0.3"
+colorpicker-compose = "1.1.3"
+com-android-application = "9.1.0"
+com-android-library = "9.1.0"
+com-diffplug-spotless = "8.4.0"
+com-google-gms-google-services = "4.4.4"
+compose-bom = "2026.03.01"
+compose-icons = "1.7.8"
+core-ktx = "1.18.0"
+core-splashscreen = "1.2.0"
+crashalytics = "20.0.5"
+datastore-core = "1.2.1"
+espresso-core = "3.5.0"
+firebase-bom = "34.12.0"
+firebase-crashalytics-plugin = "3.0.7"
 io-gitlab-arturbosch-detekt = "1.23.8"
-jackson-module-kotlin = "2.18.3"
-json-kotlin-schema = "0.56"
-jsonschema-generator = "4.37.0"
-junit = "1.2.1"
-junit-bom = "5.12.1"
-kotlin-test = "2.1.10"
-kotlinx-coroutines-test = "1.10.1"
+jackson-module-kotlin = "2.21.2"
+json-kotlin-schema = "0.57"
+jsonschema-generator = "5.0.0"
+junit = "1.3.0"
+junit-bom = "6.0.3"
+kotlin = "2.3.20"
+kotlin-test = "2.3.20"
+kotlinx-coroutines-test = "1.10.2"
 leakcanary-android = "2.14"
-lifecycle-runtime-compose = "2.8.7"
-lifecycle-viewmodel-compose = "2.8.7"
-mockk = "1.13.17"
-org-jetbrains-kotlin-android = "2.0.20"
-org-jlleitschuh-gradle-ktlint = "12.1.2"
-org-sonarqube = "5.1.0.4882"        # stay on 5.1.0.4882 due to: Sonarqube-gradle-plugin:6.0.1.5171 - this is an AGP originating defect
+lifecycle-runtime-compose = "2.10.0"
+lifecycle-viewmodel-compose = "2.10.0"
+manifest = "1.10.6"
+mockk = "1.14.9"
+org-jlleitschuh-gradle-ktlint = "14.2.0"
+org-sonarqube = "7.2.3.7755"
 profileinstaller = "1.4.1"
-protobuf-java = "4.30.1"
-protobuf-java-util = "4.30.1"
-protobuf-kotlin = "4.30.1"
+protobuf-java = "4.34.1"
+protobuf-java-util = "4.34.1"
+protobuf-kotlin = "4.34.1"
 slf4j-simple = "2.0.17"
 timber = "5.0.1"
-uiautomator = "2.3.0"
-ui-tooling = "1.7.8"
+ui-tooling = "1.10.6"
+junitVersion = "4.13.2"
+material = "1.13.0"
+uiTestJunit4 = "1.10.6"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-androidx-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmark-macro-junit4" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "manifest" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
@@ -59,14 +66,14 @@ androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
-androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "ui-tooling" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-svg" }
-coil = { module = "io.coil-kt:coil", version.ref = "coil-svg" }
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coil-svg" }
 colorpicker-compose = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker-compose" }
 com-google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-com-google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+com-google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "crashalytics" }
+compose-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-icons" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson-module-kotlin" }
 json-kotlin-schema = { module = "net.pwall.json:json-kotlin-schema", version.ref = "json-kotlin-schema" }
 jsonschema-generator = { module = "com.github.victools:jsonschema-generator", version.ref = "jsonschema-generator" }
@@ -80,17 +87,18 @@ protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", versio
 protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-kotlin" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "uiTestJunit4" }
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "com-android-application" }
-baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
 com-android-library = { id = "com.android.library", version.ref = "com-android-library" }
 com-diffplug-spotless = { id = "com.diffplug.spotless", version.ref = "com-diffplug-spotless" }
 com-google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashalytics-plugin" }
 com-google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "com-google-gms-google-services" }
 io-gitlab-arturbosch-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "io-gitlab-arturbosch-detekt" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
-org-jetbrains-kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "org-jetbrains-kotlin-android" }
+org-jetbrains-kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 org-jlleitschuh-gradle-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "org-jlleitschuh-gradle-ktlint" }
 org-sonarqube = { id = "org.sonarqube", version.ref = "org-sonarqube" }

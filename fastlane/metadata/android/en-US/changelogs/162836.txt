@@ -1,0 +1,7 @@
+- Fix Export / Import defect - JSON Schema validation
+- Fix Screen rotation defect - Preserve state across rotations
+- Add new dice - Hexagram
+- Simplify instructions and colours
+- Modularise codebase for better maintainability
+- Improve CI GitHub Actions
+- Bump dependencies + IDE: Android Studio Panda 2 | 2025.3.2

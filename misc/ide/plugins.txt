@@ -1,2 +1,4 @@
 adb_idea
-Protocol Buffers
+Genymotion
+GitHub Copilot
+SonarQube fpr IDE

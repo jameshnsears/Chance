@@ -1,24 +1,21 @@
 plugins {
     alias(libs.plugins.com.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
-    alias(libs.plugins.baselineprofile)
 }
 
 android {
     namespace = "com.github.jameshnsears.chance"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.github.jameshnsears.chance"
-        minSdk = 24
-        targetSdk = 35
 
-        // changelog | min sdk | max sdk
-        versionCode = 152435
-        versionName = "1.7.2"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = libs.versions.versionCode.get().toInt()
+        versionName = "${versionCode}${minSdk}${targetSdk}"
 
-        extra["versionName"] = versionName
+        extra["versionName"] = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -55,25 +52,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
+        buildConfig = true
     }
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md,FastDoubleParser-LICENSE,FastDoubleParser-NOTICE,thirdparty-LICENSE}"
         }
     }
 
@@ -96,6 +86,8 @@ android {
 
 kotlin {
     compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+
         if (System.getProperty("idea.active") == "true") {
             println("Enable coroutine debugging")
             freeCompilerArgs.add("-Xdebug")
@@ -115,7 +107,6 @@ dependencies {
     androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    "baselineProfile"(project(":module:baselineprofile"))
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // comment out leakcanary when profiling: fdroidDebug; on API 30+ emulator
@@ -127,16 +118,18 @@ dependencies {
     "googleplayImplementation"(libs.com.google.firebase.crashlytics)
     "googleplayImplementation"(platform(libs.com.google.firebase.bom))
     implementation(libs.activity.compose)
-    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.profileinstaller)
+    implementation(libs.appcompat)
     implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))
-    implementation(project(":module:data"))
+    implementation(project(":module:data-common"))
+    implementation(project(":module:data-domain"))
+    implementation(project(":module:data-repo-api"))
+    implementation(project(":module:data-repo-impl"))
     implementation(project(":module:ui"))
-    implementation(project(":module:ui-dialog-bag"))
 }

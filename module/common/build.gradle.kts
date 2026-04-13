@@ -1,25 +1,26 @@
 plugins {
     alias(libs.plugins.com.android.library)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
 }
 
 android {
     namespace = "com.github.jameshnsears.chance.common"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
         }
 
         debug {
+            enableAndroidTestCoverage = true
             enableUnitTestCoverage = true
             isMinifyEnabled = false
         }
@@ -32,26 +33,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
         encoding = "UTF-8"
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
     }
 
     buildFeatures {
         compose = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
-    }
-
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md,FastDoubleParser-LICENSE,FastDoubleParser-NOTICE,thirdparty-LICENSE}"
         }
     }
 
@@ -67,18 +60,27 @@ android {
     }
 
     lint {
+        baseline = file("lint-baseline.xml")
         xmlReport = true
     }
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+    }
+}
+
 dependencies {
+    implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui.test.junit4)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.junit.ktx)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
+    implementation(libs.androidx.ui.test.junit4)
+    implementation(libs.appcompat)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.json.kotlin.schema)
     implementation(libs.mockk)
     implementation(libs.org.jetbrains.kotlinx.coroutines.test)
     implementation(libs.slf4j.simple)

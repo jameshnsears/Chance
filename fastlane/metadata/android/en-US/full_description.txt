@@ -1,9 +1,7 @@
-&bull; Tap the side of a dice to change almost every facet - colour; text; image (SVG); # of sides
-&bull; Clone dice to create new dice (d2...d20)
-&bull; Configure roll behaviour of individual dice
-&bull; Settings to show only what you want to see
-&bull; Import &amp; export everything, in JSON
-
-&bull; Small, modern, codebase
-
-&bull; User feedback / contribution drives development
+&bull; Choose from d2 to d20 sized dice: easily alter # of sides / clone
+&bull; Personalise dice faces: add text and / or a SVG image to any side
+&bull; Essential roll logic: multipliers, exploding dice, and score adjustment
+&bull; Roll multiple dice: combine different dice and only display the information you want to see
+&bull; Quick Yes / No shortcut: get an instant answer for a fast decision
+&bull; Example dice included: d6; Mr Benn; Hexagram; The Dice Man
+&bull; Import & Export: save, share, and reuse everything

@@ -1,23 +1,26 @@
 package com.github.jameshnsears.chance.ui.tab.bag
 
-import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
-import kotlinx.coroutines.delay
+import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertTrue
+import org.junit.Assert
 import org.junit.Test
 
-class TabBagImportEventUnitTest : UtilityAndroidHelper() {
+
+class TabBagImportEventUnitTest : UtilityAndroidUnitTestHelper() {
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun emitAndCollect() = runTest {
         val collectorJob = launch {
-            TabBagImportEvent.sharedFlowTabBagImportEvent.collect {
-                assertTrue(true)
+            BagImportEvent.sharedFlowTabBagImportEvent.collect {
+                Assert.assertTrue(true)
             }
         }
-        TabBagImportEvent.emit()
+        BagImportEvent.emit()
 
-        delay(100)
+        advanceUntilIdle()
 
         collectorJob.cancel()
     }

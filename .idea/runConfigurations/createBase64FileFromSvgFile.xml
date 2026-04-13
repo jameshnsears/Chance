@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="createBase64FileFromSvgFile" type="GradleRunConfiguration" factoryName="Gradle" folderName="utility, svg">
+  <configuration default="false" name="createBase64FileFromSvgFile" type="GradleRunConfiguration" factoryName="Gradle" folderName="utility">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -10,17 +10,20 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":module:data:testFdroidDebugUnitTest" />
+          <option value=":module:data-common:testFdroidDebugUnitTest" />
           <option value="--tests" />
-          <option value="&quot;com.github.jameshnsears.chance.data.domain.utility.svg.UtilitySvgSerializerUnitTest.createBase64FileFromSvgFile&quot;" />
+          <option value="&quot;com.github.jameshnsears.chance.data.common.utility.svg.CreateBase64FileFromSvgFileUnitTest&quot;" />
         </list>
       </option>
       <option name="vmOptions" />
     </ExternalSystemSettings>
     <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
     <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+    <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
     <DebugAllEnabled>false</DebugAllEnabled>
     <RunAsTest>true</RunAsTest>
+    <GradleProfilingDisabled>false</GradleProfilingDisabled>
+    <GradleCoverageDisabled>false</GradleCoverageDisabled>
     <method v="2" />
   </configuration>
 </component>

@@ -42,6 +42,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1685636676">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1676388399">
           <value>
             <AndroidTestResultsTableState>
@@ -166,6 +179,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1030013275">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Medium_Phone_API_36.0_AOSP" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-989553293">
           <value>
             <AndroidTestResultsTableState>
@@ -226,11 +252,13 @@
                 <map>
                   <entry key="Duration" value="109" />
                   <entry key="Genymobile Pixel 7a" value="120" />
+                  <entry key="Medium_Phone_API_36.1" value="120" />
                   <entry key="Pixel_6_API_30" value="120" />
                   <entry key="Pixel_6_API_31" value="120" />
                   <entry key="Pixel_7a_API_24" value="120" />
                   <entry key="Pixel_7a_API_30" value="120" />
                   <entry key="Tests" value="379" />
+                  <entry key="Xiaomi 2406APNFAG" value="120" />
                   <entry key="motorola Moto G (4)" value="120" />
                   <entry key="samsung SM-A520F" value="120" />
                   <entry key="samsung SM-A528B" value="139" />
@@ -320,6 +348,46 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="547003004">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Medium_Phone_API_36.0_AOSP" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="553735605">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Genymobile Pixel 7a" value="120" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="616019467">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                  <entry key="samsung SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="659901718">
           <value>
             <AndroidTestResultsTableState>
@@ -378,11 +446,25 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Genymobile Pixel 7a" value="120" />
                   <entry key="Pixel_6_API_30" value="120" />
                   <entry key="Pixel_7a_API_24" value="120" />
                   <entry key="Pixel_7a_API_35" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="motorola Moto G (4)" value="120" />
+                  <entry key="samsung SM-A528B" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1128107080">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
                   <entry key="samsung SM-A528B" value="120" />
                 </map>
               </option>

@@ -1,48 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.8.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.8.2)" variant="all" version="8.8.2">
+<issues format="6" by="lint 9.1.0" type="baseline" client="gradle" dependencies="false" name="AGP (9.1.0)" variant="all" version="9.1.0">
 
     <issue
-        id="GradleDependency"
-        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1"
-        errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to: androidx.compose.ui:ui-test-junit4:1.6.8 compatability"
-        errorLine2="                ~~~~~~~">
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 9.1.0 is available: 9.1.1"
+        errorLine1="com-android-application = &quot;9.1.0&quot;"
+        errorLine2="                          ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="16"
-            column="17"/>
+            line="12"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.test than 9.1.0 is available: 9.1.1"
+        errorLine1="com-android-application = &quot;9.1.0&quot;"
+        errorLine2="                          ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="12"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.library than 9.1.0 is available: 9.1.1"
+        errorLine1="com-android-library = &quot;9.1.0&quot;"
+        errorLine2="                      ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="13"
+            column="23"/>
     </issue>
 
     <issue
         id="GradleDependency"
-        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1"
-        errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to: androidx.compose.ui:ui-test-junit4:1.6.8 compatability"
+        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.7.0"
+        errorLine1="espresso-core = &quot;3.5.0&quot;"
         errorLine2="                ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="16"
+            line="22"
             column="17"/>
     </issue>
 
     <issue
-        id="GradleDependency"
-        message="A newer version of androidx.test.espresso:espresso-core than 3.5.0 is available: 3.6.1"
-        errorLine1="espresso-core = &quot;3.5.0&quot;             # stay on 3.5.0 due to: androidx.compose.ui:ui-test-junit4:1.6.8 compatability"
-        errorLine2="                ~~~~~~~">
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 28. Merge all the resources in this folder into `mipmap-anydpi`.">
         <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="16"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="ContextCastToActivity"
-        message="LocalContext should not be cast to Activity, use LocalActivity instead"
-        errorLine1="    val context = LocalContext.current as ShortcutActivity"
-        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/com/github/jameshnsears/chance/ShortcutActivity.kt"
-            line="40"
-            column="19"/>
+            file="src/main/res/mipmap-anydpi-v26"/>
     </issue>
 
     <issue
@@ -166,12 +173,12 @@
     <issue
         id="ReportShortcutUsage"
         message="Calling this method indicates use of dynamic shortcuts, but there are no calls to methods that track shortcut usage, such as `pushDynamicShortcut` or `reportShortcutUsed`. Calling these methods is recommended, as they track shortcut usage and allow launchers to adjust which shortcuts appear based on activation history. Please see https://developer.android.com/develop/ui/views/launch/shortcuts/managing-shortcuts#track-usage"
-        errorLine1="            shortcutManager.dynamicShortcuts = listOf("
-        errorLine2="            ^">
+        errorLine1="        shortcutManager.dynamicShortcuts = listOf("
+        errorLine2="        ^">
         <location
             file="src/main/kotlin/com/github/jameshnsears/chance/MainActivity.kt"
-            line="59"
-            column="13"/>
+            line="61"
+            column="9"/>
     </issue>
 
 </issues>

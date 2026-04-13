@@ -9,19 +9,19 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import coil.request.ImageRequest
-import com.github.jameshnsears.chance.data.R
+import com.github.jameshnsears.chance.common.utility.colour.UtilityColour
+import com.github.jameshnsears.chance.data.common.utility.svg.UtilitySvgSerializer
+import com.github.jameshnsears.chance.data.domain.R
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
-import com.github.jameshnsears.chance.data.domain.utility.svg.UtilitySvgSerializer
-import com.github.jameshnsears.chance.data.repository.bag.RepositoryBagInterface
-import com.github.jameshnsears.chance.data.repository.roll.RepositoryRollInterface
-import com.github.jameshnsears.chance.data.repository.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagImportEvent
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagResetStorageEvent
-import com.github.jameshnsears.chance.ui.utility.colour.UtilityColour
+import com.github.jameshnsears.chance.ui.tab.bag.BagImportEvent
+import com.github.jameshnsears.chance.ui.tab.bag.BagResetEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 data class ZoomState(
-    var resizeView: Dp,
+    var resizeViewDp: Dp,
     var diceBag: DiceBag,
     var rollHistory: RollHistory
 )
@@ -48,7 +48,7 @@ abstract class ZoomAndroidViewModel(
 ) : AndroidViewModel(application) {
     protected val _stateFlowZoom = MutableStateFlow(
         ZoomState(
-            resizeView = 0.dp,
+            resizeViewDp = 0.dp,
             diceBag = mutableListOf(),
             rollHistory = LinkedHashMap()
         )
@@ -70,8 +70,8 @@ abstract class ZoomAndroidViewModel(
 
         viewModelScope.launch {
             merge(
-                TabBagImportEvent.sharedFlowTabBagImportEvent.map { },
-                TabBagResetStorageEvent.sharedFlowTabBagResetStorageEvent.map { }
+                BagImportEvent.sharedFlowTabBagImportEvent.map { },
+                BagResetEvent.sharedFlowTabBagResetEvent.map { }
             ).collect {
                 Timber.d("collect.TabBagImportEvent|TabBagResetStorageEvent.TabRollAndroidViewModel")
                 updateResize()
@@ -83,7 +83,7 @@ abstract class ZoomAndroidViewModel(
     protected suspend fun updateResize() {
         _stateFlowZoom.update {
             it.copy(
-                resizeView = resizeViewAsDp(repositorySettings.fetch().first().resize),
+                resizeViewDp = resizeViewAsDp(repositorySettings.fetch().first().resize),
             )
         }
     }
@@ -119,9 +119,9 @@ abstract class ZoomAndroidViewModel(
         }
     }
 
-    fun resizeView(resize: Int) {
+    fun setResizeView(resize: Int) {
         _stateFlowZoom.value = _stateFlowZoom.value.copy(
-            resizeView = resizeViewAsDp(resize)
+            resizeViewDp = resizeViewAsDp(resize)
         )
     }
 
@@ -129,15 +129,15 @@ abstract class ZoomAndroidViewModel(
         val defaultViewSize = 80.dp
 
         return when (resize) {
-            1 -> defaultViewSize * 0.75f
-            2 -> defaultViewSize * 1.0f
-            3 -> defaultViewSize * 1.25f
-            4 -> defaultViewSize * 1.5f
-            5 -> defaultViewSize * 1.75f
-            6 -> defaultViewSize * 2.0f
-            7 -> defaultViewSize * 2.25f
-            8 -> defaultViewSize * 2.5f
-            9 -> defaultViewSize * 2.75f
+            1 -> defaultViewSize * 1.0f
+            2 -> defaultViewSize * 1.25f
+            3 -> defaultViewSize * 1.5f
+            4 -> defaultViewSize * 1.75f
+            5 -> defaultViewSize * 2.0f
+            6 -> defaultViewSize * 2.25f
+            7 -> defaultViewSize * 2.5f
+            8 -> defaultViewSize * 2.75f
+            9 -> defaultViewSize * 3.0f
             else -> defaultViewSize
         }
     }
@@ -146,9 +146,9 @@ abstract class ZoomAndroidViewModel(
         return diceEpochCache[rollDiceEpoch]
     }
 
-    fun sideImageShapeNumberFontSize() = 17.sp
+    fun sideNumberFontSizeSp() = 17.sp
 
-    fun sideImageShapeNumberShape(dice: Dice): Int {
+    fun drawableForDiceSides(dice: Dice): Int {
         return when (dice.sides.size) {
             2 -> R.drawable.d2
             6 -> R.drawable.d6
@@ -158,38 +158,36 @@ abstract class ZoomAndroidViewModel(
         }
     }
 
-    fun sideColourFilter(hexColour: String): ColorFilter {
-        return if (hexColour == "")
+    fun sideColorFilter(hexColor: String): ColorFilter {
+        return if (hexColor == "")
             ColorFilter.tint(Color.Black)
         else
-            ColorFilter.tint(UtilityColour.makeColor(hexColour))
+            ColorFilter.tint(UtilityColour.makeColor(hexColor))
     }
 
-    fun sideColor(hexColour: String): Color {
-        return if (hexColour == "")
+    fun sideColor(hexColor: String): Color {
+        return if (hexColor == "")
             Color.White
         else
-            UtilityColour.makeColor(hexColour)
+            UtilityColour.makeColor(hexColor)
     }
 
-    fun diceContainsAtLeastOneSideWithDescription(dice: Dice): Boolean {
-        dice.sides.forEach {
-            it.description
-            if (it.description != "")
-                return true
-        }
-
-        return false
+    fun hasSideWithDescription(dice: Dice): Boolean {
+        return dice.sides.any { it.description.isNotBlank() }
     }
 
     private val executor: ExecutorService = Executors.newFixedThreadPool(10)
+    private val imageRequestCache = mutableMapOf<String, ImageRequest>()
 
-    fun sideImageSVG(side: Side): ImageRequest {
-        val future = CompletableFuture<ImageRequest>()
-        executor.execute {
-            val result = UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
-            future.complete(result)
+    fun sideSvgImageRequest(side: Side): ImageRequest {
+        val cacheKey = side.imageBase64
+        return imageRequestCache.getOrPut(cacheKey) {
+            val future = CompletableFuture<ImageRequest>()
+            executor.execute {
+                val result = UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
+                future.complete(result)
+            }
+            future.join()
         }
-        return future.join()
     }
 }

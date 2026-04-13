@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name=":app:jacocoFdroidAndroidTestReport" type="GradleRunConfiguration" factoryName="Gradle" folderName="jacoco - ci">
+  <configuration default="false" name=":app:jacocoFdroidAndroidTestReport" type="GradleRunConfiguration" factoryName="Gradle" folderName="androidTest">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />

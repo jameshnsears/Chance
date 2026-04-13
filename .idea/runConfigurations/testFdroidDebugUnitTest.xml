@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="testFdroidDebugUnitTest" type="GradleRunConfiguration" factoryName="Gradle" folderName="test">
+  <configuration default="false" name="testFdroidDebugUnitTest" type="GradleRunConfiguration" factoryName="Gradle" folderName="unitTest">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />

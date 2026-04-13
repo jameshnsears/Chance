@@ -1,36 +1,33 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
+import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
+import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
-import com.github.jameshnsears.chance.data.repository.RepositoryFactory
-import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.slot
 import io.mockk.spyk
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertFalse
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
-
-class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
+class TabRollAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @OptIn(DelicateCoroutinesApi::class)
     @Test
     fun rollDiceSequenceNoExplosionNoScore() = runTest {
         val tabRollAndroidViewModel = tabRollAndroidViewModel()
 
-        every { tabRollAndroidViewModel.mediaPlayerRollSound() } returns Unit
+        coEvery { tabRollAndroidViewModel.playRollSound() } returns Unit
 
         val rollHistory = tabRollAndroidViewModel.repositoryRoll.fetch().first()
         assertEquals(2, rollHistory.size)
@@ -53,10 +50,10 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
             assertEquals(diceSelected[0], it.diceEpoch)
         }
 
-        tabRollAndroidViewModel.saveNewRollSequence(rolls)
+        tabRollAndroidViewModel.rollSequenceHelper.saveNewRollSequence(rolls)
         assertEquals(3, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
 
-        val job = GlobalScope.launch {
+        val job = launch {
             tabRollAndroidViewModel.rollDiceSequence()
         }
         job.join()
@@ -69,9 +66,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
     @Test
     fun shuffleRollSequence() = runTest {
         val repositorySettings = RepositoryFactory().repositorySettings
-        runBlocking(Dispatchers.Main) {
-            repositorySettings.store(SettingsDataTestDouble())
-        }
+        repositorySettings.store(SettingsDataTestDouble())
 
         val bagDataTestDouble = BagDataTestDouble()
         bagDataTestDouble.d4.selected = true
@@ -82,41 +77,37 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         bagDataTestDouble.d6.explode = false
 
         val repositoryBag = RepositoryFactory().repositoryBag
-        runBlocking(Dispatchers.Main) {
-            repositoryBag.store(
-                mutableListOf(
-                    bagDataTestDouble.d4,
-                    bagDataTestDouble.d6
-                )
+        repositoryBag.store(
+            mutableListOf(
+                bagDataTestDouble.d4,
+                bagDataTestDouble.d6
             )
-        }
+        )
 
         val repositoryRoll = RepositoryFactory().repositoryRoll
         val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
-        runBlocking(Dispatchers.Main) {
-            repositoryRoll.store(rollDataTestDouble.rollHistory)
-        }
+        repositoryRoll.store(rollDataTestDouble.rollHistory)
 
-        val tabRollAndroidViewModel = spyk<TabRollAndroidViewModel>(
-            TabRollAndroidViewModel(
-                getApplication(),
+        val rollAndroidViewModel = spyk<RollAndroidViewModel>(
+            RollAndroidViewModel(
+                application(),
                 repositorySettings,
                 repositoryBag,
                 repositoryRoll
             )
         )
 
-        every { tabRollAndroidViewModel.mediaPlayerRollSound() } returns Unit
+        coEvery { rollAndroidViewModel.playRollSound() } returns Unit
 
         ////////////////
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        rollAndroidViewModel.rollDiceSequence(rolls)
         assertEquals(8, rolls.size)
 
-        tabRollAndroidViewModel._stateFlowSettingsData.value.shuffle = true
-        tabRollAndroidViewModel.shuffleRollSequence(rolls)
+        rollAndroidViewModel._stateFlowSettingsData.value.shuffle = true
+        rollAndroidViewModel.shuffleRollSequence(rolls)
 
         assertEquals(8, rolls.size)
 
@@ -155,7 +146,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
             mutableMapOf(1L to rolls.toList()).entries.first()
 
         assertEquals(
-            "36", tabRollAndroidViewModel.diceSequenceScore(
+            "36", tabRollAndroidViewModel.rollSequenceHelper.rollSequenceScore(
                 rollSequence
             )
         )
@@ -230,7 +221,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
             mutableMapOf(1L to rolls.toList()).entries.first()
 
         assertEquals(
-            "1", tabRollAndroidViewModel.diceSequenceScore(
+            "1", tabRollAndroidViewModel.rollSequenceHelper.rollSequenceScore(
                 rollSequence
             )
         )
@@ -309,27 +300,27 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
     private fun tabRollAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
-    ): TabRollAndroidViewModel {
+    ): RollAndroidViewModel {
         val repositorySettings = RepositoryFactory().repositorySettings
-        runBlocking(Dispatchers.Main) {
+        runTest {
             repositorySettings.store(SettingsDataTestDouble())
         }
 
         val repositoryBag = RepositoryFactory().repositoryBag
-        runBlocking(Dispatchers.Main) {
+        runTest {
             bagDataTestDouble.d6.selected = true
             repositoryBag.store(bagDataTestDouble.allDice)
         }
 
         val repositoryRoll = RepositoryFactory().repositoryRoll
         val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
-        runBlocking(Dispatchers.Main) {
+        runTest {
             repositoryRoll.store(rollDataTestDouble.rollHistory)
         }
 
-        return spyk<TabRollAndroidViewModel>(
-            TabRollAndroidViewModel(
-                getApplication(),
+        return spyk<RollAndroidViewModel>(
+            RollAndroidViewModel(
+                application(),
                 repositorySettings,
                 repositoryBag,
                 repositoryRoll
@@ -337,7 +328,7 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidHelper() {
         )
     }
 
-    private fun deterministicTabRollAndroidViewModel(diceBag: BagDataTestDouble): TabRollAndroidViewModel {
+    private fun deterministicTabRollAndroidViewModel(diceBag: BagDataTestDouble): RollAndroidViewModel {
         val tabRollAndroidViewModel = tabRollAndroidViewModel(diceBag)
 
         val diceSlot = slot<Dice>()

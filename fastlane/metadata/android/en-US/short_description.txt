@@ -1,1 +1,1 @@
-Assign outcomes to randomness
+Create custom dice with text and SVG faces. Use chance in new and unusual ways.
