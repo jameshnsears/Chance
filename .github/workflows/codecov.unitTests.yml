@@ -1,0 +1,55 @@
+name: codecov.unitTests
+
+on:
+  push:
+    branches:
+      - "*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+jobs:
+  unitTests:
+    name: ${{ matrix.module.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        module:
+          - { name: "ui", path: "module:ui", flags: "ui-unitTest" }
+          - { name: "data-repo-api", path: "module:data-repo-api", flags: "data-repo-api-unitTest" }
+          - { name: "data-common", path: "module:data-common", flags: "data-common-unitTest" }
+    steps:
+      - name: clone
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Restore cache gradle
+        uses: ./.github/actions/cache-gradle
+
+      - name: ${{ matrix.module.name }} test
+        run: ./gradlew :${{ matrix.module.path }}:jacocoFdroidTestReport
+
+      - name: codecov
+        uses: codecov/codecov-action@v6
+        with:
+          fail_ci_if_error: true
+          files: ./module/${{ matrix.module.name }}/build/reports/jacoco/test.xml
+          flags: ${{ matrix.module.flags }}
+          verbose: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: artifact reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.module.name }}
+          path: |
+            ./module/${{ matrix.module.name }}/build/reports/jacoco/test.xml

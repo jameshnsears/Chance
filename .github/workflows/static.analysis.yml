@@ -1,0 +1,64 @@
+name: static.analysis
+
+on:
+  push:
+    branches:
+      - "*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
+
+jobs:
+  detekt:
+    name: detekt
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Restore cache gradle
+        uses: ./.github/actions/cache-gradle
+
+      - name: gradlew
+        run: ./gradlew detekt -x test
+
+  ktlint:
+    name: ktlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Restore cache gradle
+        uses: ./.github/actions/cache-gradle
+
+      - name: gradlew
+        run: ./gradlew ktlintCheck
+
+  lintFdroidDebug:
+    name: lintFdroidDebug
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          submodules: true
+
+      - name: Restore cache gradle
+        uses: ./.github/actions/cache-gradle
+
+      - name: lint
+        run: |
+          set -x
+          ./gradlew :app:lintFdroidDebug

@@ -1,20 +1,27 @@
 ignore:
-  - "module/data/src/main/java"
   - "**/*Preview.kt"
+  - "**/test/**"
+  - "**/androidTest/**"
+  - "**/testDebug/**"
+  - "**/testRelease/**"
+  - "**/build/**"
+  - "module/data-repo-impl/src/main/java/**"
 
 flags:
-  app.androidTest:
+  app-androidTest:
     carryforward: false
 
-  data.test:
-    carryforward: false
-  data.androidTest:
+  data-common-androidTest:
     carryforward: false
 
-  ui.test:
+  data-common-unitTest:
     carryforward: false
 
-  ui-dialog-bag.test:
+  data-repo-api-unitTest:
     carryforward: false
-  ui-dialog-bag.androidTest:
+
+  ui-androidTest:
+    carryforward: false
+
+  ui-unitTest:
     carryforward: false

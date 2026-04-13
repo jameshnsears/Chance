@@ -2,14 +2,12 @@ package com.github.jameshnsears.chance.ui.zoom.bag
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.jameshnsears.chance.data.R
+import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
+import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
+import com.github.jameshnsears.chance.data.domain.R
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
-import com.github.jameshnsears.chance.data.repository.RepositoryFactory
-import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
 import io.mockk.spyk
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -17,7 +15,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 
-class ZoomBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
+class ZoomBagAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun refreshAfterImport() = runTest {
         val zoomBagAndroidViewModel = this@ZoomBagAndroidViewModelUnitTest.zoomBagAndroidViewModel()
@@ -28,68 +26,68 @@ class ZoomBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
     fun resizeView() = runTest {
         val zoomBagAndroidViewModel = this@ZoomBagAndroidViewModelUnitTest.zoomBagAndroidViewModel()
 
-        zoomBagAndroidViewModel.resizeView(1)
-        assertEquals(60.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeView)
+        zoomBagAndroidViewModel.setResizeView(1)
+        assertEquals(80.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
 
-        zoomBagAndroidViewModel.resizeView(2)
-        assertEquals(80.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeView)
+        zoomBagAndroidViewModel.setResizeView(2)
+        assertEquals(100.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
 
-        zoomBagAndroidViewModel.resizeView(3)
-        assertEquals(100.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeView)
+        zoomBagAndroidViewModel.setResizeView(3)
+        assertEquals(120.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
 
-        zoomBagAndroidViewModel.resizeView(4)
-        assertEquals(120.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeView)
+        zoomBagAndroidViewModel.setResizeView(4)
+        assertEquals(140.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
 
-        zoomBagAndroidViewModel.resizeView(5)
-        assertEquals(140.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeView)
+        zoomBagAndroidViewModel.setResizeView(5)
+        assertEquals(160.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
     }
 
     @Test
-    fun sideImageShapeNumberFontSize() = runTest {
+    fun sideNumberFontSizeSp() = runTest {
         assertEquals(
             17.0.sp,
-            zoomBagAndroidViewModel().sideImageShapeNumberFontSize()
+            zoomBagAndroidViewModel().sideNumberFontSizeSp()
         )
     }
 
     @Test
-    fun diceContainsAtLeastOneSideWithDescription() = runTest {
+    fun hasSideWithDescription() = runTest {
         assertFalse(
             zoomBagAndroidViewModel()
-                .diceContainsAtLeastOneSideWithDescription(BagDataTestDouble().d2)
+                .hasSideWithDescription(BagDataTestDouble().d2)
         )
 
         assertTrue(
             zoomBagAndroidViewModel()
-                .diceContainsAtLeastOneSideWithDescription(BagDataTestDouble().diceStory)
+                .hasSideWithDescription(BagDataTestDouble().diceStory)
         )
     }
 
     @Test
-    fun sideImageShapeNumberShape() = runTest {
+    fun drawableForDiceSides() = runTest {
         assertEquals(
             R.drawable.d2,
-            zoomBagAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d2)
+            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d2)
         )
 
         assertEquals(
             R.drawable.d6,
-            zoomBagAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d6)
+            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d6)
         )
 
         assertEquals(
             R.drawable.d10,
-            zoomBagAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d10)
+            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d10)
         )
 
         assertEquals(
             R.drawable.d12,
-            zoomBagAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d12)
+            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d12)
         )
 
         assertEquals(
             R.drawable.d4_d8_d20,
-            zoomBagAndroidViewModel().sideImageShapeNumberShape(BagDataTestDouble().d4)
+            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d4)
         )
     }
 
@@ -97,13 +95,13 @@ class ZoomBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): ZoomBagAndroidViewModel {
         val repositoryBag = RepositoryFactory().repositoryBag
-        runBlocking(Dispatchers.Main) {
+        runTest {
             // 8 dice = .allDice
             repositoryBag.store(bagDataTestDouble.allDice)
         }
 
         val repositoryRoll = RepositoryFactory().repositoryRoll
-        runBlocking(Dispatchers.Main) {
+        runTest {
             // 2 rolls:
             //      1st roll:
             //              d2
@@ -121,7 +119,7 @@ class ZoomBagAndroidViewModelUnitTest : UtilityAndroidHelper() {
 
         return spyk<ZoomBagAndroidViewModel>(
             ZoomBagAndroidViewModel(
-                getApplication(),
+                application(),
                 RepositoryFactory().repositorySettings,
                 repositoryBag,
                 repositoryRoll

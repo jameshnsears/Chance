@@ -1,23 +1,25 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
-import com.github.jameshnsears.chance.utility.android.UtilityAndroidHelper
-import kotlinx.coroutines.delay
+import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertTrue
+import org.junit.Assert
 import org.junit.Test
 
-class TabRollEventUnitTest : UtilityAndroidHelper() {
+class TabRollEventUnitTest : UtilityAndroidUnitTestHelper() {
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun emitAndCollect() = runTest {
         val collectorJob = launch {
-            TabRollEvent.sharedFlowTabRollEvent.collect {
-                assertTrue(true)
+            RollEvent.sharedFlowTabRollEvent.collect {
+                Assert.assertTrue(true)
             }
         }
-        TabRollEvent.emit()
+        RollEvent.emit()
 
-        delay(100)
+        advanceUntilIdle()
 
         collectorJob.cancel()
     }

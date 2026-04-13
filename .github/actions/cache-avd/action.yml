@@ -1,0 +1,31 @@
+name: Setup AVD Environment
+description: Setup Android Emulator cache
+
+inputs:
+  api-level:
+    description: 'Android API level for the emulator'
+    default: '36'
+
+runs:
+  using: composite
+  steps:
+    - name: AVD Cache
+      uses: actions/cache@v4
+      id: avd-cache
+      with:
+        path: |
+          ~/.android/avd/*
+          ~/.android/adb*
+        key: avd-${{ inputs.api-level }}
+
+    - name: Create AVD and Generate Snapshot
+      if: steps.avd-cache.outputs.cache-hit != 'true'
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ inputs.api-level }}
+        avd-name: ${{ inputs.api-level }}
+        arch: x86_64
+        force-avd-creation: false
+        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        disable-animations: true
+        script: echo "Generated AVD snapshot for caching."

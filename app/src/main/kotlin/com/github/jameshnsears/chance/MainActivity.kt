@@ -8,67 +8,76 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.github.jameshnsears.chance.composable.MainActivityComposable
-import com.github.jameshnsears.chance.data.repository.RepositoryFactory
-import com.github.jameshnsears.chance.utility.logging.UtilityLoggingLineNumberTree
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import com.github.jameshnsears.chance.common.utility.UtilityLoggingLineNumberTree
+import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
+import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
 
         installLogging()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            installSplashScreen()
+        enableEdgeToEdge()
+
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
         }
 
         installShortcut()
 
         val repositoryFactory = RepositoryFactory(application)
 
-        var resizeInitialValue: Int
-        runBlocking {
-            resizeInitialValue = repositoryFactory.repositorySettings.fetch().first().resize
-        }
-
         setContent {
-            MainActivityComposable(
+            val settings by produceState<SettingsDataInterface?>(initialValue = null) {
+                val flow = repositoryFactory.repositorySettings.fetch()
+                flow.collect { value = it }
+            }
+
+            MainComposable(
                 application,
                 repositoryFactory.repositorySettings,
                 repositoryFactory.repositoryBag,
                 repositoryFactory.repositoryRoll,
-                resizeInitialValue
+                settings?.resize ?: 2
             )
         }
     }
 
     private fun installLogging() {
-        if (Timber.treeCount == 0)
+        if (BuildConfig.DEBUG && Timber.treeCount == 0) {
             Timber.plant(UtilityLoggingLineNumberTree())
-    }
-
-    private fun installShortcut() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val shortcutManager = getSystemService(ShortcutManager::class.java) as ShortcutManager
-
-            shortcutManager.dynamicShortcuts = listOf(
-                createShortcut(
-                    getString(R.string.app_shortcut_yes_no),
-                    Icon.createWithResource(
-                        applicationContext,
-                        R.drawable.outline_thumbs_up_down_24
-                    )
-                )
-            )
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
+    private fun installShortcut() {
+        val shortcutManager = getSystemService(ShortcutManager::class.java) ?: return
+
+        shortcutManager.dynamicShortcuts = listOf(
+            createShortcut(
+                getString(R.string.app_shortcut_yes_no),
+                Icon.createWithResource(
+                    applicationContext,
+                    R.drawable.thumb_up_down
+                )
+            )
+        )
+    }
+
     private fun createShortcut(
         shortcutId: String,
         icon: Icon
