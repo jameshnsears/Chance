@@ -136,4 +136,43 @@ class CardSideAndroidViewModelUnitTest : DialogBagUnitTestUnitTestHelper() {
             fail()
         }
     }
+
+    @Test
+    fun sideCardSvgFileImportValidAsync() {
+        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel()
+
+        // Should not throw - validates synchronously
+        dialogBagAndroidViewModel.cardSideAndroidViewModel.sideImageSvgImportAsync(
+            requireNotNull(
+                javaClass.classLoader?.getResourceAsStream("data/svg/d2.svg")
+            ) {
+                fail()
+            },
+            kiloBytes = 500
+        )
+
+        // Async work happens on background dispatcher
+        // Progress flag should be set initially
+        assertTrue(
+            dialogBagAndroidViewModel.cardSideAndroidViewModel.stateFlowCardSide.value.svgImportInProgress
+        )
+    }
+
+    @Test
+    fun sideCardSvgFileImportAsyncInvalid() {
+        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel()
+
+        try {
+            dialogBagAndroidViewModel.cardSideAndroidViewModel.sideImageSvgImportAsync(
+                requireNotNull(
+                    javaClass.classLoader?.getResourceAsStream("data/svg/empty.svg")
+                ) {
+                    fail()
+                }
+            )
+            fail()
+        } catch (_: CardSideSvgImportException) {
+            // expected - validation happens synchronously
+        }
+    }
 }

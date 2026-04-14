@@ -2,12 +2,14 @@ package com.github.jameshnsears.chance.ui.dialog.bag.card.side
 
 import android.app.Application
 import android.net.Uri
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import coil.request.ImageRequest
 import com.github.jameshnsears.chance.data.common.utility.svg.UtilitySvgSerializer
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceSideEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -15,6 +17,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.InputStream
 
+@Stable
 data class CardSideState(
     val sideNumber: Int,
     val sideNumberColour: String,
@@ -27,7 +30,8 @@ data class CardSideState(
     val sideApplyToAllNumberColour: Boolean,
     val sideApplyToAllDescription: Boolean,
     val sideApplyToAllSvg: Boolean,
-    val diceSidesFewerThanSideNumber: Boolean
+    val diceSidesFewerThanSideNumber: Boolean,
+    val svgImportInProgress: Boolean = false
 )
 
 enum class SvgImportError {
@@ -57,7 +61,8 @@ class CardSideAndroidViewModel(
         sideApplyToAllNumberColour = false,
         sideApplyToAllDescription = false,
         sideApplyToAllSvg = false,
-        diceSidesFewerThanSideNumber = false
+        diceSidesFewerThanSideNumber = false,
+        svgImportInProgress = false
     )
 
     private val _stateFlowCardSide = MutableStateFlow(sideInitialState)
@@ -95,7 +100,7 @@ class CardSideAndroidViewModel(
     fun sideImageSvgImport(uri: Uri) {
         val inputStream = getApplication<Application>().contentResolver.openInputStream(uri)
         if (inputStream != null) {
-            sideImageSvgImport(inputStream)
+            sideImageSvgImportAsync(inputStream)
         }
     }
 
@@ -124,6 +129,49 @@ class CardSideAndroidViewModel(
             }
         } else {
             throw CardSideSvgImportException(SvgImportError.NOT_A_SVG)
+        }
+    }
+
+    /**
+     * Async variant of SVG import that performs base64 encoding and ImageRequest
+     * creation on a background dispatcher to avoid blocking the main thread.
+     */
+    fun sideImageSvgImportAsync(inputStream: InputStream, kiloBytes: Int = 128) {
+        val candidateSvgString = sideImageSvgImportReadFile(inputStream)
+
+        // Validate synchronously (fast check)
+        isSvgTooBig(candidateSvgString, kiloBytes)
+
+        if (!UtilitySvgSerializer.isStringSvg(candidateSvgString)) {
+            throw CardSideSvgImportException(SvgImportError.NOT_A_SVG)
+        }
+
+        // Perform encoding and ImageRequest creation on background dispatcher
+        _stateFlowCardSide.update { it.copy(svgImportInProgress = true) }
+
+        viewModelScope.launch(Dispatchers.Default) {
+            try {
+                val encodedBase64 = UtilitySvgSerializer.encodeIntoBase64StringAsync(candidateSvgString)
+                val imageRequest = UtilitySvgSerializer.imageRequestFromSvgStringAsync(
+                    getApplication(),
+                    candidateSvgString
+                )
+
+                // Update state on main thread
+                _stateFlowCardSide.update {
+                    it.copy(
+                        sideImageBase64 = encodedBase64,
+                        sideImageRequest = imageRequest,
+                        sideImageDrawableId = 0,
+                        svgImportInProgress = false
+                    )
+                }
+
+                Timber.d("sideImageSvgImportAsync completed successfully")
+            } catch (e: CardSideSvgImportException) {
+                Timber.e(e, "sideImageSvgImportAsync failed with import error")
+                _stateFlowCardSide.update { it.copy(svgImportInProgress = false) }
+            }
         }
     }
 

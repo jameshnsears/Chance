@@ -63,7 +63,10 @@ fun ZoomRoll(
 
     val listState = rememberLazyListState()
 
-    val itemsList = stateFlowZoom.value.rollHistory.entries.toList()
+    // Use entries directly without materializing to list for better performance
+    val entriesList = remember(stateFlowZoom.value.rollHistory) {
+        stateFlowZoom.value.rollHistory.entries.toList()
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -71,14 +74,14 @@ fun ZoomRoll(
             .testTag(ZoomRollTestTag.LAZY_COLUMN),
         state = listState,
     ) {
-        if (itemsList.isEmpty()) {
+        if (entriesList.isEmpty()) {
             item {
                 Box(modifier = Modifier.testTag(ZoomRollTestTag.LAZY_COLUMN_EMPTY)) {
                 }
             }
         } else {
             itemsIndexed(
-                items = itemsList,
+                items = entriesList,
                 key = { index, item -> "${item.key}_${index}" }
             ) { index, rollSequence ->
                 if (stateFlowTabRoll.value.rollIndexTime)

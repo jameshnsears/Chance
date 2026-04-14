@@ -1,5 +1,6 @@
 package com.github.jameshnsears.chance.ui.dialog.bag.card.roll
 
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.core.Dice
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@Stable
 data class CardRollState(
     var rollMultiplierValue: Int,
     var rollExplode: Boolean,
@@ -59,7 +61,7 @@ class CardRollViewModel(
         _stateFlow.update { it.copy(rollExplode = ticked) }
     }
 
-    private fun rollExplodeSidesEquals() = (1..diceSidesSize).toList().map { it.toString() }
+    private fun rollExplodeSidesEquals() = (1..diceSidesSize).map { it.toString() }
 
     fun rollExplodeWhen(equalityValue: String) {
         when (equalityValue) {
@@ -67,8 +69,7 @@ class CardRollViewModel(
                 _stateFlow.update { cardRollState ->
                     cardRollState.copy(
                         rollExplodeWhen = equalityValue,
-                        rollExplodeAvailableValues = (2..diceSidesSize).toList()
-                            .map { it.toString() },
+                        rollExplodeAvailableValues = (2..diceSidesSize).map { it.toString() },
                         rollExplodeValue = 2
                     )
                 }
@@ -78,8 +79,7 @@ class CardRollViewModel(
                 _stateFlow.update { cardRollState ->
                     cardRollState.copy(
                         rollExplodeWhen = equalityValue,
-                        rollExplodeAvailableValues = (1..<diceSidesSize).toList()
-                            .map { it.toString() },
+                        rollExplodeAvailableValues = (1..<diceSidesSize).map { it.toString() },
                         rollExplodeValue = 1
                     )
                 }

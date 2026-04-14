@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
 import android.app.Application
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.core.Dice
@@ -25,6 +26,7 @@ import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import java.security.SecureRandom
 
+@Stable
 data class SettingsState(
     var rollIndexTime: Boolean,
     var rollScore: Boolean,
@@ -187,6 +189,7 @@ class RollAndroidViewModel(
     fun rollDiceSequence() {
         viewModelScope.launch {
             _rollEnabled.value = false
+            _undoEnabled.value = false
 
             playRollSound()
 
@@ -199,7 +202,6 @@ class RollAndroidViewModel(
             rollSequenceHelper.saveNewRollSequence(newRollSequence)
 
             _undoEnabled.value = true
-
             _rollEnabled.value = true
 
             RollEvent.emit()
@@ -331,6 +333,7 @@ class RollAndroidViewModel(
         viewModelScope.launch {
             if (_undoEnabled.value) {
                 _undoEnabled.value = false
+                _rollEnabled.value = false
 
                 val rollHistory = repositoryRoll.fetch().first()
 
@@ -341,6 +344,7 @@ class RollAndroidViewModel(
                 RollEvent.emit()
 
                 _undoEnabled.value = rollHistory.isNotEmpty()
+                _rollEnabled.value = _diceBag.value.any { it.selected }
             }
         }
     }

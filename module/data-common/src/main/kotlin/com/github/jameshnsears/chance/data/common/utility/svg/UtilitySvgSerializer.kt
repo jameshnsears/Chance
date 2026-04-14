@@ -5,6 +5,8 @@ import coil.decode.SvgDecoder
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.github.jameshnsears.chance.data.domain.core.Side
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.URL
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -53,5 +55,54 @@ class UtilitySvgSerializer {
                 .memoryCachePolicy(CachePolicy.ENABLED)
                 .memoryCacheKey(svgString.hashCode().toString())
                 .build()
+
+        /**
+         * Async variant of imageRequestFromBase64String that performs decoding and
+         * ImageRequest creation on a background dispatcher to avoid blocking the main thread.
+         */
+        suspend fun imageRequestFromBase64StringAsync(
+            application: Application,
+            side: Side
+        ): ImageRequest = withContext(Dispatchers.Default) {
+            // Check cache first (fast path)
+            side.imageRequest?.let { return@withContext it }
+
+            // Perform CPU-intensive work on background dispatcher
+            val imageRequest = ImageRequest.Builder(application)
+                .data(decodeBase64StringIntoByteArray(side.imageBase64))
+                .decoderFactory(SvgDecoder.Factory())
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .memoryCacheKey(side.imageBase64.hashCode().toString())
+                .build()
+
+            side.imageRequest = imageRequest
+            imageRequest
+        }
+
+        /**
+         * Async variant of imageRequestFromSvgString that performs encoding and
+         * ImageRequest creation on a background dispatcher.
+         */
+        suspend fun imageRequestFromSvgStringAsync(
+            application: Application,
+            svgString: String
+        ): ImageRequest = withContext(Dispatchers.Default) {
+            // Perform CPU-intensive work on background dispatcher
+            ImageRequest.Builder(application)
+                .data(svgString.toByteArray())
+                .decoderFactory(SvgDecoder.Factory())
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .memoryCacheKey(svgString.hashCode().toString())
+                .build()
+        }
+
+        /**
+         * Async variant that encodes an SVG string to base64 on a background dispatcher.
+         */
+        @OptIn(ExperimentalEncodingApi::class)
+        suspend fun encodeIntoBase64StringAsync(string: String): String =
+            withContext(Dispatchers.Default) {
+                Base64.encode(string.toByteArray())
+            }
     }
 }

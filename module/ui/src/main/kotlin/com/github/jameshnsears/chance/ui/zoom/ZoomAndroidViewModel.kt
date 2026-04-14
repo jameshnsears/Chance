@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.ui.zoom
 
 import android.app.Application
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.Dp
@@ -30,10 +31,8 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
+@Stable
 data class ZoomState(
     var resizeViewDp: Dp,
     var diceBag: DiceBag,
@@ -92,17 +91,19 @@ abstract class ZoomAndroidViewModel(
 
     protected fun updateDiceBagList() {
         viewModelScope.launch {
-            _diceBagList.value = emptyList()
             diceEpochCache.clear()
 
             if (_stateFlowZoom.value.diceBag.size == 0) {
                 _stateFlowZoom.value.diceBag = repositoryBag.fetch().first()
             }
 
+            // Build list more efficiently - avoid repeated list creation via +=
+            val newDiceList = mutableListOf<Dice>()
             for (dice in _stateFlowZoom.value.diceBag) {
-                _diceBagList.value += dice
+                newDiceList.add(dice)
                 diceEpochCache[dice.epoch] = dice
             }
+            _diceBagList.value = newDiceList
         }
     }
 
@@ -176,18 +177,16 @@ abstract class ZoomAndroidViewModel(
         return dice.sides.any { it.description.isNotBlank() }
     }
 
-    private val executor: ExecutorService = Executors.newFixedThreadPool(10)
     private val imageRequestCache = mutableMapOf<String, ImageRequest>()
 
     fun sideSvgImageRequest(side: Side): ImageRequest {
         val cacheKey = side.imageBase64
-        return imageRequestCache.getOrPut(cacheKey) {
-            val future = CompletableFuture<ImageRequest>()
-            executor.execute {
-                val result = UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
-                future.complete(result)
-            }
-            future.join()
-        }
+        // Return cached result if available (fast path - no lock)
+        imageRequestCache[cacheKey]?.let { return it }
+
+        // For synchronous API, create result and cache it
+        val result = UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
+        imageRequestCache[cacheKey] = result
+        return result
     }
 }
