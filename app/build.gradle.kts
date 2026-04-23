@@ -12,8 +12,13 @@ android {
 
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
-        versionName = "${versionCode}${minSdk}${targetSdk}"
+
+        val baseVersionCode = libs.versions.versionCode.get()
+        versionCode = "${baseVersionCode}${minSdk}${targetSdk}".toInt()
+        println("versionCode=$versionCode")
+
+        versionName = libs.versions.versionName.get()
+        println("versionName=$versionName")
 
         extra["versionName"] = libs.versions.versionName.get()
 
