@@ -6,7 +6,7 @@ targetSdk = "36"
 compileSdk = "37"
 
 activity-compose = "1.13.0"
-androidxTestRunner = "1.5.0" # tied to: espresso-core = "3.5.0"
+androidxTestRunner = "1.7.0" # tied to: espresso-core = "3.5.0"
 androidxTestOrchestrator = "1.6.1"
 appcompat = "1.7.1"
 coil-svg = "2.7.0"
