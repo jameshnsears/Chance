@@ -13,18 +13,11 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
 
-        // fdroid can't recognise this
-        // val baseVersionCode = libs.versions.versionCode.get()
-        // versionCode = "${baseVersionCode}${minSdk}${targetSdk}".toInt()
-        versionCode = 162836
+        versionCode = 172836
         println("versionCode=$versionCode")
 
-        // fdroid can't recognise this
-        // versionName = libs.versions.versionName.get()
-        versionName = "2.0.0"
+        versionName = "2.1.0"
         println("versionName=$versionName")
-
-        extra["versionName"] = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"

@@ -1,6 +1,4 @@
 [versions]
-versionCode = "16"
-versionName = "2.0.0"
 minSdk = "28"
 targetSdk = "36"
 compileSdk = "37"
