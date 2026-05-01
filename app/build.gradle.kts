@@ -13,18 +13,13 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
 
-        // fdroid can't recognise this
-        // val baseVersionCode = libs.versions.versionCode.get()
-        // versionCode = "${baseVersionCode}${minSdk}${targetSdk}".toInt()
-        versionCode = 162836
+        // NOTE: value not in .toml due to fdroid build process?
+        versionCode = 172836
         println("versionCode=$versionCode")
 
-        // fdroid can't recognise this
-        // versionName = libs.versions.versionName.get()
-        versionName = "2.0.0"
+        // NOTE: .toml also contains this value for the module:ui
+        versionName = "2.0.1"
         println("versionName=$versionName")
-
-        extra["versionName"] = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
@@ -39,19 +34,13 @@ android {
             // The generated .map file, for google play store manual upload, in:
             // app/build/outputs/mapping/release/
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            isShrinkResources = false
         }
 
         debug {
             enableAndroidTestCoverage = true
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            isShrinkResources = false
         }
     }
 

@@ -12,12 +12,8 @@ type for release and performance testing. It MUST use the optimized default file
 
     buildTypes {
        getByName("release") {
-           isMinifyEnabled = true
-           isShrinkResources = true
-           proguardFiles(
-               getDefaultProguardFile("proguard-android-optimize.txt"),
-               "proguard-rules.pro"
-           )
+           isMinifyEnabled = false
+           isShrinkResources = false
        }
     }
 

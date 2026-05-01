@@ -2,9 +2,13 @@ package com.github.jameshnsears.chance.ui.tab.bag
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -92,13 +96,16 @@ fun TabBagBottomSheetLayout(
     tabBagAndroidViewModel: TabBagAndroidViewModel,
     zoomBagAndroidViewModel: ZoomBagAndroidViewModel
 ) {
+    val isGestureNavigation = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() < 40.dp
+    val columnHeight = if (isGestureNavigation) 310.dp else 330.dp
 
     Column(
         Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .padding(start = 8.dp, end = 8.dp, top = 10.dp)
-            .height(310.dp),
+            .height(columnHeight)
+            .navigationBarsPadding(),
     ) {
         Resize(
             tabBagAndroidViewModel,

@@ -11,8 +11,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
-
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     testOptions {
@@ -25,11 +23,13 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
 
         debug {
             isMinifyEnabled = false
+            isShrinkResources = false
         }
 
         create("benchmarkRelease") {

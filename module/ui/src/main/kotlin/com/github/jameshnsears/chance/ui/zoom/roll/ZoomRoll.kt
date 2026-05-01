@@ -40,6 +40,7 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.roll.RollAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.roll.SettingsState
 import com.github.jameshnsears.chance.ui.zoom.ZoomSideDescription
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -120,10 +121,11 @@ fun ZoomRoll(
                             }
                         ) { _, roll ->
                             RollDetails(
-                                rollAndroidViewModel,
                                 zoomRollAndroidViewModel,
                                 roll,
-                                zoomRollAndroidViewModel.fetchDiceFromEpochCache(roll.diceEpoch)!!
+                                zoomRollAndroidViewModel.fetchDiceFromEpochCache(roll.diceEpoch)!!,
+                                stateFlowTabRoll.value,
+                                stateFlowZoom.value.resizeViewDp
                             )
                         }
                     }
@@ -177,25 +179,21 @@ private fun RollScore(
 
 @Composable
 private fun RollDetails(
-    rollAndroidViewModel: RollAndroidViewModel,
     zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
     roll: Roll,
-    dice: Dice
+    dice: Dice,
+    settingsState: SettingsState,
+    resizeViewDp: Dp
 ) {
-    val stateFlowTabRoll =
-        rollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
-            lifecycleOwner = LocalLifecycleOwner.current
-        )
+    val settingsDiceTitle = settingsState.diceTitle
 
-    val settingsDiceTitle = stateFlowTabRoll.value.diceTitle
+    val settingsSideNumber = settingsState.sideNumber
 
-    val settingsSideNumber = stateFlowTabRoll.value.sideNumber
+    val settingsBehaviour = settingsState.rollBehaviour
 
-    val settingsBehaviour = stateFlowTabRoll.value.rollBehaviour
+    val settingsSideDescription = settingsState.sideDescription
 
-    val settingsSideDescription = stateFlowTabRoll.value.sideDescription
-
-    val settingsSideSVG = stateFlowTabRoll.value.sideSVG
+    val settingsSideSVG = settingsState.sideSVG
 
     Column(
         Modifier.padding(start = 4.dp),
@@ -216,17 +214,19 @@ private fun RollDetails(
                 }
             }
 
-        if (settingsBehaviour) ZoomSideRollBehaviour(zoomRollAndroidViewModel, roll)
+        if (settingsBehaviour) ZoomSideRollBehaviour(zoomRollAndroidViewModel, roll, resizeViewDp)
 
         if (settingsSideNumber) ZoomRollSideImageShape(
             zoomRollAndroidViewModel,
             dice,
-            roll.side
+            roll.side,
+            resizeViewDp
         )
 
         if (settingsSideSVG) ZoomRollSideImageSVG(
             zoomRollAndroidViewModel,
-            roll.side
+            roll.side,
+            resizeViewDp
         )
 
         if (settingsSideDescription) ZoomSideDescription(zoomRollAndroidViewModel, dice, roll.side)
@@ -236,16 +236,10 @@ private fun RollDetails(
 @Composable
 fun ZoomSideRollBehaviour(
     zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
-    roll: Roll
+    roll: Roll,
+    resizeView: Dp
 ) {
     val rollSelectionIconColour = if (isSystemInDarkTheme()) Color.White else Color.Black
-
-    val stateFlowZoom =
-        zoomRollAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = LocalLifecycleOwner.current
-        )
-
-    val resizeView = stateFlowZoom.value.resizeViewDp
 
     Box {
         Row(
@@ -311,15 +305,9 @@ private fun ZoomSideRollBehaviourIcon(
 fun ZoomRollSideImageShape(
     zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
     dice: Dice,
-    side: Side
+    side: Side,
+    resizeView: Dp
 ) {
-    val stateFlowZoom =
-        zoomRollAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = LocalLifecycleOwner.current
-        )
-
-    val resizeView = stateFlowZoom.value.resizeViewDp
-
     Box {
         Image(
             painter = painterResource(zoomRollAndroidViewModel.drawableForDiceSides(dice)),
@@ -345,15 +333,9 @@ fun ZoomRollSideImageShape(
 @Composable
 fun ZoomRollSideImageSVG(
     zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
-    side: Side
+    side: Side,
+    resizeView: Dp
 ) {
-    val stateFlowZoom =
-        zoomRollAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = LocalLifecycleOwner.current
-        )
-
-    val resizeView = stateFlowZoom.value.resizeViewDp
-
     val modifier = Modifier
         .size(resizeView)
         .padding(top = 8.dp)

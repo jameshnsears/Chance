@@ -4,8 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
@@ -64,12 +68,16 @@ fun TabRollBottomSheetLayout(
     rollAndroidViewModel: RollAndroidViewModel,
     bottomSheetScaffoldState: BottomSheetScaffoldState
 ) {
+    val isGestureNavigation = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() < 40.dp
+    val columnHeight = if (isGestureNavigation) 210.dp else 250.dp
+
     Column(
         Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .padding(start = 8.dp, end = 8.dp)
-            .height(210.dp),
+            .height(columnHeight)
+            .navigationBarsPadding(),
     ) {
         Row(
             modifier = Modifier

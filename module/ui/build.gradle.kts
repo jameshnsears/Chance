@@ -12,8 +12,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
-
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     testOptions {
@@ -29,6 +27,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isShrinkResources = false
             buildConfigField("String", "VERSION", "\"${versionName}\"")
             buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
         }
@@ -39,6 +38,7 @@ android {
             enableAndroidTestCoverage = true
             enableUnitTestCoverage = true
             isMinifyEnabled = false
+            isShrinkResources = false
         }
 
         create("benchmarkRelease") {
