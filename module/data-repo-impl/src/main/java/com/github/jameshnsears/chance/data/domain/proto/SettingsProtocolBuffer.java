@@ -22,6 +22,7 @@ public final class SettingsProtocolBuffer extends
     public static final int SIDESVG_FIELD_NUMBER = 8;
     public static final int ROLLSOUND_FIELD_NUMBER = 9;
     public static final int SHUFFLE_FIELD_NUMBER = 10;
+    public static final int HAPTICS_FIELD_NUMBER = 11;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer DEFAULT_INSTANCE;
@@ -71,8 +72,8 @@ public final class SettingsProtocolBuffer extends
     private boolean sideSVG_ = false;
     private boolean rollSound_ = false;
     private boolean shuffle_ = false;
+    private boolean haptics_ = false;
     private byte memoizedIsInitialized = -1;
-
     // Use SettingsProtocolBuffer.newBuilder() to construct.
     private SettingsProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -291,6 +292,16 @@ public final class SettingsProtocolBuffer extends
         return shuffle_;
     }
 
+    /**
+     * <code>bool haptics = 11;</code>
+     *
+     * @return The haptics.
+     */
+    @java.lang.Override
+    public boolean getHaptics() {
+        return haptics_;
+    }
+
     @java.lang.Override
     public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -333,6 +344,9 @@ public final class SettingsProtocolBuffer extends
         }
         if (shuffle_ != false) {
             output.writeBool(10, shuffle_);
+        }
+        if (haptics_ != false) {
+            output.writeBool(11, haptics_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -383,6 +397,10 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(10, shuffle_);
         }
+        if (haptics_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeBoolSize(11, haptics_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
         return size;
@@ -418,6 +436,8 @@ public final class SettingsProtocolBuffer extends
             != other.getRollSound()) return false;
         if (getShuffle()
             != other.getShuffle()) return false;
+        if (getHaptics()
+            != other.getHaptics()) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
     }
@@ -458,6 +478,9 @@ public final class SettingsProtocolBuffer extends
         hash = (37 * hash) + SHUFFLE_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
             getShuffle());
+        hash = (37 * hash) + HAPTICS_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getHaptics());
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -509,6 +532,7 @@ public final class SettingsProtocolBuffer extends
         private boolean sideSVG_;
         private boolean rollSound_;
         private boolean shuffle_;
+        private boolean haptics_;
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.newBuilder()
         private Builder() {
@@ -548,6 +572,7 @@ public final class SettingsProtocolBuffer extends
             sideSVG_ = false;
             rollSound_ = false;
             shuffle_ = false;
+            haptics_ = false;
             return this;
         }
 
@@ -613,6 +638,9 @@ public final class SettingsProtocolBuffer extends
             if (((from_bitField0_ & 0x00000200) != 0)) {
                 result.shuffle_ = shuffle_;
             }
+            if (((from_bitField0_ & 0x00000400) != 0)) {
+                result.haptics_ = haptics_;
+            }
         }
 
         @java.lang.Override
@@ -656,6 +684,9 @@ public final class SettingsProtocolBuffer extends
             }
             if (other.getShuffle() != false) {
                 setShuffle(other.getShuffle());
+            }
+            if (other.getHaptics() != false) {
+                setHaptics(other.getHaptics());
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -733,6 +764,11 @@ public final class SettingsProtocolBuffer extends
                             bitField0_ |= 0x00000200;
                             break;
                         } // case 80
+                        case 88: {
+                            haptics_ = input.readBool();
+                            bitField0_ |= 0x00000400;
+                            break;
+                        } // case 88
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -1105,6 +1141,42 @@ public final class SettingsProtocolBuffer extends
         public Builder clearShuffle() {
             bitField0_ = (bitField0_ & ~0x00000200);
             shuffle_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool haptics = 11;</code>
+         *
+         * @return The haptics.
+         */
+        @java.lang.Override
+        public boolean getHaptics() {
+            return haptics_;
+        }
+
+        /**
+         * <code>bool haptics = 11;</code>
+         *
+         * @param value The haptics to set.
+         * @return This builder for chaining.
+         */
+        public Builder setHaptics(boolean value) {
+
+            haptics_ = value;
+            bitField0_ |= 0x00000400;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool haptics = 11;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearHaptics() {
+            bitField0_ = (bitField0_ & ~0x00000400);
+            haptics_ = false;
             onChanged();
             return this;
         }

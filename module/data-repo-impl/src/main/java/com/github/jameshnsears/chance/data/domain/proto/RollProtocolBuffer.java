@@ -65,7 +65,6 @@ public final class RollProtocolBuffer extends
     private int scoreAdjustment_ = 0;
     private int score_ = 0;
     private byte memoizedIsInitialized = -1;
-
     // Use RollProtocolBuffer.newBuilder() to construct.
     private RollProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);

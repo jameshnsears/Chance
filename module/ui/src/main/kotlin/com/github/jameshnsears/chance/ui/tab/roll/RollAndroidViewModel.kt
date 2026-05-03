@@ -11,6 +11,7 @@ import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
+import com.github.jameshnsears.chance.ui.tab.HapticHelper
 import com.github.jameshnsears.chance.ui.tab.bag.BagImportEvent
 import com.github.jameshnsears.chance.ui.tab.bag.BagResetEvent
 import kotlinx.coroutines.delay
@@ -38,6 +39,7 @@ data class SettingsState(
     var sideSVG: Boolean,
 
     var shuffle: Boolean,
+    var haptics: Boolean,
     var rollSound: Boolean,
 )
 
@@ -57,6 +59,7 @@ class RollAndroidViewModel(
             sideDescription = false,
             sideSVG = false,
             shuffle = false,
+            haptics = false,
             rollSound = false,
         )
     )
@@ -108,6 +111,7 @@ class RollAndroidViewModel(
                 rollBehaviour = settings.rollBehaviour,
                 sideDescription = settings.sideDescription,
                 sideSVG = settings.sideSVG,
+                haptics = settings.haptics,
                 rollSound = settings.rollSound,
             )
         }
@@ -191,6 +195,8 @@ class RollAndroidViewModel(
             _rollEnabled.value = false
             _undoEnabled.value = false
 
+            playRollHaptic()
+
             playRollSound()
 
             val newRollSequence = mutableListOf<Roll>()
@@ -246,8 +252,31 @@ class RollAndroidViewModel(
         settings.sideSVG = _stateFlowSettingsData.value.sideSVG
 
         settings.rollSound = _stateFlowSettingsData.value.rollSound
+        settings.haptics = _stateFlowSettingsData.value.haptics
+        settings.shuffle = _stateFlowSettingsData.value.shuffle
 
         repositorySettings.store(settings)
+    }
+
+    suspend fun playRollHaptic() {
+        if (_stateFlowSettingsData.value.haptics) {
+            Timber.d("playRollHaptic")
+            hapticHelper.playRollHaptic()
+        }
+    }
+
+    suspend fun playUndoHaptic() {
+        if (_stateFlowSettingsData.value.haptics) {
+            Timber.d("playUndoHaptic")
+            hapticHelper.playUndoHaptic()
+        }
+    }
+
+    suspend fun playUndoAllHaptic() {
+        if (_stateFlowSettingsData.value.haptics) {
+            Timber.d("playUndoAllHaptic")
+            hapticHelper.playUndoAllHaptic()
+        }
     }
 
     suspend fun playRollSound() {
@@ -257,7 +286,9 @@ class RollAndroidViewModel(
         }
     }
 
-    private val rollSoundPlayer: RollSoundPlayer = RollSoundPlayer(getApplication())
+    val hapticHelper = HapticHelper(getApplication())
+
+    private val rollSoundPlayer = RollSoundPlayer(getApplication())
 
     override fun onCleared() {
         super.onCleared()
@@ -335,6 +366,8 @@ class RollAndroidViewModel(
                 _undoEnabled.value = false
                 _rollEnabled.value = false
 
+                playUndoHaptic()
+
                 val rollHistory = repositoryRoll.fetch().first()
 
                 rollHistory.remove(rollHistory.keys.first())
@@ -352,6 +385,9 @@ class RollAndroidViewModel(
     fun undoAll() {
         viewModelScope.launch {
             _undoEnabled.value = false
+
+            playUndoAllHaptic()
+
             repositoryRoll.clear()
             RollEvent.emit()
         }
@@ -409,6 +445,12 @@ class RollAndroidViewModel(
     fun settingsShuffle(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(shuffle = checked) }
+        }
+    }
+
+    fun settingsUseHaptics(checked: Boolean) {
+        viewModelScope.launch {
+            _stateFlowSettingsData.update { it.copy(haptics = checked) }
         }
     }
 

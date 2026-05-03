@@ -46,7 +46,6 @@ public final class Bag {
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Dice.getDescriptor();
     }
-
     private Bag() {
     }
 

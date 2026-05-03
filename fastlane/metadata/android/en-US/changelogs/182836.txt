@@ -1,0 +1,2 @@
+- Add some haptic support
+- Bump dependencies + IDE: Android Studio Panda 3 | 2025.3.3 Patch 1

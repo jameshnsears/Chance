@@ -14,6 +14,7 @@ class SettingsDataImpl(
     override var sideDescription: Boolean = false,
     override var sideSVG: Boolean = true,
 
+    override var haptics: Boolean = false,
     override var rollSound: Boolean = false,
     override var shuffle: Boolean = false
 ) : SettingsDataInterface

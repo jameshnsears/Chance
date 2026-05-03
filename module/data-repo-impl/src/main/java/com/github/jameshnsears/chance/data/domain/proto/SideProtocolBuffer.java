@@ -76,7 +76,6 @@ public final class SideProtocolBuffer extends
     private SideProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
     }
-
     private SideProtocolBuffer() {
         uuid_ = "";
         numberColour_ = "";

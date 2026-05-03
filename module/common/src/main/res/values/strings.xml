@@ -80,6 +80,7 @@
     <string name="tab.roll.settings.behaviour">Behaviour</string>
 
     <string name="tab.roll.settings.use.shuffle">Shuffle (multiple dice)</string>
+    <string name="tab.roll.settings.use.haptics">Haptics (undo &amp; roll)</string>
     <string name="tab.roll.settings.use.sound">Sound</string>
 
     <string name="tab.roll.settings.undo.all">Undo All</string>

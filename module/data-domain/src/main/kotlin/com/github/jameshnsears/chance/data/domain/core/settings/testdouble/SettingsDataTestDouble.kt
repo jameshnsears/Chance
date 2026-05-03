@@ -14,6 +14,7 @@ class SettingsDataTestDouble(
     override var sideDescription: Boolean = true,
     override var sideSVG: Boolean = true,
 
+    override var haptics: Boolean = false,
     override var rollSound: Boolean = true,
     override var shuffle: Boolean = false
 ) : SettingsDataInterface {
@@ -30,6 +31,7 @@ class SettingsDataTestDouble(
         if (rollBehaviour != other.rollBehaviour) return false
         if (sideDescription != other.sideDescription) return false
         if (sideSVG != other.sideSVG) return false
+        if (haptics != other.haptics) return false
         if (rollSound != other.rollSound) return false
         if (shuffle != other.shuffle) return false
 

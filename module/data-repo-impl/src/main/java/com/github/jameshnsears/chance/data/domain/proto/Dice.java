@@ -52,7 +52,6 @@ public final class Dice {
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Side.getDescriptor();
     }
-
     private Dice() {
     }
 

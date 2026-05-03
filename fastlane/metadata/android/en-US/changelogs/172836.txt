@@ -1,4 +1,0 @@
-- Fix issue with proguard
-- Improve navigation gesture / button support
-- Improve performance
-- Bump dependencies + IDE: Android Studio Panda 3 | 2025.3.3 Patch 1

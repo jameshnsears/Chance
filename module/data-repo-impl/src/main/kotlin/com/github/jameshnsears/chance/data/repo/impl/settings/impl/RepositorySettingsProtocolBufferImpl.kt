@@ -116,6 +116,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
                     sideDescription = settingsProtocolBuffer.sideDescription,
                     sideSVG = settingsProtocolBuffer.sideSVG,
 
+                    haptics = settingsProtocolBuffer.haptics,
                     rollSound = settingsProtocolBuffer.rollSound,
                     shuffle = settingsProtocolBuffer.shuffle,
                 )

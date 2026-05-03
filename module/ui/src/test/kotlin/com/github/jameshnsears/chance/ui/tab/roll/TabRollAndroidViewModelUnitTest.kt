@@ -8,8 +8,12 @@ import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTes
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
+import com.github.jameshnsears.chance.ui.tab.HapticHelper
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkConstructor
+import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.spyk
 import junit.framework.TestCase.assertEquals
