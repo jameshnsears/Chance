@@ -59,15 +59,8 @@ detekt {
     )
 
     debug = true
-
     ignoreFailures = false
-
     buildUponDefaultConfig = true
-
-//    baseline = file("${rootProject.projectDir}/app/detekt-baseline.xml")
-
-    parallel = true
-
     config.setFrom("${rootProject.projectDir}/detekt.yml")
 }
 
@@ -85,36 +78,59 @@ ktlint {
 // ────────────────────────────────────────────────────────────────────
 
 // 1. Centralize configuration to avoid duplication
+val d = "$"
 val inclusions = listOf(
-    "**/intermediates/built_in_kotlinc/**/*.class",
-    "**/intermediates/javac/**/*.class"
+    "**/tmp/kotlin-classes/fdroidDebug/**/*.class",
+    "**/intermediates/javac/fdroidDebug/classes/**/*.class",
+    "**/intermediates/built_in_kotlinc/fdroidDebug/**/*.class"
 )
 
 val exclusions = listOf(
+    "**/*${d}Companion${d}*.*",
+    "**/*${d}DefaultImpls${d}*.*",
+    "**/*${d}inlined${d}*.*",
+    "**/*${d}Lambda${d}*.*",
+    "**/*${d}MethodHandler${d}*.*",
+    "**/*${d}Preview${d}*.*",
+    "**/*${d}SAM${d}*.*",
     "**/BuildConfig.*",
-    "**/*Instrumented*.*",
-    "**/*Test.*",
     "**/composable/*.*",
+    "**/*Composable${d}*.*",
     "**/domain/proto/*.*",
+    "**/*_Factory*.*",
+    "**/*Instrumented*.*",
+    "**/Manifest*.*",
+    "**/*_MembersInjector*.*",
+    "**/*_Provide*.*",
+    "**/R${d}*.class",
     "**/R.class",
-    "**/R$*.class",
-    "**/Manifest*.*"
+    "**/*Test.*",
+    "**/*_ViewBinding*.*",
 )
 
 // Helper to configure reports consistently
-fun JacocoReport.configureReport(type: String) {
+fun JacocoReport.configureReport(project: Project, type: String) {
     group = "chance"
     description = "Generate Jacoco $type coverage reports."
 
     reports {
         xml.required.set(true)
+        xml.outputLocation.set(project.layout.buildDirectory.file("reports/jacoco/$type.xml"))
         html.required.set(true)
-        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco/$type"))
+        html.outputLocation.set(project.layout.buildDirectory.dir("reports/jacoco/$type"))
     }
 }
 
+// Access version catalog safely
+val libsCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+val jacocoVersion = libsCatalog.findVersion("jacocoVersion").get().requiredVersion
+
 subprojects {
     apply(plugin = "jacoco")
+
+    extensions.configure<JacocoPluginExtension> {
+        toolVersion = jacocoVersion
+    }
 
     // Use plugins.withType instead of afterEvaluate for better performance
     plugins.withId("com.android.application") { configureJacoco() }
@@ -123,46 +139,49 @@ subprojects {
 
 fun Project.configureJacoco() {
     tasks.register<JacocoReport>("jacocoFdroidTestReport") {
-        configureReport("unitTest")
+        configureReport(this@configureJacoco, "unitTest")
         dependsOn("testFdroidDebugUnitTest")
-
-        val buildDir = layout.buildDirectory.asFile.get()
 
         sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
         classDirectories.setFrom(
-            fileTree(buildDir) {
+            fileTree(layout.buildDirectory) {
                 setIncludes(inclusions)
                 setExcludes(exclusions)
             }
         )
         executionData.setFrom(
-            fileTree(buildDir) { include("**/*.exec", "**/*.ec") }
+            fileTree(layout.buildDirectory) { include("**/*.exec", "**/*.ec") }
         )
     }
 
     // Combine AndroidTest (Instrumented) + Unit Test
     tasks.register<JacocoReport>("jacocoFdroidAndroidTestReport") {
-        configureReport("androidTest")
-        dependsOn("connectedFdroidDebugAndroidTest")
-
-        val buildDir = layout.buildDirectory.asFile.get()
+        configureReport(this@configureJacoco, "androidTest")
+        dependsOn("testFdroidDebugUnitTest", "connectedFdroidDebugAndroidTest")
 
         sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
-        classDirectories.setFrom(fileTree(buildDir) {
+        classDirectories.setFrom(fileTree(layout.buildDirectory) {
             setIncludes(inclusions)
             setExcludes(exclusions)
         })
 
         // Grab both local unit tests and instrumented results
+        // Support for Orchestrator: .ec files are often nested in subdirectories
         executionData.setFrom(
-            fileTree(buildDir) { include("outputs/unit_test_code_coverage/**/*.exec", "outputs/code_coverage/**/*.ec") }
+            fileTree(layout.buildDirectory) {
+                include(
+                    "outputs/unit_test_code_coverage/**/*.exec",
+                    "outputs/code_coverage/**/*.ec",
+                    "outputs/managed_device_code_coverage/**/*.ec"
+                )
+            }
         )
     }
 }
 
 // Global Aggregated Report
 tasks.register<JacocoReport>("jacocoCombinedReport") {
-    configureReport("combined")
+    configureReport(project, "combined")
 
     // Collect data from all subprojects
     val subProjectList = subprojects.filter {

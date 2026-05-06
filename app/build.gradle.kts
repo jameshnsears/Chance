@@ -17,7 +17,7 @@ android {
         versionCode = 182836
         println("versionCode=$versionCode")
 
-        // NOTE: .toml also contains this value for the module:ui
+        // NOTE: .toml also contains this value for the module:ui - fdroid again
         versionName = "2.1.0"
         println("versionName=$versionName")
 
@@ -26,6 +26,12 @@ android {
 
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
 
@@ -39,16 +45,9 @@ android {
 
         debug {
             enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
             isMinifyEnabled = false
             isShrinkResources = false
-        }
-    }
-
-    testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
-
-        unitTests {
-            isIncludeAndroidResources = true
         }
     }
 

@@ -40,7 +40,7 @@ jobs:
         uses: codecov/codecov-action@v6
         with:
           fail_ci_if_error: true
-          files: ./module/${{ matrix.module.name }}/build/reports/jacoco/test.xml
+          files: ./module/${{ matrix.module.name }}/build/reports/jacoco/unitTest.xml
           flags: ${{ matrix.module.flags }}
           verbose: true
         env:
@@ -52,4 +52,4 @@ jobs:
         with:
           name: ${{ matrix.module.name }}
           path: |
-            ./module/${{ matrix.module.name }}/build/reports/jacoco/test.xml
+            ./module/${{ matrix.module.name }}/build/reports/jacoco/unitTest.xml
