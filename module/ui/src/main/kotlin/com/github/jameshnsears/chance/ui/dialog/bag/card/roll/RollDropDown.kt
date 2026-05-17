@@ -50,6 +50,7 @@ fun GenericExposedDropdownMenuBox(
             dropdownContents.forEach { selectionOption ->
                 DropdownMenuItem(
                     text = { Text(selectionOption) },
+                    modifier = Modifier.testTag("${testTag}-${selectionOption}"),
                     onClick = {
                         isDropdownExpanded = false
                         valueChanged(selectionOption)

@@ -23,8 +23,8 @@ class CardRollTest : AndroidTestHelper() {
             BagCardRoll(viewModel)
         }
 
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_MULTIPLIER_VALUE).assertIsDisplayed()
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_MULTIPLIER_VALUE).performClick()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_MULTIPLIER_VALUE).assertIsDisplayed()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_MULTIPLIER_VALUE).performClick()
 
         // select "2" from dropdown
         composeRule.onNodeWithText("2").performClick()
@@ -42,16 +42,16 @@ class CardRollTest : AndroidTestHelper() {
         }
 
         // initially off
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_EXPLODE_CHECKBOX).assertIsOff()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_EXPLODE_CHECKBOX).assertIsOff()
 
         // toggle on
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_EXPLODE_CHECKBOX).performClick()
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_EXPLODE_CHECKBOX).assertIsOn()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_EXPLODE_CHECKBOX).performClick()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_EXPLODE_CHECKBOX).assertIsOn()
 
         verify { viewModel.rollExplode(true) }
 
         // change "when" to "<"
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_EXPLODE_WHEN).performClick()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_EXPLODE_WHEN).performClick()
         composeRule.onNodeWithText("<").performClick()
 
         verify { viewModel.rollExplodeWhen("<") }
@@ -67,11 +67,11 @@ class CardRollTest : AndroidTestHelper() {
         }
 
         // initially off
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_MODIFY_SCORE_CHECKBOX).assertIsOff()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_MODIFY_SCORE_CHECKBOX).assertIsOff()
 
         // toggle on
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_MODIFY_SCORE_CHECKBOX).performClick()
-        composeRule.onNodeWithTag(BagCardRollTestTag.ROLL_MODIFY_SCORE_CHECKBOX).assertIsOn()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_MODIFY_SCORE_CHECKBOX).performClick()
+        composeRule.onNodeWithTag(RollTestTag.ROLL_MODIFY_SCORE_CHECKBOX).assertIsOn()
 
         verify { viewModel.rollModifyScore(true) }
     }

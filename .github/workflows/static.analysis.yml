@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/cache-gradle
 
       - name: gradlew
-        run: ./gradlew detekt -x test
+        run: ./gradlew detekt -x test --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
   ktlint:
     name: ktlint
@@ -43,7 +43,7 @@ jobs:
         uses: ./.github/actions/cache-gradle
 
       - name: gradlew
-        run: ./gradlew ktlintCheck
+        run: ./gradlew ktlintCheck --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
   lintFdroidDebug:
     name: lintFdroidDebug
@@ -61,4 +61,4 @@ jobs:
       - name: lint
         run: |
           set -x
-          ./gradlew :app:lintFdroidDebug
+          ./gradlew :app:lintFdroidDebug --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"

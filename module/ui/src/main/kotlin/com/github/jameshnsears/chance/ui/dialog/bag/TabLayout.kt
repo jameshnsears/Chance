@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -53,17 +54,20 @@ fun
     val tabs = listOf(
         TabItem(
             stringResource(R.string.dialog_bag_dice),
-            ImageVector.vectorResource(R.drawable.dice)
+            ImageVector.vectorResource(R.drawable.dice),
+            TabTestTag.TAB_DICE
         ),
 
         TabItem(
             stringResource(R.string.dialog_bag_side_title),
-            ImageVector.vectorResource(R.drawable.dice_side)
+            ImageVector.vectorResource(R.drawable.dice_side),
+            TabTestTag.TAB_SIDE
         ),
 
         TabItem(
             stringResource(R.string.dialog_bag_roll),
-            ImageVector.vectorResource(R.drawable.dice_roll)
+            ImageVector.vectorResource(R.drawable.dice_roll),
+            TabTestTag.TAB_ROLL
         )
     )
 
@@ -73,6 +77,7 @@ fun
         PrimaryTabRow(selectedTabIndex = selectedTabIndex.intValue) {
             tabs.forEachIndexed { index, tab ->
                 Tab(
+                    modifier = Modifier.testTag(tab.testTag),
                     selected = selectedTabIndex.intValue == index,
                     onClick = { selectedTabIndex.intValue = index },
                     icon = {
@@ -146,9 +151,11 @@ fun DialogBagTabContent(
                 .focusTarget()
                 .padding(end = 4.dp),
         ) {
-            IconButton(onClick = {
-                showDialog.value = false
-            }) {
+            IconButton(
+                modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CANCEL),
+                onClick = {
+                    showDialog.value = false
+                }) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
                     contentDescription = stringResource(R.string.close),
@@ -246,4 +253,4 @@ fun BehaviourContent(
     }
 }
 
-data class TabItem(val title: String, val icon: ImageVector)
+data class TabItem(val title: String, val icon: ImageVector, val testTag: String)

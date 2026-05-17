@@ -34,13 +34,13 @@ jobs:
         uses: ./.github/actions/cache-gradle
 
       - name: ${{ matrix.module.name }} test
-        run: ./gradlew :${{ matrix.module.path }}:jacocoFdroidTestReport
+        run: ./gradlew :${{ matrix.module.path }}:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
       - name: codecov
         uses: codecov/codecov-action@v6
         with:
           fail_ci_if_error: true
-          files: ./module/${{ matrix.module.name }}/build/reports/jacoco/test.xml
+          files: ./module/${{ matrix.module.name }}/build/reports/jacoco/unitTest.xml
           flags: ${{ matrix.module.flags }}
           verbose: true
         env:
@@ -52,4 +52,4 @@ jobs:
         with:
           name: ${{ matrix.module.name }}
           path: |
-            ./module/${{ matrix.module.name }}/build/reports/jacoco/test.xml
+            ./module/${{ matrix.module.name }}/build/reports/jacoco/unitTest.xml

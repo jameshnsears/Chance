@@ -78,4 +78,11 @@ public interface SettingsProtocolBufferOrBuilder extends
      * @return The shuffle.
      */
     boolean getShuffle();
+
+    /**
+     * <code>bool haptics = 11;</code>
+     *
+     * @return The haptics.
+     */
+    boolean getHaptics();
 }

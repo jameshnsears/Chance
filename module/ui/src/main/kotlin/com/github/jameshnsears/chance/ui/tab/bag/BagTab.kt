@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBag
 import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
@@ -52,6 +53,7 @@ fun TabBagLayout(
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
+                    .testTag(BagTestTag.BOTTOM_SHEET),
             ) {
                 TabBagBottomSheetLayout(
                     bottomSheetScaffoldState,

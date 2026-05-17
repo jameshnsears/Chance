@@ -61,7 +61,9 @@ fun TabRow(
             }
         }
 
-        Column {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
             when (selectedTabIndex.intValue) {
                 0 -> {
                     TabBag(

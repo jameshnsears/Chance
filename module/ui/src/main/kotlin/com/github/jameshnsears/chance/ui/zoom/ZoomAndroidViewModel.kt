@@ -95,7 +95,7 @@ abstract class ZoomAndroidViewModel(
         viewModelScope.launch {
             diceEpochCache.clear()
 
-            if (_stateFlowZoom.value.diceBag.size == 0) {
+            if (_stateFlowZoom.value.diceBag.isEmpty()) {
                 _stateFlowZoom.value.diceBag = repositoryBag.fetch().first()
             }
 

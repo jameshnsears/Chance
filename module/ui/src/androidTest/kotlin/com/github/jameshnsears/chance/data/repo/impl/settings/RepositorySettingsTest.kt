@@ -40,6 +40,7 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
         Assert.assertEquals(originalSettings.sideDescription, fetchedSettings.sideDescription)
         Assert.assertEquals(originalSettings.sideSVG, fetchedSettings.sideSVG)
 
+        Assert.assertEquals(originalSettings.haptics, fetchedSettings.haptics)
         Assert.assertEquals(originalSettings.rollSound, fetchedSettings.rollSound)
     }
 
@@ -72,6 +73,7 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
         Assert.assertEquals(originalSettings.sideDescription, fetchedSettings.sideDescription)
         Assert.assertEquals(originalSettings.sideSVG, fetchedSettings.sideSVG)
 
+        Assert.assertEquals(originalSettings.haptics, fetchedSettings.haptics)
         Assert.assertEquals(originalSettings.rollSound, fetchedSettings.rollSound)
     }
 }

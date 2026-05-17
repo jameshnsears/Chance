@@ -4,6 +4,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.github.jameshnsears.chance.common.R
 
@@ -22,14 +24,16 @@ fun DialogConfirm(
             text = { Text(text = text) },
             confirmButton = {
                 TextButton(
-                    onClick = onConfirmation
+                    onClick = onConfirmation,
+                    modifier = Modifier.testTag(ConfirmTestTag.OK)
                 ) {
                     Text(stringResource(R.string.dialog_bag_delete_confirmation_ok))
                 }
             },
             dismissButton = {
                 TextButton(
-                    onClick = onDismissRequest
+                    onClick = onDismissRequest,
+                    modifier = Modifier.testTag(ConfirmTestTag.CANCEL)
                 ) {
                     Text(stringResource(R.string.dialog_bag_delete_confirmation_cancel))
                 }

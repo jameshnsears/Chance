@@ -25,7 +25,7 @@
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.application than 9.1.1 is available: 9.2.0"
+        message="A newer version of com.android.application than 9.1.1 is available: 9.2.1"
         errorLine1="com-android-application = &quot;9.1.1&quot;"
         errorLine2="                          ~~~~~~~">
         <location
@@ -36,7 +36,7 @@
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.test than 9.1.1 is available: 9.2.0"
+        message="A newer version of com.android.test than 9.1.1 is available: 9.2.1"
         errorLine1="com-android-application = &quot;9.1.1&quot;"
         errorLine2="                          ~~~~~~~">
         <location
@@ -47,7 +47,7 @@
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of com.android.library than 9.1.1 is available: 9.2.0"
+        message="A newer version of com.android.library than 9.1.1 is available: 9.2.1"
         errorLine1="com-android-library = &quot;9.1.1&quot;"
         errorLine2="                      ~~~~~~~">
         <location
@@ -76,6 +76,17 @@
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
             line="23"
             column="17"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 2.2.21 is available: 2.3.20"
+        errorLine1="kotlin-reflect = &quot;2.2.21&quot; # version resolved in configuration &apos;:app:fdroidDebugRuntimeClasspath&apos; by consistent resolution"
+        errorLine2="                 ~~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="35"
+            column="18"/>
     </issue>
 
     <issue

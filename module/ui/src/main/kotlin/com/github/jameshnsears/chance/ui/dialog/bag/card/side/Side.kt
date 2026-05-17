@@ -143,7 +143,7 @@ fun SideColour(
 
     SideDescriptionAndColourApplyToAll(
         stateFlowCardSide.value.sideApplyToAllNumberColour,
-        SideTestTag.SIDE_APPLY_NUMBER_COLOUR,
+        SideTestTag.SIDE_COLOUR_APPLY_ALL,
         cardSideService::sideApplyToAllNumberColour,
         R.string.dialog_bag_side_colour_apply_to_all,
         diceSidesFewerThanSdeNumber

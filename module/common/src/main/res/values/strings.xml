@@ -58,7 +58,7 @@
         <item>12</item>
         <item>20</item>
     </string-array>
-    <string name="dialog.bag.dice.colour">Title…</string>
+    <string name="dialog.bag.dice.colour"># Sides…</string>
 
     <string name="dialog.bag.roll">Behaviour</string>
     <string name="dialog.bag.roll.repeat">Roll multiple times</string>
@@ -68,18 +68,19 @@
 
     <string name="dialog.bag.colour.picker.side">Side #</string>
     <string name="dialog.bag.colour.picker.description">Side Description</string>
-    <string name="dialog.bag.colour.picker.dice">Dice Title</string>
+    <string name="dialog.bag.colour.picker.dice">Dice # Sides</string>
 
     <string name="tab.roll.settings.roll.time">Roll Index : Time</string>
     <string name="tab.roll.settings.score">Score</string>
 
     <string name="tab.roll.settings.dice.title">Title</string>
-    <string name="tab.roll.settings.side.number">Side #</string>
+    <string name="tab.roll.settings.side.number"># Sides</string>
     <string name="tab.roll.settings.side.svg">SVG</string>
     <string name="tab.roll.settings.side.description">Side Description</string>
     <string name="tab.roll.settings.behaviour">Behaviour</string>
 
     <string name="tab.roll.settings.use.shuffle">Shuffle (multiple dice)</string>
+    <string name="tab.roll.settings.use.haptics">Haptics (undo &amp; roll)</string>
     <string name="tab.roll.settings.use.sound">Sound</string>
 
     <string name="tab.roll.settings.undo.all">Undo All</string>

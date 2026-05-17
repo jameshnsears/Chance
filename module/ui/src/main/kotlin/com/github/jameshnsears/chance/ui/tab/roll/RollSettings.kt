@@ -41,7 +41,6 @@ fun Settings(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, top = 8.dp, bottom = 8.dp)
-            .testTag(RollTestTag.SETTINGS)
             .clickable {
                 showDialog.value = true
 
@@ -63,7 +62,8 @@ fun Settings(
                 coroutineScope.launch {
                     bottomSheetScaffoldState.bottomSheetState.partialExpand()
                 }
-            }
+            },
+            modifier = Modifier.testTag(RollTestTag.SETTINGS)
         ) {
             Icon(
                 Icons.Outlined.Settings,

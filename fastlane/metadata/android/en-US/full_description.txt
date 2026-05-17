@@ -1,9 +1,7 @@
-&bull; Choose from d2 to d20 sized dice: easily alter # of sides / clone
-&bull; Personalise dice faces: add text and / or a SVG image to any side
-&bull; Essential roll logic: multipliers, exploding dice, and score adjustment
-&bull; Roll multiple dice: combine different dice and only display the information you want to see
-&bull; Quick Yes / No shortcut: get an instant answer for a fast decision
-&bull; Example dice included: d6; Hexagram; Mr Benn; The Dice Man
-&bull; Import & Export: save, share, and reuse everything
+&bull; Example dice bag
+&bull; Easily clone, change size, appearance and behaviour
+&bull; Choose which dice to roll and what results to see
+&bull; Export and Import feature
+&bull; Yes / No app shortcut
 
 &bull; User feedback drives development and is always appreciated!

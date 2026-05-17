@@ -23,7 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -92,7 +92,6 @@ fun DialogColourPicker(
     controller: ColorPickerController,
 ) {
     var hexCode by remember { mutableStateOf("") }
-    var textColor by remember { mutableStateOf(Color.Transparent) }
 
     Column(
         modifier = Modifier
@@ -125,7 +124,6 @@ fun DialogColourPicker(
                 },
                 onColorChanged = { colorEnvelope ->
                     hexCode = colorEnvelope.hexCode
-                    textColor = colorEnvelope.color
                 },
                 initialColor = UtilityColour.makeColor(currentColour),
             )
@@ -156,7 +154,8 @@ fun DialogColourPicker(
             fontSize = 16.sp,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 12.dp, bottom = 12.dp),
+                .padding(top = 12.dp, bottom = 12.dp)
+                .testTag(DialogColourTestTag.DIALOG_COLOUR_HEX),
         )
 
         ColourPickerCancelOk(showDialog, setColour, hexCode)
@@ -176,8 +175,12 @@ fun ColourPickerCancelOk(
         horizontalArrangement = Arrangement.End,
     ) {
         TextButton(
-            modifier = Modifier.padding(end = 18.dp),
-            onClick = { showDialog.value = false },
+            modifier = Modifier
+                .padding(end = 18.dp)
+                .testTag(DialogColourTestTag.DIALOG_COLOUR_CANCEL),
+            onClick = {
+                showDialog.value = false
+            },
         ) {
             Text(stringResource(R.string.dialog_cancel))
         }
@@ -187,6 +190,7 @@ fun ColourPickerCancelOk(
                 showDialog.value = false
                 setColour(hexCode)
             },
+            modifier = Modifier.testTag(DialogColourTestTag.DIALOG_COLOUR_OK),
         ) {
             Text(stringResource(R.string.dialog_ok))
         }

@@ -18,4 +18,5 @@ message SettingsProtocolBuffer {
 
   bool rollSound = 9;
   bool shuffle = 10;
+  bool haptics = 11;
 }

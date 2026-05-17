@@ -100,7 +100,7 @@ fun SideImageSVG(
                 modifier = Modifier
                     .width(180.dp)
                     .padding(top = 6.dp)
-                    .testTag(SideTestTag.SIDE_IMAGE_SVG_CLEAR),
+                    .testTag(SideTestTag.SIDE_IMAGE_SVG_DROP),
                 enabled = cardSideService.sideImageAvailable() && !diceSidesFewerThanSideNumber
             ) {
                 Icon(
@@ -138,7 +138,7 @@ fun SideImageSVG(
 
     SideDescriptionAndColourApplyToAll(
         stateFlowCardSide.value.sideApplyToAllSvg,
-        SideTestTag.SIDE_APPLY_SVG,
+        SideTestTag.SIDE_IMAGE_APPLY_ALL,
         cardSideService::sideApplyToAllSvg,
         diceSidesFewerThanSideNumber = diceSidesFewerThanSideNumber
     )

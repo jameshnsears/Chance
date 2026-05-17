@@ -14,8 +14,6 @@ android {
     }
 
     testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
-
         unitTests {
             isIncludeAndroidResources = true
         }
@@ -80,20 +78,16 @@ kotlin {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.datastore.core)
+    implementation(libs.androidx.datastore.preferences)
     implementation(libs.appcompat)
-    implementation(libs.material)
-
     implementation(libs.jackson.module.kotlin)
     implementation(libs.json.kotlin.schema)
     implementation(libs.jsonschema.generator)
-
-    implementation(libs.androidx.datastore.core)
-    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.material)
     implementation(libs.protobuf.java)
     implementation(libs.protobuf.java.util)
     implementation(libs.protobuf.kotlin)
-
-
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
 

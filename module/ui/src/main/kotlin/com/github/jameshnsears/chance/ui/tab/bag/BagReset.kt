@@ -53,7 +53,7 @@ fun ResetStorage(
             },
             modifier = Modifier
                 .width(150.dp)
-                .testTag(BagTestTag.IMPORT),
+                .testTag(BagTestTag.RESET),
         ) {
             val storageResetPainter = painterResource(id = R.drawable.storage_reset)
             val iconModifier = Modifier.size(24.dp)

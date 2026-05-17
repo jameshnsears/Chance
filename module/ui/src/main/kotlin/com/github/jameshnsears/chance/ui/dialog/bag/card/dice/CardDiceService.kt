@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 data class CardDiceState(
     val diceTitle: String,
     val diceSidesSize: Int,
-    var diceSidesPosition: Float,
+    var diceSiderPosition: Float,
+    var diceSiderInfoColour: Float,
     var diceColour: String,
     val diceCanBeDeleted: Boolean,
     val diceCanBeCloned: Boolean,
@@ -31,7 +32,8 @@ class CardDiceService(
         CardDiceState(
             diceTitle = diceTitleInit(),
             diceSidesSize = dice.sides.size,
-            diceSidesPosition = diceSidesPosition(dice.sides.size),
+            diceSiderPosition = diceSidesPosition(dice.sides.size),
+            diceSiderInfoColour = 0.38f,
             diceColour = dice.colour,
             diceCanBeDeleted = false,
             diceCanBeCloned = false,
@@ -112,7 +114,8 @@ class CardDiceService(
         _stateFlowCardDice.update {
             it.copy(
                 diceSidesSize = sideSizeInt,
-                diceSidesPosition = diceSidesPosition(sideSizeInt)
+                diceSiderPosition = diceSidesPosition(sideSizeInt),
+                diceSiderInfoColour = if (sideSizeInt != dice.sides.size) 1.0f else 0.38f
             )
         }
 

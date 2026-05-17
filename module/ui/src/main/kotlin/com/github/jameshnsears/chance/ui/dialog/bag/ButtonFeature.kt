@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,7 @@ fun TextButtonDelete(
 
     TextButton(
         enabled = diceTitleIsUnique,
+        modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE),
         onClick = {
             showDialogConfirm.value = true
         },
@@ -61,6 +64,7 @@ fun TextButtonClone(
     showDialog: MutableState<Boolean>
 ) {
     TextButton(
+        modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CLONE),
         enabled = diceTitleIsUnique,
         onClick = {
             dialogBagAndroidViewModel.clone(cardDiceState, cardRollState)
@@ -85,6 +89,7 @@ fun TextButtonSave(
     showDialog: MutableState<Boolean>
 ) {
     TextButton(
+        modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_SAVE),
         enabled = diceTitleIsUnique,
         onClick = {
             dialogBagAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)

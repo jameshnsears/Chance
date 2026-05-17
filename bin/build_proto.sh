@@ -1,3 +1,4 @@
+# NOTE manually extract bin folder from protoc-28.2-linux-x86_64_4.28.2.zip
 set -e
 
 PROTOC_DIR=$PWD/bin/

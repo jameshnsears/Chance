@@ -80,7 +80,7 @@ class CardSideTest : AndroidTestHelper() {
             }
         }
 
-        composeRule.onNodeWithTag(SideTestTag.SIDE_APPLY_NUMBER_COLOUR)
+        composeRule.onNodeWithTag(SideTestTag.SIDE_COLOUR_APPLY_ALL)
             .performClick()
 
         verify { mockViewModel.sideApplyToAllNumberColour(true) }
@@ -94,7 +94,7 @@ class CardSideTest : AndroidTestHelper() {
             }
         }
 
-        composeRule.onNodeWithTag(SideTestTag.SIDE_APPLY_SVG)
+        composeRule.onNodeWithTag(SideTestTag.SIDE_IMAGE_APPLY_ALL)
             .performClick()
     }
 
@@ -112,7 +112,7 @@ class CardSideTest : AndroidTestHelper() {
         composeRule.onNodeWithTag(SideTestTag.SIDE_DESCRIPTION).assertIsNotEnabled()
         composeRule.onNodeWithTag(SideTestTag.SIDE_DESCRIPTION_COLOUR).assertIsNotEnabled()
         composeRule.onNodeWithTag(SideTestTag.SIDE_IMAGE_SVG).assertIsNotEnabled()
-        composeRule.onNodeWithTag(SideTestTag.SIDE_IMAGE_SVG_CLEAR).assertIsNotEnabled()
+        composeRule.onNodeWithTag(SideTestTag.SIDE_IMAGE_SVG_DROP).assertIsNotEnabled()
     }
 
     @Test
@@ -129,7 +129,7 @@ class CardSideTest : AndroidTestHelper() {
         composeRule.onNodeWithTag(SideTestTag.SIDE_DESCRIPTION).assertIsEnabled()
         composeRule.onNodeWithTag(SideTestTag.SIDE_DESCRIPTION_COLOUR).assertIsEnabled()
         composeRule.onNodeWithTag(SideTestTag.SIDE_IMAGE_SVG).assertIsEnabled()
-        composeRule.onNodeWithTag(SideTestTag.SIDE_IMAGE_SVG_CLEAR).assertIsNotEnabled()
+        composeRule.onNodeWithTag(SideTestTag.SIDE_IMAGE_SVG_DROP).assertIsNotEnabled()
     }
 
     @Test

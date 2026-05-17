@@ -102,7 +102,7 @@ fun SideDescription(
 
     SideDescriptionAndColourApplyToAll(
         stateFlowCardSide.value.sideApplyToAllDescription,
-        SideTestTag.SIDE_APPLY_DESCRIPTION,
+        SideTestTag.SIDE_DESCRIPTION_APPLY_ALL,
         cardSideService::sideApplyToAllDescription,
         R.string.dialog_bag_side_description_apply_to_all,
         diceSidesFewerThanSdeNumber

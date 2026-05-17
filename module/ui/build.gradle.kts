@@ -15,8 +15,6 @@ android {
     }
 
     testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
-
         unitTests {
             isIncludeAndroidResources = true
         }
@@ -26,15 +24,17 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
             buildConfigField("String", "VERSION", "\"${versionName}\"")
             buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
+
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
 
         debug {
             buildConfigField("String", "VERSION", "\"${versionName}\"")
             buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
+
             enableAndroidTestCoverage = true
             enableUnitTestCoverage = true
             isMinifyEnabled = false
@@ -101,8 +101,11 @@ dependencies {
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(project(":module:data-domain"))
+
     androidTestUtil(libs.androidx.test.orchestrator)
+
     debugImplementation(libs.androidx.ui.tooling)
+
     implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -125,12 +128,14 @@ dependencies {
     implementation(libs.protobuf.kotlin)
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))
     implementation(project(":module:data-common"))
     implementation(project(":module:data-domain"))
     implementation(project(":module:data-repo-api"))
     implementation(project(":module:data-repo-impl"))
+
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
@@ -138,5 +143,5 @@ dependencies {
 }
 
 fun gitHash() = providers.exec {
-    commandLine("git", "rev-parse", "--short=8", "HEAD")
+    commandLine("git", "rev-parse", "--short=7", "HEAD")
 }.standardOutput.asText.get().trim()

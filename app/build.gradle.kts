@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
+    alias(libs.plugins.testretry)
 }
 
 android {
@@ -14,11 +15,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
 
         // NOTE: value not in .toml due to fdroid build process?
-        versionCode = 172836
+        versionCode = 182836
         println("versionCode=$versionCode")
 
-        // NOTE: .toml also contains this value for the module:ui
-        versionName = "2.0.1"
+        // NOTE: .toml also contains this value for the module:ui - fdroid again
+        versionName = "2.1.0"
         println("versionName=$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -27,6 +28,21 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        testInstrumentationRunnerArguments["GITHUB_ACTION_ID"] =
+            project.findProperty("GITHUB_ACTION_ID")?.toString() ?: ""
+    }
+
+    testOptions {
+        animationsDisabled = true
+
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
+    androidResources {
+        localeFilters += "en"
     }
 
     buildTypes {
@@ -39,16 +55,9 @@ android {
 
         debug {
             enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
             isMinifyEnabled = false
             isShrinkResources = false
-        }
-    }
-
-    testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
-
-        unitTests {
-            isIncludeAndroidResources = true
         }
     }
 
@@ -85,6 +94,13 @@ android {
     }
 }
 
+tasks.withType<Test>().configureEach {
+    retry {
+        maxRetries.set(2)
+        maxFailures.set(2)
+    }
+}
+
 kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
@@ -102,10 +118,12 @@ dependencies {
     androidTestImplementation(libs.androidx.datastore.core)
     androidTestImplementation(libs.androidx.datastore.preferences)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.intents)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.coil.compose)
     androidTestImplementation(libs.coil.svg)
+    androidTestImplementation(libs.kotlin.reflect)
     androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))

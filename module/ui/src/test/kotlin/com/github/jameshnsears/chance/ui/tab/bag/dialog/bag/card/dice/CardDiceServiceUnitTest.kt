@@ -69,19 +69,19 @@ class CardDiceServiceUnitTest : DialogBagUnitTestUnitTestHelper() {
         val bagCardDiceAndroidViewModel = dialogBagAndroidViewModel.cardDiceService
         var stateFlowDice = bagCardDiceAndroidViewModel.stateFlowCardDice.value
         assertEquals(6, stateFlowDice.diceSidesSize)
-        assertEquals(2.0f, stateFlowDice.diceSidesPosition)
+        assertEquals(2.0f, stateFlowDice.diceSiderPosition)
 
         bagCardDiceAndroidViewModel.diceSidesSize("20")
 
         stateFlowDice = bagCardDiceAndroidViewModel.stateFlowCardDice.value
         assertEquals(20, stateFlowDice.diceSidesSize)
-        assertEquals(6.0f, stateFlowDice.diceSidesPosition)
+        assertEquals(6.0f, stateFlowDice.diceSiderPosition)
 
         bagCardDiceAndroidViewModel.diceSidesSize("2")
 
         stateFlowDice = bagCardDiceAndroidViewModel.stateFlowCardDice.value
         assertEquals(2, stateFlowDice.diceSidesSize)
-        assertEquals(0.0f, stateFlowDice.diceSidesPosition)
+        assertEquals(0.0f, stateFlowDice.diceSiderPosition)
     }
 
     @Test

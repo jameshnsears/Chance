@@ -1,10 +1,11 @@
 package com.github.jameshnsears.chance.ui.tab.bag
 
+import com.github.jameshnsears.chance.ui.MutableSharedFlowEvent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import timber.log.Timber
 
-object BagImportEvent {
+object BagImportEvent : MutableSharedFlowEvent() {
     private val _sharedFlowTabBagImportEvent = MutableSharedFlow<Boolean>()
     val sharedFlowTabBagImportEvent: SharedFlow<Boolean> = _sharedFlowTabBagImportEvent
 

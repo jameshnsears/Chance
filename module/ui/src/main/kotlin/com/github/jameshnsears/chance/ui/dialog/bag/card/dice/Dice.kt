@@ -42,13 +42,6 @@ import com.github.jameshnsears.chance.ui.dialog.bag.card.BagCardColourSample
 import com.github.jameshnsears.chance.ui.dialog.colour.DialogColourPicker
 import kotlin.math.roundToInt
 
-class BagCardDiceTestTag {
-    companion object {
-        const val DICE_TITLE = "DICE_TITLE"
-        const val DICE_SIDES = "DICE_SIDES"
-        const val DICE_COLOUR = "DICE_COLOUR"
-    }
-}
 
 @Composable
 fun BagCardDice(
@@ -100,7 +93,8 @@ fun DiceSides(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    var sliderPosition = stateFlowCardDice.value.diceSidesPosition
+    var sliderPosition = stateFlowCardDice.value.diceSiderPosition
+    val sliderInfoColour = stateFlowCardDice.value.diceSiderInfoColour
 
     Row(modifier = Modifier.padding(top = 8.dp)) {
         Text(
@@ -127,7 +121,7 @@ fun DiceSides(
             ),
             modifier = Modifier
                 .padding(start = 8.dp, end = 12.dp)
-                .testTag(BagCardDiceTestTag.DICE_SIDES),
+                .testTag(DiceTestTag.DICE_SIDES),
         )
     }
 
@@ -140,6 +134,7 @@ fun DiceSides(
         Icon(
             imageVector = Icons.Outlined.Info,
             contentDescription = stringResource(R.string.info),
+            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = sliderInfoColour),
         )
     }
 
@@ -151,6 +146,7 @@ fun DiceSides(
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_dice_sides_info),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = sliderInfoColour),
         )
     }
 }
@@ -175,7 +171,7 @@ fun DiceTitle(cardDiceService: CardDiceService) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 8.dp, bottom = 8.dp)
-            .testTag(BagCardDiceTestTag.DICE_TITLE),
+            .testTag(DiceTestTag.DICE_TITLE),
         trailingIcon = {
             if (diceTitle.isNotEmpty()) {
                 IconButton(onClick = {
@@ -240,8 +236,7 @@ fun DiceColour(cardDiceService: CardDiceService) {
     Row(
         modifier = Modifier
             .padding(top = 8.dp, bottom = 4.dp)
-            .fillMaxWidth()
-            .testTag(BagCardDiceTestTag.DICE_COLOUR),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Button(
@@ -250,7 +245,7 @@ fun DiceColour(cardDiceService: CardDiceService) {
             },
             modifier = Modifier
                 .width(180.dp)
-                .testTag(BagCardDiceTestTag.DICE_COLOUR),
+                .testTag(DiceTestTag.DICE_COLOUR),
 
             ) {
             val palettePainter = painterResource(id = R.drawable.palette)

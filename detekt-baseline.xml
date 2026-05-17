@@ -9,8 +9,6 @@
     <ID>LongMethod:SideSvg.kt$@Composable fun SideImageSVG( cardSideService: CardSideService )</ID>
     <ID>LongMethod:ZoomBag.kt$@Composable fun ZoomBag( zoomBagAndroidViewModel: ZoomBagAndroidViewModel )</ID>
     <ID>MatchingDeclarationName:DialogSettings.kt$DialogSettingsTestTag</ID>
-    <ID>MatchingDeclarationName:Dice.kt$BagCardDiceTestTag</ID>
-    <ID>MatchingDeclarationName:Roll.kt$BagCardRollTestTag</ID>
     <ID>MatchingDeclarationName:RollSelection.kt$RollSelectionTestTag</ID>
     <ID>MatchingDeclarationName:TabRow.kt$TabRowTestTag</ID>
     <ID>TooGenericExceptionCaught:BagAndroidViewModel.kt$TabBagAndroidViewModel$e: Exception</ID>
@@ -19,8 +17,7 @@
     <ID>TooGenericExceptionThrown:Main.kt$throw RuntimeException("Test Crash")</ID>
     <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>
     <ID>UnusedParameter:TabLayout.kt$modifier: Modifier</ID>
-    <ID>UnusedParameter:ZoomRoll.kt$rollAndroidViewModel: RollAndroidViewModel</ID>
-    <ID>VariableNaming:RollAndroidViewModel.kt$RollAndroidViewModel$val _stateFlowSettingsData = MutableStateFlow( SettingsState( rollIndexTime = false, rollScore = false, diceTitle = false, rollBehaviour = false, sideNumber = false, sideDescription = false, sideSVG = false, shuffle = false, rollSound = false, ) )</ID>
+    <ID>VariableNaming:RollAndroidViewModel.kt$RollAndroidViewModel$val _stateFlowSettingsData = MutableStateFlow( SettingsState( rollIndexTime = false, rollScore = false, diceTitle = false, rollBehaviour = false, sideNumber = false, sideDescription = false, sideSVG = false, shuffle = false, haptics = false, rollSound = false, ) )</ID>
     <ID>VariableNaming:RollAndroidViewModel.kt$RollAndroidViewModel$var _undoEnabled = MutableStateFlow(false)</ID>
     <ID>VariableNaming:ZoomAndroidViewModel.kt$ZoomAndroidViewModel$protected val _stateFlowZoom = MutableStateFlow( ZoomState( resizeViewDp = 0.dp, diceBag = mutableListOf(), rollHistory = LinkedHashMap() ) )</ID>
   </CurrentIssues>

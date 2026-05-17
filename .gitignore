@@ -21,6 +21,7 @@
 /.idea/libraries
 /.idea/modules.xml
 /.idea/navEditor.xml
+/.idea/planningMode.xml
 /.idea/sonarlint
 /.idea/workspace.xml
 *.iml

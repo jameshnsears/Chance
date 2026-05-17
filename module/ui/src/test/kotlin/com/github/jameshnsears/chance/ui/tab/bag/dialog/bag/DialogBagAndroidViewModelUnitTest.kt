@@ -372,6 +372,8 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestUnitTestHelper() {
     fun dialogBagCloneWithSidesSame() = runTest {
         val bagDataTestDouble = BagDataTestDouble()
 
+        advanceUntilIdle()
+
         val diceToClone = bagDataTestDouble.d12
 
         val repositoryBag = RepositoryFactory().repositoryBag

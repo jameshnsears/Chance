@@ -56,7 +56,7 @@ class CardDiceTest : AndroidTestHelper() {
 
         composeRule.onNodeWithText(getString(R.string.dialog_bag_dice)).performClick()
 
-        val diceTitle = composeRule.onNodeWithTag(BagCardDiceTestTag.DICE_TITLE)
+        val diceTitle = composeRule.onNodeWithTag(DiceTestTag.DICE_TITLE)
         composeRule.waitForIdle()
         diceTitle.assertTextContains(diceInDialogBag.d2.title)
 

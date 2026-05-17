@@ -14,8 +14,6 @@ android {
     }
 
     testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
-
         unitTests {
             isIncludeAndroidResources = true
         }
@@ -28,6 +26,7 @@ android {
         }
 
         debug {
+            enableAndroidTestCoverage = true
             enableUnitTestCoverage = true
             isMinifyEnabled = false
             isShrinkResources = false

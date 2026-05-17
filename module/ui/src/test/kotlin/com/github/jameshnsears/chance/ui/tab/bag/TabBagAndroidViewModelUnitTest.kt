@@ -212,7 +212,7 @@ class TabBagAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
                 resize = 1,
                 rollIndexTime = false, rollScore = false,
                 diceTitle = false, sideNumber = false, rollBehaviour = false, sideDescription = false, sideSVG = false,
-                rollSound = false, shuffle = true
+                haptics = false, rollSound = false, shuffle = true
             )
         )
 

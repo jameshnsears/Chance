@@ -13,6 +13,7 @@ interface SettingsDataInterface {
     var sideDescription: Boolean
     var sideSVG: Boolean
 
+    var haptics: Boolean
     var rollSound: Boolean
     var shuffle: Boolean
 }

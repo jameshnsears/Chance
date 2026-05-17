@@ -14,8 +14,6 @@ android {
     }
 
     testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
-
         unitTests {
             isIncludeAndroidResources = true
         }
@@ -97,19 +95,9 @@ dependencies {
 
     implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.test.junit4)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.junit.ktx)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.svg)
-    implementation(libs.mockk)
-    implementation(libs.org.jetbrains.kotlinx.coroutines.test)
-    implementation(libs.slf4j.simple)
-    implementation(libs.timber)
     implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.junit.ktx)
@@ -119,11 +107,13 @@ dependencies {
     implementation(libs.jackson.module.kotlin)
     implementation(libs.json.kotlin.schema)
     implementation(libs.jsonschema.generator)
+    implementation(libs.mockk)
+    implementation(libs.org.jetbrains.kotlinx.coroutines.test)
     implementation(libs.protobuf.java)
     implementation(libs.protobuf.java.util)
     implementation(libs.protobuf.kotlin)
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
-    implementation(platform(libs.androidx.compose.bom))
 
+    implementation(platform(libs.androidx.compose.bom))
 }

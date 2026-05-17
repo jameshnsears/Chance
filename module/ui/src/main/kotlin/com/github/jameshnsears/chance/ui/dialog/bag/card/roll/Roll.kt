@@ -32,18 +32,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 
-class BagCardRollTestTag {
-    companion object {
-        const val ROLL_MULTIPLIER_VALUE = "ROLL_MULTIPLIER_VALUE"
-        const val ROLL_EXPLODE = "ROLL_EXPLODE"
-        const val ROLL_EXPLODE_CHECKBOX = "ROLL_EXPLODE_CHECKBOX"
-        const val ROLL_EXPLODE_WHEN = "ROLL_EXPLODE_WHEN"
-        const val ROLL_EXPLODE_VALUE = "ROLL_EXPLODE_VALUE"
-        const val ROLL_MODIFY_SCORE = "ROLL_MODIFY_SCORE"
-        const val ROLL_MODIFY_SCORE_CHECKBOX = "ROLL_MODIFY_SCORE_CHECKBOX"
-        const val ROLL_MODIFY_SCORE_VALUE = "ROLL_MODIFY_SCORE_VALUE"
-    }
-}
 
 @Composable
 fun BagCardRoll(
@@ -112,7 +100,7 @@ private fun RollMultiplier(cardRollService: CardRollService) {
 
         GenericExposedDropdownMenuBox(
             cardRollService::rollMultiplierValue,
-            BagCardRollTestTag.ROLL_MULTIPLIER_VALUE,
+            RollTestTag.ROLL_MULTIPLIER_VALUE,
             DiceRollValues.multiplierValues,
             stateFlowCardRoll.value.rollMultiplierValue.toString(),
             90.dp
@@ -133,7 +121,7 @@ private fun RollExplode(cardRollService: CardRollService) {
         modifier = Modifier
             .padding(top = 8.dp)
             .fillMaxWidth()
-            .testTag(BagCardRollTestTag.ROLL_EXPLODE),
+            .testTag(RollTestTag.ROLL_EXPLODE),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
@@ -147,7 +135,7 @@ private fun RollExplode(cardRollService: CardRollService) {
             )
 
             Checkbox(
-                modifier = Modifier.testTag(BagCardRollTestTag.ROLL_EXPLODE_CHECKBOX),
+                modifier = Modifier.testTag(RollTestTag.ROLL_EXPLODE_CHECKBOX),
                 checked = rollExplode,
                 onCheckedChange = {
                     rollExplode = it
@@ -218,7 +206,7 @@ private fun RollExplodeDropdownValue(
 ) {
     GenericExposedDropdownMenuBox(
         cardRollService::rollExplodeValue,
-        BagCardRollTestTag.ROLL_EXPLODE_VALUE,
+        RollTestTag.ROLL_EXPLODE_VALUE,
         stateFlow.value.rollExplodeAvailableValues,
         stateFlow.value.rollExplodeValue.toString(),
         90.dp
@@ -232,7 +220,7 @@ private fun RollExplodeDropdownWhen(
 ) {
     GenericExposedDropdownMenuBox(
         cardRollService::rollExplodeWhen,
-        BagCardRollTestTag.ROLL_EXPLODE_WHEN,
+        RollTestTag.ROLL_EXPLODE_WHEN,
         DiceRollValues.explodeWhenValues,
         stateFlow.value.rollExplodeWhen,
         80.dp
@@ -252,7 +240,7 @@ fun RollScore(cardRollService: CardRollService) {
         modifier = Modifier
             .padding(start = 6.dp, top = 8.dp, bottom = 8.dp)
             .fillMaxWidth()
-            .testTag(BagCardRollTestTag.ROLL_MODIFY_SCORE),
+            .testTag(RollTestTag.ROLL_MODIFY_SCORE),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -262,7 +250,7 @@ fun RollScore(cardRollService: CardRollService) {
         )
 
         Checkbox(
-            modifier = Modifier.testTag(BagCardRollTestTag.ROLL_MODIFY_SCORE_CHECKBOX),
+            modifier = Modifier.testTag(RollTestTag.ROLL_MODIFY_SCORE_CHECKBOX),
             checked = rollModifyScore,
             onCheckedChange = {
                 rollModifyScore = it
@@ -278,7 +266,7 @@ fun RollScore(cardRollService: CardRollService) {
 
         GenericExposedDropdownMenuBox(
             cardRollService::rollModifyScoreValue,
-            BagCardRollTestTag.ROLL_MODIFY_SCORE_VALUE,
+            RollTestTag.ROLL_MODIFY_SCORE_VALUE,
             DiceRollValues.modifyScoreValues,
             stateFlowCardRoll.value.rollModifyScoreValue.toString(),
             90.dp

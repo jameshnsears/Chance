@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineBreak
@@ -26,6 +27,7 @@ import coil.request.ImageRequest
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagTestTag
 
 @Composable
 fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, side: Side) {
@@ -38,6 +40,7 @@ fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, 
         ) {
             Text(
                 text = side.description,
+                modifier = Modifier.testTag("${ZoomBagTestTag.ZOOM_SIDE_DESCRIPTION}-${dice.title}"),
                 color = zoomAndroidViewModel.sideColor(side.descriptionColour),
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
@@ -81,7 +84,8 @@ fun ZoomSideImageShape(
                     cardDice.value = dice
                     cardSide.value = side
                     showDialog.value = true
-                },
+                }
+                .testTag("${ZoomBagTestTag.ZOOM_SIDE_IMAGE_SHAPE}-${dice.title}-${side.number}"),
             colorFilter = zoomAndroidViewModel.sideColorFilter(dice.colour),
             contentScale = ContentScale.Crop
         )
@@ -116,6 +120,7 @@ fun ZoomSideImageSVG(
             cardSide.value = side
             showDialog.value = true
         }
+        .testTag("${ZoomBagTestTag.ZOOM_SIDE_IMAGE_SVG}-${dice.title}-${side.number}")
 
     if (side.imageBase64 != "") {
         val imageRequest: ImageRequest = remember {

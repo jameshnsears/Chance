@@ -68,11 +68,14 @@ jobs:
           avd-name: ${{ matrix.api-level }}
           disable-animations: true
           force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
           script: |
             adb logcat -c
             adb logcat > logcat.txt &
-            ./gradlew :module:ui:jacocoFdroidAndroidTestReport -Dorg.gradle.jvmargs="-Xmx2048m"
+            adb shell settings put global window_animation_scale 0.0
+            adb shell settings put global transition_animation_scale 0.0
+            adb shell settings put global animator_duration_scale 0.0
+            ./gradlew :module:ui:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
       - name: codecov
         if: matrix.run-tests == true

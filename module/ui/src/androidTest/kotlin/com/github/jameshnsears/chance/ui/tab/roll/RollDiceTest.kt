@@ -117,13 +117,10 @@ class RollDiceTest : AndroidTestHelper() {
         composeRule
             .onNodeWithTag(RollTestTag.BOTTOM_SHEET)
             .performTouchInput {
-                val startY = centerY + (height / 4)
-                val endY = centerY - (height / 4)
-
                 swipe(
-                    start = Offset(centerX, startY),
-                    end = Offset(centerX, endY),
-                    durationMillis = 300
+                    start = topCenter,
+                    end = Offset(centerX, -1000f),
+                    durationMillis = 500
                 )
             }
 

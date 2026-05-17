@@ -48,6 +48,8 @@ class DialogSettingsTestTag {
         const val SETTINGS_SIDE_SVG = "SETTINGS_SIDE_SVG"
         const val SETTINGS_BEHAVIOUR = "SETTINGS_BEHAVIOUR"
 
+        const val SETTINGS_ROLL_HAPTICS = "SETTINGS_ROLL_HAPTICS"
+
         const val SETTINGS_ROLL_SOUND = "SETTINGS_ROLL_SOUND"
 
         const val SETTINGS_ROLL_SHUFFLE = "SETTINGS_ROLL_SHUFFLE"
@@ -89,6 +91,7 @@ fun DialogSettingsLayout(
     val sideNumber = stateFlowSettings.value.sideNumber
     val sideDescription = stateFlowSettings.value.sideDescription
     val sideSVG = stateFlowSettings.value.sideSVG
+    val haptics = stateFlowSettings.value.haptics
     val rollSound = stateFlowSettings.value.rollSound
     val shuffle = stateFlowSettings.value.shuffle
 
@@ -172,6 +175,13 @@ fun DialogSettingsLayout(
             )
 
             CommonSwitch(
+                stringResource(R.string.tab_roll_settings_use_haptics),
+                haptics,
+                rollAndroidViewModel::settingsUseHaptics,
+                DialogSettingsTestTag.SETTINGS_ROLL_HAPTICS
+            )
+
+            CommonSwitch(
                 stringResource(R.string.tab_roll_settings_use_sound),
                 rollSound,
                 rollAndroidViewModel::settingsRollSound,
@@ -242,7 +252,6 @@ fun CommonSwitch(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 4.dp, bottom = 4.dp)
-            .testTag(testTag)
             .clickable {
                 val newValue = !switched.value
                 switched.value = newValue
@@ -260,6 +269,7 @@ fun CommonSwitch(
                 switched.value = it
                 dialogRollViewModelMethod(it)
             },
+            modifier = Modifier.testTag(testTag)
         )
     }
 }
