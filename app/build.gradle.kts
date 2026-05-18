@@ -15,11 +15,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
 
         // NOTE: value not in .toml due to fdroid build process?
-        versionCode = 182836
+        versionCode = 192836
         println("versionCode=$versionCode")
 
         // NOTE: .toml also contains this value for the module:ui - fdroid again
-        versionName = "2.1.0"
+        versionName = "2.2.0"
         println("versionName=$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
