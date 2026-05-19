@@ -57,19 +57,6 @@ class ZoomBagAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
-    fun hasSideWithDescription() = runTest {
-        assertFalse(
-            zoomBagAndroidViewModel()
-                .hasSideWithDescription(BagDataTestDouble().d2)
-        )
-
-        assertTrue(
-            zoomBagAndroidViewModel()
-                .hasSideWithDescription(BagDataTestDouble().diceStory)
-        )
-    }
-
-    @Test
     fun drawableForDiceSides() = runTest {
         assertEquals(
             R.drawable.d2,

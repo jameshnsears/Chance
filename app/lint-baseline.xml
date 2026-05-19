@@ -8,7 +8,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="build.gradle.kts"
-            line="14"
+            line="15"
             column="9"/>
     </issue>
 
@@ -80,7 +80,7 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 2.2.21 is available: 2.3.20"
+        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 2.2.21 is available: 2.3.21"
         errorLine1="kotlin-reflect = &quot;2.2.21&quot; # version resolved in configuration &apos;:app:fdroidDebugRuntimeClasspath&apos; by consistent resolution"
         errorLine2="                 ~~~~~~~~">
         <location
