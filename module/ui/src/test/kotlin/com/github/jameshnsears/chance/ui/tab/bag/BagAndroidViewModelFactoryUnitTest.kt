@@ -12,10 +12,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BagAndroidViewModelFactoryUnitTest {
-    private val application = mockk<Application>()
-    private val repositorySettings = mockk<RepositorySettingsInterface>()
-    private val repositoryBag = mockk<RepositoryBagInterface>()
-    private val repositoryRoll = mockk<RepositoryRollInterface>()
+    private val application = mockk<Application>(relaxed = true)
+    private val repositorySettings = mockk<RepositorySettingsInterface>(relaxed = true)
+    private val repositoryBag = mockk<RepositoryBagInterface>(relaxed = true)
+    private val repositoryRoll = mockk<RepositoryRollInterface>(relaxed = true)
     private val resizeInitialValue = 2
 
     private val factory = BagAndroidViewModelFactory(

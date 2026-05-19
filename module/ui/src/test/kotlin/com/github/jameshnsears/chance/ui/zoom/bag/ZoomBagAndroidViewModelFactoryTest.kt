@@ -12,9 +12,9 @@ import org.junit.Test
 
 class ZoomBagAndroidViewModelFactoryTest {
     private val application: Application = mockk(relaxed = true)
-    private val repositorySettings: RepositorySettingsInterface = mockk()
-    private val repositoryBag: RepositoryBagInterface = mockk()
-    private val repositoryRoll: RepositoryRollInterface = mockk()
+    private val repositorySettings: RepositorySettingsInterface = mockk(relaxed = true)
+    private val repositoryBag: RepositoryBagInterface = mockk(relaxed = true)
+    private val repositoryRoll: RepositoryRollInterface = mockk(relaxed = true)
 
     private val factory = ZoomBagAndroidViewModelFactory(
         application,
