@@ -12,10 +12,16 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 
 
 class ZoomBagAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
+    @Before
+    fun before() = runTest {
+        RepositoryFactory().resetStorage()
+    }
+
     @Test
     fun refreshAfterImport() = runTest {
         val zoomBagAndroidViewModel = this@ZoomBagAndroidViewModelUnitTest.zoomBagAndroidViewModel()

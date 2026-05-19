@@ -19,7 +19,8 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         ): RepositorySettingsProtocolBufferTestDouble {
             if (instance == null) {
                 instance = RepositorySettingsProtocolBufferTestDouble()
-
+                instance!!.settings = settingsData
+            } else if (instance!!.settings == null) {
                 instance!!.settings = settingsData
             }
             return instance!!
@@ -82,7 +83,7 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
     }
 
     override suspend fun fetch(): Flow<SettingsDataInterface> = flow {
-        emit(settings!!)
+        emit(settings ?: SettingsDataTestDouble())
     }
 
     override suspend fun store(settingsData: SettingsDataInterface) {

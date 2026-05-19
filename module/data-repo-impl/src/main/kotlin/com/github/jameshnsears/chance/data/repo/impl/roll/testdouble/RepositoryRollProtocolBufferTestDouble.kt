@@ -25,6 +25,11 @@ class RepositoryRollProtocolBufferTestDouble private constructor() :
                     instance!!.store(rollHistory)
                     instance!!.traceUuid(rollHistory)
                 }
+            } else if (!instance!!.isRollHistoryInitialized()) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    instance!!.store(rollHistory)
+                    instance!!.traceUuid(rollHistory)
+                }
             }
             return instance!!
         }
@@ -32,8 +37,14 @@ class RepositoryRollProtocolBufferTestDouble private constructor() :
 
     private lateinit var rollHistory: RollHistory
 
+    fun isRollHistoryInitialized() = ::rollHistory.isInitialized
+
     override suspend fun fetch(): Flow<RollHistory> = flow {
-        emit(rollHistory)
+        if (isRollHistoryInitialized()) {
+            emit(rollHistory)
+        } else {
+            emit(LinkedHashMap())
+        }
     }
 
     override suspend fun store(newRollHistory: RollHistory) {

@@ -368,6 +368,7 @@ class DialogBagAndroidViewModelUnitTest : DialogBagUnitTestUnitTestHelper() {
         assertFalse(remainingDice.contains(diceToDelete))
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun dialogBagCloneWithSidesSame() = runTest {
         val bagDataTestDouble = BagDataTestDouble()

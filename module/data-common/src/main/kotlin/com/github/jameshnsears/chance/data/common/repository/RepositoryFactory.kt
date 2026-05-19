@@ -20,39 +20,42 @@ class RepositoryFactory(val context: Context? = null) {
     val settingsImpl = SettingsDataImpl()
     val settingsTestDouble = SettingsDataTestDouble()
 
-    val repositorySettings = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER))
-            RepositorySettingsProtocolBufferImpl.getInstance(context!!, settingsImpl)
+    val repositorySettings = if (BuildConfig.DEBUG) {
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER) && context != null)
+            RepositorySettingsProtocolBufferImpl.getInstance(context, settingsImpl)
         else
             RepositorySettingsProtocolBufferTestDouble.getInstance(settingsTestDouble)
-    else
+    } else {
         RepositorySettingsProtocolBufferImpl.getInstance(context!!, settingsImpl)
+    }
 
     ///////////////////////////////////////////////////
 
     private val bagDataImpl by lazy { BagDataImpl(context) }
     val bagDataTestDouble = BagDataTestDouble()
 
-    val repositoryBag = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER))
-            RepositoryBagProtocolBufferImpl.getInstance(context!!, bagDataImpl.allDice)
+    val repositoryBag = if (BuildConfig.DEBUG) {
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER) && context != null)
+            RepositoryBagProtocolBufferImpl.getInstance(context, bagDataImpl.allDice)
         else
             RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDice)
-    else
+    } else {
         RepositoryBagProtocolBufferImpl.getInstance(context!!, bagDataImpl.allDice)
+    }
 
     ///////////////////////////////////////////////////
 
     private val rollHistoryDataImpl by lazy { RollHistoryDataImpl(bagDataImpl).rollHistory }
     val rollHistoryTestDouble = RollHistoryDataTestDouble(bagDataTestDouble).rollHistory
 
-    val repositoryRoll = if (BuildConfig.DEBUG)
-        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER))
-            RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
+    val repositoryRoll = if (BuildConfig.DEBUG) {
+        if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER) && context != null)
+            RepositoryRollProtocolBufferImpl.getInstance(context, rollHistoryDataImpl)
         else
             RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble)
-    else
+    } else {
         RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
+    }
 
     ///////////////////////////////////////////////////
 
