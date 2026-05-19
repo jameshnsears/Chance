@@ -6,7 +6,6 @@ import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelpe
 import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
-import io.mockk.spyk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -21,13 +20,13 @@ class ZoomBagAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun refreshAfterImport() = runTest {
-        val zoomBagAndroidViewModel = this@ZoomBagAndroidViewModelUnitTest.zoomBagAndroidViewModel()
+        val zoomBagAndroidViewModel = zoomBagAndroidViewModel()
         zoomBagAndroidViewModel.refreshAfterImport()
     }
 
     @Test
     fun resizeView() = runTest {
-        val zoomBagAndroidViewModel = this@ZoomBagAndroidViewModelUnitTest.zoomBagAndroidViewModel()
+        val zoomBagAndroidViewModel = zoomBagAndroidViewModel()
 
         zoomBagAndroidViewModel.setResizeView(1)
         assertEquals(80.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
@@ -48,44 +47,25 @@ class ZoomBagAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun sideNumberFontSizeSp() = runTest {
         assertEquals(
-            17.0.sp,
+            17.sp,
             zoomBagAndroidViewModel().sideNumberFontSizeSp()
         )
     }
 
-    private fun zoomBagAndroidViewModel(
+    private suspend fun zoomBagAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): ZoomBagAndroidViewModel {
         val repositoryBag = RepositoryFactory().repositoryBag
-        runTest {
-            // 8 dice = .allDice
-            repositoryBag.store(bagDataTestDouble.allDice)
-        }
+        repositoryBag.store(bagDataTestDouble.allDice)
 
         val repositoryRoll = RepositoryFactory().repositoryRoll
-        runTest {
-            // 2 rolls:
-            //      1st roll:
-            //              d2
-            //              d4
-            //              d8
-            //              d10
-            //              d12
-            //              d20
-            //      2nd roll:
-            //              d4
-            //              d4
-            //              d4
-            repositoryRoll.store(RollHistoryDataTestDouble(bagDataTestDouble).rollHistory)
-        }
+        repositoryRoll.store(RollHistoryDataTestDouble(bagDataTestDouble).rollHistory)
 
-        return spyk<ZoomBagAndroidViewModel>(
-            ZoomBagAndroidViewModel(
-                application(),
-                RepositoryFactory().repositorySettings,
-                repositoryBag,
-                repositoryRoll
-            )
+        return ZoomBagAndroidViewModel(
+            application(),
+            RepositoryFactory().repositorySettings,
+            repositoryBag,
+            repositoryRoll
         )
     }
 }

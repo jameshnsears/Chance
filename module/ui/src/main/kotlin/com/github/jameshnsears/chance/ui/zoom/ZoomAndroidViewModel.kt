@@ -25,7 +25,7 @@ import com.github.jameshnsears.chance.ui.tab.bag.BagImportEvent
 import com.github.jameshnsears.chance.ui.tab.bag.BagResetEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.update
@@ -82,10 +82,13 @@ abstract class ZoomAndroidViewModel(
     }
 
     protected suspend fun updateResize() {
-        _stateFlowZoom.update {
-            it.copy(
-                resizeViewDp = resizeViewAsDp(repositorySettings.fetch().first().resize),
-            )
+        val settings = repositorySettings.fetch().firstOrNull()
+        if (settings != null) {
+            _stateFlowZoom.update {
+                it.copy(
+                    resizeViewDp = resizeViewAsDp(settings.resize),
+                )
+            }
         }
     }
 
@@ -96,7 +99,10 @@ abstract class ZoomAndroidViewModel(
             diceEpochCache.clear()
 
             if (_stateFlowZoom.value.diceBag.isEmpty()) {
-                _stateFlowZoom.value.diceBag = repositoryBag.fetch().first()
+                val diceBag = repositoryBag.fetch().firstOrNull()
+                if (diceBag != null) {
+                    _stateFlowZoom.value.diceBag = diceBag
+                }
             }
 
             // Build list more efficiently - avoid repeated list creation via +=
@@ -111,10 +117,13 @@ abstract class ZoomAndroidViewModel(
 
     fun refreshAfterImport() {
         viewModelScope.launch {
+            val diceBag = repositoryBag.fetch().firstOrNull()
+            val rollHistory = repositoryRoll.fetch().firstOrNull()
+
             _stateFlowZoom.update {
                 it.copy(
-                    diceBag = repositoryBag.fetch().first(),
-                    rollHistory = repositoryRoll.fetch().first()
+                    diceBag = diceBag ?: mutableListOf(),
+                    rollHistory = rollHistory ?: LinkedHashMap()
                 )
             }
 
