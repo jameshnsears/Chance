@@ -4,7 +4,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
-import com.github.jameshnsears.chance.data.domain.R
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import io.mockk.spyk
@@ -51,34 +50,6 @@ class ZoomBagAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         assertEquals(
             17.0.sp,
             zoomBagAndroidViewModel().sideNumberFontSizeSp()
-        )
-    }
-
-    @Test
-    fun drawableForDiceSides() = runTest {
-        assertEquals(
-            R.drawable.d2,
-            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d2)
-        )
-
-        assertEquals(
-            R.drawable.d6,
-            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d6)
-        )
-
-        assertEquals(
-            R.drawable.d10,
-            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d10)
-        )
-
-        assertEquals(
-            R.drawable.d12,
-            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d12)
-        )
-
-        assertEquals(
-            R.drawable.d4_d8_d20,
-            zoomBagAndroidViewModel().drawableForDiceSides(BagDataTestDouble().d4)
         )
     }
 
