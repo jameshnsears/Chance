@@ -126,44 +126,59 @@ subprojects {
 }
 
 fun Project.configureJacoco() {
+    val targetProjects = if (project.path == ":app") {
+        rootProject.subprojects.filter {
+            it.plugins.hasPlugin("com.android.application") || it.plugins.hasPlugin("com.android.library")
+        }
+    } else {
+        listOf(project)
+    }
+
     tasks.register<JacocoReport>("jacocoFdroidTestReport") {
         configureReport(this@configureJacoco, "unitTest")
-        dependsOn("testFdroidDebugUnitTest")
+        dependsOn(targetProjects.map { "${it.path}:testFdroidDebugUnitTest" })
 
-        sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
-        classDirectories.setFrom(
-            fileTree(layout.buildDirectory) {
+        sourceDirectories.setFrom(targetProjects.map {
+            files("${it.projectDir}/src/main/java", "${it.projectDir}/src/main/kotlin")
+        })
+        classDirectories.setFrom(targetProjects.map { proj ->
+            fileTree(proj.layout.buildDirectory) {
                 setIncludes(inclusions)
                 setExcludes(exclusions)
             }
-        )
-        executionData.setFrom(
-            fileTree(layout.buildDirectory) { include("**/*.exec", "**/*.ec") }
-        )
+        })
+        executionData.setFrom(targetProjects.map { proj ->
+            fileTree(proj.layout.buildDirectory) { include("**/*.exec", "**/*.ec") }
+        })
     }
 
     // Combine AndroidTest (Instrumented) + Unit Test
     tasks.register<JacocoReport>("jacocoFdroidAndroidTestReport") {
         configureReport(this@configureJacoco, "androidTest")
-        dependsOn("testFdroidDebugUnitTest", "connectedFdroidDebugAndroidTest")
+        dependsOn(targetProjects.map { "${it.path}:testFdroidDebugUnitTest" })
+        dependsOn(targetProjects.map { "${it.path}:connectedFdroidDebugAndroidTest" })
 
-        sourceDirectories.setFrom(files("$projectDir/src/main/java", "$projectDir/src/main/kotlin"))
-        classDirectories.setFrom(fileTree(layout.buildDirectory) {
-            setIncludes(inclusions)
-            setExcludes(exclusions)
+        sourceDirectories.setFrom(targetProjects.map {
+            files("${it.projectDir}/src/main/java", "${it.projectDir}/src/main/kotlin")
+        })
+        classDirectories.setFrom(targetProjects.map { proj ->
+            fileTree(proj.layout.buildDirectory) {
+                setIncludes(inclusions)
+                setExcludes(exclusions)
+            }
         })
 
         // Grab both local unit tests and instrumented results
         // Support for Orchestrator: .ec files are often nested in subdirectories
-        executionData.setFrom(
-            fileTree(layout.buildDirectory) {
+        executionData.setFrom(targetProjects.map { proj ->
+            fileTree(proj.layout.buildDirectory) {
                 include(
                     "outputs/unit_test_code_coverage/**/*.exec",
                     "outputs/code_coverage/**/*.ec",
                     "outputs/managed_device_code_coverage/**/*.ec"
                 )
             }
-        )
+        })
     }
 }
 
@@ -175,6 +190,9 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
     val subProjectList = subprojects.filter {
         it.plugins.hasPlugin("com.android.application") || it.plugins.hasPlugin("com.android.library")
     }
+
+    dependsOn(subProjectList.map { "${it.path}:testFdroidDebugUnitTest" })
+    dependsOn(subProjectList.map { "${it.path}:connectedFdroidDebugAndroidTest" })
 
     sourceDirectories.setFrom(subProjectList.map {
         files("${it.projectDir}/src/main/java", "${it.projectDir}/src/main/kotlin")

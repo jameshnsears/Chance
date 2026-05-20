@@ -20,13 +20,19 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusTarget
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
@@ -44,12 +50,12 @@ import com.github.jameshnsears.chance.ui.dialog.bag.card.side.BagCardSide
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideService
 
 @Composable
-fun
-    DialogBagTabLayout(
+fun DialogBagTabLayout(
     showDialog: MutableState<Boolean>,
     dialogBagAndroidViewModel: DialogBagAndroidViewModel
 ) {
     val selectedTabIndex = rememberSaveable { mutableIntStateOf(1) }
+    val clickCounter = remember { mutableIntStateOf(0) }
 
     val tabs = listOf(
         TabItem(
@@ -79,9 +85,39 @@ fun
                 Tab(
                     modifier = Modifier.testTag(tab.testTag),
                     selected = selectedTabIndex.intValue == index,
-                    onClick = { selectedTabIndex.intValue = index },
+                    onClick = {
+                        selectedTabIndex.intValue = index
+                        clickCounter.intValue++
+                    },
                     icon = {
+                        val animation = remember { Animatable(if (tab.testTag == TabTestTag.TAB_ROLL) 1f else 0f) }
+                        LaunchedEffect(clickCounter.intValue) {
+                            if (selectedTabIndex.intValue == index) {
+                                if (clickCounter.intValue > 0) {
+                                    if (tab.testTag == TabTestTag.TAB_ROLL) {
+                                        animation.animateTo(0.7f, tween(500, easing = LinearEasing))
+                                        animation.animateTo(1f, tween(500, easing = LinearEasing))
+                                    } else {
+                                        animation.snapTo(0f)
+                                        animation.animateTo(360f, tween(1000, easing = LinearEasing))
+                                    }
+                                }
+                            } else {
+                                animation.snapTo(if (tab.testTag == TabTestTag.TAB_ROLL) 1f else 0f)
+                            }
+                        }
+
                         Icon(
+                            modifier = Modifier.graphicsLayer {
+                                when (tab.testTag) {
+                                    TabTestTag.TAB_DICE -> rotationY = animation.value
+                                    TabTestTag.TAB_SIDE -> rotationX = animation.value
+                                    TabTestTag.TAB_ROLL -> {
+                                        scaleX = animation.value
+                                        scaleY = animation.value
+                                    }
+                                }
+                            },
                             imageVector = tab.icon,
                             contentDescription = tab.title
                         )
