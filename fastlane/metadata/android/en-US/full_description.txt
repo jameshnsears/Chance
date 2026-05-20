@@ -5,3 +5,11 @@
 &bull; Yes / No app shortcut
 
 &bull; User feedback drives development and is always appreciated!
+
+Designed to stay out of the player's way
+Multiple dice types
+Ability to roll several dice at once
+Create named roll presets
+Roll history & total
+Persistant state
+Works offline
