@@ -94,7 +94,7 @@ fun DialogBagTabLayout(
                     },
                     icon = {
                         val initialValue = when (tab.testTag) {
-                            TabTestTag.TAB_SIDE -> 1f
+                            TabTestTag.TAB_SIDE -> 1.4f
                             TabTestTag.TAB_ROLL -> 0f
                             else -> 0f
                         }
@@ -109,9 +109,9 @@ fun DialogBagTabLayout(
                                         }
 
                                         TabTestTag.TAB_SIDE -> {
-                                            animation.animateTo(0.3f, tween(500, easing = LinearEasing))
+                                            animation.animateTo(0.2f, tween(500, easing = LinearEasing))
+                                            animation.animateTo(2.2f, tween(500, easing = LinearEasing))
                                             animation.animateTo(1.4f, tween(500, easing = LinearEasing))
-                                            animation.animateTo(1f, tween(500, easing = LinearEasing))
                                         }
 
                                         TabTestTag.TAB_ROLL -> {
@@ -128,7 +128,11 @@ fun DialogBagTabLayout(
                         Icon(
                             modifier = Modifier.graphicsLayer {
                                 when (tab.testTag) {
-                                    TabTestTag.TAB_DICE -> rotationY = animation.value
+                                    TabTestTag.TAB_DICE -> {
+                                        rotationY = animation.value
+                                        scaleX = 1.4f
+                                        scaleY = 1.4f
+                                    }
                                     TabTestTag.TAB_SIDE -> {
                                         scaleX = animation.value
                                         scaleY = animation.value
