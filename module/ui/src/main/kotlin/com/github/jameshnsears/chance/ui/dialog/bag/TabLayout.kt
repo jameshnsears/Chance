@@ -39,6 +39,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
@@ -90,20 +93,35 @@ fun DialogBagTabLayout(
                         clickCounter.intValue++
                     },
                     icon = {
-                        val animation = remember { Animatable(if (tab.testTag == TabTestTag.TAB_ROLL) 1f else 0f) }
+                        val initialValue = when (tab.testTag) {
+                            TabTestTag.TAB_SIDE -> 1f
+                            TabTestTag.TAB_ROLL -> 0f
+                            else -> 0f
+                        }
+                        val animation = remember { Animatable(initialValue) }
                         LaunchedEffect(clickCounter.intValue) {
                             if (selectedTabIndex.intValue == index) {
                                 if (clickCounter.intValue > 0) {
-                                    if (tab.testTag == TabTestTag.TAB_ROLL) {
-                                        animation.animateTo(0.7f, tween(500, easing = LinearEasing))
-                                        animation.animateTo(1f, tween(500, easing = LinearEasing))
-                                    } else {
-                                        animation.snapTo(0f)
-                                        animation.animateTo(360f, tween(1000, easing = LinearEasing))
+                                    when (tab.testTag) {
+                                        TabTestTag.TAB_DICE -> {
+                                            animation.snapTo(0f)
+                                            animation.animateTo(360f, tween(1000, easing = LinearEasing))
+                                        }
+
+                                        TabTestTag.TAB_SIDE -> {
+                                            animation.animateTo(0.3f, tween(500, easing = LinearEasing))
+                                            animation.animateTo(1.4f, tween(500, easing = LinearEasing))
+                                            animation.animateTo(1f, tween(500, easing = LinearEasing))
+                                        }
+
+                                        TabTestTag.TAB_ROLL -> {
+                                            animation.snapTo(0f)
+                                            animation.animateTo(2 * PI.toFloat(), tween(1000, easing = LinearEasing))
+                                        }
                                     }
                                 }
                             } else {
-                                animation.snapTo(if (tab.testTag == TabTestTag.TAB_ROLL) 1f else 0f)
+                                animation.snapTo(initialValue)
                             }
                         }
 
@@ -111,10 +129,17 @@ fun DialogBagTabLayout(
                             modifier = Modifier.graphicsLayer {
                                 when (tab.testTag) {
                                     TabTestTag.TAB_DICE -> rotationY = animation.value
-                                    TabTestTag.TAB_SIDE -> rotationX = animation.value
-                                    TabTestTag.TAB_ROLL -> {
+                                    TabTestTag.TAB_SIDE -> {
                                         scaleX = animation.value
                                         scaleY = animation.value
+                                    }
+
+                                    TabTestTag.TAB_ROLL -> {
+                                        val angle = animation.value
+                                        translationX = (sin(angle) * 40).dp.toPx()
+                                        val scale = 1f + (cos(angle) * 0.4f)
+                                        scaleX = scale
+                                        scaleY = scale
                                     }
                                 }
                             },
