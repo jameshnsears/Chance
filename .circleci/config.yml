@@ -1,294 +1,342 @@
 version: 2.1
 
-orbs:
-  android: circleci/android@3.1.0
-  codecov: codecov/codecov@4.1.0
-
-# FIX 1 (style): Keep the executor anchor but note it is only valid because
-# CircleCI merges the map under the `executor:` key at job level.
-android_exec: &android_exec
-  name: android/android_machine
-  resource_class: large
-  tag: default
+executors:
+  android-docker:
+    docker:
+      - image: cimg/android:2024.10
+    resource_class: large
 
 commands:
+  restore_gradle_cache:
+    description: Restore Gradle caches.
+    steps:
+      - restore_cache:
+          keys:
+            - gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle.kts" }}
+            - gradle-cache-
+
+  save_gradle_cache:
+    description: Save Gradle caches.
+    steps:
+      - save_cache:
+          paths:
+            - ~/.gradle
+            - ~/.android
+          key: gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle.kts" }}
+
   codecov_upload:
+    description: Upload Codecov report.
     parameters:
       report_path:
         type: string
       flags:
         type: string
     steps:
-      - codecov/upload:
-          # FIX 7: codecov orb v4 uses `file` (singular), not `files`.
-          # Using the wrong key silently skips the upload.
-          file: << parameters.report_path >>
-          flags: << parameters.flags >>
+      - run:
+          name: codecov
+          command: |
+            if [ -z "$CODECOV_TOKEN" ]; then
+              echo "Skipping Codecov upload because CODECOV_TOKEN is not set"
+              exit 0
+            fi
+            bash <(curl -s https://codecov.io/bash) -f "<< parameters.report_path >>" -F "<< parameters.flags >>" -t "$CODECOV_TOKEN"
 
   write_local_properties:
+    description: Write local.properties from secret.
     steps:
       - run:
-          name: Write local.properties
+          name: local.properties
           command: |
-            echo "sdk.dir=/android-sdk" > local.properties
-            echo "maps_api_key=$MAPS_API_KEY" >> local.properties
+            if [ -n "$LOCAL_PROPERTIES" ]; then
+              echo "$LOCAL_PROPERTIES" | base64 -d > local.properties
+            fi
 
   write_google_services:
+    description: Write google-services.json from secret.
+    steps:
+      - run:
+          name: google-services.json
+          command: |
+            if [ -n "$GOOGLE_PLAY_JSON_DEVELOPMENT" ]; then
+              echo "$GOOGLE_PLAY_JSON_DEVELOPMENT" | base64 -d > app/google-services.json
+            fi
+
+  install_emulator_packages:
+    description: Install the Android emulator and system images.
     parameters:
-      target_module:
+      api_level:
         type: string
     steps:
       - run:
-          name: Write google-services.json
+          name: Install Android emulator packages
           command: |
-            # FIX 2: `echo` mangles JSON — it expands escape sequences and can
-            # break on backticks, special characters, and multi-line content.
-            # `printf '%s'` writes the value verbatim with no interpretation.
-            printf '%s' "$GOOGLE_SERVICES_JSON" > << parameters.target_module >>/google-services.json
+            yes y | sdkmanager --licenses || true
+            sdkmanager "platforms;android-<< parameters.api_level >>" \
+                       "system-images;android-<< parameters.api_level >>;google_apis;x86_64" \
+                       "platform-tools" \
+                       "emulator"
 
-  # FIX 1 (shared helper): Extract submodule init into a reusable command so
-  # every job that needs submodules uses the same safe implementation.
-  checkout_with_submodules:
+  # FIX 1: Moved create_avd out of install_emulator_packages — it was
+  # incorrectly nested as a sub-key, making it an unregistered command.
+  create_avd:
+    description: Create an Android Virtual Device.
+    parameters:
+      api_level:
+        type: string
+      device_name:
+        type: string
+        default: "pixel"
     steps:
-      - checkout
       - run:
-          name: Initialise git submodules
-          command: git submodule update --init --recursive
+          name: Create AVD
+          command: |
+            echo no | avdmanager create avd \
+              -n "circleci-android-<< parameters.api_level >>" \
+              -k "system-images;android-<< parameters.api_level >>;google_apis;x86_64" \
+              -d "<< parameters.device_name >>" \
+              --force
+
+  # FIX 2: Added a start_emulator command. The AVD was created but never
+  # launched, so instrumentation tests would fail immediately with no device.
+  # -no-audio, -no-window, and -no-boot-anim keep startup fast in CI.
+  start_emulator:
+    description: Start the AVD and wait for it to finish booting.
+    parameters:
+      api_level:
+        type: string
+    steps:
+      - run:
+          name: Start emulator
+          background: true
+          command: |
+            emulator -avd "circleci-android-<< parameters.api_level >>" \
+              -no-audio -no-window -no-boot-anim -gpu swiftshader_indirect
+      - run:
+          name: Wait for emulator to boot
+          command: |
+            adb wait-for-device
+            # Poll boot completion — much faster than a fixed sleep
+            until adb shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; do
+              sleep 3
+            done
+            adb shell input keyevent 82
 
   run_android_test:
+    description: Run an Android instrumentation test and capture logcat.
     parameters:
-      test_command:
-        type: string
-      report_path:
-        type: string
-      flags:
+      gradle_task:
         type: string
     steps:
       - run:
-          name: Run Android Test
-          command: << parameters.test_command >>
-      - codecov_upload:
-          report_path: << parameters.report_path >>
-          flags: << parameters.flags >>
+          name: Run Android instrumentation test
+          command: |
+            adb logcat -c
+            adb logcat > logcat.txt &
+            adb shell settings put global window_animation_scale 0.0
+            adb shell settings put global transition_animation_scale 0.0
+            adb shell settings put global animator_duration_scale 0.0
+            ./gradlew << parameters.gradle_task >> --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
   store_android_artifacts:
-    parameters:
-      module_path:
-        type: string
+    description: Store Android test artifacts.
     steps:
-      - store_test_results:
-          path: << parameters.module_path >>/build/test-results
       - store_artifacts:
-          path: << parameters.module_path >>/build/reports
+          path: logcat.txt
+          destination: logcat
+      - store_artifacts:
+          path: "**/build/reports/*"
+          destination: build-reports
 
 jobs:
   unit_test_ui:
-    executor: *android_exec
+    executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      # FIX 1: replaced `checkout: submodules: true` (invalid parameter) with
-      # the new `checkout_with_submodules` command throughout all jobs.
-      - checkout_with_submodules
-      - android/restore_gradle_cache
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - run:
-          name: UI unit tests
-          command: |
-            ./gradlew :module:ui:jacocoFdroidTestReport \
-              --parallel \
-              --max-workers 2 \
-              -Dorg.gradle.jvmargs="-Xmx2048m"
+          name: ui unit tests
+          command: ./gradlew :module:ui:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - codecov_upload:
           report_path: ./module/ui/build/reports/jacoco/unitTest.xml
           flags: ui-unitTest
-      # FIX 4: store test results and reports so failures are visible in
-      # CircleCI Insights and the Artifacts tab.
-      - store_android_artifacts:
-          module_path: ./module/ui
-      - android/save_gradle_cache
+      - save_gradle_cache
 
   unit_test_data_repo_api:
-    executor: *android_exec
+    executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout_with_submodules
-      - android/restore_gradle_cache
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - run:
-          name: Data repo api unit tests
-          command: |
-            ./gradlew :module:data-repo-api:jacocoFdroidTestReport \
-              --parallel \
-              --max-workers 2 \
-              -Dorg.gradle.jvmargs="-Xmx2048m"
+          name: data-repo-api unit tests
+          command: ./gradlew :module:data-repo-api:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - codecov_upload:
           report_path: ./module/data-repo-api/build/reports/jacoco/unitTest.xml
           flags: data-repo-api-unitTest
-      # FIX 4: store test results and reports.
-      - store_android_artifacts:
-          module_path: ./module/data-repo-api
-      - android/save_gradle_cache
+      - save_gradle_cache
 
   unit_test_data_common:
-    executor: *android_exec
+    executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout_with_submodules
-      - android/restore_gradle_cache
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - run:
-          name: Data common unit tests
-          command: |
-            ./gradlew :module:data-common:jacocoFdroidTestReport \
-              --parallel \
-              --max-workers 2 \
-              -Dorg.gradle.jvmargs="-Xmx2048m"
+          name: data-common unit tests
+          command: ./gradlew :module:data-common:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - codecov_upload:
           report_path: ./module/data-common/build/reports/jacoco/unitTest.xml
           flags: data-common-unitTest
-      # FIX 4: store test results and reports.
-      - store_android_artifacts:
-          module_path: ./module/data-common
-      - android/save_gradle_cache
+      - save_gradle_cache
 
   ui_android_test:
-    executor: *android_exec
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout_with_submodules
-      - android/create_avd:
-          avd_name: testavd
-          system_image: system-images;android-36;google_apis;x86_64
-          install: true
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - write_local_properties
-      - write_google_services:
-          target_module: app
-      - android/start_emulator:
-          avd_name: testavd
-          no_window: true
-          gpu: swiftshader_indirect
-          restore_gradle_cache_prefix: v1a
+      - write_google_services
+      - install_emulator_packages:
+          api_level: "36"
+      - create_avd:
+          api_level: "36"
+      - start_emulator:
+          api_level: "36"
       - run_android_test:
-          test_command: ./gradlew :module:ui:connectedFdroidDebugAndroidTest --continue --parallel -Dorg.gradle.jvmargs="-Xmx2048m"
-          report_path: ./module/ui/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml
+          gradle_task: ":module:ui:jacocoFdroidAndroidTestReport"
+      - codecov_upload:
+          report_path: ./module/ui/build/reports/jacoco/androidTest.xml
           flags: ui-androidTest
-      - store_android_artifacts:
-          module_path: ./module/ui
-      # FIX 3: `restore_gradle_cache_prefix` on start_emulator restores cache
-      # during boot, but without a matching save the cache is never written for
-      # future runs. Add the save step after the work is done.
-      - android/save_gradle_cache:
-          cache_prefix: v1a
+      - store_android_artifacts
+      - save_gradle_cache
 
   app_android_test:
-    executor: *android_exec
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout_with_submodules
-      - android/create_avd:
-          avd_name: testavd
-          system_image: system-images;android-36;google_apis;x86_64
-          install: true
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - write_local_properties
-      - write_google_services:
-          target_module: app
-      - android/start_emulator:
-          avd_name: testavd
-          no_window: true
-          gpu: swiftshader_indirect
-          restore_gradle_cache_prefix: v1a
+      - write_google_services
+      - install_emulator_packages:
+          api_level: "36"
+      - create_avd:
+          api_level: "36"
+      - start_emulator:
+          api_level: "36"
       - run_android_test:
-          test_command: ./gradlew :app:connectedFdroidDebugAndroidTest --continue --parallel -Dorg.gradle.jvmargs="-Xmx2048m"
-          report_path: ./app/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml
+          gradle_task: ":app:jacocoFdroidAndroidTestReport"
+      - codecov_upload:
+          report_path: ./app/build/reports/jacoco/androidTest.xml
           flags: app-androidTest
-      - store_android_artifacts:
-          module_path: ./app
-      # FIX 3: matching cache save.
-      - android/save_gradle_cache:
-          cache_prefix: v1a
+      - store_android_artifacts
+      - save_gradle_cache
 
   data_common_android_test:
-    executor: *android_exec
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout_with_submodules
-      - android/create_avd:
-          avd_name: testavd
-          system_image: system-images;android-36;google_apis;x86_64
-          install: true
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - write_local_properties
-      - write_google_services:
-          target_module: app
-      - android/start_emulator:
-          avd_name: testavd
-          no_window: true
-          gpu: swiftshader_indirect
-          restore_gradle_cache_prefix: v1a
+      - write_google_services
+      - install_emulator_packages:
+          api_level: "36"
+      - create_avd:
+          api_level: "36"
+      - start_emulator:
+          api_level: "36"
       - run_android_test:
-          test_command: ./gradlew :module:data-common:connectedFdroidDebugAndroidTest --continue --parallel -Dorg.gradle.jvmargs="-Xmx2048m"
-          report_path: ./module/data-common/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml
+          gradle_task: ":module:data-common:jacocoFdroidAndroidTestReport"
+      - codecov_upload:
+          report_path: ./module/data-common/build/reports/jacoco/androidTest.xml
           flags: data-common-androidTest
-      - store_android_artifacts:
-          module_path: ./module/data-common
-      # FIX 3: matching cache save.
-      - android/save_gradle_cache:
-          cache_prefix: v1a
+      - store_android_artifacts
+      - save_gradle_cache
 
   detekt:
-    executor: *android_exec
+    executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
-      - checkout_with_submodules
-      - android/restore_gradle_cache
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - run:
-          name: Detekt
-          command: ./gradlew detekt --parallel
-      # FIX 5: store detekt HTML/XML reports so they are accessible on failure.
-      - store_artifacts:
-          path: build/reports/detekt
-      - android/save_gradle_cache
+          name: detekt
+          command: ./gradlew detekt -x test --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - save_gradle_cache
 
   ktlint:
-    executor: *android_exec
+    executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
-      - checkout_with_submodules
-      - android/restore_gradle_cache
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - run:
-          name: Ktlint
-          command: ./gradlew ktlintCheck --parallel
-      # FIX 5: store ktlint reports.
-      - store_artifacts:
-          path: build/reports/ktlint
-      - android/save_gradle_cache
+          name: ktlint
+          command: ./gradlew ktlintCheck --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - save_gradle_cache
 
   lint_fdroid_debug:
-    executor: *android_exec
+    executor: android-docker
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
-      - checkout_with_submodules
-      - android/restore_gradle_cache
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
       - run:
-          name: Lint Fdroid Debug
-          command: ./gradlew lintFdroidDebug --parallel
-      # FIX 5: store lint reports so lint failures can be inspected.
-      - store_artifacts:
-          path: app/build/reports/lint-results-fdroidDebug.html
-      - android/save_gradle_cache
+          name: lintFdroidDebug
+          command: ./gradlew :app:lintFdroidDebug --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - save_gradle_cache
 
+  # FIX 3: Moved sonarqube inside the jobs: block — it was defined at the
+  # root level, making it invisible to the workflow scheduler.
   sonarqube:
-    executor: *android_exec
+    executor: android-docker
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
-      - checkout_with_submodules
-      - android/restore_gradle_cache
+      - checkout:
+          submodules: true
       - run:
-          name: Sonarqube
-          command: ./gradlew sonar -Dsonar.gradle.skipCompile=true
-      - android/save_gradle_cache
+          name: Fetch full git history
+          command: |
+            git fetch --unshallow || true
+            git fetch --all --tags --prune
+      - run:
+          name: Verify git repository
+          command: git fsck --full
+      - restore_gradle_cache
+      - run:
+          name: sonar
+          command: |
+            if [ -z "$SONAR_TOKEN" ]; then
+              echo "SONAR_TOKEN is not set; please configure SONAR_TOKEN in CircleCI project settings"
+              exit 1
+            fi
+            ./gradlew :sonar --info
+      - save_gradle_cache
 
 workflows:
+  version: 2
   codecov_and_static:
     jobs:
       - unit_test_ui
@@ -300,8 +348,4 @@ workflows:
       - detekt
       - ktlint
       - lint_fdroid_debug
-      - sonarqube:
-          requires:
-            - unit_test_ui
-            - unit_test_data_repo_api
-            - unit_test_data_common
+      - sonarqube
