@@ -6,6 +6,11 @@ executors:
       - image: cimg/android:2024.10
     resource_class: large
 
+  android-machine:
+    machine:
+      image: android:2024.10
+    resource_class: large
+
 commands:
   restore_gradle_cache:
     description: Restore Gradle caches.
@@ -191,7 +196,7 @@ jobs:
       - save_gradle_cache
 
   ui_android_test:
-    executor: android-docker
+    executor: android-machine
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -215,7 +220,7 @@ jobs:
       - save_gradle_cache
 
   app_android_test:
-    executor: android-docker
+    executor: android-machine
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -239,7 +244,7 @@ jobs:
       - save_gradle_cache
 
   data_common_android_test:
-    executor: android-docker
+    executor: android-machine
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
