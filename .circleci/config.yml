@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@3.1.0
-  codecov: codecov/codecov@4.1.0 # Added official Codecov orb
+  codecov: codecov/codecov@4.1.0
 
 commands:
   codecov_upload:
@@ -16,7 +16,6 @@ commands:
       - codecov/upload:
           file: << parameters.report_path >>
           flags: << parameters.flags >>
-          # The orb automatically looks for $CODECOV_TOKEN in your environment
 
   write_local_properties:
     description: Write local.properties from secret
@@ -50,7 +49,6 @@ commands:
             adb logcat -c
             adb logcat > logcat.txt &
 
-            # Animations are already disabled natively by the android/start-emulator orb
             ./gradlew << parameters.gradle_task >> \
               --parallel \
               --max-workers 2 \
@@ -65,11 +63,9 @@ commands:
 
       - run:
           name: Collect build reports
-          when: always # Ensures reports are collected even if tests fail
+          when: always
           command: |
             mkdir -p /tmp/build-reports
-            # CircleCI store_artifacts doesn't support wildcards.
-            # This correctly finds and copies all nested report folders.
             find . -type d -path "*/build/reports" | while read -r dir; do
               dest="/tmp/build-reports/$(echo $dir | sed 's/[^a-zA-Z0-9]/_/g')"
               mkdir -p "$dest"
@@ -80,16 +76,15 @@ commands:
           path: /tmp/build-reports
           destination: build-reports
 
-executors:
-  android_executor:
-    executor:
-      name: android/android-machine # Fixed: hyphen instead of underscore
-      tag: "2024.11.1"
-      resource-class: large
+# Note: The custom executors: block has been removed to fix the schema error.
 
 jobs:
   unit_test_ui:
-    executor: android_executor
+    # We define the YAML anchor (&android_exec) here on the first usage
+    executor: &android_exec
+      name: android/android-machine
+      tag: "2024.11.1"
+      resource-class: large
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -109,7 +104,8 @@ jobs:
       - android/save-gradle-cache
 
   unit_test_data_repo_api:
-    executor: android_executor
+    # We reuse the anchor (*android_exec) for all subsequent jobs
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -129,7 +125,7 @@ jobs:
       - android/save-gradle-cache
 
   unit_test_data_common:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -149,7 +145,7 @@ jobs:
       - android/save-gradle-cache
 
   ui_android_test:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -175,7 +171,7 @@ jobs:
       - android/save-gradle-cache
 
   app_android_test:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -201,7 +197,7 @@ jobs:
       - android/save-gradle-cache
 
   data_common_android_test:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -227,7 +223,7 @@ jobs:
       - android/save-gradle-cache
 
   detekt:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
@@ -245,7 +241,7 @@ jobs:
       - android/save-gradle-cache
 
   ktlint:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
@@ -262,7 +258,7 @@ jobs:
       - android/save-gradle-cache
 
   lint_fdroid_debug:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
@@ -279,7 +275,7 @@ jobs:
       - android/save-gradle-cache
 
   sonarqube:
-    executor: android_executor
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
