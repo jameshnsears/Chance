@@ -76,8 +76,6 @@ commands:
                        "platform-tools" \
                        "emulator"
 
-  # FIX 1: Moved create_avd out of install_emulator_packages — it was
-  # incorrectly nested as a sub-key, making it an unregistered command.
   create_avd:
     description: Create an Android Virtual Device.
     parameters:
@@ -96,9 +94,6 @@ commands:
               -d "<< parameters.device_name >>" \
               --force
 
-  # FIX 2: Added a start_emulator command. The AVD was created but never
-  # launched, so instrumentation tests would fail immediately with no device.
-  # -no-audio, -no-window, and -no-boot-anim keep startup fast in CI.
   start_emulator:
     description: Start the AVD and wait for it to finish booting.
     parameters:
@@ -115,7 +110,6 @@ commands:
           name: Wait for emulator to boot
           command: |
             adb wait-for-device
-            # Poll boot completion — much faster than a fixed sleep
             until adb shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; do
               sleep 3
             done
@@ -307,8 +301,6 @@ jobs:
           command: ./gradlew :app:lintFdroidDebug --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - save_gradle_cache
 
-  # FIX 3: Moved sonarqube inside the jobs: block — it was defined at the
-  # root level, making it invisible to the workflow scheduler.
   sonarqube:
     executor: android-docker
     environment:
@@ -319,7 +311,10 @@ jobs:
       - run:
           name: Fetch full git history
           command: |
-            git fetch --unshallow || true
+            git fetch --unshallow || git fetch --all
+            git submodule foreach --recursive \
+              'git fetch --unshallow || git fetch --all || true'
+
             git fetch --all --tags --prune
       - run:
           name: Verify git repository
