@@ -94,7 +94,7 @@ commands:
             echo "Emulator boot confirmed"
 
 jobs:
-  unit_test_ui:
+  codecov_unit_test_ui:
     executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -110,7 +110,7 @@ jobs:
           flags: ui-unitTest
       - save_gradle_cache
 
-  unit_test_data_repo_api:
+  codecov_unit_test_data_repo_api:
     executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -126,7 +126,7 @@ jobs:
           flags: data-repo-api-unitTest
       - save_gradle_cache
 
-  unit_test_data_common:
+  codecov_unit_test_data_common:
     executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -142,7 +142,7 @@ jobs:
           flags: data-common-unitTest
       - save_gradle_cache
 
-  android_test_ui:
+  codecov_android_test_ui:
     executor:
       name: android/android_machine
       resource_class: large
@@ -167,7 +167,7 @@ jobs:
           destination: build-reports
       - save_gradle_cache
 
-  android_test_app:
+  codecov_android_test_app:
     executor:
       name: android/android_machine
       resource_class: large
@@ -193,7 +193,7 @@ jobs:
           destination: build-reports
       - save_gradle_cache
 
-  android_test_data_common:
+  codecov_android_test_data_common:
     executor:
       name: android/android_machine
       resource_class: large
@@ -257,7 +257,7 @@ jobs:
           command: ./gradlew :app:lintFdroidDebug --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - save_gradle_cache
 
-  sonarqube:
+  static_sonarqube:
     executor: android-docker
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
@@ -282,12 +282,12 @@ workflows:
   version: 2
   codecov_and_static:
     jobs:
-      - unit_test_ui
-      - unit_test_data_repo_api
-      - unit_test_data_common
-      - android_test_ui
-      - android_test_app
-      - android_test_data_common
+      - codecov_unit_test_ui
+      - codecov_unit_test_data_repo_api
+      - codecov_unit_test_data_common
+      - codecov_android_test_ui
+      - codecov_android_test_app
+      - codecov_android_test_data_common
       - static_detekt
       - static_ktlint
       - static_lint
