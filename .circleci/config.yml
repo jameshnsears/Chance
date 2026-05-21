@@ -256,6 +256,16 @@ jobs:
       - checkout:
           submodules: true
       - run:
+          name: Unshallow Git History for SonarScanner
+          command: |
+            # Check if the repository is shallow, and if so, fetch the full history
+            if [ -f .git/shallow ]; then
+            echo "Shallow repository detected. Fetching full history..."
+            git fetch --unshallow --recurse-submodules=no
+            else
+            echo "Repository is already complete."
+            fi
+      - run:
           name: Fetch full git history
           command: |
             git fetch --unshallow || git fetch --all
