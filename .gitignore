@@ -38,3 +38,5 @@ misc/uml/chance.vpp.bak*
 /misc/images/dice/virtue/.~lock.cubes.odt#
 /build_output.log
 /.idea/deploymentTargetSelector.xml
+/app/google-services.json.base64
+/local.properties.base64

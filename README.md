@@ -4,6 +4,10 @@
 
 ---
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/circleci/MCy57jQouXVWw9Fruvasqq/NJrXoRpDdJPzuDQj9Za6nW/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/MCy57jQouXVWw9Fruvasqq/NJrXoRpDdJPzuDQj9Za6nW/tree/main)
+
+---
+
 Static Analysis
 
 [![static.gitleaks](https://github.com/jameshnsears/Chance/actions/workflows/static.gitleaks.yml/badge.svg)](https://github.com/jameshnsears/Chance/actions/workflows/static.gitleaks.yml)
