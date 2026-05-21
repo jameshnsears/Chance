@@ -93,63 +93,7 @@ fun DialogBagTabLayout(
                         clickCounter.intValue++
                     },
                     icon = {
-                        val initialValue = when (tab.testTag) {
-                            TabTestTag.TAB_SIDE -> 1.4f
-                            TabTestTag.TAB_ROLL -> 0f
-                            else -> 0f
-                        }
-                        val animation = remember { Animatable(initialValue) }
-                        LaunchedEffect(clickCounter.intValue) {
-                            if (selectedTabIndex.intValue == index) {
-                                if (clickCounter.intValue > 0) {
-                                    when (tab.testTag) {
-                                        TabTestTag.TAB_DICE -> {
-                                            animation.snapTo(0f)
-                                            animation.animateTo(360f, tween(1000, easing = LinearEasing))
-                                        }
-
-                                        TabTestTag.TAB_SIDE -> {
-                                            animation.animateTo(0.2f, tween(500, easing = LinearEasing))
-                                            animation.animateTo(2.2f, tween(500, easing = LinearEasing))
-                                            animation.animateTo(1.4f, tween(500, easing = LinearEasing))
-                                        }
-
-                                        TabTestTag.TAB_ROLL -> {
-                                            animation.snapTo(0f)
-                                            animation.animateTo(2 * PI.toFloat(), tween(1000, easing = LinearEasing))
-                                        }
-                                    }
-                                }
-                            } else {
-                                animation.snapTo(initialValue)
-                            }
-                        }
-
-                        Icon(
-                            modifier = Modifier.graphicsLayer {
-                                when (tab.testTag) {
-                                    TabTestTag.TAB_DICE -> {
-                                        rotationY = animation.value
-                                        scaleX = 1.4f
-                                        scaleY = 1.4f
-                                    }
-                                    TabTestTag.TAB_SIDE -> {
-                                        scaleX = animation.value
-                                        scaleY = animation.value
-                                    }
-
-                                    TabTestTag.TAB_ROLL -> {
-                                        val angle = animation.value
-                                        translationX = (sin(angle) * 40).dp.toPx()
-                                        val scale = 1f + (cos(angle) * 0.4f)
-                                        scaleX = scale
-                                        scaleY = scale
-                                    }
-                                }
-                            },
-                            imageVector = tab.icon,
-                            contentDescription = tab.title
-                        )
+                        TabIcon(tab, index, selectedTabIndex.intValue, clickCounter.intValue)
                     },
                     text = { Text(tab.title) }
                 )
@@ -167,6 +111,66 @@ fun DialogBagTabLayout(
             showDialog,
         )
     }
+}
+
+@Composable
+fun TabIcon(tab: TabItem, index: Int, selectedTabIndex: Int, clickCounter: Int) {
+    val initialValue = when (tab.testTag) {
+        TabTestTag.TAB_SIDE -> 1.4f
+        else -> 0f
+    }
+    val animation = remember { Animatable(initialValue) }
+    LaunchedEffect(clickCounter) {
+        if (selectedTabIndex == index) {
+            if (clickCounter > 0) {
+                when (tab.testTag) {
+                    TabTestTag.TAB_DICE -> {
+                        animation.snapTo(0f)
+                        animation.animateTo(360f, tween(1000, easing = LinearEasing))
+                    }
+
+                    TabTestTag.TAB_SIDE -> {
+                        animation.animateTo(0.2f, tween(500, easing = LinearEasing))
+                        animation.animateTo(2.2f, tween(500, easing = LinearEasing))
+                        animation.animateTo(1.4f, tween(500, easing = LinearEasing))
+                    }
+
+                    TabTestTag.TAB_ROLL -> {
+                        animation.snapTo(0f)
+                        animation.animateTo(2 * PI.toFloat(), tween(1000, easing = LinearEasing))
+                    }
+                }
+            }
+        } else {
+            animation.snapTo(initialValue)
+        }
+    }
+
+    Icon(
+        modifier = Modifier.graphicsLayer {
+            when (tab.testTag) {
+                TabTestTag.TAB_DICE -> {
+                    rotationY = animation.value
+                    scaleX = 1.4f
+                    scaleY = 1.4f
+                }
+                TabTestTag.TAB_SIDE -> {
+                    scaleX = animation.value
+                    scaleY = animation.value
+                }
+
+                TabTestTag.TAB_ROLL -> {
+                    val angle = animation.value
+                    translationX = (sin(angle) * 40).dp.toPx()
+                    val scale = 1f + (cos(angle) * 0.4f)
+                    scaleX = scale
+                    scaleY = scale
+                }
+            }
+        },
+        imageVector = tab.icon,
+        contentDescription = tab.title
+    )
 }
 
 @Composable
