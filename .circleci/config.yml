@@ -4,9 +4,13 @@ orbs:
   android: circleci/android@3.1.0
   codecov: codecov/codecov@4.1.0
 
+android_exec: &android_exec
+  name: android/android_machine
+  resource_class: large
+  tag: default
+
 commands:
   codecov_upload:
-    description: Upload Codecov report
     parameters:
       report_path:
         type: string
@@ -14,74 +18,55 @@ commands:
         type: string
     steps:
       - codecov/upload:
-          file: << parameters.report_path >>
+          files: << parameters.report_path >>
           flags: << parameters.flags >>
 
   write_local_properties:
-    description: Write local.properties from secret
     steps:
       - run:
           name: Write local.properties
           command: |
-            if [ -n "$LOCAL_PROPERTIES" ]; then
-              echo "$LOCAL_PROPERTIES" | base64 -d > local.properties
-            fi
+            echo "sdk.dir=/android-sdk" > local.properties
+            echo "maps_api_key=$MAPS_API_KEY" >> local.properties
 
   write_google_services:
-    description: Write google-services.json from secret
-    steps:
-      - run:
-          name: Write google-services.json
-          command: |
-            if [ -n "$GOOGLE_PLAY_JSON_DEVELOPMENT" ]; then
-              echo "$GOOGLE_PLAY_JSON_DEVELOPMENT" | base64 -d > app/google-services.json
-            fi
-
-  run_android_test:
-    description: Run Android instrumentation test
     parameters:
-      gradle_task:
+      target_module:
         type: string
     steps:
       - run:
-          name: Run Android instrumentation test
-          command: |
-            adb logcat -c
-            adb logcat > logcat.txt &
+          name: Write google-services.json
+          command: echo "$GOOGLE_SERVICES_JSON" > << parameters.target_module >>/google-services.json
 
-            ./gradlew << parameters.gradle_task >> \
-              --parallel \
-              --max-workers 2 \
-              -Dorg.gradle.jvmargs="-Xmx2048m"
+  run_android_test:
+    parameters:
+      test_command:
+        type: string
+      report_path:
+        type: string
+      flags:
+        type: string
+    steps:
+      - run:
+          name: Run Android Test
+          command: << parameters.test_command >>
+      - codecov_upload:
+          report_path: << parameters.report_path >>
+          flags: << parameters.flags >>
 
   store_android_artifacts:
-    description: Store Android artifacts
+    parameters:
+      module_path:
+        type: string
     steps:
+      - store_test_results:
+          path: << parameters.module_path >>/build/test-results
       - store_artifacts:
-          path: logcat.txt
-          destination: logcat
-
-      - run:
-          name: Collect build reports
-          when: always
-          command: |
-            mkdir -p /tmp/build-reports
-            find . -type d -path "*/build/reports" | while read -r dir; do
-              dest="/tmp/build-reports/$(echo $dir | sed 's/[^a-zA-Z0-9]/_/g')"
-              mkdir -p "$dest"
-              cp -r "$dir/"* "$dest/" || true
-            done
-
-      - store_artifacts:
-          path: /tmp/build-reports
-          destination: build-reports
+          path: << parameters.module_path >>/build/reports
 
 jobs:
   unit_test_ui:
-    executor: &android_exec
-      name: android/android_machine
-      tag: "2024.11.1"
-      resource-class: large
+    executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -109,7 +94,7 @@ jobs:
           submodules: true
       - android/restore_gradle_cache
       - run:
-          name: Data repo API unit tests
+          name: Data repo api unit tests
           command: |
             ./gradlew :module:data-repo-api:jacocoFdroidTestReport \
               --parallel \
@@ -142,81 +127,75 @@ jobs:
 
   ui_android_test:
     executor: *android_exec
-    environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout:
           submodules: true
-      - android/restore_gradle_cache
+      - android/create_avd:
+          avd_name: testavd
+          system_image: system-images;android-36;google_apis;x86_64
+          install: true
       - write_local_properties
-      - write_google_services
-      - android/create-avd:
-          avd-name: testavd
-          system-image: system-images;android-36;google_apis;x86_64
-      - android/start-emulator:
-          avd-name: testavd
-          no-window: true
+      - write_google_services:
+          target_module: app
+      - android/start_emulator:
+          avd_name: testavd
+          no_window: true
           gpu: swiftshader_indirect
-          restore-gradle-cache-prefix: v1a
+          restore_gradle_cache_prefix: v1a
       - run_android_test:
-          gradle_task: ":module:ui:jacocoFdroidAndroidTestReport"
-      - codecov_upload:
-          report_path: ./module/ui/build/reports/jacoco/androidTest.xml
+          test_command: ./gradlew :module:ui:connectedFdroidDebugAndroidTest --continue --parallel -Dorg.gradle.jvmargs="-Xmx2048m"
+          report_path: ./module/ui/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml
           flags: ui-androidTest
-      - store_android_artifacts
-      - android/save_gradle_cache
+      - store_android_artifacts:
+          module_path: ./module/ui
 
   app_android_test:
     executor: *android_exec
-    environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout:
           submodules: true
-      - android/restore_gradle_cache
+      - android/create_avd:
+          avd_name: testavd
+          system_image: system-images;android-36;google_apis;x86_64
+          install: true
       - write_local_properties
-      - write_google_services
-      - android/create-avd:
-          avd-name: testavd
-          system-image: system-images;android-36;google_apis;x86_64
-      - android/start-emulator:
-          avd-name: testavd
-          no-window: true
+      - write_google_services:
+          target_module: app
+      - android/start_emulator:
+          avd_name: testavd
+          no_window: true
           gpu: swiftshader_indirect
-          restore-gradle-cache-prefix: v1a
+          restore_gradle_cache_prefix: v1a
       - run_android_test:
-          gradle_task: ":app:jacocoFdroidAndroidTestReport"
-      - codecov_upload:
-          report_path: ./app/build/reports/jacoco/androidTest.xml
+          test_command: ./gradlew :app:connectedFdroidDebugAndroidTest --continue --parallel -Dorg.gradle.jvmargs="-Xmx2048m"
+          report_path: ./app/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml
           flags: app-androidTest
-      - store_android_artifacts
-      - android/save_gradle_cache
+      - store_android_artifacts:
+          module_path: ./app
 
   data_common_android_test:
     executor: *android_exec
-    environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout:
           submodules: true
-      - android/restore_gradle_cache
+      - android/create_avd:
+          avd_name: testavd
+          system_image: system-images;android-36;google_apis;x86_64
+          install: true
       - write_local_properties
-      - write_google_services
-      - android/create-avd:
-          avd-name: testavd
-          system-image: system-images;android-36;google_apis;x86_64
-      - android/start-emulator:
-          avd-name: testavd
-          no-window: true
+      - write_google_services:
+          target_module: app
+      - android/start_emulator:
+          avd_name: testavd
+          no_window: true
           gpu: swiftshader_indirect
-          restore-gradle-cache-prefix: v1a
+          restore_gradle_cache_prefix: v1a
       - run_android_test:
-          gradle_task: ":module:data-common:jacocoFdroidAndroidTestReport"
-      - codecov_upload:
-          report_path: ./module/data-common/build/reports/jacoco/androidTest.xml
+          test_command: ./gradlew :module:data-common:connectedFdroidDebugAndroidTest --continue --parallel -Dorg.gradle.jvmargs="-Xmx2048m"
+          report_path: ./module/data-common/build/reports/coverage/androidTest/fdroid/debug/connected/report.xml
           flags: data-common-androidTest
-      - store_android_artifacts
-      - android/save_gradle_cache
+      - store_android_artifacts:
+          module_path: ./module/data-common
 
   detekt:
     executor: *android_exec
@@ -228,12 +207,7 @@ jobs:
       - android/restore_gradle_cache
       - run:
           name: Detekt
-          command: |
-            ./gradlew detekt \
-              -x test \
-              --parallel \
-              --max-workers 2 \
-              -Dorg.gradle.jvmargs="-Xmx2048m"
+          command: ./gradlew detekt --parallel
       - android/save_gradle_cache
 
   ktlint:
@@ -245,59 +219,37 @@ jobs:
           submodules: true
       - android/restore_gradle_cache
       - run:
-          name: ktlint
-          command: |
-            ./gradlew ktlintCheck \
-              --parallel \
-              --max-workers 2 \
-              -Dorg.gradle.jvmargs="-Xmx2048m"
+          name: Ktlint
+          command: ./gradlew ktlintCheck --parallel
       - android/save_gradle_cache
 
   lint_fdroid_debug:
     executor: *android_exec
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout:
           submodules: true
       - android/restore_gradle_cache
       - run:
-          name: lintFdroidDebug
-          command: |
-            ./gradlew :app:lintFdroidDebug \
-              --parallel \
-              --max-workers 2 \
-              -Dorg.gradle.jvmargs="-Xmx2048m"
+          name: Lint Fdroid Debug
+          command: ./gradlew lintFdroidDebug --parallel
       - android/save_gradle_cache
 
   sonarqube:
     executor: *android_exec
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout:
           submodules: true
-      - run:
-          name: Fetch full git history
-          command: |
-            git fetch --unshallow || true
-            git fetch --all --tags --prune
-      - run:
-          name: Verify git repository
-          command: git fsck --full
       - android/restore_gradle_cache
       - run:
-          name: SonarQube
-          command: |
-            if [ -z "$SONAR_TOKEN" ]; then
-              echo "SONAR_TOKEN is not set"
-              exit 1
-            fi
-            ./gradlew :sonar --info
+          name: Sonarqube
+          command: ./gradlew sonar -Dsonar.gradle.skipCompile=true
       - android/save_gradle_cache
 
 workflows:
-  version: 2
   codecov_and_static:
     jobs:
       - unit_test_ui
