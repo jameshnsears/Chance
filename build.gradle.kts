@@ -24,6 +24,7 @@ sonarqube {
         property("sonar.kotlin.binaries", "**/build/tmp/kotlin-classes/fdroidDebug")
         property("sonar.organization", "jameshnsears-github")
         property("sonar.projectKey", "jameshnsears_Chance")
+        property("sonar.scm.disabled", "true")
         property("sonar.sources", "**/src/main/kotlin")
     }
 }
