@@ -7,6 +7,7 @@
     <ID>LongMethod:BagImportExport.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ImportExport( bottomSheetScaffoldState: BottomSheetScaffoldState, tabBagAndroidViewModel: TabBagAndroidViewModel, zoomBagAndroidViewModel: ZoomBagAndroidViewModel )</ID>
     <ID>LongMethod:DialogSettings.kt$@Composable fun DialogSettingsLayout( rollAndroidViewModel: RollAndroidViewModel )</ID>
     <ID>LongMethod:SideSvg.kt$@Composable fun SideImageSVG( cardSideService: CardSideService )</ID>
+    <ID>LongMethod:TabLayout.kt$@Composable fun DialogBagTabLayout( showDialog: MutableState&lt;Boolean&gt;, dialogBagAndroidViewModel: DialogBagAndroidViewModel )</ID>
     <ID>LongMethod:ZoomBag.kt$@Composable fun ZoomBag( zoomBagAndroidViewModel: ZoomBagAndroidViewModel )</ID>
     <ID>MatchingDeclarationName:DialogSettings.kt$DialogSettingsTestTag</ID>
     <ID>MatchingDeclarationName:RollSelection.kt$RollSelectionTestTag</ID>
