@@ -262,28 +262,10 @@ jobs:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
       - checkout:
-          submodules: true
+          shallow: false
       - run:
-          name: Unshallow Git History for SonarScanner
-          command: |
-            # Check if the repository is shallow, and if so, fetch the full history
-            if [ -f .git/shallow ]; then
-            echo "Shallow repository detected. Fetching full history..."
-            git fetch --unshallow --recurse-submodules=no
-            else
-            echo "Repository is already complete."
-            fi
-      - run:
-          name: Fetch full git history
-          command: |
-            git fetch --unshallow || git fetch --all
-            git submodule foreach --recursive \
-              'git fetch --unshallow || git fetch --all || true'
-
-            git fetch --all --tags --prune
-      - run:
-          name: Verify git repository
-          command: git fsck --full
+          name: Fetch full Git history
+          command: git fetch --unshallow
       - restore_gradle_cache
       - run:
           name: sonar
