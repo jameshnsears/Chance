@@ -70,19 +70,33 @@ commands:
       - run:
           name: Install Android emulator packages
           command: |
-            yes | sdkmanager --licenses
-            sdkmanager "platforms;android-<< parameters.api_level >>" "system-images;android-<< parameters.api_level >>;default;x86_64" "platform-tools" "emulator"
+            # Use 'yes y' to ensure all license prompts are caught, and || true so it doesn't fail the build if no new licenses exist
+            yes y | sdkmanager --licenses || true
 
-  create_avd:
-    description: Create an Android Virtual Device.
-    parameters:
-      api_level:
-        type: string
-    steps:
-      - run:
-          name: Create AVD
-          command: |
-            echo no | avdmanager create avd -n circleci-android-<< parameters.api_level >> -k "system-images;android-<< parameters.api_level >>;default;x86_64" --force
+            # Using google_apis instead of default is highly recommended for most modern apps
+            sdkmanager "platforms;android-<< parameters.api_level >>" \
+                       "system-images;android-<< parameters.api_level >>;google_apis;x86_64" \
+                       "platform-tools" \
+                       "emulator"
+
+    create_avd:
+      description: Create an Android Virtual Device.
+      parameters:
+        api_level:
+          type: string
+        device_name:
+          type: string
+          default: "pixel" # Optional: Specify a hardware profile
+      steps:
+        - run:
+            name: Create AVD
+            command: |
+              # Create the AVD using the google_apis image installed in the previous step
+              echo no | avdmanager create avd \
+                -n "circleci-android-<< parameters.api_level >>" \
+                -k "system-images;android-<< parameters.api_level >>;google_apis;x86_64" \
+                -d "<< parameters.device_name >>" \
+                --force
 
   run_android_test:
     description: Run an Android instrumentation test and capture logcat.
@@ -264,23 +278,33 @@ jobs:
           command: ./gradlew :app:lintFdroidDebug --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - save_gradle_cache
 
-  sonarqube:
-    executor: android-docker
-    environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
-    steps:
-      - checkout:
-          submodules: true
-      - restore_gradle_cache
-      - run:
-          name: sonar
-          command: |
-            if [ -z "$SONAR_TOKEN" ]; then
-              echo "SONAR_TOKEN is not set; please configure SONAR_TOKEN in CircleCI project settings"
-              exit 1
-            fi
-            ./gradlew :sonar --info
-      - save_gradle_cache
+sonarqube:
+  executor: android-docker
+  environment:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
+
+  steps:
+    - checkout:
+        submodules: true
+    - run:
+        name: Fetch full git history
+        command: |
+          git fetch --unshallow || true
+          git fetch --all --tags --prune
+    - run:
+        name: Verify git repository
+        command: |
+          git fsck --full
+    - restore_gradle_cache
+    - run:
+        name: sonar
+        command: |
+          if [ -z "$SONAR_TOKEN" ]; then
+            echo "SONAR_TOKEN is not set; please configure SONAR_TOKEN in CircleCI project settings"
+            exit 1
+          fi
+          ./gradlew :sonar --info
+    - save_gradle_cache
 
 workflows:
   version: 2
