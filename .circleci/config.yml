@@ -264,9 +264,6 @@ jobs:
     steps:
       - checkout:
           shallow: false
-      - run:
-          name: Fetch full Git history
-          command: git fetch --unshallow
       - restore_gradle_cache
       - run:
           name: sonar
