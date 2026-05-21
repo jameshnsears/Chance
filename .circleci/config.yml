@@ -61,16 +61,6 @@ commands:
               echo "$GOOGLE_PLAY_JSON_DEVELOPMENT" | base64 -d > app/google-services.json
             fi
 
-  enable_kvm:
-    description: Enable KVM for emulator execution.
-    steps:
-      - run:
-          name: Enable KVM
-          command: |
-            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-            sudo udevadm control --reload-rules
-            sudo udevadm trigger --name-match=kvm
-
   install_emulator_packages:
     description: Install the Android emulator and system images.
     parameters:
@@ -179,7 +169,6 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - enable_kvm
       - install_emulator_packages:
           api_level: "36"
       - create_avd:
@@ -202,7 +191,6 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - enable_kvm
       - install_emulator_packages:
           api_level: "36"
       - create_avd:
@@ -225,7 +213,6 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - enable_kvm
       - install_emulator_packages:
           api_level: "36"
       - create_avd:
