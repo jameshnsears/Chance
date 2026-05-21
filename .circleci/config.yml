@@ -64,6 +64,35 @@ commands:
               echo "$GOOGLE_PLAY_JSON_DEVELOPMENT" | base64 -d > app/google-services.json
             fi
 
+  # Reusable command: create + boot emulator with all CI-safe flags
+  create_and_boot_emulator:
+    description: Create AVD and start emulator with CI-optimised flags.
+    steps:
+      - android/create_avd:
+          avd_name: circleci-android-34
+          # google_atd (Automated Test Device) strips Play Services bloat — boots ~2x faster than google_apis
+          system_image: "system-images;android-34;google_atd;x86_64"
+          install: true
+      - android/start_emulator:
+          avd_name: circleci-android-34
+          no_window: true
+          post_emulator_launch_assemble_command: ""
+          additional_args: >-
+            -no-snapshot-save
+            -no-boot-anim
+            -no-audio
+            -gpu swiftshader_indirect
+            -memory 2048
+            -cores 2
+      - run:
+          name: Wait for emulator to fully boot
+          command: |
+            adb wait-for-device
+            # Poll boot completion with a hard 5-minute timeout
+            timeout 300 bash -c \
+              'until [[ "$(adb shell getprop sys.boot_completed 2>/dev/null)" == "1" ]]; do sleep 5; done'
+            echo "Emulator boot confirmed"
+
 jobs:
   unit_test_ui:
     executor: android-docker
@@ -126,14 +155,7 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - android/create_avd:
-          avd_name: circleci-android-36
-          system_image: "system-images;android-36;google_apis;x86_64"
-          install: true
-      - android/start_emulator:
-          avd_name: circleci-android-36
-          no_window: true
-          post_emulator_launch_assemble_command: ""
+      - create_and_boot_emulator
       - android/disable_animations
       - android/run_tests:
           test_command: ./gradlew :module:ui:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
@@ -158,14 +180,7 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - android/create_avd:
-          avd_name: circleci-android-36
-          system_image: "system-images;android-36;google_apis;x86_64"
-          install: true
-      - android/start_emulator:
-          avd_name: circleci-android-36
-          no_window: true
-          post_emulator_launch_assemble_command: ""
+      - create_and_boot_emulator
       - android/disable_animations
       - android/run_tests:
           test_command: ./gradlew :app:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
@@ -190,14 +205,7 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - android/create_avd:
-          avd_name: circleci-android-36
-          system_image: "system-images;android-36;google_apis;x86_64"
-          install: true
-      - android/start_emulator:
-          avd_name: circleci-android-36
-          no_window: true
-          post_emulator_launch_assemble_command: ""
+      - create_and_boot_emulator
       - android/disable_animations
       - android/run_tests:
           test_command: ./gradlew :module:data-common:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
