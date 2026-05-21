@@ -205,6 +205,11 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
+      - run:
+          name: Setup Android environment
+          command: |
+            export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+            export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$PATH
       - install_emulator_packages:
           api_level: "36"
       - create_avd:
@@ -229,6 +234,11 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
+      - run:
+          name: Setup Android environment
+          command: |
+            export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+            export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$PATH
       - install_emulator_packages:
           api_level: "36"
       - create_avd:
@@ -253,6 +263,11 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
+      - run:
+          name: Setup Android environment
+          command: |
+            export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+            export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$PATH
       - install_emulator_packages:
           api_level: "36"
       - create_avd:
