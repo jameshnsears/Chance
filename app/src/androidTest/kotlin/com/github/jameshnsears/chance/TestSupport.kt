@@ -53,5 +53,5 @@ open class TestSupport : UtilityLoggingHelper() {
     }
 
     val isCI: Boolean
-        get() = InstrumentationRegistry.getArguments().getString("GITHUB_ACTION_ID") == "1"
+        get() = InstrumentationRegistry.getArguments().getString("IN_CI") == "1"
 }

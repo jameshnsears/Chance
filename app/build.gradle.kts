@@ -29,8 +29,8 @@ android {
             useSupportLibrary = true
         }
 
-        testInstrumentationRunnerArguments["GITHUB_ACTION_ID"] =
-            project.findProperty("GITHUB_ACTION_ID")?.toString() ?: ""
+        testInstrumentationRunnerArguments["IN_CI"] =
+            project.findProperty("IN_CI")?.toString() ?: ""
     }
 
     testOptions {
