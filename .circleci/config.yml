@@ -76,11 +76,8 @@ commands:
           path: /tmp/build-reports
           destination: build-reports
 
-# Note: The custom executors: block has been removed to fix the schema error.
-
 jobs:
   unit_test_ui:
-    # We define the YAML anchor (&android_exec) here on the first usage
     executor: &android_exec
       name: android/android-machine
       tag: "2024.11.1"
@@ -104,7 +101,6 @@ jobs:
       - android/save-gradle-cache
 
   unit_test_data_repo_api:
-    # We reuse the anchor (*android_exec) for all subsequent jobs
     executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
