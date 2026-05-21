@@ -174,7 +174,6 @@ jobs:
       tag: default
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-      IN_CI: "1"
     steps:
       - checkout:
           submodules: true
@@ -184,7 +183,7 @@ jobs:
       - create_and_boot_emulator
       - android/disable_animations
       - android/run_tests:
-          test_command: ./gradlew :app:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+          test_command: ./gradlew :app:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m" -PIN_CI=1
       - codecov_upload:
           report_path: ./app/build/reports/jacoco/androidTest.xml
           flags: app-androidTest
@@ -263,7 +262,7 @@ jobs:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
       - checkout:
-          shallow: false
+          fetch-depth: 0
       - restore_gradle_cache
       - run:
           name: sonar
