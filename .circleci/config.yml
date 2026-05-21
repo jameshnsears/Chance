@@ -171,7 +171,6 @@ jobs:
 
   ui_android_test:
     executor: android-docker
-    resource_class: xlarge
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -195,7 +194,6 @@ jobs:
 
   app_android_test:
     executor: android-docker
-    resource_class: xlarge
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -219,7 +217,6 @@ jobs:
 
   data_common_android_test:
     executor: android-docker
-    resource_class: xlarge
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
