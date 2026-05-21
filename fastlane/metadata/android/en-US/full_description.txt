@@ -1,15 +1,10 @@
-&bull; Example dice bag
-&bull; Easily clone, change size, appearance and behaviour
-&bull; Choose which dice to roll and what results to see
-&bull; Export and Import feature
-&bull; Yes / No app shortcut
+&bull; Designed to stay out of the player's way
+&bull; Multiple dice types - examples included
+&bull; Ability to roll several dice at once
+&bull; Named roll presets
+&bull; Roll history & totals
+&bull; Persistant state
+&bull; Works offline
+&bull; Modern codebase
 
 &bull; User feedback drives development and is always appreciated!
-
-Designed to stay out of the player's way
-Multiple dice types
-Ability to roll several dice at once
-Create named roll presets
-Roll history & total
-Persistant state
-Works offline
