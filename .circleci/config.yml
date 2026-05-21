@@ -1,14 +1,12 @@
 version: 2.1
 
+orbs:
+  android: circleci/android@3.1.0
+
 executors:
   android-docker:
     docker:
       - image: cimg/android:2024.10
-    resource_class: large
-
-  android-machine:
-    machine:
-      image: android:2024.10
     resource_class: large
 
 commands:
@@ -66,86 +64,6 @@ commands:
               echo "$GOOGLE_PLAY_JSON_DEVELOPMENT" | base64 -d > app/google-services.json
             fi
 
-  install_emulator_packages:
-    description: Install the Android emulator and system images.
-    parameters:
-      api_level:
-        type: string
-    steps:
-      - run:
-          name: Install Android emulator packages
-          command: |
-            yes y | sdkmanager --licenses || true
-            sdkmanager "platforms;android-<< parameters.api_level >>" \
-                       "system-images;android-<< parameters.api_level >>;google_apis;x86_64" \
-                       "platform-tools" \
-                       "emulator"
-
-  create_avd:
-    description: Create an Android Virtual Device.
-    parameters:
-      api_level:
-        type: string
-      device_name:
-        type: string
-        default: "pixel"
-    steps:
-      - run:
-          name: Create AVD
-          command: |
-            echo no | avdmanager create avd \
-              -n "circleci-android-<< parameters.api_level >>" \
-              -k "system-images;android-<< parameters.api_level >>;google_apis;x86_64" \
-              -d "<< parameters.device_name >>" \
-              --force
-
-  start_emulator:
-    description: Start the AVD and wait for it to finish booting.
-    parameters:
-      api_level:
-        type: string
-    steps:
-      - run:
-          name: Start emulator
-          background: true
-          command: |
-            emulator -avd "circleci-android-<< parameters.api_level >>" \
-              -no-audio -no-window -no-boot-anim -gpu swiftshader_indirect
-      - run:
-          name: Wait for emulator to boot
-          command: |
-            adb wait-for-device
-            until adb shell getprop sys.boot_completed 2>/dev/null | grep -q "1"; do
-              sleep 3
-            done
-            adb shell input keyevent 82
-
-  run_android_test:
-    description: Run an Android instrumentation test and capture logcat.
-    parameters:
-      gradle_task:
-        type: string
-    steps:
-      - run:
-          name: Run Android instrumentation test
-          command: |
-            adb logcat -c
-            adb logcat > logcat.txt &
-            adb shell settings put global window_animation_scale 0.0
-            adb shell settings put global transition_animation_scale 0.0
-            adb shell settings put global animator_duration_scale 0.0
-            ./gradlew << parameters.gradle_task >> --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
-
-  store_android_artifacts:
-    description: Store Android test artifacts.
-    steps:
-      - store_artifacts:
-          path: logcat.txt
-          destination: logcat
-      - store_artifacts:
-          path: "**/build/reports/*"
-          destination: build-reports
-
 jobs:
   unit_test_ui:
     executor: android-docker
@@ -196,7 +114,10 @@ jobs:
       - save_gradle_cache
 
   ui_android_test:
-    executor: android-machine
+    executor:
+      name: android/android_machine
+      resource-class: large
+      tag: default
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -205,27 +126,30 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - run:
-          name: Setup Android environment
-          command: |
-            export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-            export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$PATH
-      - install_emulator_packages:
-          api_level: "36"
-      - create_avd:
-          api_level: "36"
-      - start_emulator:
-          api_level: "36"
-      - run_android_test:
-          gradle_task: ":module:ui:jacocoFdroidAndroidTestReport"
+      - android/create-avd:
+          avd-name: circleci-android-36
+          system-image: "system-images;android-36;google_apis;x86_64"
+          install: true
+      - android/start-emulator:
+          avd-name: circleci-android-36
+          no-window: true
+          post-emulator-launch-assemble-command: ""
+      - android/disable-animations
+      - android/run-tests:
+          test-command: ./gradlew :module:ui:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - codecov_upload:
           report_path: ./module/ui/build/reports/jacoco/androidTest.xml
           flags: ui-androidTest
-      - store_android_artifacts
+      - store_artifacts:
+          path: "**/build/reports/*"
+          destination: build-reports
       - save_gradle_cache
 
   app_android_test:
-    executor: android-machine
+    executor:
+      name: android/android_machine
+      resource-class: large
+      tag: default
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -234,27 +158,30 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - run:
-          name: Setup Android environment
-          command: |
-            export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-            export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$PATH
-      - install_emulator_packages:
-          api_level: "36"
-      - create_avd:
-          api_level: "36"
-      - start_emulator:
-          api_level: "36"
-      - run_android_test:
-          gradle_task: ":app:jacocoFdroidAndroidTestReport"
+      - android/create-avd:
+          avd-name: circleci-android-36
+          system-image: "system-images;android-36;google_apis;x86_64"
+          install: true
+      - android/start-emulator:
+          avd-name: circleci-android-36
+          no-window: true
+          post-emulator-launch-assemble-command: ""
+      - android/disable-animations
+      - android/run-tests:
+          test-command: ./gradlew :app:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - codecov_upload:
           report_path: ./app/build/reports/jacoco/androidTest.xml
           flags: app-androidTest
-      - store_android_artifacts
+      - store_artifacts:
+          path: "**/build/reports/*"
+          destination: build-reports
       - save_gradle_cache
 
   data_common_android_test:
-    executor: android-machine
+    executor:
+      name: android/android_machine
+      resource-class: large
+      tag: default
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
@@ -263,23 +190,23 @@ jobs:
       - restore_gradle_cache
       - write_local_properties
       - write_google_services
-      - run:
-          name: Setup Android environment
-          command: |
-            export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-            export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/tools:$PATH
-      - install_emulator_packages:
-          api_level: "36"
-      - create_avd:
-          api_level: "36"
-      - start_emulator:
-          api_level: "36"
-      - run_android_test:
-          gradle_task: ":module:data-common:jacocoFdroidAndroidTestReport"
+      - android/create-avd:
+          avd-name: circleci-android-36
+          system-image: "system-images;android-36;google_apis;x86_64"
+          install: true
+      - android/start-emulator:
+          avd-name: circleci-android-36
+          no-window: true
+          post-emulator-launch-assemble-command: ""
+      - android/disable-animations
+      - android/run-tests:
+          test-command: ./gradlew :module:data-common:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - codecov_upload:
           report_path: ./module/data-common/build/reports/jacoco/androidTest.xml
           flags: data-common-androidTest
-      - store_android_artifacts
+      - store_artifacts:
+          path: "**/build/reports/*"
+          destination: build-reports
       - save_gradle_cache
 
   detekt:
