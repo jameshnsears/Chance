@@ -87,7 +87,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache # Fixed: changed hyphen to underscore
       - run:
           name: UI unit tests
           command: |
@@ -98,7 +98,7 @@ jobs:
       - codecov_upload:
           report_path: ./module/ui/build/reports/jacoco/unitTest.xml
           flags: ui-unitTest
-      - android/save-gradle-cache
+      - android/save_gradle_cache # Fixed: changed hyphen to underscore
 
   unit_test_data_repo_api:
     executor: *android_exec
@@ -107,7 +107,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: Data repo API unit tests
           command: |
@@ -118,7 +118,7 @@ jobs:
       - codecov_upload:
           report_path: ./module/data-repo-api/build/reports/jacoco/unitTest.xml
           flags: data-repo-api-unitTest
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   unit_test_data_common:
     executor: *android_exec
@@ -127,7 +127,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: Data common unit tests
           command: |
@@ -139,6 +139,7 @@ jobs:
           report_path: ./module/data-common/build/reports/jacoco/unitTest.xml
           flags: data-common-unitTest
       - android/save-gradle-cache
+      - android/save_gradle_cache
 
   ui_android_test:
     executor: *android_exec
@@ -147,7 +148,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - write_local_properties
       - write_google_services
       - android/create-avd:
@@ -164,7 +165,7 @@ jobs:
           report_path: ./module/ui/build/reports/jacoco/androidTest.xml
           flags: ui-androidTest
       - store_android_artifacts
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   app_android_test:
     executor: *android_exec
@@ -173,7 +174,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - write_local_properties
       - write_google_services
       - android/create-avd:
@@ -190,7 +191,7 @@ jobs:
           report_path: ./app/build/reports/jacoco/androidTest.xml
           flags: app-androidTest
       - store_android_artifacts
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   data_common_android_test:
     executor: *android_exec
@@ -199,7 +200,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - write_local_properties
       - write_google_services
       - android/create-avd:
@@ -216,7 +217,7 @@ jobs:
           report_path: ./module/data-common/build/reports/jacoco/androidTest.xml
           flags: data-common-androidTest
       - store_android_artifacts
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   detekt:
     executor: *android_exec
@@ -225,7 +226,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: Detekt
           command: |
@@ -234,7 +235,7 @@ jobs:
               --parallel \
               --max-workers 2 \
               -Dorg.gradle.jvmargs="-Xmx2048m"
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   ktlint:
     executor: *android_exec
@@ -243,7 +244,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: ktlint
           command: |
@@ -251,7 +252,7 @@ jobs:
               --parallel \
               --max-workers 2 \
               -Dorg.gradle.jvmargs="-Xmx2048m"
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   lint_fdroid_debug:
     executor: *android_exec
@@ -260,7 +261,7 @@ jobs:
     steps:
       - checkout:
           submodules: true
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: lintFdroidDebug
           command: |
@@ -268,7 +269,7 @@ jobs:
               --parallel \
               --max-workers 2 \
               -Dorg.gradle.jvmargs="-Xmx2048m"
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
   sonarqube:
     executor: *android_exec
@@ -285,7 +286,7 @@ jobs:
       - run:
           name: Verify git repository
           command: git fsck --full
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run:
           name: SonarQube
           command: |
@@ -294,7 +295,7 @@ jobs:
               exit 1
             fi
             ./gradlew :sonar --info
-      - android/save-gradle-cache
+      - android/save_gradle_cache
 
 workflows:
   version: 2
