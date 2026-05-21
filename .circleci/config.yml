@@ -4,6 +4,8 @@ orbs:
   android: circleci/android@3.1.0
   codecov: codecov/codecov@4.1.0
 
+# FIX 1 (style): Keep the executor anchor but note it is only valid because
+# CircleCI merges the map under the `executor:` key at job level.
 android_exec: &android_exec
   name: android/android_machine
   resource_class: large
@@ -18,7 +20,9 @@ commands:
         type: string
     steps:
       - codecov/upload:
-          files: << parameters.report_path >>
+          # FIX 7: codecov orb v4 uses `file` (singular), not `files`.
+          # Using the wrong key silently skips the upload.
+          file: << parameters.report_path >>
           flags: << parameters.flags >>
 
   write_local_properties:
@@ -36,7 +40,20 @@ commands:
     steps:
       - run:
           name: Write google-services.json
-          command: echo "$GOOGLE_SERVICES_JSON" > << parameters.target_module >>/google-services.json
+          command: |
+            # FIX 2: `echo` mangles JSON — it expands escape sequences and can
+            # break on backticks, special characters, and multi-line content.
+            # `printf '%s'` writes the value verbatim with no interpretation.
+            printf '%s' "$GOOGLE_SERVICES_JSON" > << parameters.target_module >>/google-services.json
+
+  # FIX 1 (shared helper): Extract submodule init into a reusable command so
+  # every job that needs submodules uses the same safe implementation.
+  checkout_with_submodules:
+    steps:
+      - checkout
+      - run:
+          name: Initialise git submodules
+          command: git submodule update --init --recursive
 
   run_android_test:
     parameters:
@@ -70,8 +87,9 @@ jobs:
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout:
-          submodules: true
+      # FIX 1: replaced `checkout: submodules: true` (invalid parameter) with
+      # the new `checkout_with_submodules` command throughout all jobs.
+      - checkout_with_submodules
       - android/restore_gradle_cache
       - run:
           name: UI unit tests
@@ -83,6 +101,10 @@ jobs:
       - codecov_upload:
           report_path: ./module/ui/build/reports/jacoco/unitTest.xml
           flags: ui-unitTest
+      # FIX 4: store test results and reports so failures are visible in
+      # CircleCI Insights and the Artifacts tab.
+      - store_android_artifacts:
+          module_path: ./module/ui
       - android/save_gradle_cache
 
   unit_test_data_repo_api:
@@ -90,8 +112,7 @@ jobs:
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/restore_gradle_cache
       - run:
           name: Data repo api unit tests
@@ -103,6 +124,9 @@ jobs:
       - codecov_upload:
           report_path: ./module/data-repo-api/build/reports/jacoco/unitTest.xml
           flags: data-repo-api-unitTest
+      # FIX 4: store test results and reports.
+      - store_android_artifacts:
+          module_path: ./module/data-repo-api
       - android/save_gradle_cache
 
   unit_test_data_common:
@@ -110,8 +134,7 @@ jobs:
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/restore_gradle_cache
       - run:
           name: Data common unit tests
@@ -123,13 +146,15 @@ jobs:
       - codecov_upload:
           report_path: ./module/data-common/build/reports/jacoco/unitTest.xml
           flags: data-common-unitTest
+      # FIX 4: store test results and reports.
+      - store_android_artifacts:
+          module_path: ./module/data-common
       - android/save_gradle_cache
 
   ui_android_test:
     executor: *android_exec
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/create_avd:
           avd_name: testavd
           system_image: system-images;android-36;google_apis;x86_64
@@ -148,12 +173,16 @@ jobs:
           flags: ui-androidTest
       - store_android_artifacts:
           module_path: ./module/ui
+      # FIX 3: `restore_gradle_cache_prefix` on start_emulator restores cache
+      # during boot, but without a matching save the cache is never written for
+      # future runs. Add the save step after the work is done.
+      - android/save_gradle_cache:
+          cache_prefix: v1a
 
   app_android_test:
     executor: *android_exec
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/create_avd:
           avd_name: testavd
           system_image: system-images;android-36;google_apis;x86_64
@@ -172,12 +201,14 @@ jobs:
           flags: app-androidTest
       - store_android_artifacts:
           module_path: ./app
+      # FIX 3: matching cache save.
+      - android/save_gradle_cache:
+          cache_prefix: v1a
 
   data_common_android_test:
     executor: *android_exec
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/create_avd:
           avd_name: testavd
           system_image: system-images;android-36;google_apis;x86_64
@@ -196,18 +227,23 @@ jobs:
           flags: data-common-androidTest
       - store_android_artifacts:
           module_path: ./module/data-common
+      # FIX 3: matching cache save.
+      - android/save_gradle_cache:
+          cache_prefix: v1a
 
   detekt:
     executor: *android_exec
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/restore_gradle_cache
       - run:
           name: Detekt
           command: ./gradlew detekt --parallel
+      # FIX 5: store detekt HTML/XML reports so they are accessible on failure.
+      - store_artifacts:
+          path: build/reports/detekt
       - android/save_gradle_cache
 
   ktlint:
@@ -215,12 +251,14 @@ jobs:
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true"
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/restore_gradle_cache
       - run:
           name: Ktlint
           command: ./gradlew ktlintCheck --parallel
+      # FIX 5: store ktlint reports.
+      - store_artifacts:
+          path: build/reports/ktlint
       - android/save_gradle_cache
 
   lint_fdroid_debug:
@@ -228,12 +266,14 @@ jobs:
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/restore_gradle_cache
       - run:
           name: Lint Fdroid Debug
           command: ./gradlew lintFdroidDebug --parallel
+      # FIX 5: store lint reports so lint failures can be inspected.
+      - store_artifacts:
+          path: app/build/reports/lint-results-fdroidDebug.html
       - android/save_gradle_cache
 
   sonarqube:
@@ -241,8 +281,7 @@ jobs:
     environment:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
-      - checkout:
-          submodules: true
+      - checkout_with_submodules
       - android/restore_gradle_cache
       - run:
           name: Sonarqube
@@ -261,4 +300,8 @@ workflows:
       - detekt
       - ktlint
       - lint_fdroid_debug
-      - sonarqube
+      - sonarqube:
+          requires:
+            - unit_test_ui
+            - unit_test_data_repo_api
+            - unit_test_data_common
