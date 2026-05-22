@@ -11,7 +11,6 @@ import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.roll.RollAndroidViewModel
-import io.mockk.mockk
 
 
 @SuppressLint("ViewModelConstructorInComposable")
@@ -34,13 +33,13 @@ fun ZoomRollPreview() {
         ) {
             ZoomRoll(
                 RollAndroidViewModel(
-                    mockk<Application>(),
+                    Application(),
                     repositorySettings,
                     repositoryBag,
                     repositoryRoll
                 ),
                 ZoomRollAndroidViewModel(
-                    mockk<Application>(),
+                    Application(),
                     repositorySettings,
                     repositoryBag,
                     repositoryRoll

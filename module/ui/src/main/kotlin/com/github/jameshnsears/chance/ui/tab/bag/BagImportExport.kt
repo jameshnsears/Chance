@@ -17,6 +17,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -101,6 +102,7 @@ fun ImportExport(
             },
             modifier = Modifier
                 .width(150.dp)
+                .minimumInteractiveComponentSize()
                 .testTag(BagTestTag.EXPORT),
         ) {
             val storageExportPainter = painterResource(id = R.drawable.storage_export)
@@ -129,6 +131,7 @@ fun ImportExport(
             },
             modifier = Modifier
                 .width(150.dp)
+                .minimumInteractiveComponentSize()
                 .testTag(BagTestTag.IMPORT),
         ) {
             val storageImportPainter = painterResource(id = R.drawable.storage_import)

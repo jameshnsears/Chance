@@ -4,7 +4,6 @@ import com.github.jameshnsears.chance.common.ui.AndroidTestHelper
 import org.junit.Test
 
 class BagResetTest : AndroidTestHelper() {
-
     @Test
     fun confirmReset() {
         reset()

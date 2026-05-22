@@ -1,29 +1,39 @@
 package com.github.jameshnsears.chance
 
-import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsSelected
-import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import com.github.jameshnsears.chance.common.R
+import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
+import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
+import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.dialog.settings.DialogSettingsTestTag
 import com.github.jameshnsears.chance.ui.tab.roll.RollTestTag
 import com.github.jameshnsears.chance.ui.tab.roll.selection.RollSelectionTestTag
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 
 class RollTest : TestSupport() {
+    @Before
+    fun setup() = runTest {
+        RepositoryFactory().resetStorage()
+
+        androidComposeTestRule.waitForIdle()
+    }
+
     @Test
     fun roll() = runTest {
         androidComposeTestRule
-            .onNodeWithText(getString(R.string.tab_bag))
-            .assertIsDisplayed()
-            .assertIsSelected()
+            .onNodeWithText(getString(R.string.tab_roll))
+            .performClick()
+
+        androidComposeTestRule.waitForIdle()
 
         androidComposeTestRule
             .onNodeWithText(getString(R.string.tab_roll))
@@ -49,10 +59,31 @@ class RollTest : TestSupport() {
             .onNodeWithText(getString(R.string.tab_roll))
             .performClick()
 
+        androidComposeTestRule.waitForIdle()
+
         displayBottomSheet(RollTestTag.BOTTOM_SHEET)
 
         androidComposeTestRule
             .onNodeWithTag(RollTestTag.UNDO)
+            .assertIsEnabled()
+            .performClick()
+
+        androidComposeTestRule.waitForIdle()
+
+        androidComposeTestRule
+            .onNodeWithTag(RollTestTag.SETTINGS)
+            .performClick()
+
+        androidComposeTestRule.waitForIdle()
+
+        androidComposeTestRule
+            .onNodeWithTag(DialogSettingsTestTag.SETTINGS_UNDO_ALL)
+            .performScrollTo()
+
+        androidComposeTestRule.waitForIdle()
+
+        androidComposeTestRule
+            .onNodeWithTag(DialogSettingsTestTag.SETTINGS_UNDO_ALL)
             .assertIsEnabled()
             .performClick()
 
@@ -68,6 +99,8 @@ class RollTest : TestSupport() {
         androidComposeTestRule
             .onNodeWithText(getString(R.string.tab_roll))
             .performClick()
+
+        androidComposeTestRule.waitForIdle()
 
         displayBottomSheet(RollTestTag.BOTTOM_SHEET)
 
@@ -86,33 +119,5 @@ class RollTest : TestSupport() {
         dialogSettingsTestTags.forEach { tag ->
             assertClick(tag)
         }
-    }
-
-    @Test
-    fun rollSettingsUndoAll() = runTest {
-        androidComposeTestRule
-            .onNodeWithText(getString(R.string.tab_roll))
-            .performClick()
-
-        displayBottomSheet(RollTestTag.BOTTOM_SHEET)
-
-        androidComposeTestRule
-            .onNodeWithTag(RollTestTag.ROLL_ENABLED)
-            .assertIsDisplayed()
-            .performClick()
-
-        androidComposeTestRule
-            .onNodeWithTag(RollTestTag.SETTINGS)
-            .performClick()
-
-        androidComposeTestRule.waitForIdle()
-
-        waitForGitHubCI(DialogSettingsTestTag.SETTINGS_UNDO_ALL)
-
-        androidComposeTestRule
-            .onNodeWithTag(DialogSettingsTestTag.SETTINGS_UNDO_ALL)
-            .performScrollTo()
-            .assertIsEnabled()
-            .performClick()
     }
 }

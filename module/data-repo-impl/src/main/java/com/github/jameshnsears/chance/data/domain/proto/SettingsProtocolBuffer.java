@@ -23,6 +23,8 @@ public final class SettingsProtocolBuffer extends
     public static final int ROLLSOUND_FIELD_NUMBER = 9;
     public static final int SHUFFLE_FIELD_NUMBER = 10;
     public static final int HAPTICS_FIELD_NUMBER = 11;
+    public static final int ROLLSCORETTS_FIELD_NUMBER = 12;
+    public static final int SHAKETOROLL_FIELD_NUMBER = 13;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer DEFAULT_INSTANCE;
@@ -73,6 +75,8 @@ public final class SettingsProtocolBuffer extends
     private boolean rollSound_ = false;
     private boolean shuffle_ = false;
     private boolean haptics_ = false;
+    private boolean rollScoreTTS_ = false;
+    private boolean shakeToRoll_ = false;
     private byte memoizedIsInitialized = -1;
 
     // Use SettingsProtocolBuffer.newBuilder() to construct.
@@ -303,6 +307,26 @@ public final class SettingsProtocolBuffer extends
         return haptics_;
     }
 
+    /**
+     * <code>bool rollScoreTTS = 12;</code>
+     *
+     * @return The rollScoreTTS.
+     */
+    @java.lang.Override
+    public boolean getRollScoreTTS() {
+        return rollScoreTTS_;
+    }
+
+    /**
+     * <code>bool shakeToRoll = 13;</code>
+     *
+     * @return The shakeToRoll.
+     */
+    @java.lang.Override
+    public boolean getShakeToRoll() {
+        return shakeToRoll_;
+    }
+
     @java.lang.Override
     public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -348,6 +372,12 @@ public final class SettingsProtocolBuffer extends
         }
         if (haptics_ != false) {
             output.writeBool(11, haptics_);
+        }
+        if (rollScoreTTS_ != false) {
+            output.writeBool(12, rollScoreTTS_);
+        }
+        if (shakeToRoll_ != false) {
+            output.writeBool(13, shakeToRoll_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -402,6 +432,14 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(11, haptics_);
         }
+        if (rollScoreTTS_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeBoolSize(12, rollScoreTTS_);
+        }
+        if (shakeToRoll_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeBoolSize(13, shakeToRoll_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
         return size;
@@ -439,6 +477,10 @@ public final class SettingsProtocolBuffer extends
             != other.getShuffle()) return false;
         if (getHaptics()
             != other.getHaptics()) return false;
+        if (getRollScoreTTS()
+            != other.getRollScoreTTS()) return false;
+        if (getShakeToRoll()
+            != other.getShakeToRoll()) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
     }
@@ -482,6 +524,12 @@ public final class SettingsProtocolBuffer extends
         hash = (37 * hash) + HAPTICS_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
             getHaptics());
+        hash = (37 * hash) + ROLLSCORETTS_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getRollScoreTTS());
+        hash = (37 * hash) + SHAKETOROLL_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getShakeToRoll());
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -534,6 +582,8 @@ public final class SettingsProtocolBuffer extends
         private boolean rollSound_;
         private boolean shuffle_;
         private boolean haptics_;
+        private boolean rollScoreTTS_;
+        private boolean shakeToRoll_;
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.newBuilder()
         private Builder() {
@@ -574,6 +624,8 @@ public final class SettingsProtocolBuffer extends
             rollSound_ = false;
             shuffle_ = false;
             haptics_ = false;
+            rollScoreTTS_ = false;
+            shakeToRoll_ = false;
             return this;
         }
 
@@ -642,6 +694,12 @@ public final class SettingsProtocolBuffer extends
             if (((from_bitField0_ & 0x00000400) != 0)) {
                 result.haptics_ = haptics_;
             }
+            if (((from_bitField0_ & 0x00000800) != 0)) {
+                result.rollScoreTTS_ = rollScoreTTS_;
+            }
+            if (((from_bitField0_ & 0x00001000) != 0)) {
+                result.shakeToRoll_ = shakeToRoll_;
+            }
         }
 
         @java.lang.Override
@@ -688,6 +746,12 @@ public final class SettingsProtocolBuffer extends
             }
             if (other.getHaptics() != false) {
                 setHaptics(other.getHaptics());
+            }
+            if (other.getRollScoreTTS() != false) {
+                setRollScoreTTS(other.getRollScoreTTS());
+            }
+            if (other.getShakeToRoll() != false) {
+                setShakeToRoll(other.getShakeToRoll());
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -770,6 +834,16 @@ public final class SettingsProtocolBuffer extends
                             bitField0_ |= 0x00000400;
                             break;
                         } // case 88
+                        case 96: {
+                            rollScoreTTS_ = input.readBool();
+                            bitField0_ |= 0x00000800;
+                            break;
+                        } // case 96
+                        case 104: {
+                            shakeToRoll_ = input.readBool();
+                            bitField0_ |= 0x00001000;
+                            break;
+                        } // case 104
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -1178,6 +1252,78 @@ public final class SettingsProtocolBuffer extends
         public Builder clearHaptics() {
             bitField0_ = (bitField0_ & ~0x00000400);
             haptics_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollScoreTTS = 12;</code>
+         *
+         * @return The rollScoreTTS.
+         */
+        @java.lang.Override
+        public boolean getRollScoreTTS() {
+            return rollScoreTTS_;
+        }
+
+        /**
+         * <code>bool rollScoreTTS = 12;</code>
+         *
+         * @param value The rollScoreTTS to set.
+         * @return This builder for chaining.
+         */
+        public Builder setRollScoreTTS(boolean value) {
+
+            rollScoreTTS_ = value;
+            bitField0_ |= 0x00000800;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool rollScoreTTS = 12;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearRollScoreTTS() {
+            bitField0_ = (bitField0_ & ~0x00000800);
+            rollScoreTTS_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool shakeToRoll = 13;</code>
+         *
+         * @return The shakeToRoll.
+         */
+        @java.lang.Override
+        public boolean getShakeToRoll() {
+            return shakeToRoll_;
+        }
+
+        /**
+         * <code>bool shakeToRoll = 13;</code>
+         *
+         * @param value The shakeToRoll to set.
+         * @return This builder for chaining.
+         */
+        public Builder setShakeToRoll(boolean value) {
+
+            shakeToRoll_ = value;
+            bitField0_ |= 0x00001000;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool shakeToRoll = 13;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearShakeToRoll() {
+            bitField0_ = (bitField0_ & ~0x00001000);
+            shakeToRoll_ = false;
             onChanged();
             return this;
         }

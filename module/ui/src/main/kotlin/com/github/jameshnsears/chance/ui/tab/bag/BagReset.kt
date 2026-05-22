@@ -13,6 +13,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,6 +54,7 @@ fun ResetStorage(
             },
             modifier = Modifier
                 .width(150.dp)
+                .minimumInteractiveComponentSize()
                 .testTag(BagTestTag.RESET),
         ) {
             val storageResetPainter = painterResource(id = R.drawable.storage_reset)

@@ -85,4 +85,18 @@ public interface SettingsProtocolBufferOrBuilder extends
      * @return The haptics.
      */
     boolean getHaptics();
+
+    /**
+     * <code>bool rollScoreTTS = 12;</code>
+     *
+     * @return The rollScoreTTS.
+     */
+    boolean getRollScoreTTS();
+
+    /**
+     * <code>bool shakeToRoll = 13;</code>
+     *
+     * @return The shakeToRoll.
+     */
+    boolean getShakeToRoll();
 }

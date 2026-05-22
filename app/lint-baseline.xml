@@ -8,7 +8,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="build.gradle.kts"
-            line="14"
+            line="15"
             column="9"/>
     </issue>
 
@@ -30,7 +30,7 @@
         errorLine2="                          ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="13"
+            line="14"
             column="27"/>
     </issue>
 
@@ -41,7 +41,7 @@
         errorLine2="                          ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="13"
+            line="14"
             column="27"/>
     </issue>
 
@@ -52,7 +52,7 @@
         errorLine2="                      ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="14"
+            line="15"
             column="23"/>
     </issue>
 
@@ -74,19 +74,30 @@
         errorLine2="                ~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="23"
+            line="24"
             column="17"/>
     </issue>
 
     <issue
         id="GradleDependency"
-        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 2.2.21 is available: 2.3.20"
+        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 2.2.21 is available: 2.3.21"
         errorLine1="kotlin-reflect = &quot;2.2.21&quot; # version resolved in configuration &apos;:app:fdroidDebugRuntimeClasspath&apos; by consistent resolution"
         errorLine2="                 ~~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="35"
+            line="36"
             column="18"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.gradle.test-retry than 1.6.4 is available: 1.6.5"
+        errorLine1="org-gradle-test-retry = &quot;1.6.4&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
+            line="47"
+            column="25"/>
     </issue>
 
     <issue

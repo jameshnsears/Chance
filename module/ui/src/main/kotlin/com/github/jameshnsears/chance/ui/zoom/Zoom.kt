@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
@@ -16,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,7 +45,7 @@ fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, 
                 color = zoomAndroidViewModel.sideColor(side.descriptionColour),
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
-                style = TextStyle(
+                style = MaterialTheme.typography.bodyMedium.copy(
                     lineBreak = LineBreak.Paragraph
                 )
             )
@@ -52,7 +53,8 @@ fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, 
     } else if (zoomAndroidViewModel.hasSideWithDescription(dice)) {
         Text(
             text = " ",
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -70,7 +72,10 @@ fun ZoomSideImageShape(
 
     if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_EPOCH_UUID))
         Row {
-            Text(text = side.uuid)
+            Text(
+                text = side.uuid,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
 
     Box {
@@ -80,6 +85,7 @@ fun ZoomSideImageShape(
             modifier = Modifier
                 .size(resizeView)
                 .padding(top = 8.dp)
+                .minimumInteractiveComponentSize()
                 .clickable {
                     cardDice.value = dice
                     cardSide.value = side
@@ -97,6 +103,7 @@ fun ZoomSideImageShape(
             fontSize = zoomAndroidViewModel.sideNumberFontSizeSp(),
             text = "${side.number}",
             color = zoomAndroidViewModel.sideColor(side.numberColour),
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -115,6 +122,7 @@ fun ZoomSideImageSVG(
     val modifier = Modifier
         .size(resizeView)
         .padding(top = 8.dp)
+        .minimumInteractiveComponentSize()
         .clickable {
             cardDice.value = dice
             cardSide.value = side

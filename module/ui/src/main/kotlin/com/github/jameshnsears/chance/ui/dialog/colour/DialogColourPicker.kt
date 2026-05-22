@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -26,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.common.utility.colour.UtilityColour
@@ -95,26 +96,26 @@ fun DialogColourPicker(
 
     Column(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp),
+            .padding(top = 24.dp, bottom = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     )
     {
         Text(
             modifier = Modifier
                 .align(Alignment.Start)
-                .padding(start = 24.dp),
+                .padding(start = 24.dp, bottom = 4.dp),
             text = dialogTitle,
-            fontSize = 24.sp,
+            style = MaterialTheme.typography.titleLarge,
         )
 
         Box(
             Modifier
-                .height(375.dp)
-                .width(375.dp)
+                .height(300.dp)
+                .width(300.dp)
                 .align(Alignment.CenterHorizontally),
         ) {
             HsvColorPicker(
-                modifier = Modifier.padding(24.dp),
+                modifier = Modifier.padding(8.dp),
                 controller = controller,
                 drawOnPosSelected = {
                     drawColorIndicator(
@@ -131,8 +132,8 @@ fun DialogColourPicker(
 
         AlphaSlider(
             modifier = Modifier
-                .padding(top = 12.dp, start = 24.dp, end = 24.dp, bottom = 12.dp)
-                .height(35.dp)
+                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 12.dp)
+                .height(48.dp)
                 .fillMaxWidth(0.80f)
                 .align(Alignment.CenterHorizontally),
             controller = controller,
@@ -141,22 +142,24 @@ fun DialogColourPicker(
 
         BrightnessSlider(
             modifier = Modifier
-                .padding(top = 12.dp, start = 24.dp, end = 24.dp, bottom = 12.dp)
-                .height(35.dp)
+                .padding(top = 6.dp, start = 12.dp, end = 12.dp, bottom = 6.dp)
+                .height(48.dp)
                 .fillMaxWidth(0.80f)
                 .align(Alignment.CenterHorizontally),
             controller = controller,
             initialColor = UtilityColour.makeColor(currentColour),
         )
 
-        Text(
-            text = hexCode,
-            fontSize = 16.sp,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 12.dp, bottom = 12.dp)
-                .testTag(DialogColourTestTag.DIALOG_COLOUR_HEX),
-        )
+        SelectionContainer {
+            Text(
+                text = hexCode,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 12.dp, bottom = 12.dp)
+                    .testTag(DialogColourTestTag.DIALOG_COLOUR_HEX),
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
 
         ColourPickerCancelOk(showDialog, setColour, hexCode)
     }
@@ -171,12 +174,13 @@ fun ColourPickerCancelOk(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(end = 8.dp),
+            .padding(bottom = 16.dp, end = 8.dp),
         horizontalArrangement = Arrangement.End,
     ) {
         TextButton(
             modifier = Modifier
                 .padding(end = 18.dp)
+                .minimumInteractiveComponentSize()
                 .testTag(DialogColourTestTag.DIALOG_COLOUR_CANCEL),
             onClick = {
                 showDialog.value = false
@@ -190,7 +194,9 @@ fun ColourPickerCancelOk(
                 showDialog.value = false
                 setColour(hexCode)
             },
-            modifier = Modifier.testTag(DialogColourTestTag.DIALOG_COLOUR_OK),
+            modifier = Modifier
+                .minimumInteractiveComponentSize()
+                .testTag(DialogColourTestTag.DIALOG_COLOUR_OK),
         ) {
             Text(stringResource(R.string.dialog_ok))
         }

@@ -1,5 +1,0 @@
-- Add haptic support
-- Fix dice # Sides button string
-- Improve gesture layout
-- Improve test coverage
-- Bump dependencies + IDE: Android Studio Panda 4 | 2025.3.4 Patch 1

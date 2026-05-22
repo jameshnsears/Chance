@@ -65,6 +65,9 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideSVG"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollSound"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shuffle"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("haptics"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScoreTTS"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shakeToRoll"))
 
         JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(context.settingsDataStore.data.first())
@@ -97,6 +100,10 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
 
         newSettings.rollSound = settingsProtocolBuffer.rollSound
         newSettings.shuffle = settingsProtocolBuffer.shuffle
+        newSettings.haptics = settingsProtocolBuffer.haptics
+
+        newSettings.rollScoreTTS = settingsProtocolBuffer.rollScoreTTS
+        newSettings.shakeToRoll = settingsProtocolBuffer.shakeToRoll
 
         return newSettings
     }
@@ -109,6 +116,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
 
                     rollIndexTime = settingsProtocolBuffer.rollIndexTime,
                     rollScore = settingsProtocolBuffer.rollScore,
+                    rollScoreTTS = settingsProtocolBuffer.rollScoreTTS,
 
                     diceTitle = settingsProtocolBuffer.diceTitle,
                     sideNumber = settingsProtocolBuffer.sideNumber,
@@ -119,6 +127,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
                     haptics = settingsProtocolBuffer.haptics,
                     rollSound = settingsProtocolBuffer.rollSound,
                     shuffle = settingsProtocolBuffer.shuffle,
+                    shakeToRoll = settingsProtocolBuffer.shakeToRoll,
                 )
             }.first()
 

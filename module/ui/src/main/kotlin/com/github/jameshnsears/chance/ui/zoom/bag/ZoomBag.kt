@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -74,15 +75,16 @@ fun ZoomBag(
             ) {
                 if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_EPOCH_UUID)) {
                     Column {
-                        Text(dice.title)
-                        Text("${dice.epoch}")
-                        Text(dice.uuid)
+                        Text(dice.title, style = MaterialTheme.typography.bodyMedium)
+                        Text("${dice.epoch}", style = MaterialTheme.typography.bodyMedium)
+                        Text(dice.uuid, style = MaterialTheme.typography.bodyMedium)
                     }
                 } else {
                     Text(
                         dice.title,
                         Modifier.testTag("${ZoomBagTestTag.ZOOM_DICE_TITLE}-${dice.title}"),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }

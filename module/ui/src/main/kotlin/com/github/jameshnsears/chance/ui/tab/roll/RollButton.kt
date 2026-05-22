@@ -37,12 +37,12 @@ fun RollButton(rollAndroidViewModel: RollAndroidViewModel) {
         modifier = Modifier.then(
             if (rollEnabled) Modifier
                 .padding(start = 18.dp)
-                .width(160.dp)
+                .width(185.dp)
                 .testTag(RollTestTag.ROLL_ENABLED)
             else
                 Modifier
                     .padding(start = 18.dp)
-                    .width(160.dp)
+                    .width(185.dp)
                     .testTag(RollTestTag.ROLL_NOT_ENABLED),
         ),
         enabled = rollEnabled

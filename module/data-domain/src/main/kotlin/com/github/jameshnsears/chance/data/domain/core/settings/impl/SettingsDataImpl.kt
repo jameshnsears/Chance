@@ -7,6 +7,7 @@ class SettingsDataImpl(
 
     override var rollIndexTime: Boolean = false,
     override var rollScore: Boolean = false,
+    override var rollScoreTTS: Boolean = false,
 
     override var diceTitle: Boolean = false,
     override var sideNumber: Boolean = false,
@@ -15,6 +16,7 @@ class SettingsDataImpl(
     override var sideSVG: Boolean = true,
 
     override var haptics: Boolean = false,
+    override var shakeToRoll: Boolean = false,
     override var rollSound: Boolean = false,
     override var shuffle: Boolean = false
 ) : SettingsDataInterface

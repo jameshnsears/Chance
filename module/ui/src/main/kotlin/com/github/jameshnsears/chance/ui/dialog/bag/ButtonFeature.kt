@@ -1,5 +1,7 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -10,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceState
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollState
@@ -27,15 +29,16 @@ fun TextButtonDelete(
 
     TextButton(
         enabled = diceTitleIsUnique,
-        modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE),
+        modifier = Modifier
+            .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
+            .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE),
         onClick = {
             showDialogConfirm.value = true
         },
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_delete),
-            textAlign = TextAlign.End,
-            fontSize = 16.sp,
+            textAlign = TextAlign.End
         )
     }
 
@@ -64,7 +67,10 @@ fun TextButtonClone(
     showDialog: MutableState<Boolean>
 ) {
     TextButton(
-        modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CLONE),
+        modifier = Modifier
+            .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
+            .padding(start = 12.dp, end = 12.dp)
+            .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CLONE),
         enabled = diceTitleIsUnique,
         onClick = {
             dialogBagAndroidViewModel.clone(cardDiceState, cardRollState)
@@ -73,8 +79,7 @@ fun TextButtonClone(
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_clone),
-            textAlign = TextAlign.End,
-            fontSize = 16.sp,
+            textAlign = TextAlign.End
         )
     }
 }
@@ -89,7 +94,9 @@ fun TextButtonSave(
     showDialog: MutableState<Boolean>
 ) {
     TextButton(
-        modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_SAVE),
+        modifier = Modifier
+            .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
+            .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_SAVE),
         enabled = diceTitleIsUnique,
         onClick = {
             dialogBagAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)
@@ -98,8 +105,7 @@ fun TextButtonSave(
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_save),
-            textAlign = TextAlign.End,
-            fontSize = 16.sp,
+            textAlign = TextAlign.End
         )
     }
 }

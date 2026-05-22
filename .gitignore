@@ -18,6 +18,7 @@
 /.idea/copilot.data.migration.agent.xml
 /.idea/copilot.data.migration.ask2agent.xml
 /.idea/dbnavigator.xml
+/.idea/deploymentTargetSelector.xml
 /.idea/libraries
 /.idea/modules.xml
 /.idea/navEditor.xml
@@ -38,3 +39,5 @@ misc/uml/chance.vpp.bak*
 /misc/images/dice/virtue/.~lock.cubes.odt#
 /build_output.log
 /.idea/deploymentTargetSelector.xml
+/app/google-services.json.base64
+/local.properties.base64

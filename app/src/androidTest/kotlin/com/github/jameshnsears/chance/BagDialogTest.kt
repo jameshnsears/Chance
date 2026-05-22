@@ -1,11 +1,9 @@
 package com.github.jameshnsears.chance
 
 import androidx.compose.ui.semantics.SemanticsActions
-import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -20,10 +18,8 @@ import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.RollTestTag
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.SideTestTag
 import com.github.jameshnsears.chance.ui.dialog.colour.DialogColourTestTag
 import com.github.jameshnsears.chance.ui.dialog.confirm.ConfirmTestTag
-import com.github.jameshnsears.chance.ui.dialog.settings.DialogSettingsTestTag
 import com.github.jameshnsears.chance.ui.tab.bag.BagTestTag
 import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagTestTag
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assume.assumeTrue
 import org.junit.Test

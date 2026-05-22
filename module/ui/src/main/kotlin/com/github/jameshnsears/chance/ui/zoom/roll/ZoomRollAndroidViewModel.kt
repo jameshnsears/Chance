@@ -9,7 +9,7 @@ import com.github.jameshnsears.chance.ui.tab.ResizeEvent
 import com.github.jameshnsears.chance.ui.tab.bag.BagResetEvent
 import com.github.jameshnsears.chance.ui.tab.roll.RollEvent
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.update
@@ -38,7 +38,7 @@ class ZoomRollAndroidViewModel(
                 RollEvent.sharedFlowTabRollEvent.map { },
                 BagResetEvent.sharedFlowTabBagResetEvent.map { }
             ).collect {
-                Timber.d("collect.TabRollEvent|TabBagResetStorageEvent")
+                Timber.d("collect.RollEvent|BagResetEvent")
                 updateStateFlowZoom()
             }
         }
@@ -52,10 +52,13 @@ class ZoomRollAndroidViewModel(
     }
 
     override suspend fun updateStateFlowZoom() {
+        val diceBag = repositoryBag.fetch().firstOrNull()
+        val rollHistory = repositoryRoll.fetch().firstOrNull()
+
         _stateFlowZoom.update {
             it.copy(
-                diceBag = repositoryBag.fetch().first(),
-                rollHistory = repositoryRoll.fetch().first()
+                diceBag = diceBag ?: mutableListOf(),
+                rollHistory = rollHistory ?: LinkedHashMap()
             )
         }
 

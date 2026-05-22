@@ -119,13 +119,6 @@ fun TabBagBottomSheetLayout(
                 .padding(top = 12.dp, bottom = 12.dp)
         )
 
-        Version(bottomSheetScaffoldState)
-
-        HorizontalDivider(
-            modifier = Modifier
-                .padding(top = 12.dp, bottom = 12.dp)
-        )
-
         ImportExport(
             bottomSheetScaffoldState,
             tabBagAndroidViewModel,
@@ -141,5 +134,12 @@ fun TabBagBottomSheetLayout(
             bottomSheetScaffoldState,
             tabBagAndroidViewModel
         )
+
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(top = 12.dp, bottom = 12.dp)
+        )
+
+        Version(bottomSheetScaffoldState)
     }
 }

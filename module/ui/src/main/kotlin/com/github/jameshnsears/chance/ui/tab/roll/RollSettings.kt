@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
@@ -12,6 +13,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,6 +42,7 @@ fun Settings(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
+            .heightIn(min = 48.dp)
             .padding(start = 8.dp, top = 8.dp, bottom = 8.dp)
             .clickable {
                 showDialog.value = true
@@ -63,7 +66,9 @@ fun Settings(
                     bottomSheetScaffoldState.bottomSheetState.partialExpand()
                 }
             },
-            modifier = Modifier.testTag(RollTestTag.SETTINGS)
+            modifier = Modifier
+                .minimumInteractiveComponentSize()
+                .testTag(RollTestTag.SETTINGS)
         ) {
             Icon(
                 Icons.Outlined.Settings,

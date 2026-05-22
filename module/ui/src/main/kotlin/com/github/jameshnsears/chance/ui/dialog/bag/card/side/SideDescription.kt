@@ -5,18 +5,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -54,6 +60,12 @@ fun SideDescription(
             }
         },
         label = { Text(stringResource(R.string.dialog_bag_side_description)) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Outlined.Description,
+                contentDescription = null,
+            )
+        },
         singleLine = true,
         modifier = Modifier
             .testTag(SideTestTag.SIDE_DESCRIPTION)
@@ -62,9 +74,11 @@ fun SideDescription(
         enabled = !diceSidesFewerThanSdeNumber,
         trailingIcon = {
             if (sideDescription.isNotEmpty()) {
-                IconButton(onClick = {
-                    cardSideService.sideDescription("")
-                }
+                IconButton(
+                    onClick = {
+                        cardSideService.sideDescription("")
+                    },
+                    modifier = Modifier.minimumInteractiveComponentSize()
                 ) {
                     Icon(
                         painterResource(id = R.drawable.cancel),
@@ -95,6 +109,7 @@ fun SideDescription(
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_side_description_info),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 
@@ -131,6 +146,7 @@ fun SideDescriptionColour(cardSideService: CardSideService) {
             onClick = { showDialogColourPicker.value = true },
             modifier = Modifier
                 .width(180.dp)
+                .minimumInteractiveComponentSize()
                 .testTag(SideTestTag.SIDE_DESCRIPTION_COLOUR),
             enabled = !diceSidesFewerThanSdeNumber
         ) {
@@ -175,7 +191,8 @@ fun SideDescriptionAndColourApplyToAll(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 0.dp, end = 2.dp)
+            .heightIn(min = 48.dp)
+            .padding(top = 12.dp, bottom = 0.dp, end = 2.dp)
             .testTag(testTag)
             .clickable(enabled = !diceSidesFewerThanSideNumber) {
                 sideApplyToAllFunction(!sideApplyToAll)
@@ -191,7 +208,19 @@ fun SideDescriptionAndColourApplyToAll(
             onCheckedChange = {
                 sideApplyToAllFunction(it)
             },
-            enabled = !diceSidesFewerThanSideNumber
+            modifier = Modifier.minimumInteractiveComponentSize(),
+            enabled = !diceSidesFewerThanSideNumber,
+            thumbContent = if (sideApplyToAll) {
+                {
+                    Icon(
+                        imageVector = Icons.Filled.Check,
+                        contentDescription = null,
+                        modifier = Modifier.size(SwitchDefaults.IconSize),
+                    )
+                }
+            } else {
+                null
+            }
         )
     }
 }

@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -26,10 +27,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
@@ -88,7 +90,18 @@ fun ZoomRoll(
     ) {
         if (entriesList.isEmpty()) {
             item {
-                Box(modifier = Modifier.testTag(ZoomRollTestTag.LAZY_COLUMN_EMPTY)) {
+                Box(
+                    modifier = Modifier
+                        .fillParentMaxSize()
+                        .testTag(ZoomRollTestTag.LAZY_COLUMN_EMPTY),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.tab_roll_empty),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
         } else {
@@ -107,7 +120,12 @@ fun ZoomRoll(
                     modifier = Modifier.testTag(ZoomRollTestTag.LAZY_COLUMN_NOT_EMPTY)
                 ) {
                     if (stateFlowTabRoll.value.rollScore)
-                        RollScore(rollAndroidViewModel, rollSequence)
+                        RollScore(
+                            rollAndroidViewModel,
+                            zoomRollAndroidViewModel,
+                            rollSequence,
+                            stateFlowZoom.value.resizeViewDp
+                        )
 
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -153,7 +171,8 @@ private fun RollIndexTime(
             text = "$position : ${
                 SimpleDateFormat("dd, MMMM HH:mm:ss", LocalLocale.current.platformLocale)
                     .format(Date(rollHistory.key))
-            }"
+            }",
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -161,7 +180,9 @@ private fun RollIndexTime(
 @Composable
 private fun RollScore(
     rollAndroidViewModel: RollAndroidViewModel,
-    rollSequence: MutableMap.MutableEntry<Long, List<Roll>>
+    zoomRollAndroidViewModel: ZoomRollAndroidViewModel,
+    rollSequence: MutableMap.MutableEntry<Long, List<Roll>>,
+    resizeViewDp: Dp
 ) {
     Column(
         Modifier
@@ -171,8 +192,10 @@ private fun RollScore(
     ) {
         Text(
             text = rollAndroidViewModel.rollSequenceHelper.rollSequenceScore(rollSequence),
-            fontSize = 24.sp,
-            textAlign = TextAlign.Center
+            fontSize = zoomRollAndroidViewModel.rollScoreFontSizeSp(resizeViewDp),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
@@ -204,13 +227,13 @@ private fun RollDetails(
             Row(Modifier.padding(4.dp)) {
                 if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_EPOCH_UUID)) {
                     Column {
-                        Text(dice.title)
-                        Text("${dice.epoch}")
-                        Text(dice.uuid)
-                        Text(roll.side.uuid)
+                        Text(dice.title, style = MaterialTheme.typography.bodyMedium)
+                        Text("${dice.epoch}", style = MaterialTheme.typography.bodyMedium)
+                        Text(dice.uuid, style = MaterialTheme.typography.bodyMedium)
+                        Text(roll.side.uuid, style = MaterialTheme.typography.bodyMedium)
                     }
                 } else {
-                    Text(dice.title)
+                    Text(dice.title, style = MaterialTheme.typography.bodyMedium)
                 }
             }
 
@@ -298,6 +321,7 @@ private fun ZoomSideRollBehaviourIcon(
         fontSize = zoomRollAndroidViewModel.sideNumberFontSizeSp(),
         text = text,
         color = rollSelectionIconColour,
+        style = MaterialTheme.typography.bodyMedium
     )
 }
 
@@ -326,6 +350,7 @@ fun ZoomRollSideImageShape(
             fontSize = zoomRollAndroidViewModel.sideNumberFontSizeSp(),
             text = "${side.number}",
             color = zoomRollAndroidViewModel.sideColor(side.numberColour),
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

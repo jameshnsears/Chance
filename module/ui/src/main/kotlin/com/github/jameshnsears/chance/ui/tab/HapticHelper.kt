@@ -9,36 +9,44 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class HapticHelper(context: Context) {
-    val vibrator: Vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val vibratorManager = context.getSystemService(VibratorManager::class.java)!!
-        vibratorManager.defaultVibrator
-    } else {
-        context.getSystemService(Vibrator::class.java)!!
+    val vibrator: Vibrator? = try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = context.getSystemService(VibratorManager::class.java)
+            vibratorManager?.defaultVibrator
+        } else {
+            context.getSystemService(Vibrator::class.java)
+        }
+    } catch (e: Exception) {
+        Timber.w(e, "Vibrator not available")
+        null
     }
 
     private fun vibrate(effect: VibrationEffect) {
+        val v = vibrator ?: return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val attrs = VibrationAttributes.Builder()
                 .setUsage(VibrationAttributes.USAGE_TOUCH)
                 .build()
-            vibrator.vibrate(effect, attrs)
+            v.vibrate(effect, attrs)
         } else {
             val attrs = AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
                 .build()
             @Suppress("DEPRECATION")
-            vibrator.vibrate(effect, attrs)
+            v.vibrate(effect, attrs)
         }
     }
 
     suspend fun playRollHaptic() = withContext(Dispatchers.Default) {
-        if (!vibrator.hasVibrator()) return@withContext
+        val v = vibrator ?: return@withContext
+        if (!v.hasVibrator()) return@withContext
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            vibrator.areAllPrimitivesSupported(
+            v.areAllPrimitivesSupported(
                 VibrationEffect.Composition.PRIMITIVE_THUD,
                 VibrationEffect.Composition.PRIMITIVE_CLICK
             )
@@ -55,10 +63,11 @@ class HapticHelper(context: Context) {
     }
 
     suspend fun playUndoHaptic() = withContext(Dispatchers.Default) {
-        if (!vibrator.hasVibrator()) return@withContext
+        val v = vibrator ?: return@withContext
+        if (!v.hasVibrator()) return@withContext
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            vibrator.areAllPrimitivesSupported(VibrationEffect.Composition.PRIMITIVE_CLICK)
+            v.areAllPrimitivesSupported(VibrationEffect.Composition.PRIMITIVE_CLICK)
         ) {
             vibrate(
                 VibrationEffect.startComposition()
@@ -72,10 +81,11 @@ class HapticHelper(context: Context) {
     }
 
     suspend fun playUndoAllHaptic() = withContext(Dispatchers.Default) {
-        if (!vibrator.hasVibrator()) return@withContext
+        val v = vibrator ?: return@withContext
+        if (!v.hasVibrator()) return@withContext
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            vibrator.areAllPrimitivesSupported(
+            v.areAllPrimitivesSupported(
                 VibrationEffect.Composition.PRIMITIVE_THUD,
                 VibrationEffect.Composition.PRIMITIVE_CLICK
             )

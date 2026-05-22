@@ -6,8 +6,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +33,7 @@ fun GenericExposedDropdownMenuBox(
         expanded = isDropdownExpanded,
         onExpandedChange = { isDropdownExpanded = it },
     ) {
-        TextField(
+        OutlinedTextField(
             modifier = Modifier
                 .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                 .width(width)
@@ -41,7 +42,7 @@ fun GenericExposedDropdownMenuBox(
             value = selectedDropdownContent,
             onValueChange = { },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isDropdownExpanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
         )
         ExposedDropdownMenu(
             expanded = isDropdownExpanded,
@@ -50,7 +51,9 @@ fun GenericExposedDropdownMenuBox(
             dropdownContents.forEach { selectionOption ->
                 DropdownMenuItem(
                     text = { Text(selectionOption) },
-                    modifier = Modifier.testTag("${testTag}-${selectionOption}"),
+                    modifier = Modifier
+                        .minimumInteractiveComponentSize()
+                        .testTag("${testTag}-${selectionOption}"),
                     onClick = {
                         isDropdownExpanded = false
                         valueChanged(selectionOption)

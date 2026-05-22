@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FormatListNumbered
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Title
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -24,6 +26,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -70,11 +73,6 @@ fun BagCardDice(
 
                 DiceSides(cardDiceService)
 
-                HorizontalDivider(
-                    modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp)
-                )
-
                 DiceColour(cardDiceService)
             }
         }
@@ -96,16 +94,31 @@ fun DiceSides(
     var sliderPosition = stateFlowCardDice.value.diceSiderPosition
     val sliderInfoColour = stateFlowCardDice.value.diceSiderInfoColour
 
-    Row(modifier = Modifier.padding(top = 8.dp)) {
+    Row(
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .fillMaxWidth(),
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.FormatListNumbered,
+            contentDescription = null,
+        )
+
+        Spacer(modifier = Modifier.width(12.dp))
+
         Text(
             "${stringResource(R.string.dialog_bag_dice_sides)}: ${sliderDisplayValues[sliderPosition.roundToInt()]}",
             modifier = Modifier
-                .align(Alignment.CenterVertically)
                 .width(80.dp)
         )
+    }
 
-        Spacer(modifier = Modifier.width(6.dp))
-
+    Row(
+        modifier = Modifier
+            .padding(top = 8.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Slider(
             value = sliderPosition,
             onValueChange = {
@@ -120,7 +133,8 @@ fun DiceSides(
                 inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
             ),
             modifier = Modifier
-                .padding(start = 8.dp, end = 12.dp)
+                .padding(bottom = 4.dp)
+                .minimumInteractiveComponentSize()
                 .testTag(DiceTestTag.DICE_SIDES),
         )
     }
@@ -147,6 +161,7 @@ fun DiceSides(
         Text(
             text = stringResource(R.string.dialog_bag_dice_sides_info),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = sliderInfoColour),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }
@@ -167,6 +182,12 @@ fun DiceTitle(cardDiceService: CardDiceService) {
                 cardDiceService.diceTitle(it)
         },
         label = { Text(stringResource(R.string.dialog_bag_dice_title)) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Outlined.Title,
+                contentDescription = null,
+            )
+        },
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
@@ -174,11 +195,14 @@ fun DiceTitle(cardDiceService: CardDiceService) {
             .testTag(DiceTestTag.DICE_TITLE),
         trailingIcon = {
             if (diceTitle.isNotEmpty()) {
-                IconButton(onClick = {
-                    cardDiceService.diceTitle(
-                        ""
-                    )
-                }) {
+                IconButton(
+                    onClick = {
+                        cardDiceService.diceTitle(
+                            ""
+                        )
+                    },
+                    modifier = Modifier.minimumInteractiveComponentSize()
+                ) {
                     Icon(
                         painterResource(id = R.drawable.cancel),
                         contentDescription = stringResource(R.string.dialog_cancel),
@@ -207,6 +231,7 @@ fun DiceTitle(cardDiceService: CardDiceService) {
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_dice_title_info_0),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 
@@ -218,6 +243,7 @@ fun DiceTitle(cardDiceService: CardDiceService) {
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_dice_title_info_1),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }
@@ -245,6 +271,7 @@ fun DiceColour(cardDiceService: CardDiceService) {
             },
             modifier = Modifier
                 .width(180.dp)
+                .minimumInteractiveComponentSize()
                 .testTag(DiceTestTag.DICE_COLOUR),
 
             ) {

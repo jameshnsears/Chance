@@ -3,6 +3,9 @@ package com.github.jameshnsears.chance.ui.tab.roll
 import android.app.Application
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
@@ -31,6 +34,7 @@ import java.security.SecureRandom
 data class SettingsState(
     var rollIndexTime: Boolean,
     var rollScore: Boolean,
+    var rollScoreTTS: Boolean,
 
     var diceTitle: Boolean,
     var rollBehaviour: Boolean,
@@ -40,6 +44,7 @@ data class SettingsState(
 
     var shuffle: Boolean,
     var haptics: Boolean,
+    var shakeToRoll: Boolean,
     var rollSound: Boolean,
 )
 
@@ -53,6 +58,7 @@ class RollAndroidViewModel(
         SettingsState(
             rollIndexTime = false,
             rollScore = false,
+            rollScoreTTS = false,
             diceTitle = false,
             rollBehaviour = false,
             sideNumber = false,
@@ -60,6 +66,7 @@ class RollAndroidViewModel(
             sideSVG = false,
             shuffle = false,
             haptics = false,
+            shakeToRoll = false,
             rollSound = false,
         )
     )
@@ -74,15 +81,61 @@ class RollAndroidViewModel(
     private var _rollEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
     var rollEnabled: StateFlow<Boolean> = _rollEnabled
 
+    private val mutex = Mutex()
+
+    private val secureRandom = SecureRandom()
+
+    val hapticHelper = HapticHelper(getApplication())
+
+    private val rollSoundPlayer = RollSoundPlayer(getApplication())
+
+    private val rollScoreTtsPlayer = RollScoreTtsPlayer(getApplication())
+
+    private var isForeground = false
+
+    private val lifecycleEventObserver = LifecycleEventObserver { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_START -> {
+                isForeground = true
+                updateShakeService()
+            }
+
+            Lifecycle.Event.ON_STOP -> {
+                isForeground = false
+                updateShakeService()
+            }
+
+            else -> {}
+        }
+    }
+
+    private val shakeToRollService = ShakeToRollService(getApplication()) {
+        if (_stateFlowSettingsData.value.shakeToRoll && _rollEnabled.value) {
+            rollDiceSequence()
+        }
+    }
+
+    val rollSequenceHelper = RollSequenceHelper(repositoryRoll)
+
     init {
+        if (System.getProperty("isUnitTest") != "true") {
+            ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleEventObserver)
+        }
+
         viewModelScope.launch {
             alignSettings()
             alignBottomSheetWithStorage()
         }
 
         viewModelScope.launch {
+            stateFlowSettings.collect {
+                updateShakeService()
+            }
+        }
+
+        viewModelScope.launch {
             DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect.DialogBagCloseEvent.TabRollAndroidViewModel")
+                Timber.d("collect.DialogBagCloseEvent")
                 alignBottomSheetWithStorage()
             }
         }
@@ -92,7 +145,7 @@ class RollAndroidViewModel(
                 BagImportEvent.sharedFlowTabBagImportEvent.map { },
                 BagResetEvent.sharedFlowTabBagResetEvent.map { }
             ).collect {
-                Timber.d("collect.TabBagImportEvent|TabBagResetStorageEvent.TabRollAndroidViewModel")
+                Timber.d("collect.BagImportEvent|BagResetEvent")
                 alignSettings()
                 alignBottomSheetWithStorage()
             }
@@ -106,13 +159,16 @@ class RollAndroidViewModel(
             it.copy(
                 rollIndexTime = settings.rollIndexTime,
                 rollScore = settings.rollScore,
+                rollScoreTTS = settings.rollScoreTTS,
                 diceTitle = settings.diceTitle,
                 sideNumber = settings.sideNumber,
                 rollBehaviour = settings.rollBehaviour,
                 sideDescription = settings.sideDescription,
                 sideSVG = settings.sideSVG,
                 haptics = settings.haptics,
+                shakeToRoll = settings.shakeToRoll,
                 rollSound = settings.rollSound,
+                shuffle = settings.shuffle,
             )
         }
     }
@@ -144,7 +200,6 @@ class RollAndroidViewModel(
         return _diceBag.value.any { it.selected }
     }
 
-    private val mutex = Mutex()
 
     fun markDiceAsSelected(dice: Dice, selected: Boolean) {
         Timber.d("epoch=${dice.epoch}; selected=${selected}")
@@ -188,7 +243,6 @@ class RollAndroidViewModel(
             && !stateFlowSettings.value.sideSVG
         )
 
-    private val secureRandom = SecureRandom()
 
     fun rollDiceSequence() {
         viewModelScope.launch {
@@ -211,6 +265,8 @@ class RollAndroidViewModel(
             _rollEnabled.value = true
 
             RollEvent.emit()
+
+            playScoreTTS(newRollSequence.sumOf { it.score })
         }
     }
 
@@ -244,6 +300,7 @@ class RollAndroidViewModel(
 
         settings.rollIndexTime = _stateFlowSettingsData.value.rollIndexTime
         settings.rollScore = _stateFlowSettingsData.value.rollScore
+        settings.rollScoreTTS = _stateFlowSettingsData.value.rollScoreTTS
 
         settings.diceTitle = _stateFlowSettingsData.value.diceTitle
         settings.sideNumber = _stateFlowSettingsData.value.sideNumber
@@ -253,6 +310,7 @@ class RollAndroidViewModel(
 
         settings.rollSound = _stateFlowSettingsData.value.rollSound
         settings.haptics = _stateFlowSettingsData.value.haptics
+        settings.shakeToRoll = _stateFlowSettingsData.value.shakeToRoll
         settings.shuffle = _stateFlowSettingsData.value.shuffle
 
         repositorySettings.store(settings)
@@ -286,13 +344,29 @@ class RollAndroidViewModel(
         }
     }
 
-    val hapticHelper = HapticHelper(getApplication())
-
-    private val rollSoundPlayer = RollSoundPlayer(getApplication())
+    suspend fun playScoreTTS(score: Int) {
+        if (_stateFlowSettingsData.value.rollScoreTTS) {
+            delay(250)
+            rollScoreTtsPlayer.playScore(score)
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
+        if (System.getProperty("isUnitTest") != "true") {
+            ProcessLifecycleOwner.get().lifecycle.removeObserver(lifecycleEventObserver)
+        }
         rollSoundPlayer.release()
+        rollScoreTtsPlayer.release()
+        shakeToRollService.stop()
+    }
+
+    private fun updateShakeService() {
+        if (isForeground && _stateFlowSettingsData.value.shakeToRoll) {
+            shakeToRollService.start()
+        } else {
+            shakeToRollService.stop()
+        }
     }
 
     fun rollDiceSequence(newRollSequence: MutableList<Roll>) {
@@ -356,8 +430,6 @@ class RollAndroidViewModel(
         }
     }
 
-    val rollSequenceHelper = RollSequenceHelper(repositoryRoll)
-
     fun randomSide(dice: Dice) = dice.sides[secureRandom.nextInt(dice.sides.size)]
 
     fun undo() {
@@ -407,6 +479,13 @@ class RollAndroidViewModel(
         }
     }
 
+    fun settingsRollScoreTTS(checked: Boolean) {
+        viewModelScope.launch {
+            _stateFlowSettingsData.update { it.copy(rollScoreTTS = checked) }
+            alignBottomSheetWithStorage()
+        }
+    }
+
     fun settingsDiceTitle(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(diceTitle = checked) }
@@ -451,6 +530,12 @@ class RollAndroidViewModel(
     fun settingsUseHaptics(checked: Boolean) {
         viewModelScope.launch {
             _stateFlowSettingsData.update { it.copy(haptics = checked) }
+        }
+    }
+
+    fun settingsShakeToRoll(checked: Boolean) {
+        viewModelScope.launch {
+            _stateFlowSettingsData.update { it.copy(shakeToRoll = checked) }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.github.jameshnsears.chance.ui.tab.roll
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Dice
@@ -19,9 +20,13 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
+import org.junit.Rule
 import org.junit.Test
 
 class TabRollAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
     @OptIn(DelicateCoroutinesApi::class)
     @Test
     fun rollDiceSequenceNoExplosionNoScore() = runTest {
@@ -259,6 +264,9 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         tabRollAndroidViewModel.settingsRollScore(false)
         assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.rollScore)
 
+        tabRollAndroidViewModel.settingsRollScoreTTS(false)
+        assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.rollScoreTTS)
+
         tabRollAndroidViewModel.settingsDiceTitle(false)
         assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.diceTitle)
 
@@ -276,6 +284,12 @@ class TabRollAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         tabRollAndroidViewModel.settingsBehaviour(false)
         assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.rollBehaviour)
+
+        tabRollAndroidViewModel.settingsShakeToRoll(false)
+        assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.shakeToRoll)
+
+        tabRollAndroidViewModel.settingsUseHaptics(false)
+        assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.haptics)
     }
 
     @Test

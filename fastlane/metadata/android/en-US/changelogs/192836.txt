@@ -1,0 +1,9 @@
+- Fix: Shuffle switch persistant state
+- New: Improve Material Design 3 alignment
+- New: Resizable score text
+- New: Score TTS
+- New: Shake to Roll
+- Dev: Improved test coverage
+- Dev: Bumped dependencies
+- Dev: Added secondary CI service: circleci
+- Dev: Android Studio Panda 4 | 2025.3.4 Patch 1

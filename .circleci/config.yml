@@ -1,0 +1,319 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@3.2.0
+
+executors:
+  android-docker:
+    docker:
+      - image: cimg/android:2024.10
+    resource_class: large
+
+commands:
+  restore_gradle_cache:
+    description: Restore Gradle caches.
+    steps:
+      - restore_cache:
+          keys:
+            - gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle.kts" }}
+            - gradle-cache-
+
+  save_gradle_cache:
+    description: Save Gradle caches.
+    steps:
+      - save_cache:
+          paths:
+            - ~/.gradle
+            - ~/.android
+          key: gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle.kts" }}
+
+  codecov_upload:
+    description: Upload Codecov report.
+    parameters:
+      report_path:
+        type: string
+      flags:
+        type: string
+    steps:
+      - run:
+          name: codecov
+          command: |
+            if [ -z "$CODECOV_TOKEN" ]; then
+              echo "Skipping Codecov upload because CODECOV_TOKEN is not set"
+              exit 0
+            fi
+            bash <(curl -s https://codecov.io/bash) -f "<< parameters.report_path >>" -F "<< parameters.flags >>" -t "$CODECOV_TOKEN"
+
+  write_local_properties:
+    description: Write local.properties from secret.
+    steps:
+      - run:
+          name: local.properties
+          command: |
+            if [ -n "$LOCAL_PROPERTIES" ]; then
+              echo "$LOCAL_PROPERTIES" | base64 -d > local.properties
+            fi
+
+  write_google_services:
+    description: Write google-services.json from secret.
+    steps:
+      - run:
+          name: google-services.json
+          command: |
+            if [ -n "$GOOGLE_PLAY_JSON_DEVELOPMENT" ]; then
+              echo "$GOOGLE_PLAY_JSON_DEVELOPMENT" | base64 -d > app/google-services.json
+            fi
+
+  create_and_boot_emulator:
+    description: Create AVD and start emulator with CI-optimised flags.
+    steps:
+      - android/create_avd:
+          avd_name: circleci-android-34
+          system_image: "system-images;android-34;google_atd;x86_64"
+          install: true
+      - android/start_emulator:
+          avd_name: circleci-android-34
+          no_window: true
+          post_emulator_launch_assemble_command: ""
+          additional_args: >-
+            -no-snapshot-save
+            -no-boot-anim
+            -no-audio
+            -gpu swiftshader_indirect
+            -memory 2048
+            -cores 2
+      - run:
+          name: Wait for emulator to fully boot
+          command: |
+            adb wait-for-device
+            timeout 300 bash -c \
+              'until [[ "$(adb shell getprop sys.boot_completed 2>/dev/null)" == "1" ]]; do sleep 5; done'
+            echo "Emulator boot confirmed"
+
+jobs:
+  codecov_unit_test_ui:
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - run:
+          name: ui unit tests
+          command: ./gradlew :module:ui:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - codecov_upload:
+          report_path: ./module/ui/build/reports/jacoco/unitTest.xml
+          flags: ui-unitTest
+      - save_gradle_cache
+
+  codecov_unit_test_data_repo_api:
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - run:
+          name: data-repo-api unit tests
+          command: ./gradlew :module:data-repo-api:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - codecov_upload:
+          report_path: ./module/data-repo-api/build/reports/jacoco/unitTest.xml
+          flags: data-repo-api-unitTest
+      - save_gradle_cache
+
+  codecov_unit_test_data_common:
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - run:
+          name: data-common unit tests
+          command: ./gradlew :module:data-common:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - codecov_upload:
+          report_path: ./module/data-common/build/reports/jacoco/unitTest.xml
+          flags: data-common-unitTest
+      - save_gradle_cache
+
+  codecov_android_test_ui:
+    executor:
+      name: android/android_machine
+      resource_class: large
+      tag: default
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - write_local_properties
+      - write_google_services
+      - create_and_boot_emulator
+      - android/disable_animations
+      - android/run_tests:
+          test_command: ./gradlew :module:ui:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - codecov_upload:
+          report_path: ./module/ui/build/reports/jacoco/androidTest.xml
+          flags: ui-androidTest
+      - store_artifacts:
+          path: "**/build/reports/*"
+          destination: build-reports
+      - save_gradle_cache
+
+  codecov_android_test_app:
+    executor:
+      name: android/android_machine
+      resource_class: large
+      tag: default
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - write_local_properties
+      - write_google_services
+      - create_and_boot_emulator
+      - android/disable_animations
+      - android/run_tests:
+          test_command: ./gradlew :app:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m" -PIN_CI=1
+      - codecov_upload:
+          report_path: ./app/build/reports/jacoco/androidTest.xml
+          flags: app-androidTest
+      - store_artifacts:
+          path: "**/build/reports/*"
+          destination: build-reports
+      - save_gradle_cache
+
+  codecov_android_test_data_common:
+    executor:
+      name: android/android_machine
+      resource_class: large
+      tag: default
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - write_local_properties
+      - write_google_services
+      - create_and_boot_emulator
+      - android/disable_animations
+      - android/run_tests:
+          test_command: ./gradlew :module:data-common:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - codecov_upload:
+          report_path: ./module/data-common/build/reports/jacoco/androidTest.xml
+          flags: data-common-androidTest
+      - store_artifacts:
+          path: "**/build/reports/*"
+          destination: build-reports
+      - save_gradle_cache
+
+  static_detekt:
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - run:
+          name: detekt
+          command: ./gradlew detekt -x test --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - save_gradle_cache
+
+  static_ktlint:
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - run:
+          name: ktlint
+          command: ./gradlew ktlintCheck --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - save_gradle_cache
+
+  static_lint:
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - run:
+          name: lintFdroidDebug
+          command: ./gradlew :app:lintFdroidDebug --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - save_gradle_cache
+
+  static_sonarqube:
+    executor: android-docker
+    steps:
+      - checkout:
+          submodules: true
+          fetch-depth: 0
+      - run:
+          name: sonar
+          command: |
+            ./gradlew :sonar --info -Dsonar.scm.disabled=true
+
+workflows:
+  version: 2
+  codecov_and_static:
+    jobs:
+      - codecov_unit_test_ui:
+          filters:
+            branches:
+              only: main
+
+      - codecov_unit_test_data_repo_api:
+          filters:
+            branches:
+              only: main
+
+      - codecov_unit_test_data_common:
+          filters:
+            branches:
+              only: main
+
+      - codecov_android_test_ui:
+          filters:
+            branches:
+              only: main
+
+      - codecov_android_test_app:
+          filters:
+            branches:
+              only: main
+
+      - codecov_android_test_data_common:
+          filters:
+            branches:
+              only: main
+
+      - static_detekt:
+          filters:
+            branches:
+              only: main
+
+      - static_ktlint:
+          filters:
+            branches:
+              only: main
+
+      - static_lint:
+          filters:
+            branches:
+              only: main
+
+      - static_sonarqube:
+          filters:
+            branches:
+              only: main

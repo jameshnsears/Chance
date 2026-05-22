@@ -115,6 +115,7 @@ dependencies {
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.ui.test.junit4)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
@@ -136,10 +137,16 @@ dependencies {
     implementation(project(":module:data-repo-api"))
     implementation(project(":module:data-repo-impl"))
 
+    testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.mockk.android)
     testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     testImplementation(platform(libs.org.junit.bom))
+}
+
+tasks.withType<Test> {
+    systemProperty("isUnitTest", "true")
 }
 
 fun gitHash() = providers.exec {

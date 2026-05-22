@@ -17,13 +17,13 @@ import androidx.core.graphics.toColorInt
 fun BagCardColourSample(sideColour: String) {
     Box(
         modifier = Modifier
-            .size(40.dp)
+            .size(48.dp)
             .clip(CircleShape)
             .border(1.dp, Color.Black, CircleShape)
     ) {
         Canvas(
             modifier = Modifier
-                .size(40.dp),
+                .size(48.dp),
         ) {
             drawCircle(
                 color = Color("#${sideColour}".toColorInt()),

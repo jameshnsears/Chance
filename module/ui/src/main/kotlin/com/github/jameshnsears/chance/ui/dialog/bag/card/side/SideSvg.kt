@@ -16,7 +16,9 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,7 +70,7 @@ fun SideImageSVG(
 
     Row(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 0.dp),
+            .padding(top = 12.dp, bottom = 0.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
@@ -79,6 +81,7 @@ fun SideImageSVG(
                 modifier = Modifier
                     .width(180.dp)
                     .padding(bottom = 6.dp)
+                    .minimumInteractiveComponentSize()
                     .testTag(SideTestTag.SIDE_IMAGE_SVG),
                 enabled = !diceSidesFewerThanSideNumber
             ) {
@@ -100,6 +103,7 @@ fun SideImageSVG(
                 modifier = Modifier
                     .width(180.dp)
                     .padding(top = 6.dp)
+                    .minimumInteractiveComponentSize()
                     .testTag(SideTestTag.SIDE_IMAGE_SVG_DROP),
                 enabled = cardSideService.sideImageAvailable() && !diceSidesFewerThanSideNumber
             ) {
@@ -163,6 +167,7 @@ fun SideImageSVG(
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_side_image_apply_svg_size),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }

@@ -1,0 +1,41 @@
+Role: Act as an elite Senior Android UI/UX Product Designer, Product Manager, and Material Design 3 expert.
+
+Context: I am developing a native Android app.
+
+App Type/Niche: dice rolling app, no animation, but to be essentail to anyone rolling dice/
+
+Target Audience: anyone interested in rolling one or more dice
+
+Core User Goal of These Screens: ease of use to sophisticated features; brain dead ease of use
+
+Task: Analyze the attached screenshots of my app. Provide an exhaustive, brutally honest critique of the user interface and user experience. Structure your feedback into the following specific categories:
+
+Material Design 3 & Android Ecosystem Alignment
+
+Are there components that feel "non-native" or break established Android design patterns (e.g., iOS-style toggles, improper bottom navigation usage, missing Floating Action Buttons where one belongs)?
+
+How well does the typography, spacing, and layout hierarchy respect Android standards?
+
+Accessibility (a11y) & Usability Audits
+
+Point out any potential issues with visual hierarchy, text readability, or color contrast.
+
+Are there "fat-finger" risks? Identify any interactive elements, icons, or text links that look like they have a tap-target size smaller than 48x48 dp.
+
+How well does the screen guide the user's eye? Where is the friction?
+
+Feature Gap & Edge-Case Analysis
+
+Looking at this specific app niche, what standard industry features are completely missing from these screens that users will expect?
+
+Have I accounted for edge cases? (e.g., What do these screens look like when they are empty, loading, or encountering an error? Is there a clear back/escape path?)
+
+Output Format:
+Please organize your feedback using clear headings. For every critical issue you identify, provide:
+
+The Problem: What is wrong and why it hurts the user experience.
+
+The Recommendation: A specific, actionable solution to fix it.
+
+Priority Level: (High/Medium/Low) based on how severely it impacts usability.
+

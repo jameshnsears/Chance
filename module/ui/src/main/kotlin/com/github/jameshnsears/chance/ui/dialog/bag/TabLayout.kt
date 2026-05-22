@@ -1,6 +1,9 @@
 package com.github.jameshnsears.chance.ui.dialog.bag
 
 import android.content.res.Configuration
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,20 +16,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AutoFixHigh
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusTarget
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
@@ -36,20 +45,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
+import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.BagCardDice
 import com.github.jameshnsears.chance.ui.dialog.bag.card.dice.CardDiceService
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.BagCardRoll
 import com.github.jameshnsears.chance.ui.dialog.bag.card.roll.CardRollService
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.BagCardSide
 import com.github.jameshnsears.chance.ui.dialog.bag.card.side.CardSideService
+import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Composable
-fun
-    DialogBagTabLayout(
+fun DialogBagTabLayout(
     showDialog: MutableState<Boolean>,
     dialogBagAndroidViewModel: DialogBagAndroidViewModel
 ) {
     val selectedTabIndex = rememberSaveable { mutableIntStateOf(1) }
+    val clickCounter = remember { mutableIntStateOf(0) }
 
     val tabs = listOf(
         TabItem(
@@ -66,7 +79,7 @@ fun
 
         TabItem(
             stringResource(R.string.dialog_bag_roll),
-            ImageVector.vectorResource(R.drawable.dice_roll),
+            Icons.Outlined.AutoFixHigh,
             TabTestTag.TAB_ROLL
         )
     )
@@ -79,9 +92,72 @@ fun
                 Tab(
                     modifier = Modifier.testTag(tab.testTag),
                     selected = selectedTabIndex.intValue == index,
-                    onClick = { selectedTabIndex.intValue = index },
+                    onClick = {
+                        selectedTabIndex.intValue = index
+                        clickCounter.intValue++
+                    },
                     icon = {
+                        val initialValue = when (tab.testTag) {
+                            TabTestTag.TAB_SIDE -> 1.0f
+                            TabTestTag.TAB_ROLL -> 0f
+                            else -> 0f
+                        }
+                        val animation = remember { Animatable(initialValue) }
+                        LaunchedEffect(clickCounter.intValue) {
+                            if (selectedTabIndex.intValue == index) {
+                                if (clickCounter.intValue > 0) {
+                                    when (tab.testTag) {
+                                        TabTestTag.TAB_DICE -> {
+                                            animation.snapTo(0f)
+                                            animation.animateTo(360f, tween(1000, easing = LinearEasing))
+                                        }
+
+                                        TabTestTag.TAB_SIDE -> {
+                                            animation.animateTo(0.15f, tween(500, easing = LinearEasing))
+                                            animation.animateTo(1.5f, tween(500, easing = LinearEasing))
+                                            animation.animateTo(1.0f, tween(500, easing = LinearEasing))
+                                        }
+
+                                        TabTestTag.TAB_ROLL -> {
+                                            animation.snapTo(0f)
+                                            animation.animateTo(2 * PI.toFloat(), tween(1000, easing = LinearEasing))
+                                        }
+                                    }
+                                }
+                            } else {
+                                animation.snapTo(initialValue)
+                            }
+                        }
+
                         Icon(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .then(
+                                    if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_TAB_ANIMATION)) {
+                                        Modifier.graphicsLayer {
+                                            when (tab.testTag) {
+                                                TabTestTag.TAB_DICE -> {
+                                                    rotationY = animation.value
+                                                }
+
+                                                TabTestTag.TAB_SIDE -> {
+                                                    scaleX = animation.value
+                                                    scaleY = animation.value
+                                                }
+
+                                                TabTestTag.TAB_ROLL -> {
+                                                    val angle = animation.value
+                                                    translationX = (sin(angle) * 40).dp.toPx()
+                                                    val scale = 1f + (cos(angle) * 0.2f)
+                                                    scaleX = scale
+                                                    scaleY = scale
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        Modifier
+                                    }
+                                ),
                             imageVector = tab.icon,
                             contentDescription = tab.title
                         )
@@ -149,10 +225,12 @@ fun DialogBagTabContent(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .focusTarget()
-                .padding(end = 4.dp),
+                .padding(top = 6.dp, bottom = 6.dp, end = 4.dp),
         ) {
             IconButton(
-                modifier = Modifier.testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CANCEL),
+                modifier = Modifier
+                    .minimumInteractiveComponentSize()
+                    .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CANCEL),
                 onClick = {
                     showDialog.value = false
                 }) {
@@ -213,8 +291,7 @@ fun DiceContent(
     val insets = if (isLandscape) PaddingValues(0.dp) else WindowInsets.navigationBars.asPaddingValues()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .padding(insets)
     ) {
         BagCardDice(cardDiceService)
@@ -229,8 +306,7 @@ fun SideContent(
     val insets = WindowInsets.navigationBars.asPaddingValues()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .padding(insets)
     ) {
         BagCardSide(cardSideService)
@@ -245,8 +321,7 @@ fun BehaviourContent(
     val insets = WindowInsets.navigationBars.asPaddingValues()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
             .padding(insets)
     ) {
         BagCardRoll(cardRollService)

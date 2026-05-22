@@ -20,7 +20,9 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
         ): RepositoryBagProtocolBufferTestDouble {
             if (instance == null) {
                 instance = RepositoryBagProtocolBufferTestDouble()
-
+                instance!!.diceBag = diceBag
+                instance!!.traceUuid(diceBag)
+            } else if (!instance!!.isDiceBagInitialized()) {
                 instance!!.diceBag = diceBag
                 instance!!.traceUuid(diceBag)
             }
@@ -30,6 +32,8 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
     }
 
     private lateinit var diceBag: DiceBag
+
+    fun isDiceBagInitialized() = ::diceBag.isInitialized
 
     override suspend fun jsonExport(): String {
         val bagProtocolBufferBuilder: BagProtocolBuffer.Builder =
@@ -49,11 +53,19 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
     }
 
     override suspend fun fetch(): Flow<DiceBag> = flow {
-        emit(diceBag)
+        if (isDiceBagInitialized()) {
+            emit(diceBag)
+        } else {
+            emit(mutableListOf())
+        }
     }
 
     override suspend fun fetch(epoch: Long): Flow<Dice> = flow {
-        emit(diceBag.firstOrNull { it.epoch == epoch } ?: Dice())
+        if (isDiceBagInitialized()) {
+            emit(diceBag.firstOrNull { it.epoch == epoch } ?: Dice())
+        } else {
+            emit(Dice())
+        }
     }
 
     override suspend fun store(newDiceBag: DiceBag) {

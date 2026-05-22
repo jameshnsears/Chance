@@ -5,7 +5,8 @@ sealed class UtilityFeature {
         REPO_PROTOCOL_BUFFER,
         REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
         UI_SHOW_CRASHLYTICS_BUTTON,
-        UI_SHOW_EPOCH_UUID
+        UI_SHOW_EPOCH_UUID,
+        UI_SHOW_TAB_ANIMATION
     }
 
     companion object {

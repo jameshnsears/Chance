@@ -18,12 +18,15 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
         originalSettings.resize = 2
         originalSettings.rollIndexTime = false
         originalSettings.rollScore = false
+        originalSettings.rollScoreTTS = false
         originalSettings.diceTitle = true
         originalSettings.sideNumber = false
         originalSettings.rollBehaviour = true
         originalSettings.sideDescription = true
         originalSettings.sideSVG = false
+        originalSettings.haptics = false
         originalSettings.rollSound = true
+        originalSettings.shakeToRoll = true
 
         repositoryFactory.repositorySettings.store(originalSettings)
 
@@ -33,6 +36,7 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
 
         Assert.assertEquals(originalSettings.rollIndexTime, fetchedSettings.rollIndexTime)
         Assert.assertEquals(originalSettings.rollScore, fetchedSettings.rollScore)
+        Assert.assertEquals(originalSettings.rollScoreTTS, fetchedSettings.rollScoreTTS)
 
         Assert.assertEquals(originalSettings.diceTitle, fetchedSettings.diceTitle)
         Assert.assertEquals(originalSettings.sideNumber, fetchedSettings.sideNumber)
@@ -42,6 +46,7 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
 
         Assert.assertEquals(originalSettings.haptics, fetchedSettings.haptics)
         Assert.assertEquals(originalSettings.rollSound, fetchedSettings.rollSound)
+        Assert.assertEquals(originalSettings.shakeToRoll, fetchedSettings.shakeToRoll)
     }
 
     @Test

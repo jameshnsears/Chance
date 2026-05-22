@@ -1,8 +1,12 @@
 package com.github.jameshnsears.chance.ui.dialog.confirm
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -20,12 +24,20 @@ fun DialogConfirm(
     if (openDialog) {
         AlertDialog(
             onDismissRequest = onDismissRequest,
+            icon = {
+                Icon(
+                    imageVector = Icons.Outlined.Warning,
+                    contentDescription = null
+                )
+            },
             title = { Text(text = title) },
             text = { Text(text = text) },
             confirmButton = {
                 TextButton(
                     onClick = onConfirmation,
-                    modifier = Modifier.testTag(ConfirmTestTag.OK)
+                    modifier = Modifier
+                        .minimumInteractiveComponentSize()
+                        .testTag(ConfirmTestTag.OK)
                 ) {
                     Text(stringResource(R.string.dialog_bag_delete_confirmation_ok))
                 }
@@ -33,7 +45,9 @@ fun DialogConfirm(
             dismissButton = {
                 TextButton(
                     onClick = onDismissRequest,
-                    modifier = Modifier.testTag(ConfirmTestTag.CANCEL)
+                    modifier = Modifier
+                        .minimumInteractiveComponentSize()
+                        .testTag(ConfirmTestTag.CANCEL)
                 ) {
                     Text(stringResource(R.string.dialog_bag_delete_confirmation_cancel))
                 }

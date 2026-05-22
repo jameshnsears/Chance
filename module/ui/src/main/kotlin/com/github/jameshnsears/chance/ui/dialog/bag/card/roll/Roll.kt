@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
@@ -16,8 +18,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
@@ -26,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,12 +56,42 @@ fun BagCardRoll(
             ),
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
+                Row(
+                    modifier = Modifier
+                        .padding(start = 6.dp, top = 8.dp, bottom = 8.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = stringResource(R.string.info),
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(start = 6.dp, top = 8.dp, bottom = 4.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.dialog_bag_roll_info),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(top = 12.dp, bottom = 12.dp)
+                )
+
                 RollMultiplier(cardRollService)
 
                 HorizontalDivider(
                     modifier = Modifier
                         .padding(top = 12.dp, bottom = 12.dp)
                 )
+
                 RollExplode(cardRollService)
 
                 HorizontalDivider(
@@ -115,7 +150,7 @@ private fun RollExplode(cardRollService: CardRollService) {
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    var rollExplode = stateFlowCardRoll.value.rollExplode
+    val rollExplode = stateFlowCardRoll.value.rollExplode
 
     Row(
         modifier = Modifier
@@ -126,7 +161,15 @@ private fun RollExplode(cardRollService: CardRollService) {
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(start = 6.dp)
+            modifier = Modifier
+                .heightIn(min = 48.dp)
+                .padding(start = 6.dp)
+                .testTag(RollTestTag.ROLL_EXPLODE_CHECKBOX)
+                .toggleable(
+                    value = rollExplode,
+                    onValueChange = { cardRollService.rollExplode(it) },
+                    role = Role.Checkbox
+                )
         ) {
             Icon(
                 painterResource(id = R.drawable.dice_roll_explode),
@@ -135,12 +178,10 @@ private fun RollExplode(cardRollService: CardRollService) {
             )
 
             Checkbox(
-                modifier = Modifier.testTag(RollTestTag.ROLL_EXPLODE_CHECKBOX),
+                modifier = Modifier
+                    .minimumInteractiveComponentSize(),
                 checked = rollExplode,
-                onCheckedChange = {
-                    rollExplode = it
-                    cardRollService.rollExplode(it)
-                }
+                onCheckedChange = null
             )
 
             Spacer(Modifier.width(3.dp))
@@ -172,7 +213,8 @@ private fun RollExplode(cardRollService: CardRollService) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(R.string.dialog_bag_roll_explode_depth),
+            text = stringResource(R.string.dialog_bag_roll_explode_meaning),
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }
@@ -234,7 +276,7 @@ fun RollScore(cardRollService: CardRollService) {
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    var rollModifyScore = stateFlowCardRoll.value.rollModifyScore
+    val rollModifyScore = stateFlowCardRoll.value.rollModifyScore
 
     Row(
         modifier = Modifier
@@ -243,24 +285,34 @@ fun RollScore(cardRollService: CardRollService) {
             .testTag(RollTestTag.ROLL_MODIFY_SCORE),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            painterResource(id = R.drawable.dice_roll_add_subtract),
-            contentDescription = stringResource(R.string.adjustment),
-            modifier = Modifier.size(24.dp),
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .heightIn(min = 48.dp)
+                .testTag(RollTestTag.ROLL_MODIFY_SCORE_CHECKBOX)
+                .toggleable(
+                    value = rollModifyScore,
+                    onValueChange = { cardRollService.rollModifyScore(it) },
+                    role = Role.Checkbox
+                )
+        ) {
+            Icon(
+                painterResource(id = R.drawable.dice_roll_add_subtract),
+                contentDescription = stringResource(R.string.adjustment),
+                modifier = Modifier.size(24.dp),
+            )
 
-        Checkbox(
-            modifier = Modifier.testTag(RollTestTag.ROLL_MODIFY_SCORE_CHECKBOX),
-            checked = rollModifyScore,
-            onCheckedChange = {
-                rollModifyScore = it
-                cardRollService.rollModifyScore(it)
-            }
-        )
+            Checkbox(
+                modifier = Modifier
+                    .minimumInteractiveComponentSize(),
+                checked = rollModifyScore,
+                onCheckedChange = null
+            )
 
-        Spacer(Modifier.width(3.dp))
+            Spacer(Modifier.width(3.dp))
 
-        Text(stringResource(R.string.dialog_bag_roll_score))
+            Text(stringResource(R.string.dialog_bag_roll_score))
+        }
 
         Spacer(Modifier.width(20.dp))
 

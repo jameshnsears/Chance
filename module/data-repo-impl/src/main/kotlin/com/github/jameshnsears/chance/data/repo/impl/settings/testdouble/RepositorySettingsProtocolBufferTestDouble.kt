@@ -19,7 +19,8 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         ): RepositorySettingsProtocolBufferTestDouble {
             if (instance == null) {
                 instance = RepositorySettingsProtocolBufferTestDouble()
-
+                instance!!.settings = settingsData
+            } else if (instance!!.settings == null) {
                 instance!!.settings = settingsData
             }
             return instance!!
@@ -38,13 +39,16 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("resize"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollIndexTime"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScore"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScoreTTS"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("diceTitle"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideNumber"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("behaviour"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideDescription"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideSVG"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollSound"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("haptics"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shuffle"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shakeToRoll"))
 
         return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(settingsProtocolBufferBuilder.build())
@@ -68,6 +72,7 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
 
         newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
         newSettings.rollScore = settingsProtocolBuffer.rollScore
+        newSettings.rollScoreTTS = settingsProtocolBuffer.rollScoreTTS
 
         newSettings.diceTitle = settingsProtocolBuffer.diceTitle
         newSettings.sideNumber = settingsProtocolBuffer.sideNumber
@@ -76,13 +81,15 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         newSettings.sideSVG = settingsProtocolBuffer.sideSVG
 
         newSettings.rollSound = settingsProtocolBuffer.rollSound
+        newSettings.haptics = settingsProtocolBuffer.haptics
         newSettings.shuffle = settingsProtocolBuffer.shuffle
+        newSettings.shakeToRoll = settingsProtocolBuffer.shakeToRoll
 
         return newSettings
     }
 
     override suspend fun fetch(): Flow<SettingsDataInterface> = flow {
-        emit(settings!!)
+        emit(settings ?: SettingsDataTestDouble())
     }
 
     override suspend fun store(settingsData: SettingsDataInterface) {

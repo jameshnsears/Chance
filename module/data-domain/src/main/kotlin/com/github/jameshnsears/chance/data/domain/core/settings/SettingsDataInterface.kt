@@ -6,6 +6,7 @@ interface SettingsDataInterface {
 
     var rollIndexTime: Boolean
     var rollScore: Boolean
+    var rollScoreTTS: Boolean
 
     var diceTitle: Boolean
     var sideNumber: Boolean
@@ -14,6 +15,7 @@ interface SettingsDataInterface {
     var sideSVG: Boolean
 
     var haptics: Boolean
+    var shakeToRoll: Boolean
     var rollSound: Boolean
     var shuffle: Boolean
 }

@@ -225,8 +225,8 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
 
     override val allDice = mutableListOf(
         d6,
-        hexagram,
         diceStory,
+        hexagram,
         diceMan
     )
 }

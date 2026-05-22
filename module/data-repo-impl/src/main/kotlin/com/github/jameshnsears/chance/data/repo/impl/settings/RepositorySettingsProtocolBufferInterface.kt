@@ -13,6 +13,7 @@ interface RepositorySettingsProtocolBufferInterface : RepositorySettingsInterfac
 
         settingsProtocolBufferBuilder.setRollIndexTime(settingsData.rollIndexTime)
         settingsProtocolBufferBuilder.setRollScore(settingsData.rollScore)
+        settingsProtocolBufferBuilder.setRollScoreTTS(settingsData.rollScoreTTS)
 
         settingsProtocolBufferBuilder.setDiceTitle(settingsData.diceTitle)
         settingsProtocolBufferBuilder.setSideNumber(settingsData.sideNumber)
@@ -23,6 +24,7 @@ interface RepositorySettingsProtocolBufferInterface : RepositorySettingsInterfac
         settingsProtocolBufferBuilder.setHaptics(settingsData.haptics)
         settingsProtocolBufferBuilder.setRollSound(settingsData.rollSound)
         settingsProtocolBufferBuilder.setShuffle(settingsData.shuffle)
+        settingsProtocolBufferBuilder.setShakeToRoll(settingsData.shakeToRoll)
 
         settingsProtocolBufferBuilder.build()
     }

@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -69,16 +70,18 @@ fun Version(
         Image(
             painter = githubPainter,
             contentDescription = stringResource(R.string.github),
-            modifier = logoModifier.clickable {
-                coroutineScope.launch {
-                    bottomSheetScaffoldState.bottomSheetState.partialExpand()
-                }
+            modifier = logoModifier
+                .minimumInteractiveComponentSize()
+                .clickable {
+                    coroutineScope.launch {
+                        bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                    }
 
-                openUrlInBrowser(
-                    context,
-                    githubProjectUrl
-                )
-            },
+                    openUrlInBrowser(
+                        context,
+                        githubProjectUrl
+                    )
+                },
         )
     }
 }
