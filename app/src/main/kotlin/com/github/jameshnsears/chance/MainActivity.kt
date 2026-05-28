@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
                 getString(R.string.app_shortcut_yes_no),
                 Icon.createWithResource(
                     applicationContext,
-                    R.drawable.thumb_up_down
+                    R.drawable.ic_shortcut_yes_no
                 )
             )
         )

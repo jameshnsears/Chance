@@ -1,3 +1,4 @@
+&bull; Create custom dice with text and SVG faces
 &bull; Roll several dice at once
 &bull; Designed to stay out of the player's way
 &bull; Works offline
@@ -8,4 +9,4 @@
 &bull; Yes / No shortcut
 &bull; Export / Import feature
 
-&bull; User feedback (especially GitHub Issue) always appreciated!
+&bull; User feedback (especially GitHub Issues) is always appreciated!

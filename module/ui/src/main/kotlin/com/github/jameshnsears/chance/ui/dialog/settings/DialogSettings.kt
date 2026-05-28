@@ -105,13 +105,19 @@ fun DialogSettingsLayout(
         color = backgroundColor,
         shape = RoundedCornerShape(16.dp),
     ) {
-        Box(modifier = Modifier.height(470.dp)) {
+        Box(modifier = Modifier.height(455.dp)) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 24.dp, top = 24.dp),
+                text = stringResource(R.string.tab_roll_settings),
+                style = MaterialTheme.typography.titleLarge,
+                )
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 24.dp, start = 12.dp, end = 12.dp, bottom = 24.dp)
+                    .padding(top = 84.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
                     .verticalScroll(scrollState),
-                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CommonSwitch(
                     stringResource(R.string.tab_roll_settings_roll_time),

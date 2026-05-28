@@ -14,7 +14,7 @@
     <string name="tab.bag.export.success">Export successful</string>
 
     <string name="tab.bag.reset.storage">Reset</string>
-    <string name="tab.bag.reset.storage.confirm">Reset app to default state?</string>
+    <string name="tab.bag.reset.storage.confirm">Reset everything to default state?</string>
 
     <string name="dialog.cancel">Cancel</string>
     <string name="dialog.ok">OK</string>
@@ -40,7 +40,7 @@
     <string name="dialog.bag.side.image">SVG file…</string>
     <string name="dialog.bag.side.image.clear">Drop SVG</string>
     <string name="dialog.bag.side.image_apply.to.all">Apply to all sides</string>
-    <string name="dialog.bag.side.image_apply.svg.size">\u2022 File size limit: 128 KB</string>
+    <string name="dialog.bag.side.image_apply.svg.size">\u2022 128KB file size limit</string>
     <string name="dialog.bag.side.image.error">Invalid SVG</string>
 
     <string name="dialog.bag.dice">Dice</string>
@@ -65,8 +65,8 @@
     <string name="dialog.bag.roll.info">\u2022 Behaviour applies to this dice only</string>
     <string name="dialog.bag.roll.repeat">Roll multiplier</string>
     <string name="dialog.bag.roll.explode.side">Side #</string>
-    <string name="dialog.bag.roll.explode.meaning">\u2022 Explosion: if a side # matches criteria, roll again (up to 5 times) and add to score</string>
-    <string name="dialog.bag.roll.score">Score adjustment</string>
+    <string name="dialog.bag.roll.explode.meaning">\u2022 Explosion: if a Side # matches criteria, roll again (up to 5 times) and add to score</string>
+    <string name="dialog.bag.roll.score">Mod score</string>
 
     <string name="dialog.bag.colour.picker.side">Side #</string>
     <string name="dialog.bag.colour.picker.description">Side Description</string>
@@ -83,7 +83,7 @@
     <string name="tab.roll.settings.behaviour">Behaviour</string>
 
     <string name="tab.roll.settings.use.shuffle">Shuffle</string>
-    <string name="tab.roll.settings.use.haptics">Haptics (Undo &amp; Roll)</string>
+    <string name="tab.roll.settings.use.haptics">Haptic</string>
     <string name="tab.roll.settings.shake.to.roll">Shake to Roll</string>
     <string name="tab.roll.settings.use.sound">Roll Sound</string>
 

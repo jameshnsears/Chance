@@ -7,7 +7,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -25,7 +25,7 @@ fun TextButtonDelete(
     dialogBagAndroidViewModel: DialogBagAndroidViewModel,
     showDialog: MutableState<Boolean>
 ) {
-    val showDialogConfirm = remember { mutableStateOf(false) }
+    val showDialogConfirm = rememberSaveable { mutableStateOf(false) }
 
     TextButton(
         enabled = diceTitleIsUnique,

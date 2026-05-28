@@ -84,7 +84,7 @@ fun ZoomRoll(
 
     LazyColumn(
         modifier = Modifier
-            .padding(top = 8.dp, start = 0.dp, bottom = 125.dp, end = 8.dp)
+            .padding(top = 8.dp, start = 4.dp, bottom = 125.dp, end = 8.dp)
             .testTag(ZoomRollTestTag.LAZY_COLUMN),
         state = listState,
     ) {
@@ -165,13 +165,14 @@ private fun RollIndexTime(
     rollHistory: MutableMap.MutableEntry<Long, List<Roll>>
 ) {
     Row(
-        modifier = Modifier.padding(start = 8.dp),
+        modifier = Modifier.padding(start = 8.dp, bottom = 8.dp),
     ) {
         Text(
             text = "$position : ${
                 SimpleDateFormat("dd, MMMM HH:mm:ss", LocalLocale.current.platformLocale)
                     .format(Date(rollHistory.key))
             }",
+            fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.bodyMedium
         )
     }

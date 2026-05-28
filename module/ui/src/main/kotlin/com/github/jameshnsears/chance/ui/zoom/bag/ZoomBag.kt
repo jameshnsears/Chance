@@ -63,7 +63,7 @@ fun ZoomBag(
     }
 
     LazyColumn(
-        modifier = Modifier.padding(top = 8.dp, start = 0.dp, bottom = 65.dp, end = 8.dp),
+        modifier = Modifier.padding(top = 8.dp, start = 4.dp, bottom = 65.dp, end = 8.dp),
         state = listState,
     ) {
         itemsIndexed(

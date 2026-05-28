@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -49,8 +48,7 @@ fun TabRollLayout(
                 Modifier.testTag(RollTestTag.BOTTOM_SHEET)
             ) {
                 TabRollBottomSheetLayout(
-                    rollAndroidViewModel,
-                    bottomSheetScaffoldState
+                    rollAndroidViewModel
                 )
             }
         },
@@ -65,11 +63,10 @@ fun TabRollLayout(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabRollBottomSheetLayout(
-    rollAndroidViewModel: RollAndroidViewModel,
-    bottomSheetScaffoldState: BottomSheetScaffoldState
+    rollAndroidViewModel: RollAndroidViewModel
 ) {
     val isGestureNavigation = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() < 40.dp
-    val columnHeight = if (isGestureNavigation) 210.dp else 250.dp
+    val columnHeight = if (isGestureNavigation) 220.dp else 245.dp
 
     Column(
         Modifier
@@ -103,8 +100,7 @@ fun TabRollBottomSheetLayout(
         )
 
         Settings(
-            rollAndroidViewModel,
-            bottomSheetScaffoldState
+            rollAndroidViewModel
         )
     }
 }

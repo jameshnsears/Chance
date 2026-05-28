@@ -80,24 +80,13 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 2.2.21 is available: 2.3.21"
+        message="A newer version of org.jetbrains.kotlin:kotlin-reflect than 2.2.21 is available: 2.3.20"
         errorLine1="kotlin-reflect = &quot;2.2.21&quot; # version resolved in configuration &apos;:app:fdroidDebugRuntimeClasspath&apos; by consistent resolution"
         errorLine2="                 ~~~~~~~~">
         <location
             file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
             line="36"
             column="18"/>
-    </issue>
-
-    <issue
-        id="NewerVersionAvailable"
-        message="A newer version of org.gradle.test-retry than 1.6.4 is available: 1.6.5"
-        errorLine1="org-gradle-test-retry = &quot;1.6.4&quot;"
-        errorLine2="                        ~~~~~~~">
-        <location
-            file="$HOME/GIT_REPOS/chance/gradle/libs.versions.toml"
-            line="47"
-            column="25"/>
     </issue>
 
     <issue
@@ -160,17 +149,6 @@
             file="src/main/res/values/colors.xml"
             line="7"
             column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.ic_launcher_background` appears to be unused"
-        errorLine1="&lt;vector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/drawable/ic_launcher_background.xml"
-            line="2"
-            column="1"/>
     </issue>
 
     <issue

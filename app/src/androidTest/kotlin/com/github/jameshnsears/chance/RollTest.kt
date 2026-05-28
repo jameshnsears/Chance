@@ -9,8 +9,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import com.github.jameshnsears.chance.common.R
-import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
-import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
 import com.github.jameshnsears.chance.ui.dialog.settings.DialogSettingsTestTag
 import com.github.jameshnsears.chance.ui.tab.roll.RollTestTag

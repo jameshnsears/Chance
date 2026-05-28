@@ -16,8 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -34,7 +34,7 @@ fun ResetStorage(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     tabBagAndroidViewModel: TabBagAndroidViewModel,
 ) {
-    val showDialogConfirm = remember { mutableStateOf(false) }
+    val showDialogConfirm = rememberSaveable { mutableStateOf(false) }
 
     val coroutineScope = rememberCoroutineScope()
 
