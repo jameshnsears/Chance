@@ -37,7 +37,7 @@ jobs:
         run: ./gradlew :${{ matrix.module.path }}:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
       - name: codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           files: ./module/${{ matrix.module.name }}/build/reports/jacoco/unitTest.xml
