@@ -12,7 +12,7 @@ interface RepositoryRollInterface : RepositoryImportExportInterface {
     fun traceUuid(rollHistory: RollHistory) {
         rollHistory.forEach { (_, rollList) ->
             rollList.forEach { roll ->
-                Timber.d("roll: dice.epoch=${roll.diceEpoch}; side.uuid=${roll.side.uuid}")
+                Timber.d("roll: dice.uuid=${roll.uuidDice}; side.uuid=${roll.side.uuid}")
             }
         }
     }

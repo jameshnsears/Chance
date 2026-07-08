@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 9.1.1" type="baseline" client="gradle" dependencies="false" name="AGP (9.1.1)" variant="all" version="9.1.1">
+<issues format="6" by="lint 9.2.1" type="baseline" client="gradle" dependencies="false" name="AGP (9.2.1)" variant="all" version="9.2.1">
+
+    <issue
+        id="WrongConstant"
+        message="Must be one or more of: Context.MODE_PRIVATE, Context.MODE_WORLD_READABLE, Context.MODE_WORLD_WRITEABLE, Context.MODE_MULTI_PROCESS"
+        errorLine1="            every { applicationMock!!.getSharedPreferences(any(), any()) } returns sharedPreferencesMock"
+        errorLine2="                                                                  ~~~~~">
+        <location
+            file="src/testFixtures/kotlin/com/github/jameshnsears/chance/common/utility/UtilityAndroidUnitTestHelper.kt"
+            line="37"
+            column="67"/>
+    </issue>
 
     <issue
         id="VectorRaster"

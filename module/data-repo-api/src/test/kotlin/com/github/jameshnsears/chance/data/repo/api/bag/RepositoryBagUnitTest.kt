@@ -27,15 +27,15 @@ class RepositoryBagUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
-    fun fetchDiceByEpoch() = runTest {
+    fun fetchDiceByUuid() = runTest {
         val mockRepository = mockk<RepositoryBagInterface>()
-        val epoch = 123456789L
-        val dice = Dice(epoch = epoch, title = "d20")
+        val uuid = "dice-uuid"
+        val dice = Dice(uuid = uuid, title = "d20")
 
-        coEvery { mockRepository.fetch(epoch) } returns flowOf(dice)
+        coEvery { mockRepository.fetch(uuid) } returns flowOf(dice)
 
-        val result = mockRepository.fetch(epoch).first()
-        assertEquals(epoch, result.epoch)
+        val result = mockRepository.fetch(uuid).first()
+        assertEquals(uuid, result.uuid)
         assertEquals("d20", result.title)
     }
 
@@ -53,7 +53,7 @@ class RepositoryBagUnitTest : UtilityAndroidUnitTestHelper() {
     fun traceUuid() {
         val repository = object : RepositoryBagInterface {
             override suspend fun fetch() = flowOf(mutableListOf<Dice>())
-            override suspend fun fetch(epoch: Long) = flowOf(Dice())
+            override suspend fun fetch(uuid: String) = flowOf(Dice())
             override suspend fun store(newDiceBag: DiceBag) {}
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}

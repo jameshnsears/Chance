@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.github.jameshnsears.chance.data.domain.proto;
+
+message GroupProtocolBuffer {
+  string uuid = 1;
+  string name = 2;
+  repeated string uuidDice = 3;
+  string notes = 4;
+  int32 displayIndex = 5;
+  bool selected = 6;
+}

@@ -50,6 +50,10 @@ android {
         compose = true
     }
 
+    testFixtures {
+        enable = true
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md,FastDoubleParser-LICENSE,FastDoubleParser-NOTICE,thirdparty-LICENSE}"
@@ -84,14 +88,19 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.junit.ktx)
-    implementation(libs.androidx.ui.test.junit4)
     implementation(libs.appcompat)
     implementation(libs.jackson.module.kotlin)
     implementation(libs.json.kotlin.schema)
-    implementation(libs.mockk)
-    implementation(libs.org.jetbrains.kotlinx.coroutines.test)
+    implementation(libs.kotlin.reflect)
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))
+    testFixturesImplementation(libs.androidx.junit.ktx)
+    testFixturesImplementation(libs.androidx.test.runner)
+    testFixturesImplementation(libs.androidx.ui.test.junit4)
+    testFixturesImplementation(libs.kotlin.reflect)
+    testFixturesImplementation(libs.mockk)
+    testFixturesImplementation(libs.kotlinx.coroutines.test)
+    testFixturesImplementation(libs.timber)
+    testFixturesImplementation(platform(libs.androidx.compose.bom))
 }

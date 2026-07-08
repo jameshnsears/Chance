@@ -2,8 +2,9 @@ package com.github.jameshnsears.chance.data.repo.impl.roll
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.common.utility.UtilityLoggingHelper
-import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -21,7 +22,8 @@ class RepositoryRollTest : UtilityLoggingHelper() {
         val repositoryRollImpl = repositoryFactory.repositoryRoll
 
         val bagDataTestDouble = BagDataTestDouble()
-        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
+        val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
+        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble, groupDataTestDouble)
 
         val originalRollHistory = rollDataTestDouble.rollHistory
 
@@ -42,7 +44,7 @@ class RepositoryRollTest : UtilityLoggingHelper() {
             originalRollSequence.forEachIndexed { index, roll ->
                 val fetchedRoll = fetchedRollSequence[index]
 
-                Assert.assertEquals(roll.diceEpoch, fetchedRoll.diceEpoch)
+                Assert.assertEquals(roll.uuidDice, fetchedRoll.uuidDice)
 
                 val originalSide = roll.side
                 val fetchedSide = fetchedRoll.side
@@ -69,7 +71,8 @@ class RepositoryRollTest : UtilityLoggingHelper() {
         val repositoryRollImpl = repositoryFactory.repositoryRoll
 
         val bagDataTestDouble = BagDataTestDouble()
-        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble)
+        val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
+        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble, groupDataTestDouble)
 
         val originalRollHistory = rollDataTestDouble.rollHistory
 

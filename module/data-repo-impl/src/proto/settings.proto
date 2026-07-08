@@ -5,7 +5,7 @@ option java_multiple_files = true;
 package com.github.jameshnsears.chance.data.domain.proto;
 
 message SettingsProtocolBuffer {
-  int32 resize = 1;
+  int32 resize = 1 [deprecated = true];
 
   bool rollIndexTime = 2;
   bool rollScore = 3;
@@ -21,4 +21,7 @@ message SettingsProtocolBuffer {
   bool haptics = 11;
   bool rollScoreTTS = 12;
   bool shakeToRoll = 13;
+
+  float resizeZoom = 14;
+  bool groupTitle = 15;
 }

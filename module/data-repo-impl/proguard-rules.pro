@@ -1,21 +1,28 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Surgical keep for Protobuf generated classes used with JsonFormat reflection
+-keep class com.github.jameshnsears.chance.data.domain.proto.** { *; }
+-keep interface com.github.jameshnsears.chance.data.domain.proto.** { *; }
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep all members of the generated classes to ensure reflection (JsonFormat) works
+-keepclassmembers class com.github.jameshnsears.chance.data.domain.proto.** {
+    <fields>;
+    <methods>;
+}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep the Builders as they are used for parsing and merging.
+-keep class com.github.jameshnsears.chance.data.domain.proto.**$Builder { *; }
+-keepclassmembers class com.github.jameshnsears.chance.data.domain.proto.**$Builder {
+    public *;
+}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Keep the Protobuf runtime, which is heavily used by JsonFormat and DataStore.
+-keep class com.google.protobuf.** { *; }
+-keepclassmembers class com.google.protobuf.** {
+    public *;
+    static *;
+}
+
+# Keep the repository implementations and serializers to ensure DataStore can access them
+-keep class com.github.jameshnsears.chance.data.repo.impl.** { *; }
+
+# Attributes required for reflection-based tools like JsonFormat.
+-keepattributes Signature, *Annotation*, EnclosingMethod, InnerClasses, LineNumberTable

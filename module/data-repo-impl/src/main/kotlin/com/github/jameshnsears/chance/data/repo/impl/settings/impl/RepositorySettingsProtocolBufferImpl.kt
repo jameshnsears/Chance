@@ -3,23 +3,19 @@ package com.github.jameshnsears.chance.data.repo.impl.settings.impl
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
-import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
-import com.github.jameshnsears.chance.data.repo.impl.BuildConfig
 import com.github.jameshnsears.chance.data.repo.impl.settings.RepositorySettingsProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -35,18 +31,6 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         ): RepositorySettingsProtocolBufferImpl {
             if (instance == null) {
                 instance = RepositorySettingsProtocolBufferImpl(context)
-
-                CoroutineScope(Dispatchers.IO).launch {
-                    if (BuildConfig.DEBUG) {
-                        if (!UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER)) {
-                            instance!!.clear()
-                        }
-                    }
-
-                    if (instance!!.fetch().first().resize == 0) {
-                        instance!!.store(settings)
-                    }
-                }
             }
 
             return instance!!
@@ -55,7 +39,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
 
     override suspend fun jsonExport(): String = withContext(Dispatchers.IO) {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
-        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("resize"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("resizeZoom"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollIndexTime"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScore"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("diceTitle"))
@@ -68,6 +52,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("haptics"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScoreTTS"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shakeToRoll"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("groupTitle"))
 
         JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(context.settingsDataStore.data.first())
@@ -77,73 +62,23 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         store(jsonImportProcess(json))
     }
 
-    override fun jsonImportProcess(json: String): SettingsDataInterface {
-        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
-            SettingsProtocolBuffer.newBuilder()
+    override suspend fun fetch(): Flow<SettingsDataInterface> = context.settingsDataStore.data
+        .map { settingsProtocolBuffer ->
+            val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
 
-        JsonFormat.parser().merge(json, settingsProtocolBufferBuilder)
+            Timber.d("repositorySettings.FETCH ============================================")
+            Timber.d("repositorySettings.resizeZoom=${settings.resizeZoom}")
 
-        val settingsProtocolBuffer = settingsProtocolBufferBuilder.build()
-
-        val newSettings = SettingsDataImpl()
-
-        newSettings.resize = settingsProtocolBuffer.resize
-
-        newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
-        newSettings.rollScore = settingsProtocolBuffer.rollScore
-
-        newSettings.diceTitle = settingsProtocolBuffer.diceTitle
-        newSettings.sideNumber = settingsProtocolBuffer.sideNumber
-        newSettings.rollBehaviour = settingsProtocolBuffer.behaviour
-        newSettings.sideDescription = settingsProtocolBuffer.sideDescription
-        newSettings.sideSVG = settingsProtocolBuffer.sideSVG
-
-        newSettings.rollSound = settingsProtocolBuffer.rollSound
-        newSettings.shuffle = settingsProtocolBuffer.shuffle
-        newSettings.haptics = settingsProtocolBuffer.haptics
-
-        newSettings.rollScoreTTS = settingsProtocolBuffer.rollScoreTTS
-        newSettings.shakeToRoll = settingsProtocolBuffer.shakeToRoll
-
-        return newSettings
-    }
-
-    override suspend fun fetch(): Flow<SettingsDataImpl> = flow {
-        val settings = context.settingsDataStore.data
-            .map { settingsProtocolBuffer ->
-                SettingsDataImpl(
-                    resize = settingsProtocolBuffer.resize,
-
-                    rollIndexTime = settingsProtocolBuffer.rollIndexTime,
-                    rollScore = settingsProtocolBuffer.rollScore,
-                    rollScoreTTS = settingsProtocolBuffer.rollScoreTTS,
-
-                    diceTitle = settingsProtocolBuffer.diceTitle,
-                    sideNumber = settingsProtocolBuffer.sideNumber,
-                    rollBehaviour = settingsProtocolBuffer.behaviour,
-                    sideDescription = settingsProtocolBuffer.sideDescription,
-                    sideSVG = settingsProtocolBuffer.sideSVG,
-
-                    haptics = settingsProtocolBuffer.haptics,
-                    rollSound = settingsProtocolBuffer.rollSound,
-                    shuffle = settingsProtocolBuffer.shuffle,
-                    shakeToRoll = settingsProtocolBuffer.shakeToRoll,
-                )
-            }.first()
-
-        Timber.d("repositorySettings.FETCH ============================================")
-        Timber.d("repositorySettings.resize=${settings.resize}")
-
-        emit(settings)
-    }.flowOn(Dispatchers.IO)
+            settings
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun store(settingsData: SettingsDataInterface) {
         withContext(Dispatchers.IO) {
             Timber.d("repositorySettings.STORE ============================================")
-            Timber.d("repositorySettings.resize=${settingsData.resize}")
+            Timber.d("repositorySettings.resizeZoom=${settingsData.resizeZoom}")
 
             context.settingsDataStore.updateData {
-                val settingsProtocolBufferBuilder = it.toBuilder()
+                val settingsProtocolBufferBuilder = SettingsProtocolBuffer.newBuilder()
                 mapSettingsIntoSettingsProtocolBufferBuilder(
                     settingsData,
                     settingsProtocolBufferBuilder
@@ -166,4 +101,7 @@ val Context.settingsDataStore: DataStore<SettingsProtocolBuffer> by dataStore(
     // /data/data/com.github.jameshnsears.chance.test.test/files/datastore
     fileName = "settings.pb",
     serializer = RepositorySettingsProtocolBufferSerializer,
+    corruptionHandler = ReplaceFileCorruptionHandler {
+        SettingsProtocolBuffer.getDefaultInstance()
+    },
 )

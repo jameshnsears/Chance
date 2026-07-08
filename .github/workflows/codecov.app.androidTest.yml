@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
           submodules: true
@@ -75,11 +75,11 @@ jobs:
             adb shell settings put global window_animation_scale 0.0
             adb shell settings put global transition_animation_scale 0.0
             adb shell settings put global animator_duration_scale 0.0
-            ./gradlew :app:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m" -PIN_CI=1
+            ./gradlew :module:common:compileFdroidDebugKotlin :module:data-common:compileFdroidDebugKotlin :module:data-domain:compileFdroidDebugKotlin :module:data-repo-api:compileFdroidDebugKotlin :module:data-repo-impl:compileFdroidDebugKotlin :module:ui:compileFdroidDebugKotlin :app:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m" -PIN_CI=1
 
       - name: codecov
         if: matrix.run-tests == true
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           files: ./app/build/reports/jacoco/androidTest.xml

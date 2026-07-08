@@ -88,24 +88,17 @@ kotlin {
 }
 
 dependencies {
-    androidTestImplementation(libs.androidx.compose.ui.test.manifest)
-    androidTestImplementation(libs.androidx.datastore.core)
-    androidTestImplementation(libs.androidx.datastore.preferences)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.test.runner)
-    androidTestImplementation(libs.coil.compose)
-    androidTestImplementation(libs.coil.svg)
-    androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
     androidTestImplementation(libs.mockk.android)
-    androidTestImplementation(libs.protobuf.kotlin)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(project(":module:data-domain"))
-
+    androidTestImplementation(testFixtures(project(":module:common")))
     androidTestUtil(libs.androidx.test.orchestrator)
-
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.ui.tooling)
-
     implementation(libs.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -113,10 +106,11 @@ dependencies {
     implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.process)
-    implementation(libs.androidx.ui.test.junit4)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(libs.colorpicker.compose)
@@ -129,20 +123,19 @@ dependencies {
     implementation(libs.protobuf.kotlin)
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
-
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))
     implementation(project(":module:data-common"))
     implementation(project(":module:data-domain"))
     implementation(project(":module:data-repo-api"))
     implementation(project(":module:data-repo-impl"))
-
     testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.mockk.android)
-    testImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(platform(libs.org.junit.bom))
+    testImplementation(testFixtures(project(":module:common")))
 }
 
 tasks.withType<Test> {

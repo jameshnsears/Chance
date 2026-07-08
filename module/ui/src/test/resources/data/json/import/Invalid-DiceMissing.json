@@ -1,171 +1,171 @@
 [
   {
-    "resize": 2,
-    "rollIndexTime": false,
+    "resizeZoom": 2.0,
+    "rollIndexTime": true,
     "rollScore": true,
-    "diceTitle": false,
+    "diceTitle": true,
     "sideNumber": true,
-    "behaviour": false,
-    "sideDescription": false,
+    "behaviour": true,
+    "sideDescription": true,
     "sideSVG": true,
-    "rollSound": false
+    "rollSound": false,
+    "shuffle": false,
+    "haptics": false,
+    "rollScoreTTS": false,
+    "shakeToRoll": false,
+    "groupTitle": true
   },
   {
   },
   {
     "values": {
-      "171914001692": {
+      "1782317981060": {
         "roll": [
           {
-            "diceEpoch": "1719140016898",
+            "uuidDice": "ef8c2cfd-7649-409f-882f-6ce1a05319dd",
             "side": {
-              "uuid": "",
+              "uuid": "1bf5240c-4950-4cf2-913e-ac62851b1cc1",
               "number": 2,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 2
+            "score": 2,
+            "uuidGroup": "53d3b8e0-4ce1-4fa9-b8e8-13a95df0dffb"
           },
           {
-            "diceEpoch": "1719140016900",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "1bbb438e-f652-416f-b9ae-ef399ab5aa0a",
               "number": 3,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 3
+            "multiplierIndex": 2,
+            "score": 3,
+            "uuidGroup": "53d3b8e0-4ce1-4fa9-b8e8-13a95df0dffb"
           },
           {
-            "diceEpoch": "1719140016911",
+            "uuidDice": "798fdd2d-b9b2-4a60-a347-834ed1b6f853",
             "side": {
-              "uuid": "",
+              "uuid": "13fa3512-42ab-439e-b6b0-844d3aed4bdc",
               "number": 5,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 3,
             "score": 5
           },
           {
-            "diceEpoch": "1719140016913",
+            "uuidDice": "82fe7469-abb2-4419-9bff-85d315b7a7b4",
             "side": {
-              "uuid": "",
+              "uuid": "868965ff-3bc5-4acc-b46b-9efab19b8c8b",
               "number": 6,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 4,
             "score": 6
           },
           {
-            "diceEpoch": "1719140016915",
+            "uuidDice": "b7a94dcd-9a87-444d-9dda-b3bbdb3d299e",
             "side": {
-              "uuid": "",
+              "uuid": "89e0e003-5bd1-4b61-b3c9-32562de1b1aa",
               "number": 7,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 5,
             "score": 7
           },
           {
-            "diceEpoch": "1719140016917",
+            "uuidDice": "567e2b6d-8158-4971-a647-e613865c42eb",
             "side": {
-              "uuid": "",
+              "uuid": "e96b4f1e-f5c8-4ba9-b4c3-08a5248d7e62",
               "number": 14,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 6,
             "score": 14
           }
         ]
       },
-      "1719140016922": {
+      "1782317981065": {
         "roll": [
           {
-            "diceEpoch": "1719140016900",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "1bbb438e-f652-416f-b9ae-ef399ab5aa0a",
               "number": 3,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
             "score": 3
           },
           {
-            "diceEpoch": "1719140016900",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "1bbb438e-f652-416f-b9ae-ef399ab5aa0a",
+              "number": 3,
+              "numberColour": "FFFFFFFF",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "score": 3,
+            "uuidGroup": "03f40164-ccc7-4a2f-ae0c-9cce49655411"
+          },
+          {
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
+            "side": {
+              "uuid": "c023463e-e7af-4438-aad5-e228f84ac15d",
               "number": 2,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 2,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 2
+            "score": 2,
+            "uuidGroup": "03f40164-ccc7-4a2f-ae0c-9cce49655411"
           },
           {
-            "diceEpoch": "1719140016900",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "c1ddd5ab-a9b1-4981-b564-4231c6ef6408",
               "number": 1,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 3,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 1
+            "score": 1,
+            "uuidGroup": "03f40164-ccc7-4a2f-ae0c-9cce49655411"
           }
         ]
       }
     }
+  },
+  {
+    "group": [
+      {
+        "uuid": "53d3b8e0-4ce1-4fa9-b8e8-13a95df0dffb",
+        "name": "tg1",
+        "uuidDice": [
+          "ef8c2cfd-7649-409f-882f-6ce1a05319dd",
+          "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f"
+        ],
+        "notes": "Test Note 1"
+      },
+      {
+        "uuid": "03f40164-ccc7-4a2f-ae0c-9cce49655411",
+        "name": "tg2",
+        "uuidDice": [
+          "ef8c2cfd-7649-409f-882f-6ce1a05319dd",
+          "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
+          "7eeff917-45f3-43e1-a05c-f3caf5b5c6cb",
+          "798fdd2d-b9b2-4a60-a347-834ed1b6f853"
+        ],
+        "notes": "Test Note 2"
+      }
+    ]
   }
 ]

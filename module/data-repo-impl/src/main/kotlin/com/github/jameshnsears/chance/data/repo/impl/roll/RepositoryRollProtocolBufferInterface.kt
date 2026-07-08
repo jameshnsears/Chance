@@ -20,7 +20,7 @@ interface RepositoryRollProtocolBufferInterface : RepositoryRollInterface {
 
             for (roll in valueRolls) {
                 val rollProtocolBuffer = RollProtocolBuffer.newBuilder()
-                rollProtocolBuffer.setDiceEpoch(roll.diceEpoch)
+                rollProtocolBuffer.setUuidDice(roll.uuidDice)
 
                 val sideProtocolBuffer = SideProtocolBuffer.newBuilder()
                 sideProtocolBuffer.setUuid(roll.side.uuid)
@@ -37,6 +37,7 @@ interface RepositoryRollProtocolBufferInterface : RepositoryRollInterface {
                 rollProtocolBuffer.setExplodeIndex(roll.explodeIndex)
                 rollProtocolBuffer.setScoreAdjustment(roll.scoreAdjustment)
                 rollProtocolBuffer.setScore(roll.score)
+                rollProtocolBuffer.setUuidGroup(roll.uuidGroup)
 
                 rollListProtocolBuffer.addRoll(rollProtocolBuffer.build())
             }
@@ -45,20 +46,17 @@ interface RepositoryRollProtocolBufferInterface : RepositoryRollInterface {
         }
     }
 
-    fun jsonImportProcess(json: String): RollHistory {
-        val rollHistoryProtocolBufferBuilder: RollHistoryProtocolBuffer.Builder =
-            RollHistoryProtocolBuffer.newBuilder()
-
-        JsonFormat.parser().merge(json, rollHistoryProtocolBufferBuilder)
-
+    fun mapRollHistoryProtocolBufferIntoRollHistory(
+        rollHistoryProtocolBuffer: RollHistoryProtocolBuffer,
+    ): RollHistory {
         val newRollHistory: RollHistory = LinkedHashMap()
 
-        rollHistoryProtocolBufferBuilder.valuesMap.forEach { mapEntry ->
+        rollHistoryProtocolBuffer.valuesMap.forEach { mapEntry ->
             val rollList = mutableListOf<Roll>()
             mapEntry.value.rollList.forEach {
                 rollList.add(
                     Roll(
-                        diceEpoch = it.diceEpoch,
+                        uuidDice = it.uuidDice,
                         side = Side(
                             uuid = it.side.uuid,
                             number = it.side.number,
@@ -66,13 +64,14 @@ interface RepositoryRollProtocolBufferInterface : RepositoryRollInterface {
                             imageBase64 = it.side.imageBase64,
                             imageDrawableId = it.side.imageDrawableId,
                             description = it.side.description,
-                            descriptionColour = it.side.descriptionColour
+                            descriptionColour = it.side.descriptionColour,
                         ),
                         multiplierIndex = it.multiplierIndex,
                         explodeIndex = it.explodeIndex,
                         scoreAdjustment = it.scoreAdjustment,
-                        score = it.score
-                    )
+                        score = it.score,
+                        uuidGroup = it.uuidGroup,
+                    ),
                 )
             }
 
@@ -80,5 +79,14 @@ interface RepositoryRollProtocolBufferInterface : RepositoryRollInterface {
         }
 
         return newRollHistory
+    }
+
+    fun jsonImportProcess(json: String): RollHistory {
+        val rollHistoryProtocolBufferBuilder: RollHistoryProtocolBuffer.Builder =
+            RollHistoryProtocolBuffer.newBuilder()
+
+        JsonFormat.parser().merge(json, rollHistoryProtocolBufferBuilder)
+
+        return mapRollHistoryProtocolBufferIntoRollHistory(rollHistoryProtocolBufferBuilder.build())
     }
 }

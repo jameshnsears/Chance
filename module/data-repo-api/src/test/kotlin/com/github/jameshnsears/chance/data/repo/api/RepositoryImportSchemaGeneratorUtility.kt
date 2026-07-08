@@ -1,6 +1,6 @@
 package com.github.jameshnsears.chance.data.repo.api
 
-import com.github.jameshnsears.chance.data.domain.core.roll.Roll
+import com.github.jameshnsears.chance.data.domain.core.group.Group
 import com.github.victools.jsonschema.generator.OptionPreset
 import com.github.victools.jsonschema.generator.SchemaGenerator
 import com.github.victools.jsonschema.generator.SchemaGeneratorConfigBuilder
@@ -11,8 +11,9 @@ import java.lang.reflect.Type
 
 class RepositoryImportSchemaGeneratorUtility {
     @Test
+    // place inside RepositoryImportSchema
     fun createJsonSchema() {
-        val value: Type = Roll::class.java  // Side::class.java; etc ...
+        val value: Type = Group::class.java  // Side::class.java; etc ...
 
         val schemaGeneratorConfigBuilder =
             SchemaGeneratorConfigBuilder(SchemaVersion.DRAFT_2020_12, OptionPreset.PLAIN_JSON)

@@ -1,4 +1,2 @@
 adb_idea
-Genymotion
-GitHub Copilot
-SonarQube fpr IDE
+SonarQube for IDE

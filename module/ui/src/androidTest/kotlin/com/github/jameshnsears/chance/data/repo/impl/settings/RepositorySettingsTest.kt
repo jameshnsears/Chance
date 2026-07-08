@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.data.repo.impl.settings
 
 import androidx.test.core.app.ApplicationProvider
 import com.github.jameshnsears.chance.common.utility.UtilityLoggingHelper
-import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -15,7 +15,7 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
         val repositoryFactory = RepositoryFactory(ApplicationProvider.getApplicationContext())
 
         val originalSettings = SettingsDataImpl()
-        originalSettings.resize = 2
+        originalSettings.resizeZoom = 2f
         originalSettings.rollIndexTime = false
         originalSettings.rollScore = false
         originalSettings.rollScoreTTS = false
@@ -32,7 +32,7 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
 
         val fetchedSettings = repositoryFactory.repositorySettings.fetch().first()
 
-        Assert.assertEquals(originalSettings.resize, fetchedSettings.resize)
+        Assert.assertEquals(originalSettings.resizeZoom, fetchedSettings.resizeZoom)
 
         Assert.assertEquals(originalSettings.rollIndexTime, fetchedSettings.rollIndexTime)
         Assert.assertEquals(originalSettings.rollScore, fetchedSettings.rollScore)
@@ -67,7 +67,7 @@ class RepositorySettingsTest : UtilityLoggingHelper() {
 
         val fetchedSettings = repositoryFactory.repositorySettings.fetch().first()
 
-        Assert.assertEquals(originalSettings.resize, fetchedSettings.resize)
+        Assert.assertEquals(originalSettings.resizeZoom, fetchedSettings.resizeZoom)
 
         Assert.assertEquals(originalSettings.rollIndexTime, fetchedSettings.rollIndexTime)
         Assert.assertEquals(originalSettings.rollScore, fetchedSettings.rollScore)

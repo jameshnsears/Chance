@@ -10,22 +10,6 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose) apply false
     alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
     alias(libs.plugins.testretry) apply false
-    alias(libs.plugins.org.sonarqube)
-}
-
-// ────────────────────────────────────────────────────────────────────
-
-sonarqube {
-    properties {
-        property("sonar.branch.name", "main")
-        property("sonar.cpd.exclusions", "**/src/main/java/**")
-        property("sonar.exclusions", "**/src/main/java/**")
-        property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.kotlin.binaries", "**/build/tmp/kotlin-classes/fdroidDebug")
-        property("sonar.organization", "jameshnsears-github")
-        property("sonar.projectKey", "jameshnsears_Chance")
-        property("sonar.sources", "**/src/main/kotlin")
-    }
 }
 
 // ────────────────────────────────────────────────────────────────────
@@ -48,14 +32,18 @@ detekt {
             "${rootProject.projectDir}/app/src/androidTest/kotlin",
             "${rootProject.projectDir}/app/src/main/kotlin",
             "${rootProject.projectDir}/module/common/src/main/kotlin",
-            "${rootProject.projectDir}/module/data/src/androidTest/kotlin",
-            "${rootProject.projectDir}/module/data/src/main/kotlin",
-            "${rootProject.projectDir}/module/data/src/test/kotlin",
+            "${rootProject.projectDir}/module/common/src/testFixtures/kotlin",
+            "${rootProject.projectDir}/module/data-common/src/androidTest/kotlin",
+            "${rootProject.projectDir}/module/data-common/src/main/kotlin",
+            "${rootProject.projectDir}/module/data-common/src/test/kotlin",
+            "${rootProject.projectDir}/module/data-domain/src/main/kotlin",
+            "${rootProject.projectDir}/module/data-repo-api/src/main/kotlin",
+            "${rootProject.projectDir}/module/data-repo-api/src/test/kotlin",
+            "${rootProject.projectDir}/module/data-repo-impl/src/main/kotlin",
+            "${rootProject.projectDir}/module/data-repo-impl/src/test/kotlin",
+            "${rootProject.projectDir}/module/ui/src/androidTest/kotlin",
             "${rootProject.projectDir}/module/ui/src/main/kotlin",
             "${rootProject.projectDir}/module/ui/src/test/kotlin",
-            "${rootProject.projectDir}/module/ui-dialog-bag/src/androidTest/kotlin",
-            "${rootProject.projectDir}/module/ui-dialog-bag/src/main/kotlin",
-            "${rootProject.projectDir}/module/ui-dialog-bag/src/test/kotlin",
         )
     )
 
@@ -80,7 +68,7 @@ ktlint {
 
 // 1. Centralize configuration to avoid duplication
 val inclusions = listOf(
-    "**/intermediates/built_in_kotlinc/fdroidDebug/compileFdroidDebugKotlin/classes/com/github/jameshnsears/chance/**/*",
+    "com/github/jameshnsears/chance/**/*",
 )
 
 val exclusions = listOf(
@@ -94,6 +82,13 @@ val exclusions = listOf(
     "**/*Test$*.class",
     "**/*UnitTest.class",
     "**/*UnitTest$*.class",
+)
+
+val classDirPaths = listOf(
+    "intermediates/built_in_kotlinc/fdroidDebug/compileFdroidDebugKotlin/classes",
+    "intermediates/javac/fdroidDebug/classes",
+    "tmp/kotlin-classes/fdroidDebug",
+    "intermediates/runtime_library_classes_dir/fdroidDebug/bundleLibRuntimeToDirFdroidDebug"
 )
 
 // Helper to configure reports consistently
@@ -126,25 +121,26 @@ subprojects {
 }
 
 fun Project.configureJacoco() {
-    val targetProjects = if (project.path == ":app") {
-        rootProject.subprojects.filter {
-            it.plugins.hasPlugin("com.android.application") || it.plugins.hasPlugin("com.android.library")
-        }
-    } else {
-        listOf(project)
+    fun getAndroidProjects() = rootProject.subprojects.filter {
+        it.plugins.hasPlugin("com.android.application") || it.plugins.hasPlugin("com.android.library")
     }
 
     tasks.register<JacocoReport>("jacocoFdroidTestReport") {
+        val allAndroidProjects = getAndroidProjects()
+        val targetProjects = if (project.path == ":app") allAndroidProjects else listOf(project)
+
         configureReport(this@configureJacoco, "unitTest")
         dependsOn(targetProjects.map { "${it.path}:testFdroidDebugUnitTest" })
 
-        sourceDirectories.setFrom(targetProjects.map {
+        sourceDirectories.setFrom(allAndroidProjects.map {
             files("${it.projectDir}/src/main/java", "${it.projectDir}/src/main/kotlin")
         })
-        classDirectories.setFrom(targetProjects.map { proj ->
-            fileTree(proj.layout.buildDirectory) {
-                setIncludes(inclusions)
-                setExcludes(exclusions)
+        classDirectories.setFrom(allAndroidProjects.map { proj ->
+            classDirPaths.map { path ->
+                fileTree(proj.layout.buildDirectory.dir(path)) {
+                    include(inclusions)
+                    exclude(exclusions)
+                }
             }
         })
         executionData.setFrom(targetProjects.map { proj ->
@@ -154,23 +150,28 @@ fun Project.configureJacoco() {
 
     // Combine AndroidTest (Instrumented) + Unit Test
     tasks.register<JacocoReport>("jacocoFdroidAndroidTestReport") {
+        val allAndroidProjects = getAndroidProjects()
+        val targetProjects = if (project.path == ":app") allAndroidProjects else listOf(project)
+
         configureReport(this@configureJacoco, "androidTest")
         dependsOn(targetProjects.map { "${it.path}:testFdroidDebugUnitTest" })
         dependsOn(targetProjects.map { "${it.path}:connectedFdroidDebugAndroidTest" })
 
-        sourceDirectories.setFrom(targetProjects.map {
+        // Use allAndroidProjects for source and classes to allow cross-module coverage visibility
+        sourceDirectories.setFrom(allAndroidProjects.map {
             files("${it.projectDir}/src/main/java", "${it.projectDir}/src/main/kotlin")
         })
-        classDirectories.setFrom(targetProjects.map { proj ->
-            fileTree(proj.layout.buildDirectory) {
-                setIncludes(inclusions)
-                setExcludes(exclusions)
+        classDirectories.setFrom(allAndroidProjects.map { proj ->
+            classDirPaths.map { path ->
+                fileTree(proj.layout.buildDirectory.dir(path)) {
+                    include(inclusions)
+                    exclude(exclusions)
+                }
             }
         })
 
-        // Grab both local unit tests and instrumented results
-        // Support for Orchestrator: .ec files are often nested in subdirectories
-        executionData.setFrom(targetProjects.map { proj ->
+        // Grab both local unit tests and instrumented results from all relevant projects
+        executionData.setFrom(allAndroidProjects.map { proj ->
             fileTree(proj.layout.buildDirectory) {
                 include(
                     "outputs/unit_test_code_coverage/**/*.exec",
@@ -198,9 +199,11 @@ tasks.register<JacocoReport>("jacocoCombinedReport") {
         files("${it.projectDir}/src/main/java", "${it.projectDir}/src/main/kotlin")
     })
     classDirectories.setFrom(subProjectList.map { proj ->
-        fileTree(proj.layout.buildDirectory) {
-            setIncludes(inclusions)
-            setExcludes(exclusions)
+        classDirPaths.map { path ->
+            fileTree(proj.layout.buildDirectory.dir(path)) {
+                include(inclusions)
+                exclude(exclusions)
+            }
         }
     })
     executionData.setFrom(subProjectList.map { proj ->

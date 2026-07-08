@@ -1,102 +1,89 @@
 package com.github.jameshnsears.chance.data.repo.impl.settings.testdouble
 
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
-import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.impl.settings.RepositorySettingsProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 class RepositorySettingsProtocolBufferTestDouble private constructor() :
     RepositorySettingsProtocolBufferInterface {
+    private val settingsProtocolBufferStateFlow =
+        MutableStateFlow(SettingsProtocolBuffer.getDefaultInstance())
+
+    private var initialized = false
+
     companion object {
-        var instance: RepositorySettingsProtocolBufferTestDouble? = null
+        private var instance: RepositorySettingsProtocolBufferTestDouble? = null
 
         fun getInstance(
-            settingsData: SettingsDataInterface
+            settingsData: SettingsDataInterface,
         ): RepositorySettingsProtocolBufferTestDouble {
             if (instance == null) {
                 instance = RepositorySettingsProtocolBufferTestDouble()
-                instance!!.settings = settingsData
-            } else if (instance!!.settings == null) {
-                instance!!.settings = settingsData
+            }
+
+            if (!instance!!.initialized) {
+                instance!!.updateStateFlow(settingsData)
+                instance!!.initialized = true
             }
             return instance!!
         }
     }
 
-    private var settings: SettingsDataInterface? = null
+    private fun updateStateFlow(settingsData: SettingsDataInterface) {
+        val settingsProtocolBufferBuilder = SettingsProtocolBuffer.newBuilder()
+        mapSettingsIntoSettingsProtocolBufferBuilder(settingsData, settingsProtocolBufferBuilder)
+        settingsProtocolBufferStateFlow.value = settingsProtocolBufferBuilder.build()
+    }
 
     override suspend fun jsonExport(): String {
-        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
-            SettingsProtocolBuffer.newBuilder()
-
-        mapSettingsIntoSettingsProtocolBufferBuilder(settings!!, settingsProtocolBufferBuilder)
-
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
-        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("resize"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("resizeZoom"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollIndexTime"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScore"))
-        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScoreTTS"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("diceTitle"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideNumber"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("behaviour"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideDescription"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("sideSVG"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollSound"))
-        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("haptics"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shuffle"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("haptics"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScoreTTS"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shakeToRoll"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("groupTitle"))
 
         return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
-            .print(settingsProtocolBufferBuilder.build())
+            .print(settingsProtocolBufferStateFlow.value)
     }
 
     override suspend fun jsonImport(json: String) {
         store(jsonImportProcess(json))
     }
 
-    override fun jsonImportProcess(json: String): SettingsDataInterface {
-        val settingsProtocolBufferBuilder: SettingsProtocolBuffer.Builder =
-            SettingsProtocolBuffer.newBuilder()
+    override suspend fun fetch(): Flow<SettingsDataInterface> = settingsProtocolBufferStateFlow
+        .map { settingsProtocolBuffer ->
+            val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
 
-        JsonFormat.parser().merge(json, settingsProtocolBufferBuilder)
+            Timber.d("repositorySettings.FETCH ============================================")
+            Timber.d("repositorySettings.resizeZoom=${settings.resizeZoom}")
 
-        val settingsProtocolBuffer = settingsProtocolBufferBuilder.build()
-
-        val newSettings = SettingsDataTestDouble()
-
-        newSettings.resize = settingsProtocolBuffer.resize
-
-        newSettings.rollIndexTime = settingsProtocolBuffer.rollIndexTime
-        newSettings.rollScore = settingsProtocolBuffer.rollScore
-        newSettings.rollScoreTTS = settingsProtocolBuffer.rollScoreTTS
-
-        newSettings.diceTitle = settingsProtocolBuffer.diceTitle
-        newSettings.sideNumber = settingsProtocolBuffer.sideNumber
-        newSettings.rollBehaviour = settingsProtocolBuffer.behaviour
-        newSettings.sideDescription = settingsProtocolBuffer.sideDescription
-        newSettings.sideSVG = settingsProtocolBuffer.sideSVG
-
-        newSettings.rollSound = settingsProtocolBuffer.rollSound
-        newSettings.haptics = settingsProtocolBuffer.haptics
-        newSettings.shuffle = settingsProtocolBuffer.shuffle
-        newSettings.shakeToRoll = settingsProtocolBuffer.shakeToRoll
-
-        return newSettings
-    }
-
-    override suspend fun fetch(): Flow<SettingsDataInterface> = flow {
-        emit(settings ?: SettingsDataTestDouble())
-    }
+            settings
+        }
 
     override suspend fun store(settingsData: SettingsDataInterface) {
-        settings = settingsData
+        Timber.d("repositorySettings.STORE ============================================")
+        Timber.d("repositorySettings.resizeZoom=${settingsData.resizeZoom}")
+
+        updateStateFlow(settingsData)
     }
 
     override suspend fun clear() {
-        settings = null
+        settingsProtocolBufferStateFlow.value = SettingsProtocolBuffer.getDefaultInstance()
     }
 }

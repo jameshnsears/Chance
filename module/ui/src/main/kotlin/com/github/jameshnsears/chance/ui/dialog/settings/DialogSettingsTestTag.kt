@@ -11,6 +11,7 @@ class DialogSettingsTestTag {
         const val SETTINGS_SIDE_DESCRIPTION = "SETTINGS_SIDE_DESCRIPTION"
         const val SETTINGS_SIDE_SVG = "SETTINGS_SIDE_SVG"
         const val SETTINGS_BEHAVIOUR = "SETTINGS_BEHAVIOUR"
+        const val SETTINGS_GROUP_TITLE = "SETTINGS_GROUP_TITLE"
 
         const val SETTINGS_ROLL_SHUFFLE = "SETTINGS_ROLL_SHUFFLE"
         const val SETTINGS_ROLL_HAPTICS = "SETTINGS_ROLL_HAPTICS"
@@ -18,5 +19,6 @@ class DialogSettingsTestTag {
         const val SETTINGS_ROLL_SOUND = "SETTINGS_ROLL_SOUND"
 
         const val SETTINGS_UNDO_ALL = "SETTINGS_UNDO_ALL"
+        const val SETTINGS_CLOSE = "SETTINGS_CLOSE"
     }
 }

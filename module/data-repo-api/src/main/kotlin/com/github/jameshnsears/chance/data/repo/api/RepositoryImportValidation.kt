@@ -10,15 +10,21 @@ class RepositoryImportValidation {
             validateJsonIsNotEmpty(jsonNode)
             validateJsonSectionsExist(jsonNode)
 
-            validateDiceBagNotEmpty(jsonNode.get(1))
-            validateDiceTitle(jsonNode.get(1))
-            validateRollsReferenceAvailableDice(jsonNode.get(1), jsonNode.get(2))
+            val jsonSettings = jsonNode.get(0)
+            val jsonBag = jsonNode.get(1)
+            val jsonRolls = jsonNode.get(2)
+            val jsonGroups = jsonNode.get(3)
 
-            validateRepositorySettings(jsonNode.get(0))
-            validateRepositoryBag(jsonNode.get(1))
-            validateRepositoryRoll(jsonNode.get(2))
+            validateRepositorySettings(jsonSettings)
+            validateRepositoryBag(jsonBag)
+            validateRepositoryRolls(jsonRolls)
+            validateRepositoryGroups(jsonGroups)
 
-            validateEpochData(jsonNode)
+            validateDiceIntegrity(jsonBag)
+            validateRollsReferenceAvailableDice(jsonBag, jsonRolls)
+
+            if (jsonGroups != null)
+                validateGroupsReferenceAvailableDice(jsonBag, jsonGroups)
         }
 
         private fun validateJsonIsNotEmpty(rootNode: JsonNode) {
@@ -27,7 +33,7 @@ class RepositoryImportValidation {
         }
 
         private fun validateJsonSectionsExist(rootNode: JsonNode) {
-            if (rootNode.size() != 3)
+            if (rootNode.size() !in 2..4)
                 throw RepositoryImportException(RepositoryImportStatus.ERROR_SECTION_MISSING)
         }
 
@@ -37,12 +43,17 @@ class RepositoryImportValidation {
             if (!RepositoryImportSchema.schemaSettings.validate(settingsString))
                 logSchemaValidationFailure(
                     settingsString,
-                    RepositoryImportSchema.schemaDice,
+                    RepositoryImportSchema.schemaSettings,
                     RepositoryImportStatus.ERROR_SCHEMA_SETTINGS
                 )
         }
 
         private fun validateRepositoryBag(jsonBag: JsonNode) {
+            if (jsonBag.toString() == "{}")
+                throw RepositoryImportException(RepositoryImportStatus.ERROR_DICE_MISSING)
+
+            validateDiceTitle(jsonBag)
+
             jsonBag.get("dice").forEach { dice ->
                 validateDice(dice)
                 validateDiceEachSide(dice)
@@ -69,13 +80,15 @@ class RepositoryImportValidation {
         ) {
             val output = schema.validateBasic(json)
 
-            println("$reason")
             Timber.e("$reason")
 
             output.errors?.forEach {
                 val errorMessage = "${it.error} - ${it.instanceLocation}"
-                println(errorMessage)
                 Timber.e(errorMessage)
+
+                if (BuildConfig.DEBUG) {
+                    println(errorMessage)
+                }
             }
 
             throw RepositoryImportException(reason)
@@ -100,8 +113,8 @@ class RepositoryImportValidation {
             }
         }
 
-        private fun validateRepositoryRoll(jsonRoll: JsonNode) {
-            jsonRoll.forEach { rollHistory ->
+        private fun validateRepositoryRolls(jsonRolls: JsonNode) {
+            jsonRolls.forEach { rollHistory ->
                 rollHistory.forEach { rollSequence ->
                     rollSequence.forEach { roll ->
                         roll.forEach { diceAndSide ->
@@ -109,6 +122,12 @@ class RepositoryImportValidation {
                         }
                     }
                 }
+            }
+        }
+
+        private fun validateRepositoryGroups(jsonGroups: JsonNode?) {
+            if (jsonGroups != null && !jsonGroups.isEmpty) {
+                validateGroup(jsonGroups)
             }
         }
 
@@ -125,15 +144,28 @@ class RepositoryImportValidation {
             }
         }
 
-        private fun validateDiceBagNotEmpty(jsonBag: JsonNode) {
-            if (jsonBag.toString() == "{}")
-                throw RepositoryImportException(RepositoryImportStatus.ERROR_DICE_MISSING)
+        private fun validateGroup(
+            group: JsonNode,
+        ) {
+            val groupString = group.toString()
+            if (!RepositoryImportSchema.schemaGroup.validate(groupString)) {
+                logSchemaValidationFailure(
+                    groupString,
+                    RepositoryImportSchema.schemaGroup,
+                    RepositoryImportStatus.ERROR_SCHEMA_GROUP
+                )
+            }
         }
 
         private fun validateDiceTitle(jsonBag: JsonNode) {
             val diceTitles = ArrayList<String>()
             jsonBag.get("dice").forEach { dice ->
-                val diceTitle = dice.get("title").toString()
+
+                if (dice.get("title") == null) {
+                    throw RepositoryImportException(RepositoryImportStatus.ERROR_SCHEMA_DICE)
+                }
+
+                val diceTitle = dice.get("title").asText()
 
                 if (diceTitles.contains(diceTitle)) {
                     Timber.e(diceTitle)
@@ -146,19 +178,22 @@ class RepositoryImportValidation {
 
         private fun validateRollsReferenceAvailableDice(
             jsonBag: JsonNode,
-            jsonRoll: JsonNode
+            jsonRolls: JsonNode
         ) {
-            val allDiceEpochs = diceEpochs(jsonBag)
+            val allDiceUuids = diceUuids(jsonBag)
 
-            jsonRoll.forEach { rollHistory ->
+            jsonRolls.forEach { rollHistory ->
                 rollHistory.forEach { rollSequence ->
                     rollSequence.forEach { roll ->
                         roll.forEach { diceAndSide ->
-                            val sideDiceEpoch = diceAndSide.get("diceEpoch").toString()
+                            val uuidDice = diceAndSide.get("uuidDice")
+                            if (uuidDice != null) {
+                                val sideDiceUuid = uuidDice.asText()
 
-                            if (!allDiceEpochs.contains(sideDiceEpoch)) {
-                                Timber.e(sideDiceEpoch)
-                                throw RepositoryImportException(RepositoryImportStatus.ERROR_DICE_UNKNOWN)
+                                if (!allDiceUuids.contains(sideDiceUuid)) {
+                                    Timber.e(sideDiceUuid)
+                                    throw RepositoryImportException(RepositoryImportStatus.ERROR_DICE_UNKNOWN)
+                                }
                             }
                         }
                     }
@@ -166,31 +201,25 @@ class RepositoryImportValidation {
             }
         }
 
-        private fun validateEpochData(rootNode: JsonNode) {
-            //  roll side diceEpoch must be known dice epoch
-            val diceEpochs = diceEpochs(rootNode.get(1))
+        private fun validateGroupsReferenceAvailableDice(jsonBag: JsonNode, jsonGroups: JsonNode) {
+            val allDiceUuids = diceUuids(jsonBag)
 
-            rootNode.get(2).forEach { rollHistory ->
-                rollHistory.forEach { rollSequence ->
-                    rollSequence.forEach { roll ->
-                        roll.forEach { diceAndSide ->
-                            val sideDiceEpoch = diceAndSide.get("diceEpoch").toString()
-                            if (!diceEpochs.contains(sideDiceEpoch)) {
-                                Timber.e(sideDiceEpoch)
-                                throw RepositoryImportException(RepositoryImportStatus.ERROR_DICE_UNKNOWN)
-                            }
-                        }
+            jsonGroups.get("group")?.forEach { group ->
+                group.get("uuidDice")?.forEach { uuidDice ->
+                    if (!allDiceUuids.contains(uuidDice.asText())) {
+                        Timber.e(uuidDice.asText())
+                        throw RepositoryImportException(RepositoryImportStatus.ERROR_DICE_UNKNOWN)
                     }
                 }
             }
         }
 
-        private fun diceEpochs(jsonNode: JsonNode): ArrayList<String> {
-            val diceEpochs = ArrayList<String>()
-            jsonNode.get("dice").forEach { dice ->
-                diceEpochs.add(dice.get("epoch").toString())
-            }
-            return diceEpochs
+        private fun validateDiceIntegrity(jsonBag: JsonNode) = diceUuids(jsonBag)
+
+        private fun diceUuids(jsonNode: JsonNode): List<String> {
+            return jsonNode.get("dice")?.mapNotNull { dice ->
+                dice.get("uuid")?.asText()
+            } ?: emptyList()
         }
     }
 }

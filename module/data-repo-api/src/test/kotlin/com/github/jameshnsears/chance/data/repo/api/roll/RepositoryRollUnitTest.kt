@@ -18,21 +18,21 @@ class RepositoryRollUnitTest : UtilityAndroidUnitTestHelper() {
     fun fetch() = runTest {
         val mockRepository = mockk<RepositoryRollInterface>()
         val rollHistory: RollHistory = linkedMapOf(
-            1L to listOf(Roll(diceEpoch = 10L, side = Side(number = 1)))
+            1L to listOf(Roll(uuidDice = "10", side = Side(number = 1)))
         )
 
         coEvery { mockRepository.fetch() } returns flowOf(rollHistory)
 
         val result = mockRepository.fetch().first()
         assertEquals(1, result.size)
-        assertEquals(10L, result[1L]!![0].diceEpoch)
+        assertEquals("10", result[1L]!![0].uuidDice)
     }
 
     @Test
     fun store() = runTest {
         val mockRepository = mockk<RepositoryRollInterface>(relaxed = true)
         val rollHistory: RollHistory = linkedMapOf(
-            1L to listOf(Roll(diceEpoch = 10L, side = Side(number = 1)))
+            1L to listOf(Roll(uuidDice = "10", side = Side(number = 1)))
         )
 
         mockRepository.store(rollHistory)
@@ -51,7 +51,7 @@ class RepositoryRollUnitTest : UtilityAndroidUnitTestHelper() {
         }
 
         val rollHistory: RollHistory = linkedMapOf(
-            1L to listOf(Roll(diceEpoch = 10L, side = Side(uuid = "side-uuid", number = 1)))
+            1L to listOf(Roll(uuidDice = "10", side = Side(uuid = "side-uuid", number = 1)))
         )
 
         // Verifies no crash when calling default implementation

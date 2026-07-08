@@ -18,6 +18,8 @@ public final class RollProtocolBuffer extends
     public static final int EXPLODEINDEX_FIELD_NUMBER = 4;
     public static final int SCOREADJUSTMENT_FIELD_NUMBER = 5;
     public static final int SCORE_FIELD_NUMBER = 6;
+    public static final int UUIDDICE_FIELD_NUMBER = 7;
+    public static final int UUIDGROUP_FIELD_NUMBER = 8;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer DEFAULT_INSTANCE;
@@ -64,6 +66,10 @@ public final class RollProtocolBuffer extends
     private int explodeIndex_ = 0;
     private int scoreAdjustment_ = 0;
     private int score_ = 0;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object uuidDice_ = "";
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object uuidGroup_ = "";
     private byte memoizedIsInitialized = -1;
 
     // Use RollProtocolBuffer.newBuilder() to construct.
@@ -72,6 +78,8 @@ public final class RollProtocolBuffer extends
     }
 
     private RollProtocolBuffer() {
+        uuidDice_ = "";
+        uuidGroup_ = "";
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
@@ -185,11 +193,14 @@ public final class RollProtocolBuffer extends
     }
 
     /**
-     * <code>int64 diceEpoch = 1;</code>
+     * <code>int64 diceEpoch = 1 [deprecated = true];</code>
      *
      * @return The diceEpoch.
+     * @deprecated com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.diceEpoch is deprecated.
+     * See roll.proto;l=9
      */
     @java.lang.Override
+    @java.lang.Deprecated
     public long getDiceEpoch() {
         return diceEpoch_;
     }
@@ -262,6 +273,84 @@ public final class RollProtocolBuffer extends
         return score_;
     }
 
+    /**
+     * <code>string uuidDice = 7;</code>
+     *
+     * @return The uuidDice.
+     */
+    @java.lang.Override
+    public java.lang.String getUuidDice() {
+        java.lang.Object ref = uuidDice_;
+        if (ref instanceof java.lang.String) {
+            return (java.lang.String) ref;
+        } else {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            uuidDice_ = s;
+            return s;
+        }
+    }
+
+    /**
+     * <code>string uuidDice = 7;</code>
+     *
+     * @return The bytes for uuidDice.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+    getUuidDiceBytes() {
+        java.lang.Object ref = uuidDice_;
+        if (ref instanceof java.lang.String) {
+            com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            uuidDice_ = b;
+            return b;
+        } else {
+            return (com.google.protobuf.ByteString) ref;
+        }
+    }
+
+    /**
+     * <code>string uuidGroup = 8;</code>
+     *
+     * @return The uuidGroup.
+     */
+    @java.lang.Override
+    public java.lang.String getUuidGroup() {
+        java.lang.Object ref = uuidGroup_;
+        if (ref instanceof java.lang.String) {
+            return (java.lang.String) ref;
+        } else {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            uuidGroup_ = s;
+            return s;
+        }
+    }
+
+    /**
+     * <code>string uuidGroup = 8;</code>
+     *
+     * @return The bytes for uuidGroup.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+    getUuidGroupBytes() {
+        java.lang.Object ref = uuidGroup_;
+        if (ref instanceof java.lang.String) {
+            com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            uuidGroup_ = b;
+            return b;
+        } else {
+            return (com.google.protobuf.ByteString) ref;
+        }
+    }
+
     @java.lang.Override
     public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -292,6 +381,12 @@ public final class RollProtocolBuffer extends
         }
         if (score_ != 0) {
             output.writeInt32(6, score_);
+        }
+        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(uuidDice_)) {
+            com.google.protobuf.GeneratedMessage.writeString(output, 7, uuidDice_);
+        }
+        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(uuidGroup_)) {
+            com.google.protobuf.GeneratedMessage.writeString(output, 8, uuidGroup_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -326,6 +421,12 @@ public final class RollProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(6, score_);
         }
+        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(uuidDice_)) {
+            size += com.google.protobuf.GeneratedMessage.computeStringSize(7, uuidDice_);
+        }
+        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(uuidGroup_)) {
+            size += com.google.protobuf.GeneratedMessage.computeStringSize(8, uuidGroup_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
         return size;
@@ -356,6 +457,10 @@ public final class RollProtocolBuffer extends
             != other.getScoreAdjustment()) return false;
         if (getScore()
             != other.getScore()) return false;
+        if (!getUuidDice()
+            .equals(other.getUuidDice())) return false;
+        if (!getUuidGroup()
+            .equals(other.getUuidGroup())) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
     }
@@ -382,6 +487,10 @@ public final class RollProtocolBuffer extends
         hash = (53 * hash) + getScoreAdjustment();
         hash = (37 * hash) + SCORE_FIELD_NUMBER;
         hash = (53 * hash) + getScore();
+        hash = (37 * hash) + UUIDDICE_FIELD_NUMBER;
+        hash = (53 * hash) + getUuidDice().hashCode();
+        hash = (37 * hash) + UUIDGROUP_FIELD_NUMBER;
+        hash = (53 * hash) + getUuidGroup().hashCode();
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -431,6 +540,8 @@ public final class RollProtocolBuffer extends
         private int explodeIndex_;
         private int scoreAdjustment_;
         private int score_;
+        private java.lang.Object uuidDice_ = "";
+        private java.lang.Object uuidGroup_ = "";
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.newBuilder()
         private Builder() {
@@ -477,6 +588,8 @@ public final class RollProtocolBuffer extends
             explodeIndex_ = 0;
             scoreAdjustment_ = 0;
             score_ = 0;
+            uuidDice_ = "";
+            uuidGroup_ = "";
             return this;
         }
 
@@ -534,6 +647,12 @@ public final class RollProtocolBuffer extends
             if (((from_bitField0_ & 0x00000020) != 0)) {
                 result.score_ = score_;
             }
+            if (((from_bitField0_ & 0x00000040) != 0)) {
+                result.uuidDice_ = uuidDice_;
+            }
+            if (((from_bitField0_ & 0x00000080) != 0)) {
+                result.uuidGroup_ = uuidGroup_;
+            }
             result.bitField0_ |= to_bitField0_;
         }
 
@@ -566,6 +685,16 @@ public final class RollProtocolBuffer extends
             }
             if (other.getScore() != 0) {
                 setScore(other.getScore());
+            }
+            if (!other.getUuidDice().isEmpty()) {
+                uuidDice_ = other.uuidDice_;
+                bitField0_ |= 0x00000040;
+                onChanged();
+            }
+            if (!other.getUuidGroup().isEmpty()) {
+                uuidGroup_ = other.uuidGroup_;
+                bitField0_ |= 0x00000080;
+                onChanged();
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -625,6 +754,16 @@ public final class RollProtocolBuffer extends
                             bitField0_ |= 0x00000020;
                             break;
                         } // case 48
+                        case 58: {
+                            uuidDice_ = input.readStringRequireUtf8();
+                            bitField0_ |= 0x00000040;
+                            break;
+                        } // case 58
+                        case 66: {
+                            uuidGroup_ = input.readStringRequireUtf8();
+                            bitField0_ |= 0x00000080;
+                            break;
+                        } // case 66
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -642,21 +781,27 @@ public final class RollProtocolBuffer extends
         }
 
         /**
-         * <code>int64 diceEpoch = 1;</code>
+         * <code>int64 diceEpoch = 1 [deprecated = true];</code>
          *
          * @return The diceEpoch.
+         * @deprecated com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.diceEpoch is deprecated.
+         * See roll.proto;l=9
          */
         @java.lang.Override
+        @java.lang.Deprecated
         public long getDiceEpoch() {
             return diceEpoch_;
         }
 
         /**
-         * <code>int64 diceEpoch = 1;</code>
+         * <code>int64 diceEpoch = 1 [deprecated = true];</code>
          *
          * @param value The diceEpoch to set.
          * @return This builder for chaining.
+         * @deprecated com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.diceEpoch is deprecated.
+         * See roll.proto;l=9
          */
+        @java.lang.Deprecated
         public Builder setDiceEpoch(long value) {
 
             diceEpoch_ = value;
@@ -666,10 +811,13 @@ public final class RollProtocolBuffer extends
         }
 
         /**
-         * <code>int64 diceEpoch = 1;</code>
+         * <code>int64 diceEpoch = 1 [deprecated = true];</code>
          *
          * @return This builder for chaining.
+         * @deprecated com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.diceEpoch is deprecated.
+         * See roll.proto;l=9
          */
+        @java.lang.Deprecated
         public Builder clearDiceEpoch() {
             bitField0_ = (bitField0_ & ~0x00000001);
             diceEpoch_ = 0L;
@@ -945,6 +1093,174 @@ public final class RollProtocolBuffer extends
         public Builder clearScore() {
             bitField0_ = (bitField0_ & ~0x00000020);
             score_ = 0;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string uuidDice = 7;</code>
+         *
+         * @return The uuidDice.
+         */
+        public java.lang.String getUuidDice() {
+            java.lang.Object ref = uuidDice_;
+            if (!(ref instanceof java.lang.String)) {
+                com.google.protobuf.ByteString bs =
+                    (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                uuidDice_ = s;
+                return s;
+            } else {
+                return (java.lang.String) ref;
+            }
+        }
+
+        /**
+         * <code>string uuidDice = 7;</code>
+         *
+         * @param value The uuidDice to set.
+         * @return This builder for chaining.
+         */
+        public Builder setUuidDice(
+            java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            uuidDice_ = value;
+            bitField0_ |= 0x00000040;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string uuidDice = 7;</code>
+         *
+         * @return The bytes for uuidDice.
+         */
+        public com.google.protobuf.ByteString
+        getUuidDiceBytes() {
+            java.lang.Object ref = uuidDice_;
+            if (ref instanceof String) {
+                com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
+                uuidDice_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        /**
+         * <code>string uuidDice = 7;</code>
+         *
+         * @param value The bytes for uuidDice to set.
+         * @return This builder for chaining.
+         */
+        public Builder setUuidDiceBytes(
+            com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            uuidDice_ = value;
+            bitField0_ |= 0x00000040;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string uuidDice = 7;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearUuidDice() {
+            uuidDice_ = getDefaultInstance().getUuidDice();
+            bitField0_ = (bitField0_ & ~0x00000040);
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string uuidGroup = 8;</code>
+         *
+         * @return The uuidGroup.
+         */
+        public java.lang.String getUuidGroup() {
+            java.lang.Object ref = uuidGroup_;
+            if (!(ref instanceof java.lang.String)) {
+                com.google.protobuf.ByteString bs =
+                    (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                uuidGroup_ = s;
+                return s;
+            } else {
+                return (java.lang.String) ref;
+            }
+        }
+
+        /**
+         * <code>string uuidGroup = 8;</code>
+         *
+         * @param value The uuidGroup to set.
+         * @return This builder for chaining.
+         */
+        public Builder setUuidGroup(
+            java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            uuidGroup_ = value;
+            bitField0_ |= 0x00000080;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string uuidGroup = 8;</code>
+         *
+         * @return The bytes for uuidGroup.
+         */
+        public com.google.protobuf.ByteString
+        getUuidGroupBytes() {
+            java.lang.Object ref = uuidGroup_;
+            if (ref instanceof String) {
+                com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
+                uuidGroup_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        /**
+         * <code>string uuidGroup = 8;</code>
+         *
+         * @param value The bytes for uuidGroup to set.
+         * @return This builder for chaining.
+         */
+        public Builder setUuidGroupBytes(
+            com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            uuidGroup_ = value;
+            bitField0_ |= 0x00000080;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string uuidGroup = 8;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearUuidGroup() {
+            uuidGroup_ = getDefaultInstance().getUuidGroup();
+            bitField0_ = (bitField0_ & ~0x00000080);
             onChanged();
             return this;
         }

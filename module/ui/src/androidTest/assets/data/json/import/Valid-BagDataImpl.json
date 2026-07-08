@@ -1,14 +1,18 @@
 [
   {
-    "resize": 3,
+    "resizeZoom": 3,
     "rollIndexTime": false,
     "rollScore": false,
+    "rollScoreTTS": false,
     "diceTitle": false,
     "sideNumber": false,
     "behaviour": false,
     "sideDescription": false,
     "sideSVG": false,
-    "rollSound": false
+    "haptics": false,
+    "shakeToRoll": false,
+    "rollSound": false,
+    "shuffle": false
   },
   {
     "dice": [
@@ -155,5 +159,6 @@
   {
     "values": {
     }
-  }
+  },
+  []
 ]

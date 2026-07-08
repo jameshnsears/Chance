@@ -1,0 +1,146 @@
+package com.github.jameshnsears.chance.data.common.repo
+
+import android.content.Context
+import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
+import com.github.jameshnsears.chance.data.common.BuildConfig
+import com.github.jameshnsears.chance.data.domain.core.bag.impl.BagDataImpl
+import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.group.impl.GroupDataImpl
+import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.impl.RollHistoryDataImpl
+import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
+import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
+import com.github.jameshnsears.chance.data.repo.impl.bag.impl.RepositoryBagProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repo.impl.bag.testdouble.RepositoryBagProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repo.impl.group.impl.RepositoryGroupProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repo.impl.group.testdouble.RepositoryGroupProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repo.impl.roll.impl.RepositoryRollProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repo.impl.roll.testdouble.RepositoryRollProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repo.impl.settings.impl.RepositorySettingsProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repo.impl.settings.testdouble.RepositorySettingsProtocolBufferTestDouble
+import kotlinx.coroutines.flow.first
+
+class RepositoryFactory(val context: Context? = null) {
+    // ========================================================================
+    // 1. Non-Repository Variables (Eagerly initialized in strict dependency order)
+    // ========================================================================
+
+    // Settings (No dependencies)
+    val settingsImpl = SettingsDataImpl()
+    val settingsTestDouble = SettingsDataTestDouble()
+
+    // Bag (Independent, requires context)
+    val bagDataImpl = BagDataImpl(context)
+    val bagDataTestDouble = BagDataTestDouble()
+
+    // Group (Depends on Bag)
+    val groupDataImplObject = GroupDataImpl(context, bagDataImpl)
+    val groupDataImpl = groupDataImplObject.groupHistory
+
+    val groupDataTestDoubleObject = GroupDataTestDouble(bagDataTestDouble)
+    val groupDataTestDouble = groupDataTestDoubleObject.groupHistory
+
+    // Roll History (Depends on Bag and Group)
+    val rollHistoryDataImpl = RollHistoryDataImpl(bagDataImpl, groupDataImplObject).rollHistory
+    val rollHistoryTestDouble = RollHistoryDataTestDouble(bagDataTestDouble, groupDataTestDoubleObject).rollHistory
+
+    // ========================================================================
+    // 2. Repositories (Guaranteed to initialize AFTER all above variables exist)
+    // ========================================================================
+
+    val repositorySettings by lazy {
+        if (BuildConfig.DEBUG) {
+            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
+                RepositorySettingsProtocolBufferImpl.getInstance(context, settingsImpl)
+            else
+                RepositorySettingsProtocolBufferTestDouble.getInstance(settingsTestDouble)
+        } else {
+            RepositorySettingsProtocolBufferImpl.getInstance(context!!, settingsImpl)
+        }
+    }
+
+    val repositoryBag by lazy {
+        if (BuildConfig.DEBUG) {
+            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
+                RepositoryBagProtocolBufferImpl.getInstance(context, bagDataImpl.allDice)
+            else
+                RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDice)
+        } else {
+            RepositoryBagProtocolBufferImpl.getInstance(context!!, bagDataImpl.allDice)
+        }
+    }
+
+    val repositoryGroup by lazy {
+        if (BuildConfig.DEBUG) {
+            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
+                RepositoryGroupProtocolBufferImpl.getInstance(context, groupDataImpl)
+            else
+                RepositoryGroupProtocolBufferTestDouble.getInstance(groupDataTestDouble)
+        } else {
+            RepositoryGroupProtocolBufferImpl.getInstance(context!!, groupDataImpl)
+        }
+    }
+
+    val repositoryRoll by lazy {
+        if (BuildConfig.DEBUG) {
+            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
+                RepositoryRollProtocolBufferImpl.getInstance(context, rollHistoryDataImpl)
+            else
+                RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble)
+        } else {
+            RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
+        }
+    }
+
+    // ========================================================================
+    // 3. Operations
+    // ========================================================================
+
+    suspend fun initialize() {
+        if (BuildConfig.DEBUG && UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_EMPTY_AT_STARTUP)) {
+            repositorySettings.clear()
+            repositoryBag.clear()
+            repositoryGroup.clear()
+            repositoryRoll.clear()
+        }
+
+        if (repositorySettings.fetch().first().resizeZoom == 0f) {
+            repositorySettings.store(settingsImpl)
+        }
+
+        if (repositoryBag.fetch().first().isEmpty()) {
+            repositoryBag.store(bagDataImpl.allDice)
+        }
+
+        if (repositoryGroup.fetch().first().isEmpty()) {
+            repositoryGroup.store(groupDataImpl)
+        }
+
+        if (repositoryRoll.fetch().first().isEmpty()) {
+            repositoryRoll.store(rollHistoryDataImpl)
+            repositoryRoll.traceUuid(rollHistoryDataImpl)
+        }
+    }
+
+    suspend fun resetStorage() {
+        if (BuildConfig.DEBUG) {
+            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
+                repositorySettings.store(settingsImpl)
+                repositoryBag.store(bagDataImpl.allDice)
+                repositoryGroup.store(groupDataImpl)
+                repositoryRoll.store(rollHistoryDataImpl)
+            } else {
+                repositorySettings.store(settingsTestDouble)
+                repositoryBag.store(bagDataTestDouble.allDice)
+                repositoryGroup.store(groupDataTestDouble)
+                repositoryRoll.store(rollHistoryTestDouble)
+            }
+        } else {
+            repositorySettings.store(settingsImpl)
+            repositoryBag.store(bagDataImpl.allDice)
+            repositoryGroup.store(groupDataImpl)
+            repositoryRoll.store(rollHistoryDataImpl)
+        }
+    }
+}

@@ -27,13 +27,14 @@ public final class Roll {
     static {
         java.lang.String[] descriptorData = {
             "\n\nroll.proto\0220com.github.jameshnsears.ch" +
-                "ance.data.domain.proto\032\nside.proto\"\322\001\n\022R" +
-                "ollProtocolBuffer\022\021\n\tdiceEpoch\030\001 \001(\003\022R\n\004" +
-                "side\030\002 \001(\0132D.com.github.jameshnsears.cha" +
-                "nce.data.domain.proto.SideProtocolBuffer" +
-                "\022\027\n\017multiplierIndex\030\003 \001(\005\022\024\n\014explodeInde" +
-                "x\030\004 \001(\005\022\027\n\017scoreAdjustment\030\005 \001(\005\022\r\n\005scor" +
-                "e\030\006 \001(\005B\002P\001b\006proto3"
+                "ance.data.domain.proto\032\nside.proto\"\373\001\n\022R" +
+                "ollProtocolBuffer\022\025\n\tdiceEpoch\030\001 \001(\003B\002\030\001" +
+                "\022R\n\004side\030\002 \001(\0132D.com.github.jameshnsears" +
+                ".chance.data.domain.proto.SideProtocolBu" +
+                "ffer\022\027\n\017multiplierIndex\030\003 \001(\005\022\024\n\014explode" +
+                "Index\030\004 \001(\005\022\027\n\017scoreAdjustment\030\005 \001(\005\022\r\n\005" +
+                "score\030\006 \001(\005\022\020\n\010uuidDice\030\007 \001(\t\022\021\n\tuuidGro" +
+                "up\030\010 \001(\tB\002P\001b\006proto3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
             .internalBuildGeneratedFileFrom(descriptorData,
@@ -45,7 +46,7 @@ public final class Roll {
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
             internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_descriptor,
-            new java.lang.String[]{"DiceEpoch", "Side", "MultiplierIndex", "ExplodeIndex", "ScoreAdjustment", "Score",});
+            new java.lang.String[]{"DiceEpoch", "Side", "MultiplierIndex", "ExplodeIndex", "ScoreAdjustment", "Score", "UuidDice", "UuidGroup",});
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Side.getDescriptor();
     }

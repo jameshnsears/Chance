@@ -22,12 +22,15 @@ data class Dice(
 
     var modifyScore: Boolean = false,
     var modifyScoreValue: Int = DiceRollValues.modifyScoreValues[0].toInt(),
+
+    var displayIndex: Int = 0,
 )
 
 class DiceRollValues {
     companion object {
-        val multiplierValues = listOf("1", "2", "3", "4", "5", "6")
+        val multiplierValues = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "20", "50")
         val explodeWhenValues = listOf("=", "<", ">")
-        val modifyScoreValues = listOf("-5", "-4", "-3", "-2", "-1", "1", "2", "3", "4", "5")
+        val modifyScoreValues =
+            listOf("-5", "-4", "-3", "-2", "-1", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "15", "20")
     }
 }

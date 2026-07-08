@@ -10,10 +10,13 @@ public interface SettingsProtocolBufferOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int32 resize = 1;</code>
+     * <code>int32 resize = 1 [deprecated = true];</code>
      *
      * @return The resize.
+     * @deprecated com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.resize is deprecated.
+     * See settings.proto;l=7
      */
+    @java.lang.Deprecated
     int getResize();
 
     /**
@@ -99,4 +102,18 @@ public interface SettingsProtocolBufferOrBuilder extends
      * @return The shakeToRoll.
      */
     boolean getShakeToRoll();
+
+    /**
+     * <code>float resizeZoom = 14;</code>
+     *
+     * @return The resizeZoom.
+     */
+    float getResizeZoom();
+
+    /**
+     * <code>bool groupTitle = 15;</code>
+     *
+     * @return The groupTitle.
+     */
+    boolean getGroupTitle();
 }

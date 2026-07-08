@@ -9,24 +9,25 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.github.jameshnsears.chance.common.utility.UtilityLoggingLineNumberTree
-import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        // set UtilityFeature.enabled flag to use test double data!
+
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
         installLogging()
-
         enableEdgeToEdge()
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
@@ -42,19 +43,26 @@ class MainActivity : ComponentActivity() {
 
         val repositoryFactory = RepositoryFactory(application)
 
+        val settings = getSettings(repositoryFactory)
+
         setContent {
-            val settings by produceState<SettingsDataInterface?>(initialValue = null) {
-                val flow = repositoryFactory.repositorySettings.fetch()
-                flow.collect { value = it }
-            }
+            splashScreen.setKeepOnScreenCondition { false }
 
             MainComposable(
                 application,
                 repositoryFactory.repositorySettings,
                 repositoryFactory.repositoryBag,
                 repositoryFactory.repositoryRoll,
-                settings?.resize ?: 2
+                repositoryFactory.repositoryGroup,
+                settings.resizeZoom
             )
+        }
+    }
+
+    private fun getSettings(repositoryFactory: RepositoryFactory): SettingsDataInterface {
+        return runBlocking {
+            repositoryFactory.initialize()
+            repositoryFactory.repositorySettings.fetch().first()
         }
     }
 

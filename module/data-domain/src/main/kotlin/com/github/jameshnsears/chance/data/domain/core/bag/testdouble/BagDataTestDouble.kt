@@ -99,7 +99,6 @@ class BagDataTestDouble : BagDataInterface {
         d2,
         d4,
         d6,
-        diceStory,
         d8,
         d10,
         d12,

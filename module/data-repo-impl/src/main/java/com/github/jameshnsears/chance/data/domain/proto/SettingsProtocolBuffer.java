@@ -25,6 +25,8 @@ public final class SettingsProtocolBuffer extends
     public static final int HAPTICS_FIELD_NUMBER = 11;
     public static final int ROLLSCORETTS_FIELD_NUMBER = 12;
     public static final int SHAKETOROLL_FIELD_NUMBER = 13;
+    public static final int RESIZEZOOM_FIELD_NUMBER = 14;
+    public static final int GROUPTITLE_FIELD_NUMBER = 15;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer DEFAULT_INSTANCE;
@@ -77,6 +79,8 @@ public final class SettingsProtocolBuffer extends
     private boolean haptics_ = false;
     private boolean rollScoreTTS_ = false;
     private boolean shakeToRoll_ = false;
+    private float resizeZoom_ = 0F;
+    private boolean groupTitle_ = false;
     private byte memoizedIsInitialized = -1;
 
     // Use SettingsProtocolBuffer.newBuilder() to construct.
@@ -198,11 +202,14 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>int32 resize = 1;</code>
+     * <code>int32 resize = 1 [deprecated = true];</code>
      *
      * @return The resize.
+     * @deprecated com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.resize is deprecated.
+     * See settings.proto;l=7
      */
     @java.lang.Override
+    @java.lang.Deprecated
     public int getResize() {
         return resize_;
     }
@@ -327,6 +334,26 @@ public final class SettingsProtocolBuffer extends
         return shakeToRoll_;
     }
 
+    /**
+     * <code>float resizeZoom = 14;</code>
+     *
+     * @return The resizeZoom.
+     */
+    @java.lang.Override
+    public float getResizeZoom() {
+        return resizeZoom_;
+    }
+
+    /**
+     * <code>bool groupTitle = 15;</code>
+     *
+     * @return The groupTitle.
+     */
+    @java.lang.Override
+    public boolean getGroupTitle() {
+        return groupTitle_;
+    }
+
     @java.lang.Override
     public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -378,6 +405,12 @@ public final class SettingsProtocolBuffer extends
         }
         if (shakeToRoll_ != false) {
             output.writeBool(13, shakeToRoll_);
+        }
+        if (java.lang.Float.floatToRawIntBits(resizeZoom_) != 0) {
+            output.writeFloat(14, resizeZoom_);
+        }
+        if (groupTitle_ != false) {
+            output.writeBool(15, groupTitle_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -440,6 +473,14 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(13, shakeToRoll_);
         }
+        if (java.lang.Float.floatToRawIntBits(resizeZoom_) != 0) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeFloatSize(14, resizeZoom_);
+        }
+        if (groupTitle_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeBoolSize(15, groupTitle_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
         return size;
@@ -481,6 +522,11 @@ public final class SettingsProtocolBuffer extends
             != other.getRollScoreTTS()) return false;
         if (getShakeToRoll()
             != other.getShakeToRoll()) return false;
+        if (java.lang.Float.floatToIntBits(getResizeZoom())
+            != java.lang.Float.floatToIntBits(
+            other.getResizeZoom())) return false;
+        if (getGroupTitle()
+            != other.getGroupTitle()) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
     }
@@ -530,6 +576,12 @@ public final class SettingsProtocolBuffer extends
         hash = (37 * hash) + SHAKETOROLL_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
             getShakeToRoll());
+        hash = (37 * hash) + RESIZEZOOM_FIELD_NUMBER;
+        hash = (53 * hash) + java.lang.Float.floatToIntBits(
+            getResizeZoom());
+        hash = (37 * hash) + GROUPTITLE_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getGroupTitle());
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -584,6 +636,8 @@ public final class SettingsProtocolBuffer extends
         private boolean haptics_;
         private boolean rollScoreTTS_;
         private boolean shakeToRoll_;
+        private float resizeZoom_;
+        private boolean groupTitle_;
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.newBuilder()
         private Builder() {
@@ -626,6 +680,8 @@ public final class SettingsProtocolBuffer extends
             haptics_ = false;
             rollScoreTTS_ = false;
             shakeToRoll_ = false;
+            resizeZoom_ = 0F;
+            groupTitle_ = false;
             return this;
         }
 
@@ -700,6 +756,12 @@ public final class SettingsProtocolBuffer extends
             if (((from_bitField0_ & 0x00001000) != 0)) {
                 result.shakeToRoll_ = shakeToRoll_;
             }
+            if (((from_bitField0_ & 0x00002000) != 0)) {
+                result.resizeZoom_ = resizeZoom_;
+            }
+            if (((from_bitField0_ & 0x00004000) != 0)) {
+                result.groupTitle_ = groupTitle_;
+            }
         }
 
         @java.lang.Override
@@ -752,6 +814,12 @@ public final class SettingsProtocolBuffer extends
             }
             if (other.getShakeToRoll() != false) {
                 setShakeToRoll(other.getShakeToRoll());
+            }
+            if (other.getResizeZoom() != 0F) {
+                setResizeZoom(other.getResizeZoom());
+            }
+            if (other.getGroupTitle() != false) {
+                setGroupTitle(other.getGroupTitle());
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -844,6 +912,16 @@ public final class SettingsProtocolBuffer extends
                             bitField0_ |= 0x00001000;
                             break;
                         } // case 104
+                        case 117: {
+                            resizeZoom_ = input.readFloat();
+                            bitField0_ |= 0x00002000;
+                            break;
+                        } // case 117
+                        case 120: {
+                            groupTitle_ = input.readBool();
+                            bitField0_ |= 0x00004000;
+                            break;
+                        } // case 120
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -861,21 +939,27 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>int32 resize = 1;</code>
+         * <code>int32 resize = 1 [deprecated = true];</code>
          *
          * @return The resize.
+         * @deprecated com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.resize is deprecated.
+         * See settings.proto;l=7
          */
         @java.lang.Override
+        @java.lang.Deprecated
         public int getResize() {
             return resize_;
         }
 
         /**
-         * <code>int32 resize = 1;</code>
+         * <code>int32 resize = 1 [deprecated = true];</code>
          *
          * @param value The resize to set.
          * @return This builder for chaining.
+         * @deprecated com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.resize is deprecated.
+         * See settings.proto;l=7
          */
+        @java.lang.Deprecated
         public Builder setResize(int value) {
 
             resize_ = value;
@@ -885,10 +969,13 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>int32 resize = 1;</code>
+         * <code>int32 resize = 1 [deprecated = true];</code>
          *
          * @return This builder for chaining.
+         * @deprecated com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.resize is deprecated.
+         * See settings.proto;l=7
          */
+        @java.lang.Deprecated
         public Builder clearResize() {
             bitField0_ = (bitField0_ & ~0x00000001);
             resize_ = 0;
@@ -1324,6 +1411,78 @@ public final class SettingsProtocolBuffer extends
         public Builder clearShakeToRoll() {
             bitField0_ = (bitField0_ & ~0x00001000);
             shakeToRoll_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>float resizeZoom = 14;</code>
+         *
+         * @return The resizeZoom.
+         */
+        @java.lang.Override
+        public float getResizeZoom() {
+            return resizeZoom_;
+        }
+
+        /**
+         * <code>float resizeZoom = 14;</code>
+         *
+         * @param value The resizeZoom to set.
+         * @return This builder for chaining.
+         */
+        public Builder setResizeZoom(float value) {
+
+            resizeZoom_ = value;
+            bitField0_ |= 0x00002000;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>float resizeZoom = 14;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearResizeZoom() {
+            bitField0_ = (bitField0_ & ~0x00002000);
+            resizeZoom_ = 0F;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool groupTitle = 15;</code>
+         *
+         * @return The groupTitle.
+         */
+        @java.lang.Override
+        public boolean getGroupTitle() {
+            return groupTitle_;
+        }
+
+        /**
+         * <code>bool groupTitle = 15;</code>
+         *
+         * @param value The groupTitle to set.
+         * @return This builder for chaining.
+         */
+        public Builder setGroupTitle(boolean value) {
+
+            groupTitle_ = value;
+            bitField0_ |= 0x00004000;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool groupTitle = 15;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearGroupTitle() {
+            bitField0_ = (bitField0_ & ~0x00004000);
+            groupTitle_ = false;
             onChanged();
             return this;
         }

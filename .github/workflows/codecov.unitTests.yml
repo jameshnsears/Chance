@@ -21,11 +21,12 @@ jobs:
       matrix:
         module:
           - { name: "ui", path: "module:ui", flags: "ui-unitTest" }
+          - { name: "data-repo-impl", path: "module:data-repo-impl", flags: "data-repo-impl-unitTest" }
           - { name: "data-repo-api", path: "module:data-repo-api", flags: "data-repo-api-unitTest" }
           - { name: "data-common", path: "module:data-common", flags: "data-common-unitTest" }
     steps:
       - name: clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
           submodules: true
@@ -37,7 +38,7 @@ jobs:
         run: ./gradlew :${{ matrix.module.path }}:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
 
       - name: codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           files: ./module/${{ matrix.module.name }}/build/reports/jacoco/unitTest.xml

@@ -14,17 +14,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.tab.TabRow
-import com.github.jameshnsears.chance.ui.tab.bag.BagAndroidViewModelFactory
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
-import com.github.jameshnsears.chance.ui.tab.roll.RollAndroidViewModel
-import com.github.jameshnsears.chance.ui.tab.roll.RollAndroidViewModelFactory
-import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModel
-import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagAndroidViewModelFactory
-import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModel
-import com.github.jameshnsears.chance.ui.zoom.roll.ZoomRollAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.tab.setup.groups.GroupsAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.setup.groups.GroupsAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceAndroidViewModelFactory
 
 @Composable
 fun MainComposable(
@@ -32,20 +35,41 @@ fun MainComposable(
     repositorySettings: RepositorySettingsInterface,
     repositoryBag: RepositoryBagInterface,
     repositoryRoll: RepositoryRollInterface,
-    resizeInitialValue: Int
+    repositoryGroup: RepositoryGroupInterface,
+    resizeInitialValue: Float
 ) {
-    val tabBagViewModel: TabBagAndroidViewModel = viewModel(
-        factory = BagAndroidViewModelFactory(
+    val tabBagViewModel: DiceAndroidViewModel = viewModel(
+        factory = DiceAndroidViewModelFactory(
             application,
             repositorySettings,
             repositoryBag,
             repositoryRoll,
+            repositoryGroup,
             resizeInitialValue
         )
     )
 
-    val tabRollViewModel: RollAndroidViewModel = viewModel(
-        factory = RollAndroidViewModelFactory(
+    val groupsViewModel: GroupsAndroidViewModel = viewModel(
+        factory = GroupsAndroidViewModelFactory(
+            application,
+            repositoryBag,
+            repositoryGroup,
+            repositoryRoll
+        )
+    )
+
+    val tabRollViewModel: RollsAndroidViewModel = viewModel(
+        factory = RollsAndroidViewModelFactory(
+            application,
+            repositorySettings,
+            repositoryBag,
+            repositoryRoll,
+            repositoryGroup
+        )
+    )
+
+    val zoomBagViewModel: ZoomDiceAndroidViewModel = viewModel(
+        factory = ZoomDiceAndroidViewModelFactory(
             application,
             repositorySettings,
             repositoryBag,
@@ -53,33 +77,26 @@ fun MainComposable(
         )
     )
 
-    val zoomBagViewModel: ZoomBagAndroidViewModel = viewModel(
-        factory = ZoomBagAndroidViewModelFactory(
+    val zoomRollViewModel: ZoomRollsAndroidViewModel = viewModel(
+        factory = ZoomRollsAndroidViewModelFactory(
             application,
             repositorySettings,
             repositoryBag,
-            repositoryRoll
-        )
-    )
-
-    val zoomRollViewModel: ZoomRollAndroidViewModel = viewModel(
-        factory = ZoomRollAndroidViewModelFactory(
-            application,
-            repositorySettings,
-            repositoryBag,
-            repositoryRoll
+            repositoryRoll,
+            repositoryGroup
         )
     )
 
     ChanceTheme {
         Scaffold(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         ) { innerPadding ->
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
                     .consumeWindowInsets(innerPadding),
-                color = MaterialTheme.colorScheme.background
+                color = MaterialTheme.colorScheme.surfaceContainerLow
             ) {
                 if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_CRASHLYTICS_BUTTON)) {
                     Button(
@@ -91,6 +108,7 @@ fun MainComposable(
                 } else {
                     TabRow(
                         tabBagViewModel,
+                        groupsViewModel,
                         tabRollViewModel,
                         zoomBagViewModel,
                         zoomRollViewModel

@@ -10,19 +10,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Rule
 import androidx.compose.material.icons.automirrored.outlined.VolumeUp
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.AutoFixHigh
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.FormatListNumbered
+import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.PhonelinkRing
 import androidx.compose.material.icons.outlined.RecordVoiceOver
@@ -35,12 +35,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -57,190 +59,99 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
-import com.github.jameshnsears.chance.ui.tab.roll.RollAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.rolls.SettingsState
 
 @Composable
 fun DialogSettings(
     showDialog: MutableState<Boolean>,
-    rollAndroidViewModel: RollAndroidViewModel,
+    rollsAndroidViewModel: RollsAndroidViewModel,
 ) {
     Dialog(
         onDismissRequest = {
             showDialog.value = false
-            rollAndroidViewModel.dismissSettingsDialog()
+            rollsAndroidViewModel.dismissSettingsDialog()
         },
     ) {
         DialogSettingsLayout(
-            rollAndroidViewModel
+            showDialog,
+            rollsAndroidViewModel
         )
     }
 }
 
 @Composable
 fun DialogSettingsLayout(
-    rollAndroidViewModel: RollAndroidViewModel
+    showDialog: MutableState<Boolean>,
+    rollsAndroidViewModel: RollsAndroidViewModel
 ) {
     val stateFlowSettings =
-        rollAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
+        rollsAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    val rollTime = stateFlowSettings.value.rollIndexTime
-    val rollScore = stateFlowSettings.value.rollScore
-    val rollScoreTTS = stateFlowSettings.value.rollScoreTTS
-    val diceTitle = stateFlowSettings.value.diceTitle
-    val rollBehaviour = stateFlowSettings.value.rollBehaviour
-    val sideNumber = stateFlowSettings.value.sideNumber
-    val sideDescription = stateFlowSettings.value.sideDescription
-    val sideSVG = stateFlowSettings.value.sideSVG
-    val haptics = stateFlowSettings.value.haptics
-    val shakeToRoll = stateFlowSettings.value.shakeToRoll
-    val rollSound = stateFlowSettings.value.rollSound
-    val shuffle = stateFlowSettings.value.shuffle
-
+    val state = stateFlowSettings.value
     val scrollState = rememberScrollState()
-    val backgroundColor = MaterialTheme.colorScheme.secondaryContainer
+    val backgroundColor = MaterialTheme.colorScheme.surfaceContainer
 
     Surface(
         color = backgroundColor,
-        shape = RoundedCornerShape(16.dp),
+        shape = MaterialTheme.shapes.extraLarge,
     ) {
-        Box(modifier = Modifier.height(455.dp)) {
+        Box(modifier = Modifier.height(550.dp)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 8.dp, top = 8.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
+                IconButton(
+                    onClick = {
+                        showDialog.value = false
+                        rollsAndroidViewModel.dismissSettingsDialog()
+                    },
+                    modifier = Modifier.testTag(DialogSettingsTestTag.SETTINGS_CLOSE)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringResource(R.string.close)
+                    )
+                }
+            }
+
             Text(
                 modifier = Modifier
-                    .padding(start = 24.dp, top = 24.dp),
-                text = stringResource(R.string.tab_roll_settings),
-                style = MaterialTheme.typography.titleLarge,
-                )
+                    .padding(start = 24.dp, top = 24.dp, bottom = 16.dp),
+                text = stringResource(R.string.tab_roll_settings_title),
+                style = MaterialTheme.typography.headlineSmall,
+            )
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 84.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
+                    .padding(top = 72.dp, bottom = 8.dp)
                     .verticalScroll(scrollState),
             ) {
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_roll_time),
-                    Icons.Outlined.Schedule,
-                    rollTime,
-                    rollAndroidViewModel::settingsIndexTime,
-                    DialogSettingsTestTag.SETTINGS_TIME
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_score),
-                    Icons.Outlined.Score,
-                    rollScore,
-                    rollAndroidViewModel::settingsRollScore,
-                    DialogSettingsTestTag.SETTINGS_SCORE
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_score_tts),
-                    Icons.Outlined.RecordVoiceOver,
-                    rollScoreTTS,
-                    rollAndroidViewModel::settingsRollScoreTTS,
-                    DialogSettingsTestTag.SETTINGS_SCORE_TTS
-                )
+                SettingsRollInfoSection(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
 
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_dice_title),
-                    Icons.Outlined.Title,
-                    diceTitle,
-                    rollAndroidViewModel::settingsDiceTitle,
-                    DialogSettingsTestTag.SETTINGS_DICE_TITLE
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_side_number),
-                    Icons.Outlined.FormatListNumbered,
-                    sideNumber,
-                    rollAndroidViewModel::settingsSideNumber,
-                    DialogSettingsTestTag.SETTINGS_SIDE_NUMBER
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_side_svg),
-                    Icons.Outlined.Image,
-                    sideSVG,
-                    rollAndroidViewModel::settingsSideSVG,
-                    DialogSettingsTestTag.SETTINGS_SIDE_SVG
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_side_description),
-                    Icons.Outlined.Description,
-                    sideDescription,
-                    rollAndroidViewModel::settingsSideDescription,
-                    DialogSettingsTestTag.SETTINGS_SIDE_DESCRIPTION
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_behaviour),
-                    Icons.Outlined.AutoFixHigh,
-                    rollBehaviour,
-                    rollAndroidViewModel::settingsBehaviour,
-                    DialogSettingsTestTag.SETTINGS_BEHAVIOUR
-                )
+                SettingsSideInfoSection(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
 
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_use_shuffle),
-                    Icons.Outlined.Shuffle,
-                    shuffle,
-                    rollAndroidViewModel::settingsShuffle,
-                    DialogSettingsTestTag.SETTINGS_ROLL_SHUFFLE
-                )
+                SettingsInteractionSection(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp)
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_use_haptics),
-                    Icons.Outlined.Vibration,
-                    haptics,
-                    rollAndroidViewModel::settingsUseHaptics,
-                    DialogSettingsTestTag.SETTINGS_ROLL_HAPTICS
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_use_sound),
-                    Icons.AutoMirrored.Outlined.VolumeUp,
-                    rollSound,
-                    rollAndroidViewModel::settingsRollSound,
-                    DialogSettingsTestTag.SETTINGS_ROLL_SOUND
-                )
-
-                CommonSwitch(
-                    stringResource(R.string.tab_roll_settings_shake_to_roll),
-                    Icons.Outlined.PhonelinkRing,
-                    shakeToRoll,
-                    rollAndroidViewModel::settingsShakeToRoll,
-                    DialogSettingsTestTag.SETTINGS_SHAKE_TO_ROLL
-                )
-
-                HorizontalDivider(
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp)
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
 
                 UndoAll(
-                    rollAndroidViewModel,
+                    rollsAndroidViewModel,
                 )
             }
 
@@ -266,11 +177,138 @@ fun DialogSettingsLayout(
 }
 
 @Composable
+private fun SettingsRollInfoSection(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    state: SettingsState
+) {
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_roll_time),
+        Icons.Outlined.Schedule,
+        state.rollIndexTime,
+        rollsAndroidViewModel::settingsIndexTime,
+        DialogSettingsTestTag.SETTINGS_TIME
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_score),
+        Icons.Outlined.Score,
+        state.rollScore,
+        rollsAndroidViewModel::settingsRollScore,
+        DialogSettingsTestTag.SETTINGS_SCORE
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_group_title),
+        Icons.Outlined.GridView,
+        state.groupTitle,
+        rollsAndroidViewModel::settingsGroupTitle,
+        DialogSettingsTestTag.SETTINGS_GROUP_TITLE
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_dice_title),
+        Icons.Outlined.Title,
+        state.diceTitle,
+        rollsAndroidViewModel::settingsDiceTitle,
+        DialogSettingsTestTag.SETTINGS_DICE_TITLE
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_behaviour),
+        Icons.AutoMirrored.Outlined.Rule,
+        state.rollBehaviour,
+        rollsAndroidViewModel::settingsBehaviour,
+        DialogSettingsTestTag.SETTINGS_BEHAVIOUR
+    )
+}
+
+@Composable
+private fun SettingsSideInfoSection(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    state: SettingsState
+) {
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_side_number),
+        Icons.Outlined.FormatListNumbered,
+        state.sideNumber,
+        rollsAndroidViewModel::settingsSideNumber,
+        DialogSettingsTestTag.SETTINGS_SIDE_NUMBER
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_side_svg),
+        Icons.Outlined.Image,
+        state.sideSVG,
+        rollsAndroidViewModel::settingsSideSVG,
+        DialogSettingsTestTag.SETTINGS_SIDE_SVG
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_side_description),
+        Icons.Outlined.Description,
+        state.sideDescription,
+        rollsAndroidViewModel::settingsSideDescription,
+        DialogSettingsTestTag.SETTINGS_SIDE_DESCRIPTION
+    )
+}
+
+@Composable
+private fun SettingsInteractionSection(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    state: SettingsState
+) {
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_use_shuffle),
+        Icons.Outlined.Shuffle,
+        state.shuffle,
+        rollsAndroidViewModel::settingsShuffle,
+        DialogSettingsTestTag.SETTINGS_ROLL_SHUFFLE
+    )
+
+    HorizontalDivider(
+        modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+    )
+
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_use_haptics),
+        Icons.Outlined.Vibration,
+        state.haptics,
+        rollsAndroidViewModel::settingsUseHaptics,
+        DialogSettingsTestTag.SETTINGS_ROLL_HAPTICS
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_use_sound),
+        Icons.AutoMirrored.Outlined.VolumeUp,
+        state.rollSound,
+        rollsAndroidViewModel::settingsRollSound,
+        DialogSettingsTestTag.SETTINGS_ROLL_SOUND
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_score_tts),
+        Icons.Outlined.RecordVoiceOver,
+        state.rollScoreTTS,
+        rollsAndroidViewModel::settingsRollScoreTTS,
+        DialogSettingsTestTag.SETTINGS_SCORE_TTS
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_shake_to_roll),
+        Icons.Outlined.PhonelinkRing,
+        state.shakeToRoll,
+        rollsAndroidViewModel::settingsShakeToRoll,
+        DialogSettingsTestTag.SETTINGS_SHAKE_TO_ROLL
+    )
+}
+
+@Composable
 private fun UndoAll(
-    rollAndroidViewModel: RollAndroidViewModel,
+    rollsAndroidViewModel: RollsAndroidViewModel,
 ) {
     val rollEnabled =
-        rollAndroidViewModel.undoEnabled.collectAsStateWithLifecycle(
+        rollsAndroidViewModel.undoEnabled.collectAsStateWithLifecycle(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
@@ -278,11 +316,11 @@ private fun UndoAll(
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 4.dp, bottom = 4.dp)
+            .padding(top = 12.dp, bottom = 18.dp)
     ) {
         Button(
             onClick = {
-                rollAndroidViewModel.undoAll()
+                rollsAndroidViewModel.undoAll()
             },
             modifier = Modifier
                 .width(160.dp)
@@ -305,58 +343,57 @@ private fun UndoAll(
 @Composable
 fun CommonSwitch(
     text: String,
-    icon: ImageVector, // New parameter
+    icon: ImageVector,
     switchState: Boolean,
     dialogRollViewModelMethod: (Boolean) -> Unit,
     testTag: String
 ) {
     val switched = rememberSaveable { mutableStateOf(switchState) }
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    ListItem(
+        headlineContent = {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyLarge
+            )
+        },
+        leadingContent = {
+            Icon(
+                imageVector = icon,
+                contentDescription = "",
+                modifier = Modifier.size(24.dp)
+            )
+        },
+        trailingContent = {
+            Switch(
+                checked = switched.value,
+                onCheckedChange = {
+                    switched.value = it
+                    dialogRollViewModelMethod(it)
+                },
+                modifier = Modifier
+                    .testTag(testTag),
+                thumbContent = if (switched.value) {
+                    {
+                        Icon(
+                            imageVector = Icons.Filled.Check,
+                            contentDescription = "",
+                            modifier = Modifier.size(SwitchDefaults.IconSize),
+                        )
+                    }
+                } else {
+                    null
+                }
+            )
+        },
+        colors = ListItemDefaults.colors(containerColor = androidx.compose.ui.graphics.Color.Transparent),
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 48.dp)
-            .padding(top = 4.dp, bottom = 4.dp)
             .clickable {
                 val newValue = !switched.value
                 switched.value = newValue
                 dialogRollViewModelMethod(newValue)
             }
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.size(24.dp)
-        )
-
-        Spacer(modifier = Modifier.width(12.dp))
-
-        Text(
-            modifier = Modifier.weight(1f),
-            text = text,
-        )
-
-        Switch(
-            checked = switched.value,
-            onCheckedChange = {
-                switched.value = it
-                dialogRollViewModelMethod(it)
-            },
-            modifier = Modifier
-                .minimumInteractiveComponentSize()
-                .testTag(testTag),
-            thumbContent = if (switched.value) {
-                {
-                    Icon(
-                        imageVector = Icons.Filled.Check,
-                        contentDescription = null,
-                        modifier = Modifier.size(SwitchDefaults.IconSize),
-                    )
-                }
-            } else {
-                null
-            }
-        )
-    }
+            .padding(horizontal = 8.dp)
+    )
 }

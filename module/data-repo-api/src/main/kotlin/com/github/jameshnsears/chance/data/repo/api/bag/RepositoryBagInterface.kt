@@ -8,7 +8,7 @@ import timber.log.Timber
 
 interface RepositoryBagInterface : RepositoryImportExportInterface {
     suspend fun fetch(): Flow<DiceBag>
-    suspend fun fetch(epoch: Long): Flow<Dice>
+    suspend fun fetch(uuid: String): Flow<Dice>
     suspend fun store(newDiceBag: DiceBag)
 
     fun traceUuid(diceBag: DiceBag) {

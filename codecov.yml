@@ -26,3 +26,6 @@ flags:
 
   ui-unitTest:
     carryforward: false
+
+  data-repo-impl-unitTest:
+    carryforward: false

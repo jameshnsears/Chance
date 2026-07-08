@@ -15,11 +15,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
 
         // NOTE: value not in .toml due to fdroid build process?
-        versionCode = 202836
+        versionCode = 213137
         println("versionCode=$versionCode")
 
         // NOTE: .toml also contains this value for the module:ui - fdroid again
-        versionName = "2.3.0"
+        versionName = "2.4.0"
         println("versionName=$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -49,15 +49,17 @@ android {
         release {
             // The generated .map file, for google play store manual upload, in:
             // app/build/outputs/mapping/release/
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
 
         debug {
             enableAndroidTestCoverage = true
             enableUnitTestCoverage = true
-            isMinifyEnabled = false
-            isShrinkResources = false
         }
     }
 
@@ -114,28 +116,21 @@ kotlin {
 
 dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.androidx.compose.ui.test.manifest)
+    androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.datastore.core)
     androidTestImplementation(libs.androidx.datastore.preferences)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.espresso.intents)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.coil.compose)
     androidTestImplementation(libs.coil.svg)
     androidTestImplementation(libs.kotlin.reflect)
-    androidTestImplementation(libs.org.jetbrains.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(testFixtures(project(":module:common")))
     androidTestUtil(libs.androidx.test.orchestrator)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-    // comment out leakcanary when profiling: fdroidDebug; on API 30+ emulator
-    // run app, via Profiler (complete data)
-    // Profiler > select Track Memory Consumption
-    // Start profiler task (attached to selected process)
     debugImplementation(libs.leakcanary.android)
-
     "googleplayImplementation"(libs.com.google.firebase.crashlytics)
     "googleplayImplementation"(platform(libs.com.google.firebase.bom))
     implementation(libs.activity.compose)
@@ -145,6 +140,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.profileinstaller)
     implementation(libs.appcompat)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))
@@ -153,4 +150,5 @@ dependencies {
     implementation(project(":module:data-repo-api"))
     implementation(project(":module:data-repo-impl"))
     implementation(project(":module:ui"))
+    testImplementation(testFixtures(project(":module:common")))
 }

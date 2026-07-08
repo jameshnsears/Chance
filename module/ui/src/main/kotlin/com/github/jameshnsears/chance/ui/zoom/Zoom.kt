@@ -12,10 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.LineBreak
@@ -28,7 +34,7 @@ import coil.request.ImageRequest
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
-import com.github.jameshnsears.chance.ui.zoom.bag.ZoomBagTestTag
+import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceTestTag
 
 @Composable
 fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, side: Side) {
@@ -41,7 +47,7 @@ fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, 
         ) {
             Text(
                 text = side.description,
-                modifier = Modifier.testTag("${ZoomBagTestTag.ZOOM_SIDE_DESCRIPTION}-${dice.title}"),
+                modifier = Modifier.testTag("${ZoomDiceTestTag.ZOOM_SIDE_DESCRIPTION}-${dice.title}"),
                 color = zoomAndroidViewModel.sideColor(side.descriptionColour),
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
@@ -60,7 +66,7 @@ fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, 
 }
 
 @Composable
-fun ZoomSideImageShape(
+fun ZoomFaceImageShape(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     dice: Dice,
     side: Side,
@@ -70,13 +76,16 @@ fun ZoomSideImageShape(
     resizeView: Dp,
 ) {
 
-    if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_EPOCH_UUID))
+    if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_UUID))
         Row {
             Text(
                 text = side.uuid,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
+
+    var itemOffset by remember { mutableStateOf(Offset.Zero) }
 
     Box {
         Image(
@@ -86,12 +95,17 @@ fun ZoomSideImageShape(
                 .size(resizeView)
                 .padding(top = 8.dp)
                 .minimumInteractiveComponentSize()
+                .onGloballyPositioned { coordinates ->
+                    itemOffset = coordinates.positionInWindow() +
+                        Offset(coordinates.size.width / 2f, coordinates.size.height / 2f)
+                }
                 .clickable {
+                    zoomAndroidViewModel.tapOffset.value = itemOffset
                     cardDice.value = dice
                     cardSide.value = side
                     showDialog.value = true
                 }
-                .testTag("${ZoomBagTestTag.ZOOM_SIDE_IMAGE_SHAPE}-${dice.title}-${side.number}"),
+                .testTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-${dice.title}-${side.number}"),
             colorFilter = zoomAndroidViewModel.sideColorFilter(dice.colour),
             contentScale = ContentScale.Crop
         )
@@ -109,7 +123,7 @@ fun ZoomSideImageShape(
 }
 
 @Composable
-fun ZoomSideImageSVG(
+fun ZoomFaceImageSVG(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     dice: Dice,
     side: Side,
@@ -119,16 +133,23 @@ fun ZoomSideImageSVG(
     resizeView: Dp,
 ) {
 
+    var itemOffset by remember { mutableStateOf(Offset.Zero) }
+
     val modifier = Modifier
         .size(resizeView)
         .padding(top = 8.dp)
         .minimumInteractiveComponentSize()
+        .onGloballyPositioned { coordinates ->
+            itemOffset = coordinates.positionInWindow() +
+                Offset(coordinates.size.width / 2f, coordinates.size.height / 2f)
+        }
         .clickable {
+            zoomAndroidViewModel.tapOffset.value = itemOffset
             cardDice.value = dice
             cardSide.value = side
             showDialog.value = true
         }
-        .testTag("${ZoomBagTestTag.ZOOM_SIDE_IMAGE_SVG}-${dice.title}-${side.number}")
+        .testTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SVG}-${dice.title}-${side.number}")
 
     if (side.imageBase64 != "") {
         val imageRequest: ImageRequest = remember {

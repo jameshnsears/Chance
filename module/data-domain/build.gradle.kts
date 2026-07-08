@@ -11,6 +11,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
+
+        consumerProguardFiles("proguard-rules.pro")
     }
 
     testOptions {
@@ -75,13 +77,14 @@ kotlin {
 }
 
 dependencies {
+    androidTestImplementation(libs.androidx.junit)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     implementation(project(":module:common"))
+
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

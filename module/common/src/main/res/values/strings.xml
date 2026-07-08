@@ -1,12 +1,16 @@
 <resources>
+    <string name="tab.setup">Setup</string>
+
+    <string name="tab.setup.dice">Dice</string>
+    <string name="tab.setup.groups">Groups</string>
+    <string name="tab.setup.groups.empty">Tap + to create a new group</string>
+
     <string name="tab.roll">Rolls</string>
-    <string name="tab.roll.empty">Select your dice below and tap Roll to start</string>
+    <string name="tab.roll.empty">Select a dice or group and tap Roll</string>
     <string name="tab.roll.undo">Undo</string>
     <string name="tab.roll.roll">Roll</string>
-
     <string name="tab.roll.settings">Settings</string>
 
-    <string name="tab.setup">Setup</string>
     <string name="tab.bag.import">Import…</string>
     <string name="tab.bag.import.success">Import successful</string>
     <string name="tab.bag.import.failure">Import failed: %s</string>
@@ -20,33 +24,33 @@
     <string name="dialog.ok">OK</string>
 
     <string name="dialog.bag.save">Save</string>
-    <string name="dialog.bag.clone">Clone</string>
+    <string name="dialog.bag.clone">Duplicate</string>
     <string name="dialog.bag.delete">Delete</string>
+    <string name="dialog.group.delete">Delete</string>
+    <string name="dialog.group.delete.confirmation">This will delete associated rolls</string>
     <string name="dialog.bag.delete.confirmation">Delete</string>
-    <string name="dialog.bag.delete.confirmation.question">Delete dice and related rolls?</string>
+    <string name="dialog.bag.delete.confirmation.question">This will delete the dice from associated groups and rolls</string>
     <string name="dialog.bag.delete.confirmation.ok">OK</string>
     <string name="dialog.bag.delete.confirmation.cancel">Cancel</string>
 
     <string name="dialog.bag.side.title">Side</string>
     <string name="dialog.bag.side">Side # </string>
     <string name="dialog.bag.side.colour">Side #…</string>
-    <string name="dialog.bag.side.colour.apply.to.all">Apply to all sides</string>
+    <string name="dialog.bag.side.colour.apply.to.all">Use colour on all side #\'s</string>
 
     <string name="dialog.bag.side.description">Description</string>
     <string name="dialog.bag.side.description.colour">Description…</string>
-    <string name="dialog.bag.side.description.info">\u2022 Up to 25 characters</string>
     <string name="dialog.bag.side.description.apply.to.all">Apply to all sides</string>
 
-    <string name="dialog.bag.side.image">SVG file…</string>
-    <string name="dialog.bag.side.image.clear">Drop SVG</string>
-    <string name="dialog.bag.side.image_apply.to.all">Apply to all sides</string>
-    <string name="dialog.bag.side.image_apply.svg.size">\u2022 128KB file size limit</string>
-    <string name="dialog.bag.side.image.error">Invalid SVG</string>
+    <string name="dialog.bag.side.image">Image…</string>
+    <string name="dialog.bag.side.image.clear">Clear</string>
+    <string name="dialog.bag.side.image_apply.to.all">Use image on all sides</string>
+    <string name="dialog.bag.side.image_apply.svg.size">\u2022 256 KB size limit for SVG image file</string>
+    <string name="dialog.bag.side.image.error">Invalid image</string>
 
     <string name="dialog.bag.dice">Dice</string>
     <string name="dialog.bag.dice.title">Title</string>
-    <string name="dialog.bag.dice.title.info.0">\u2022 Must be unique to Clone</string>
-    <string name="dialog.bag.dice.title.info.1">\u2022 Up to 25 characters</string>
+    <string name="dialog.bag.dice.title.info.0">\u2022 Must be unique</string>
     <string name="dialog.bag.dice.sides">Sides</string>
     <string name="dialog.bag.dice.sides.info">\u2022 Will undo related rolls (after Save)</string>
 
@@ -61,35 +65,47 @@
     </string-array>
     <string name="dialog.bag.dice.colour">Sides…</string>
 
-    <string name="dialog.bag.roll">Behaviour</string>
-    <string name="dialog.bag.roll.info">\u2022 Behaviour applies to this dice only</string>
+    <string name="dialog.bag.roll">Rules</string>
+    <string name="dialog.bag.roll.info">\u2022 Rules apply to this dice only</string>
     <string name="dialog.bag.roll.repeat">Roll multiplier</string>
-    <string name="dialog.bag.roll.explode.side">Side #</string>
-    <string name="dialog.bag.roll.explode.meaning">\u2022 Explosion: if a Side # matches criteria, roll again (up to 5 times) and add to score</string>
-    <string name="dialog.bag.roll.score">Mod score</string>
+    <string name="dialog.bag.roll.explode.side">Explode if sides #</string>
+    <string name="dialog.bag.roll.explode.meaning">\u2022 Rolls again up to 5× and adds to the total</string>
+    <string name="dialog.bag.roll.score">Modify score</string>
 
     <string name="dialog.bag.colour.picker.side">Side #</string>
     <string name="dialog.bag.colour.picker.description">Side Description</string>
     <string name="dialog.bag.colour.picker.dice">Dice Sides</string>
 
-    <string name="tab.roll.settings.roll.time">Roll Index : Time</string>
+    <string name="dialog.bag.setup.groups.title">Create group</string>
+    <string name="dialog.bag.setup.groups.name">Title</string>
+    <string name="dialog.bag.setup.groups.name.info.0">\u2022 Must be unique</string>
+    <string name="dialog.bag.setup.groups.select">\u2022 Group must contain at least one dice</string>
+    <string name="dialog.bag.setup.groups.notes">Notes (optional)</string>
+    <string name="dialog.bag.setup.groups.confirmation.question">Delete group and associated rolls?</string>
+    <string name="dialog.bag.setup.groups.change.info.0">\u2022 Changing dice will undo associated rolls</string>
+
+    <string name="tab.roll.settings.title">Settings</string>
+    <string name="tab.roll.settings.roll.time">Roll # and time</string>
     <string name="tab.roll.settings.score">Score</string>
     <string name="tab.roll.settings.score.tts">Score TTS</string>
 
     <string name="tab.roll.settings.dice.title">Dice Title</string>
-    <string name="tab.roll.settings.side.number">Sides</string>
-    <string name="tab.roll.settings.side.svg">SVG file</string>
+    <string name="tab.roll.settings.side.number">Side #</string>
+    <string name="tab.roll.settings.side.svg">Image</string>
     <string name="tab.roll.settings.side.description">Side Description</string>
-    <string name="tab.roll.settings.behaviour">Behaviour</string>
+    <string name="tab.roll.settings.behaviour">Rules</string>
+    <string name="tab.roll.settings.group.title">Group Title</string>
 
     <string name="tab.roll.settings.use.shuffle">Shuffle</string>
-    <string name="tab.roll.settings.use.haptics">Haptic</string>
+    <string name="tab.roll.settings.use.haptics">Haptics</string>
     <string name="tab.roll.settings.shake.to.roll">Shake to Roll</string>
     <string name="tab.roll.settings.use.sound">Roll Sound</string>
 
     <string name="tab.roll.settings.undo.all">Undo All</string>
 
-    <string name="bag.d6">d6</string>
+    <string name="bag.d2">d2</string>
+
+    <string name="bag.d6">3d6+5</string>
 
     <string name="bag.haxagram">I Ching, Yarrow Stalk</string>
     <string name="bag.haxagram.yin">Yin, 2</string>
@@ -104,19 +120,19 @@
     <string name="bag.mrbenn.spaceship">Spaceship</string>
 
     <string name="bag.diceman">The Dice Man</string>
-    <string name="bag.diceman.draw">Draw / Paint your feelings</string>
-    <string name="bag.diceman.introspection">Act without introspection</string>
-    <string name="bag.diceman.meditation">Practise meditation</string>
-    <string name="bag.diceman.feedback">Seek external feedback on behavior</string>
-    <string name="bag.diceman.journaling">Spend time journaling</string>
-    <string name="bag.diceman.project">Work on a professional project</string>
-    <string name="bag.diceman.partner">Talk to your partner</string>
-    <string name="bag.diceman.neighbour">Visit a neighbour</string>
-    <string name="bag.diceman.movie">Watch a movie</string>
-    <string name="bag.diceman.bed">Go to bed early, read a book</string>
+    <string name="bag.diceman.00">Talk to a stranger</string>
+    <string name="bag.diceman.01">Try new food</string>
+    <string name="bag.diceman.02">Take a new route</string>
+    <string name="bag.diceman.03">Read 20 minutes</string>
+    <string name="bag.diceman.04">Call an old friend</string>
+    <string name="bag.diceman.05">Visit a new place</string>
+    <string name="bag.diceman.06">Draw something</string>
+    <string name="bag.diceman.07">Do one good deed</string>
+    <string name="bag.diceman.08">Learn one new fact</string>
+    <string name="bag.diceman.09">Change today\'s plan</string>
 
     <string name="github">GitHub</string>
-    <string name="svg">SVG</string>
+    <string name="svg">Image</string>
     <string name="info">Info</string>
     <string name="colour">Colour</string>
     <string name="close">Close</string>

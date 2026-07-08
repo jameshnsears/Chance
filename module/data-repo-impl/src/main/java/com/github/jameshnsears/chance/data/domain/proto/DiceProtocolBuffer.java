@@ -24,6 +24,7 @@ public final class DiceProtocolBuffer extends
     public static final int EXPLODEVALUE_FIELD_NUMBER = 10;
     public static final int MODIFYSCORE_FIELD_NUMBER = 11;
     public static final int MODIFYSCOREVALUE_FIELD_NUMBER = 12;
+    public static final int DISPLAYINDEX_FIELD_NUMBER = 13;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer DEFAULT_INSTANCE;
@@ -80,6 +81,7 @@ public final class DiceProtocolBuffer extends
     private int explodeValue_ = 0;
     private boolean modifyScore_ = false;
     private int modifyScoreValue_ = 0;
+    private int displayIndex_ = 0;
     private byte memoizedIsInitialized = -1;
 
     // Use DiceProtocolBuffer.newBuilder() to construct.
@@ -473,6 +475,16 @@ public final class DiceProtocolBuffer extends
         return modifyScoreValue_;
     }
 
+    /**
+     * <code>int32 displayIndex = 13;</code>
+     *
+     * @return The displayIndex.
+     */
+    @java.lang.Override
+    public int getDisplayIndex() {
+        return displayIndex_;
+    }
+
     @java.lang.Override
     public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
@@ -521,6 +533,9 @@ public final class DiceProtocolBuffer extends
         }
         if (modifyScoreValue_ != 0) {
             output.writeInt32(12, modifyScoreValue_);
+        }
+        if (displayIndex_ != 0) {
+            output.writeInt32(13, displayIndex_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -575,6 +590,10 @@ public final class DiceProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(12, modifyScoreValue_);
         }
+        if (displayIndex_ != 0) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeInt32Size(13, displayIndex_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
         return size;
@@ -614,6 +633,8 @@ public final class DiceProtocolBuffer extends
             != other.getModifyScore()) return false;
         if (getModifyScoreValue()
             != other.getModifyScoreValue()) return false;
+        if (getDisplayIndex()
+            != other.getDisplayIndex()) return false;
         if (!getUnknownFields().equals(other.getUnknownFields())) return false;
         return true;
     }
@@ -655,6 +676,8 @@ public final class DiceProtocolBuffer extends
             getModifyScore());
         hash = (37 * hash) + MODIFYSCOREVALUE_FIELD_NUMBER;
         hash = (53 * hash) + getModifyScoreValue();
+        hash = (37 * hash) + DISPLAYINDEX_FIELD_NUMBER;
+        hash = (53 * hash) + getDisplayIndex();
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -711,6 +734,7 @@ public final class DiceProtocolBuffer extends
         private int explodeValue_;
         private boolean modifyScore_;
         private int modifyScoreValue_;
+        private int displayIndex_;
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer.newBuilder()
         private Builder() {
@@ -758,6 +782,7 @@ public final class DiceProtocolBuffer extends
             explodeValue_ = 0;
             modifyScore_ = false;
             modifyScoreValue_ = 0;
+            displayIndex_ = 0;
             return this;
         }
 
@@ -839,6 +864,9 @@ public final class DiceProtocolBuffer extends
             if (((from_bitField0_ & 0x00000800) != 0)) {
                 result.modifyScoreValue_ = modifyScoreValue_;
             }
+            if (((from_bitField0_ & 0x00001000) != 0)) {
+                result.displayIndex_ = displayIndex_;
+            }
         }
 
         @java.lang.Override
@@ -919,6 +947,9 @@ public final class DiceProtocolBuffer extends
             }
             if (other.getModifyScoreValue() != 0) {
                 setModifyScoreValue(other.getModifyScoreValue());
+            }
+            if (other.getDisplayIndex() != 0) {
+                setDisplayIndex(other.getDisplayIndex());
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -1014,6 +1045,11 @@ public final class DiceProtocolBuffer extends
                             bitField0_ |= 0x00000800;
                             break;
                         } // case 96
+                        case 104: {
+                            displayIndex_ = input.readInt32();
+                            bitField0_ |= 0x00001000;
+                            break;
+                        } // case 104
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -1868,6 +1904,42 @@ public final class DiceProtocolBuffer extends
         public Builder clearModifyScoreValue() {
             bitField0_ = (bitField0_ & ~0x00000800);
             modifyScoreValue_ = 0;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int32 displayIndex = 13;</code>
+         *
+         * @return The displayIndex.
+         */
+        @java.lang.Override
+        public int getDisplayIndex() {
+            return displayIndex_;
+        }
+
+        /**
+         * <code>int32 displayIndex = 13;</code>
+         *
+         * @param value The displayIndex to set.
+         * @return This builder for chaining.
+         */
+        public Builder setDisplayIndex(int value) {
+
+            displayIndex_ = value;
+            bitField0_ |= 0x00001000;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>int32 displayIndex = 13;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearDisplayIndex() {
+            bitField0_ = (bitField0_ & ~0x00001000);
+            displayIndex_ = 0;
             onChanged();
             return this;
         }

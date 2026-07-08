@@ -145,4 +145,11 @@ public interface DiceProtocolBufferOrBuilder extends
      * @return The modifyScoreValue.
      */
     int getModifyScoreValue();
+
+    /**
+     * <code>int32 displayIndex = 13;</code>
+     *
+     * @return The displayIndex.
+     */
+    int getDisplayIndex();
 }

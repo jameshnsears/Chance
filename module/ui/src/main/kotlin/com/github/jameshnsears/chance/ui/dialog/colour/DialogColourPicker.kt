@@ -71,7 +71,7 @@ fun DialogColourPickerLayout(
     val controller = rememberColorPickerController()
 
     Surface(
-        color = MaterialTheme.colorScheme.secondaryContainer,
+        color = MaterialTheme.colorScheme.surfaceContainer,
         shape = RoundedCornerShape(16.dp),
     ) {
         DialogColourPicker(
@@ -132,7 +132,7 @@ fun DialogColourPicker(
 
         AlphaSlider(
             modifier = Modifier
-                .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 12.dp)
+                .padding(top = 12.dp, bottom = 12.dp)
                 .height(48.dp)
                 .fillMaxWidth(0.80f)
                 .align(Alignment.CenterHorizontally),
@@ -142,7 +142,7 @@ fun DialogColourPicker(
 
         BrightnessSlider(
             modifier = Modifier
-                .padding(top = 6.dp, start = 12.dp, end = 12.dp, bottom = 6.dp)
+                .padding(top = 6.dp, bottom = 6.dp)
                 .height(48.dp)
                 .fillMaxWidth(0.80f)
                 .align(Alignment.CenterHorizontally),
@@ -174,7 +174,7 @@ fun ColourPickerCancelOk(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp, end = 8.dp),
+            .padding(bottom = 16.dp, end = 24.dp),
         horizontalArrangement = Arrangement.End,
     ) {
         TextButton(

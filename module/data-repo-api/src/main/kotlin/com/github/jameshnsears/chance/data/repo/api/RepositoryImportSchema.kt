@@ -9,13 +9,16 @@ class RepositoryImportSchema {
             {
               "type": "object",
               "properties": {
-                "resize": {
+                "resizeZoom": {
                   "type": "number"
                 },
                 "rollIndexTime": {
                   "type": "boolean"
                 },
                 "rollScore": {
+                  "type": "boolean"
+                },
+                "rollScoreTTS": {
                   "type": "boolean"
                 },
                 "diceTitle": {
@@ -33,12 +36,20 @@ class RepositoryImportSchema {
                 "sideSVG": {
                   "type": "boolean"
                 },
+                "haptics": {
+                  "type": "boolean"
+                },
+                "shakeToRoll": {
+                  "type": "boolean"
+                },
                 "rollSound": {
+                  "type": "boolean"
+                },
+                "shuffle": {
                   "type": "boolean"
                 }
               },
               "required": [
-                "resize",
                 "rollIndexTime",
                 "rollScore",
                 "diceTitle",
@@ -97,6 +108,12 @@ class RepositoryImportSchema {
                     },
                     "rollModifyScoreValue" : {
                       "type" : "integer"
+                    },
+                    "displayIndex" : {
+                      "type" : "integer"
+                    },
+                    "uuid": {
+                    "type": "string"
                     }
                   },
                   "required": [
@@ -143,6 +160,9 @@ class RepositoryImportSchema {
                       "type": "string",
                       "maxLength": 8,
                       "minLength": 8
+                    },
+                    "uuid": {
+                    "type": "string"
                     }
                   },
                   "required": [
@@ -152,6 +172,55 @@ class RepositoryImportSchema {
                     ]
                 }
                 """.trimIndent()
+        )
+
+        val schemaGroup = JSONSchema.parse(
+            """
+                {
+                  "type": "object",
+                  "properties": {
+                    "group": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "uuidDice": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "modifyScore": {
+                            "type": "boolean"
+                          },
+                          "modifyScoreValue": {
+                            "type": "integer"
+                          },
+                          "displayIndex": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "notes": {
+                            "type": "string"
+                          },
+                          "uuid": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "uuid",
+                          "name"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "group"
+                  ]
+                }
+            """.trimIndent()
         )
     }
 }

@@ -2,6 +2,8 @@ package com.github.jameshnsears.chance.ui.zoom
 
 import android.app.Application
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.Dp
@@ -20,9 +22,10 @@ import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
-import com.github.jameshnsears.chance.ui.dialog.bag.DialogBagCloseEvent
-import com.github.jameshnsears.chance.ui.tab.bag.BagImportEvent
-import com.github.jameshnsears.chance.ui.tab.bag.BagResetEvent
+import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceCloseEvent
+import com.github.jameshnsears.chance.ui.tab.DisplayIndexEvent
+import com.github.jameshnsears.chance.ui.tab.SetupImportEvent
+import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceResetEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -34,11 +37,12 @@ import timber.log.Timber
 
 @Stable
 data class ZoomState(
-    var resizeViewDp: Dp,
-    var diceBag: DiceBag,
-    var rollHistory: RollHistory,
-    var firstVisibleItemIndex: Int = 0,
-    var firstVisibleItemScrollOffset: Int = 0,
+    val resizeViewDp: Dp,
+    val diceBag: DiceBag,
+    val rollHistory: RollHistory,
+    val firstVisibleItemIndex: Int = 0,
+    val firstVisibleItemScrollOffset: Int = 0,
+    val horizontalScrollPositions: Map<String, Pair<Int, Int>> = emptyMap(),
 )
 
 abstract class ZoomAndroidViewModel(
@@ -47,6 +51,8 @@ abstract class ZoomAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
 ) : AndroidViewModel(application) {
+    val tapOffset = mutableStateOf(Offset.Zero)
+
     protected val _stateFlowZoom = MutableStateFlow(
         ZoomState(
             resizeViewDp = 0.dp,
@@ -59,22 +65,23 @@ abstract class ZoomAndroidViewModel(
     private val _diceBagList = MutableStateFlow<List<Dice>>(emptyList())
     val diceBagList: StateFlow<List<Dice>> = _diceBagList
 
-    private var diceEpochCache: MutableMap<Long, Dice> = mutableMapOf()
+    private var diceUuidCache: MutableMap<String, Dice> = mutableMapOf()
 
     init {
         viewModelScope.launch {
-            DialogBagCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect.DialogBagCloseEvent")
+            DialogDiceCloseEvent.sharedFlowDialogBagCloseEvent.collect {
+                Timber.d("collect.DialogDiceCloseEvent")
                 updateStateFlowZoom()
             }
         }
 
         viewModelScope.launch {
             merge(
-                BagImportEvent.sharedFlowTabBagImportEvent.map { },
-                BagResetEvent.sharedFlowTabBagResetEvent.map { }
+                SetupImportEvent.sharedFlowTabBagImportEvent.map { },
+                DiceResetEvent.sharedFlowTabBagResetEvent.map { },
+                DisplayIndexEvent.sharedFlowDisplayIndexEvent.map { }
             ).collect {
-                Timber.d("collect.BagImportEvent|BagResetEvent")
+                Timber.d("collect.SetupImportEvent|DiceResetEvent|DisplayIndexEvent")
                 updateResize()
                 updateStateFlowZoom()
             }
@@ -86,7 +93,7 @@ abstract class ZoomAndroidViewModel(
         if (settings != null) {
             _stateFlowZoom.update {
                 it.copy(
-                    resizeViewDp = resizeViewAsDp(settings.resize),
+                    resizeViewDp = resizeViewAsDp(settings.resizeZoom),
                 )
             }
         }
@@ -94,25 +101,33 @@ abstract class ZoomAndroidViewModel(
 
     open suspend fun updateStateFlowZoom() {}
 
-    protected fun updateDiceBagList() {
-        viewModelScope.launch {
-            diceEpochCache.clear()
+    protected suspend fun updateDiceBagList(diceBagToUse: DiceBag? = null) {
+        diceUuidCache.clear()
 
-            if (_stateFlowZoom.value.diceBag.isEmpty()) {
-                val diceBag = repositoryBag.fetch().firstOrNull()
-                if (diceBag != null) {
-                    _stateFlowZoom.value.diceBag = diceBag
+        var diceBag = diceBagToUse ?: _stateFlowZoom.value.diceBag
+        if (diceBag.isEmpty()) {
+            val fetchedDiceBag = repositoryBag.fetch().firstOrNull()
+            if (fetchedDiceBag != null) {
+                if (diceBagToUse == null) {
+                    _stateFlowZoom.update {
+                        it.copy(
+                            diceBag = fetchedDiceBag.sortedBy { it.displayIndex }.toMutableList()
+                        )
+                    }
                 }
+                diceBag = fetchedDiceBag.sortedBy { it.displayIndex }.toMutableList()
             }
-
-            // Build list more efficiently - avoid repeated list creation via +=
-            val newDiceList = mutableListOf<Dice>()
-            for (dice in _stateFlowZoom.value.diceBag) {
-                newDiceList.add(dice)
-                diceEpochCache[dice.epoch] = dice
-            }
-            _diceBagList.value = newDiceList
+        } else {
+            diceBag = diceBag.sortedBy { it.displayIndex }.toMutableList()
         }
+
+        // Build list more efficiently - avoid repeated list creation via +=
+        val newDiceList = mutableListOf<Dice>()
+        for (dice in diceBag) {
+            newDiceList.add(dice)
+            diceUuidCache[dice.uuid] = dice
+        }
+        _diceBagList.value = newDiceList
     }
 
     fun refreshAfterImport() {
@@ -120,38 +135,26 @@ abstract class ZoomAndroidViewModel(
             val diceBag = repositoryBag.fetch().firstOrNull()
             val rollHistory = repositoryRoll.fetch().firstOrNull()
 
+            updateDiceBagList(diceBag)
+
             _stateFlowZoom.update {
                 it.copy(
                     diceBag = diceBag ?: mutableListOf(),
                     rollHistory = rollHistory ?: LinkedHashMap()
                 )
             }
-
-            updateDiceBagList()
         }
     }
 
-    fun setResizeView(resize: Int) {
+    fun setResizeView(resizeZoom: Float) {
         _stateFlowZoom.value = _stateFlowZoom.value.copy(
-            resizeViewDp = resizeViewAsDp(resize)
+            resizeViewDp = resizeViewAsDp(resizeZoom)
         )
     }
 
-    private fun resizeViewAsDp(resize: Int): Dp {
-        val defaultViewSize = 70.dp
-
-        return when (resize) {
-            1 -> defaultViewSize * 1.0f
-            2 -> defaultViewSize * 1.25f
-            3 -> defaultViewSize * 1.5f
-            4 -> defaultViewSize * 1.75f
-            5 -> defaultViewSize * 2.0f
-            6 -> defaultViewSize * 2.25f
-            7 -> defaultViewSize * 2.5f
-            8 -> defaultViewSize * 2.75f
-            9 -> defaultViewSize * 3.0f
-            else -> defaultViewSize
-        }
+    private fun resizeViewAsDp(resizeZoom: Float): Dp {
+        val defaultViewSize = 65.dp
+        return defaultViewSize * (1.0f + (resizeZoom - 1.0f) * 0.32f)
     }
 
     fun saveScrollPosition(index: Int, offset: Int) {
@@ -163,8 +166,16 @@ abstract class ZoomAndroidViewModel(
         }
     }
 
-    fun fetchDiceFromEpochCache(rollDiceEpoch: Long): Dice? {
-        return diceEpochCache[rollDiceEpoch]
+    fun saveHorizontalScrollPosition(diceUuid: String, index: Int, offset: Int) {
+        _stateFlowZoom.update {
+            it.copy(
+                horizontalScrollPositions = it.horizontalScrollPositions + (diceUuid to (index to offset))
+            )
+        }
+    }
+
+    fun fetchDiceFromUuidCache(rollDiceUuid: String): Dice? {
+        return diceUuidCache[rollDiceUuid]
     }
 
     fun sideNumberFontSizeSp() = 17.sp
@@ -210,5 +221,46 @@ abstract class ZoomAndroidViewModel(
         val result = UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
         imageRequestCache[cacheKey] = result
         return result
+    }
+
+    fun move(fromIndex: Int, toIndex: Int, commit: Boolean = true) {
+        if (fromIndex == toIndex) return
+
+        val currentList = _diceBagList.value.toMutableList()
+        if (fromIndex in currentList.indices && toIndex in currentList.indices) {
+            val item = currentList.removeAt(fromIndex)
+            currentList.add(toIndex, item)
+
+            // Update displayIndex for all items in the list
+            currentList.forEachIndexed { index, dice ->
+                dice.displayIndex = index
+            }
+
+            _diceBagList.value = currentList
+            _stateFlowZoom.update { it.copy(diceBag = currentList) }
+
+            if (commit) {
+                viewModelScope.launch {
+                    repositoryBag.store(currentList)
+                    DisplayIndexEvent.emit()
+                }
+            }
+        }
+    }
+
+    fun moveUp(dice: Dice) {
+        val currentList = _diceBagList.value
+        val index = currentList.indexOfFirst { it.uuid == dice.uuid }
+        if (index > 0) {
+            move(index, index - 1)
+        }
+    }
+
+    fun moveDown(dice: Dice) {
+        val currentList = _diceBagList.value
+        val index = currentList.indexOfFirst { it.uuid == dice.uuid }
+        if (index != -1 && index < currentList.size - 1) {
+            move(index, index + 1)
+        }
     }
 }

@@ -1,12 +1,10 @@
-&bull; Create custom dice with text and SVG faces
-&bull; Roll several dice at once
-&bull; Designed to stay out of the player's way
+&bull; Story cubes
+&bull; Decision dice
+&bull; Custom rules
+&bull; Dice groups
+&bull; Customisable roll history
+&bull; Export/Import
+&bull; Yes/No shortcut
 &bull; Works offline
-&bull; Named roll presets
-&bull; Roll history
-&bull; Persistent state
-&bull; Example dice included
-&bull; Yes / No shortcut
-&bull; Export / Import feature
 
-&bull; User feedback (especially GitHub Issues) is always appreciated!
+Feedback (especially via GitHub Issues) is always appreciated :-)

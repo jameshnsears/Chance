@@ -9,10 +9,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.jameshnsears.chance.common.utility.UtilityLoggingHelper
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
-import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
-import com.github.jameshnsears.chance.ui.tab.bag.BagImportEvent
-import com.github.jameshnsears.chance.ui.tab.bag.ExportImportStatus
-import com.github.jameshnsears.chance.ui.tab.bag.TabBagAndroidViewModel
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
+import com.github.jameshnsears.chance.ui.tab.SetupImportEvent
+import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.setup.dice.ExportImportStatus
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -27,7 +27,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
 
     private val applicationContext: Application = ApplicationProvider.getApplicationContext()
 
-    private lateinit var tabBagAndroidViewModel: TabBagAndroidViewModel
+    private lateinit var diceAndroidViewModel: DiceAndroidViewModel
 
     private lateinit var repositoryFactory: RepositoryFactory
 
@@ -35,19 +35,20 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
     fun setUp() {
         repositoryFactory = RepositoryFactory(context)
 
-        tabBagAndroidViewModel = TabBagAndroidViewModel(
+        diceAndroidViewModel = DiceAndroidViewModel(
             applicationContext,
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
-            3
+            repositoryFactory.repositoryGroup,
+            3.0f
         )
     }
 
     @Test
     fun validateDefaultDataShippedWithApp() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER
+            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD
         )
 
         val dataImplJson = "[" +
@@ -56,6 +57,8 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
             repositoryFactory.repositoryBag.jsonExport() +
             "," +
             repositoryFactory.repositoryRoll.jsonExport() +
+            "," +
+            repositoryFactory.repositoryGroup.jsonExport() +
             "]"
 
         try {
@@ -74,7 +77,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
             "data/json/import/Invalid-Empty.json"
         )
 
-        tabBagAndroidViewModel.importFileJson(
+        diceAndroidViewModel.importFileJson(
             Uri.fromFile(
                 tempFile
             )
@@ -83,8 +86,8 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
         waitForCI()
 
         val collectorJob = launch {
-            BagImportEvent.sharedFlowTabBagImportEvent.collect {
-                val stateFlowTabBagImport = tabBagAndroidViewModel.stateFlowTabBagImport.value
+            SetupImportEvent.sharedFlowTabBagImportEvent.collect {
+                val stateFlowTabBagImport = diceAndroidViewModel.stateFlowTabBagImport.value
                 Assert.assertEquals(ExportImportStatus.FAILURE, stateFlowTabBagImport.importStatus)
                 Assert.assertEquals(
                     RepositoryImportStatus.ERROR_IMPORT_EMPTY,
@@ -98,7 +101,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
 
     private fun waitForCI() {
         repeat(60) {
-            if (tabBagAndroidViewModel.stateFlowTabBagImport.value.importStatus == ExportImportStatus.IMPORT_STARTED) {
+            if (diceAndroidViewModel.stateFlowTabBagImport.value.importStatus == ExportImportStatus.IMPORT_STARTED) {
                 Thread.sleep(1000)
                 Timber.d("Waiting for CI")
             }
@@ -113,7 +116,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
             "data/json/import/Valid-BagDataImpl.json"
         )
 
-        tabBagAndroidViewModel.importFileJson(
+        diceAndroidViewModel.importFileJson(
             Uri.fromFile(
                 tempFile
             )
@@ -122,8 +125,8 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
         waitForCI()
 
         val collectorJob = launch {
-            BagImportEvent.sharedFlowTabBagImportEvent.collect {
-                val stateFlowTabBagImport = tabBagAndroidViewModel.stateFlowTabBagImport.value
+            SetupImportEvent.sharedFlowTabBagImportEvent.collect {
+                val stateFlowTabBagImport = diceAndroidViewModel.stateFlowTabBagImport.value
                 Assert.assertEquals(ExportImportStatus.SUCCESS, stateFlowTabBagImport.importStatus)
                 Assert.assertEquals(RepositoryImportStatus.NONE, stateFlowTabBagImport.importDetail)
             }

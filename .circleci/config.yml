@@ -107,6 +107,22 @@ jobs:
           flags: ui-unitTest
       - save_gradle_cache
 
+  codecov_unit_test_data_repo_impl:
+    executor: android-docker
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
+    steps:
+      - checkout:
+          submodules: true
+      - restore_gradle_cache
+      - run:
+          name: data-repo-impl unit tests
+          command: ./gradlew :module:data-repo-impl:jacocoFdroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+      - codecov_upload:
+          report_path: ./module/data-repo-impl/build/reports/jacoco/unitTest.xml
+          flags: data-repo-impl-unitTest
+      - save_gradle_cache
+
   codecov_unit_test_data_repo_api:
     executor: android-docker
     environment:
@@ -217,7 +233,7 @@ jobs:
   static_detekt:
     executor: android-docker
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true -Dorg.gradle.configureondemand=true"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
     steps:
       - checkout:
           submodules: true
@@ -230,7 +246,7 @@ jobs:
   static_ktlint:
     executor: android-docker
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true -Dorg.gradle.configureondemand=true"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
     steps:
       - checkout:
           submodules: true
@@ -243,7 +259,7 @@ jobs:
   static_lint:
     executor: android-docker
     environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dsonar.gradle.skipCompile=true -Dorg.gradle.configureondemand=true"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.configureondemand=true"
     steps:
       - checkout:
           submodules: true
@@ -252,17 +268,6 @@ jobs:
           name: lintFdroidDebug
           command: ./gradlew :app:lintFdroidDebug --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
       - save_gradle_cache
-
-  static_sonarqube:
-    executor: android-docker
-    steps:
-      - checkout:
-          submodules: true
-          fetch-depth: 0
-      - run:
-          name: sonar
-          command: |
-            ./gradlew :sonar --info -Dsonar.scm.disabled=true
 
 workflows:
   version: 2
@@ -274,6 +279,11 @@ workflows:
               only: main
 
       - codecov_unit_test_data_repo_api:
+          filters:
+            branches:
+              only: main
+
+      - codecov_unit_test_data_repo_impl:
           filters:
             branches:
               only: main
@@ -309,11 +319,6 @@ workflows:
               only: main
 
       - static_lint:
-          filters:
-            branches:
-              only: main
-
-      - static_sonarqube:
           filters:
             branches:
               only: main

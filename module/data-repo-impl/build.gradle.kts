@@ -11,6 +11,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
+
+        consumerProguardFiles("proguard-rules.pro")
     }
 
     testOptions {
@@ -94,4 +96,11 @@ dependencies {
     implementation(project(":module:data-domain"))
     implementation(project(":module:data-repo-api"))
     implementation(project(":module:common"))
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(platform(libs.org.junit.bom))
+    testImplementation(testFixtures(project(":module:common")))
 }

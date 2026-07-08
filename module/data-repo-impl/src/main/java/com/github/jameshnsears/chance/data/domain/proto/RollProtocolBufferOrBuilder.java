@@ -10,10 +10,13 @@ public interface RollProtocolBufferOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>int64 diceEpoch = 1;</code>
+     * <code>int64 diceEpoch = 1 [deprecated = true];</code>
      *
      * @return The diceEpoch.
+     * @deprecated com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer.diceEpoch is deprecated.
+     * See roll.proto;l=9
      */
+    @java.lang.Deprecated
     long getDiceEpoch();
 
     /**
@@ -62,4 +65,34 @@ public interface RollProtocolBufferOrBuilder extends
      * @return The score.
      */
     int getScore();
+
+    /**
+     * <code>string uuidDice = 7;</code>
+     *
+     * @return The uuidDice.
+     */
+    java.lang.String getUuidDice();
+
+    /**
+     * <code>string uuidDice = 7;</code>
+     *
+     * @return The bytes for uuidDice.
+     */
+    com.google.protobuf.ByteString
+    getUuidDiceBytes();
+
+    /**
+     * <code>string uuidGroup = 8;</code>
+     *
+     * @return The uuidGroup.
+     */
+    java.lang.String getUuidGroup();
+
+    /**
+     * <code>string uuidGroup = 8;</code>
+     *
+     * @return The bytes for uuidGroup.
+     */
+    com.google.protobuf.ByteString
+    getUuidGroupBytes();
 }

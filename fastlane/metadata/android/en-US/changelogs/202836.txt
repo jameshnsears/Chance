@@ -1,5 +1,0 @@
-- Fix: Shortcut icon appearance on Xiaomi HyperOS 3 in dark mode
-- New: Improve device rotation remember support
-- New: Minor cosmetic improvements
-- Dev: Bump dependencies
-- Dev: Android Studio Panda 4 | 2025.3.4 Patch 1

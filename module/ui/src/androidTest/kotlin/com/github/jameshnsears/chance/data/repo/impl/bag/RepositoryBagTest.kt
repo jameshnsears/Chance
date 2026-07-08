@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.data.repo.impl.bag
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.common.utility.UtilityLoggingHelper
-import com.github.jameshnsears.chance.data.common.repository.RepositoryFactory
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first

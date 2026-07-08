@@ -2,27 +2,37 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
+    <ID>CyclomaticComplexMethod:RollsAndroidViewModel.kt$RollsAndroidViewModel$fun isContentAvailableToDisplay(rolls: List&lt;Roll&gt;): Boolean</ID>
+    <ID>CyclomaticComplexMethod:SettingsDataImpl.kt$SettingsDataImpl$override fun equals(other: Any?): Boolean</ID>
+    <ID>CyclomaticComplexMethod:SettingsDataTestDouble.kt$SettingsDataTestDouble$override fun equals(other: Any?): Boolean</ID>
+    <ID>EmptyFunctionBlock:RepositoryBagUnitTest.kt$RepositoryBagUnitTest.&lt;no name provided&gt;${}</ID>
+    <ID>EmptyFunctionBlock:RepositoryGroupUnitTest.kt$RepositoryGroupUnitTest.&lt;no name provided&gt;${}</ID>
+    <ID>EmptyFunctionBlock:RepositoryRollUnitTest.kt$RepositoryRollUnitTest.&lt;no name provided&gt;${}</ID>
     <ID>EmptyFunctionBlock:ShakeToRollService.kt$ShakeToRollService${}</ID>
     <ID>FunctionParameterNaming:DialogColourPickerPreview.kt$_: String</ID>
-    <ID>ImplicitDefaultLocale:UtilityLoggingLineNumberTree.kt$UtilityLoggingLineNumberTree$String.format( "%s, %s", element.lineNumber, element.methodName, )</ID>
-    <ID>LongMethod:BagImportExport.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun ImportExport( bottomSheetScaffoldState: BottomSheetScaffoldState, tabBagAndroidViewModel: TabBagAndroidViewModel, zoomBagAndroidViewModel: ZoomBagAndroidViewModel )</ID>
-    <ID>LongMethod:DialogSettings.kt$@Composable fun DialogSettingsLayout( rollAndroidViewModel: RollAndroidViewModel )</ID>
-    <ID>LongMethod:SideSvg.kt$@Composable fun SideImageSVG( cardSideService: CardSideService )</ID>
-    <ID>LongMethod:TabLayout.kt$@Composable fun DialogBagTabLayout( showDialog: MutableState&lt;Boolean&gt;, dialogBagAndroidViewModel: DialogBagAndroidViewModel )</ID>
-    <ID>LongMethod:ZoomBag.kt$@Composable fun ZoomBag( zoomBagAndroidViewModel: ZoomBagAndroidViewModel )</ID>
-    <ID>MatchingDeclarationName:RollSelection.kt$RollSelectionTestTag</ID>
+    <ID>LongMethod:DialogDiceTest.kt$DialogDiceTest$@Test fun dialogDice()</ID>
+    <ID>LongMethod:Groups.kt$@Composable fun Groups( groupsAndroidViewModel: GroupsAndroidViewModel, )</ID>
     <ID>MatchingDeclarationName:TabRow.kt$TabRowTestTag</ID>
-    <ID>SwallowedException:RollScoreTtsPlayer.kt$RollScoreTtsPlayer$e: NoClassDefFoundError</ID>
+    <ID>RethrowCaughtException:DiceAndroidViewModelUnitTest.kt$DiceAndroidViewModelUnitTest$throw e</ID>
+    <ID>SwallowedException:RollsScoreTtsPlayer.kt$RollsScoreTtsPlayer$e: NoClassDefFoundError</ID>
     <ID>SwallowedException:ShakeToRollService.kt$ShakeToRollService$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:BagAndroidViewModel.kt$TabBagAndroidViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:CardSideService.kt$CardSideService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CardFaceService.kt$CardSideService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DiceAndroidViewModel.kt$DiceAndroidViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:HapticHelper.kt$HapticHelper$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:RollSoundPlayer.kt$RollSoundPlayer$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RollsSoundPlayer.kt$RollsSoundPlayer$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ShakeToRollService.kt$ShakeToRollService$e: Exception</ID>
     <ID>TooGenericExceptionThrown:Main.kt$throw RuntimeException("Test Crash")</ID>
     <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>
-    <ID>VariableNaming:RollAndroidViewModel.kt$RollAndroidViewModel$val _stateFlowSettingsData = MutableStateFlow( SettingsState( rollIndexTime = false, rollScore = false, rollScoreTTS = false, diceTitle = false, rollBehaviour = false, sideNumber = false, sideDescription = false, sideSVG = false, shuffle = false, haptics = false, shakeToRoll = false, rollSound = false, ) )</ID>
-    <ID>VariableNaming:RollAndroidViewModel.kt$RollAndroidViewModel$var _undoEnabled = MutableStateFlow(false)</ID>
+    <ID>UnusedParameter:RepositoryBagProtocolBufferImpl.kt$RepositoryBagProtocolBufferImpl.Companion$diceBag: DiceBag</ID>
+    <ID>UnusedParameter:RepositoryGroupProtocolBufferImpl.kt$RepositoryGroupProtocolBufferImpl.Companion$groupHistory: GroupHistory</ID>
+    <ID>UnusedParameter:RepositoryRollProtocolBufferImpl.kt$RepositoryRollProtocolBufferImpl.Companion$rollHistory: RollHistory</ID>
+    <ID>UnusedParameter:RepositorySettingsProtocolBufferImpl.kt$RepositorySettingsProtocolBufferImpl.Companion$settings: SettingsDataInterface = SettingsDataImpl()</ID>
+    <ID>UnusedPrivateProperty:GroupDataImpl.kt$GroupDataImpl$bagData: BagDataInterface</ID>
+    <ID>UnusedPrivateProperty:RollHistoryDataImpl.kt$RollHistoryDataImpl$bagData: BagDataInterface</ID>
+    <ID>UnusedPrivateProperty:RollHistoryDataImpl.kt$RollHistoryDataImpl$groupData: GroupDataInterface</ID>
+    <ID>UnusedPrivateProperty:RollHistoryDataTestDouble.kt$RollHistoryDataTestDouble$groupData: GroupDataInterface</ID>
+    <ID>VariableNaming:RollsAndroidViewModel.kt$RollsAndroidViewModel$val _stateFlowSettingsData = MutableStateFlow( SettingsState( rollIndexTime = false, rollScore = false, rollScoreTTS = false, diceTitle = false, rollBehaviour = false, sideNumber = false, sideDescription = false, sideSVG = false, shuffle = false, haptics = false, shakeToRoll = false, rollSound = false, groupTitle = false, ) )</ID>
+    <ID>VariableNaming:RollsAndroidViewModel.kt$RollsAndroidViewModel$var _undoEnabled = MutableStateFlow(false)</ID>
     <ID>VariableNaming:ZoomAndroidViewModel.kt$ZoomAndroidViewModel$protected val _stateFlowZoom = MutableStateFlow( ZoomState( resizeViewDp = 0.dp, diceBag = mutableListOf(), rollHistory = LinkedHashMap() ) )</ID>
   </CurrentIssues>
 </SmellBaseline>

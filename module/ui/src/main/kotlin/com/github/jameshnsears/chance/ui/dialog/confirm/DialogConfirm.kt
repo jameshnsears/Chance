@@ -28,7 +28,7 @@ fun DialogConfirm(
                     onClick = onConfirmation,
                     modifier = Modifier
                         .minimumInteractiveComponentSize()
-                        .testTag(ConfirmTestTag.OK)
+                        .testTag(DialogConfirmTestTag.OK)
                 ) {
                     Text(stringResource(R.string.dialog_bag_delete_confirmation_ok))
                 }
@@ -38,7 +38,7 @@ fun DialogConfirm(
                     onClick = onDismissRequest,
                     modifier = Modifier
                         .minimumInteractiveComponentSize()
-                        .testTag(ConfirmTestTag.CANCEL)
+                        .testTag(DialogConfirmTestTag.CANCEL)
                 ) {
                     Text(stringResource(R.string.dialog_bag_delete_confirmation_cancel))
                 }

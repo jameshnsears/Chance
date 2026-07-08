@@ -8,71 +8,85 @@ import com.github.jameshnsears.chance.data.repo.impl.bag.RepositoryBagProtocolBu
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 class RepositoryBagProtocolBufferTestDouble private constructor() :
     RepositoryBagProtocolBufferInterface {
+    private val diceBagProtocolBufferStateFlow =
+        MutableStateFlow(BagProtocolBuffer.getDefaultInstance())
+
+    private var initialized = false
+
     companion object {
         private var instance: RepositoryBagProtocolBufferTestDouble? = null
 
         fun getInstance(
-            diceBag: DiceBag
+            diceBag: DiceBag,
         ): RepositoryBagProtocolBufferTestDouble {
             if (instance == null) {
                 instance = RepositoryBagProtocolBufferTestDouble()
-                instance!!.diceBag = diceBag
+            }
+
+            if (!instance!!.initialized) {
+                instance!!.updateStateFlow(diceBag)
                 instance!!.traceUuid(diceBag)
-            } else if (!instance!!.isDiceBagInitialized()) {
-                instance!!.diceBag = diceBag
-                instance!!.traceUuid(diceBag)
+                instance!!.initialized = true
             }
 
             return instance!!
         }
     }
 
-    private lateinit var diceBag: DiceBag
-
-    fun isDiceBagInitialized() = ::diceBag.isInitialized
+    private fun updateStateFlow(diceBag: DiceBag) {
+        val bagProtocolBufferBuilder = BagProtocolBuffer.newBuilder()
+        mapDiceBagIntoBagProtocolBufferBuilder(diceBag, bagProtocolBufferBuilder)
+        diceBagProtocolBufferStateFlow.value = bagProtocolBufferBuilder.build()
+    }
 
     override suspend fun jsonExport(): String {
-        val bagProtocolBufferBuilder: BagProtocolBuffer.Builder =
-            BagProtocolBuffer.newBuilder()
-
-        mapDiceBagIntoBagProtocolBufferBuilder(diceBag, bagProtocolBufferBuilder)
-
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("selected"))
 
         return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
-            .print(bagProtocolBufferBuilder.build())
+            .print(diceBagProtocolBufferStateFlow.value)
     }
 
     override suspend fun jsonImport(json: String) {
         store(jsonImportProcess(json))
     }
 
-    override suspend fun fetch(): Flow<DiceBag> = flow {
-        if (isDiceBagInitialized()) {
-            emit(diceBag)
-        } else {
-            emit(mutableListOf())
-        }
-    }
+    override suspend fun fetch(): Flow<DiceBag> = diceBagProtocolBufferStateFlow
+        .map { bagProtocolBuffer ->
+            val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)
 
-    override suspend fun fetch(epoch: Long): Flow<Dice> = flow {
-        if (isDiceBagInitialized()) {
-            emit(diceBag.firstOrNull { it.epoch == epoch } ?: Dice())
-        } else {
-            emit(Dice())
+            Timber.d("repositoryBag.FETCH ============================================")
+            Timber.d("repositoryBag.size=${diceBag.size}")
+
+            diceBag
         }
-    }
+
+    override suspend fun fetch(uuid: String): Flow<Dice> = diceBagProtocolBufferStateFlow
+        .map { bagProtocolBuffer ->
+            var dice = Dice()
+
+            bagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
+                if (uuid == diceProtocolBuffer.uuid) {
+                    dice = mapDiceProtocolBufferIntoDice(diceProtocolBuffer)
+                }
+            }
+            dice
+        }
 
     override suspend fun store(newDiceBag: DiceBag) {
-        diceBag = newDiceBag
+        Timber.d("repositoryBag.STORE ============================================")
+        Timber.d("repositoryBag.size=${newDiceBag.size}")
+
+        updateStateFlow(newDiceBag)
     }
 
     override suspend fun clear() {
-        diceBag.clear()
+        diceBagProtocolBufferStateFlow.value = BagProtocolBuffer.getDefaultInstance()
     }
 }

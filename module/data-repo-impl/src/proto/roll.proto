@@ -7,10 +7,13 @@ package com.github.jameshnsears.chance.data.domain.proto;
 import "side.proto";
 
 message RollProtocolBuffer {
-  int64 diceEpoch = 1;
+  int64 diceEpoch = 1 [deprecated = true];
   SideProtocolBuffer side = 2;
   int32 multiplierIndex = 3;
   int32 explodeIndex = 4;
   int32 scoreAdjustment = 5;
   int32 score = 6;
+
+  string uuidDice = 7;
+  string uuidGroup = 8;
 }

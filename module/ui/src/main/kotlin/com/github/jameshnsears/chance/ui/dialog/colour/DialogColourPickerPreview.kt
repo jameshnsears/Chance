@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.common.R
-import com.github.jameshnsears.chance.common.utility.UtilityPreview
 
 @Composable
-@UtilityPreview
+@Preview
 fun DialogColorPickerPreview() {
     val showColourDialog = rememberSaveable { mutableStateOf(true) }
 

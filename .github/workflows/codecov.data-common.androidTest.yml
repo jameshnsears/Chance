@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: clone
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
           submodules: true
@@ -79,7 +79,7 @@ jobs:
 
       - name: codecov
         if: matrix.run-tests == true
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           files: ./module/data-common/build/reports/jacoco/androidTest.xml

@@ -24,4 +24,6 @@ message DiceProtocolBuffer {
 
   bool modifyScore = 11;
   int32 modifyScoreValue = 12;
+
+  int32 displayIndex = 13;
 }

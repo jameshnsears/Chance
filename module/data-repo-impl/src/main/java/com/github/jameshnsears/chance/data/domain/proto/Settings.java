@@ -27,14 +27,16 @@ public final class Settings {
     static {
         java.lang.String[] descriptorData = {
             "\n\016settings.proto\0220com.github.jameshnsear" +
-                "s.chance.data.domain.proto\"\226\002\n\026SettingsP" +
-                "rotocolBuffer\022\016\n\006resize\030\001 \001(\005\022\025\n\rrollInd" +
-                "exTime\030\002 \001(\010\022\021\n\trollScore\030\003 \001(\010\022\021\n\tdiceT" +
-                "itle\030\004 \001(\010\022\022\n\nsideNumber\030\005 \001(\010\022\021\n\tbehavi" +
-                "our\030\006 \001(\010\022\027\n\017sideDescription\030\007 \001(\010\022\017\n\007si" +
-                "deSVG\030\010 \001(\010\022\021\n\trollSound\030\t \001(\010\022\017\n\007shuffl" +
-                "e\030\n \001(\010\022\017\n\007haptics\030\013 \001(\010\022\024\n\014rollScoreTTS" +
-                "\030\014 \001(\010\022\023\n\013shakeToRoll\030\r \001(\010B\002P\001b\006proto3"
+                "s.chance.data.domain.proto\"\302\002\n\026SettingsP" +
+                "rotocolBuffer\022\022\n\006resize\030\001 \001(\005B\002\030\001\022\025\n\rrol" +
+                "lIndexTime\030\002 \001(\010\022\021\n\trollScore\030\003 \001(\010\022\021\n\td" +
+                "iceTitle\030\004 \001(\010\022\022\n\nsideNumber\030\005 \001(\010\022\021\n\tbe" +
+                "haviour\030\006 \001(\010\022\027\n\017sideDescription\030\007 \001(\010\022\017" +
+                "\n\007sideSVG\030\010 \001(\010\022\021\n\trollSound\030\t \001(\010\022\017\n\007sh" +
+                "uffle\030\n \001(\010\022\017\n\007haptics\030\013 \001(\010\022\024\n\014rollScor" +
+                "eTTS\030\014 \001(\010\022\023\n\013shakeToRoll\030\r \001(\010\022\022\n\nresiz" +
+                "eZoom\030\016 \001(\002\022\022\n\ngroupTitle\030\017 \001(\010B\002P\001b\006pro" +
+                "to3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
             .internalBuildGeneratedFileFrom(descriptorData,
@@ -45,7 +47,7 @@ public final class Settings {
         internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
             internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor,
-            new java.lang.String[]{"Resize", "RollIndexTime", "RollScore", "DiceTitle", "SideNumber", "Behaviour", "SideDescription", "SideSVG", "RollSound", "Shuffle", "Haptics", "RollScoreTTS", "ShakeToRoll",});
+            new java.lang.String[]{"Resize", "RollIndexTime", "RollScore", "DiceTitle", "SideNumber", "Behaviour", "SideDescription", "SideSVG", "RollSound", "Shuffle", "Haptics", "RollScoreTTS", "ShakeToRoll", "ResizeZoom", "GroupTitle",});
         descriptor.resolveAllFeaturesImmutable();
     }
 

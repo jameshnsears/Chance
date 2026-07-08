@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.data.domain.core.settings
 
 
 interface SettingsDataInterface {
-    var resize: Int
+    var resizeZoom: Float
 
     var rollIndexTime: Boolean
     var rollScore: Boolean
@@ -18,4 +18,5 @@ interface SettingsDataInterface {
     var shakeToRoll: Boolean
     var rollSound: Boolean
     var shuffle: Boolean
+    var groupTitle: Boolean
 }

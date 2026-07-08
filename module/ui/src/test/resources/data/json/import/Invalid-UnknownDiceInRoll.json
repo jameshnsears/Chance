@@ -1,36 +1,36 @@
 [
   {
-    "resize": 2,
-    "rollIndexTime": false,
+    "resizeZoom": 2.0,
+    "rollIndexTime": true,
     "rollScore": true,
-    "diceTitle": false,
+    "diceTitle": true,
     "sideNumber": true,
-    "behaviour": false,
-    "sideDescription": false,
+    "behaviour": true,
+    "sideDescription": true,
     "sideSVG": true,
-    "rollSound": false
+    "rollSound": false,
+    "shuffle": false,
+    "haptics": false,
+    "rollScoreTTS": false,
+    "shakeToRoll": false,
+    "groupTitle": true
   },
   {
     "dice": [
       {
-        "epoch": "1719140016898",
+        "epoch": "1782317980873",
+        "uuid": "ef8c2cfd-7649-409f-882f-6ce1a05319dd",
         "side": [
           {
-            "uuid": "",
+            "uuid": "1bf5240c-4950-4cf2-913e-ac62851b1cc1",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "a43a9bb9-0615-4380-a4ca-19e84c9250c3",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           }
         ],
@@ -38,49 +38,36 @@
         "colour": "FF6650a4",
         "selected": false,
         "multiplierValue": 1,
-        "explode": false,
-        "explodeWhen": "\u003d",
+        "explodeWhen": "=",
         "explodeValue": 1,
-        "modifyScore": false,
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1719140016900",
+        "epoch": "1782317980963",
+        "uuid": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
         "side": [
           {
-            "uuid": "",
+            "uuid": "5ed46915-04d8-4260-9b47-51c25d44e84e",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "1bbb438e-f652-416f-b9ae-ef399ab5aa0a",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "c023463e-e7af-4438-aad5-e228f84ac15d",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "c1ddd5ab-a9b1-4981-b564-4231c6ef6408",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           }
         ],
@@ -89,133 +76,108 @@
         "selected": false,
         "multiplierValue": 2,
         "explode": true,
-        "explodeWhen": "\u003d",
+        "explodeWhen": "=",
         "explodeValue": 2,
-        "modifyScore": false,
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1719140016902",
+        "epoch": "1782317980965",
+        "uuid": "7eeff917-45f3-43e1-a05c-f3caf5b5c6cb",
         "side": [
           {
-            "uuid": "",
+            "uuid": "31d4a489-9e09-4af4-a38f-b3797c4689ca",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnM2LnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTEuNzEzMTM0IgogICAgIGlua3NjYXBlOmN5PSIxNS4wMjM4NjMiCiAgICAgaW5rc2NhcGU6cGFnZWNoZWNrZXJib2FyZD0iMCIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIgogICAgIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6d2luZG93LWhlaWdodD0iMTAwOCIKICAgICBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIxIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTkyMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteD0iMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMCIKICAgICBpbmtzY2FwZTp6b29tPSIyMS44OTg0OTUiCiAgICAgaW5rc2NhcGU6c2hvd3BhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6ZGVza2NvbG9yPSIjZDFkMWQxIiAvPgogIDxwYXRoCiAgICAgZD0ibSAzMDAsLTI0MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAwLC0zNjAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMzYwLDM2MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAwLC0zNjAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gLTQ2MCw0ODAgYyAtMjIsMCAtNDAuODMzMzMsLTcuODMzMzMgLTU2LjUsLTIzLjUgQyAxMjcuODMzMzMsLTE1OS4xNjY2NyAxMjAsLTE3OCAxMjAsLTIwMCB2IC01NjAgYyAwLC0yMiA3LjgzMzMzLC00MC44MzMzMyAyMy41LC01Ni41IDE1LjY2NjY3LC0xNS42NjY2NyAzNC41LC0yMy41IDU2LjUsLTIzLjUgaCA1NjAgYyAyMiwwIDQwLjgzMzMzLDcuODMzMzMgNTYuNSwyMy41IDE1LjY2NjY3LDE1LjY2NjY3IDIzLjUsMzQuNSAyMy41LDU2LjUgdiA1NjAgYyAwLDIyIC03LjgzMzMzLDQwLjgzMzMzIC0yMy41LDU2LjUgLTE1LjY2NjY3LDE1LjY2NjY3IC0zNC41LDIzLjUgLTU2LjUsMjMuNSB6IG0gMCwtODAgSCA3NjAgViAtNzYwIEggMjAwIFogbSAwLC01NjAgdiA1NjAgeiIKICAgICBpZD0icGF0aDIiCiAgICAgc29kaXBvZGk6bm9kZXR5cGVzPSJzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzY2NjY2NjY2MiCiAgICAgc3R5bGU9ImZpbGw6IzdENTI2MDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6IzdENTI2MDtzdHJva2Utb3BhY2l0eToxIiAvPgogIDxwYXRoCiAgICAgc3R5bGU9InN0cm9rZS13aWR0aDo0MDtmaWxsOiM3RDUyNjA7ZmlsbC1vcGFjaXR5OjEiCiAgICAgZD0ibSA2NjAsLTQyMCBjIDE2LjY2NjY4LDAgMzAuODMzMzIsLTUuODMzMzIgNDIuNSwtMTcuNSAxMS42NjY2OCwtMTEuNjY2NjggMTcuNSwtMjUuODMzMzIgMTcuNSwtNDIuNSAwLC0xNi42NjY2OCAtNS44MzMzMiwtMzAuODMzMzIgLTE3LjUsLTQyLjUgLTExLjY2NjY4LC0xMS42NjY2OCAtMjUuODMzMzIsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY4LDAgLTMwLjgzMzMyLDUuODMzMzIgLTQyLjUsMTcuNSAtMTEuNjY2NjgsMTEuNjY2NjggLTE3LjUsMjUuODMzMzIgLTE3LjUsNDIuNSAwLDE2LjY2NjY4IDUuODMzMzIsMzAuODMzMzIgMTcuNSw0Mi41IDExLjY2NjY4LDExLjY2NjY4IDI1LjgzMzMyLDE3LjUgNDIuNSwxNy41IHoiCiAgICAgaWQ9InBhdGgxMTM2IiAvPgogIDxwYXRoCiAgICAgc3R5bGU9InN0cm9rZS13aWR0aDo0MDtmaWxsOiM3RDUyNjA7ZmlsbC1vcGFjaXR5OjEiCiAgICAgZD0ibSAzMDAsLTQyMCBjIDE2LjY2NjY4LDAgMzAuODMzMzIsLTUuODMzMzIgNDIuNSwtMTcuNSAxMS42NjY2OCwtMTEuNjY2NjggMTcuNSwtMjUuODMzMzIgMTcuNSwtNDIuNSAwLC0xNi42NjY2OCAtNS44MzMzMiwtMzAuODMzMzIgLTE3LjUsLTQyLjUgLTExLjY2NjY4LC0xMS42NjY2OCAtMjUuODMzMzIsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY4LDAgLTMwLjgzMzMyLDUuODMzMzIgLTQyLjUsMTcuNSAtMTEuNjY2NjgsMTEuNjY2NjggLTE3LjUsMjUuODMzMzIgLTE3LjUsNDIuNSAwLDE2LjY2NjY4IDUuODMzMzIsMzAuODMzMzIgMTcuNSw0Mi41IDExLjY2NjY4LDExLjY2NjY4IDI1LjgzMzMyLDE3LjUgNDIuNSwxNy41IHoiCiAgICAgaWQ9InBhdGgxMTM2LTYiIC8+Cjwvc3ZnPgo\u003d",
-            "imageDrawableId": 0,
-            "description": "6",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "e4216b64-cbf1-4e2b-ac03-18bce613f872",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgdmVyc2lvbj0iMS4xIgogICBpZD0ic3ZnNCIKICAgc29kaXBvZGk6ZG9jbmFtZT0iZDZzNS5zdmciCiAgIGlua3NjYXBlOnZlcnNpb249IjEuMi4yIChiMGE4NDg2NTQxLCAyMDIyLTEyLTAxKSIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgaWQ9Im5hbWVkdmlldzYiCiAgICAgcGFnZWNvbG9yPSIjZmZmZmZmIgogICAgIGJvcmRlcmNvbG9yPSIjMDAwMDAwIgogICAgIGJvcmRlcm9wYWNpdHk9IjAuMjUiCiAgICAgaW5rc2NhcGU6c2hvd3BhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6cGFnZW9wYWNpdHk9IjAuMCIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6em9vbT0iMzQuOTE2NjY3IgogICAgIGlua3NjYXBlOmN4PSIxMi4wMTQzMiIKICAgICBpbmtzY2FwZTpjeT0iMTIiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9IjEwMDgiCiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjAiCiAgICAgaW5rc2NhcGU6d2luZG93LXk9IjAiCiAgICAgaW5rc2NhcGU6d2luZG93LW1heGltaXplZD0iMSIKICAgICBpbmtzY2FwZTpjdXJyZW50LWxheWVyPSJzdmc0IiAvPgogIDxwYXRoCiAgICAgZD0iTTMwMC0yNDBxMjUgMCA0Mi41LTE3LjVUMzYwLTMwMHEwLTI1LTE3LjUtNDIuNVQzMDAtMzYwcS0yNSAwLTQyLjUgMTcuNVQyNDAtMzAwcTAgMjUgMTcuNSA0Mi41VDMwMC0yNDBabTAtMzYwcTI1IDAgNDIuNS0xNy41VDM2MC02NjBxMC0yNS0xNy41LTQyLjVUMzAwLTcyMHEtMjUgMC00Mi41IDE3LjVUMjQwLTY2MHEwIDI1IDE3LjUgNDIuNVQzMDAtNjAwWm0xODAgMTgwcTI1IDAgNDIuNS0xNy41VDU0MC00ODBxMC0yNS0xNy41LTQyLjVUNDgwLTU0MHEtMjUgMC00Mi41IDE3LjVUNDIwLTQ4MHEwIDI1IDE3LjUgNDIuNVQ0ODAtNDIwWm0xODAgMTgwcTI1IDAgNDIuNS0xNy41VDcyMC0zMDBxMC0yNS0xNy41LTQyLjVUNjYwLTM2MHEtMjUgMC00Mi41IDE3LjVUNjAwLTMwMHEwIDI1IDE3LjUgNDIuNVQ2NjAtMjQwWm0wLTM2MHEyNSAwIDQyLjUtMTcuNVQ3MjAtNjYwcTAtMjUtMTcuNS00Mi41VDY2MC03MjBxLTI1IDAtNDIuNSAxNy41VDYwMC02NjBxMCAyNSAxNy41IDQyLjVUNjYwLTYwMFpNMjAwLTEyMHEtMzMgMC01Ni41LTIzLjVUMTIwLTIwMHYtNTYwcTAtMzMgMjMuNS01Ni41VDIwMC04NDBoNTYwcTMzIDAgNTYuNSAyMy41VDg0MC03NjB2NTYwcTAgMzMtMjMuNSA1Ni41VDc2MC0xMjBIMjAwWm0wLTgwaDU2MHYtNTYwSDIwMHY1NjBabTAtNTYwdjU2MC01NjBaIgogICAgIGlkPSJwYXRoMiIKICAgICBzdHlsZT0iZmlsbDojN0Q1MjYwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTojN0Q1MjYwO3N0cm9rZS1vcGFjaXR5OjEiIC8+Cjwvc3ZnPgo\u003d",
-            "imageDrawableId": 0,
-            "description": "5",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "c9e0e84a-2971-4726-959c-9c86bfc1e362",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnM0LnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iLTMuMzI3NjgxNCIKICAgICBpbmtzY2FwZTpjeT0iMTEuNjYyMTUiCiAgICAgaW5rc2NhcGU6cGFnZWNoZWNrZXJib2FyZD0iMCIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMC4wIgogICAgIGlua3NjYXBlOnBhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6d2luZG93LWhlaWdodD0iMTAwOCIKICAgICBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIxIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTkyMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteD0iMCIKICAgICBpbmtzY2FwZTp3aW5kb3cteT0iMCIKICAgICBpbmtzY2FwZTp6b29tPSIxNi4zNzc3NyIKICAgICBpbmtzY2FwZTpzaG93cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTpkZXNrY29sb3I9IiNkMWQxZDEiIC8+CiAgPHBhdGgKICAgICBkPSJtIDMwMCwtMjQwIGMgMTYuNjY2NjcsMCAzMC44MzMzMywtNS44MzMzMyA0Mi41LC0xNy41IDExLjY2NjY3LC0xMS42NjY2NyAxNy41LC0yNS44MzMzMyAxNy41LC00Mi41IDAsLTE2LjY2NjY3IC01LjgzMzMzLC0zMC44MzMzMyAtMTcuNSwtNDIuNSAtMTEuNjY2NjcsLTExLjY2NjY3IC0yNS44MzMzMywtMTcuNSAtNDIuNSwtMTcuNSAtMTYuNjY2NjcsMCAtMzAuODMzMzMsNS44MzMzMyAtNDIuNSwxNy41IC0xMS42NjY2NywxMS42NjY2NyAtMTcuNSwyNS44MzMzMyAtMTcuNSw0Mi41IDAsMTYuNjY2NjcgNS44MzMzMywzMC44MzMzMyAxNy41LDQyLjUgMTEuNjY2NjcsMTEuNjY2NjcgMjUuODMzMzMsMTcuNSA0Mi41LDE3LjUgeiBtIDAsLTM2MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAzNjAsMzYwIGMgMTYuNjY2NjcsMCAzMC44MzMzMywtNS44MzMzMyA0Mi41LC0xNy41IDExLjY2NjY3LC0xMS42NjY2NyAxNy41LC0yNS44MzMzMyAxNy41LC00Mi41IDAsLTE2LjY2NjY3IC01LjgzMzMzLC0zMC44MzMzMyAtMTcuNSwtNDIuNSAtMTEuNjY2NjcsLTExLjY2NjY3IC0yNS44MzMzMywtMTcuNSAtNDIuNSwtMTcuNSAtMTYuNjY2NjcsMCAtMzAuODMzMzMsNS44MzMzMyAtNDIuNSwxNy41IC0xMS42NjY2NywxMS42NjY2NyAtMTcuNSwyNS44MzMzMyAtMTcuNSw0Mi41IDAsMTYuNjY2NjcgNS44MzMzMywzMC44MzMzMyAxNy41LDQyLjUgMTEuNjY2NjcsMTEuNjY2NjcgMjUuODMzMzMsMTcuNSA0Mi41LDE3LjUgeiBtIDAsLTM2MCBjIDE2LjY2NjY3LDAgMzAuODMzMzMsLTUuODMzMzMgNDIuNSwtMTcuNSAxMS42NjY2NywtMTEuNjY2NjcgMTcuNSwtMjUuODMzMzMgMTcuNSwtNDIuNSAwLC0xNi42NjY2NyAtNS44MzMzMywtMzAuODMzMzMgLTE3LjUsLTQyLjUgLTExLjY2NjY3LC0xMS42NjY2NyAtMjUuODMzMzMsLTE3LjUgLTQyLjUsLTE3LjUgLTE2LjY2NjY3LDAgLTMwLjgzMzMzLDUuODMzMzMgLTQyLjUsMTcuNSAtMTEuNjY2NjcsMTEuNjY2NjcgLTE3LjUsMjUuODMzMzMgLTE3LjUsNDIuNSAwLDE2LjY2NjY3IDUuODMzMzMsMzAuODMzMzMgMTcuNSw0Mi41IDExLjY2NjY3LDExLjY2NjY3IDI1LjgzMzMzLDE3LjUgNDIuNSwxNy41IHogbSAtNDYwLDQ4MCBjIC0yMiwwIC00MC44MzMzMywtNy44MzMzMyAtNTYuNSwtMjMuNSBDIDEyNy44MzMzMywtMTU5LjE2NjY3IDEyMCwtMTc4IDEyMCwtMjAwIHYgLTU2MCBjIDAsLTIyIDcuODMzMzMsLTQwLjgzMzMzIDIzLjUsLTU2LjUgMTUuNjY2NjcsLTE1LjY2NjY3IDM0LjUsLTIzLjUgNTYuNSwtMjMuNSBoIDU2MCBjIDIyLDAgNDAuODMzMzMsNy44MzMzMyA1Ni41LDIzLjUgMTUuNjY2NjcsMTUuNjY2NjcgMjMuNSwzNC41IDIzLjUsNTYuNSB2IDU2MCBjIDAsMjIgLTcuODMzMzMsNDAuODMzMzMgLTIzLjUsNTYuNSAtMTUuNjY2NjcsMTUuNjY2NjcgLTM0LjUsMjMuNSAtNTYuNSwyMy41IHogbSAwLC04MCBIIDc2MCBWIC03NjAgSCAyMDAgWiBtIDAsLTU2MCB2IDU2MCB6IgogICAgIGlkPSJwYXRoMiIKICAgICBzb2RpcG9kaTpub2RldHlwZXM9InNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NjY2NjY2NjYyIKICAgICBzdHlsZT0iZmlsbDojN0Q1MjYwO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTojN0Q1MjYwO3N0cm9rZS1vcGFjaXR5OjEiIC8+Cjwvc3ZnPgo\u003d",
-            "imageDrawableId": 0,
-            "description": "4",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "04dc841f-30ab-4d64-b6b9-b301fb439e1d",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnMzLnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTIuMDIxNTA1IgogICAgIGlua3NjYXBlOmN5PSIxMiIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiCiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSIxMDA4IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy14PSIwIgogICAgIGlua3NjYXBlOndpbmRvdy15PSIwIgogICAgIGlua3NjYXBlOnpvb209IjIzLjI1IgogICAgIGlua3NjYXBlOnNob3dwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIgLz4KICA8cGF0aAogICAgIGQ9Im0gMzAwLC0yNDAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMTgwLC0xODAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMTgwLC0xODAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gLTQ2MCw0ODAgYyAtMjIsMCAtNDAuODMzMzMsLTcuODMzMzMgLTU2LjUsLTIzLjUgQyAxMjcuODMzMzMsLTE1OS4xNjY2NyAxMjAsLTE3OCAxMjAsLTIwMCB2IC01NjAgYyAwLC0yMiA3LjgzMzMzLC00MC44MzMzMyAyMy41LC01Ni41IDE1LjY2NjY3LC0xNS42NjY2NyAzNC41LC0yMy41IDU2LjUsLTIzLjUgaCA1NjAgYyAyMiwwIDQwLjgzMzMzLDcuODMzMzMgNTYuNSwyMy41IDE1LjY2NjY3LDE1LjY2NjY3IDIzLjUsMzQuNSAyMy41LDU2LjUgdiA1NjAgYyAwLDIyIC03LjgzMzMzLDQwLjgzMzMzIC0yMy41LDU2LjUgLTE1LjY2NjY3LDE1LjY2NjY3IC0zNC41LDIzLjUgLTU2LjUsMjMuNSB6IG0gMCwtODAgSCA3NjAgViAtNzYwIEggMjAwIFogbSAwLC01NjAgdiA1NjAgeiIKICAgICBpZD0icGF0aDIiCiAgICAgc29kaXBvZGk6bm9kZXR5cGVzPSJzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzY2NjY2NjY2MiCiAgICAgc3R5bGU9ImZpbGw6IzdENTI2MDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6IzdENTI2MDtzdHJva2Utb3BhY2l0eToxIiAvPgo8L3N2Zz4K",
-            "imageDrawableId": 0,
-            "description": "3",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "2a39a7ce-9433-4a9d-9acb-526a10b1100b",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnMyLnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTIuMDIxNTA1IgogICAgIGlua3NjYXBlOmN5PSIxMiIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiCiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSIxMDA4IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy14PSIwIgogICAgIGlua3NjYXBlOndpbmRvdy15PSIwIgogICAgIGlua3NjYXBlOnpvb209IjIzLjI1IgogICAgIGlua3NjYXBlOnNob3dwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIgLz4KICA8cGF0aAogICAgIGQ9Im0gMzAwLC0yNDAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gMzYwLC0zNjAgYyAxNi42NjY2NywwIDMwLjgzMzMzLC01LjgzMzMzIDQyLjUsLTE3LjUgMTEuNjY2NjcsLTExLjY2NjY3IDE3LjUsLTI1LjgzMzMzIDE3LjUsLTQyLjUgMCwtMTYuNjY2NjcgLTUuODMzMzMsLTMwLjgzMzMzIC0xNy41LC00Mi41IC0xMS42NjY2NywtMTEuNjY2NjcgLTI1LjgzMzMzLC0xNy41IC00Mi41LC0xNy41IC0xNi42NjY2NywwIC0zMC44MzMzMyw1LjgzMzMzIC00Mi41LDE3LjUgLTExLjY2NjY3LDExLjY2NjY3IC0xNy41LDI1LjgzMzMzIC0xNy41LDQyLjUgMCwxNi42NjY2NyA1LjgzMzMzLDMwLjgzMzMzIDE3LjUsNDIuNSAxMS42NjY2NywxMS42NjY2NyAyNS44MzMzMywxNy41IDQyLjUsMTcuNSB6IG0gLTQ2MCw0ODAgYyAtMjIsMCAtNDAuODMzMzMsLTcuODMzMzMgLTU2LjUsLTIzLjUgQyAxMjcuODMzMzMsLTE1OS4xNjY2NyAxMjAsLTE3OCAxMjAsLTIwMCB2IC01NjAgYyAwLC0yMiA3LjgzMzMzLC00MC44MzMzMyAyMy41LC01Ni41IDE1LjY2NjY3LC0xNS42NjY2NyAzNC41LC0yMy41IDU2LjUsLTIzLjUgaCA1NjAgYyAyMiwwIDQwLjgzMzMzLDcuODMzMzMgNTYuNSwyMy41IDE1LjY2NjY3LDE1LjY2NjY3IDIzLjUsMzQuNSAyMy41LDU2LjUgdiA1NjAgYyAwLDIyIC03LjgzMzMzLDQwLjgzMzMzIC0yMy41LDU2LjUgLTE1LjY2NjY3LDE1LjY2NjY3IC0zNC41LDIzLjUgLTU2LjUsMjMuNSB6IG0gMCwtODAgSCA3NjAgViAtNzYwIEggMjAwIFogbSAwLC01NjAgdiA1NjAgeiIKICAgICBpZD0icGF0aDIiCiAgICAgc29kaXBvZGk6bm9kZXR5cGVzPSJzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzY2NjY2NjY2MiCiAgICAgc3R5bGU9ImZpbGw6IzdENTI2MDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6IzdENTI2MDtzdHJva2Utb3BhY2l0eToxIiAvPgo8L3N2Zz4K",
-            "imageDrawableId": 0,
-            "description": "2",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "be78ad62-2019-42fc-89d4-243b7214dfb8",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgaGVpZ2h0PSIyNCIKICAgaWQ9InN2ZzQiCiAgIHZlcnNpb249IjEuMSIKICAgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiCiAgIHdpZHRoPSIyNCIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMS4yLjIgKGIwYTg0ODY1NDEsIDIwMjItMTItMDEpIgogICBzb2RpcG9kaTpkb2NuYW1lPSJkNnMxLnN2ZyIKICAgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiCiAgIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcwogICAgIGlkPSJkZWZzOCIgLz4KICA8c29kaXBvZGk6bmFtZWR2aWV3CiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMS4wIgogICAgIGlkPSJuYW1lZHZpZXc2IgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBzaG93Z3JpZD0iZmFsc2UiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ic3ZnNCIKICAgICBpbmtzY2FwZTpjeD0iMTIuMzE1MTMyIgogICAgIGlua3NjYXBlOmN5PSIxNC42ODM5MyIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiCiAgICAgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSIxMDA4IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIxOTIwIgogICAgIGlua3NjYXBlOndpbmRvdy14PSIwIgogICAgIGlua3NjYXBlOndpbmRvdy15PSIwIgogICAgIGlua3NjYXBlOnpvb209IjM4LjIwNTAzMSIKICAgICBpbmtzY2FwZTpzaG93cGFnZXNoYWRvdz0iMiIKICAgICBpbmtzY2FwZTpkZXNrY29sb3I9IiNkMWQxZDEiIC8+CiAgPHBhdGgKICAgICBkPSJtIDQ4MCwtNDIwIGMgMTYuNjY2NjcsMCAzMC44MzMzMywtNS44MzMzMyA0Mi41LC0xNy41IDExLjY2NjY3LC0xMS42NjY2NyAxNy41LC0yNS44MzMzMyAxNy41LC00Mi41IDAsLTE2LjY2NjY3IC01LjgzMzMzLC0zMC44MzMzMyAtMTcuNSwtNDIuNSAtMTEuNjY2NjcsLTExLjY2NjY3IC0yNS44MzMzMywtMTcuNSAtNDIuNSwtMTcuNSAtMTYuNjY2NjcsMCAtMzAuODMzMzMsNS44MzMzMyAtNDIuNSwxNy41IC0xMS42NjY2NywxMS42NjY2NyAtMTcuNSwyNS44MzMzMyAtMTcuNSw0Mi41IDAsMTYuNjY2NjcgNS44MzMzMywzMC44MzMzMyAxNy41LDQyLjUgMTEuNjY2NjcsMTEuNjY2NjcgMjUuODMzMzMsMTcuNSA0Mi41LDE3LjUgeiBtIC0yODAsMzAwIGMgLTIyLDAgLTQwLjgzMzMzLC03LjgzMzMzIC01Ni41LC0yMy41IEMgMTI3LjgzMzMzLC0xNTkuMTY2NjcgMTIwLC0xNzggMTIwLC0yMDAgdiAtNTYwIGMgMCwtMjIgNy44MzMzMywtNDAuODMzMzMgMjMuNSwtNTYuNSAxNS42NjY2NywtMTUuNjY2NjcgMzQuNSwtMjMuNSA1Ni41LC0yMy41IGggNTYwIGMgMjIsMCA0MC44MzMzMyw3LjgzMzMzIDU2LjUsMjMuNSAxNS42NjY2NywxNS42NjY2NyAyMy41LDM0LjUgMjMuNSw1Ni41IHYgNTYwIGMgMCwyMiAtNy44MzMzMyw0MC44MzMzMyAtMjMuNSw1Ni41IC0xNS42NjY2NywxNS42NjY2NyAtMzQuNSwyMy41IC01Ni41LDIzLjUgeiBtIDAsLTgwIEggNzYwIFYgLTc2MCBIIDIwMCBaIG0gMCwtNTYwIHYgNTYwIHoiCiAgICAgaWQ9InBhdGgyIgogICAgIHNvZGlwb2RpOm5vZGV0eXBlcz0ic3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc2NjY2NjY2NjIgogICAgIHN0eWxlPSJmaWxsOiM3RDUyNjA7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOiM3RDUyNjA7c3Ryb2tlLW9wYWNpdHk6MSIgLz4KPC9zdmc+Cg\u003d\u003d",
-            "imageDrawableId": 0,
-            "description": "1",
             "descriptionColour": "FF000000"
           }
         ],
         "title": "d6",
         "colour": "FF6650a4",
-        "selected": true,
+        "selected": false,
         "multiplierValue": 3,
-        "explode": false,
-        "explodeWhen": "\u003d",
+        "explodeWhen": "=",
         "explodeValue": 1,
-        "modifyScore": false,
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1719140016908",
+        "epoch": "1782317980978",
+        "uuid": "e3755237-eb51-4889-ab5b-9844f94b2646",
         "side": [
           {
-            "uuid": "",
+            "uuid": "9c8d1b85-6405-4b90-b10e-d5e5bcc88615",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 2131230843,
+            "imageDrawableId": 2131231029,
             "description": "Knight",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "",
+            "uuid": "5345e3c6-dcfa-4d22-a652-5c3af2872fe0",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 2131230844,
+            "imageDrawableId": 2131231030,
             "description": "Lion",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "",
+            "uuid": "c6710e8d-0dfa-4723-976b-85df46128af4",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 2131230845,
+            "imageDrawableId": 2131231031,
             "description": "Pirate",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "",
+            "uuid": "5d0665c9-66c4-439d-9717-da6169a6e624",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 2131230842,
+            "imageDrawableId": 2131231028,
             "description": "Crocodile",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "",
+            "uuid": "3f2a6317-c240-438a-821e-b2f6cdce3934",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 2131230846,
+            "imageDrawableId": 2131231032,
             "description": "Queen",
             "descriptionColour": "FF6650a4"
           },
           {
-            "uuid": "",
+            "uuid": "238b0e1a-5939-42a0-a7c9-501f9d07f509",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 2131230847,
+            "imageDrawableId": 2131231033,
             "description": "Spaceship",
             "descriptionColour": "FF6650a4"
           }
@@ -223,86 +185,61 @@
         "title": "Story",
         "colour": "FF6650a4",
         "selected": false,
-        "multiplierValue": 4,
-        "explode": false,
-        "explodeWhen": "\u003d",
+        "multiplierValue": 3,
+        "explodeWhen": "=",
         "explodeValue": 1,
-        "modifyScore": false,
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1719140016911",
+        "epoch": "1782317980967",
+        "uuid": "798fdd2d-b9b2-4a60-a347-834ed1b6f853",
         "side": [
           {
-            "uuid": "",
+            "uuid": "fe6279c6-2866-4efc-8e1b-ee83b2af66bb",
             "number": 8,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "dbf0082f-5eeb-4fe4-a07f-42e1935d740d",
             "number": 7,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "d87b3cdf-85a2-4848-852e-dc0d112a1cd2",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "13fa3512-42ab-439e-b6b0-844d3aed4bdc",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "c8d43168-97b4-4b4d-b645-afc0c1a547a5",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "ca0e3e79-2ab3-4431-b8e9-b9ffb6e07c07",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "f4c310fe-7e8f-4936-b159-55b13170bb91",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "f268fc2e-0c78-4197-962e-aa94753ab0df",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           }
         ],
@@ -311,102 +248,72 @@
         "selected": false,
         "multiplierValue": 1,
         "explode": true,
-        "explodeWhen": "\u003d",
+        "explodeWhen": "=",
         "explodeValue": 1,
-        "modifyScore": false,
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1719140016913",
+        "epoch": "1782317980970",
+        "uuid": "82fe7469-abb2-4419-9bff-85d315b7a7b4",
         "side": [
           {
-            "uuid": "",
+            "uuid": "d0b57ef3-af32-4547-aea9-4722d9842de6",
             "number": 10,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "4384f937-d23c-4731-b10c-b07668f0de7a",
             "number": 9,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "23e1cb7d-9cf6-40a7-a7fb-8f614dc90b98",
             "number": 8,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "20c5a053-0c71-49dc-b42e-2682ebafd177",
             "number": 7,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "868965ff-3bc5-4acc-b46b-9efab19b8c8b",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "d5895429-831d-4e99-9bef-6d2914d50510",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "2432114e-d8b8-420b-8b73-13c55c3a3af1",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "019ccd76-1d6e-4af0-972f-c6133973befe",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "631b8ef3-5a40-46d0-b56b-1368c032a7b4",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "7090fc9a-a31d-4bbc-b9fd-765905cc317d",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           }
         ],
@@ -414,121 +321,84 @@
         "colour": "FF6650a4",
         "selected": false,
         "multiplierValue": 1,
-        "explode": false,
-        "explodeWhen": "\u003d",
+        "explodeWhen": "=",
         "explodeValue": 1,
-        "modifyScore": false,
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1719140016915",
+        "epoch": "1782317980972",
+        "uuid": "b7a94dcd-9a87-444d-9dda-b3bbdb3d299e",
         "side": [
           {
-            "uuid": "",
+            "uuid": "56496bb1-bd73-4b71-bca7-32d6898f3216",
             "number": 12,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "8f464aae-722d-4ad2-bad6-6c4b40674fd5",
             "number": 11,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "8683f57f-8a28-4dd9-ad6f-bb36dac66304",
             "number": 10,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "4b5f12f3-f588-478b-b267-658697e59e35",
             "number": 9,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "0dc18880-091a-4447-b647-5575c47517e8",
             "number": 8,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "89e0e003-5bd1-4b61-b3c9-32562de1b1aa",
             "number": 7,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "0039fbe6-f457-4467-b366-41dfbe3f76a1",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "877dc3ff-c952-4708-91b9-419720281fe8",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "066ee346-3d2c-4fce-adc4-d4f1ecb25378",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "d4583596-ec0d-4f98-870a-0fc1aacdf755",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "5979bafa-1822-49c4-98a5-07eacabc02ef",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "6e24f982-aaa3-4839-82ce-22f48516c299",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           }
         ],
@@ -536,193 +406,132 @@
         "colour": "FF6650a4",
         "selected": false,
         "multiplierValue": 1,
-        "explode": false,
-        "explodeWhen": "\u003d",
+        "explodeWhen": "=",
         "explodeValue": 1,
-        "modifyScore": false,
         "modifyScoreValue": -5
       },
       {
-        "epoch": "1719140016917",
+        "epoch": "1782317980975",
+        "uuid": "567e2b6d-8158-4971-a647-e613865c42eb",
         "side": [
           {
-            "uuid": "",
+            "uuid": "6d33fe0f-cc88-4e7b-96a9-cf4243b0527b",
             "number": 20,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "f477ff39-5d14-4e81-91af-17550a4ddea8",
             "number": 19,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "22fd6819-4680-4469-a9b6-ffb7e951f636",
             "number": 18,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "49b0d372-826b-4e8e-a7c6-0a2d784c4530",
             "number": 17,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "638065b6-ba1d-451a-be5e-6149044fdbe9",
             "number": 16,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "3ea3885a-65fb-4b43-9a41-3a59fa4eca34",
             "number": 15,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "e96b4f1e-f5c8-4ba9-b4c3-08a5248d7e62",
             "number": 14,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "7795881e-4dc8-4877-8fc8-ae875cfeab1d",
             "number": 13,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "6412aead-45a9-4580-b2ec-3499b6ee8a4d",
             "number": 12,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "47623bc4-fe7f-4b01-9676-3ff76c77f299",
             "number": 11,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "9b32ef16-ccc5-453d-bc42-0a1fa3ebe731",
             "number": 10,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "747c0bee-1932-4d34-95b4-e5d4fbe71751",
             "number": 9,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "7f3f9a34-09e6-4c5e-b434-2d7aa2920157",
             "number": 8,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "8e438e44-2547-46fe-b32b-60b4566bcab7",
             "number": 7,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "4eb5d688-e9ea-4c4d-ae3b-c97e6102cc8d",
             "number": 6,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "a52f0cde-281c-47ca-b18f-5900d96f230a",
             "number": 5,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "5d5b926c-fec0-474e-9165-4f2237cfbf75",
             "number": 4,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "8c94863a-c8cd-4f92-aedc-ca30d538cf84",
             "number": 3,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "c96976a0-eaf8-4ff7-9340-0db27086ce2f",
             "number": 2,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           },
           {
-            "uuid": "",
+            "uuid": "993d4923-737a-41fc-b050-62dcf2ea6ded",
             "number": 1,
             "numberColour": "FFFFFFFF",
-            "imageBase64": "",
-            "imageDrawableId": 0,
-            "description": "",
             "descriptionColour": "FF000000"
           }
         ],
@@ -731,7 +540,7 @@
         "selected": false,
         "multiplierValue": 20,
         "explode": true,
-        "explodeWhen": "\u003d",
+        "explodeWhen": "=",
         "explodeValue": 20,
         "modifyScore": true,
         "modifyScoreValue": -5
@@ -740,158 +549,153 @@
   },
   {
     "values": {
-      "171914001692": {
+      "1782317981060": {
         "roll": [
           {
-            "diceEpoch": "1719140016898",
+            "uuidDice": "zf8c2cfd-7649-409f-882f-6ce1a05319dd",
             "side": {
-              "uuid": "",
+              "uuid": "1bf5240c-4950-4cf2-913e-ac62851b1cc1",
               "number": 2,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 2
+            "score": 2,
+            "uuidGroup": "53d3b8e0-4ce1-4fa9-b8e8-13a95df0dffb"
           },
           {
-            "diceEpoch": "1719140016900",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "1bbb438e-f652-416f-b9ae-ef399ab5aa0a",
               "number": 3,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 3
+            "multiplierIndex": 2,
+            "score": 3,
+            "uuidGroup": "53d3b8e0-4ce1-4fa9-b8e8-13a95df0dffb"
           },
           {
-            "diceEpoch": "1719140016911",
+            "uuidDice": "798fdd2d-b9b2-4a60-a347-834ed1b6f853",
             "side": {
-              "uuid": "",
+              "uuid": "13fa3512-42ab-439e-b6b0-844d3aed4bdc",
               "number": 5,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 3,
             "score": 5
           },
           {
-            "diceEpoch": "1719140016913",
+            "uuidDice": "82fe7469-abb2-4419-9bff-85d315b7a7b4",
             "side": {
-              "uuid": "",
+              "uuid": "868965ff-3bc5-4acc-b46b-9efab19b8c8b",
               "number": 6,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 4,
             "score": 6
           },
           {
-            "diceEpoch": "1719140016915",
+            "uuidDice": "b7a94dcd-9a87-444d-9dda-b3bbdb3d299e",
             "side": {
-              "uuid": "",
+              "uuid": "89e0e003-5bd1-4b61-b3c9-32562de1b1aa",
               "number": 7,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 5,
             "score": 7
           },
           {
-            "diceEpoch": "1719140016917",
+            "uuidDice": "567e2b6d-8158-4971-a647-e613865c42eb",
             "side": {
-              "uuid": "",
+              "uuid": "e96b4f1e-f5c8-4ba9-b4c3-08a5248d7e62",
               "number": 14,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
-            "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
+            "multiplierIndex": 6,
             "score": 14
           }
         ]
       },
-      "1719140016922": {
+      "1782317981065": {
         "roll": [
           {
-            "diceEpoch": "1719140016900",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "1bbb438e-f652-416f-b9ae-ef399ab5aa0a",
               "number": 3,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 1,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
             "score": 3
           },
           {
-            "diceEpoch": "1719140016900",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "1bbb438e-f652-416f-b9ae-ef399ab5aa0a",
+              "number": 3,
+              "numberColour": "FFFFFFFF",
+              "descriptionColour": "FF000000"
+            },
+            "multiplierIndex": 1,
+            "score": 3,
+            "uuidGroup": "03f40164-ccc7-4a2f-ae0c-9cce49655411"
+          },
+          {
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
+            "side": {
+              "uuid": "c023463e-e7af-4438-aad5-e228f84ac15d",
               "number": 2,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 2,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 2
+            "score": 2,
+            "uuidGroup": "03f40164-ccc7-4a2f-ae0c-9cce49655411"
           },
           {
-            "diceEpoch": "1719140016901",
+            "uuidDice": "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
             "side": {
-              "uuid": "",
+              "uuid": "c1ddd5ab-a9b1-4981-b564-4231c6ef6408",
               "number": 1,
               "numberColour": "FFFFFFFF",
-              "imageBase64": "",
-              "imageDrawableId": 0,
-              "description": "",
               "descriptionColour": "FF000000"
             },
             "multiplierIndex": 3,
-            "explodeIndex": 0,
-            "scoreAdjustment": 0,
-            "score": 1
+            "score": 1,
+            "uuidGroup": "03f40164-ccc7-4a2f-ae0c-9cce49655411"
           }
         ]
       }
     }
+  },
+  {
+    "group": [
+      {
+        "uuid": "53d3b8e0-4ce1-4fa9-b8e8-13a95df0dffb",
+        "name": "tg1",
+        "uuidDice": [
+          "ef8c2cfd-7649-409f-882f-6ce1a05319dd",
+          "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f"
+        ],
+        "notes": "Test Note 1"
+      },
+      {
+        "uuid": "03f40164-ccc7-4a2f-ae0c-9cce49655411",
+        "name": "tg2",
+        "uuidDice": [
+          "ef8c2cfd-7649-409f-882f-6ce1a05319dd",
+          "aa3bce7c-a07d-4b6e-a78a-b7e898ad591f",
+          "7eeff917-45f3-43e1-a05c-f3caf5b5c6cb",
+          "798fdd2d-b9b2-4a60-a347-834ed1b6f853"
+        ],
+        "notes": "Test Note 2"
+      }
+    ]
   }
 ]
