@@ -6,6 +6,22 @@ import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.BagDataInterface
 
 class BagDataTestDouble : BagDataInterface {
+    override suspend fun allDice(): MutableList<Dice> {
+        return allDiceList()
+    }
+
+    fun allDiceList(): MutableList<Dice> {
+        return mutableListOf(
+            d2,
+            d4,
+            d6,
+            d8,
+            d10,
+            d12,
+            d20,
+        )
+    }
+
     val d2 = Dice(
         sides = (2 downTo 1).map { index -> Side(number = index) },
         title = "d2",
@@ -93,15 +109,5 @@ class BagDataTestDouble : BagDataInterface {
         ),
         title = "Story",
         multiplierValue = 3,
-    )
-
-    override val allDice = mutableListOf(
-        d2,
-        d4,
-        d6,
-        d8,
-        d10,
-        d12,
-        d20,
     )
 }

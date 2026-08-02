@@ -16,7 +16,7 @@ open class DialogDiceUnitTestUnitTestHelper : UtilityAndroidUnitTestHelper() {
         val repositoryBag = RepositoryFactory().repositoryBag
         runBlocking(Dispatchers.Main) {
             repositoryBag.store(
-                BagDataTestDouble().allDice,
+                BagDataTestDouble().allDice(),
             )
         }
 

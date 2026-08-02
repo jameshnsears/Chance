@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -152,15 +153,19 @@ fun ZoomFaceImageSVG(
         .testTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SVG}-${dice.title}-${side.number}")
 
     if (side.imageBase64 != "") {
-        val imageRequest: ImageRequest = remember {
-            zoomAndroidViewModel.sideSvgImageRequest(side)
+        val imageRequest by produceState<ImageRequest?>(initialValue = side.imageRequest, side.imageBase64) {
+            if (value == null) {
+                value = zoomAndroidViewModel.sideSvgImageRequestAsync(side)
+            }
         }
 
-        AsyncImage(
-            model = imageRequest,
-            contentDescription = side.description,
-            modifier = modifier
-        )
+        if (imageRequest != null) {
+            AsyncImage(
+                model = imageRequest,
+                contentDescription = side.description,
+                modifier = modifier
+            )
+        }
     } else {
         if (side.imageDrawableId != 0) {
             Image(

@@ -33,6 +33,7 @@ class RepositorySettingsProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() 
 
         mockkStatic("com.github.jameshnsears.chance.data.repo.impl.settings.impl.RepositorySettingsProtocolBufferImplKt")
         every { context.settingsDataStore } returns dataStore
+        coEvery { dataStore.data } returns flowOf(SettingsProtocolBuffer.getDefaultInstance())
     }
 
     @After

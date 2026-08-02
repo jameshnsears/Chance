@@ -104,6 +104,9 @@ your `gradle.properties` file:
 
     android.newDsl=false
 
+Alternatively, for a more gradual migration, AGP 9.4 lets you opt out individual
+modules. To learn how, see [Variant API module opt-out](https://developer.android.com/build/releases/agp-9-4-0-release-notes#new-dsl-opt-out).
+
 The previous classes are marked as deprecated in AGP 9.0. This means projects
 that opt out of the `newDsl` flag will see deprecation warnings, including on
 the `android` block itself.

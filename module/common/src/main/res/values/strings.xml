@@ -18,7 +18,7 @@
     <string name="tab.bag.export.success">Export successful</string>
 
     <string name="tab.bag.reset.storage">Reset</string>
-    <string name="tab.bag.reset.storage.confirm">Reset everything to default state?</string>
+    <string name="tab.bag.reset.storage.confirm">Reset App to default state?</string>
 
     <string name="dialog.cancel">Cancel</string>
     <string name="dialog.ok">OK</string>
@@ -29,7 +29,7 @@
     <string name="dialog.group.delete">Delete</string>
     <string name="dialog.group.delete.confirmation">This will delete associated rolls</string>
     <string name="dialog.bag.delete.confirmation">Delete</string>
-    <string name="dialog.bag.delete.confirmation.question">This will delete the dice from associated groups and rolls</string>
+    <string name="dialog.bag.delete.confirmation.question">Delete dice, associated groups and rolls?</string>
     <string name="dialog.bag.delete.confirmation.ok">OK</string>
     <string name="dialog.bag.delete.confirmation.cancel">Cancel</string>
 
@@ -51,25 +51,16 @@
     <string name="dialog.bag.dice">Dice</string>
     <string name="dialog.bag.dice.title">Title</string>
     <string name="dialog.bag.dice.title.info.0">\u2022 Must be unique</string>
-    <string name="dialog.bag.dice.sides">Sides</string>
-    <string name="dialog.bag.dice.sides.info">\u2022 Will undo related rolls (after Save)</string>
-
-    <string-array name="dialog.bag.dice.sides">
-        <item>2</item>
-        <item>4</item>
-        <item>6</item>
-        <item>8</item>
-        <item>10</item>
-        <item>12</item>
-        <item>20</item>
-    </string-array>
+    <string name="dialog.bag.dice.sides"># of Sides</string>
+    <string name="dialog.bag.dice.sides.arbitrary.info">2..100</string>
+    <string name="dialog.bag.dice.sides.info">\u2022 Changing # will undo related rolls (after Save)</string>
     <string name="dialog.bag.dice.colour">Sides…</string>
 
     <string name="dialog.bag.roll">Rules</string>
     <string name="dialog.bag.roll.info">\u2022 Rules apply to this dice only</string>
     <string name="dialog.bag.roll.repeat">Roll multiplier</string>
     <string name="dialog.bag.roll.explode.side">Explode if sides #</string>
-    <string name="dialog.bag.roll.explode.meaning">\u2022 Rolls again up to 5× and adds to the total</string>
+    <string name="dialog.bag.roll.explode.meaning">\u2022 Rolls again up to 5× and adds to the score</string>
     <string name="dialog.bag.roll.score">Modify score</string>
 
     <string name="dialog.bag.colour.picker.side">Side #</string>
@@ -81,7 +72,6 @@
     <string name="dialog.bag.setup.groups.name.info.0">\u2022 Must be unique</string>
     <string name="dialog.bag.setup.groups.select">\u2022 Group must contain at least one dice</string>
     <string name="dialog.bag.setup.groups.notes">Notes (optional)</string>
-    <string name="dialog.bag.setup.groups.confirmation.question">Delete group and associated rolls?</string>
     <string name="dialog.bag.setup.groups.change.info.0">\u2022 Changing dice will undo associated rolls</string>
 
     <string name="tab.roll.settings.title">Settings</string>

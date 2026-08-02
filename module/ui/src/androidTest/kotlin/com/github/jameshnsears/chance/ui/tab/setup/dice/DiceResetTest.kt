@@ -1,45 +1,97 @@
 package com.github.jameshnsears.chance.ui.tab.setup.dice
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.common.ui.AndroidTestHelper
+import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
+import com.github.jameshnsears.chance.ui.dialog.confirm.DialogConfirmTestTag
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 class DiceResetTest : AndroidTestHelper() {
-    @Test
-    fun confirmReset() {
-        reset()
-        /*
-    confirm that dice bag contains three dice
-     */
+    private lateinit var repositoryFactory: RepositoryFactory
+    private lateinit var viewModel: DiceAndroidViewModel
+
+    @Before
+    fun setUp() = runBlocking {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        repositoryFactory = RepositoryFactory(context)
+        repositoryFactory.resetStorage()
+
+        viewModel = DiceAndroidViewModel(
+            InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as android.app.Application,
+            repositoryFactory.repositorySettings,
+            repositoryFactory.repositoryBag,
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup,
+            1.0f,
+        )
     }
 
-    private fun reset() {
-        /*
-            click "Dice" tab
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Test
+    fun confirmReset() = runBlocking {
+        val initialDiceCount = repositoryFactory.repositoryBag.fetch().first().size
 
-    click "Reset Storage" button
+        // Modify something to verify reset works
+        repositoryFactory.repositoryBag.clear()
+        assertEquals(0, repositoryFactory.repositoryBag.fetch().first().size)
 
-    click "OK" on confirmation dialog
-         */
+        composeRule.setContent {
+            ChanceTheme {
+                val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+                ResetStorage(
+                    bottomSheetScaffoldState = bottomSheetScaffoldState,
+                    diceAndroidViewModel = viewModel
+                )
+            }
+        }
+
+        // Click Reset button
+        composeRule.onNodeWithTag(DiceTestTag.RESET).performClick()
+
+        // Confirm Dialog is shown
+        composeRule.onNodeWithTag(DialogConfirmTestTag.OK).assertIsDisplayed()
+
+        // Click OK
+        composeRule.onNodeWithTag(DialogConfirmTestTag.OK).performClick()
+
+        // Verify storage is reset
+        val resetDiceCount = repositoryFactory.repositoryBag.fetch().first().size
+        assertEquals(initialDiceCount, resetDiceCount)
     }
 
-    ////////////////////
-
+    @OptIn(ExperimentalMaterial3Api::class)
     @Test
-    fun deleteDiceThenResetStorage() {
-        /*
-    click Mr Benn dice, the knight
+    fun cancelReset() = runBlocking {
+        repositoryFactory.repositoryBag.clear()
+        assertEquals(0, repositoryFactory.repositoryBag.fetch().first().size)
 
-    click "Delete" button
+        composeRule.setContent {
+            ChanceTheme {
+                val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+                ResetStorage(
+                    bottomSheetScaffoldState = bottomSheetScaffoldState,
+                    diceAndroidViewModel = viewModel
+                )
+            }
+        }
 
-    click "OK" on confirmation dialog
+        // Click Reset button
+        composeRule.onNodeWithTag(DiceTestTag.RESET).performClick()
 
-    confirm that dice bag contains two dice
+        // Click CANCEL
+        composeRule.onNodeWithTag(DialogConfirmTestTag.CANCEL).performClick()
 
-    confirm dice bag does not contain mr Benn dice
-
-    confirm dice bag contains only d6; and The Dice Man dice
-     */
-
-        reset()
+        // Verify storage is NOT reset (remains 0)
+        assertEquals(0, repositoryFactory.repositoryBag.fetch().first().size)
     }
 }

@@ -8,12 +8,24 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.test.espresso.Espresso
+import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.TestSupport
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.ui.dialog.settings.DialogSettingsTestTag
 import com.github.jameshnsears.chance.ui.tab.rolls.selection.RollsSelectionTestTag
+import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Test
 
 class RollsTabTest : TestSupport() {
+    @Before
+    fun setUp() {
+        runBlocking {
+            RepositoryFactory(InstrumentationRegistry.getInstrumentation().targetContext).resetStorage()
+        }
+    }
+
     @Test
     fun rollFirstDice() {
         androidComposeTestRule.onNodeWithText("Rolls").performClick()
@@ -65,13 +77,13 @@ class RollsTabTest : TestSupport() {
             .performScrollTo()
             .performClick()
 
-        androidComposeTestRule.onNodeWithTag(DialogSettingsTestTag.SETTINGS_CLOSE).performClick()
+        Espresso.pressBack()
         androidComposeTestRule.waitForIdle()
 
         assertClick(RollsTestTag.ROLL_ENABLED)
         androidComposeTestRule.waitForIdle()
 
-        repeat(3) {
+        repeat(4) {
             androidComposeTestRule.onNodeWithTag(RollsTestTag.UNDO).performClick()
             androidComposeTestRule.waitForIdle()
         }

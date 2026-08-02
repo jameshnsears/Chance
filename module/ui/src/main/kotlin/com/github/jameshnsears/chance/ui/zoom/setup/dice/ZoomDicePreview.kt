@@ -21,11 +21,10 @@ fun ZoomBagPreview() {
         Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
-    val repositorySettings = RepositoryFactory().repositorySettings
-
-    val repositoryBag = RepositoryFactory().repositoryBag
-
-    val repositoryRoll = RepositoryFactory().repositoryRoll
+    val repositoryFactory = RepositoryFactory()
+    val repositorySettings = repositoryFactory.repositorySettings
+    val repositoryBag = repositoryFactory.repositoryBag
+    val repositoryRoll = repositoryFactory.repositoryRoll
 
     val context = LocalContext.current
     val application = object : Application() {

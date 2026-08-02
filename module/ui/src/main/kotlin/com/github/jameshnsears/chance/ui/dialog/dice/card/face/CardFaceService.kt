@@ -9,6 +9,7 @@ import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.ui.dialog.dice.card.dice.CardDiceSideEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,10 +55,7 @@ class CardSideService(
         sideNumberColour = side.numberColour,
         sideImageDrawableId = side.imageDrawableId,
         sideImageBase64 = side.imageBase64,
-        sideImageRequest = UtilitySvgSerializer.imageRequestFromBase64String(
-            application,
-            side
-        ),
+        sideImageRequest = null,
         sideImageAvailable = sideImageAvailableInit(),
         sideDescription = sideDescriptionInit(),
         sideDescriptionColour = side.descriptionColour,
@@ -71,6 +69,8 @@ class CardSideService(
     private val _stateFlowCardSide = MutableStateFlow(sideInitialState)
     val stateFlowCardSide: StateFlow<CardSideState> = _stateFlowCardSide
 
+    private var imageLoadingJob: Job? = null
+
     init {
         scope.launch(Dispatchers.IO) {
             CardDiceSideEvent.sharedFlowDiceSide.collect { itInt ->
@@ -83,20 +83,29 @@ class CardSideService(
             }
         }
 
+        imageLoadingJob = scope.launch {
+            val imageRequest = UtilitySvgSerializer.imageRequestFromBase64StringAsync(
+                application,
+                side
+            )
+            _stateFlowCardSide.update {
+                it.copy(sideImageRequest = imageRequest)
+            }
+        }
+
         Timber.d("card.side: side.uuid=${side.uuid}")
     }
 
     fun refresh(side: Side) {
+        imageLoadingJob?.cancel()
+
         _stateFlowCardSide.update {
             it.copy(
                 sideNumber = side.number,
                 sideNumberColour = side.numberColour,
                 sideImageDrawableId = side.imageDrawableId,
                 sideImageBase64 = side.imageBase64,
-                sideImageRequest = UtilitySvgSerializer.imageRequestFromBase64String(
-                    application,
-                    side
-                ),
+                sideImageRequest = null,
                 sideImageAvailable = (side.imageDrawableId != 0 || side.imageBase64.isNotEmpty()),
                 sideDescription = side.description,
                 sideDescriptionColour = side.descriptionColour,
@@ -106,6 +115,16 @@ class CardSideService(
                 diceSidesFewerThanSideNumber = false,
                 svgImportInProgress = false
             )
+        }
+
+        imageLoadingJob = scope.launch {
+            val imageRequest = UtilitySvgSerializer.imageRequestFromBase64StringAsync(
+                application,
+                side
+            )
+            _stateFlowCardSide.update {
+                it.copy(sideImageRequest = imageRequest)
+            }
         }
     }
 

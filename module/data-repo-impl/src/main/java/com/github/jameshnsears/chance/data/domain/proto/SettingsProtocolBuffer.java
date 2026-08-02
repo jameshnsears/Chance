@@ -91,7 +91,7 @@ public final class SettingsProtocolBuffer extends
     private SettingsProtocolBuffer() {
     }
 
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
     }
@@ -355,7 +355,7 @@ public final class SettingsProtocolBuffer extends
     }
 
     @java.lang.Override
-    public final boolean isInitialized() {
+    public boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -370,46 +370,46 @@ public final class SettingsProtocolBuffer extends
         if (resize_ != 0) {
             output.writeInt32(1, resize_);
         }
-        if (rollIndexTime_ != false) {
+        if (rollIndexTime_) {
             output.writeBool(2, rollIndexTime_);
         }
-        if (rollScore_ != false) {
+        if (rollScore_) {
             output.writeBool(3, rollScore_);
         }
-        if (diceTitle_ != false) {
+        if (diceTitle_) {
             output.writeBool(4, diceTitle_);
         }
-        if (sideNumber_ != false) {
+        if (sideNumber_) {
             output.writeBool(5, sideNumber_);
         }
-        if (behaviour_ != false) {
+        if (behaviour_) {
             output.writeBool(6, behaviour_);
         }
-        if (sideDescription_ != false) {
+        if (sideDescription_) {
             output.writeBool(7, sideDescription_);
         }
-        if (sideSVG_ != false) {
+        if (sideSVG_) {
             output.writeBool(8, sideSVG_);
         }
-        if (rollSound_ != false) {
+        if (rollSound_) {
             output.writeBool(9, rollSound_);
         }
-        if (shuffle_ != false) {
+        if (shuffle_) {
             output.writeBool(10, shuffle_);
         }
-        if (haptics_ != false) {
+        if (haptics_) {
             output.writeBool(11, haptics_);
         }
-        if (rollScoreTTS_ != false) {
+        if (rollScoreTTS_) {
             output.writeBool(12, rollScoreTTS_);
         }
-        if (shakeToRoll_ != false) {
+        if (shakeToRoll_) {
             output.writeBool(13, shakeToRoll_);
         }
         if (java.lang.Float.floatToRawIntBits(resizeZoom_) != 0) {
             output.writeFloat(14, resizeZoom_);
         }
-        if (groupTitle_ != false) {
+        if (groupTitle_) {
             output.writeBool(15, groupTitle_);
         }
         getUnknownFields().writeTo(output);
@@ -425,51 +425,51 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(1, resize_);
         }
-        if (rollIndexTime_ != false) {
+        if (rollIndexTime_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(2, rollIndexTime_);
         }
-        if (rollScore_ != false) {
+        if (rollScore_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(3, rollScore_);
         }
-        if (diceTitle_ != false) {
+        if (diceTitle_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(4, diceTitle_);
         }
-        if (sideNumber_ != false) {
+        if (sideNumber_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(5, sideNumber_);
         }
-        if (behaviour_ != false) {
+        if (behaviour_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(6, behaviour_);
         }
-        if (sideDescription_ != false) {
+        if (sideDescription_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(7, sideDescription_);
         }
-        if (sideSVG_ != false) {
+        if (sideSVG_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(8, sideSVG_);
         }
-        if (rollSound_ != false) {
+        if (rollSound_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(9, rollSound_);
         }
-        if (shuffle_ != false) {
+        if (shuffle_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(10, shuffle_);
         }
-        if (haptics_ != false) {
+        if (haptics_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(11, haptics_);
         }
-        if (rollScoreTTS_ != false) {
+        if (rollScoreTTS_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(12, rollScoreTTS_);
         }
-        if (shakeToRoll_ != false) {
+        if (shakeToRoll_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(13, shakeToRoll_);
         }
@@ -477,7 +477,7 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeFloatSize(14, resizeZoom_);
         }
-        if (groupTitle_ != false) {
+        if (groupTitle_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(15, groupTitle_);
         }
@@ -491,10 +491,9 @@ public final class SettingsProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)) {
+        if (!(obj instanceof SettingsProtocolBuffer other)) {
             return super.equals(obj);
         }
-        com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer) obj;
 
         if (getResize()
             != other.getResize()) return false;
@@ -527,8 +526,7 @@ public final class SettingsProtocolBuffer extends
             other.getResizeZoom())) return false;
         if (getGroupTitle()
             != other.getGroupTitle()) return false;
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
+        return getUnknownFields().equals(other.getUnknownFields());
     }
 
     @java.lang.Override
@@ -650,7 +648,7 @@ public final class SettingsProtocolBuffer extends
 
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor
+        public static com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
         }
@@ -779,46 +777,46 @@ public final class SettingsProtocolBuffer extends
             if (other.getResize() != 0) {
                 setResize(other.getResize());
             }
-            if (other.getRollIndexTime() != false) {
+            if (other.getRollIndexTime()) {
                 setRollIndexTime(other.getRollIndexTime());
             }
-            if (other.getRollScore() != false) {
+            if (other.getRollScore()) {
                 setRollScore(other.getRollScore());
             }
-            if (other.getDiceTitle() != false) {
+            if (other.getDiceTitle()) {
                 setDiceTitle(other.getDiceTitle());
             }
-            if (other.getSideNumber() != false) {
+            if (other.getSideNumber()) {
                 setSideNumber(other.getSideNumber());
             }
-            if (other.getBehaviour() != false) {
+            if (other.getBehaviour()) {
                 setBehaviour(other.getBehaviour());
             }
-            if (other.getSideDescription() != false) {
+            if (other.getSideDescription()) {
                 setSideDescription(other.getSideDescription());
             }
-            if (other.getSideSVG() != false) {
+            if (other.getSideSVG()) {
                 setSideSVG(other.getSideSVG());
             }
-            if (other.getRollSound() != false) {
+            if (other.getRollSound()) {
                 setRollSound(other.getRollSound());
             }
-            if (other.getShuffle() != false) {
+            if (other.getShuffle()) {
                 setShuffle(other.getShuffle());
             }
-            if (other.getHaptics() != false) {
+            if (other.getHaptics()) {
                 setHaptics(other.getHaptics());
             }
-            if (other.getRollScoreTTS() != false) {
+            if (other.getRollScoreTTS()) {
                 setRollScoreTTS(other.getRollScoreTTS());
             }
-            if (other.getShakeToRoll() != false) {
+            if (other.getShakeToRoll()) {
                 setShakeToRoll(other.getShakeToRoll());
             }
             if (other.getResizeZoom() != 0F) {
                 setResizeZoom(other.getResizeZoom());
             }
-            if (other.getGroupTitle() != false) {
+            if (other.getGroupTitle()) {
                 setGroupTitle(other.getGroupTitle());
             }
             this.mergeUnknownFields(other.getUnknownFields());
@@ -827,7 +825,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         @java.lang.Override
-        public final boolean isInitialized() {
+        public boolean isInitialized() {
             return true;
         }
 

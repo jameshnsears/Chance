@@ -2,7 +2,9 @@ package com.github.jameshnsears.chance.data.repo.impl.group.testdouble
 
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.proto.GroupHistoryProtocolBuffer
+import com.github.jameshnsears.chance.data.domain.proto.GroupProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.impl.group.RepositoryGroupProtocolBufferInterface
+import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,14 +47,19 @@ class RepositoryGroupProtocolBufferTestDouble private constructor() :
     }
 
     override suspend fun jsonExport(): String {
-        return JsonFormat.printer().print(groupHistoryProtocolBufferStateFlow.value)
+        val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
+        fieldsToAlwaysOutput.add(GroupProtocolBuffer.getDescriptor().findFieldByName("displayIndex"))
+        fieldsToAlwaysOutput.add(GroupProtocolBuffer.getDescriptor().findFieldByName("selected"))
+
+        return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
+            .print(groupHistoryProtocolBufferStateFlow.value)
     }
 
     override suspend fun jsonImport(json: String) {
         store(jsonImportProcess(json))
     }
 
-    override suspend fun fetch(): Flow<GroupHistory> = groupHistoryProtocolBufferStateFlow
+    override fun fetch(): Flow<GroupHistory> = groupHistoryProtocolBufferStateFlow
         .map { groupHistoryProtocolBuffer ->
             val groupHistory = mapGroupHistoryProtocolBufferIntoGroupHistory(groupHistoryProtocolBuffer)
 

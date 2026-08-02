@@ -97,4 +97,19 @@ public interface SideProtocolBufferOrBuilder extends
      */
     com.google.protobuf.ByteString
     getDescriptionColourBytes();
+
+    /**
+     * <code>string imageBase64Uuid = 8;</code>
+     *
+     * @return The imageBase64Uuid.
+     */
+    java.lang.String getImageBase64Uuid();
+
+    /**
+     * <code>string imageBase64Uuid = 8;</code>
+     *
+     * @return The bytes for imageBase64Uuid.
+     */
+    com.google.protobuf.ByteString
+    getImageBase64UuidBytes();
 }

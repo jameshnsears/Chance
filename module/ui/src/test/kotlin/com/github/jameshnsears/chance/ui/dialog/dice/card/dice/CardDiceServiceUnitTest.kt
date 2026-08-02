@@ -69,19 +69,36 @@ class CardDiceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val bagCardDiceAndroidViewModel = dialogBagAndroidViewModel.cardDiceService
         var stateFlowDice = bagCardDiceAndroidViewModel.stateFlowCardDice.value
         assertEquals(6, stateFlowDice.diceSidesSize)
-        assertEquals(4.0f, stateFlowDice.diceSiderPosition)
 
         bagCardDiceAndroidViewModel.diceSidesSize("20")
 
         stateFlowDice = bagCardDiceAndroidViewModel.stateFlowCardDice.value
         assertEquals(20, stateFlowDice.diceSidesSize)
-        assertEquals(0.0f, stateFlowDice.diceSiderPosition)
 
         bagCardDiceAndroidViewModel.diceSidesSize("2")
 
         stateFlowDice = bagCardDiceAndroidViewModel.stateFlowCardDice.value
         assertEquals(2, stateFlowDice.diceSidesSize)
-        assertEquals(6.0f, stateFlowDice.diceSiderPosition)
+    }
+
+    @Test
+    fun diceCardModifySidesInvalid() = runTest {
+        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel()
+
+        val bagCardDiceAndroidViewModel = dialogBagAndroidViewModel.cardDiceService
+        assertTrue(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
+
+        bagCardDiceAndroidViewModel.diceSidesSize("1")
+        assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
+
+        bagCardDiceAndroidViewModel.diceSidesSize("101")
+        assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
+
+        bagCardDiceAndroidViewModel.diceSidesSize("")
+        assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
+
+        bagCardDiceAndroidViewModel.diceSidesSize("2")
+        assertTrue(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
     }
 
     @Test
@@ -97,18 +114,5 @@ class CardDiceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         )
 
         assertFalse(dialogBagAndroidViewModel.cardDiceService.diceCanBeDeleted())
-    }
-
-    @Test
-    fun diceCardNumberOfSidesPositionInit() {
-        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel()
-
-        val bagCardDiceAndroidViewModel = dialogBagAndroidViewModel.cardDiceService
-
-        assertEquals(3.0f, bagCardDiceAndroidViewModel.diceSidesPosition(8))
-        assertEquals(2.0f, bagCardDiceAndroidViewModel.diceSidesPosition(10))
-        assertEquals(1.0f, bagCardDiceAndroidViewModel.diceSidesPosition(12))
-        assertEquals(0.0f, bagCardDiceAndroidViewModel.diceSidesPosition(20))
-        assertEquals(6.0f, bagCardDiceAndroidViewModel.diceSidesPosition(2))
     }
 }

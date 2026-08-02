@@ -83,7 +83,7 @@ public final class GroupProtocolBuffer extends
         notes_ = "";
     }
 
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.Group.internal_static_com_github_jameshnsears_chance_data_domain_proto_GroupProtocolBuffer_descriptor;
     }
@@ -371,7 +371,7 @@ public final class GroupProtocolBuffer extends
     }
 
     @java.lang.Override
-    public final boolean isInitialized() {
+    public boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -398,7 +398,7 @@ public final class GroupProtocolBuffer extends
         if (displayIndex_ != 0) {
             output.writeInt32(5, displayIndex_);
         }
-        if (selected_ != false) {
+        if (selected_) {
             output.writeBool(6, selected_);
         }
         getUnknownFields().writeTo(output);
@@ -422,7 +422,7 @@ public final class GroupProtocolBuffer extends
                 dataSize += computeStringSizeNoTag(uuidDice_.getRaw(i));
             }
             size += dataSize;
-            size += 1 * getUuidDiceList().size();
+            size += getUuidDiceList().size();
         }
         if (!com.google.protobuf.GeneratedMessage.isStringEmpty(notes_)) {
             size += com.google.protobuf.GeneratedMessage.computeStringSize(4, notes_);
@@ -431,7 +431,7 @@ public final class GroupProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(5, displayIndex_);
         }
-        if (selected_ != false) {
+        if (selected_) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(6, selected_);
         }
@@ -445,10 +445,9 @@ public final class GroupProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.GroupProtocolBuffer)) {
+        if (!(obj instanceof GroupProtocolBuffer other)) {
             return super.equals(obj);
         }
-        com.github.jameshnsears.chance.data.domain.proto.GroupProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.GroupProtocolBuffer) obj;
 
         if (!getUuid()
             .equals(other.getUuid())) return false;
@@ -462,8 +461,7 @@ public final class GroupProtocolBuffer extends
             != other.getDisplayIndex()) return false;
         if (getSelected()
             != other.getSelected()) return false;
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
+        return getUnknownFields().equals(other.getUnknownFields());
     }
 
     @java.lang.Override
@@ -548,7 +546,7 @@ public final class GroupProtocolBuffer extends
 
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor
+        public static com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Group.internal_static_com_github_jameshnsears_chance_data_domain_proto_GroupProtocolBuffer_descriptor;
         }
@@ -668,7 +666,7 @@ public final class GroupProtocolBuffer extends
             if (other.getDisplayIndex() != 0) {
                 setDisplayIndex(other.getDisplayIndex());
             }
-            if (other.getSelected() != false) {
+            if (other.getSelected()) {
                 setSelected(other.getSelected());
             }
             this.mergeUnknownFields(other.getUnknownFields());
@@ -677,7 +675,7 @@ public final class GroupProtocolBuffer extends
         }
 
         @java.lang.Override
-        public final boolean isInitialized() {
+        public boolean isInitialized() {
             return true;
         }
 
@@ -1022,7 +1020,6 @@ public final class GroupProtocolBuffer extends
             uuidDice_ =
                 com.google.protobuf.LazyStringArrayList.emptyList();
             bitField0_ = (bitField0_ & ~0x00000004);
-            ;
             onChanged();
             return this;
         }

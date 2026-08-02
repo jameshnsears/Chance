@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.ui.tab
 import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import io.mockk.every
 import io.mockk.mockk
@@ -18,14 +19,18 @@ import org.junit.Test
 class HapticHelperUnitTest : UtilityAndroidUnitTestHelper() {
     private lateinit var hapticHelper: HapticHelper
     private lateinit var mockVibrator: Vibrator
+    private lateinit var mockVibratorManager: VibratorManager
     private lateinit var mockContext: Context
 
     @Before
     fun setUp() {
         mockVibrator = mockk(relaxed = true)
+        mockVibratorManager = mockk(relaxed = true)
         mockContext = mockk()
 
         every { mockContext.getSystemService(Vibrator::class.java) } returns mockVibrator
+        every { mockContext.getSystemService(VibratorManager::class.java) } returns mockVibratorManager
+        every { mockVibratorManager.defaultVibrator } returns mockVibrator
         every { mockVibrator.hasVibrator() } returns true
 
         mockkStatic(VibrationEffect::class)

@@ -5,9 +5,7 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
-import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
-import kotlinx.coroutines.flow.first
 
 class RollsSequenceHelper(
     val repositoryRoll: RepositoryRollInterface
@@ -46,11 +44,7 @@ class RollsSequenceHelper(
     suspend fun saveNewRollSequence(
         newRollSequence: MutableList<Roll>
     ) {
-        val rollHistory: RollHistory = LinkedHashMap()
-        rollHistory[UtilityEpochTimeGenerator.currentEpochMillis()] = newRollSequence
-
-        rollHistory.putAll(repositoryRoll.fetch().first())
-        repositoryRoll.store(rollHistory)
+        repositoryRoll.store(UtilityEpochTimeGenerator.currentEpochMillis(), newRollSequence)
     }
 
     fun rollSequenceScore(rollSequence: MutableMap.MutableEntry<Long, List<Roll>>): String {

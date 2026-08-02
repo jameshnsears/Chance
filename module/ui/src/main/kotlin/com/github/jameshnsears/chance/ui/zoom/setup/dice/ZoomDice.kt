@@ -30,7 +30,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -60,11 +62,11 @@ fun ZoomBag(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    val stateFlowZoom by zoomDiceAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
+    val stateFlowZoom by zoomDiceAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle()
 
-    val resizeView = stateFlowZoom.resizeViewDp
+    val resizeView by remember {
+        derivedStateOf { stateFlowZoom.resizeViewDp }
+    }
 
     val listState = rememberLazyListState(
         initialFirstVisibleItemIndex = stateFlowZoom.firstVisibleItemIndex,
@@ -245,11 +247,9 @@ private fun ZoomDiceSidesRow(
     zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel,
     resizeView: androidx.compose.ui.unit.Dp
 ) {
-    val stateFlowZoom by zoomDiceAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-
-    val scrollPosition = stateFlowZoom.horizontalScrollPositions[dice.uuid] ?: (0 to 0)
+    val scrollPosition by remember(dice.uuid) {
+        zoomDiceAndroidViewModel.getScrollPositionFlow(dice.uuid)
+    }.collectAsStateWithLifecycle(0 to 0)
 
     val listState = rememberLazyListState(
         initialFirstVisibleItemIndex = scrollPosition.first,

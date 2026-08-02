@@ -156,7 +156,7 @@ private fun SideImagePreview(state: CardSideState) {
             painter = painterResource(id = state.sideImageDrawableId),
             contentDescription = stringResource(R.string.svg),
             modifier = Modifier
-                .size(128.dp)
+                .size(110.dp)
         )
     } else {
         if (state.sideImageRequest != null) {
@@ -164,7 +164,7 @@ private fun SideImagePreview(state: CardSideState) {
                 model = state.sideImageRequest,
                 contentDescription = stringResource(R.string.svg),
                 modifier = Modifier
-                    .size(128.dp)
+                    .size(110.dp)
             )
         }
     }

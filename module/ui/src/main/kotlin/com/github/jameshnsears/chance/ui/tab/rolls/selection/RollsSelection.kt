@@ -14,7 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.group.Group
@@ -30,20 +28,15 @@ import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 
 @Composable
 fun RollSelectionRow(rollsAndroidViewModel: RollsAndroidViewModel) {
-    val stateDiceBag =
-        rollsAndroidViewModel.diceBag.collectAsStateWithLifecycle(
-            lifecycleOwner = LocalLifecycleOwner.current
-        )
+    val stateDiceBag = rollsAndroidViewModel.diceBag.collectAsStateWithLifecycle()
 
-    val stateGroupHistory =
-        rollsAndroidViewModel.groupHistory.collectAsStateWithLifecycle(
-            lifecycleOwner = LocalLifecycleOwner.current
-        )
+    val stateGroupHistory = rollsAndroidViewModel.groupHistory.collectAsStateWithLifecycle()
 
     val diceBag = stateDiceBag.value
     val groupHistory = stateGroupHistory.value
 
     LazyRow(
+        state = rollsAndroidViewModel.rollSelectionRowScrollState,
         modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
     ) {
         items(diceBag.size) { index ->
@@ -58,19 +51,14 @@ fun RollSelectionRow(rollsAndroidViewModel: RollsAndroidViewModel) {
 @Composable
 fun RollSelectionFilterChip(rollsAndroidViewModel: RollsAndroidViewModel, dice: Dice) {
     var selected by remember(dice.selected) { mutableStateOf(dice.selected) }
-    var lastClickTime by remember { mutableLongStateOf(0L) }        // debounce
 
     FilterChip(
         modifier = Modifier
             .padding(end = 8.dp)
             .testTag(RollsSelectionTestTag.ROLL_BUTTON + dice.title),
         onClick = {
-            val currentTime = System.currentTimeMillis()
-            if (currentTime - lastClickTime > 750) {
-                selected = !selected
-                rollsAndroidViewModel.markDiceAsSelected(dice, !dice.selected)
-                lastClickTime = currentTime
-            }
+            selected = !selected
+            rollsAndroidViewModel.markDiceAsSelected(dice, selected)
         },
         label = {
             Text(
@@ -103,19 +91,14 @@ fun RollSelectionGroupFilterChip(
     group: Group
 ) {
     var selected by remember(group.selected) { mutableStateOf(group.selected) }
-    var lastClickTime by remember { mutableLongStateOf(0L) }
 
     FilterChip(
         modifier = Modifier
             .padding(end = 8.dp)
             .testTag(RollsSelectionTestTag.ROLL_BUTTON + group.name),
         onClick = {
-            val currentTime = System.currentTimeMillis()
-            if (currentTime - lastClickTime > 750) {
-                selected = !selected
-                rollsAndroidViewModel.markGroupAsSelected(group)
-                lastClickTime = currentTime
-            }
+            selected = !selected
+            rollsAndroidViewModel.markGroupAsSelected(group)
         },
         label = {
             Row(verticalAlignment = Alignment.CenterVertically) {

@@ -65,7 +65,7 @@ public final class GroupHistoryProtocolBuffer extends
         group_ = java.util.Collections.emptyList();
     }
 
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.GroupHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_GroupHistoryProtocolBuffer_descriptor;
     }
@@ -218,7 +218,7 @@ public final class GroupHistoryProtocolBuffer extends
     }
 
     @java.lang.Override
-    public final boolean isInitialized() {
+    public boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -256,15 +256,13 @@ public final class GroupHistoryProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.GroupHistoryProtocolBuffer)) {
+        if (!(obj instanceof GroupHistoryProtocolBuffer other)) {
             return super.equals(obj);
         }
-        com.github.jameshnsears.chance.data.domain.proto.GroupHistoryProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.GroupHistoryProtocolBuffer) obj;
 
         if (!getGroupList()
             .equals(other.getGroupList())) return false;
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
+        return getUnknownFields().equals(other.getUnknownFields());
     }
 
     @java.lang.Override
@@ -335,7 +333,7 @@ public final class GroupHistoryProtocolBuffer extends
 
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor
+        public static com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.GroupHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_GroupHistoryProtocolBuffer_descriptor;
         }
@@ -453,7 +451,7 @@ public final class GroupHistoryProtocolBuffer extends
         }
 
         @java.lang.Override
-        public final boolean isInitialized() {
+        public boolean isInitialized() {
             return true;
         }
 
@@ -503,7 +501,7 @@ public final class GroupHistoryProtocolBuffer extends
         }
 
         private void ensureGroupIsMutable() {
-            if (!((bitField0_ & 0x00000001) != 0)) {
+            if ((bitField0_ & 0x00000001) == 0) {
                 group_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.domain.proto.GroupProtocolBuffer>(group_);
                 bitField0_ |= 0x00000001;
             }

@@ -4,6 +4,7 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.repo.api.RepositoryImportException
@@ -15,27 +16,35 @@ import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.BuildConfig
 import com.github.jameshnsears.chance.ui.tab.SetupImportEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 enum class ExportImportStatus {
-    NONE,
+    READY,
     IMPORT_STARTED,
     SUCCESS,
     FAILURE
 }
 
 data class TabBagExportState(
-    var exportStatus: ExportImportStatus,
+    val exportStatus: ExportImportStatus,
 )
 
 data class TabBagImportState(
-    var importStatus: ExportImportStatus,
-    var importDetail: RepositoryImportStatus
+    val importStatus: ExportImportStatus,
+    val importDetail: RepositoryImportStatus
 )
 
 class DiceAndroidViewModel(
@@ -46,116 +55,131 @@ class DiceAndroidViewModel(
     val repositoryGroup: RepositoryGroupInterface,
     resizeInitialValue: Float,
 ) : AndroidViewModel(applicationContext) {
-    private val _stateFlowResize = MutableStateFlow(resizeInitialValue)
-    val stateFlowResize: StateFlow<Float> = _stateFlowResize
+    val validator = RepositoryImportValidation(BuildConfig.VERSION)
+
+    val stateFlowResize: StateFlow<Float> = flow {
+        emitAll(repositorySettings.fetch())
+    }
+        .map { it.resizeZoom }
+        .distinctUntilChanged()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = resizeInitialValue
+        )
 
     fun resetExportImportStatus() {
         viewModelScope.launch {
             _stateFlowTabBagExport.update {
                 it.copy(
-                    exportStatus = ExportImportStatus.NONE,
+                    exportStatus = ExportImportStatus.READY,
                 )
             }
 
             _stateFlowTabBagImport.update {
                 it.copy(
-                    importStatus = ExportImportStatus.NONE,
-                    importDetail = RepositoryImportStatus.NONE
+                    importStatus = ExportImportStatus.READY,
+                    importDetail = RepositoryImportStatus.SUCCESS
                 )
             }
         }
     }
 
-    suspend fun exportRepositoriesAsJson(): String {
-        return "[" +
-            repositorySettings.jsonExport() +
-            "," +
-            repositoryBag.jsonExport() +
-            "," +
-            repositoryRoll.jsonExport() +
-            "," +
-            repositoryGroup.jsonExport() +
-            "]"
+    suspend fun exportRepositoriesAsJson(): String = withContext(Dispatchers.IO) {
+        val mapper = jacksonObjectMapper()
+        val rootNode = mapper.createObjectNode()
+        rootNode.put("version", BuildConfig.VERSION)
+        rootNode.set<JsonNode>("settings", mapper.readTree(repositorySettings.jsonExport()))
+        rootNode.set<JsonNode>("bag", mapper.readTree(repositoryBag.jsonExport()))
+        rootNode.set<JsonNode>("rolls", mapper.readTree(repositoryRoll.jsonExport()))
+        rootNode.set<JsonNode>("groups", mapper.readTree(repositoryGroup.jsonExport()))
+        rootNode.toString()
     }
 
     private val _stateFlowTabBagExport = MutableStateFlow(
         TabBagExportState(
-            exportStatus = ExportImportStatus.NONE,
+            exportStatus = ExportImportStatus.READY,
         )
     )
     val stateFlowTabBagExport: StateFlow<TabBagExportState> = _stateFlowTabBagExport
 
     private val _stateFlowTabBagImport = MutableStateFlow(
         TabBagImportState(
-            importStatus = ExportImportStatus.NONE,
-            importDetail = RepositoryImportStatus.NONE
+            importStatus = ExportImportStatus.READY,
+            importDetail = RepositoryImportStatus.SUCCESS
         )
     )
     val stateFlowTabBagImport: StateFlow<TabBagImportState> = _stateFlowTabBagImport
 
-    fun import(json: String) {
+    suspend fun import(json: String) = withContext(Dispatchers.IO) {
         Timber.d("import.started")
 
-        viewModelScope.launch {
-            try {
-                val rootNode = jacksonObjectMapper().readTree(json)
-
-                RepositoryImportValidation.validate(rootNode)
-
-                Timber.d("import.validation completed")
-
-                repositorySettings.clear()
-                repositorySettings.jsonImport(rootNode.get(0).toString())
-
-                repositoryBag.clear()
-                repositoryBag.jsonImport(rootNode.get(1).toString())
-
-                repositoryRoll.clear()
-                repositoryRoll.jsonImport(rootNode.get(2).toString())
-
-                repositoryGroup.clear()
-                if (rootNode.get(3) != null && !rootNode.get(3).isEmpty)
-                    repositoryGroup.jsonImport(rootNode.get(3).toString())
-
-                _stateFlowTabBagImport.update {
-                    it.copy(
-                        importStatus = ExportImportStatus.SUCCESS,
-                        importDetail = RepositoryImportStatus.NONE
-                    )
-                }
-
-                _stateFlowResize.value = repositorySettings.fetch().first().resizeZoom
-
-                SetupImportEvent.emit()
-
-                Timber.d("import.completed.success")
-            } catch (e: RepositoryImportException) {
-                Timber.e(e.detail.toString())
-
-                _stateFlowTabBagImport.update {
-                    it.copy(
-                        importStatus = ExportImportStatus.FAILURE,
-                        importDetail = e.detail
-                    )
-                }
-
-                Timber.e("import.completed.failure")
-            } catch (e: Exception) {
-                Timber.e(e.message.toString())
-
-                if (BuildConfig.DEBUG) {
-                    e.printStackTrace()
-                }
-
-                _stateFlowTabBagImport.update {
-                    it.copy(
-                        importStatus = ExportImportStatus.FAILURE,
-                        importDetail = RepositoryImportStatus.ERROR_PROTO
-                    )
-                }
-
-                Timber.e("import.completed.failure")
+        try {
+            if (json.isBlank()) {
+                throw RepositoryImportException(RepositoryImportStatus.JSON_FILE_EMPTY)
             }
+
+            val rootNode = try {
+                jacksonObjectMapper().readTree(json)
+            } catch (_: Exception) {
+                throw RepositoryImportException(RepositoryImportStatus.JSON_FILE_MISSING_SECTION)
+            }
+
+            val importData = validator.validate(rootNode)
+
+            Timber.d("import.validation completed. version=${importData.version}")
+
+            repositorySettings.clear()
+            repositoryBag.clear()
+            repositoryRoll.clear()
+
+            repositorySettings.jsonImport(importData.jsonSettings.toString())
+
+            if (validator.jsonVersion == "2.5.0") {
+                repositoryBag.jsonImport(importData.jsonBag.toString())
+                repositoryRoll.jsonImport(importData.jsonRolls.toString())
+                repositoryGroup.jsonImport(importData.jsonGroups.toString())
+            } else {
+                repositoryBag.jsonImport(importData.jsonBag.toString())
+                repositoryRoll.jsonImport(importData.jsonRolls.toString())
+
+                val jsonGroups = importData.jsonGroups
+                if (jsonGroups != null && !jsonGroups.isEmpty && !jsonGroups.isNull)
+                    repositoryGroup.jsonImport(jsonGroups.toString())
+            }
+
+            _stateFlowTabBagImport.update {
+                it.copy(
+                    importStatus = ExportImportStatus.SUCCESS,
+                    importDetail = RepositoryImportStatus.SUCCESS
+                )
+            }
+
+            SetupImportEvent.emit()
+
+            Timber.d("import.completed.success")
+        } catch (e: RepositoryImportException) {
+            Timber.e(e.detail.toString())
+
+            _stateFlowTabBagImport.update {
+                it.copy(
+                    importStatus = ExportImportStatus.FAILURE,
+                    importDetail = e.detail
+                )
+            }
+
+            Timber.e("import.completed.failure")
+        } catch (e: Exception) {
+            Timber.e(e)
+
+            _stateFlowTabBagImport.update {
+                it.copy(
+                    importStatus = ExportImportStatus.FAILURE,
+                    importDetail = RepositoryImportStatus.JSON_FILE_MISSING_SECTION
+                )
+            }
+
+            Timber.e("import.completed.failure.generic")
         }
     }
 
@@ -167,9 +191,31 @@ class DiceAndroidViewModel(
                 )
             }
 
-            getContext().contentResolver.openInputStream(uri)?.use { inputStream ->
-                import(inputStream.reader().readText())
-                inputStream.close()
+            try {
+                val json = withContext(Dispatchers.IO) {
+                    getContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+                        inputStream.reader().readText()
+                    }
+                }
+
+                if (json != null) {
+                    import(json)
+                } else {
+                    _stateFlowTabBagImport.update {
+                        it.copy(
+                            importStatus = ExportImportStatus.FAILURE,
+                            importDetail = RepositoryImportStatus.JSON_FILE_MISSING_SECTION
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e)
+                _stateFlowTabBagImport.update {
+                    it.copy(
+                        importStatus = ExportImportStatus.FAILURE,
+                        importDetail = RepositoryImportStatus.JSON_FILE_MISSING_SECTION
+                    )
+                }
             }
         }
     }
@@ -178,8 +224,11 @@ class DiceAndroidViewModel(
 
     fun exportFileJson(uri: Uri) {
         viewModelScope.launch {
-            getContext().contentResolver.openOutputStream(uri)?.use { outputStream ->
-                outputStream.write(exportRepositoriesAsJson().toByteArray())
+            val json = exportRepositoriesAsJson()
+            withContext(Dispatchers.IO) {
+                getContext().contentResolver.openOutputStream(uri)?.use { outputStream ->
+                    outputStream.write(json.toByteArray())
+                }
             }
 
             _stateFlowTabBagExport.update {
@@ -192,10 +241,8 @@ class DiceAndroidViewModel(
 
     fun resizeSettings(newResize: Float) {
         viewModelScope.launch {
-            if (_stateFlowResize.value != newResize) {
-                _stateFlowResize.value = newResize
-
-                val settings = repositorySettings.fetch().first()
+            val settings = repositorySettings.fetch().first()
+            if (settings.resizeZoom != newResize) {
                 settings.resizeZoom = newResize
                 repositorySettings.store(settings)
 
@@ -207,8 +254,6 @@ class DiceAndroidViewModel(
     fun resetStorage() {
         viewModelScope.launch {
             RepositoryFactory(applicationContext).resetStorage()
-
-            _stateFlowResize.value = repositorySettings.fetch().first().resizeZoom
 
             DiceResetEvent.emit()
         }

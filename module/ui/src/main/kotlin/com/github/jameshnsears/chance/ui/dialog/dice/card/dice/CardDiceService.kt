@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 data class CardDiceState(
     val diceTitle: String,
     val diceSidesSize: Int,
-    var diceSiderPosition: Float,
     var diceSiderInfoColour: Float,
     var diceColour: String,
     val diceCanBeDeleted: Boolean,
@@ -32,7 +31,6 @@ class CardDiceService(
         CardDiceState(
             diceTitle = diceTitleInit(),
             diceSidesSize = dice.sides.size,
-            diceSiderPosition = diceSidesPosition(dice.sides.size),
             diceSiderInfoColour = 0.38f,
             diceColour = dice.colour,
             diceCanBeDeleted = false,
@@ -44,11 +42,14 @@ class CardDiceService(
 
     private var diceTitlesHeldByOtherDice: List<String> = emptyList()
 
+    private var isSidesValid = true
+
     init {
         scope.launch(Dispatchers.IO) {
             _stateFlowCardDice.update {
                 it.copy(
                     diceCanBeDeleted = diceCanBeDeleted(),
+                    diceCanBeSaved = canDiceTitleBeSaved(it.diceTitle)
                 )
             }
 
@@ -57,11 +58,11 @@ class CardDiceService(
     }
 
     fun refresh(dice: Dice) {
+        isSidesValid = true
         _stateFlowCardDice.update {
             it.copy(
                 diceTitle = dice.title,
                 diceSidesSize = dice.sides.size,
-                diceSiderPosition = diceSidesPosition(dice.sides.size),
                 diceSiderInfoColour = 0.38f,
                 diceColour = dice.colour,
                 diceCanBeDeleted = false,
@@ -87,8 +88,8 @@ class CardDiceService(
         _stateFlowCardDice.update {
             it.copy(
                 diceTitle = title,
-                diceCanBeSaved = canDiceTitleBeSaved(title),
-                diceCanBeCloned = canDiceTitleBeCloned(title)
+                diceCanBeSaved = canDiceTitleBeSaved(title) && isSidesValid,
+                diceCanBeCloned = canDiceTitleBeCloned(title) && isSidesValid
             )
         }
     }
@@ -121,31 +122,23 @@ class CardDiceService(
         return true
     }
 
-    fun diceSidesPosition(diceSidesSize: Int): Float {
-        return when (diceSidesSize) {
-            20 -> 0.0f
-            12 -> 1.0f
-            10 -> 2.0f
-            8 -> 3.0f
-            6 -> 4.0f
-            4 -> 5.0f
-            else -> 6.0f
-        }
-    }
-
     fun diceSidesSize(sideSize: String) {
-        val sideSizeInt = sideSize.toInt()
+        val sideSizeInt = sideSize.toIntOrNull()
+        isSidesValid = sideSizeInt != null && sideSizeInt in 2..100
 
         _stateFlowCardDice.update {
             it.copy(
-                diceSidesSize = sideSizeInt,
-                diceSiderPosition = diceSidesPosition(sideSizeInt),
-                diceSiderInfoColour = if (sideSizeInt != dice.sides.size) 1.0f else 0.38f
+                diceSidesSize = sideSizeInt ?: it.diceSidesSize,
+                diceSiderInfoColour = if (isSidesValid && sideSizeInt != dice.sides.size) 1.0f else 0.38f,
+                diceCanBeSaved = canDiceTitleBeSaved(it.diceTitle) && isSidesValid,
+                diceCanBeCloned = canDiceTitleBeCloned(it.diceTitle) && isSidesValid
             )
         }
 
-        scope.launch(Dispatchers.IO) {
-            CardDiceSideEvent.emit(sideSizeInt)
+        if (isSidesValid) {
+            scope.launch(Dispatchers.IO) {
+                CardDiceSideEvent.emit(sideSizeInt!!)
+            }
         }
     }
 

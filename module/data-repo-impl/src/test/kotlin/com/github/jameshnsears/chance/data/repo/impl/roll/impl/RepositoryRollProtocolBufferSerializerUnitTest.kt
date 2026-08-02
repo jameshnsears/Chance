@@ -7,6 +7,7 @@ import com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -58,5 +59,32 @@ class RepositoryRollProtocolBufferSerializerUnitTest : UtilityAndroidUnitTestHel
 
         val actual = RollHistoryProtocolBuffer.parseFrom(ByteArrayInputStream(outputStream.toByteArray()))
         assertEquals(rollHistory, actual)
+    }
+
+    @Test
+    fun readFromConcatenated() = runTest {
+        val msg1 = RollHistoryProtocolBuffer.newBuilder()
+            .putValues(
+                1L, RollListProtocolBuffer.newBuilder()
+                    .addRoll(RollProtocolBuffer.newBuilder().setUuidDice("d1").build()).build()
+            )
+            .build()
+        val msg2 = RollHistoryProtocolBuffer.newBuilder()
+            .putValues(
+                2L, RollListProtocolBuffer.newBuilder()
+                    .addRoll(RollProtocolBuffer.newBuilder().setUuidDice("d2").build()).build()
+            )
+            .build()
+
+        val outputStream = ByteArrayOutputStream()
+        msg1.writeTo(outputStream)
+        msg2.writeTo(outputStream)
+
+        val inputStream = ByteArrayInputStream(outputStream.toByteArray())
+        val actual = RepositoryRollProtocolBufferSerializer.readFrom(inputStream)
+
+        assertEquals(2, actual.valuesCount)
+        assertTrue(actual.containsValues(1L))
+        assertTrue(actual.containsValues(2L))
     }
 }

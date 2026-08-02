@@ -32,7 +32,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.data.repo.api.RepositoryImportStatus
-import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceAndroidViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,7 +43,6 @@ import java.util.Locale
 fun ImportExport(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     diceAndroidViewModel: DiceAndroidViewModel,
-    zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel
 ) {
     val stateFlowTabBagExport =
         diceAndroidViewModel.stateFlowTabBagExport.collectAsStateWithLifecycle(
@@ -90,7 +88,6 @@ fun ImportExport(
         exportStatus,
         importStatus,
         importFailureReason,
-        zoomDiceAndroidViewModel,
         diceAndroidViewModel
     )
 }
@@ -174,7 +171,6 @@ private fun ImportExportToasts(
     exportStatus: ExportImportStatus,
     importStatus: ExportImportStatus,
     importFailureReason: RepositoryImportStatus,
-    zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel,
     diceAndroidViewModel: DiceAndroidViewModel
 ) {
     val context = LocalContext.current
@@ -194,7 +190,6 @@ private fun ImportExportToasts(
     LaunchedEffect(importStatus) {
         if (importStatus == ExportImportStatus.SUCCESS) {
             Toast.makeText(context, importSuccessfulToast, Toast.LENGTH_SHORT).show()
-            zoomDiceAndroidViewModel.refreshAfterImport()
         }
 
         if (importStatus == ExportImportStatus.FAILURE) {
@@ -207,7 +202,7 @@ private fun ImportExportToasts(
         }
     }
 
-    if (exportStatus != ExportImportStatus.NONE || importStatus != ExportImportStatus.NONE) {
+    if (exportStatus != ExportImportStatus.READY || importStatus != ExportImportStatus.READY) {
         diceAndroidViewModel.resetExportImportStatus()
     }
 }

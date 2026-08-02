@@ -15,11 +15,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
 
         // NOTE: value not in .toml due to fdroid build process?
-        versionCode = 213137
+        versionCode = 223137
         println("versionCode=$versionCode")
 
         // NOTE: .toml also contains this value for the module:ui - fdroid again
-        versionName = "2.4.0"
+        versionName = "2.5.0"
         println("versionName=$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -91,7 +91,21 @@ android {
     }
 
     lint {
+        // Detecting "Liar APIs" is difficult...
+        // This forces lint to check all libraries, not just your code
+        checkDependencies = true
+        // Specifically watch for NewApi issues
+        fatal += "NewApi"
+        // Report issues even if they are suppressed in libraries
+        checkAllWarnings = true
+
+        disable.addAll(listOf("InvalidPackage", "Instantiatable"))
+        checkReleaseBuilds = false
+        abortOnError = false
+        warningsAsErrors = false
         baseline = file("lint-baseline.xml")
+        checkAllWarnings = true
+        htmlReport = true
         xmlReport = true
     }
 }

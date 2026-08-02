@@ -11,7 +11,8 @@ data class Side(
     var imageBase64: String = "",
     var imageRequest: ImageRequest? = null,         // not in .proto
     var description: String = "",
-    var descriptionColour: String = "FF000000"
+    var descriptionColour: String = "FF000000",
+    var imageBase64Uuid: String = ""
 ) {
     fun copy(): Side {
         return Side(
@@ -22,7 +23,8 @@ data class Side(
             imageBase64,
             imageRequest,
             description,
-            descriptionColour
+            descriptionColour,
+            imageBase64Uuid
         )
     }
 

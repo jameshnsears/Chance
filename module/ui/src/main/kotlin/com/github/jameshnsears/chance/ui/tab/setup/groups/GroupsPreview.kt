@@ -20,11 +20,10 @@ fun GroupsPreview() {
     UtilityFeature.enabled = setOf(
         Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
-    val repositoryBag = RepositoryFactory().repositoryBag
-
-    val repositoryGroup = RepositoryFactory().repositoryGroup
-
-    val repositoryRoll = RepositoryFactory().repositoryRoll
+    val repositoryFactory = RepositoryFactory()
+    val repositoryBag = repositoryFactory.repositoryBag
+    val repositoryGroup = repositoryFactory.repositoryGroup
+    val repositoryRoll = repositoryFactory.repositoryRoll
 
     val context = LocalContext.current
     val application = context.applicationContext as? Application ?: object : Application() {

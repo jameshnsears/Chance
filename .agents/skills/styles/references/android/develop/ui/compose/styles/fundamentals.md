@@ -297,7 +297,7 @@ Styles](https://developer.android.com/static/develop/ui/compose/styles/images/bu
 ## Style inheritance
 
 > [!NOTE]
-> **Note:** Whilst the Style APIs are experimental, you need to opt-in to enable Style inheritance by setting the flag `ComposeFoundationFlags.isInheritedTextStyleEnabled = true`.
+> **Note:** While the Style APIs are experimental, you need to opt-in to enable Style inheritance by setting the flag `ComposeFoundationFlags.isInheritedTextStyleEnabled = true`.
 
 Certain style properties, such as `contentColor` and text style-related
 properties, propagate to the child composables. A style set on a child

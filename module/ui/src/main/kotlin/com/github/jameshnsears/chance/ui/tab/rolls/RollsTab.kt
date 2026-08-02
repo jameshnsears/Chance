@@ -17,10 +17,15 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import com.github.jameshnsears.chance.ui.tab.HapticHelper
 import com.github.jameshnsears.chance.ui.tab.rolls.selection.RollSelectionRow
 import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRoll
 import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
@@ -31,6 +36,31 @@ fun TabRoll(
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
 ) {
+    val context = LocalContext.current
+
+    val hapticHelper = remember { HapticHelper(context) }
+    val rollsSoundPlayer = remember { RollsSoundPlayer(context) }
+    val rollsScoreTtsPlayer = remember { RollsScoreTtsPlayer(context) }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            rollsSoundPlayer.release()
+            rollsScoreTtsPlayer.release()
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        rollsAndroidViewModel.sideEffectFlow.collect { sideEffect ->
+            when (sideEffect) {
+                is RollSideEffect.RollHaptic -> hapticHelper.playRollHaptic()
+                is RollSideEffect.RollSound -> rollsSoundPlayer.play()
+                is RollSideEffect.ScoreTTS -> rollsScoreTtsPlayer.playScore(sideEffect.score)
+                is RollSideEffect.UndoHaptic -> hapticHelper.playUndoHaptic()
+                is RollSideEffect.UndoAllHaptic -> hapticHelper.playUndoAllHaptic()
+            }
+        }
+    }
+
     TabRollLayout(rollsAndroidViewModel, zoomRollsAndroidViewModel)
 }
 

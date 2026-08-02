@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
@@ -13,6 +14,8 @@ import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Preview
@@ -22,13 +25,20 @@ fun ZoomRollPreview() {
         Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
 
-    val repositorySettings = RepositoryFactory().repositorySettings
-
-    val repositoryBag = RepositoryFactory().repositoryBag
-
-    val repositoryRoll = RepositoryFactory().repositoryRoll
-
-    val repositoryGroup = RepositoryFactory().repositoryGroup
+    val repositoryFactory = remember {
+        RepositoryFactory().apply {
+            runBlocking {
+                resetStorage()
+                val settings = repositorySettings.fetch().first()
+                settings.groupTitle = true
+                repositorySettings.store(settings)
+            }
+        }
+    }
+    val repositorySettings = repositoryFactory.repositorySettings
+    val repositoryBag = repositoryFactory.repositoryBag
+    val repositoryRoll = repositoryFactory.repositoryRoll
+    val repositoryGroup = repositoryFactory.repositoryGroup
 
     val context = LocalContext.current
     val application = object : Application() {

@@ -63,7 +63,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: default   # without GMS
           arch: x86_64
-          ram-size: 4096m
+          ram-size: 2048m
           heap-size: 512m
           avd-name: ${{ matrix.api-level }}
           disable-animations: true
@@ -75,7 +75,7 @@ jobs:
             adb shell settings put global window_animation_scale 0.0
             adb shell settings put global transition_animation_scale 0.0
             adb shell settings put global animator_duration_scale 0.0
-            ./gradlew :module:data-common:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx2048m"
+            ./gradlew :module:data-common:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx4096m -XX:+UseParallelGC"
 
       - name: codecov
         if: matrix.run-tests == true

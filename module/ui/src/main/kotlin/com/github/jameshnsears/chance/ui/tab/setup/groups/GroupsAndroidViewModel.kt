@@ -16,6 +16,7 @@ import com.github.jameshnsears.chance.ui.tab.rolls.RollsEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -64,45 +65,36 @@ class GroupsAndroidViewModel(
     }
 
     fun onNameChange(group: Group, name: String) {
-        if (group.uuid == _stateFlowNewGroup.value.uuid) {
-            _stateFlowNewGroup.value = _stateFlowNewGroup.value.copy(name = name)
-            return
-        }
-        updateDraft(group) { it.copy(name = name) }
+        updateGroup(group) { it.copy(name = name) }
     }
 
     fun onNotesChange(group: Group, notes: String) {
-        if (group.uuid == _stateFlowNewGroup.value.uuid) {
-            _stateFlowNewGroup.value = _stateFlowNewGroup.value.copy(notes = notes)
-            return
-        }
-        updateDraft(group) { it.copy(notes = notes) }
+        updateGroup(group) { it.copy(notes = notes) }
     }
 
     fun onUuidDiceChange(group: Group, uuid: String, newQuantity: Int) {
-        if (group.uuid == _stateFlowNewGroup.value.uuid) {
-            val currentGroup = _stateFlowNewGroup.value
+        updateGroup(group) { currentGroup ->
             val otherUuids = currentGroup.uuidDice.filter { u -> u != uuid }
             val addedUuids = List(newQuantity) { uuid }
-            _stateFlowNewGroup.value = currentGroup.copy(uuidDice = otherUuids + addedUuids)
-            return
-        }
-        updateDraft(group) {
-            val otherUuids = it.uuidDice.filter { u -> u != uuid }
-            val addedUuids = List(newQuantity) { uuid }
-            it.copy(uuidDice = otherUuids + addedUuids)
+            currentGroup.copy(uuidDice = otherUuids + addedUuids)
         }
     }
 
-    private fun updateDraft(group: Group, transform: (Group) -> Group) {
-        val currentDraft = _stateFlowGroupDrafts.value[group.uuid] ?: group
-        _stateFlowGroupDrafts.value += (group.uuid to transform(currentDraft))
+    private fun updateGroup(group: Group, transform: (Group) -> Group) {
+        if (group.uuid == _stateFlowNewGroup.value.uuid) {
+            _stateFlowNewGroup.update(transform)
+        } else {
+            _stateFlowGroupDrafts.update { currentDrafts ->
+                val currentDraft = currentDrafts[group.uuid] ?: group
+                currentDrafts + (group.uuid to transform(currentDraft))
+            }
+        }
     }
 
     fun onDelete(group: Group) {
         viewModelScope.launch {
+            _stateFlowGroupDrafts.update { it - group.uuid }
             val updatedHistory = _stateFlowGroupHistory.value.filter { it.uuid != group.uuid }
-            _stateFlowGroupDrafts.value -= group.uuid
             repositoryGroup.store(updatedHistory)
 
             deleteRollHistory(group.uuid)
@@ -147,13 +139,13 @@ class GroupsAndroidViewModel(
                         if (it.uuid == group.uuid) groupToStore else it
                     }
                     repositoryGroup.store(updatedHistory)
-                    _stateFlowGroupDrafts.value -= group.uuid
+                    _stateFlowGroupDrafts.update { it - group.uuid }
                 }
             } else {
                 // New group
                 val newGroupWithDisplayIndex = group.copy(displayIndex = currentHistory.size)
                 repositoryGroup.store(currentHistory + newGroupWithDisplayIndex)
-                _stateFlowNewGroup.value = Group()
+                _stateFlowNewGroup.update { Group() }
                 DisplayIndexEvent.emit()
             }
             GroupEvent.emit()

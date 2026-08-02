@@ -356,7 +356,7 @@ fun MediaPlayer(
 
 <br />
 
-Within the `style` lambda, you can apply state based styling for custom states,
+Within the `style` lambda, you can apply state-based styling for custom states,
 using the previously defined extension functions.
 
 

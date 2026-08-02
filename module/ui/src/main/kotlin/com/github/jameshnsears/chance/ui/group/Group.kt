@@ -137,7 +137,7 @@ private fun GroupHeader(
             text = group.name,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
-                .padding(start = 8.dp)
+                .padding(start = 4.dp)
                 .weight(1f)
                 .testTag(GroupTestTag.NAME),
         )

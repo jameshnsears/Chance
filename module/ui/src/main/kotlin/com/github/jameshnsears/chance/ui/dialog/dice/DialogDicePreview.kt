@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
-import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.repo.impl.bag.testdouble.RepositoryBagProtocolBufferTestDouble
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +28,8 @@ fun DialogBagPreview() {
     val showDialog = mutableStateOf(true)
 
     val repositoryBagProtocolBufferTestDouble =
-        RepositoryBagProtocolBufferTestDouble.getInstance(RepositoryFactory().bagDataTestDouble.allDice)
+        RepositoryBagProtocolBufferTestDouble.getInstance()
+
     runBlocking(Dispatchers.Main) {
         repositoryBagProtocolBufferTestDouble.store(
             mutableListOf(

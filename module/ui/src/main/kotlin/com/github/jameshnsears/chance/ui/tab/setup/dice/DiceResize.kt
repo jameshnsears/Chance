@@ -14,13 +14,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceAndroidViewModel
 
 
 @Composable
 fun Resize(
     diceAndroidViewModel: DiceAndroidViewModel,
-    zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel,
 ) {
     val stateFlowResize =
         diceAndroidViewModel.stateFlowResize.collectAsStateWithLifecycle(
@@ -37,7 +35,6 @@ fun Resize(
             value = stateFlowResize.value,
             onValueChange = { newValue ->
                 diceAndroidViewModel.resizeSettings(newValue)
-                zoomDiceAndroidViewModel.setResizeView(newValue)
             },
             valueRange = 1f..9f,
             colors = SliderDefaults.colors(

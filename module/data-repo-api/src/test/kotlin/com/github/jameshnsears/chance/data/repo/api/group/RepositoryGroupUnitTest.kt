@@ -3,8 +3,8 @@ package com.github.jameshnsears.chance.data.repo.api.group
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import com.github.jameshnsears.chance.data.domain.core.group.Group
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
-import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -18,7 +18,7 @@ class RepositoryGroupUnitTest : UtilityAndroidUnitTestHelper() {
         val mockRepository = mockk<RepositoryGroupInterface>()
         val groupHistory: GroupHistory = listOf(Group(name = "Group 1"))
 
-        coEvery { mockRepository.fetch() } returns flowOf(groupHistory)
+        every { mockRepository.fetch() } returns flowOf(groupHistory)
 
         val result = mockRepository.fetch().first()
         assertEquals(1, result.size)
@@ -38,7 +38,7 @@ class RepositoryGroupUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun traceUuid() {
         val repository = object : RepositoryGroupInterface {
-            override suspend fun fetch() = flowOf(emptyList<Group>())
+            override fun fetch() = flowOf(emptyList<Group>())
             override suspend fun store(newGroupHistory: GroupHistory) {}
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}

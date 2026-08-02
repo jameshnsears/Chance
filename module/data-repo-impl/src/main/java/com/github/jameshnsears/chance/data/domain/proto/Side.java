@@ -11,7 +11,7 @@ public final class Side {
     static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_fieldAccessorTable;
-    private static com.google.protobuf.Descriptors.FileDescriptor
+    private static final com.google.protobuf.Descriptors.FileDescriptor
         descriptor;
 
     static {
@@ -27,12 +27,12 @@ public final class Side {
     static {
         java.lang.String[] descriptorData = {
             "\n\nside.proto\0220com.github.jameshnsears.ch" +
-                "ance.data.domain.proto\"\246\001\n\022SideProtocolB" +
+                "ance.data.domain.proto\"\277\001\n\022SideProtocolB" +
                 "uffer\022\014\n\004uuid\030\001 \001(\t\022\016\n\006number\030\002 \001(\005\022\024\n\014n" +
                 "umberColour\030\003 \001(\t\022\027\n\017imageDrawableId\030\004 \001" +
                 "(\005\022\023\n\013imageBase64\030\005 \001(\t\022\023\n\013description\030\006" +
-                " \001(\t\022\031\n\021descriptionColour\030\007 \001(\tB\002P\001b\006pro" +
-                "to3"
+                " \001(\t\022\031\n\021descriptionColour\030\007 \001(\t\022\027\n\017image" +
+                "Base64Uuid\030\010 \001(\tB\002P\001b\006proto3"
         };
         descriptor = com.google.protobuf.Descriptors.FileDescriptor
             .internalBuildGeneratedFileFrom(descriptorData,
@@ -43,7 +43,7 @@ public final class Side {
         internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
             internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor,
-            new java.lang.String[]{"Uuid", "Number", "NumberColour", "ImageDrawableId", "ImageBase64", "Description", "DescriptionColour",});
+            new java.lang.String[]{"Uuid", "Number", "NumberColour", "ImageDrawableId", "ImageBase64", "Description", "DescriptionColour", "ImageBase64Uuid",});
         descriptor.resolveAllFeaturesImmutable();
     }
 

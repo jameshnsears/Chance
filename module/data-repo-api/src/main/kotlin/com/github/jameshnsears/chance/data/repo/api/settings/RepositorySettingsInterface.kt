@@ -5,6 +5,6 @@ import com.github.jameshnsears.chance.data.repo.api.RepositoryImportExportInterf
 import kotlinx.coroutines.flow.Flow
 
 interface RepositorySettingsInterface : RepositoryImportExportInterface {
-    suspend fun fetch(): Flow<SettingsDataInterface>
+    fun fetch(): Flow<SettingsDataInterface>
     suspend fun store(settingsData: SettingsDataInterface)
 }

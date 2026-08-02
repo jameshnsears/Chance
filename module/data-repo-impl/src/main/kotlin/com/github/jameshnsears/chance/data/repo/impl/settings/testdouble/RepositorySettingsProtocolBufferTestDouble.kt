@@ -66,7 +66,7 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         store(jsonImportProcess(json))
     }
 
-    override suspend fun fetch(): Flow<SettingsDataInterface> = settingsProtocolBufferStateFlow
+    override fun fetch(): Flow<SettingsDataInterface> = settingsProtocolBufferStateFlow
         .map { settingsProtocolBuffer ->
             val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
 

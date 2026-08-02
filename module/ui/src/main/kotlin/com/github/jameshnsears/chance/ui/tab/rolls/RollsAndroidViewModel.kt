@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.ui.tab.rolls
 
 import android.app.Application
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Stable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
@@ -16,44 +17,48 @@ import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
-import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceCloseEvent
-import com.github.jameshnsears.chance.ui.tab.DisplayIndexEvent
-import com.github.jameshnsears.chance.ui.tab.GroupEvent
-import com.github.jameshnsears.chance.ui.tab.HapticHelper
-import com.github.jameshnsears.chance.ui.tab.SetupImportEvent
-import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceResetEvent
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import java.security.SecureRandom
-import kotlin.time.Duration.Companion.milliseconds
+
+sealed class RollSideEffect {
+    object RollHaptic : RollSideEffect()
+    object RollSound : RollSideEffect()
+    data class ScoreTTS(val score: Int) : RollSideEffect()
+    object UndoHaptic : RollSideEffect()
+    object UndoAllHaptic : RollSideEffect()
+}
 
 @Stable
 data class SettingsState(
-    var rollIndexTime: Boolean,
-    var rollScore: Boolean,
-    var rollScoreTTS: Boolean,
+    val rollIndexTime: Boolean,
+    val rollScore: Boolean,
+    val rollScoreTTS: Boolean,
 
-    var diceTitle: Boolean,
-    var rollBehaviour: Boolean,
-    var sideNumber: Boolean,
-    var sideDescription: Boolean,
-    var sideSVG: Boolean,
+    val diceTitle: Boolean,
+    val rollBehaviour: Boolean,
+    val sideNumber: Boolean,
+    val sideDescription: Boolean,
+    val sideSVG: Boolean,
 
-    var shuffle: Boolean,
-    var haptics: Boolean,
-    var shakeToRoll: Boolean,
-    var rollSound: Boolean,
+    val shuffle: Boolean,
+    val haptics: Boolean,
+    val shakeToRoll: Boolean,
+    val rollSound: Boolean,
 
-    var groupTitle: Boolean,
+    val groupTitle: Boolean,
 )
 
 class RollsAndroidViewModel(
@@ -63,46 +68,88 @@ class RollsAndroidViewModel(
     val repositoryRoll: RepositoryRollInterface,
     val repositoryGroup: RepositoryGroupInterface,
 ) : AndroidViewModel(application) {
-    val _stateFlowSettingsData = MutableStateFlow(
-        SettingsState(
-            rollIndexTime = false,
-            rollScore = false,
-            rollScoreTTS = false,
-            diceTitle = false,
-            rollBehaviour = false,
-            sideNumber = false,
-            sideDescription = false,
-            sideSVG = false,
-            shuffle = false,
-            haptics = false,
-            shakeToRoll = false,
-            rollSound = false,
-            groupTitle = false,
+    val stateFlowSettings: StateFlow<SettingsState> = repositorySettings.fetch()
+        .map { settings ->
+            SettingsState(
+                rollIndexTime = settings.rollIndexTime,
+                rollScore = settings.rollScore,
+                rollScoreTTS = settings.rollScoreTTS,
+                diceTitle = settings.diceTitle,
+                rollBehaviour = settings.rollBehaviour,
+                sideNumber = settings.sideNumber,
+                sideDescription = settings.sideDescription,
+                sideSVG = settings.sideSVG,
+                haptics = settings.haptics,
+                shakeToRoll = settings.shakeToRoll,
+                rollSound = settings.rollSound,
+                shuffle = settings.shuffle,
+                groupTitle = settings.groupTitle,
+            )
+        }.distinctUntilChanged()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = SettingsState(
+                rollIndexTime = false,
+                rollScore = false,
+                rollScoreTTS = false,
+                diceTitle = false,
+                rollBehaviour = false,
+                sideNumber = false,
+                sideDescription = false,
+                sideSVG = false,
+                shuffle = false,
+                haptics = false,
+                shakeToRoll = false,
+                rollSound = false,
+                groupTitle = true,
+            )
         )
-    )
-    val stateFlowSettings: StateFlow<SettingsState> = _stateFlowSettingsData
 
-    private var _diceBag: MutableStateFlow<DiceBag> = MutableStateFlow(mutableListOf())
-    var diceBag: StateFlow<DiceBag> = _diceBag
+    val diceBag: StateFlow<DiceBag> = repositoryBag.fetch()
+        .map { it.sortedBy { dice -> dice.displayIndex }.toMutableList() }
+        .distinctUntilChanged()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = mutableListOf()
+        )
 
-    private var _groupHistory: MutableStateFlow<GroupHistory> = MutableStateFlow(emptyList())
-    var groupHistory: StateFlow<GroupHistory> = _groupHistory
+    val groupHistory: StateFlow<GroupHistory> = repositoryGroup.fetch()
+        .map { it.sortedBy { group -> group.displayIndex } }
+        .distinctUntilChanged()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = emptyList()
+        )
 
-    var _undoEnabled = MutableStateFlow(false)
-    var undoEnabled: StateFlow<Boolean> = _undoEnabled
+    private val _rollHistoryFlow = repositoryRoll.fetch()
+        .distinctUntilChanged()
 
-    private var _rollEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    var rollEnabled: StateFlow<Boolean> = _rollEnabled
+    val undoEnabled: StateFlow<Boolean> = combine(
+        _rollHistoryFlow,
+        stateFlowSettings
+    ) { rollHistory, settings ->
+        rollHistory.isNotEmpty() && !isSettingsNotEnabled(settings)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
+    val rollEnabled: StateFlow<Boolean> = combine(
+        diceBag,
+        groupHistory,
+        stateFlowSettings
+    ) { diceBag, groupHistory, settings ->
+        (diceBag.any { it.selected } || groupHistory.any { it.selected }) && !isSettingsNotEnabled(settings)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
+    val rollSelectionRowScrollState = LazyListState()
+
+    private val _sideEffectFlow = MutableSharedFlow<RollSideEffect>()
+    val sideEffectFlow: SharedFlow<RollSideEffect> = _sideEffectFlow.asSharedFlow()
 
     private val mutex = Mutex()
 
     private val secureRandom = SecureRandom()
-
-    val hapticHelper = HapticHelper(getApplication())
-
-    private val rollsSoundPlayer = RollsSoundPlayer(getApplication())
-
-    private val rollsScoreTtsPlayer = RollsScoreTtsPlayer(getApplication())
 
     private var isForeground = false
 
@@ -123,7 +170,7 @@ class RollsAndroidViewModel(
     }
 
     private val shakeToRollService = ShakeToRollService(getApplication()) {
-        if (_stateFlowSettingsData.value.shakeToRoll && _rollEnabled.value) {
+        if (stateFlowSettings.value.shakeToRoll && rollEnabled.value) {
             rollDiceSequence()
         }
     }
@@ -136,90 +183,10 @@ class RollsAndroidViewModel(
         }
 
         viewModelScope.launch {
-            alignSettings()
-            alignBottomSheetWithStorage()
-        }
-
-        viewModelScope.launch {
-            repositoryGroup.fetch().collect {
-                _groupHistory.value = it.sortedBy { group -> group.displayIndex }
-            }
-        }
-
-        viewModelScope.launch {
             stateFlowSettings.collect {
                 updateShakeService()
             }
         }
-
-        viewModelScope.launch {
-            DialogDiceCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect.DialogDiceCloseEvent")
-                alignBottomSheetWithStorage()
-            }
-        }
-
-        viewModelScope.launch {
-            merge(
-                SetupImportEvent.sharedFlowTabBagImportEvent.map { },
-                DiceResetEvent.sharedFlowTabBagResetEvent.map { },
-                DisplayIndexEvent.sharedFlowDisplayIndexEvent.map { },
-                GroupEvent.sharedFlowGroupEvent.map { }
-            ).collect {
-                Timber.d("collect.SetupImportEvent|DiceResetEvent|DisplayIndexEvent|GroupEvent")
-                alignSettings()
-                alignBottomSheetWithStorage()
-            }
-        }
-    }
-
-    private suspend fun alignSettings() {
-        val settings = repositorySettings.fetch().first()
-
-        _stateFlowSettingsData.update {
-            it.copy(
-                rollIndexTime = settings.rollIndexTime,
-                rollScore = settings.rollScore,
-                rollScoreTTS = settings.rollScoreTTS,
-                diceTitle = settings.diceTitle,
-                sideNumber = settings.sideNumber,
-                rollBehaviour = settings.rollBehaviour,
-                sideDescription = settings.sideDescription,
-                sideSVG = settings.sideSVG,
-                haptics = settings.haptics,
-                shakeToRoll = settings.shakeToRoll,
-                rollSound = settings.rollSound,
-                shuffle = settings.shuffle,
-                groupTitle = settings.groupTitle,
-            )
-        }
-    }
-
-    private suspend fun alignBottomSheetWithStorage() {
-        _undoEnabled.value = isUndoPossible()
-        Timber.d("_undoEnabled.value=${_undoEnabled.value}")
-
-        _rollEnabled.value = isRollPossible()
-        Timber.d("_rollEnabled.value=${_rollEnabled.value}")
-    }
-
-    private suspend fun isUndoPossible(): Boolean {
-        if (isSettingsNotEnabled())
-            return false
-
-        if (repositoryRoll.fetch().first().isNotEmpty())
-            return true
-
-        return false
-    }
-
-    private suspend fun isRollPossible(): Boolean {
-        if (isSettingsNotEnabled())
-            return false
-
-        _diceBag.value = repositoryBag.fetch().first().sortedBy { it.displayIndex }.toMutableList()
-
-        return _diceBag.value.any { it.selected } || _groupHistory.value.any { it.selected }
     }
 
 
@@ -230,7 +197,7 @@ class RollsAndroidViewModel(
             mutex.withLock {
                 val updatedDiceBag: DiceBag = mutableListOf()
 
-                _diceBag.value.forEach {
+                diceBag.value.forEach {
                     val existingDice = it.copy()
 
                     if (dice.uuid == it.uuid) {
@@ -241,11 +208,6 @@ class RollsAndroidViewModel(
                 }
 
                 repositoryBag.store(updatedDiceBag)
-
-                _diceBag.value = updatedDiceBag
-
-                _undoEnabled.value = isUndoPossible()
-                _rollEnabled.value = isRollPossible()
             }
         }
     }
@@ -255,52 +217,47 @@ class RollsAndroidViewModel(
 
         viewModelScope.launch {
             mutex.withLock {
-                val updatedHistory = _groupHistory.value.map {
+                val updatedHistory = groupHistory.value.map {
                     if (it.uuid == group.uuid) it.copy(selected = !it.selected) else it
                 }
                 repositoryGroup.store(updatedHistory)
-                _groupHistory.value = updatedHistory
-
-                _undoEnabled.value = isUndoPossible()
-                _rollEnabled.value = isRollPossible()
             }
         }
     }
 
-    private fun isSettingsNotEnabled() = (
-        !stateFlowSettings.value.rollIndexTime
-            && !stateFlowSettings.value.rollScore
-            && !stateFlowSettings.value.diceTitle
-            && !stateFlowSettings.value.rollBehaviour
-            && !stateFlowSettings.value.sideNumber
-            && !stateFlowSettings.value.sideDescription
-            && !stateFlowSettings.value.sideSVG
-            && !stateFlowSettings.value.groupTitle
+    private fun isSettingsNotEnabled(settings: SettingsState) = (
+        !settings.rollIndexTime
+            && !settings.rollScore
+            && !settings.diceTitle
+            && !settings.rollBehaviour
+            && !settings.sideNumber
+            && !settings.sideDescription
+            && !settings.sideSVG
+            && !settings.groupTitle
         )
 
     fun rollDiceSequence() {
         viewModelScope.launch {
-            _rollEnabled.value = false
-            _undoEnabled.value = false
-
-            playRollHaptic()
-            playRollSound()
+            if (stateFlowSettings.value.haptics) {
+                _sideEffectFlow.emit(RollSideEffect.RollHaptic)
+            }
+            if (stateFlowSettings.value.rollSound) {
+                _sideEffectFlow.emit(RollSideEffect.RollSound)
+            }
 
             val newRollSequence = mutableListOf<Roll>()
-            rollDiceSequence(newRollSequence)
+            generateRollDiceSequence(newRollSequence)
             shuffleRollSequence(newRollSequence)
 
             rollsSequenceHelper.saveNewRollSequence(newRollSequence)
 
-            _undoEnabled.value = true
-            _rollEnabled.value = true
-
             RollsEvent.emit()
+            // States will be updated by repository collectors
         }
     }
 
     fun shuffleRollSequence(rollSequence: MutableList<Roll>) {
-        if (_stateFlowSettingsData.value.shuffle) {
+        if (stateFlowSettings.value.shuffle) {
             if (rollSequence.size > 1) {
                 rollSequence.shuffle()
 
@@ -316,67 +273,11 @@ class RollsAndroidViewModel(
         }
     }
 
-    fun dismissSettingsDialog() {
-        viewModelScope.launch {
-            saveSettings()
-            alignBottomSheetWithStorage()
-        }
-    }
-
-    private suspend fun saveSettings() {
-        val settings = repositorySettings.fetch().first()
-
-        settings.rollIndexTime = _stateFlowSettingsData.value.rollIndexTime
-        settings.rollScore = _stateFlowSettingsData.value.rollScore
-        settings.rollScoreTTS = _stateFlowSettingsData.value.rollScoreTTS
-
-        settings.diceTitle = _stateFlowSettingsData.value.diceTitle
-        settings.sideNumber = _stateFlowSettingsData.value.sideNumber
-        settings.rollBehaviour = _stateFlowSettingsData.value.rollBehaviour
-        settings.sideDescription = _stateFlowSettingsData.value.sideDescription
-        settings.sideSVG = _stateFlowSettingsData.value.sideSVG
-
-        settings.rollSound = _stateFlowSettingsData.value.rollSound
-        settings.haptics = _stateFlowSettingsData.value.haptics
-        settings.shakeToRoll = _stateFlowSettingsData.value.shakeToRoll
-        settings.shuffle = _stateFlowSettingsData.value.shuffle
-        settings.groupTitle = _stateFlowSettingsData.value.groupTitle
-
-        repositorySettings.store(settings)
-    }
-
-    suspend fun playRollHaptic() {
-        if (_stateFlowSettingsData.value.haptics) {
-            Timber.d("playRollHaptic")
-            hapticHelper.playRollHaptic()
-        }
-    }
-
-    suspend fun playUndoHaptic() {
-        if (_stateFlowSettingsData.value.haptics) {
-            Timber.d("playUndoHaptic")
-            hapticHelper.playUndoHaptic()
-        }
-    }
-
-    suspend fun playUndoAllHaptic() {
-        if (_stateFlowSettingsData.value.haptics) {
-            Timber.d("playUndoAllHaptic")
-            hapticHelper.playUndoAllHaptic()
-        }
-    }
-
-    suspend fun playRollSound() {
-        if (_stateFlowSettingsData.value.rollSound) {
-            rollsSoundPlayer.play()
-            delay(750.milliseconds)
-        }
-    }
-
-    suspend fun playScoreTTS(score: Int) {
-        if (_stateFlowSettingsData.value.rollScoreTTS) {
-            delay(250.milliseconds)
-            rollsScoreTtsPlayer.playScore(score)
+    fun playScoreTTS(score: Int) {
+        if (stateFlowSettings.value.rollScoreTTS) {
+            viewModelScope.launch {
+                _sideEffectFlow.emit(RollSideEffect.ScoreTTS(score))
+            }
         }
     }
 
@@ -384,20 +285,18 @@ class RollsAndroidViewModel(
         if (System.getProperty("isUnitTest") != "true") {
             ProcessLifecycleOwner.get().lifecycle.removeObserver(lifecycleEventObserver)
         }
-        rollsSoundPlayer.release()
-        rollsScoreTtsPlayer.release()
         shakeToRollService.stop()
     }
 
     private fun updateShakeService() {
-        if (isForeground && _stateFlowSettingsData.value.shakeToRoll) {
+        if (isForeground && stateFlowSettings.value.shakeToRoll) {
             shakeToRollService.start()
         } else {
             shakeToRollService.stop()
         }
     }
 
-    fun rollDiceSequence(newRollSequence: MutableList<Roll>) {
+    fun generateRollDiceSequence(newRollSequence: MutableList<Roll>) {
         val diceToRoll = getDiceToRoll()
         val diceCountMap = mutableMapOf<String, Int>()
 
@@ -409,10 +308,10 @@ class RollsAndroidViewModel(
     }
 
     private fun getDiceToRoll(): List<Pair<Dice, String>> {
-        val selectedDice = _diceBag.value.filter { it.selected }.map { it to "" }
+        val selectedDice = diceBag.value.filter { it.selected }.map { it to "" }
 
-        val diceMap = _diceBag.value.associateBy { it.uuid }
-        val groupDice = _groupHistory.value
+        val diceMap = diceBag.value.associateBy { it.uuid }
+        val groupDice = groupHistory.value
             .filter { it.selected }
             .flatMap { group ->
                 group.uuidDice.mapNotNull { diceMap[it]?.to(group.uuid) }
@@ -468,31 +367,24 @@ class RollsAndroidViewModel(
 
     fun undo() {
         viewModelScope.launch {
-            if (_undoEnabled.value) {
-                _undoEnabled.value = false
-                _rollEnabled.value = false
+            if (undoEnabled.value) {
+                if (stateFlowSettings.value.haptics) {
+                    _sideEffectFlow.emit(RollSideEffect.UndoHaptic)
+                }
 
-                playUndoHaptic()
-
-                val rollHistory = repositoryRoll.fetch().first()
-
-                rollHistory.remove(rollHistory.keys.first())
-
-                repositoryRoll.store(rollHistory)
+                repositoryRoll.removeLatest()
 
                 RollsEvent.emit()
-
-                _undoEnabled.value = rollHistory.isNotEmpty()
-                _rollEnabled.value = isRollPossible()
+                // States will be updated by repository collectors
             }
         }
     }
 
     fun undoAll() {
         viewModelScope.launch {
-            _undoEnabled.value = false
-
-            playUndoAllHaptic()
+            if (stateFlowSettings.value.haptics) {
+                _sideEffectFlow.emit(RollSideEffect.UndoAllHaptic)
+            }
 
             repositoryRoll.clear()
             RollsEvent.emit()
@@ -501,94 +393,109 @@ class RollsAndroidViewModel(
 
     fun settingsIndexTime(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(rollIndexTime = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.rollIndexTime = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsRollScore(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(rollScore = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.rollScore = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsRollScoreTTS(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(rollScoreTTS = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.rollScoreTTS = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsDiceTitle(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(diceTitle = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.diceTitle = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsSideNumber(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(sideNumber = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.sideNumber = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsSideDescription(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(sideDescription = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.sideDescription = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsSideSVG(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(sideSVG = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.sideSVG = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsBehaviour(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(rollBehaviour = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.rollBehaviour = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsGroupTitle(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(groupTitle = checked) }
-            alignBottomSheetWithStorage()
+            val settings = repositorySettings.fetch().first()
+            settings.groupTitle = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsShuffle(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(shuffle = checked) }
+            val settings = repositorySettings.fetch().first()
+            settings.shuffle = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsUseHaptics(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(haptics = checked) }
+            val settings = repositorySettings.fetch().first()
+            settings.haptics = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsShakeToRoll(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(shakeToRoll = checked) }
+            val settings = repositorySettings.fetch().first()
+            settings.shakeToRoll = checked
+            repositorySettings.store(settings)
         }
     }
 
     fun settingsRollSound(checked: Boolean) {
         viewModelScope.launch {
-            _stateFlowSettingsData.update { it.copy(rollSound = checked) }
+            val settings = repositorySettings.fetch().first()
+            settings.rollSound = checked
+            repositorySettings.store(settings)
         }
     }
 
-    fun isContentAvailableToDisplay(rolls: List<Roll>): Boolean {
-        val settings = _stateFlowSettingsData.value
-
+    fun isContentAvailableToDisplay(rolls: List<Roll>, settings: SettingsState): Boolean {
         var svgExists = false
         var descriptionExists = false
 

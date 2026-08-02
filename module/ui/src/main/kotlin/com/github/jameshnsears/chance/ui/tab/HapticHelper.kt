@@ -13,12 +13,8 @@ import timber.log.Timber
 
 class HapticHelper(context: Context) {
     val vibrator: Vibrator? = try {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager = context.getSystemService(VibratorManager::class.java)
-            vibratorManager?.defaultVibrator
-        } else {
-            context.getSystemService(Vibrator::class.java)
-        }
+        val vibratorManager = context.getSystemService(VibratorManager::class.java)
+        vibratorManager?.defaultVibrator
     } catch (e: Exception) {
         Timber.w(e, "Vibrator not available")
         null
@@ -45,8 +41,7 @@ class HapticHelper(context: Context) {
         val v = vibrator ?: return@withContext
         if (!v.hasVibrator()) return@withContext
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            v.areAllPrimitivesSupported(
+        if (v.areAllPrimitivesSupported(
                 VibrationEffect.Composition.PRIMITIVE_THUD,
                 VibrationEffect.Composition.PRIMITIVE_CLICK
             )
@@ -66,8 +61,7 @@ class HapticHelper(context: Context) {
         val v = vibrator ?: return@withContext
         if (!v.hasVibrator()) return@withContext
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            v.areAllPrimitivesSupported(VibrationEffect.Composition.PRIMITIVE_CLICK)
+        if (v.areAllPrimitivesSupported(VibrationEffect.Composition.PRIMITIVE_CLICK)
         ) {
             vibrate(
                 VibrationEffect.startComposition()
@@ -84,8 +78,7 @@ class HapticHelper(context: Context) {
         val v = vibrator ?: return@withContext
         if (!v.hasVibrator()) return@withContext
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
-            v.areAllPrimitivesSupported(
+        if (v.areAllPrimitivesSupported(
                 VibrationEffect.Composition.PRIMITIVE_THUD,
                 VibrationEffect.Composition.PRIMITIVE_CLICK
             )

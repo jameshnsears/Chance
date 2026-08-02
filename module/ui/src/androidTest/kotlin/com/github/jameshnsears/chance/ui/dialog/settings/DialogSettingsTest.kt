@@ -1,8 +1,6 @@
 package com.github.jameshnsears.chance.ui.dialog.settings
 
 import android.app.Application
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
@@ -55,7 +53,6 @@ class DialogSettingsTest : AndroidTestHelper() {
 
             ChanceTheme {
                 DialogSettingsLayout(
-                    remember { mutableStateOf(true) },
                     rollsAndroidViewModel
                 )
             }

@@ -201,7 +201,12 @@ private fun RollExplode(cardRollService: CardRollService) {
             Text(stringResource(R.string.dialog_bag_roll_explode_side))
         }
 
-        RollExplodeLayout(cardRollService, rollExplode)
+        Row(
+            modifier = Modifier
+                .padding(top = 8.dp)
+        ) {
+            RollExplodeLayout(cardRollService, rollExplode)
+        }
 
         Row(
             modifier = Modifier

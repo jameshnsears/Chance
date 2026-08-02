@@ -77,7 +77,7 @@ class CardFaceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
     fun sideCardSvgFileImportValid() = runTest {
         getDialogBagAndroidViewModel().cardSideService.sideImageSvgImport(
             requireNotNull(
-                javaClass.classLoader?.getResourceAsStream("data/svg/d2.svg")
+                javaClass.classLoader?.getResourceAsStream("data/svg/d2_d100.svg")
             ) {
                 fail()
             },
@@ -110,6 +110,13 @@ class CardFaceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
         side: Side
     ) {
+        val start = System.currentTimeMillis()
+        while (dialogDiceAndroidViewModel.cardSideService.stateFlowCardSide.value.sideImageRequest == null
+            && System.currentTimeMillis() - start < 2000
+        ) {
+            Thread.sleep(10)
+        }
+
         val stateFlowSide =
             dialogDiceAndroidViewModel.cardSideService.stateFlowCardSide.value
 
@@ -143,7 +150,7 @@ class CardFaceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         // Should not throw - validates synchronously
         dialogBagAndroidViewModel.cardSideService.sideImageSvgImport(
             requireNotNull(
-                javaClass.classLoader?.getResourceAsStream("data/svg/d2.svg")
+                javaClass.classLoader?.getResourceAsStream("data/svg/d2_d100.svg")
             ) {
                 fail()
             },

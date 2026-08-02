@@ -6,7 +6,7 @@ description: Analyze and create a testing strategy for native Android apps - ins
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
-  last-updated: '2026-06-02'
+  last-updated: '2026-06-25'
   keywords:
   - android
   - testing

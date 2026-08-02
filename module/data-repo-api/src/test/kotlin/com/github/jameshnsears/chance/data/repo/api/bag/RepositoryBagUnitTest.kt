@@ -4,8 +4,8 @@ import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelpe
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
-import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -19,7 +19,7 @@ class RepositoryBagUnitTest : UtilityAndroidUnitTestHelper() {
         val mockRepository = mockk<RepositoryBagInterface>()
         val diceBag: DiceBag = mutableListOf(Dice(title = "d6"))
 
-        coEvery { mockRepository.fetch() } returns flowOf(diceBag)
+        every { mockRepository.fetch() } returns flowOf(diceBag)
 
         val result = mockRepository.fetch().first()
         assertEquals(1, result.size)
@@ -32,7 +32,7 @@ class RepositoryBagUnitTest : UtilityAndroidUnitTestHelper() {
         val uuid = "dice-uuid"
         val dice = Dice(uuid = uuid, title = "d20")
 
-        coEvery { mockRepository.fetch(uuid) } returns flowOf(dice)
+        every { mockRepository.fetch(uuid) } returns flowOf(dice)
 
         val result = mockRepository.fetch(uuid).first()
         assertEquals(uuid, result.uuid)
@@ -52,8 +52,8 @@ class RepositoryBagUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun traceUuid() {
         val repository = object : RepositoryBagInterface {
-            override suspend fun fetch() = flowOf(mutableListOf<Dice>())
-            override suspend fun fetch(uuid: String) = flowOf(Dice())
+            override fun fetch() = flowOf(mutableListOf<Dice>())
+            override fun fetch(uuid: String) = flowOf(Dice())
             override suspend fun store(newDiceBag: DiceBag) {}
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}

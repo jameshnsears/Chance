@@ -4,6 +4,8 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
+import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
+import com.github.jameshnsears.chance.data.repo.impl.RepositoryProtocolBufferImageCache
 import com.github.jameshnsears.chance.data.repo.impl.bag.RepositoryBagProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
@@ -23,13 +25,13 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
         private var instance: RepositoryBagProtocolBufferTestDouble? = null
 
         fun getInstance(
-            diceBag: DiceBag,
+            diceBag: DiceBag = mutableListOf(),
         ): RepositoryBagProtocolBufferTestDouble {
             if (instance == null) {
                 instance = RepositoryBagProtocolBufferTestDouble()
             }
 
-            if (!instance!!.initialized) {
+            if (!instance!!.initialized && diceBag.isNotEmpty()) {
                 instance!!.updateStateFlow(diceBag)
                 instance!!.traceUuid(diceBag)
                 instance!!.initialized = true
@@ -48,16 +50,31 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
     override suspend fun jsonExport(): String {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("selected"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("explode"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("displayIndex"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("modifyScore"))
+        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("imageDrawableId"))
+        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("imageBase64"))
+        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("description"))
+
+        val bagProtocolBuffer = diceBagProtocolBufferStateFlow.value
+        val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)
+
+        val exportedBuilder = BagProtocolBuffer.newBuilder()
+        mapDiceBagIntoBagProtocolBufferBuilderForExport(
+            diceBag,
+            exportedBuilder
+        )
 
         return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
-            .print(diceBagProtocolBufferStateFlow.value)
+            .print(exportedBuilder.build())
     }
 
     override suspend fun jsonImport(json: String) {
         store(jsonImportProcess(json))
     }
 
-    override suspend fun fetch(): Flow<DiceBag> = diceBagProtocolBufferStateFlow
+    override fun fetch(): Flow<DiceBag> = diceBagProtocolBufferStateFlow
         .map { bagProtocolBuffer ->
             val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)
 
@@ -67,13 +84,17 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
             diceBag
         }
 
-    override suspend fun fetch(uuid: String): Flow<Dice> = diceBagProtocolBufferStateFlow
+    override fun fetch(uuid: String): Flow<Dice> = diceBagProtocolBufferStateFlow
         .map { bagProtocolBuffer ->
+            val cacheDice =
+                bagProtocolBuffer.diceList.find { it.epoch == RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
+            val imageCache = cacheDice?.sideList?.associate { it.uuid to it.imageBase64 } ?: emptyMap()
+
             var dice = Dice()
 
             bagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
                 if (uuid == diceProtocolBuffer.uuid) {
-                    dice = mapDiceProtocolBufferIntoDice(diceProtocolBuffer)
+                    dice = mapDiceProtocolBufferIntoDice(diceProtocolBuffer, imageCache)
                 }
             }
             dice

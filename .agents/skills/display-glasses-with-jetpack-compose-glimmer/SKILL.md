@@ -9,7 +9,7 @@ description: Provides guidelines for developing projected Android XR apps for di
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
-  last-updated: '2026-06-09'
+  last-updated: '2026-07-22'
   keywords:
   - Jetpack Compose Glimmer
   - audio glasses
@@ -25,7 +25,7 @@ metadata:
 | Term | Definition |
 |---|---|
 | **Intelligent Eyewear** | All-day wear, hands-free devices that provide access to information. Equipped with speakers, a camera, and a microphone. Some are audio-only (audio glasses), and some also have a display (display glasses). |
-| **Display Glasses** | Audio glasses with the addition of a small, private display for glanceable visuals that harmonize with audio output. |
+| **Display glasses** | Audio glasses with the addition of a private display in lenses for glanceable visuals that harmonize with audio output. |
 | **Jetpack Compose Glimmer** | A Compose UI toolkit for building augmented Android XR experiences, optimized for display glasses. It provides components, theming, and behaviors for transparent displays. |
 | **Projected Activity (Glasses Activity)** | An Android `Activity` that runs on a host device (phone) but its UI and interactions are projected to a connected, intelligent eyewear device (audio or display glasses). |
 | **Projected Device** | An XR device connected to an Android-powered device (host). Host projects the application content to the Projected device and let users interact with it. |
@@ -58,7 +58,7 @@ metadata:
 - **Setup Projected Activity:** First, you need to create a new projected activity for your app. If the project doesn't already have one, see [Create
   your first activity for intelligent eyewear](https://developer.android.com/develop/xr/jetpack-xr-sdk/ai-glasses/first-activity). Use [references/projectedcontext-source.md](references/projectedcontext-source.md) to launch the Glasses Projected activity on the Projected Device. Ensure that you specify `xr_projected` for the `android:requiredDisplayCategory` attribute in app manifest to tell the system that this activity will use a projected context to access hardware from a connected device.
 - **Mobile App Integration:** If the project contains an existing mobile app, you must create a new Glasses Activity dedicated to rendering Glimmer UI. For detailed configuration, heavily reference [Create your first activity
-  for intelligent eyewear](https://developer.android.com/develop/xr/jetpack-xr-sdk/ai-glasses/first-activity). If there isn't already a method to launch the Glasses Activity, add a button to the existing mobile app UI labeled "Launch on Glasses" that uses `ProjectedContext` to launch the Glasses Activity on the glasses. Always keep this button in a highly visible location, such as an overlay Floating Action Button (FAB) or the top navigation bar, to ensure users discover the projection capability. If the glasses aren't connected, disable the button. Don't launch the Glasses Activity on the phone, only on the display glasses. If it makes sense to automatically launch the Glasses Activity without an explicit launch button, then do so.
+  for intelligent eyewear](https://developer.android.com/develop/xr/jetpack-xr-sdk/ai-glasses/first-activity). If there isn't already a method to launch the Glasses Activity, add a button to the existing mobile app UI labeled "Launch on Glasses" that uses `ProjectedContext` to launch the Glasses Activity on the glasses. Place the 'Launch on Glasses' button as a screen-level FloatingActionButton, in the TopAppBar, or in the top navigation bar to ensure users discover the projection capability. If the glasses aren't connected, disable the button. Don't launch the Glasses Activity on the phone, only on the display glasses. If it makes sense to automatically launch the Glasses Activity without an explicit launch button, then do so.
 - **UI Library:** Identify if the project has the `androidx.xr.glimmer:glimmer` library, if not it must be added to the project. See [Declaring Jetpack Compose Glimmer Dependencies](https://developer.android.com/jetpack/androidx/releases/xr-glimmer#declaring_dependencies) to fetch the latest dependency version.
 - **Theming:** All Glimmer components must be wrapped within the `GlimmerTheme` composable to ensure correct token resolution.
 - **Mandatory black background:** Display glasses use additive displays. Any non-black color in the background blocks the real world. **You must always** set a pure black background (`Modifier.background(Color.Black)`) on the root container of your Projected Activity.
@@ -81,7 +81,7 @@ metadata:
 ## 3. Map input controls
 
 - Map app interactions, such as tap and swipe, to the available hardware controls on the glasses, such as the touchpad.
-- Inputs are more 1-dimensional; users typically make one control input at a time.
+- Inputs are one-dimensional; users must make one control input at a time.
 - Avoid nesting scrolling controls.
 - Jetpack Compose Glimmer components are designed to work with standard input methods, such as a tap or swipe on the glasses' touchpad.
 - Use System Back to dismiss temporary states or detailed views.
@@ -217,7 +217,7 @@ concise information like a short title, a name, or a status.
 
 ##### Guidelines and usage
 
-- **Spatial Spacing:** When using a standalone `TitleChip` above content, you must use `TitleChipDefaults.AssociatedContentSpacing` (8.dp) to maintain the visual hierarchy.
+- **Spatial Spacing** : When using a standalone `TitleChip` preceding content, you must use `TitleChipDefaults.AssociatedContentSpacing` (8.dp) to maintain the visual hierarchy.
 - **Interactivity:** Title chips are purely for informational purposes, they cannot be targeted or activated for navigation.
 - **Layout** Always center text in a title chip. Never let the title chip go to two lines, and truncate extra words. Keep the label to three words or less.
 
@@ -268,7 +268,7 @@ different types.
 - **Visual Consistency:** When building lists of similar items, always use a consistent background color (typically `GlimmerTheme.colors.surface`) and corner radius (standard 36.dp) for every item. Don't vary these unless you are visually grouping different *types* of content.
 - **Integrated Title Chips:** Glimmer Lists support integrated title chips. **IF** you need a section header within a list: **THEN** enable the integrated title chip rather than adding a standalone `TitleChip` to maintain spatial consistency.
 - **Vertical Arrangement:** ALWAYS use `verticalArrangement =
-  Arrangement.spacedBy(20.dp)` for `VerticalList` to ensure visual separation between items on the glasses display.
+  Arrangement.spacedBy(20.dp)` for `GlimmerLazyColumn` to ensure visual separation between items on the glasses display.
 - Be sure to use the default 20 dp spacing between list items unless otherwise specified.
 
 ##### Technical Documentation Links
@@ -277,7 +277,7 @@ If you are creating a Glimmer List component, read the:
 
 - **API Source Code (List):** Use [references/list-source.md](references/list-source.md).
 - **API Source Code (ListItem):** Use [references/listitem-source.md](references/listitem-source.md).
-- **API Source Code (ListState):** Use [references/liststate-source.md](references/liststate-source.md).
+- **API Source Code (GlimmerLazyListState):** Use [references/liststate-source.md](references/liststate-source.md).
 
 #### Stacks
 

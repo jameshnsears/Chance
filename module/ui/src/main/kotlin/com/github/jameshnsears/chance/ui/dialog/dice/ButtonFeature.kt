@@ -23,14 +23,14 @@ import com.github.jameshnsears.chance.ui.dialog.dice.card.roll.CardRollState
 
 @Composable
 fun TextButtonDelete(
-    diceTitleIsUnique: Boolean,
+    enabled: Boolean,
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
     showDialog: MutableState<Boolean>,
 ) {
     val showDialogConfirm = rememberSaveable { mutableStateOf(false) }
 
     TextButton(
-        enabled = diceTitleIsUnique,
+        enabled = enabled,
         modifier = Modifier
             .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
             .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE),
@@ -63,7 +63,7 @@ fun TextButtonDelete(
 
 @Composable
 fun TextButtonClone(
-    diceTitleIsUnique: Boolean,
+    enabled: Boolean,
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
     cardDiceState: CardDiceState,
     cardRollState: CardRollState,
@@ -74,7 +74,7 @@ fun TextButtonClone(
             .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
             .padding(start = 12.dp, end = 12.dp)
             .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CLONE),
-        enabled = diceTitleIsUnique,
+        enabled = enabled,
         onClick = {
             dialogDiceAndroidViewModel.clone(cardDiceState, cardRollState)
             showDialog.value = false
@@ -89,7 +89,7 @@ fun TextButtonClone(
 
 @Composable
 fun TextButtonSave(
-    diceTitleIsUnique: Boolean,
+    enabled: Boolean,
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
     cardDiceState: CardDiceState,
     cardRollState: CardRollState,
@@ -100,7 +100,7 @@ fun TextButtonSave(
         modifier = Modifier
             .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
             .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_SAVE),
-        enabled = diceTitleIsUnique,
+        enabled = enabled,
         onClick = {
             dialogDiceAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)
             showDialog.value = false

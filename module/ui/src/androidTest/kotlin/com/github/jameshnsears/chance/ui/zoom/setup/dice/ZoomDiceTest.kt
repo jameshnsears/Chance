@@ -80,7 +80,8 @@ class ZoomDiceTest : AndroidTestHelper() {
         val bagDataTestDouble = BagDataTestDouble()
         val repositoryFactory = RepositoryFactory(ApplicationProvider.getApplicationContext())
         val repositoryBag = repositoryFactory.repositoryBag
-        repositoryBag.store(bagDataTestDouble.allDice)
+        val allDice = bagDataTestDouble.allDice()
+        repositoryBag.store(allDice)
 
         val viewModel = ZoomDiceAndroidViewModel(
             ApplicationProvider.getApplicationContext(),
@@ -93,7 +94,7 @@ class ZoomDiceTest : AndroidTestHelper() {
             ZoomBag(viewModel)
         }
 
-        val firstDice = bagDataTestDouble.allDice[0]
+        val firstDice = allDice[0]
         val firstSide = firstDice.sides[0]
 
         composeRule.onNodeWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-${firstDice.title}-${firstSide.number}")

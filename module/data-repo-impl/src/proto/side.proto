@@ -12,4 +12,5 @@ message SideProtocolBuffer {
   string imageBase64 = 5;
   string description = 6;
   string descriptionColour = 7;
+  string imageBase64Uuid = 8;
 }

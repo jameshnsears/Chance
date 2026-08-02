@@ -6,16 +6,18 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
-import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.impl.settings.RepositorySettingsProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -26,8 +28,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         private var instance: RepositorySettingsProtocolBufferImpl? = null
 
         fun getInstance(
-            context: Context,
-            settings: SettingsDataInterface = SettingsDataImpl()
+            context: Context
         ): RepositorySettingsProtocolBufferImpl {
             if (instance == null) {
                 instance = RepositorySettingsProtocolBufferImpl(context)
@@ -36,6 +37,23 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
             return instance!!
         }
     }
+
+    private val repositoryScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    private val settingsFlow = context.settingsDataStore.data
+        .map { settingsProtocolBuffer ->
+            val startTime = System.currentTimeMillis()
+            val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
+
+            Timber.d("repositorySettings.FETCH ============================================")
+            Timber.d("repositorySettings.resizeZoom=${settings.resizeZoom}; mapping_time=${System.currentTimeMillis() - startTime}ms")
+
+            settings
+        }.shareIn(
+            scope = repositoryScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            replay = 1
+        )
 
     override suspend fun jsonExport(): String = withContext(Dispatchers.IO) {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
@@ -62,15 +80,7 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         store(jsonImportProcess(json))
     }
 
-    override suspend fun fetch(): Flow<SettingsDataInterface> = context.settingsDataStore.data
-        .map { settingsProtocolBuffer ->
-            val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
-
-            Timber.d("repositorySettings.FETCH ============================================")
-            Timber.d("repositorySettings.resizeZoom=${settings.resizeZoom}")
-
-            settings
-        }.flowOn(Dispatchers.IO)
+    override fun fetch(): Flow<SettingsDataInterface> = settingsFlow
 
     override suspend fun store(settingsData: SettingsDataInterface) {
         withContext(Dispatchers.IO) {

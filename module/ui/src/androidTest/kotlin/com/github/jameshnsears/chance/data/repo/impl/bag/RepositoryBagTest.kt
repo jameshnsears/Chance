@@ -20,7 +20,7 @@ class RepositoryBagTest : UtilityLoggingHelper() {
 
         val bagDataTestDouble = BagDataTestDouble()
 
-        val originalDiceBag = bagDataTestDouble.allDice
+        val originalDiceBag = bagDataTestDouble.allDice()
 
         repositoryBagImpl.store(originalDiceBag)
 
@@ -70,7 +70,7 @@ class RepositoryBagTest : UtilityLoggingHelper() {
 
         val bagDataTestDouble = BagDataTestDouble()
 
-        val originalDieBag = bagDataTestDouble.allDice
+        val originalDieBag = bagDataTestDouble.allDice()
 
         repositoryBagImpl.store(originalDieBag)
 

@@ -8,7 +8,7 @@ description: Provides a complete workflow for implementing verified email retrie
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
-  last-updated: '2026-06-09'
+  last-updated: '2026-07-02'
   keywords:
   - implementation
   - Android
@@ -214,14 +214,8 @@ The request contains the following key information:
   - `hd` (hosted domain): In the response, this is empty.
 
   > [!NOTE]
-  > **Note:** If `email_verified` is `true` and `hd` is empty in the response, it implies that the account is an authorized Google Account. Currently, Google does not issue [verifiable credentials](references/android/identity/digital-credentials/index.md) for Google Workspace Accounts. However, the `hd` field is present in verifiable credentials issued for non-workspace accounts. You are encouraged to implement handling this field to future-proof your app.
-
-- If the email is non-@gmail.com, Google verified this email when the Google
-  Account was created, but there is no freshness claim. Therefore, for
-  non-Google emails, you should consider an additional challenge, such as an
-  OTP, to verify the user. To understand the schema of the credential and the
-  specific rules for validating fields like `email_verified`, refer to the
-  [Google Identity guides](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token).
+  > **Note:** If `email_verified` is `true` and `hd` is empty in the response, it implies that the account is an authorized Google Account. Google does not issue [verifiable credentials](references/android/identity/digital-credentials/index.md) for Google Workspace Accounts. However, the `hd` field is present in verifiable credentials issued for non-workspace accounts. You are encouraged to implement handling this field to future-proof your app. If the email is non-@gmail.com, Google verified this email when the Google Account was created, but there is no freshness claim. Therefore, for non-Google emails, you should consider an additional challenge, such as an OTP, to verify the user. To understand the schema of the credential and the specific rules for validating fields like `email_verified`, refer to the [Google
+  > Identity guides](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token).
 
 - **nonce**: A unique, cryptographically secure random value is generated for
   each request. This is critical for security, as it prevents replay attacks.
@@ -232,6 +226,9 @@ The request contains the following key information:
 
 Next, wrap the `openId4vpRequest` JSON in a `GetDigitalCredentialOption`, create
 a `GetCredentialRequest`, and call `getCredential()`.
+
+> [!NOTE]
+> **Note:** The `hd` and `email_verified` fields are hidden from users in Credential Manager's built-in UI. You cannot make a request with only these hidden fields- in case of such requests, the response is the [`GetCredentialCancellationException`](https://developer.android.com/reference/kotlin/androidx/credentials/exceptions/GetCredentialCancellationException).
 
 ## Present the request to the user
 
@@ -335,8 +332,8 @@ additional metadata as well along with verified email:
     }
      */
 
-> [!NOTE]
-> **Note:** We highly recommend that after receiving the verified email, you trigger Credential Manager's [passkey creation](https://developer.android.com/identity/credential-manager/passkeys/create-passkeys).
+> [!IMPORTANT]
+> **Important:** We highly recommend that after receiving the verified email, you trigger Credential Manager's [passkey creation](https://developer.android.com/identity/credential-manager/passkeys/create-passkeys).
 
 ## Server-side validation for account creation
 
@@ -400,10 +397,10 @@ standard passkey registration.
 
 ## WebView support
 
-For the flow to work on a WebView, developers should implement a [JavaScript
-bridge](references/android/identity/sign-in/credential-manager-webview.md) (JS Bridge) to facilitate the handoff. This bridge allows the
-Webview to signal the native app, which can then perform the actual call
-to the Credential Manager API.
+For the flow to work on a [`WebView`](https://developer.android.com/reference/android/webkit/WebView), developers should implement a
+[JavaScript bridge](references/android/identity/sign-in/credential-manager-webview.md) (JS Bridge) to facilitate the handoff. This bridge
+allows the `WebView` object to signal the native app, which can then perform the
+actual call to the Credential Manager API.
 
 ## See also
 

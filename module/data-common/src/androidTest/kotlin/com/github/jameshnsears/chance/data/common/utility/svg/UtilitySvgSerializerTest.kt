@@ -28,7 +28,7 @@ class UtilitySvgSerializerTest : AndroidTestHelper() {
     fun encodeDecodeDisplay() = runTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
 
-        val assetFilename = "data/svg/dN/d2.svg"
+        val assetFilename = "data/svg/dN/d2_d100.svg"
         val inputStream = context.assets.open(assetFilename)
 
         val encoded = UtilitySvgSerializer.encodeIntoBase64String(
@@ -67,7 +67,7 @@ class UtilitySvgSerializerTest : AndroidTestHelper() {
     fun encodeAsync() = runTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
 
-        val assetFilename = "data/svg/dN/d2.svg"
+        val assetFilename = "data/svg/dN/d2_d100.svg"
         val inputStream = context.assets.open(assetFilename)
 
         val svgString = inputStream.bufferedReader().use { it.readText() }
@@ -104,7 +104,7 @@ class UtilitySvgSerializerTest : AndroidTestHelper() {
     fun imageRequestAsync() = runTest {
         val context = ApplicationProvider.getApplicationContext<Application>()
 
-        val assetFilename = "data/svg/dN/d2.svg"
+        val assetFilename = "data/svg/dN/d2_d100.svg"
         val inputStream = context.assets.open(assetFilename)
 
         val svgString = inputStream.bufferedReader().use { it.readText() }

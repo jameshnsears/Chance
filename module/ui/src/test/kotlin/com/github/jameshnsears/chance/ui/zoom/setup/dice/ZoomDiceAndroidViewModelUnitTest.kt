@@ -7,8 +7,10 @@ import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 
@@ -20,16 +22,14 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
-    fun refreshAfterImport() = runTest {
-        val zoomBagAndroidViewModel = zoomBagAndroidViewModel()
-        zoomBagAndroidViewModel.refreshAfterImport()
-    }
-
-    @Test
     fun resizeView() = runTest {
         val zoomBagAndroidViewModel = zoomBagAndroidViewModel()
+        val repositorySettings = RepositoryFactory().repositorySettings
+        val settings = repositorySettings.fetch().first()
 
-        zoomBagAndroidViewModel.setResizeView(1f)
+        settings.resizeZoom = 1f
+        repositorySettings.store(settings)
+
         assertEquals(65.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
     }
 
@@ -41,11 +41,22 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         )
     }
 
+    @Test
+    fun sideSvgImageRequestAsync() = runTest {
+        val zoomBagAndroidViewModel = zoomBagAndroidViewModel()
+        val side = BagDataTestDouble().allDice()[0].sides[0]
+        side.imageBase64 = "PHN2ZyB2aWV3Qm94PSIwIDAgMTAgMTAiPjxjaXJjbGUgY3g9IjUiIGN5PSI1IiByPSI0Ii8+PC9zdmc+"
+
+        val imageRequest = zoomBagAndroidViewModel.sideSvgImageRequestAsync(side)
+        assertNotNull(imageRequest)
+        assertEquals(imageRequest, zoomBagAndroidViewModel.sideSvgImageRequestAsync(side))
+    }
+
     private suspend fun zoomBagAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): ZoomDiceAndroidViewModel {
         val repositoryBag = RepositoryFactory().repositoryBag
-        repositoryBag.store(bagDataTestDouble.allDice)
+        repositoryBag.store(bagDataTestDouble.allDice())
 
         val repositoryRoll = RepositoryFactory().repositoryRoll
         repositoryRoll.store(

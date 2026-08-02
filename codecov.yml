@@ -1,6 +1,7 @@
 ignore:
   - "**/*Preview.kt"
   - "**/*TestTag.kt"
+  - "**/*TestDouble.kt"
   - "**/test/**"
   - "**/androidTest/**"
   - "**/testDebug/**"

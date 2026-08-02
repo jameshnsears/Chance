@@ -1,4 +1,4 @@
-This file defines the request structures for publishing various data models in
+Defines the request structures for publishing various data models in
 the Engage SDK.
 
     {
@@ -15,7 +15,8 @@ the Engage SDK.
             "type": "@NonNull AccountProfile",
             "requirement": "Optional",
             "setter": "setAccountProfile(@NonNull AccountProfile)",
-            "getter": "getAccountProfile()"
+            "getter": "getAccountProfile()",
+            "description": "Required for personalization and cross-device syncing of recommendations."
           },
           "syncAcrossDevices": {
             "type": "Boolean",
@@ -225,6 +226,18 @@ the Engage SDK.
             "requirement": "Required",
             "setter": "setReservationCluster(ReservationCluster)",
             "getter": "getReservationCluster()"
+          }
+        }
+      },
+      "ServiceAvailabilityRequest": {
+        "package": "com.google.android.engage.service.ServiceAvailabilityRequest",
+        "fields": {
+          "intendedClusterTypes": {
+            "type": "List<Integer>",
+            "requirement": "Required",
+            "adder": "addIntendedClusterType(@ClusterType int)",
+            "adderAll": "addAllIntendedClusterTypes(List<Integer>)",
+            "getter": "getIntendedClusterTypes()"
           }
         }
       }

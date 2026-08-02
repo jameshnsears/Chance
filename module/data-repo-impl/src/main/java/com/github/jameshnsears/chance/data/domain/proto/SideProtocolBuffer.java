@@ -19,6 +19,7 @@ public final class SideProtocolBuffer extends
     public static final int IMAGEBASE64_FIELD_NUMBER = 5;
     public static final int DESCRIPTION_FIELD_NUMBER = 6;
     public static final int DESCRIPTIONCOLOUR_FIELD_NUMBER = 7;
+    public static final int IMAGEBASE64UUID_FIELD_NUMBER = 8;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer DEFAULT_INSTANCE;
@@ -70,6 +71,8 @@ public final class SideProtocolBuffer extends
     private volatile java.lang.Object description_ = "";
     @SuppressWarnings("serial")
     private volatile java.lang.Object descriptionColour_ = "";
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object imageBase64Uuid_ = "";
     private byte memoizedIsInitialized = -1;
 
     // Use SideProtocolBuffer.newBuilder() to construct.
@@ -83,9 +86,10 @@ public final class SideProtocolBuffer extends
         imageBase64_ = "";
         description_ = "";
         descriptionColour_ = "";
+        imageBase64Uuid_ = "";
     }
 
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
     }
@@ -410,8 +414,47 @@ public final class SideProtocolBuffer extends
         }
     }
 
+    /**
+     * <code>string imageBase64Uuid = 8;</code>
+     *
+     * @return The imageBase64Uuid.
+     */
     @java.lang.Override
-    public final boolean isInitialized() {
+    public java.lang.String getImageBase64Uuid() {
+        java.lang.Object ref = imageBase64Uuid_;
+        if (ref instanceof java.lang.String) {
+            return (java.lang.String) ref;
+        } else {
+            com.google.protobuf.ByteString bs =
+                (com.google.protobuf.ByteString) ref;
+            java.lang.String s = bs.toStringUtf8();
+            imageBase64Uuid_ = s;
+            return s;
+        }
+    }
+
+    /**
+     * <code>string imageBase64Uuid = 8;</code>
+     *
+     * @return The bytes for imageBase64Uuid.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+    getImageBase64UuidBytes() {
+        java.lang.Object ref = imageBase64Uuid_;
+        if (ref instanceof java.lang.String) {
+            com.google.protobuf.ByteString b =
+                com.google.protobuf.ByteString.copyFromUtf8(
+                    (java.lang.String) ref);
+            imageBase64Uuid_ = b;
+            return b;
+        } else {
+            return (com.google.protobuf.ByteString) ref;
+        }
+    }
+
+    @java.lang.Override
+    public boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -443,6 +486,9 @@ public final class SideProtocolBuffer extends
         }
         if (!com.google.protobuf.GeneratedMessage.isStringEmpty(descriptionColour_)) {
             com.google.protobuf.GeneratedMessage.writeString(output, 7, descriptionColour_);
+        }
+        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(imageBase64Uuid_)) {
+            com.google.protobuf.GeneratedMessage.writeString(output, 8, imageBase64Uuid_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -476,6 +522,9 @@ public final class SideProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessage.isStringEmpty(descriptionColour_)) {
             size += com.google.protobuf.GeneratedMessage.computeStringSize(7, descriptionColour_);
         }
+        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(imageBase64Uuid_)) {
+            size += com.google.protobuf.GeneratedMessage.computeStringSize(8, imageBase64Uuid_);
+        }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
         return size;
@@ -486,10 +535,9 @@ public final class SideProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)) {
+        if (!(obj instanceof SideProtocolBuffer other)) {
             return super.equals(obj);
         }
-        com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer) obj;
 
         if (!getUuid()
             .equals(other.getUuid())) return false;
@@ -505,8 +553,9 @@ public final class SideProtocolBuffer extends
             .equals(other.getDescription())) return false;
         if (!getDescriptionColour()
             .equals(other.getDescriptionColour())) return false;
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
+        if (!getImageBase64Uuid()
+            .equals(other.getImageBase64Uuid())) return false;
+        return getUnknownFields().equals(other.getUnknownFields());
     }
 
     @java.lang.Override
@@ -530,6 +579,8 @@ public final class SideProtocolBuffer extends
         hash = (53 * hash) + getDescription().hashCode();
         hash = (37 * hash) + DESCRIPTIONCOLOUR_FIELD_NUMBER;
         hash = (53 * hash) + getDescriptionColour().hashCode();
+        hash = (37 * hash) + IMAGEBASE64UUID_FIELD_NUMBER;
+        hash = (53 * hash) + getImageBase64Uuid().hashCode();
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -578,6 +629,7 @@ public final class SideProtocolBuffer extends
         private java.lang.Object imageBase64_ = "";
         private java.lang.Object description_ = "";
         private java.lang.Object descriptionColour_ = "";
+        private java.lang.Object imageBase64Uuid_ = "";
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer.newBuilder()
         private Builder() {
@@ -590,7 +642,7 @@ public final class SideProtocolBuffer extends
 
         }
 
-        public static final com.google.protobuf.Descriptors.Descriptor
+        public static com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
         }
@@ -614,6 +666,7 @@ public final class SideProtocolBuffer extends
             imageBase64_ = "";
             description_ = "";
             descriptionColour_ = "";
+            imageBase64Uuid_ = "";
             return this;
         }
 
@@ -670,6 +723,9 @@ public final class SideProtocolBuffer extends
             if (((from_bitField0_ & 0x00000040) != 0)) {
                 result.descriptionColour_ = descriptionColour_;
             }
+            if (((from_bitField0_ & 0x00000080) != 0)) {
+                result.imageBase64Uuid_ = imageBase64Uuid_;
+            }
         }
 
         @java.lang.Override
@@ -715,13 +771,18 @@ public final class SideProtocolBuffer extends
                 bitField0_ |= 0x00000040;
                 onChanged();
             }
+            if (!other.getImageBase64Uuid().isEmpty()) {
+                imageBase64Uuid_ = other.imageBase64Uuid_;
+                bitField0_ |= 0x00000080;
+                onChanged();
+            }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
             return this;
         }
 
         @java.lang.Override
-        public final boolean isInitialized() {
+        public boolean isInitialized() {
             return true;
         }
 
@@ -776,6 +837,11 @@ public final class SideProtocolBuffer extends
                             bitField0_ |= 0x00000040;
                             break;
                         } // case 58
+                        case 66: {
+                            imageBase64Uuid_ = input.readStringRequireUtf8();
+                            bitField0_ |= 0x00000080;
+                            break;
+                        } // case 66
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -1280,6 +1346,90 @@ public final class SideProtocolBuffer extends
         public Builder clearDescriptionColour() {
             descriptionColour_ = getDefaultInstance().getDescriptionColour();
             bitField0_ = (bitField0_ & ~0x00000040);
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string imageBase64Uuid = 8;</code>
+         *
+         * @return The imageBase64Uuid.
+         */
+        public java.lang.String getImageBase64Uuid() {
+            java.lang.Object ref = imageBase64Uuid_;
+            if (!(ref instanceof java.lang.String)) {
+                com.google.protobuf.ByteString bs =
+                    (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                imageBase64Uuid_ = s;
+                return s;
+            } else {
+                return (java.lang.String) ref;
+            }
+        }
+
+        /**
+         * <code>string imageBase64Uuid = 8;</code>
+         *
+         * @param value The imageBase64Uuid to set.
+         * @return This builder for chaining.
+         */
+        public Builder setImageBase64Uuid(
+            java.lang.String value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            imageBase64Uuid_ = value;
+            bitField0_ |= 0x00000080;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string imageBase64Uuid = 8;</code>
+         *
+         * @return The bytes for imageBase64Uuid.
+         */
+        public com.google.protobuf.ByteString
+        getImageBase64UuidBytes() {
+            java.lang.Object ref = imageBase64Uuid_;
+            if (ref instanceof String) {
+                com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                        (java.lang.String) ref);
+                imageBase64Uuid_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        /**
+         * <code>string imageBase64Uuid = 8;</code>
+         *
+         * @param value The bytes for imageBase64Uuid to set.
+         * @return This builder for chaining.
+         */
+        public Builder setImageBase64UuidBytes(
+            com.google.protobuf.ByteString value) {
+            if (value == null) {
+                throw new NullPointerException();
+            }
+            checkByteStringIsUtf8(value);
+            imageBase64Uuid_ = value;
+            bitField0_ |= 0x00000080;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>string imageBase64Uuid = 8;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearImageBase64Uuid() {
+            imageBase64Uuid_ = getDefaultInstance().getImageBase64Uuid();
+            bitField0_ = (bitField0_ & ~0x00000080);
             onChanged();
             return this;
         }

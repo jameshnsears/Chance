@@ -21,7 +21,7 @@ can't call `setContent` on a rule created with `createAndroidComposeRule()` if
 the activity already calls it.
 
 A common pattern to achieve this is to create an `AndroidComposeTestRule` using
-an empty activity such as [`ComponentActivity`](https://developer.android.com/reference/androidx/activity/ComponentActivity)).
+an empty activity such as [`ComponentActivity`](https://developer.android.com/reference/androidx/activity/ComponentActivity).
 
     class MyComposeTest {
 

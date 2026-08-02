@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
 interface RepositoryBagInterface : RepositoryImportExportInterface {
-    suspend fun fetch(): Flow<DiceBag>
-    suspend fun fetch(uuid: String): Flow<Dice>
+    fun fetch(): Flow<DiceBag>
+    fun fetch(uuid: String): Flow<Dice>
     suspend fun store(newDiceBag: DiceBag)
 
     fun traceUuid(diceBag: DiceBag) {

@@ -34,6 +34,7 @@ class RepositoryGroupProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
 
         mockkStatic("com.github.jameshnsears.chance.data.repo.impl.group.impl.RepositoryGroupProtocolBufferImplKt")
         every { context.groupHistoryDataStore } returns dataStore
+        coEvery { dataStore.data } returns flowOf(GroupHistoryProtocolBuffer.getDefaultInstance())
     }
 
     @After
@@ -53,7 +54,7 @@ class RepositoryGroupProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
 
         coEvery { dataStore.data } returns flowOf(groupHistoryProtocolBuffer)
 
-        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context, emptyList())
+        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context)
         val result = repository.fetch().first()
 
         assertEquals(1, result.size)
@@ -64,7 +65,7 @@ class RepositoryGroupProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
     fun store() = runTest {
         coEvery { dataStore.updateData(any()) } returns GroupHistoryProtocolBuffer.getDefaultInstance()
 
-        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context, emptyList())
+        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context)
         val groupHistory = listOf(Group(name = "Group 2"))
         repository.store(groupHistory)
 
@@ -76,7 +77,7 @@ class RepositoryGroupProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
         coEvery { dataStore.updateData(any()) } returns GroupHistoryProtocolBuffer.getDefaultInstance()
         coEvery { dataStore.data } returns flowOf(GroupHistoryProtocolBuffer.getDefaultInstance())
 
-        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context, emptyList())
+        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context)
         repository.clear()
 
         coVerify { dataStore.updateData(any()) }
@@ -87,6 +88,8 @@ class RepositoryGroupProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
         val groupProtocolBuffer = GroupProtocolBuffer.newBuilder()
             .setUuid("uuid")
             .setName("Group 3")
+            .setDisplayIndex(0)
+            .setSelected(false)
             .build()
         val groupHistoryProtocolBuffer = GroupHistoryProtocolBuffer.newBuilder()
             .addGroup(groupProtocolBuffer)
@@ -94,17 +97,19 @@ class RepositoryGroupProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
 
         coEvery { dataStore.data } returns flowOf(groupHistoryProtocolBuffer)
 
-        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context, emptyList())
+        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context)
         val json = repository.jsonExport()
 
         assertTrue(json.contains("\"name\": \"Group 3\""))
+        assertTrue(json.contains("\"displayIndex\": 0"))
+        assertTrue(json.contains("\"selected\": false"))
     }
 
     @Test
     fun jsonImport() = runTest {
         coEvery { dataStore.updateData(any()) } returns GroupHistoryProtocolBuffer.getDefaultInstance()
 
-        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context, emptyList())
+        val repository = RepositoryGroupProtocolBufferImpl.getInstance(context)
         val json = """
             {
               "group": [

@@ -18,28 +18,31 @@ import com.github.jameshnsears.chance.data.domain.R
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
-import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceCloseEvent
 import com.github.jameshnsears.chance.ui.tab.DisplayIndexEvent
-import com.github.jameshnsears.chance.ui.tab.SetupImportEvent
-import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceResetEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.withContext
+import java.util.concurrent.ConcurrentHashMap
 
 @Stable
 data class ZoomState(
     val resizeViewDp: Dp,
     val diceBag: DiceBag,
     val rollHistory: RollHistory,
+    val entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>> = emptyList(),
     val firstVisibleItemIndex: Int = 0,
     val firstVisibleItemScrollOffset: Int = 0,
     val horizontalScrollPositions: Map<String, Pair<Int, Int>> = emptyMap(),
@@ -53,103 +56,104 @@ abstract class ZoomAndroidViewModel(
 ) : AndroidViewModel(application) {
     val tapOffset = mutableStateOf(Offset.Zero)
 
-    protected val _stateFlowZoom = MutableStateFlow(
+    private val _scrollState = MutableStateFlow(
+        Triple(0, 0, emptyMap<String, Pair<Int, Int>>())
+    )
+
+    val stateFlowZoom: StateFlow<ZoomState> = combine(
+        repositorySettings.fetch().distinctUntilChanged(),
+        repositoryBag.fetch().distinctUntilChanged(),
+        repositoryRoll.fetch().map { rollHistory ->
+            val sortedHistory = LinkedHashMap<Long, List<Roll>>()
+            rollHistory.keys.sortedDescending().forEach { key ->
+                sortedHistory[key] = rollHistory[key]!!
+            }
+            sortedHistory
+        }.distinctUntilChanged(),
+        _scrollState
+    ) { settings, diceBag, rollHistory, scrollData ->
         ZoomState(
+            resizeViewDp = resizeViewAsDp(settings.resizeZoom),
+            diceBag = diceBag.sortedBy { it.displayIndex }.toMutableList(),
+            rollHistory = rollHistory,
+            entriesList = rollHistory.entries
+                .mapIndexed { index, entry -> index to entry }
+                .filter { (_, entry) ->
+                    isContentAvailableToDisplay(entry.value, settings)
+                },
+            firstVisibleItemIndex = scrollData.first,
+            firstVisibleItemScrollOffset = scrollData.second,
+            horizontalScrollPositions = scrollData.third
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = ZoomState(
             resizeViewDp = 0.dp,
             diceBag = mutableListOf(),
             rollHistory = LinkedHashMap()
         )
     )
-    val stateFlowZoom: StateFlow<ZoomState> = _stateFlowZoom
 
-    private val _diceBagList = MutableStateFlow<List<Dice>>(emptyList())
-    val diceBagList: StateFlow<List<Dice>> = _diceBagList
+    private fun isContentAvailableToDisplay(
+        rolls: List<Roll>,
+        settings: com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
+    ): Boolean {
+        var svgExists = false
+        var descriptionExists = false
+
+        rolls.forEach {
+            if (it.side.imageBase64.isNotEmpty() || it.side.imageDrawableId != 0)
+                svgExists = true
+
+            if (it.side.description.isNotEmpty())
+                descriptionExists = true
+        }
+
+        return (settings.rollIndexTime
+            ||
+            settings.rollScore
+            ||
+            settings.rollScoreTTS
+            ||
+            settings.diceTitle
+            ||
+            settings.rollBehaviour
+            ||
+            settings.sideNumber
+            ||
+            (settings.sideDescription && descriptionExists)
+            ||
+            (settings.sideSVG && svgExists)
+            ||
+            settings.groupTitle
+            )
+    }
+
+    val diceBagList: StateFlow<List<Dice>> = stateFlowZoom
+        .map { it.diceBag }
+        .distinctUntilChanged()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    fun getScrollPositionFlow(diceUuid: String) = stateFlowZoom
+        .map { it.horizontalScrollPositions[diceUuid] ?: (0 to 0) }
+        .distinctUntilChanged()
 
     private var diceUuidCache: MutableMap<String, Dice> = mutableMapOf()
 
     init {
         viewModelScope.launch {
-            DialogDiceCloseEvent.sharedFlowDialogBagCloseEvent.collect {
-                Timber.d("collect.DialogDiceCloseEvent")
-                updateStateFlowZoom()
-            }
-        }
-
-        viewModelScope.launch {
-            merge(
-                SetupImportEvent.sharedFlowTabBagImportEvent.map { },
-                DiceResetEvent.sharedFlowTabBagResetEvent.map { },
-                DisplayIndexEvent.sharedFlowDisplayIndexEvent.map { }
-            ).collect {
-                Timber.d("collect.SetupImportEvent|DiceResetEvent|DisplayIndexEvent")
-                updateResize()
-                updateStateFlowZoom()
-            }
-        }
-    }
-
-    protected suspend fun updateResize() {
-        val settings = repositorySettings.fetch().firstOrNull()
-        if (settings != null) {
-            _stateFlowZoom.update {
-                it.copy(
-                    resizeViewDp = resizeViewAsDp(settings.resizeZoom),
-                )
-            }
-        }
-    }
-
-    open suspend fun updateStateFlowZoom() {}
-
-    protected suspend fun updateDiceBagList(diceBagToUse: DiceBag? = null) {
-        diceUuidCache.clear()
-
-        var diceBag = diceBagToUse ?: _stateFlowZoom.value.diceBag
-        if (diceBag.isEmpty()) {
-            val fetchedDiceBag = repositoryBag.fetch().firstOrNull()
-            if (fetchedDiceBag != null) {
-                if (diceBagToUse == null) {
-                    _stateFlowZoom.update {
-                        it.copy(
-                            diceBag = fetchedDiceBag.sortedBy { it.displayIndex }.toMutableList()
-                        )
-                    }
+            diceBagList.collect { list ->
+                diceUuidCache.clear()
+                list.forEach { dice ->
+                    diceUuidCache[dice.uuid] = dice
                 }
-                diceBag = fetchedDiceBag.sortedBy { it.displayIndex }.toMutableList()
-            }
-        } else {
-            diceBag = diceBag.sortedBy { it.displayIndex }.toMutableList()
-        }
-
-        // Build list more efficiently - avoid repeated list creation via +=
-        val newDiceList = mutableListOf<Dice>()
-        for (dice in diceBag) {
-            newDiceList.add(dice)
-            diceUuidCache[dice.uuid] = dice
-        }
-        _diceBagList.value = newDiceList
-    }
-
-    fun refreshAfterImport() {
-        viewModelScope.launch {
-            val diceBag = repositoryBag.fetch().firstOrNull()
-            val rollHistory = repositoryRoll.fetch().firstOrNull()
-
-            updateDiceBagList(diceBag)
-
-            _stateFlowZoom.update {
-                it.copy(
-                    diceBag = diceBag ?: mutableListOf(),
-                    rollHistory = rollHistory ?: LinkedHashMap()
-                )
             }
         }
-    }
-
-    fun setResizeView(resizeZoom: Float) {
-        _stateFlowZoom.value = _stateFlowZoom.value.copy(
-            resizeViewDp = resizeViewAsDp(resizeZoom)
-        )
     }
 
     private fun resizeViewAsDp(resizeZoom: Float): Dp {
@@ -158,19 +162,14 @@ abstract class ZoomAndroidViewModel(
     }
 
     fun saveScrollPosition(index: Int, offset: Int) {
-        _stateFlowZoom.update {
-            it.copy(
-                firstVisibleItemIndex = index,
-                firstVisibleItemScrollOffset = offset
-            )
+        _scrollState.update {
+            it.copy(first = index, second = offset)
         }
     }
 
     fun saveHorizontalScrollPosition(diceUuid: String, index: Int, offset: Int) {
-        _stateFlowZoom.update {
-            it.copy(
-                horizontalScrollPositions = it.horizontalScrollPositions + (diceUuid to (index to offset))
-            )
+        _scrollState.update {
+            it.copy(third = it.third + (diceUuid to (index to offset)))
         }
     }
 
@@ -184,11 +183,13 @@ abstract class ZoomAndroidViewModel(
 
     fun drawableForDiceSides(dice: Dice): Int {
         return when (dice.sides.size) {
-            2 -> R.drawable.d2
+            4 -> R.drawable.d4_d8_d20
             6 -> R.drawable.d6
+            8 -> R.drawable.d4_d8_d20
             10 -> R.drawable.d10
             12 -> R.drawable.d12
-            else -> R.drawable.d4_d8_d20
+            20 -> R.drawable.d4_d8_d20
+            else -> R.drawable.d2_d100
         }
     }
 
@@ -210,23 +211,23 @@ abstract class ZoomAndroidViewModel(
         return dice.sides.any { it.description.isNotBlank() }
     }
 
-    private val imageRequestCache = mutableMapOf<String, ImageRequest>()
+    private val imageRequestCache = ConcurrentHashMap<String, ImageRequest>()
 
-    fun sideSvgImageRequest(side: Side): ImageRequest {
+    suspend fun sideSvgImageRequestAsync(side: Side): ImageRequest = withContext(Dispatchers.Default) {
         val cacheKey = side.imageBase64
         // Return cached result if available (fast path - no lock)
-        imageRequestCache[cacheKey]?.let { return it }
+        imageRequestCache[cacheKey]?.let { return@withContext it }
 
-        // For synchronous API, create result and cache it
-        val result = UtilitySvgSerializer.imageRequestFromBase64String(getApplication(), side)
+        // Use the async version from UtilitySvgSerializer
+        val result = UtilitySvgSerializer.imageRequestFromBase64StringAsync(getApplication(), side)
         imageRequestCache[cacheKey] = result
-        return result
+        result
     }
 
     fun move(fromIndex: Int, toIndex: Int, commit: Boolean = true) {
         if (fromIndex == toIndex) return
 
-        val currentList = _diceBagList.value.toMutableList()
+        val currentList = diceBagList.value.toMutableList()
         if (fromIndex in currentList.indices && toIndex in currentList.indices) {
             val item = currentList.removeAt(fromIndex)
             currentList.add(toIndex, item)
@@ -235,9 +236,6 @@ abstract class ZoomAndroidViewModel(
             currentList.forEachIndexed { index, dice ->
                 dice.displayIndex = index
             }
-
-            _diceBagList.value = currentList
-            _stateFlowZoom.update { it.copy(diceBag = currentList) }
 
             if (commit) {
                 viewModelScope.launch {
@@ -249,7 +247,7 @@ abstract class ZoomAndroidViewModel(
     }
 
     fun moveUp(dice: Dice) {
-        val currentList = _diceBagList.value
+        val currentList = diceBagList.value
         val index = currentList.indexOfFirst { it.uuid == dice.uuid }
         if (index > 0) {
             move(index, index - 1)
@@ -257,7 +255,7 @@ abstract class ZoomAndroidViewModel(
     }
 
     fun moveDown(dice: Dice) {
-        val currentList = _diceBagList.value
+        val currentList = diceBagList.value
         val index = currentList.indexOfFirst { it.uuid == dice.uuid }
         if (index != -1 && index < currentList.size - 1) {
             move(index, index + 1)

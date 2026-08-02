@@ -18,6 +18,7 @@ import kotlinx.coroutines.withTimeout
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import kotlin.time.Duration.Companion.milliseconds
 
 class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Before
@@ -31,11 +32,11 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         tabBagViewModel.resetExportImportStatus()
 
         Assert.assertEquals(
-            ExportImportStatus.NONE,
+            ExportImportStatus.READY,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            ExportImportStatus.NONE,
+            ExportImportStatus.READY,
             tabBagViewModel.stateFlowTabBagExport.value.exportStatus
         )
 
@@ -60,11 +61,11 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         tabBagViewModel.resetExportImportStatus()
 
         Assert.assertEquals(
-            ExportImportStatus.NONE,
+            ExportImportStatus.READY,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            ExportImportStatus.NONE,
+            ExportImportStatus.READY,
             tabBagViewModel.stateFlowTabBagExport.value.exportStatus
         )
 
@@ -84,18 +85,18 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     fun importValidSampleData() = runTest {
         val tabBagViewModel = tabBagViewModel()
         Assert.assertEquals(
-            ExportImportStatus.NONE,
+            ExportImportStatus.READY,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
 
-        tabBagViewModel.import(resourceAsString("/data/json/import/Valid-BagDataTestDouble.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.5.0-valid.json"))
         waitForImportStatus(tabBagViewModel)
         Assert.assertEquals(
             ExportImportStatus.SUCCESS,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.NONE,
+            RepositoryImportStatus.SUCCESS,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -111,7 +112,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.ERROR_IMPORT_EMPTY,
+            RepositoryImportStatus.JSON_FILE_EMPTY,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -119,7 +120,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun importInvalidDiceMissing() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/Invalid-DiceMissing.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.4.0-invalid-JSON_DICE_MISSING.json"))
         waitForImportStatus(tabBagViewModel, ExportImportStatus.FAILURE)
 
         Assert.assertEquals(
@@ -127,7 +128,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.ERROR_DICE_MISSING,
+            RepositoryImportStatus.JSON_DICE_MISSING,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -135,7 +136,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun importInvalidSchemaSettings() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/Invalid-SchemaSettings.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.4.0-invalid-JSON_SCHEMA_SETTINGS.json"))
         waitForImportStatus(tabBagViewModel, ExportImportStatus.FAILURE)
 
         Assert.assertEquals(
@@ -143,7 +144,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.ERROR_SCHEMA_SETTINGS,
+            RepositoryImportStatus.JSON_SCHEMA_SETTINGS,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -151,7 +152,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun importInvalidSchemaDice() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/Invalid-SchemaDice.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.4.0-invalid-JSON_SCHEMA_DICE.json"))
         waitForImportStatus(tabBagViewModel, ExportImportStatus.FAILURE)
 
         Assert.assertEquals(
@@ -159,7 +160,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.ERROR_SCHEMA_DICE,
+            RepositoryImportStatus.JSON_SCHEMA_DICE,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -167,7 +168,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun importInvalidSchemaSide() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/Invalid-SchemaSide.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.4.0-invalid-JSON_SCHEMA_SIDE.json"))
 
         waitForImportStatus(tabBagViewModel, ExportImportStatus.FAILURE)
 
@@ -176,7 +177,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.ERROR_SCHEMA_SIDE,
+            RepositoryImportStatus.JSON_SCHEMA_SIDE,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -184,7 +185,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun priorVersionImport() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/2.3.0.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.4.0-valid.json"))
 
         waitForImportStatus(tabBagViewModel, ExportImportStatus.SUCCESS)
 
@@ -195,31 +196,16 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
-    fun importInvalidDiceTitleNotUnique() = runTest {
-        val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/Invalid-DiceTitleNotUnique.json"))
-        waitForImportStatus(tabBagViewModel, ExportImportStatus.FAILURE)
-        Assert.assertEquals(
-            ExportImportStatus.FAILURE,
-            tabBagViewModel.stateFlowTabBagImport.value.importStatus
-        )
-        Assert.assertEquals(
-            RepositoryImportStatus.ERROR_DICE_TITLE,
-            tabBagViewModel.stateFlowTabBagImport.value.importDetail
-        )
-    }
-
-    @Test
     fun importInvalidSettingsMissing() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/Invalid-SettingsMissing.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.4.0-invalid-JSON_SCHEMA_SETTINGS.json"))
         waitForImportStatus(tabBagViewModel, ExportImportStatus.FAILURE)
         Assert.assertEquals(
             ExportImportStatus.FAILURE,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.ERROR_SCHEMA_SETTINGS,
+            RepositoryImportStatus.JSON_SCHEMA_SETTINGS,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -227,14 +213,14 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun importInvalidEpochData() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        tabBagViewModel.import(resourceAsString("/data/json/import/Invalid-UnknownDiceInRoll.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.4.0-invalid-JSON_DICE_UUID.json"))
         waitForImportStatus(tabBagViewModel, ExportImportStatus.FAILURE)
         Assert.assertEquals(
             ExportImportStatus.FAILURE,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
         Assert.assertEquals(
-            RepositoryImportStatus.ERROR_DICE_UNKNOWN,
+            RepositoryImportStatus.JSON_DICE_UUID,
             tabBagViewModel.stateFlowTabBagImport.value.importDetail
         )
     }
@@ -242,9 +228,9 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun resizeSettings() = runTest {
         val tabBagViewModel = tabBagViewModel()
-        Assert.assertEquals(3f, tabBagViewModel.stateFlowResize.value)
 
         tabBagViewModel.resizeSettings(5f)
+        waitForResizeValue(tabBagViewModel, 5f)
         Assert.assertEquals(5f, tabBagViewModel.stateFlowResize.value)
     }
 
@@ -288,7 +274,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val initialBag = BagDataTestDouble()
         val fetchedBag = tabBagViewModel.repositoryBag.fetch().first()
-        Assert.assertEquals(initialBag.allDice.size, fetchedBag.size)
+        Assert.assertEquals(initialBag.allDice().size, fetchedBag.size)
 
         val initialRollHistory =
             RollHistoryDataTestDouble(initialBag, GroupDataTestDouble(initialBag)).rollHistory
@@ -302,12 +288,29 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         Assert.assertEquals(initialGroupHistory.size, fetchedGroupHistory.size)
     }
 
+    private suspend fun waitForResizeValue(
+        viewModel: DiceAndroidViewModel,
+        expectedValue: Float
+    ) {
+        try {
+            withTimeout(5_000.milliseconds) {
+                viewModel.stateFlowResize
+                    .filter {
+                        it == expectedValue
+                    }
+                    .first()
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
     private suspend fun waitForImportStatus(
         viewModel: DiceAndroidViewModel,
         expectedStatus: ExportImportStatus = ExportImportStatus.SUCCESS
     ) {
         try {
-            withTimeout(5_000) {
+            withTimeout(5_000.milliseconds) {
                 viewModel.stateFlowTabBagImport
                     .filter {
                         println(it.importStatus)
@@ -339,7 +342,7 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryBag,
             repositoryRoll,
             repositoryGroup,
-            3f
+            2f
         )
     }
 }

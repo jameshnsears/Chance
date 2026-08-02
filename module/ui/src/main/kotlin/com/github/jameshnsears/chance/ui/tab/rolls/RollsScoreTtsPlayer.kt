@@ -5,13 +5,19 @@ import android.speech.tts.TextToSpeech
 import timber.log.Timber
 import java.util.Locale
 
-class RollsScoreTtsPlayer(context: Context) {
+class RollsScoreTtsPlayer(
+    context: Context,
+    textToSpeechFactory: (Context, TextToSpeech.OnInitListener) -> TextToSpeech = { ctx, listener ->
+        TextToSpeech(ctx, listener)
+    }
+) {
     private var textToSpeech: TextToSpeech? = null
-    private var isInitialized = false
+    var isInitialized = false
+        private set
 
     init {
         try {
-            textToSpeech = TextToSpeech(context) { status ->
+            textToSpeech = textToSpeechFactory(context) { status ->
                 if (status == TextToSpeech.SUCCESS) {
                     textToSpeech?.let { tts ->
                         val result = tts.setLanguage(Locale.getDefault())

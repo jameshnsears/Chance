@@ -1,8 +1,0 @@
-- New: Groups
-- New: Roll score animation
-- New: Remember last tab used
-- New: Improved Material Design 3 compliance
-- Fix: Reduce size of app download
-- Dev: Incorporate AI tooling
-- Dev: Bump dependencies
-- Dev: Android Studio Quail 1 | 2026.1.1 Patch 2

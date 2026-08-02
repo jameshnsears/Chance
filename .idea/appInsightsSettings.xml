@@ -27,7 +27,7 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.github.jameshnsears.quoteunquote" />
+                  <option name="appId" value="com.github.jameshnsears.chance" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

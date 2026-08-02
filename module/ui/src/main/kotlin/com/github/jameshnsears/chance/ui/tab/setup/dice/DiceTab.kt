@@ -56,7 +56,6 @@ fun TabBagDiceLayout(
             TabBagBottomSheetLayout(
                 bottomSheetScaffoldState,
                 diceAndroidViewModel,
-                zoomDiceAndroidViewModel
             )
         }
     ) {
@@ -106,7 +105,6 @@ fun TabBag(
 fun TabBagBottomSheetLayout(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     diceAndroidViewModel: DiceAndroidViewModel,
-    zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel
 ) {
     val isGestureNavigation = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() < 40.dp
     val columnHeight = if (isGestureNavigation) 330.dp else 360.dp
@@ -122,7 +120,6 @@ fun TabBagBottomSheetLayout(
     ) {
         Resize(
             diceAndroidViewModel,
-            zoomDiceAndroidViewModel,
         )
 
         HorizontalDivider(
@@ -133,7 +130,6 @@ fun TabBagBottomSheetLayout(
         ImportExport(
             bottomSheetScaffoldState,
             diceAndroidViewModel,
-            zoomDiceAndroidViewModel
         )
 
         HorizontalDivider(

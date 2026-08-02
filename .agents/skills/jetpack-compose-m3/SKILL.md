@@ -22,13 +22,13 @@ metadata:
 ## Prerequisites and compatibility
 
 1. **Wear OS Compose Material3 version:** If an internal tool is available to establish the **latest stable version** `{VERSION}` of `androidx.wear.compose:compose-material3`, use that tool.
-   - Otherwise, fetch the [official Maven metadata XML](https://dl.google.com/dl/android/maven2/androidx/wear/compose/compose-material3/maven-metadata.xml) to identify `{VERSION}` (highest number, ignoring `-alpha`, `-beta`, or `-rc`).
+    - Otherwise, fetch the [official Maven metadata XML](https://dl.google.com/dl/android/maven2/androidx/wear/compose/compose-material3/maven-metadata.xml) to identify `{VERSION}` (highest number, ignoring `-alpha`, `-beta`, or `-rc`).
 2. **Strict compliance:** If a version is listed as stable, you MUST use it, unless overridden by the user. Do not downgrade based on initial "Unresolved reference" errors in the editor or outdated web search results.
 3. **Kotlin version:** For Wear Compose Material3, use Kotlin **2.0.0 or
    higher**.
 4. **Compose compiler:**
-   - If Kotlin version is **2.0.0+** , the project must use the `org.jetbrains.kotlin.plugin.compose` Gradle plugin.
-   - If Kotlin version is **\< 2.0.0** , the project must use `kotlinCompilerExtensionVersion` in `composeOptions`, matching the [Compose to Kotlin Compatibility Map](https://developer.android.com/jetpack/androidx/releases/compose-kotlin).
+    - If Kotlin version is **2.0.0+** , the project must use the `org.jetbrains.kotlin.plugin.compose` Gradle plugin.
+    - If Kotlin version is **\< 2.0.0** , the project must use `kotlinCompilerExtensionVersion` in `composeOptions`, matching the [Compose to Kotlin Compatibility Map](https://developer.android.com/jetpack/androidx/releases/compose-kotlin).
 5. **Min SDK:** Ensure `minSdk` is at least **25** (Wear OS 2.0).
 6. **Sample extraction mandate**: Wear Compose libraries ship with an additional JAR file which contains individual samples for each and every component. You MUST NOT propose code changes until the samples in Capability 2 are extracted to the local cache. Library source files are incomplete and NOT a substitute for these samples; bypassing extraction is an environment setup failure.
 
@@ -77,23 +77,23 @@ before proceeding.
 
 1. Define the cache directory path: `<SKILL_ROOT>/samples/{VERSION}/`. Do NOT choose your own different location.
 2. Check if this directory exists and contains subdirectories with `.kt` files.
-   - **IF YES (cache hit):** Proceed to **Step 4**.
-   - **IF NO (cache miss):** Proceed to **Step 3**.
+    - **IF YES (cache hit):** Proceed to **Step 4**.
+    - **IF NO (cache miss):** Proceed to **Step 3**.
 
 #### Step 3: Check the Gradle cache
 
 1. Sample sources are stored in the Gradle cache. To avoid slow, brute-force searches:
-   - Determine the Gradle user home (usually `~/.gradle`, or check `$GRADLE_USER_HOME`).
-   - The cache root is `<GRADLE_USER_HOME>/caches`. Call this `<CACHE_ROOT>`.
+    - Determine the Gradle user home (usually `~/.gradle`, or check `$GRADLE_USER_HOME`).
+    - The cache root is `<GRADLE_USER_HOME>/caches`. Call this `<CACHE_ROOT>`.
 2. Define `{ARTIFACT}` as the items in the list `["material3", "foundation"]`. Also include "navigation3" in the list if the `androidx.wear.compose.navigation3` library is being used.
 3. For each `{ARTIFACT}` in the list:
 
-   - Construct the expected relative path segment for the library: `androidx.wear.compose/compose-{ARTIFACT}/{VERSION}`.
-   - Run a targeted `find` command. Here is an example which is constructed
-     for efficiency:
+    - Construct the expected relative path segment for the library: `androidx.wear.compose/compose-{ARTIFACT}/{VERSION}`.
+    - Run a targeted `find` command. Here is an example which is constructed
+      for efficiency:
 
-         find <CACHE_ROOT>/modules-2/files-2.1/androidx.wear.compose/compose-{ARTIFACT}/{VERSION}/ \
-           -name "*samples-sources.jar"
+          find <CACHE_ROOT>/modules-2/files-2.1/androidx.wear.compose/compose-{ARTIFACT}/{VERSION}/ \
+            -name "*samples-sources.jar"
 
 4. Use this JAR as the official sample sources.
 
@@ -107,10 +107,10 @@ before proceeding.
 
 1. Read the relevant `.kt` sample files.
 2. Use these official, version-matched samples as the source of truth for:
-   - Required parameters and slot names.
-   - Default styling and typography tokens.
-   - Interactive behaviors (for example: `onClick`, `onLongClick`).
-   - Component nesting (for example: `AppScaffold` -\> `ScreenScaffold`).
+    - Required parameters and slot names.
+    - Default styling and typography tokens.
+    - Interactive behaviors (for example: `onClick`, `onLongClick`).
+    - Component nesting (for example: `AppScaffold` -\> `ScreenScaffold`).
 
 ### Capability 3: Component guidance
 
@@ -119,11 +119,10 @@ provides more holistic guidance on how to use each component in practice, beyond
 the component syntax.
 
 1. `AppScaffold` and `ScreenScaffold`
-   - \[ \] Use `AppScaffold` as the outer container, with `ScreenScaffold` children.
-   - \[ \] Use only **ONE** `AppScaffold` and any number of `ScreenScaffold`.
+    - \[ \] Use `AppScaffold` as the outer container, with `ScreenScaffold` children.
+    - \[ \] Use only **ONE** `AppScaffold` and any number of `ScreenScaffold`.
 2. `ScalingLazyColumn` - Use `TransformingLazyColumn` instead.
 3. `TransformingLazyColumn` - You will need the following imports:
-
 
    ```kotlin
    import androidx.wear.compose.foundation.lazy.TransformingLazyColumn
@@ -136,8 +135,7 @@ the component syntax.
 
    <br />
 
-   **Canonical example**:
-
+**Canonical example**:
 
    ```kotlin
    val columnState = rememberTransformingLazyColumnState()
@@ -189,16 +187,15 @@ the component syntax.
 
    <br />
 
-   - \[ \] Use `TransformingLazyColumn` instead of `ScalingLazyColumn`.
-   - \[ \] You must pass the `contentPadding` parameter from `ScreenScaffold` to the `TransformingLazyColumn`.
-   - \[ \] Use the `minimumVerticalContentPadding` modifier to achieve required padding top and bottom.
-     - This expects a value from defaults, such as `ButtonDefaults`, `CardDefaults`, \`ListHeaderDefaults.
-     - Note: This is a scoped modifier available within `TransformingLazyColumnItemScope`.
-   - \[ \] Ensure the list morphs and scales.
-   - \[ \] Use `transformedHeight` modifier.
-   - \[ \] Use `transform = SurfaceTransform(...)`.
-   - \[ \] If configuring a list for snapping, use `flingBehavior` and `rotaryScrollableBehavior` **together**:
-
+- \[ \] Use `TransformingLazyColumn` instead of `ScalingLazyColumn`.
+- \[ \] You must pass the `contentPadding` parameter from `ScreenScaffold` to the `TransformingLazyColumn`.
+- \[ \] Use the `minimumVerticalContentPadding` modifier to achieve required padding top and bottom.
+    - This expects a value from defaults, such as `ButtonDefaults`, `CardDefaults`, \`ListHeaderDefaults.
+    - Note: This is a scoped modifier available within `TransformingLazyColumnItemScope`.
+- \[ \] Ensure the list morphs and scales.
+- \[ \] Use `transformedHeight` modifier.
+- \[ \] Use `transform = SurfaceTransform(...)`.
+- \[ \] If configuring a list for snapping, use `flingBehavior` and `rotaryScrollableBehavior` **together**:
 
    ```kotlin
    val columnState = rememberTransformingLazyColumnState()
@@ -218,12 +215,11 @@ the component syntax.
 
 4. `ScreenScaffold`
 
-   - \[ \] Guard the `scrollIndicator` with `!LocalScrollCaptureInProgress.current`.
+    - \[ \] Guard the `scrollIndicator` with `!LocalScrollCaptureInProgress.current`.
 5. `EdgeButton`
 
-   - \[ \] Do **NOT** use as the final item within a `TransformingLazyColumn`. Instead, use the slot in `ScreenScaffold`.
-   - \[ \] When used in a `TransformingLazyColumn`, add the required overscroll behavior:
-
+    - \[ \] Do **NOT** use as the final item within a `TransformingLazyColumn`. Instead, use the slot in `ScreenScaffold`.
+    - \[ \] When used in a `TransformingLazyColumn`, add the required overscroll behavior:
 
    ```kotlin
    val columnState = rememberTransformingLazyColumnState()
@@ -258,20 +254,20 @@ the component syntax.
 
 6. `Column`
 
-   - \[ \] USE as a direct child of `ScreenScaffold` *if* the screen is will **never** scroll, even with the largest system font.
-   - \[ \] Use `TransformingLazyColumn` instead for all other cases.
+    - \[ \] USE as a direct child of `ScreenScaffold` *if* the screen is will **never** scroll, even with the largest system font.
+    - \[ \] Use `TransformingLazyColumn` instead for all other cases.
 7. Styles
 
-   - \[ \] Do **NOT** hard-code text sizes, use `typography` from `MaterialTheme`.
-   - \[ \] Do **NOT** hard-code colors, use `colorScheme` from `MaterialTheme`.
+    - \[ \] Do **NOT** hard-code text sizes, use `typography` from `MaterialTheme`.
+    - \[ \] Do **NOT** hard-code colors, use `colorScheme` from `MaterialTheme`.
 8. Use component defaults:
 
-   - \[ \] Components such as `Button` have a corresponding `ButtonDefaults` object.
-   - Check for and use the `*Defaults` object for any component when working with padding and styling values, in preference to hard-coded values.
+    - \[ \] Components such as `Button` have a corresponding `ButtonDefaults` object.
+    - Check for and use the `*Defaults` object for any component when working with padding and styling values, in preference to hard-coded values.
 9. Use Wear specific previews:
 
-   - \[ \] `WearPreviewDevices`
-   - \[ \] `WearPreviewFontScales`
+    - \[ \] `WearPreviewDevices`
+    - \[ \] `WearPreviewFontScales`
 10. Ambient mode
 
     - \[ \] Use `LocalAmbientModeManager` instead of `AmbientLifecycleObserver`.

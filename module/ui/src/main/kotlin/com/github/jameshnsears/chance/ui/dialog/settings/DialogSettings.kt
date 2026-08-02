@@ -19,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Rule
 import androidx.compose.material.icons.automirrored.outlined.VolumeUp
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.FormatListNumbered
 import androidx.compose.material.icons.outlined.GridView
@@ -35,7 +34,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -70,11 +68,9 @@ fun DialogSettings(
     Dialog(
         onDismissRequest = {
             showDialog.value = false
-            rollsAndroidViewModel.dismissSettingsDialog()
         },
     ) {
         DialogSettingsLayout(
-            showDialog,
             rollsAndroidViewModel
         )
     }
@@ -82,8 +78,7 @@ fun DialogSettings(
 
 @Composable
 fun DialogSettingsLayout(
-    showDialog: MutableState<Boolean>,
-    rollsAndroidViewModel: RollsAndroidViewModel
+    rollsAndroidViewModel: RollsAndroidViewModel,
 ) {
     val stateFlowSettings =
         rollsAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
@@ -99,26 +94,6 @@ fun DialogSettingsLayout(
         shape = MaterialTheme.shapes.extraLarge,
     ) {
         Box(modifier = Modifier.height(550.dp)) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 8.dp, top = 8.dp),
-                horizontalArrangement = Arrangement.End
-            ) {
-                IconButton(
-                    onClick = {
-                        showDialog.value = false
-                        rollsAndroidViewModel.dismissSettingsDialog()
-                    },
-                    modifier = Modifier.testTag(DialogSettingsTestTag.SETTINGS_CLOSE)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(R.string.close)
-                    )
-                }
-            }
-
             Text(
                 modifier = Modifier
                     .padding(start = 24.dp, top = 24.dp, bottom = 16.dp),

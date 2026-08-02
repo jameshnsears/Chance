@@ -1,0 +1,7 @@
+- New: d2 to d100 dice size
+- Fix: Improve performance
+- Fix: Minor UI improvements
+- Dev: Reduce file size of import / export
+- Dev: Improve coverage
+- Dev: Bump dependencies
+- Dev: Android Studio Quail 1 | 2026.1.1 Patch 2

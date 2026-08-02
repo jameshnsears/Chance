@@ -31,8 +31,8 @@ class RepositoryFactory(val context: Context? = null) {
     val settingsTestDouble = SettingsDataTestDouble()
 
     // Bag (Independent, requires context)
-    val bagDataImpl = BagDataImpl(context)
-    val bagDataTestDouble = BagDataTestDouble()
+    val bagDataImpl by lazy { BagDataImpl(context) }
+    val bagDataTestDouble by lazy { BagDataTestDouble() }
 
     // Group (Depends on Bag)
     val groupDataImplObject = GroupDataImpl(context, bagDataImpl)
@@ -50,46 +50,50 @@ class RepositoryFactory(val context: Context? = null) {
     // ========================================================================
 
     val repositorySettings by lazy {
-        if (BuildConfig.DEBUG) {
-            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
-                RepositorySettingsProtocolBufferImpl.getInstance(context, settingsImpl)
-            else
+        if (context != null) {
+            if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
                 RepositorySettingsProtocolBufferTestDouble.getInstance(settingsTestDouble)
+            } else {
+                RepositorySettingsProtocolBufferImpl.getInstance(context)
+            }
         } else {
-            RepositorySettingsProtocolBufferImpl.getInstance(context!!, settingsImpl)
+            RepositorySettingsProtocolBufferTestDouble.getInstance(settingsTestDouble)
         }
     }
 
     val repositoryBag by lazy {
-        if (BuildConfig.DEBUG) {
-            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
-                RepositoryBagProtocolBufferImpl.getInstance(context, bagDataImpl.allDice)
-            else
-                RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDice)
+        if (context != null) {
+            if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
+                RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDiceList())
+            } else {
+                RepositoryBagProtocolBufferImpl.getInstance(context)
+            }
         } else {
-            RepositoryBagProtocolBufferImpl.getInstance(context!!, bagDataImpl.allDice)
+            RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDiceList())
         }
     }
 
     val repositoryGroup by lazy {
-        if (BuildConfig.DEBUG) {
-            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
-                RepositoryGroupProtocolBufferImpl.getInstance(context, groupDataImpl)
-            else
+        if (context != null) {
+            if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
                 RepositoryGroupProtocolBufferTestDouble.getInstance(groupDataTestDouble)
+            } else {
+                RepositoryGroupProtocolBufferImpl.getInstance(context)
+            }
         } else {
-            RepositoryGroupProtocolBufferImpl.getInstance(context!!, groupDataImpl)
+            RepositoryGroupProtocolBufferTestDouble.getInstance(groupDataTestDouble)
         }
     }
 
     val repositoryRoll by lazy {
-        if (BuildConfig.DEBUG) {
-            if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD) && context != null)
-                RepositoryRollProtocolBufferImpl.getInstance(context, rollHistoryDataImpl)
-            else
-                RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble)
+        if (context != null) {
+            if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
+                RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble, repositoryBag)
+            } else {
+                RepositoryRollProtocolBufferImpl.getInstance(context, repositoryBag)
+            }
         } else {
-            RepositoryRollProtocolBufferImpl.getInstance(context!!, rollHistoryDataImpl)
+            RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble, repositoryBag)
         }
     }
 
@@ -110,7 +114,7 @@ class RepositoryFactory(val context: Context? = null) {
         }
 
         if (repositoryBag.fetch().first().isEmpty()) {
-            repositoryBag.store(bagDataImpl.allDice)
+            repositoryBag.store(bagDataImpl.allDice())
         }
 
         if (repositoryGroup.fetch().first().isEmpty()) {
@@ -127,18 +131,18 @@ class RepositoryFactory(val context: Context? = null) {
         if (BuildConfig.DEBUG) {
             if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
                 repositorySettings.store(settingsImpl)
-                repositoryBag.store(bagDataImpl.allDice)
+                repositoryBag.store(bagDataImpl.allDice())
                 repositoryGroup.store(groupDataImpl)
                 repositoryRoll.store(rollHistoryDataImpl)
             } else {
                 repositorySettings.store(settingsTestDouble)
-                repositoryBag.store(bagDataTestDouble.allDice)
+                repositoryBag.store(bagDataTestDouble.allDice())
                 repositoryGroup.store(groupDataTestDouble)
                 repositoryRoll.store(rollHistoryTestDouble)
             }
         } else {
             repositorySettings.store(settingsImpl)
-            repositoryBag.store(bagDataImpl.allDice)
+            repositoryBag.store(bagDataImpl.allDice())
             repositoryGroup.store(groupDataImpl)
             repositoryRoll.store(rollHistoryDataImpl)
         }

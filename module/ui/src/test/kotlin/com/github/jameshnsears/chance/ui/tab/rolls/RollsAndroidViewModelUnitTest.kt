@@ -6,12 +6,11 @@ import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
-import com.github.jameshnsears.chance.data.domain.core.group.Group
+import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
-import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.slot
 import io.mockk.spyk
@@ -22,6 +21,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -36,14 +36,12 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     fun rollDiceSequenceNoExplosionNoScore() = runTest {
         val tabRollAndroidViewModel = tabRollAndroidViewModel()
 
-        coEvery { tabRollAndroidViewModel.playRollSound() } returns Unit
-
         val rollHistory = tabRollAndroidViewModel.repositoryRoll.fetch().first()
         assertEquals(2, rollHistory.size)
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
 
         val diceSelected = mutableListOf<String>()
         tabRollAndroidViewModel.diceBag.value.forEach {
@@ -71,7 +69,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
 
-    @OptIn(DelicateCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
     @Test
     fun shuffleRollSequence() = runTest {
         val repositorySettings = RepositoryFactory().repositorySettings
@@ -108,16 +106,15 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             )
         )
 
-        coEvery { rollsAndroidViewModel.playRollSound() } returns Unit
-
         ////////////////
 
         val rolls = mutableListOf<Roll>()
 
-        rollsAndroidViewModel.rollDiceSequence(rolls)
+        rollsAndroidViewModel.generateRollDiceSequence(rolls)
         assertEquals(8, rolls.size)
 
-        rollsAndroidViewModel._stateFlowSettingsData.value.shuffle = true
+        rollsAndroidViewModel.settingsShuffle(true)
+        advanceUntilIdle()
         rollsAndroidViewModel.shuffleRollSequence(rolls)
 
         assertEquals(8, rolls.size)
@@ -137,7 +134,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.d6.selected = true
 
         // d6
-        diceBag.allDice.forEach {
+        diceBag.allDice().forEach {
             if (it.selected)
                 it.explode = true
             it.explodeWhen = DiceRollValues.explodeWhenValues[0]
@@ -149,7 +146,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
 
         assertEquals(18, rolls.size)
 
@@ -169,7 +166,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.d6.selected = true
 
         // d6
-        diceBag.allDice.forEach {
+        diceBag.allDice().forEach {
             if (it.selected)
                 it.explode = true
             it.explodeWhen = DiceRollValues.explodeWhenValues[1]
@@ -181,7 +178,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
 
         assertEquals(18, rolls.size)
     }
@@ -192,7 +189,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.d6.selected = true
 
         // d6
-        diceBag.allDice.forEach {
+        diceBag.allDice().forEach {
             if (it.selected)
                 it.explode = true
             it.explodeWhen = DiceRollValues.explodeWhenValues[2]
@@ -204,7 +201,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
 
         assertEquals(18, rolls.size)
     }
@@ -215,7 +212,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.d6.selected = true
 
         // d6 only
-        diceBag.allDice.forEach {
+        diceBag.allDice().forEach {
             if (it.selected)
                 it.modifyScore = true
             it.modifyScoreValue = DiceRollValues.modifyScoreValues[0].toInt()
@@ -226,7 +223,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
 
         val rollSequence: MutableMap.MutableEntry<Long, List<Roll>> =
             mutableMapOf(1L to rolls.toList()).entries.first()
@@ -297,14 +294,17 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.haptics)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun undo() = runTest {
         val tabRollAndroidViewModel = tabRollAndroidViewModel()
-        tabRollAndroidViewModel._undoEnabled.value = true
+        advanceUntilIdle()
 
         assertEquals(2, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
+        assertTrue(tabRollAndroidViewModel.undoEnabled.value)
         tabRollAndroidViewModel.undo()
         tabRollAndroidViewModel.undo()
+        advanceUntilIdle()
 
         assertEquals(0, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
     }
@@ -313,21 +313,30 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     fun isContentAvailableToDisplay() = runTest {
         val tabRollAndroidViewModel = tabRollAndroidViewModel()
         val rolls = mutableListOf<Roll>()
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
-        assertTrue(tabRollAndroidViewModel.isContentAvailableToDisplay(rolls))
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        assertTrue(
+            tabRollAndroidViewModel.isContentAvailableToDisplay(
+                rolls,
+                tabRollAndroidViewModel.stateFlowSettings.value
+            )
+        )
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun markGroupAsSelected() = runTest {
         val bagDataTestDouble = BagDataTestDouble()
         val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
-        val repositoryGroup = RepositoryFactory().repositoryGroup
-        repositoryGroup.store(groupDataTestDouble.groupHistory)
 
-        val tabRollAndroidViewModel = tabRollAndroidViewModel(bagDataTestDouble)
+        val tabRollAndroidViewModel = tabRollAndroidViewModel(
+            bagDataTestDouble,
+            groupHistory = groupDataTestDouble.groupHistory
+        )
+        advanceUntilIdle()
 
         val group = groupDataTestDouble.groupHistory[0]
         tabRollAndroidViewModel.markGroupAsSelected(group)
+        advanceUntilIdle()
 
         assertTrue(tabRollAndroidViewModel.groupHistory.value.first { it.uuid == group.uuid }.selected)
     }
@@ -337,13 +346,14 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     fun rollDiceSequenceWithGroups() = runTest {
         val bagDataTestDouble = BagDataTestDouble()
         // Ensure no dice are selected individually
-        bagDataTestDouble.allDice.forEach { it.selected = false }
+        bagDataTestDouble.allDice().forEach { it.selected = false }
 
         val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
-        val repositoryGroup = RepositoryFactory().repositoryGroup
-        repositoryGroup.store(groupDataTestDouble.groupHistory)
-
-        val tabRollAndroidViewModel = tabRollAndroidViewModel(bagDataTestDouble, selectDefaultDice = false)
+        val tabRollAndroidViewModel = tabRollAndroidViewModel(
+            bagDataTestDouble,
+            groupHistory = groupDataTestDouble.groupHistory,
+            selectDefaultDice = false
+        )
         advanceUntilIdle()
 
         val group = groupDataTestDouble.groupHistory[0] // tg1: dice 0 and 1
@@ -357,12 +367,13 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         }
 
         val rolls = mutableListOf<Roll>()
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
 
         // tg1 has 2 dice: d2 (mult 1) and d4 (mult 2). Total 3 rolls.
         assertEquals(3, rolls.size)
-        assertTrue(rolls.any { it.uuidDice == bagDataTestDouble.allDice[0].uuid })
-        assertTrue(rolls.any { it.uuidDice == bagDataTestDouble.allDice[1].uuid })
+        val allDice = bagDataTestDouble.allDice()
+        assertTrue(rolls.any { it.uuidDice == allDice[0].uuid })
+        assertTrue(rolls.any { it.uuidDice == allDice[1].uuid })
     }
 
     @Test
@@ -380,12 +391,13 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         every { tabRollAndroidViewModel.randomSide(any()) } returns diceBag.d6.sides[0]
 
         val rolls = mutableListOf<Roll>()
-        tabRollAndroidViewModel.rollDiceSequence(rolls)
+        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
 
         // Expect 6 rolls due to current logic: Initial + 5 explosions
         assertEquals(6, rolls.size)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun shuffleRollSequenceMultiplierOrder() = runTest {
         val diceBag = BagDataTestDouble()
@@ -394,7 +406,8 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.d6.multiplierValue = 3
 
         val tabRollAndroidViewModel = tabRollAndroidViewModel(diceBag)
-        tabRollAndroidViewModel._stateFlowSettingsData.value.shuffle = true
+        tabRollAndroidViewModel.settingsShuffle(true)
+        advanceUntilIdle()
 
         val rolls = mutableListOf<Roll>()
         // Manually create rolls to ensure they are out of order for multiplierIndex
@@ -415,48 +428,55 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     fun rollEnabledAfterDeselectingDiceWithGroupSelected() = runTest {
         val bagDataTestDouble = BagDataTestDouble()
         val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
-        val group = groupDataTestDouble.groupHistory[0].copy(selected = true)
+        val groupHistory = groupDataTestDouble.groupHistory.toMutableList()
+        groupHistory[0] = groupHistory[0].copy(selected = true)
 
-        val repositoryGroup = RepositoryFactory().repositoryGroup
-        repositoryGroup.store(listOf(group))
+        val tabRollAndroidViewModel = tabRollAndroidViewModel(
+            bagDataTestDouble,
+            groupHistory = groupHistory
+        )
 
-        val tabRollAndroidViewModel = tabRollAndroidViewModel(bagDataTestDouble)
+        advanceUntilIdle()
 
         // d6 is selected by default in helper. Group is also selected.
         assertTrue(tabRollAndroidViewModel.rollEnabled.value)
 
         // Deselect d6
         tabRollAndroidViewModel.markDiceAsSelected(bagDataTestDouble.d6, false)
+        advanceUntilIdle()
 
         // This SHOULD be true because the group is still selected.
         // If it's false, then the implementation of markDiceAsSelected is buggy.
         assertTrue("Roll should be enabled because a group is selected", tabRollAndroidViewModel.rollEnabled.value)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun rollGroupWithDuplicateDice() = runTest {
         val bagDataTestDouble = BagDataTestDouble()
 
         // Reset all dice selection
-        bagDataTestDouble.allDice.forEach { it.selected = false }
+        bagDataTestDouble.allDice().forEach { it.selected = false }
 
         val d2 = bagDataTestDouble.d2
         val d4 = bagDataTestDouble.d4
 
         d2.selected = true
 
-        val group = Group(
+        val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
+        val groupHistory = groupDataTestDouble.groupHistory.toMutableList()
+        groupHistory[0] = groupHistory[0].copy(
             name = "2d4",
             uuidDice = listOf(d4.uuid, d4.uuid),
             selected = true
         )
 
-        val repositoryGroup = RepositoryFactory().repositoryGroup
-        repositoryGroup.store(listOf(group))
-
-        val tabRollAndroidViewModel = tabRollAndroidViewModel(bagDataTestDouble, selectDefaultDice = false)
-
-        coEvery { tabRollAndroidViewModel.playRollSound() } returns Unit
+        val tabRollAndroidViewModel = tabRollAndroidViewModel(
+            bagDataTestDouble,
+            groupHistory = groupHistory,
+            selectDefaultDice = false
+        )
+        advanceUntilIdle()
 
         // Mock randomSide to return sides that won't trigger explosions
         // d2 sides are [2, 1]. d4 sides are [4, 3, 2, 1].
@@ -465,7 +485,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         every { tabRollAndroidViewModel.randomSide(d4) } returns d4.sides[0]
 
         val newRollSequence = mutableListOf<Roll>()
-        tabRollAndroidViewModel.rollDiceSequence(newRollSequence)
+        tabRollAndroidViewModel.generateRollDiceSequence(newRollSequence)
 
         // d2: multiplier 1 -> 1 roll
         // d4: multiplier 2 -> 2 rolls each. 2 d4 -> 4 rolls.
@@ -479,13 +499,16 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         assertEquals(5, newRollSequence.size)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun undoAll() = runTest {
         val tabRollAndroidViewModel = tabRollAndroidViewModel()
-        tabRollAndroidViewModel._undoEnabled.value = true
+        advanceUntilIdle()
 
         assertEquals(2, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
+        assertTrue(tabRollAndroidViewModel.undoEnabled.value)
         tabRollAndroidViewModel.undoAll()
+        advanceUntilIdle()
 
         assertEquals(0, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
         assertFalse(tabRollAndroidViewModel.undoEnabled.value)
@@ -493,28 +516,35 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
     private fun tabRollAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
+        groupHistory: GroupHistory? = null,
         selectDefaultDice: Boolean = true
     ): RollsAndroidViewModel {
         val repositorySettings = RepositoryFactory().repositorySettings
-        runTest {
+        runBlocking {
             repositorySettings.store(SettingsDataTestDouble())
         }
 
         val repositoryBag = RepositoryFactory().repositoryBag
-        runTest {
+        runBlocking {
             if (selectDefaultDice)
                 bagDataTestDouble.d6.selected = true
-            repositoryBag.store(bagDataTestDouble.allDice)
-        }
-
-        val repositoryRoll = RepositoryFactory().repositoryRoll
-        val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
-        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble, groupDataTestDouble)
-        runTest {
-            repositoryRoll.store(rollDataTestDouble.rollHistory)
+            repositoryBag.store(bagDataTestDouble.allDice())
         }
 
         val repositoryGroup = RepositoryFactory().repositoryGroup
+        val finalGroupHistory = groupHistory ?: GroupDataTestDouble(bagDataTestDouble).groupHistory
+        runBlocking {
+            repositoryGroup.store(finalGroupHistory)
+        }
+
+        val repositoryRoll = RepositoryFactory().repositoryRoll
+        val groupData = object : com.github.jameshnsears.chance.data.domain.core.group.GroupDataInterface {
+            override val groupHistory = finalGroupHistory
+        }
+        val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble, groupData)
+        runBlocking {
+            repositoryRoll.store(rollDataTestDouble.rollHistory)
+        }
 
         return spyk<RollsAndroidViewModel>(
             RollsAndroidViewModel(

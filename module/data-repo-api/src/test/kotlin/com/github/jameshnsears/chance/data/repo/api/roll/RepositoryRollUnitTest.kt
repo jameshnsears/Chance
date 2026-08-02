@@ -4,8 +4,8 @@ import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelpe
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
-import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -21,7 +21,7 @@ class RepositoryRollUnitTest : UtilityAndroidUnitTestHelper() {
             1L to listOf(Roll(uuidDice = "10", side = Side(number = 1)))
         )
 
-        coEvery { mockRepository.fetch() } returns flowOf(rollHistory)
+        every { mockRepository.fetch() } returns flowOf(rollHistory)
 
         val result = mockRepository.fetch().first()
         assertEquals(1, result.size)
@@ -43,8 +43,10 @@ class RepositoryRollUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun traceUuid() {
         val repository = object : RepositoryRollInterface {
-            override suspend fun fetch() = flowOf(linkedMapOf<Long, List<Roll>>())
+            override fun fetch() = flowOf(linkedMapOf<Long, List<Roll>>())
             override suspend fun store(newRollHistory: RollHistory) {}
+            override suspend fun store(epoch: Long, rollList: List<Roll>) {}
+            override suspend fun removeLatest() {}
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}
             override suspend fun clear() {}

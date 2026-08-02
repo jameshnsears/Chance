@@ -4,7 +4,7 @@ You can do everything Styles can do with modifiers, but not all functionality in
 modifiers is available in Styles.
 **Important:**
 
-- **Choose Styles if:** You need to override a default of an existing component, perform high-performance animations, or define theme-wide set of properties for a component.
+- **Choose Styles if:** You need to override a default of an existing component, perform high-performance animations, or define a theme-wide set of properties for a component.
 - **Choose Modifiers if:** You need to add behavior (for example, clickable, gestures), define unique one-off layouts, or need additive properties.
 
 The following is a comparison between Styles versus modifiers:
@@ -20,7 +20,7 @@ The following is a comparison between Styles versus modifiers:
 ## Limitations of modifiers
 
 Modifiers have many benefits in the current Compose landscape. However, Styles
-addresses some limitations of modifiers, which the following list describes:
+address some limitations of modifiers, which the following list describes:
 
 - Modifiers are typically created in the Composition phase. Updates can force a full rerun of Composition, Layout, and Draw, even for small visual changes like color, unless you create lambda-based modifiers.
 - Conditional modifiers require disruptive if-else logic within fluent chains. Animating them requires manual state boilerplate and lacks a high-performance "auto-animate" mechanism.

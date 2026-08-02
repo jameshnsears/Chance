@@ -10,18 +10,18 @@ import org.junit.Test
 
 class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
     private val diceResources = setOf(
-        "d2"
+        "d2_d100"
     )
 
     @Test
     fun isUrlSvg() {
-        val url = this::class.java.getResource("/data/svg/d2.svg")
+        val url = this::class.java.getResource("/data/svg/d2_d100.svg")
         assertTrue(UtilitySvgSerializer.isUrlSvg(url!!))
     }
 
     @Test
     fun encodeDecode() {
-        val svgByteArray = resourceAsByteArray("/data/svg/d2.svg")
+        val svgByteArray = resourceAsByteArray("/data/svg/d2_d100.svg")
 
         val base64String = UtilitySvgSerializer.encodeIntoBase64String(svgByteArray)
 
@@ -45,7 +45,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun imageRequestFromBase64String() {
-        val svgByteArray = resourceAsByteArray("/data/svg/d2.svg")
+        val svgByteArray = resourceAsByteArray("/data/svg/d2_d100.svg")
 
         val base64String = UtilitySvgSerializer.encodeIntoBase64String(svgByteArray)
 
@@ -62,7 +62,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun imageRequestFromSvgString() {
-        val svgString = resourceAsString("/data/svg/d2.svg")
+        val svgString = resourceAsString("/data/svg/d2_d100.svg")
 
         val application = application()
 
@@ -74,7 +74,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun encodeIntoBase64StringAsync() = runTest {
-        val svgString = resourceAsString("/data/svg/d2.svg")
+        val svgString = resourceAsString("/data/svg/d2_d100.svg")
 
         val base64Sync = UtilitySvgSerializer.encodeIntoBase64String(svgString)
         val base64Async = UtilitySvgSerializer.encodeIntoBase64StringAsync(svgString)
@@ -84,7 +84,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun imageRequestFromBase64StringAsync() = runTest {
-        val svgByteArray = resourceAsByteArray("/data/svg/d2.svg")
+        val svgByteArray = resourceAsByteArray("/data/svg/d2_d100.svg")
 
         val base64String = UtilitySvgSerializer.encodeIntoBase64String(svgByteArray)
 
@@ -100,7 +100,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun imageRequestFromBase64StringAsyncCaching() = runTest {
-        val svgByteArray = resourceAsByteArray("/data/svg/d2.svg")
+        val svgByteArray = resourceAsByteArray("/data/svg/d2_d100.svg")
 
         val base64String = UtilitySvgSerializer.encodeIntoBase64String(svgByteArray)
 
@@ -117,7 +117,7 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun imageRequestFromSvgStringAsync() = runTest {
-        val svgString = resourceAsString("/data/svg/d2.svg")
+        val svgString = resourceAsString("/data/svg/d2_d100.svg")
 
         val application = application()
 

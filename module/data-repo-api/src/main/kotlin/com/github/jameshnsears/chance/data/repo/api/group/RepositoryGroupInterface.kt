@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 
 interface RepositoryGroupInterface : RepositoryImportExportInterface {
-    suspend fun fetch(): Flow<GroupHistory>
+    fun fetch(): Flow<GroupHistory>
     suspend fun store(newGroupHistory: GroupHistory)
 
     fun traceUuid(groupHistory: GroupHistory) {

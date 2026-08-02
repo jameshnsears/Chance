@@ -11,12 +11,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
+import kotlinx.coroutines.runBlocking
 
 @Preview
 @Composable
 fun GroupPreview() {
     val bagDataTestDouble = BagDataTestDouble()
     val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
+    val allDice = runBlocking { bagDataTestDouble.allDice() }
 
     ChanceTheme {
         Surface(
@@ -25,13 +27,13 @@ fun GroupPreview() {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 Group(
                     group = groupDataTestDouble.groupHistory[0],
-                    diceBag = bagDataTestDouble.allDice,
+                    diceBag = allDice,
                     initiallyExpanded = false
                 )
 
                 Group(
                     group = groupDataTestDouble.groupHistory[1],
-                    diceBag = bagDataTestDouble.allDice,
+                    diceBag = allDice,
                     initiallyExpanded = true
                 )
             }

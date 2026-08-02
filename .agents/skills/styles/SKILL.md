@@ -8,7 +8,7 @@ description: Use this skill to integrate the Jetpack Compose Styles API into an 
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
-  last-updated: '2026-06-06'
+  last-updated: '2026-07-07'
   keywords:
   - Jetpack Compose
   - Styles
@@ -130,9 +130,15 @@ Refer to the official documentation to complete specific development tasks:
 For each custom component (for example, `CustomButton`), complete the following
 sequence:
 
-1. If you are able to run an Android emulator, locate an existing screenshot test for the component. If none exists, create one using the existing project testing framework. If no framework exists, use UI Automator or Espresso to create a screenshot test with minimum required setup. Run the test and take a baseline screenshot of the Component. ELSE proceed to the next step without a screenshot test.
+1. **Establish a visual baseline (If an emulator is available):**
+   - **If you CANNOT run an Android emulator:** Skip this step entirely and proceed to Step 2.
+   - **If you CAN run an Android emulator:** Perform the following to capture a baseline screenshot:
+     - **Option A:** Locate and run an existing screenshot test for the component.
+     - **Option B (If no test exists):** Create a test using the project's existing testing framework, then run it.
+     - **Option C (If no framework exists):** Create a minimal screenshot test using UI Automator or Espresso, then run it.
 2. **Remove individual styling parameters** : Remove styling parameters such as `backgroundColor`, `shape`, `textStyle`, and `contentPadding` from the signature - anything that `StyleScope` supports.
-3. **Add the style parameter** : Add `style: Style = Style` to the function signature.
+3. **Add the style parameter** : Add `style: Style = Style` to the function signature. Always ensure the default value is exactly `Style` (e.g., `style:
+   Style = Style`) and not a specific style default like `ChipStyleDefault` or any other value.
 4. **Declare state tracking** : If the component is interactable, create a `MutableStyleState` using the interaction source. Update state fields (such as `isEnabled`) inside the Composable to track the state correctly.
 5. **Apply styleable modifier** : Replace specific layout modifiers on the root element with `Modifier.styleable()`.
 6. **Move defaults to ComponentStyles** : Move hardcoded values from the component definition to a dedicated `Style` instance in `ComponentStyles.kt`.

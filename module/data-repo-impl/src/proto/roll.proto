@@ -13,7 +13,6 @@ message RollProtocolBuffer {
   int32 explodeIndex = 4;
   int32 scoreAdjustment = 5;
   int32 score = 6;
-
   string uuidDice = 7;
   string uuidGroup = 8;
 }

@@ -129,7 +129,7 @@ Add the `com.google.android.engage:engage-core` library to your app:
 
     dependencies {
         // Make sure you also include that repository in your project's build.gradle file.
-        implementation 'com.google.android.engage:engage-core:1.5.12'
+        implementation 'com.google.android.engage:engage-core:1.6.0'
     }
 
 ### Summary
@@ -580,6 +580,102 @@ There are following APIs to publish clusters in the client:
 
 This API is used to check if the service is available for integration and
 whether the content can be presented on the device.
+
+##### For Engage SDK v1.6.0 and higher (Recommended)
+
+You can check the service availability for every cluster type that you intend to
+publish. The `isServiceAvailable` API accepts a request object,
+`ServiceAvailabilityRequest`, which contains the cluster types for which service
+availability needs to be checked. You can find the `ClusterType` enum values
+required for `ServiceAvailabilityRequest` from the following table.
+
+| Cluster Type | Cluster Type Constant | Integer Value |
+|---|---|---|
+| Unknown | `TYPE_UNKNOWN` | 0 |
+| Recommendation Cluster | `TYPE_RECOMMENDATION` | 1 |
+| Featured Cluster | `TYPE_FEATURED` | 2 |
+| Continuation Cluster | `TYPE_CONTINUATION` | 3 |
+| Shopping Cart Cluster | `TYPE_SHOPPING_CART` | 4 |
+| Food Reorder Cluster | `TYPE_FOOD_REORDER` | 5 |
+| Food Shopping Cart Cluster | `TYPE_FOOD_SHOPPING_CART` | 6 |
+| Food Shopping List Cluster | `TYPE_FOOD_SHOPPING_LIST` | 7 |
+| User Management Cluster | `TYPE_ENGAGEMENT` | 8 |
+| Shopping List Cluster | `TYPE_SHOPPING_LIST` | 9 |
+| Shopping Reorder Cluster | `TYPE_SHOPPING_REORDER` | 10 |
+| Shopping Order Tracking Cluster | `TYPE_SHOPPING_ORDER_TRACKING` | 11 |
+| Subscription Cluster | `TYPE_SUBSCRIPTION` | 12 |
+| Continue Search Cluster | `TYPE_CONTINUE_SEARCH` | 13 |
+| Reservation Cluster | `TYPE_RESERVATION` | 14 |
+
+### Kotlin
+
+    val request = ServiceAvailabilityRequest.Builder()
+        .addIntendedClusterType(ClusterType.TYPE_CONTINUATION)
+        .addIntendedClusterType(ClusterType.TYPE_RECOMMENDATION)
+        .build()
+
+    client.isServiceAvailable(request).addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val availabilityMap = task.result
+            if (availabilityMap[ClusterType.TYPE_CONTINUATION] == true) {
+                // Proceed with publishing continuation content
+            }
+            if (availabilityMap[ClusterType.TYPE_RECOMMENDATION] == true) {
+                // Proceed with publishing recommendation content
+            }
+        } else {
+            // The IPC call itself fails, proceed with error handling logic here,
+            // such as retry.
+        }
+    }
+
+### Java
+
+    ServiceAvailabilityRequest request =
+        new ServiceAvailabilityRequest.Builder()
+            .addIntendedClusterType(ClusterType.TYPE_CONTINUATION)
+            .addIntendedClusterType(ClusterType.TYPE_RECOMMENDATION)
+            .build();
+
+    client.isServiceAvailable(request).addOnCompleteListener(task -> {
+        if (task.isSuccessful()) {
+            Map<Integer, Boolean> availabilityMap = task.getResult();
+            if (Boolean.TRUE.equals(availabilityMap.get(ClusterType.TYPE_CONTINUATION))) {
+                // Proceed with publishing continuation content
+            }
+            if (Boolean.TRUE.equals(availabilityMap.get(ClusterType.TYPE_RECOMMENDATION))) {
+                // Proceed with publishing recommendation content
+            }
+        } else {
+            // The IPC call itself fails, proceed with error handling logic here,
+            // such as retry.
+        }
+    });
+
+###### Conditional Service Availability Feature
+
+Some integrated apps request a special configuration that enables and disables
+the Engage service intermittently in order to reduce their serving cost. This
+intermittent content ingestion strategy, although possible, negatively affects
+the user and the product -- stale content will not be presented and some surfaces
+will not be served at all.
+
+Starting with v1.6.0, the Engage SDK allows checking availability for specific
+cluster types. This provides more flexibility so that if the intermittent
+content strategy was adopted by a given application, some cluster types can
+follow that intermittent strategy while other cluster types are always enabled
+(i.e. continuation clusters).
+
+If the Engage service should not be 'continuously' enabled on all supported
+devices for whatever reason, and is configured for intermittent ingestion for
+any set of devices, all continuation cluster publications (e.g. Continue
+Reading and Reservations) will be still enabled by default configuration,
+and the rest of the cluster types will be enabled and disabled
+intermittently. If intermittent ingestion applies to you but this default
+configuration is not suitable for your needs, please contact
+engage-developers@google.com.
+
+##### For SDK versions prior to v1.6.0 (Deprecated)
 
 ### Kotlin
 

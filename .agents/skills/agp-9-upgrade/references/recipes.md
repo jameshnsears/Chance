@@ -38,7 +38,7 @@ Additional details for each use-case follow.
 
 ### Add custom BuildConfig fields
 
-See the detailed guide at [BuildConfig](https://developer.android.com/agents/skills/build/agp/agp-9-upgrade/references/buildconfig).
+See the detailed guide at [BuildConfig](https://developer.android.com/agents/skills/build-system/agp/agp-9-upgrade/references/buildconfig).
 
 ### Renaming an APK
 

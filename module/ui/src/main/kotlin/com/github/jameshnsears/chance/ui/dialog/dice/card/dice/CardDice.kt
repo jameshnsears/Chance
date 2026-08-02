@@ -1,8 +1,5 @@
 package com.github.jameshnsears.chance.ui.dialog.dice.card.dice
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FormatListNumbered
@@ -22,31 +19,25 @@ import androidx.compose.material.icons.outlined.Title
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Label
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
-import androidx.compose.material3.rememberSliderState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -54,7 +45,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.ui.dialog.colour.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.dice.card.BagCardColourSample
-import kotlin.math.roundToInt
 
 
 @Composable
@@ -94,58 +84,27 @@ fun BagCardDice(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiceSides(
     cardDiceService: CardDiceService
 ) {
-    val context = LocalContext.current
-    val sliderDisplayValues = remember(context) { CardDiceSliderSides(context).values().reversed() }
-
     val state by cardDiceService.stateFlowCardDice.collectAsStateWithLifecycle()
 
-    DiceSidesSlider(cardDiceService, state, sliderDisplayValues)
+    DiceSidesTextField(cardDiceService, state)
 
     DiceSidesInfo(state.diceSiderInfoColour)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun DiceSidesSlider(
+private fun DiceSidesTextField(
     cardDiceService: CardDiceService,
     state: CardDiceState,
-    sliderDisplayValues: List<String>
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isInteracting by interactionSource.collectIsDraggedAsState()
-
-    val sliderState = rememberSliderState(
-        value = state.diceSiderPosition,
-        steps = sliderDisplayValues.lastIndex - 1,
-        valueRange = 0f..sliderDisplayValues.lastIndex.toFloat()
-    )
-
-    LaunchedEffect(state.diceSiderPosition) {
-        if (!isInteracting && sliderState.value != state.diceSiderPosition) {
-            sliderState.value = state.diceSiderPosition
-        }
-    }
-
-    // Call diceSidesSize only when dragging has stopped
-    LaunchedEffect(isInteracting) {
-        if (!isInteracting) {
-            val discreteValue = sliderState.value.roundToInt()
-            val sideSize = sliderDisplayValues[discreteValue]
-            if (sideSize.toInt() != state.diceSidesSize) {
-                cardDiceService.diceSidesSize(sideSize)
-            }
-        }
-    }
-
     Row(
         modifier = Modifier
             .padding(top = 8.dp)
             .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = Icons.Outlined.FormatListNumbered,
@@ -155,65 +114,29 @@ private fun DiceSidesSlider(
         Spacer(modifier = Modifier.width(12.dp))
 
         Text(
-            "${stringResource(R.string.dialog_bag_dice_sides)}: ${sliderDisplayValues[sliderState.value.roundToInt()]}",
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .width(80.dp)
+            stringResource(R.string.dialog_bag_dice_sides)
         )
-    }
 
-    Column(
-        modifier = Modifier
-            .padding(start = 18.dp, end = 18.dp, top = 12.dp)
-            .fillMaxWidth(),
-    ) {
-        Slider(
-            state = sliderState,
-            interactionSource = interactionSource,
-            thumb = {
-                Label(
-                    label = {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .size(38.dp)
-                                .background(
-                                    color = MaterialTheme.colorScheme.inverseSurface,
-                                    shape = CircleShape
-                                )
-                        ) {
-                            Text(
-                                text = sliderDisplayValues[sliderState.value.roundToInt()],
-                                color = MaterialTheme.colorScheme.inverseOnSurface,
-                                style = MaterialTheme.typography.labelMedium
-                            )
-                        }
-                    },
-                    interactionSource = interactionSource
-                ) {
-                    SliderDefaults.Thumb(
-                        interactionSource = interactionSource,
-                        colors = SliderDefaults.colors(
-                            thumbColor = MaterialTheme.colorScheme.primary,
-                        )
-                    )
-                }
-            },
-            track = {
-                SliderDefaults.Track(
-                    sliderState = it,
-                    colors = SliderDefaults.colors(
-                        activeTrackColor = MaterialTheme.colorScheme.primary,
-                        inactiveTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                        activeTickColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        inactiveTickColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    ),
-                )
+        Spacer(modifier = Modifier.width(12.dp))
+
+        val arbitrarySidesValue = rememberSaveable { mutableStateOf(state.diceSidesSize.toString()) }
+
+        OutlinedTextField(
+            value = arbitrarySidesValue.value,
+            onValueChange = { newValue ->
+                val filtered = newValue.filter { it.isDigit() }.take(3)
+                arbitrarySidesValue.value = filtered
+                cardDiceService.diceSidesSize(filtered)
             },
             modifier = Modifier
-                .padding(bottom = 4.dp)
-                .minimumInteractiveComponentSize()
+                .width(120.dp)
                 .testTag(CardDiceTestTag.DICE_SIDES),
+            label = { Text(stringResource(R.string.dialog_bag_dice_sides_arbitrary_info)) },
+            isError = arbitrarySidesValue.value.toIntOrNull()?.let { it !in 2..100 } ?: true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number
+            ),
+            singleLine = true
         )
     }
 }
@@ -222,7 +145,7 @@ private fun DiceSidesSlider(
 private fun DiceSidesInfo(sliderInfoColour: Float) {
     Row(
         modifier = Modifier
-            .padding(top = 12.dp, bottom = 8.dp)
+            .padding(bottom = 8.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -235,7 +158,7 @@ private fun DiceSidesInfo(sliderInfoColour: Float) {
 
     Row(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp)
+            .padding(top = 8.dp, bottom = 12.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {

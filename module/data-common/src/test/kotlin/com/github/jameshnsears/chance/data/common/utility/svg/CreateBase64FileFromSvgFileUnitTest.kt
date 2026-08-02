@@ -7,7 +7,7 @@ import java.io.File
 
 class CreateBase64FileFromSvgFileUnitTest : UtilityAndroidUnitTestHelper() {
     private val diceResources = setOf(
-        "d2",
+        "d2_d100",
         "yang",
         "yin",
         "diceman"
