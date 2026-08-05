@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="androidTest-app" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
-    <module name="Chance.app" />
+  <configuration default="false" name=":module:data-common" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
+    <module name="Chance.module.data-common" />
     <option name="ANDROID_TEST_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
     <option name="TESTING_TYPE" value="0" />
     <option name="METHOD_NAME" value="" />

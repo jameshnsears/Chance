@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>TooGenericExceptionThrown:Main.kt$throw RuntimeException("Test Crash")</ID>
+  </CurrentIssues>
+</SmellBaseline>

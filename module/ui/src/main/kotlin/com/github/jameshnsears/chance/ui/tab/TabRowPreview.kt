@@ -12,7 +12,11 @@ import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.rememberNavigationState
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsCoreHelper
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsSelectionHelper
 import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.setup.groups.GroupsAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
@@ -39,11 +43,17 @@ fun TabRowPreview() {
         }
     }
 
+    val navigationState = rememberNavigationState(
+        startRoute = ChanceNavKey.SetupDice,
+        topLevelRoutes = setOf(ChanceNavKey.SetupDice, ChanceNavKey.SetupGroups, ChanceNavKey.Roll)
+    )
+
     ChanceTheme {
         Surface(
             color = MaterialTheme.colorScheme.surfaceContainerLow,
         ) {
             TabRow(
+                navigationState,
                 DiceAndroidViewModel(
                     application,
                     repositorySettings,
@@ -63,7 +73,9 @@ fun TabRowPreview() {
                     repositorySettings,
                     repositoryBag,
                     repositoryRoll,
-                    repositoryGroup
+                    repositoryGroup,
+                    RollsSelectionHelper(repositoryBag, repositoryGroup),
+                    RollsCoreHelper(repositoryRoll)
                 ),
                 ZoomDiceAndroidViewModel(
                     application,

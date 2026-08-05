@@ -17,6 +17,8 @@ import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.rememberNavigationState
 import com.github.jameshnsears.chance.ui.tab.TabRow
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
@@ -87,6 +89,11 @@ fun MainComposable(
         )
     )
 
+    val navigationState = rememberNavigationState(
+        startRoute = ChanceNavKey.SetupDice,
+        topLevelRoutes = setOf(ChanceNavKey.SetupDice, ChanceNavKey.SetupGroups, ChanceNavKey.Roll)
+    )
+
     ChanceTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -107,6 +114,7 @@ fun MainComposable(
                     }
                 } else {
                     TabRow(
+                        navigationState,
                         tabBagViewModel,
                         groupsViewModel,
                         tabRollViewModel,

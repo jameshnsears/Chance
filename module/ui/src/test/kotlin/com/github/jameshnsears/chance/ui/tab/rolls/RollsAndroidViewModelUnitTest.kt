@@ -14,9 +14,6 @@ import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.Setti
 import io.mockk.every
 import io.mockk.slot
 import io.mockk.spyk
-import junit.framework.TestCase.assertEquals
-import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -24,6 +21,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -41,7 +41,11 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            rolls,
+        )
 
         val diceSelected = mutableListOf<String>()
         tabRollAndroidViewModel.diceBag.value.forEach {
@@ -57,7 +61,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             assertEquals(diceSelected[0], it.uuidDice)
         }
 
-        tabRollAndroidViewModel.rollsSequenceHelper.saveNewRollSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.saveNewRollSequence(rolls)
         assertEquals(3, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
 
         val job = launch {
@@ -96,26 +100,25 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         val rollDataTestDouble = RollHistoryDataTestDouble(bagDataTestDouble, groupDataTestDouble)
         repositoryRoll.store(rollDataTestDouble.rollHistory)
 
-        val rollsAndroidViewModel = spyk<RollsAndroidViewModel>(
-            RollsAndroidViewModel(
-                application(),
-                repositorySettings,
-                repositoryBag,
-                repositoryRoll,
-                RepositoryFactory().repositoryGroup
-            )
+        val rollsAndroidViewModel = tabRollAndroidViewModel(
+            bagDataTestDouble = bagDataTestDouble,
+            selectDefaultDice = false
         )
 
         ////////////////
 
         val rolls = mutableListOf<Roll>()
 
-        rollsAndroidViewModel.generateRollDiceSequence(rolls)
+        rollsAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            rollsAndroidViewModel.diceBag.value,
+            rollsAndroidViewModel.groupHistory.value,
+            rolls
+        )
         assertEquals(8, rolls.size)
 
-        rollsAndroidViewModel.settingsShuffle(true)
+        rollsAndroidViewModel.settingsShuffle(checked = true)
         advanceUntilIdle()
-        rollsAndroidViewModel.shuffleRollSequence(rolls)
+        rollsAndroidViewModel.rollsCoreHelper.shuffleRollSequence(rolls, true)
 
         assertEquals(8, rolls.size)
 
@@ -146,7 +149,11 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            rolls,
+        )
 
         assertEquals(18, rolls.size)
 
@@ -154,7 +161,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             mutableMapOf(1L to rolls.toList()).entries.first()
 
         assertEquals(
-            "36", tabRollAndroidViewModel.rollsSequenceHelper.rollSequenceScore(
+            "36", tabRollAndroidViewModel.rollsCoreHelper.rollSequenceScore(
                 rollSequence
             )
         )
@@ -178,7 +185,11 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            rolls,
+        )
 
         assertEquals(18, rolls.size)
     }
@@ -201,7 +212,11 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            rolls,
+        )
 
         assertEquals(18, rolls.size)
     }
@@ -223,13 +238,17 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val rolls = mutableListOf<Roll>()
 
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            rolls,
+        )
 
         val rollSequence: MutableMap.MutableEntry<Long, List<Roll>> =
             mutableMapOf(1L to rolls.toList()).entries.first()
 
         assertEquals(
-            "1", tabRollAndroidViewModel.rollsSequenceHelper.rollSequenceScore(
+            "1", tabRollAndroidViewModel.rollsCoreHelper.rollSequenceScore(
                 rollSequence
             )
         )
@@ -309,19 +328,6 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         assertEquals(0, tabRollAndroidViewModel.repositoryRoll.fetch().first().size)
     }
 
-    @Test
-    fun isContentAvailableToDisplay() = runTest {
-        val tabRollAndroidViewModel = tabRollAndroidViewModel()
-        val rolls = mutableListOf<Roll>()
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
-        assertTrue(
-            tabRollAndroidViewModel.isContentAvailableToDisplay(
-                rolls,
-                tabRollAndroidViewModel.stateFlowSettings.value
-            )
-        )
-    }
-
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun markGroupAsSelected() = runTest {
@@ -362,12 +368,16 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         advanceUntilIdle()
 
         // Mock randomSide to return something predictable
-        every { tabRollAndroidViewModel.randomSide(any()) } answers {
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(any()) } answers {
             (it.invocation.args[0] as Dice).sides[0]
         }
 
         val rolls = mutableListOf<Roll>()
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            rolls,
+        )
 
         // tg1 has 2 dice: d2 (mult 1) and d4 (mult 2). Total 3 rolls.
         assertEquals(3, rolls.size)
@@ -388,10 +398,14 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         val tabRollAndroidViewModel = tabRollAndroidViewModel(diceBag)
 
         // Force explosion: return side with number 6
-        every { tabRollAndroidViewModel.randomSide(any()) } returns diceBag.d6.sides[0]
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(any()) } returns diceBag.d6.sides[0]
 
         val rolls = mutableListOf<Roll>()
-        tabRollAndroidViewModel.generateRollDiceSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            rolls,
+        )
 
         // Expect 6 rolls due to current logic: Initial + 5 explosions
         assertEquals(6, rolls.size)
@@ -406,7 +420,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.d6.multiplierValue = 3
 
         val tabRollAndroidViewModel = tabRollAndroidViewModel(diceBag)
-        tabRollAndroidViewModel.settingsShuffle(true)
+        tabRollAndroidViewModel.settingsShuffle(checked = true)
         advanceUntilIdle()
 
         val rolls = mutableListOf<Roll>()
@@ -415,7 +429,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         rolls.add(Roll(uuidDice = diceBag.d6.uuid, multiplierIndex = 1, side = diceBag.d6.sides[1]))
         rolls.add(Roll(uuidDice = diceBag.d6.uuid, multiplierIndex = 2, side = diceBag.d6.sides[2]))
 
-        tabRollAndroidViewModel.shuffleRollSequence(rolls)
+        tabRollAndroidViewModel.rollsCoreHelper.shuffleRollSequence(rolls, true)
 
         // Multiplier indices should be 1, 2, 3 in the resulting list (even if the sides were shuffled)
         assertEquals(1, rolls[0].multiplierIndex)
@@ -481,11 +495,15 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         // Mock randomSide to return sides that won't trigger explosions
         // d2 sides are [2, 1]. d4 sides are [4, 3, 2, 1].
         // d4 explodes on 2. So we'll return side 4 (index 0).
-        every { tabRollAndroidViewModel.randomSide(d2) } returns d2.sides[0]
-        every { tabRollAndroidViewModel.randomSide(d4) } returns d4.sides[0]
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(d2) } returns d2.sides[0]
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(d4) } returns d4.sides[0]
 
         val newRollSequence = mutableListOf<Roll>()
-        tabRollAndroidViewModel.generateRollDiceSequence(newRollSequence)
+        tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+            tabRollAndroidViewModel.diceBag.value,
+            tabRollAndroidViewModel.groupHistory.value,
+            newRollSequence
+        )
 
         // d2: multiplier 1 -> 1 roll
         // d4: multiplier 2 -> 2 rolls each. 2 d4 -> 4 rolls.
@@ -546,14 +564,18 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryRoll.store(rollDataTestDouble.rollHistory)
         }
 
-        return spyk<RollsAndroidViewModel>(
-            RollsAndroidViewModel(
-                application(),
-                repositorySettings,
-                repositoryBag,
-                repositoryRoll,
-                repositoryGroup
-            )
+        val repositoryRollSpy = spyk(repositoryRoll)
+        val rollsCoreHelper = spyk(RollsCoreHelper(repositoryRollSpy))
+        val rollsSelectionHelper = RollsSelectionHelper(repositoryBag, repositoryGroup)
+
+        return RollsAndroidViewModel(
+            application(),
+            repositorySettings,
+            repositoryBag,
+            repositoryRollSpy,
+            repositoryGroup,
+            rollsSelectionHelper,
+            rollsCoreHelper
         )
     }
 
@@ -562,7 +584,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val diceSlot = slot<Dice>()
         every {
-            tabRollAndroidViewModel.randomSide(
+            tabRollAndroidViewModel.rollsCoreHelper.randomSide(
                 dice = capture(diceSlot)
             )
         } answers {

@@ -68,6 +68,28 @@
     </issue>
 
     <issue
+        id="NewerVersionAvailable"
+        message="A newer version of io.nlopez.compose.rules:detekt than 0.4.23 is available: 0.6.3"
+        errorLine1="io-nlopez-compose-rules-detekt = &quot;0.4.23&quot;"
+        errorLine2="                                 ~~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="28"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.8.0 is available: 1.11.0"
+        errorLine1="kotlinx-serialization = &quot;1.8.0&quot;"
+        errorLine2="                        ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="40"
+            column="25"/>
+    </issue>
+
+    <issue
         id="DataExtractionRules"
         message="The attribute `android:allowBackup` is deprecated from Android 12 and may be removed in future versions. Consider adding the attribute `android:dataExtractionRules` specifying an `@xml` resource which configures backups and device transfers on Android 12 and higher."
         errorLine1="        android:allowBackup=&quot;false&quot;"

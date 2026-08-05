@@ -48,6 +48,8 @@ class RepositoryGroupProtocolBufferTestDouble private constructor() :
 
     override suspend fun jsonExport(): String {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
+        fieldsToAlwaysOutput.add(GroupProtocolBuffer.getDescriptor().findFieldByName("name"))
+        fieldsToAlwaysOutput.add(GroupProtocolBuffer.getDescriptor().findFieldByName("notes"))
         fieldsToAlwaysOutput.add(GroupProtocolBuffer.getDescriptor().findFieldByName("displayIndex"))
         fieldsToAlwaysOutput.add(GroupProtocolBuffer.getDescriptor().findFieldByName("selected"))
 

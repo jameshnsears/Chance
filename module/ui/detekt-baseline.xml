@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:ZoomAndroidViewModel.kt$ZoomAndroidViewModel$private fun isContentAvailableToDisplay( rolls: List&lt;Roll&gt;, settings: com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface ): Boolean</ID>
+    <ID>EmptyFunctionBlock:ShakeToRollService.kt$ShakeToRollService${}</ID>
+    <ID>FunctionParameterNaming:DialogColourPickerPreview.kt$_: String</ID>
+    <ID>LargeClass:DialogDiceAndroidViewModelUnitTest.kt$DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper</ID>
+    <ID>LongMethod:Groups.kt$@Composable fun Groups( groupsAndroidViewModel: GroupsAndroidViewModel, )</ID>
+    <ID>MatchingDeclarationName:NavKey.kt$ChanceNavKey : NavKey</ID>
+    <ID>MatchingDeclarationName:TabRow.kt$TabRowTestTag</ID>
+    <ID>RethrowCaughtException:DiceAndroidViewModelUnitTest.kt$DiceAndroidViewModelUnitTest$throw e</ID>
+    <ID>SwallowedException:RollsScoreTtsPlayer.kt$RollsScoreTtsPlayer$e: NoClassDefFoundError</ID>
+    <ID>SwallowedException:ShakeToRollService.kt$ShakeToRollService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CardFaceService.kt$CardSideService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DiceAndroidViewModel.kt$DiceAndroidViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:HapticHelper.kt$HapticHelper$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RollsSoundPlayer.kt$RollsSoundPlayer$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ShakeToRollService.kt$ShakeToRollService$e: Exception</ID>
+    <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>
+  </CurrentIssues>
+</SmellBaseline>

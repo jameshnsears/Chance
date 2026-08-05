@@ -8,15 +8,6 @@ import org.junit.Test
 class StartupTest : TestSupport() {
     @Test
     fun appStarts() {
-        /*
-        if (BuildConfig.DEBUG) {
-            getSharedPreferences("UtilitySharedPreferencesHelper", MODE_PRIVATE)
-            .edit()
-            .clear()
-            .apply()
-        }
-         */
-
         androidComposeTestRule.waitForIdle()
         androidComposeTestRule
             .onNodeWithTag(TabRowTestTag.TAB_ROW)

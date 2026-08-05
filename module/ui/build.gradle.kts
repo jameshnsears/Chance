@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -12,6 +13,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["clearPackageData"] = "true"
+
+        buildConfigField("String", "VERSION", "\"${libs.versions.versionName.get()}\"")
+        buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
     }
 
     testOptions {
@@ -20,21 +24,13 @@ android {
         }
     }
 
-    val versionName = libs.versions.versionName.get()
-
     buildTypes {
         release {
-            buildConfigField("String", "VERSION", "\"${versionName}\"")
-            buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
-
             isMinifyEnabled = false
             isShrinkResources = false
         }
 
         debug {
-            buildConfigField("String", "VERSION", "\"${versionName}\"")
-            buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
-
             enableAndroidTestCoverage = true
             enableUnitTestCoverage = true
             isMinifyEnabled = false
@@ -109,6 +105,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.coil.compose)

@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose) apply false
     alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
     alias(libs.plugins.testretry) apply false
+    alias(libs.plugins.baselineprofile) apply false
 }
 
 // ────────────────────────────────────────────────────────────────────
@@ -22,36 +23,6 @@ spotless {
 }
 
 // ────────────────────────────────────────────────────────────────────
-
-detekt {
-    // https://detekt.dev/docs/gettingstarted/gradle
-    parallel = true
-
-    source.setFrom(
-        files(
-            "${rootProject.projectDir}/app/src/androidTest/kotlin",
-            "${rootProject.projectDir}/app/src/main/kotlin",
-            "${rootProject.projectDir}/module/common/src/main/kotlin",
-            "${rootProject.projectDir}/module/common/src/testFixtures/kotlin",
-            "${rootProject.projectDir}/module/data-common/src/androidTest/kotlin",
-            "${rootProject.projectDir}/module/data-common/src/main/kotlin",
-            "${rootProject.projectDir}/module/data-common/src/test/kotlin",
-            "${rootProject.projectDir}/module/data-domain/src/main/kotlin",
-            "${rootProject.projectDir}/module/data-repo-api/src/main/kotlin",
-            "${rootProject.projectDir}/module/data-repo-api/src/test/kotlin",
-            "${rootProject.projectDir}/module/data-repo-impl/src/main/kotlin",
-            "${rootProject.projectDir}/module/data-repo-impl/src/test/kotlin",
-            "${rootProject.projectDir}/module/ui/src/androidTest/kotlin",
-            "${rootProject.projectDir}/module/ui/src/main/kotlin",
-            "${rootProject.projectDir}/module/ui/src/test/kotlin",
-        )
-    )
-
-    debug = true
-    ignoreFailures = false
-    buildUponDefaultConfig = true
-    config.setFrom("${rootProject.projectDir}/detekt.yml")
-}
 
 // ────────────────────────────────────────────────────────────────────
 
@@ -115,9 +86,43 @@ subprojects {
         toolVersion = jacocoVersion
     }
 
+    val libs = rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+    fun Project.configureDetekt() {
+        apply(plugin = "io.gitlab.arturbosch.detekt")
+
+        dependencies {
+            add("detektPlugins", libs.findLibrary("io-nlopez-compose-rules-detekt").get())
+        }
+
+        detekt {
+            parallel = true
+            buildUponDefaultConfig = true
+            config.setFrom("${rootProject.projectDir}/detekt.yml")
+            basePath = rootProject.projectDir.absolutePath
+        }
+
+        tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+            jvmTarget = "21"
+            reports {
+                xml.required.set(true)
+                html.required.set(true)
+            }
+        }
+    }
+
     // Use plugins.withType instead of afterEvaluate for better performance
-    plugins.withId("com.android.application") { configureJacoco() }
-    plugins.withId("com.android.library") { configureJacoco() }
+    plugins.withId("com.android.application") {
+        configureJacoco()
+        configureDetekt()
+    }
+    plugins.withId("com.android.library") {
+        configureJacoco()
+        configureDetekt()
+    }
+    plugins.withId("com.android.test") {
+        configureDetekt()
+    }
 }
 
 fun Project.configureJacoco() {

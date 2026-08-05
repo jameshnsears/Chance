@@ -59,7 +59,6 @@ import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsEvent
-import com.github.jameshnsears.chance.ui.tab.rolls.SettingsState
 import com.github.jameshnsears.chance.ui.zoom.ZoomSideDescription
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -85,10 +84,6 @@ fun ZoomRoll(
     val listState = rememberLazyListState(
         initialFirstVisibleItemIndex = stateFlowZoom.firstVisibleItemIndex,
         initialFirstVisibleItemScrollOffset = stateFlowZoom.firstVisibleItemScrollOffset
-    )
-
-    val stateFlowTabRoll by rollsAndroidViewModel.stateFlowSettings.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
     )
 
     val groupHistory by zoomRollsAndroidViewModel.groupHistory.collectAsStateWithLifecycle(
@@ -124,7 +119,7 @@ fun ZoomRoll(
     Surface(
         color = MaterialTheme.colorScheme.surfaceContainerLow,
     ) {
-        if (entriesList.isEmpty()) {
+        if (rollHistory.isEmpty()) {
             ZoomRollEmptyState()
         } else {
             ZoomRollHistoryList(
@@ -132,7 +127,6 @@ fun ZoomRoll(
                 entriesList,
                 seenRollEvents,
                 rollHistory.size,
-                stateFlowTabRoll,
                 groupHistory,
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
@@ -166,7 +160,6 @@ private fun ZoomRollHistoryList(
     entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
     seenRollEvents: MutableSet<Long>,
     rollHistorySize: Int,
-    settingsState: SettingsState,
     groupHistory: GroupHistory,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
@@ -189,7 +182,6 @@ private fun ZoomRollHistoryList(
                 rollSequence,
                 seenRollEvents,
                 rollHistorySize,
-                settingsState,
                 groupHistory,
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
@@ -207,7 +199,6 @@ private fun ZoomRollHistoryItem(
     rollSequence: Map.Entry<Long, List<Roll>>,
     seenRollEvents: MutableSet<Long>,
     rollHistorySize: Int,
-    settingsState: SettingsState,
     groupHistory: GroupHistory,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
@@ -244,7 +235,7 @@ private fun ZoomRollHistoryItem(
     }
 
     Column {
-        if (settingsState.rollIndexTime)
+        if (stateFlowZoom.rollIndexTime)
             RollIndexTime(
                 rollHistorySize - originalIndex,
                 rollSequence
@@ -259,7 +250,7 @@ private fun ZoomRollHistoryItem(
                 zoomRollsAndroidViewModel,
                 rollSequence,
                 resizeViewDp,
-                settingsState.rollScore,
+                stateFlowZoom.rollScore,
                 isNewRollEvent
             )
 
@@ -281,7 +272,6 @@ private fun ZoomRollHistoryItem(
                         zoomRollsAndroidViewModel,
                         roll,
                         zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
-                        settingsState,
                         groupHistory,
                         resizeViewDp,
                     )
@@ -406,7 +396,6 @@ private fun RollDetails(
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     roll: Roll,
     dice: Dice?,
-    settingsState: SettingsState,
     groupHistory: GroupHistory,
     resizeViewDp: Dp,
 ) {
@@ -414,7 +403,6 @@ private fun RollDetails(
         zoomRollsAndroidViewModel,
         roll,
         dice,
-        settingsState,
         groupHistory,
         resizeViewDp
     )
@@ -425,33 +413,36 @@ private fun RollDetailsContent(
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     roll: Roll,
     dice: Dice?,
-    settingsState: SettingsState,
     groupHistory: GroupHistory,
     resizeViewDp: Dp,
 ) {
+    val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        if (settingsState.groupTitle) RollGroupTitle(groupHistory, roll)
+        if (stateFlowZoom.groupTitle) RollGroupTitle(groupHistory, roll)
 
-        if (settingsState.diceTitle && dice != null) RollDiceTitle(dice, roll)
+        if (stateFlowZoom.diceTitle && dice != null) RollDiceTitle(dice, roll)
 
-        if (settingsState.rollBehaviour) ZoomSideRollBehaviour(
+        if (stateFlowZoom.rollBehaviour) ZoomSideRollBehaviour(
             roll,
             resizeViewDp
         )
 
         RollImages(
-            settingsState.sideNumber,
-            settingsState.sideSVG,
+            stateFlowZoom.sideNumber,
+            stateFlowZoom.sideSVG,
             zoomRollsAndroidViewModel,
             dice,
             roll,
             resizeViewDp
         )
 
-        if (settingsState.sideDescription && dice != null) {
+        if (stateFlowZoom.sideDescription && dice != null) {
             Box(Modifier.padding(bottom = 12.dp)) {
                 ZoomSideDescription(
                     zoomRollsAndroidViewModel,

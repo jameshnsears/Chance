@@ -75,7 +75,12 @@ class RepositoryImportValidation(private val currentAppVersion: String) {
             throw RepositoryImportException(RepositoryImportStatus.JSON_FILE_UNKNOWN_VERSION)
         }
 
-        val schemas = if (jsonVersion == "2.5.0") {
+        val schemas = if (
+            jsonVersion == "2.5.0"
+            ||
+            jsonVersion == "2.5.1"
+            )
+        {
             Schemas(
                 RepositoryImportSchemaV250.schemaSettings,
                 RepositoryImportSchemaV250.schemaDice,

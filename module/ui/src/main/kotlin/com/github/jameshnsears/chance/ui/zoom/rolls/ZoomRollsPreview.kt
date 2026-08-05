@@ -14,6 +14,8 @@ import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsCoreHelper
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsSelectionHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -58,6 +60,8 @@ fun ZoomRollPreview() {
                     repositoryBag,
                     repositoryRoll,
                     repositoryGroup,
+                    RollsSelectionHelper(repositoryBag, repositoryGroup),
+                    RollsCoreHelper(repositoryRoll)
                 ),
                 ZoomRollsAndroidViewModel(
                     application,

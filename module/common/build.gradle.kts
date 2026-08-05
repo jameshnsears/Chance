@@ -103,4 +103,6 @@ dependencies {
     testFixturesImplementation(libs.kotlinx.coroutines.test)
     testFixturesImplementation(libs.timber)
     testFixturesImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
 }

@@ -15,6 +15,7 @@
     <ID>LargeClass:DialogDiceAndroidViewModelUnitTest.kt$DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper</ID>
     <ID>LongMethod:DialogDiceTest.kt$DialogDiceTest$@Test fun dialogDice()</ID>
     <ID>LongMethod:Groups.kt$@Composable fun Groups( groupsAndroidViewModel: GroupsAndroidViewModel, )</ID>
+    <ID>MatchingDeclarationName:NavKey.kt$ChanceNavKey : NavKey</ID>
     <ID>MatchingDeclarationName:TabRow.kt$TabRowTestTag</ID>
     <ID>RethrowCaughtException:DiceAndroidViewModelUnitTest.kt$DiceAndroidViewModelUnitTest$throw e</ID>
     <ID>SwallowedException:RollsScoreTtsPlayer.kt$RollsScoreTtsPlayer$e: NoClassDefFoundError</ID>

@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:RepositoryRollProtocolBufferInterface.kt$RepositoryRollProtocolBufferInterface$fun mapRollHistoryProtocolBufferIntoRollHistory( rollHistoryProtocolBuffer: RollHistoryProtocolBuffer, diceBag: DiceBag? = null ): RollHistory</ID>
+    <ID>VariableNaming:RepositoryRollImageCacheUnitTest.kt$RepositoryRollImageCacheUnitTest$private val IMAGE_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg"</ID>
+    <ID>VariableNaming:RepositoryRollJsonOptimizationUnitTest.kt$RepositoryRollJsonOptimizationUnitTest$private val IMAGE_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg"</ID>
+    <ID>VariableNaming:RepositoryRollStorageRefactorTest.kt$RepositoryRollStorageRefactorTest$private val IMAGE_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg"</ID>
+  </CurrentIssues>
+</SmellBaseline>

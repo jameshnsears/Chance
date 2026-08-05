@@ -49,13 +49,23 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
 
     override suspend fun jsonExport(): String {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("title"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("colour"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("selected"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("multiplierValue"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("explode"))
-        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("displayIndex"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("explodeWhen"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("explodeValue"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("modifyScore"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("modifyScoreValue"))
+        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("displayIndex"))
+
+        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("number"))
+        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("numberColour"))
         fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("imageDrawableId"))
         fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("imageBase64"))
         fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("description"))
+        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("descriptionColour"))
 
         val bagProtocolBuffer = diceBagProtocolBufferStateFlow.value
         val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)

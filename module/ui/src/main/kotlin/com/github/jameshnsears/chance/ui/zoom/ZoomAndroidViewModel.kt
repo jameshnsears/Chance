@@ -46,6 +46,15 @@ data class ZoomState(
     val firstVisibleItemIndex: Int = 0,
     val firstVisibleItemScrollOffset: Int = 0,
     val horizontalScrollPositions: Map<String, Pair<Int, Int>> = emptyMap(),
+    val rollIndexTime: Boolean = false,
+    val rollScore: Boolean = false,
+    val rollScoreTTS: Boolean = false,
+    val diceTitle: Boolean = false,
+    val rollBehaviour: Boolean = false,
+    val sideNumber: Boolean = true,
+    val sideDescription: Boolean = false,
+    val sideSVG: Boolean = true,
+    val groupTitle: Boolean = false,
 )
 
 abstract class ZoomAndroidViewModel(
@@ -61,15 +70,15 @@ abstract class ZoomAndroidViewModel(
     )
 
     val stateFlowZoom: StateFlow<ZoomState> = combine(
-        repositorySettings.fetch().distinctUntilChanged(),
-        repositoryBag.fetch().distinctUntilChanged(),
+        repositorySettings.fetch(),
+        repositoryBag.fetch(),
         repositoryRoll.fetch().map { rollHistory ->
             val sortedHistory = LinkedHashMap<Long, List<Roll>>()
             rollHistory.keys.sortedDescending().forEach { key ->
                 sortedHistory[key] = rollHistory[key]!!
             }
             sortedHistory
-        }.distinctUntilChanged(),
+        },
         _scrollState
     ) { settings, diceBag, rollHistory, scrollData ->
         ZoomState(
@@ -83,7 +92,16 @@ abstract class ZoomAndroidViewModel(
                 },
             firstVisibleItemIndex = scrollData.first,
             firstVisibleItemScrollOffset = scrollData.second,
-            horizontalScrollPositions = scrollData.third
+            horizontalScrollPositions = scrollData.third,
+            rollIndexTime = settings.rollIndexTime,
+            rollScore = settings.rollScore,
+            rollScoreTTS = settings.rollScoreTTS,
+            diceTitle = settings.diceTitle,
+            rollBehaviour = settings.rollBehaviour,
+            sideNumber = settings.sideNumber,
+            sideDescription = settings.sideDescription,
+            sideSVG = settings.sideSVG,
+            groupTitle = settings.groupTitle,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -122,9 +140,13 @@ abstract class ZoomAndroidViewModel(
             ||
             settings.sideNumber
             ||
-            (settings.sideDescription && descriptionExists)
+            (settings.sideDescription
+                && descriptionExists
+                )
             ||
-            (settings.sideSVG && svgExists)
+            (settings.sideSVG
+                && svgExists
+                )
             ||
             settings.groupTitle
             )

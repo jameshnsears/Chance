@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:SettingsDataImpl.kt$SettingsDataImpl$override fun equals(other: Any?): Boolean</ID>
+    <ID>CyclomaticComplexMethod:SettingsDataTestDouble.kt$SettingsDataTestDouble$override fun equals(other: Any?): Boolean</ID>
+    <ID>UnusedPrivateProperty:GroupDataImpl.kt$GroupDataImpl$bagData: BagDataInterface</ID>
+    <ID>UnusedPrivateProperty:RollHistoryDataImpl.kt$RollHistoryDataImpl$bagData: BagDataInterface</ID>
+    <ID>UnusedPrivateProperty:RollHistoryDataImpl.kt$RollHistoryDataImpl$groupData: GroupDataInterface</ID>
+  </CurrentIssues>
+</SmellBaseline>

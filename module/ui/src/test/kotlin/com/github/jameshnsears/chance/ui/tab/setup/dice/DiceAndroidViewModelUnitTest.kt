@@ -11,9 +11,12 @@ import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.Setti
 import com.github.jameshnsears.chance.data.repo.api.RepositoryImportStatus
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import org.junit.Assert
 import org.junit.Before
@@ -288,35 +291,41 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         Assert.assertEquals(initialGroupHistory.size, fetchedGroupHistory.size)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun waitForResizeValue(
         viewModel: DiceAndroidViewModel,
         expectedValue: Float
     ) {
         try {
-            withTimeout(5_000.milliseconds) {
-                viewModel.stateFlowResize
-                    .filter {
-                        it == expectedValue
-                    }
-                    .first()
+            withContext(Dispatchers.Default.limitedParallelism(1)) {
+                withTimeout(5_000.milliseconds) {
+                    viewModel.stateFlowResize
+                        .filter {
+                            it == expectedValue
+                        }
+                        .first()
+                }
             }
         } catch (e: Exception) {
             throw e
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun waitForImportStatus(
         viewModel: DiceAndroidViewModel,
         expectedStatus: ExportImportStatus = ExportImportStatus.SUCCESS
     ) {
         try {
-            withTimeout(5_000.milliseconds) {
-                viewModel.stateFlowTabBagImport
-                    .filter {
-                        println(it.importStatus)
-                        it.importStatus == expectedStatus
-                    }
-                    .first()
+            withContext(Dispatchers.Default.limitedParallelism(1)) {
+                withTimeout(5_000.milliseconds) {
+                    viewModel.stateFlowTabBagImport
+                        .filter {
+                            println(it.importStatus)
+                            it.importStatus == expectedStatus
+                        }
+                        .first()
+                }
             }
         } catch (e: Exception) {
             throw e

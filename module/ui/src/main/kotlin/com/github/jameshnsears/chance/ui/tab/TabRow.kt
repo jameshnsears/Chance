@@ -1,7 +1,6 @@
 package com.github.jameshnsears.chance.ui.tab
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -10,17 +9,20 @@ import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
 import com.github.jameshnsears.chance.common.R
-import com.github.jameshnsears.chance.common.utility.UtilitySharedPreferencesHelper
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.NavigationState
+import com.github.jameshnsears.chance.ui.navigation.Navigator
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.rolls.TabRoll
 import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceAndroidViewModel
@@ -39,32 +41,47 @@ class TabRowTestTag {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabRow(
+    navigationState: NavigationState,
     diceAndroidViewModel: DiceAndroidViewModel,
     groupsAndroidViewModel: GroupsAndroidViewModel,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel
 ) {
-    val context = LocalContext.current
-    val utilitySharedPreferencesHelper = remember { UtilitySharedPreferencesHelper(context) }
-    val selectedTabIndex = rememberSaveable { mutableIntStateOf(utilitySharedPreferencesHelper.lastTab) }
-    val selectedSubTabIndex = rememberSaveable { mutableIntStateOf(utilitySharedPreferencesHelper.lastSubTab) }
+    val navigator = remember { Navigator(navigationState) }
+
+    val entryProvider = entryProvider {
+        entry<ChanceNavKey.SetupDice> {
+            TabBagDice(
+                diceAndroidViewModel,
+                zoomDiceAndroidViewModel
+            )
+        }
+        entry<ChanceNavKey.SetupGroups> {
+            Groups(
+                groupsAndroidViewModel
+            )
+        }
+        entry<ChanceNavKey.Roll> {
+            TabRoll(
+                rollsAndroidViewModel,
+                zoomRollsAndroidViewModel
+            )
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    val decoratedEntryProvider: (ChanceNavKey) -> NavEntry<NavKey> = { key -> entryProvider(key) as NavEntry<NavKey> }
 
     Column {
-        PrimaryTabs(selectedTabIndex, utilitySharedPreferencesHelper)
+        PrimaryTabs(navigationState, navigator)
 
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            TabContent(
-                selectedTabIndex.intValue,
-                selectedSubTabIndex,
-                utilitySharedPreferencesHelper,
-                diceAndroidViewModel,
-                groupsAndroidViewModel,
-                rollsAndroidViewModel,
-                zoomDiceAndroidViewModel,
-                zoomRollsAndroidViewModel
+            NavDisplay(
+                entries = navigationState.toDecoratedEntries(decoratedEntryProvider),
+                onBack = { navigator.goBack() }
             )
         }
     }
@@ -73,103 +90,63 @@ fun TabRow(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PrimaryTabs(
-    selectedTabIndex: androidx.compose.runtime.MutableIntState,
-    utilitySharedPreferencesHelper: UtilitySharedPreferencesHelper
+    navigationState: NavigationState,
+    navigator: Navigator
 ) {
     val tabs = listOf(
-        stringResource(R.string.tab_setup),
-        stringResource(R.string.tab_roll),
+        stringResource(R.string.tab_setup) to ChanceNavKey.SetupDice,
+        stringResource(R.string.tab_roll) to ChanceNavKey.Roll,
     )
 
-    PrimaryTabRow(
-        modifier = Modifier
-            .testTag(TabRowTestTag.TAB_ROW)
-            .statusBarsPadding(),
-        selectedTabIndex = selectedTabIndex.intValue,
-        containerColor = Color.Transparent,
-        contentColor = MaterialTheme.colorScheme.primary,
-    ) {
-        tabs.forEachIndexed { index, tabName ->
-            Tab(
-                selected = selectedTabIndex.intValue == index,
-                onClick = {
-                    selectedTabIndex.intValue = index
-                    utilitySharedPreferencesHelper.lastTab = index
-                },
-                text = {
-                    Text(
-                        text = tabName,
-                        fontSize = 18.sp,
-                    )
-                }
-            )
-        }
-    }
-}
+    val selectedTabIndex = if (navigationState.topLevelRoute == ChanceNavKey.Roll) 1 else 0
 
-@Composable
-private fun TabContent(
-    selectedTabIndex: Int,
-    selectedSubTabIndex: androidx.compose.runtime.MutableIntState,
-    utilitySharedPreferencesHelper: UtilitySharedPreferencesHelper,
-    diceAndroidViewModel: DiceAndroidViewModel,
-    groupsAndroidViewModel: GroupsAndroidViewModel,
-    rollsAndroidViewModel: RollsAndroidViewModel,
-    zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel,
-    zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel
-) {
-    when (selectedTabIndex) {
-        0 -> {
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                SetupSecondaryTabs(selectedSubTabIndex, utilitySharedPreferencesHelper)
-
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    when (selectedSubTabIndex.intValue) {
-                        1 -> {
-                            Groups(
-                                groupsAndroidViewModel
-                            )
-                        }
-
-                        else -> {
-                            TabBagDice(
-                                diceAndroidViewModel,
-                                zoomDiceAndroidViewModel
-                            )
-                        }
+    Column {
+        PrimaryTabRow(
+            modifier = Modifier
+                .testTag(TabRowTestTag.TAB_ROW)
+                .statusBarsPadding(),
+            selectedTabIndex = selectedTabIndex,
+            containerColor = Color.Transparent,
+            contentColor = MaterialTheme.colorScheme.primary,
+        ) {
+            tabs.forEachIndexed { index, (tabName, route) ->
+                Tab(
+                    selected = selectedTabIndex == index,
+                    onClick = {
+                        navigator.navigate(route)
+                    },
+                    text = {
+                        Text(
+                            text = tabName,
+                            fontSize = 18.sp,
+                        )
                     }
-                }
+                )
             }
         }
 
-        else -> {
-            TabRoll(
-                rollsAndroidViewModel,
-                zoomRollsAndroidViewModel
-            )
+        if (selectedTabIndex == 0) {
+            SetupSecondaryTabs(navigationState, navigator)
         }
     }
 }
 
 @Composable
 private fun SetupSecondaryTabs(
-    selectedSubTabIndex: androidx.compose.runtime.MutableIntState,
-    utilitySharedPreferencesHelper: UtilitySharedPreferencesHelper
+    navigationState: NavigationState,
+    navigator: Navigator
 ) {
+    val selectedSubTabIndex = if (navigationState.topLevelRoute == ChanceNavKey.SetupGroups) 1 else 0
+
     SecondaryTabRow(
-        selectedTabIndex = selectedSubTabIndex.intValue,
+        selectedTabIndex = selectedSubTabIndex,
         containerColor = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.primary,
     ) {
         Tab(
-            selected = selectedSubTabIndex.intValue == 0,
+            selected = selectedSubTabIndex == 0,
             onClick = {
-                selectedSubTabIndex.intValue = 0
-                utilitySharedPreferencesHelper.lastSubTab = 0
+                navigator.navigate(ChanceNavKey.SetupDice)
             },
             text = {
                 Text(
@@ -178,10 +155,9 @@ private fun SetupSecondaryTabs(
             }
         )
         Tab(
-            selected = selectedSubTabIndex.intValue == 1,
+            selected = selectedSubTabIndex == 1,
             onClick = {
-                selectedSubTabIndex.intValue = 1
-                utilitySharedPreferencesHelper.lastSubTab = 1
+                navigator.navigate(ChanceNavKey.SetupGroups)
             },
             text = {
                 Text(

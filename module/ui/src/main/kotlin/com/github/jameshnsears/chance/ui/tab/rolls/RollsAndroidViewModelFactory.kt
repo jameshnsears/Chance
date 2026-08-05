@@ -18,14 +18,17 @@ class RollsAndroidViewModelFactory(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RollsAndroidViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return RollsAndroidViewModel(
+            val viewModel = RollsAndroidViewModel(
                 application,
                 repositorySettings,
                 repositoryBag,
                 repositoryRoll,
-                repositoryGroup
-            ) as T
+                repositoryGroup,
+                RollsSelectionHelper(repositoryBag, repositoryGroup),
+                RollsCoreHelper(repositoryRoll)
+            )
+            @Suppress("UNCHECKED_CAST")
+            return viewModel as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

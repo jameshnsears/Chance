@@ -1,4 +1,4 @@
-An easy to use, reliable, highly performant dice rolling app.
+An easy-to-use dice rolling app, featuring:
 
 &bull; Story cubes
 &bull; Decision dice
@@ -6,10 +6,10 @@ An easy to use, reliable, highly performant dice rolling app.
 &bull; Dice groups
 &bull; Customisable roll history
 &bull; Optimised Export/Import
-&bull; Yes/No shortcut
-&bull; Works offline
 &bull; Persistant data
+&bull; Works offline
+&bull; Yes/No shortcut
 &bull; Open Source
-&bull; Free &amp; no ads
+&bull; Free/No ads
 
-Feedback (especially via GitHub Issues) is always appreciated :-)
+Feedback (especially via GitHub Issues) is always appreciated.

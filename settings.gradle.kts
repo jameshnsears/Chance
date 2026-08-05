@@ -20,6 +20,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Chance"
 include(":app")
+include(":module:baselineprofile")
 include(":module:common")
 include(":module:data-common")
 include(":module:data-domain")

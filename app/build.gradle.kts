@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.com.android.application)
+    alias(libs.plugins.baselineprofile)
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose)
     alias(libs.plugins.testretry)
 }
@@ -15,11 +16,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
 
         // NOTE: value not in .toml due to fdroid build process?
-        versionCode = 223137
+        versionCode = 233137
         println("versionCode=$versionCode")
 
         // NOTE: .toml also contains this value for the module:ui - fdroid again
-        versionName = "2.5.0"
+        versionName = "2.5.1"
         println("versionName=$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -143,6 +144,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(testFixtures(project(":module:common")))
     androidTestUtil(libs.androidx.test.orchestrator)
+    "baselineProfile"(project(":module:baselineprofile"))
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.leakcanary.android)
     "googleplayImplementation"(libs.com.google.firebase.crashlytics)

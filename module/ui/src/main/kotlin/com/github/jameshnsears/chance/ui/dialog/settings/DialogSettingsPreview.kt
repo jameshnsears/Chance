@@ -13,6 +13,8 @@ import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsCoreHelper
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsSelectionHelper
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Preview
@@ -41,7 +43,12 @@ fun DialogSettingsPreview() {
                     repositoryFactory.repositorySettings,
                     repositoryFactory.repositoryBag,
                     repositoryFactory.repositoryRoll,
-                    repositoryFactory.repositoryGroup
+                    repositoryFactory.repositoryGroup,
+                    RollsSelectionHelper(
+                        repositoryFactory.repositoryBag,
+                        repositoryFactory.repositoryGroup
+                    ),
+                    RollsCoreHelper(repositoryFactory.repositoryRoll)
                 )
             )
         }
