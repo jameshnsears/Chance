@@ -147,7 +147,7 @@ private fun RollMultiplier(cardRollService: CardRollService) {
         GenericExposedDropdownMenuBox(
             cardRollService::rollMultiplierValue,
             CardRollTestTag.ROLL_MULTIPLIER_VALUE,
-            DiceRollValues.multiplierValues,
+            DiceRollValues.MULTIPLIER_VALUES,
             stateFlowCardRoll.value.rollMultiplierValue.toString(),
             90.dp
         )
@@ -281,7 +281,7 @@ private fun RollExplodeDropdownWhen(
     GenericExposedDropdownMenuBox(
         cardRollService::rollExplodeWhen,
         CardRollTestTag.ROLL_EXPLODE_WHEN,
-        DiceRollValues.explodeWhenValues,
+        DiceRollValues.EXPLODE_WHEN_VALUES,
         stateFlow.value.rollExplodeWhen,
         80.dp,
         enabled
@@ -338,7 +338,7 @@ fun RollScore(cardRollService: CardRollService) {
         GenericExposedDropdownMenuBox(
             cardRollService::rollModifyScoreValue,
             CardRollTestTag.ROLL_MODIFY_SCORE_VALUE,
-            DiceRollValues.modifyScoreValues,
+            DiceRollValues.MODIFY_SCORE_VALUES,
             stateFlowCardRoll.value.rollModifyScoreValue.toString(),
             90.dp,
             rollModifyScore

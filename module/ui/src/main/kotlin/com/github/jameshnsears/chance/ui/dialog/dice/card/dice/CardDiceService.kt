@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.ui.dialog.dice.card.dice
 
 import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -124,7 +125,7 @@ class CardDiceService(
 
     fun diceSidesSize(sideSize: String) {
         val sideSizeInt = sideSize.toIntOrNull()
-        isSidesValid = sideSizeInt != null && sideSizeInt in 2..100
+        isSidesValid = sideSizeInt != null && sideSizeInt in DiceRollValues.SIDES_MIN..DiceRollValues.SIDES_MAX
 
         _stateFlowCardDice.update {
             it.copy(

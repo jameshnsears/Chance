@@ -1,5 +1,5 @@
 {
-  "version": "2.5.0",
+  "version": "2.6.0",
   "settings": {
     "rollIndexTime": true,
     "rollScore": false,
@@ -14,7 +14,8 @@
     "rollScoreTTS": false,
     "shakeToRoll": false,
     "resizeZoom": 2.0,
-    "groupTitle": true
+    "groupTitle": true,
+    "history": true
   },
   "bag": {
     "dice": [
@@ -243,6 +244,15 @@
         "side": [
           {
             "uuid": "09dc0fad-298f-48e1-8450-dfacdddaa7e3",
+            "number": 7,
+            "numberColour": "FFFFFFFF",
+            "imageDrawableId": 0,
+            "imageBase64": "",
+            "description": "",
+            "descriptionColour": "FF6650a4"
+          },
+          {
+            "uuid": "09dc0fad-298f-48e1-8450-dfacdddaa7e3",
             "number": 6,
             "numberColour": "FFFFFFFF",
             "imageDrawableId": 0,
@@ -296,7 +306,7 @@
             "descriptionColour": "FF6650a4"
           }
         ],
-        "title": "3d6+5",
+        "title": "3d7+5",
         "colour": "FF6650a4",
         "selected": false,
         "multiplierValue": 3,

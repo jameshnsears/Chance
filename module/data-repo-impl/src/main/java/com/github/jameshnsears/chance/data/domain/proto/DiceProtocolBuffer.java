@@ -83,7 +83,6 @@ public final class DiceProtocolBuffer extends
     private int modifyScoreValue_ = 0;
     private int displayIndex_ = 0;
     private byte memoizedIsInitialized = -1;
-
     // Use DiceProtocolBuffer.newBuilder() to construct.
     private DiceProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -97,7 +96,7 @@ public final class DiceProtocolBuffer extends
         explodeWhen_ = "";
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.Dice.internal_static_com_github_jameshnsears_chance_data_domain_proto_DiceProtocolBuffer_descriptor;
     }
@@ -486,7 +485,7 @@ public final class DiceProtocolBuffer extends
     }
 
     @java.lang.Override
-    public boolean isInitialized() {
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -513,13 +512,13 @@ public final class DiceProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessage.isStringEmpty(colour_)) {
             com.google.protobuf.GeneratedMessage.writeString(output, 5, colour_);
         }
-        if (selected_) {
+        if (selected_ != false) {
             output.writeBool(6, selected_);
         }
         if (multiplierValue_ != 0) {
             output.writeInt32(7, multiplierValue_);
         }
-        if (explode_) {
+        if (explode_ != false) {
             output.writeBool(8, explode_);
         }
         if (!com.google.protobuf.GeneratedMessage.isStringEmpty(explodeWhen_)) {
@@ -528,7 +527,7 @@ public final class DiceProtocolBuffer extends
         if (explodeValue_ != 0) {
             output.writeInt32(10, explodeValue_);
         }
-        if (modifyScore_) {
+        if (modifyScore_ != false) {
             output.writeBool(11, modifyScore_);
         }
         if (modifyScoreValue_ != 0) {
@@ -563,7 +562,7 @@ public final class DiceProtocolBuffer extends
         if (!com.google.protobuf.GeneratedMessage.isStringEmpty(colour_)) {
             size += com.google.protobuf.GeneratedMessage.computeStringSize(5, colour_);
         }
-        if (selected_) {
+        if (selected_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(6, selected_);
         }
@@ -571,7 +570,7 @@ public final class DiceProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(7, multiplierValue_);
         }
-        if (explode_) {
+        if (explode_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(8, explode_);
         }
@@ -582,7 +581,7 @@ public final class DiceProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(10, explodeValue_);
         }
-        if (modifyScore_) {
+        if (modifyScore_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(11, modifyScore_);
         }
@@ -604,9 +603,10 @@ public final class DiceProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof DiceProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer) obj;
 
         if (getEpoch()
             != other.getEpoch()) return false;
@@ -634,7 +634,8 @@ public final class DiceProtocolBuffer extends
             != other.getModifyScoreValue()) return false;
         if (getDisplayIndex()
             != other.getDisplayIndex()) return false;
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -745,7 +746,7 @@ public final class DiceProtocolBuffer extends
 
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Dice.internal_static_com_github_jameshnsears_chance_data_domain_proto_DiceProtocolBuffer_descriptor;
         }
@@ -923,13 +924,13 @@ public final class DiceProtocolBuffer extends
                 bitField0_ |= 0x00000010;
                 onChanged();
             }
-            if (other.getSelected()) {
+            if (other.getSelected() != false) {
                 setSelected(other.getSelected());
             }
             if (other.getMultiplierValue() != 0) {
                 setMultiplierValue(other.getMultiplierValue());
             }
-            if (other.getExplode()) {
+            if (other.getExplode() != false) {
                 setExplode(other.getExplode());
             }
             if (!other.getExplodeWhen().isEmpty()) {
@@ -940,7 +941,7 @@ public final class DiceProtocolBuffer extends
             if (other.getExplodeValue() != 0) {
                 setExplodeValue(other.getExplodeValue());
             }
-            if (other.getModifyScore()) {
+            if (other.getModifyScore() != false) {
                 setModifyScore(other.getModifyScore());
             }
             if (other.getModifyScoreValue() != 0) {
@@ -955,7 +956,7 @@ public final class DiceProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
 
@@ -1185,7 +1186,7 @@ public final class DiceProtocolBuffer extends
         }
 
         private void ensureSideIsMutable() {
-            if ((bitField0_ & 0x00000004) == 0) {
+            if (!((bitField0_ & 0x00000004) != 0)) {
                 side_ = new java.util.ArrayList<com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer>(side_);
                 bitField0_ |= 0x00000004;
             }

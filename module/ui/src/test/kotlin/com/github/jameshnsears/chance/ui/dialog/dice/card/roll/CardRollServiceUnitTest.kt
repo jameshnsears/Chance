@@ -23,7 +23,7 @@ class CardRollServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         assertTrue(stateFlow.rollMultiplierValue == 2)
         assertTrue(stateFlow.rollMultiplierValue == diceInDialogBag.multiplierValue)
 
-        val newMultiplierValue = DiceRollValues.multiplierValues[1]
+        val newMultiplierValue = DiceRollValues.MULTIPLIER_VALUES[1]
 
         cardRollViewModel.rollMultiplierValue(newMultiplierValue)
 
@@ -43,7 +43,7 @@ class CardRollServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         )
 
         assertTrue(stateFlow.rollExplode == diceInDialogBag.explode)
-        assertTrue(stateFlow.rollExplodeWhen == DiceRollValues.explodeWhenValues[0])
+        assertTrue(stateFlow.rollExplodeWhen == DiceRollValues.EXPLODE_WHEN_VALUES[0])
         assertTrue(stateFlow.rollExplodeValue == 1)
         assertTrue(stateFlow.rollExplodeAvailableValues.size == 6)
 
@@ -51,7 +51,7 @@ class CardRollServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val newExplodeValue = 4
 
         cardRollViewModel.rollExplode(newExplode)
-        cardRollViewModel.rollExplodeWhen(DiceRollValues.explodeWhenValues[0])
+        cardRollViewModel.rollExplodeWhen(DiceRollValues.EXPLODE_WHEN_VALUES[0])
         cardRollViewModel.rollExplodeValue(newExplodeValue.toString())
 
         stateFlow = cardRollViewModel.stateFlowCardRoll.value
@@ -69,7 +69,7 @@ class CardRollServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
             dialogBagAndroidViewModel
         )
 
-        cardRollViewModel.rollExplodeWhen(DiceRollValues.explodeWhenValues[1])
+        cardRollViewModel.rollExplodeWhen(DiceRollValues.EXPLODE_WHEN_VALUES[1])
 
         val stateFlow = cardRollViewModel.stateFlowCardRoll.value
 
@@ -87,7 +87,7 @@ class CardRollServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
             dialogBagAndroidViewModel
         )
 
-        cardRollViewModel.rollExplodeWhen(DiceRollValues.explodeWhenValues[2])
+        cardRollViewModel.rollExplodeWhen(DiceRollValues.EXPLODE_WHEN_VALUES[2])
 
         val stateFlow = cardRollViewModel.stateFlowCardRoll.value
 
@@ -107,11 +107,11 @@ class CardRollServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         )
 
         assertTrue(stateFlow.rollModifyScore == diceInDialogBag.modifyScore)
-        assertTrue(stateFlow.rollModifyScoreValue == DiceRollValues.modifyScoreValues[0].toInt())
+        assertTrue(stateFlow.rollModifyScoreValue == DiceRollValues.MODIFY_SCORE_VALUES[0].toInt())
         assertTrue(stateFlow.rollModifyScoreValue == diceInDialogBag.modifyScoreValue)
 
         val newModifyScore = true
-        val newModifyScoreValue = DiceRollValues.multiplierValues[1]
+        val newModifyScoreValue = DiceRollValues.MULTIPLIER_VALUES[1]
 
         cardRollViewModel.rollModifyScore(newModifyScore)
         cardRollViewModel.rollModifyScoreValue(newModifyScoreValue)

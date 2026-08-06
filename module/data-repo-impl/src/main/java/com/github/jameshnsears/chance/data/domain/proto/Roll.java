@@ -11,7 +11,7 @@ public final class Roll {
     static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internal_static_com_github_jameshnsears_chance_data_domain_proto_RollProtocolBuffer_fieldAccessorTable;
-    private static final com.google.protobuf.Descriptors.FileDescriptor
+    private static com.google.protobuf.Descriptors.FileDescriptor
         descriptor;
 
     static {
@@ -50,7 +50,6 @@ public final class Roll {
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Side.getDescriptor();
     }
-
     private Roll() {
     }
 

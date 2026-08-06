@@ -36,6 +36,17 @@
 
     <issue
         id="AndroidGradlePluginVersion"
+        message="A newer version of Gradle than 9.6.1 is available: 9.7.0"
+        errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-9.6.1-bin.zip"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="../gradle/wrapper/gradle-wrapper.properties"
+            line="4"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
         message="A newer version of com.android.application than 9.2.1 is available: 9.3.1"
         errorLine1="com-android-application = &quot;9.2.1&quot;"
         errorLine2="                          ~~~~~~~">
@@ -69,24 +80,13 @@
 
     <issue
         id="NewerVersionAvailable"
-        message="A newer version of io.nlopez.compose.rules:detekt than 0.4.23 is available: 0.6.3"
-        errorLine1="io-nlopez-compose-rules-detekt = &quot;0.4.23&quot;"
-        errorLine2="                                 ~~~~~~~~">
+        message="A newer version of io.nlopez.compose.rules:detekt than 0.6.3 is available: 0.6.4"
+        errorLine1="io-nlopez-compose-rules-detekt = &quot;0.6.3&quot;"
+        errorLine2="                                 ~~~~~~~">
         <location
             file="../gradle/libs.versions.toml"
             line="28"
             column="34"/>
-    </issue>
-
-    <issue
-        id="NewerVersionAvailable"
-        message="A newer version of org.jetbrains.kotlinx:kotlinx-serialization-json than 1.8.0 is available: 1.11.0"
-        errorLine1="kotlinx-serialization = &quot;1.8.0&quot;"
-        errorLine2="                        ~~~~~~~">
-        <location
-            file="../gradle/libs.versions.toml"
-            line="40"
-            column="25"/>
     </issue>
 
     <issue

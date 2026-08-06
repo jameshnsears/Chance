@@ -116,4 +116,11 @@ public interface SettingsProtocolBufferOrBuilder extends
      * @return The groupTitle.
      */
     boolean getGroupTitle();
+
+    /**
+     * <code>bool history = 16;</code>
+     *
+     * @return The history.
+     */
+    boolean getHistory();
 }

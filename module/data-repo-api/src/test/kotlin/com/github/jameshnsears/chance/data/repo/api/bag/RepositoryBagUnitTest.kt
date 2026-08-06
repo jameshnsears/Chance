@@ -60,8 +60,9 @@ class RepositoryBagUnitTest : UtilityAndroidUnitTestHelper() {
             override suspend fun clear() {}
         }
 
-        val side = Side(uuid = "side-uuid")
-        val dice = Dice(uuid = "dice-uuid", sides = listOf(side))
+        val side1 = Side(uuid = "side-uuid-1")
+        val side2 = Side(uuid = "side-uuid-2")
+        val dice = Dice(uuid = "dice-uuid", sides = listOf(side1, side2))
         val diceBag: DiceBag = mutableListOf(dice)
 
         // Verifies no crash when calling default implementation

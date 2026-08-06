@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.data.repo.api
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import net.pwall.json.schema.JSONSchema
 import timber.log.Timber
 
@@ -12,13 +13,9 @@ data class RepositoryImportData(
     val jsonGroups: JsonNode?
 )
 
-class RepositoryImportValidation(private val currentAppVersion: String) {
+class RepositoryImportValidation {
     var jsonVersion: String = ""
         private set
-
-    companion object {
-        private val VALID_SIDE_COUNTS = setOf(2, 4, 6, 8, 10, 12, 20)
-    }
 
     private data class Schemas(
         val settings: JSONSchema,
@@ -71,21 +68,34 @@ class RepositoryImportValidation(private val currentAppVersion: String) {
 
         jsonVersion = jsonNode.get("version").asText()
 
-        if (isFutureVersion(jsonVersion, currentAppVersion)) {
-            throw RepositoryImportException(RepositoryImportStatus.JSON_FILE_UNKNOWN_VERSION)
-        }
-
-        val schemas = if (
-            jsonVersion == "2.5.0"
-            ||
-            jsonVersion == "2.5.1"
+        if (jsonVersion !in listOf(
+                "2.5.0",
+                "2.5.1",
+                "2.5.2",
+                "2.6.0",
             )
-        {
+        )
+            throw RepositoryImportException(RepositoryImportStatus.JSON_FILE_UNKNOWN_VERSION)
+
+
+        val schemas = if (jsonVersion in listOf(
+                "2.5.0",
+                "2.5.1",
+                "2.5.2",
+            )
+        ) {
             Schemas(
-                RepositoryImportSchemaV250.schemaSettings,
-                RepositoryImportSchemaV250.schemaDice,
-                RepositoryImportSchemaV250.schemaSide,
-                RepositoryImportSchemaV250.schemaGroup
+                RepositoryImportSchemaV25.schemaSettings,
+                RepositoryImportSchemaV25.schemaDice,
+                RepositoryImportSchemaV25.schemaSide,
+                RepositoryImportSchemaV25.schemaGroup
+            )
+        } else if (jsonVersion == "2.6.0") {
+            Schemas(
+                RepositoryImportSchemaV260.schemaSettings,
+                RepositoryImportSchemaV260.schemaDice,
+                RepositoryImportSchemaV260.schemaSide,
+                RepositoryImportSchemaV260.schemaGroup
             )
         } else {
             Schemas(
@@ -144,7 +154,7 @@ class RepositoryImportValidation(private val currentAppVersion: String) {
 
     private fun validateDiceSides(dice: JsonNode, schemaSide: JSONSchema) {
         val sides = dice.get("side")
-        if (sides == null || sides.size() !in VALID_SIDE_COUNTS) {
+        if (sides == null || sides.size() !in DiceRollValues.SIDES_MIN..DiceRollValues.SIDES_MAX) {
             throw RepositoryImportException(RepositoryImportStatus.JSON_SIDE_SIZE)
         }
         sides.forEach { side ->
@@ -201,19 +211,6 @@ class RepositoryImportValidation(private val currentAppVersion: String) {
 
     private fun diceUuids(jsonBag: JsonNode): Set<String> {
         return jsonBag.get("dice")?.mapNotNull { it.get("uuid")?.asText() }?.toSet() ?: emptySet()
-    }
-
-    private fun isFutureVersion(version: String, currentAppVersion: String): Boolean {
-        val v1 = version.split(".").map { it.toIntOrNull() ?: 0 }
-        val v2 = currentAppVersion.split(".").map { it.toIntOrNull() ?: 0 }
-
-        for (i in 0 until maxOf(v1.size, v2.size)) {
-            val part1 = v1.getOrElse(i) { 0 }
-            val part2 = v2.getOrElse(i) { 0 }
-            if (part1 > part2) return true
-            if (part1 < part2) return false
-        }
-        return false
     }
 
     private fun validateJsonIsNotEmpty(rootNode: JsonNode) {

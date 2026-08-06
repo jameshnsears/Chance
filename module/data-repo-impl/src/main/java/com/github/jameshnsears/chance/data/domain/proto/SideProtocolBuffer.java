@@ -89,7 +89,7 @@ public final class SideProtocolBuffer extends
         imageBase64Uuid_ = "";
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
     }
@@ -454,7 +454,7 @@ public final class SideProtocolBuffer extends
     }
 
     @java.lang.Override
-    public boolean isInitialized() {
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -535,9 +535,10 @@ public final class SideProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof SideProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer) obj;
 
         if (!getUuid()
             .equals(other.getUuid())) return false;
@@ -555,7 +556,8 @@ public final class SideProtocolBuffer extends
             .equals(other.getDescriptionColour())) return false;
         if (!getImageBase64Uuid()
             .equals(other.getImageBase64Uuid())) return false;
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -642,7 +644,7 @@ public final class SideProtocolBuffer extends
 
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Side.internal_static_com_github_jameshnsears_chance_data_domain_proto_SideProtocolBuffer_descriptor;
         }
@@ -782,7 +784,7 @@ public final class SideProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
 

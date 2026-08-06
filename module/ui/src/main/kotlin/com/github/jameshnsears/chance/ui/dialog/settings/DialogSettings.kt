@@ -24,6 +24,7 @@ import androidx.compose.material.icons.outlined.FormatListNumbered
 import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.PhonelinkRing
+import androidx.compose.material.icons.outlined.RecentActors
 import androidx.compose.material.icons.outlined.RecordVoiceOver
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Score
@@ -156,6 +157,14 @@ private fun SettingsRollInfoSection(
     rollsAndroidViewModel: RollsAndroidViewModel,
     state: SettingsState
 ) {
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_history),
+        Icons.Outlined.RecentActors,
+        state.history,
+        rollsAndroidViewModel::settingsHistory,
+        DialogSettingsTestTag.SETTINGS_HISTORY
+    )
+
     CommonSwitch(
         stringResource(R.string.tab_roll_settings_roll_time),
         Icons.Outlined.Schedule,

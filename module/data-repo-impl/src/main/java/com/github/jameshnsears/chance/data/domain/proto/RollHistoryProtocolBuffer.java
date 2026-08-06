@@ -65,7 +65,7 @@ public final class RollHistoryProtocolBuffer extends
     private RollHistoryProtocolBuffer() {
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor;
     }
@@ -259,7 +259,7 @@ public final class RollHistoryProtocolBuffer extends
     }
 
     @java.lang.Override
-    public boolean isInitialized() {
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -306,13 +306,15 @@ public final class RollHistoryProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof RollHistoryProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer) obj;
 
         if (!internalGetValues().equals(
             other.internalGetValues())) return false;
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -363,7 +365,7 @@ public final class RollHistoryProtocolBuffer extends
         static final com.google.protobuf.MapEntry<
             java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer> defaultEntry =
             com.google.protobuf.MapEntry
-                .newDefaultInstance(
+                .<java.lang.Long, com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer>newDefaultInstance(
                     com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_ValuesEntry_descriptor,
                     com.google.protobuf.WireFormat.FieldType.INT64,
                     0L,
@@ -394,7 +396,7 @@ public final class RollHistoryProtocolBuffer extends
 
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.RollHistory.internal_static_com_github_jameshnsears_chance_data_domain_proto_RollHistoryProtocolBuffer_descriptor;
         }
@@ -497,9 +499,11 @@ public final class RollHistoryProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
+
+        ;
 
         @java.lang.Override
         public Builder mergeFrom(

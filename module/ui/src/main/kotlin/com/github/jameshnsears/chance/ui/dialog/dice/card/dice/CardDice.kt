@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.ui.dialog.colour.DialogColourPicker
 import com.github.jameshnsears.chance.ui.dialog.dice.card.BagCardColourSample
 
@@ -124,7 +125,7 @@ private fun DiceSidesTextField(
         OutlinedTextField(
             value = arbitrarySidesValue.value,
             onValueChange = { newValue ->
-                val filtered = newValue.filter { it.isDigit() }.take(3)
+                val filtered = newValue.filter { it.isDigit() }.take(4)
                 arbitrarySidesValue.value = filtered
                 cardDiceService.diceSidesSize(filtered)
             },
@@ -132,7 +133,8 @@ private fun DiceSidesTextField(
                 .width(120.dp)
                 .testTag(CardDiceTestTag.DICE_SIDES),
             label = { Text(stringResource(R.string.dialog_bag_dice_sides_arbitrary_info)) },
-            isError = arbitrarySidesValue.value.toIntOrNull()?.let { it !in 2..100 } ?: true,
+            isError = arbitrarySidesValue.value.toIntOrNull()
+                ?.let { it !in DiceRollValues.SIDES_MIN..DiceRollValues.SIDES_MAX } ?: true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number
             ),

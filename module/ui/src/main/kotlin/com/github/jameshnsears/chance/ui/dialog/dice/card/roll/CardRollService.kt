@@ -86,7 +86,7 @@ class CardRollService(
 
     fun rollExplodeWhen(equalityValue: String) {
         when (equalityValue) {
-            DiceRollValues.explodeWhenValues[1] -> {
+            DiceRollValues.EXPLODE_WHEN_VALUES[1] -> {
                 _stateFlow.update { cardRollState ->
                     cardRollState.copy(
                         rollExplodeWhen = equalityValue,
@@ -96,7 +96,7 @@ class CardRollService(
                 }
             }
 
-            DiceRollValues.explodeWhenValues[2] -> {
+            DiceRollValues.EXPLODE_WHEN_VALUES[2] -> {
                 _stateFlow.update { cardRollState ->
                     cardRollState.copy(
                         rollExplodeWhen = equalityValue,

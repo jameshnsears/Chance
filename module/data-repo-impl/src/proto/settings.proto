@@ -6,22 +6,19 @@ package com.github.jameshnsears.chance.data.domain.proto;
 
 message SettingsProtocolBuffer {
   int32 resize = 1 [deprecated = true];
-
   bool rollIndexTime = 2;
   bool rollScore = 3;
-
   bool diceTitle = 4;
   bool sideNumber = 5;
   bool behaviour = 6;
   bool sideDescription = 7;
   bool sideSVG = 8;
-
   bool rollSound = 9;
   bool shuffle = 10;
   bool haptics = 11;
   bool rollScoreTTS = 12;
   bool shakeToRoll = 13;
-
   float resizeZoom = 14;
   bool groupTitle = 15;
+  bool history = 16;
 }

@@ -55,6 +55,7 @@ data class ZoomState(
     val sideDescription: Boolean = false,
     val sideSVG: Boolean = true,
     val groupTitle: Boolean = false,
+    val history: Boolean = true,
 )
 
 abstract class ZoomAndroidViewModel(
@@ -102,6 +103,7 @@ abstract class ZoomAndroidViewModel(
             sideDescription = settings.sideDescription,
             sideSVG = settings.sideSVG,
             groupTitle = settings.groupTitle,
+            history = settings.history,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -149,6 +151,8 @@ abstract class ZoomAndroidViewModel(
                 )
             ||
             settings.groupTitle
+            ||
+            settings.history
             )
     }
 
@@ -211,7 +215,7 @@ abstract class ZoomAndroidViewModel(
             10 -> R.drawable.d10
             12 -> R.drawable.d12
             20 -> R.drawable.d4_d8_d20
-            else -> R.drawable.d2_d100
+            else -> R.drawable.d2_d1000
         }
     }
 

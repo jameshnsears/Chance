@@ -53,6 +53,7 @@ data class SettingsState(
     val shakeToRoll: Boolean,
     val rollSound: Boolean,
     val groupTitle: Boolean,
+    val history: Boolean,
 ) {
     fun isSettingsNotEnabled() = (
         !rollIndexTime
@@ -63,6 +64,7 @@ data class SettingsState(
             && !sideDescription
             && !sideSVG
             && !groupTitle
+            && !history
         )
 }
 
@@ -91,6 +93,7 @@ class RollsAndroidViewModel(
                 rollSound = settings.rollSound,
                 shuffle = settings.shuffle,
                 groupTitle = settings.groupTitle,
+                history = settings.history,
             )
         }.distinctUntilChanged()
         .stateIn(
@@ -110,6 +113,7 @@ class RollsAndroidViewModel(
                 shakeToRoll = false,
                 rollSound = false,
                 groupTitle = false,
+                history = true,
             )
         )
 
@@ -283,6 +287,7 @@ class RollsAndroidViewModel(
     fun settingsSideSVG(checked: Boolean) = updateSettings { it.sideSVG = checked }
     fun settingsBehaviour(checked: Boolean) = updateSettings { it.rollBehaviour = checked }
     fun settingsGroupTitle(checked: Boolean) = updateSettings { it.groupTitle = checked }
+    fun settingsHistory(checked: Boolean) = updateSettings { it.history = checked }
     fun settingsShuffle(checked: Boolean) = updateSettings { it.shuffle = checked }
     fun settingsUseHaptics(checked: Boolean) = updateSettings { it.haptics = checked }
     fun settingsShakeToRoll(checked: Boolean) = updateSettings { it.shakeToRoll = checked }

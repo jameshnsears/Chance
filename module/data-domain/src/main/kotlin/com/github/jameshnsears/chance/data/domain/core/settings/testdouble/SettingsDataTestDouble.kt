@@ -19,7 +19,8 @@ class SettingsDataTestDouble(
     override var shakeToRoll: Boolean = false,
     override var rollSound: Boolean = false,
     override var shuffle: Boolean = false,
-    override var groupTitle: Boolean = true
+    override var groupTitle: Boolean = true,
+    override var history: Boolean = true
 ) : SettingsDataInterface {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -40,6 +41,7 @@ class SettingsDataTestDouble(
         if (shuffle != other.shuffle) return false
         if (shakeToRoll != other.shakeToRoll) return false
         if (groupTitle != other.groupTitle) return false
+        if (history != other.history) return false
 
         return true
     }
@@ -59,6 +61,7 @@ class SettingsDataTestDouble(
         result = 31 * result + shuffle.hashCode()
         result = 31 * result + shakeToRoll.hashCode()
         result = 31 * result + groupTitle.hashCode()
+        result = 31 * result + history.hashCode()
         return result
     }
 }

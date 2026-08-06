@@ -29,6 +29,7 @@ interface RepositorySettingsProtocolBufferInterface : RepositorySettingsInterfac
         settingsProtocolBufferBuilder.setShakeToRoll(settingsData.shakeToRoll)
 
         settingsProtocolBufferBuilder.setGroupTitle(settingsData.groupTitle)
+        settingsProtocolBufferBuilder.setHistory(settingsData.history)
 
         settingsProtocolBufferBuilder.build()
     }
@@ -54,6 +55,7 @@ interface RepositorySettingsProtocolBufferInterface : RepositorySettingsInterfac
             shuffle = settingsProtocolBuffer.shuffle,
             shakeToRoll = settingsProtocolBuffer.shakeToRoll,
             groupTitle = settingsProtocolBuffer.groupTitle,
+            history = settingsProtocolBuffer.history,
         )
     }
 

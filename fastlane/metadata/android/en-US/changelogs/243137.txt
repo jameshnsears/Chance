@@ -1,0 +1,6 @@
+- Fix: Import dice size validation
+- New: Increase maximum dice size to d1000
+- New: Improve import error messages
+- New: Bypass SAF caching on import
+- Dev: Bump dependencies
+- Dev: Android Studio Quail 1 | 2026.1.1 Patch 2

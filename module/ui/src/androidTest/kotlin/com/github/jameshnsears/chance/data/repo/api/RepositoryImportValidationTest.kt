@@ -73,7 +73,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
                 "]"
 
             try {
-                val validator = RepositoryImportValidation(BuildConfig.VERSION)
+                val validator = RepositoryImportValidation()
                 validator.validate(jacksonObjectMapper().readTree(dataImplJson))
             } catch (e: Exception) {
                 Timber.e(e, e.message)
@@ -141,7 +141,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
             val exportedJson = diceAndroidViewModel.exportRepositoriesAsJson()
             val rootNode = jacksonObjectMapper().readTree(exportedJson)
 
-            val validator = RepositoryImportValidation(BuildConfig.VERSION)
+            val validator = RepositoryImportValidation()
             val importData = validator.validate(rootNode)
 
             Assert.assertEquals(BuildConfig.VERSION, importData.version)
@@ -160,7 +160,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
             rootNode.put("version", "99.9.9")
 
             try {
-                val validator = RepositoryImportValidation(BuildConfig.VERSION)
+                val validator = RepositoryImportValidation()
                 validator.validate(rootNode)
                 Assert.fail("Should have thrown RepositoryImportException")
             } catch (e: RepositoryImportException) {
@@ -178,7 +178,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
             (rootNode.get("settings") as com.fasterxml.jackson.databind.node.ObjectNode).put("extraProperty", true)
 
             try {
-                val validator = RepositoryImportValidation(BuildConfig.VERSION)
+                val validator = RepositoryImportValidation()
                 validator.validate(rootNode)
                 Assert.fail("Should have thrown RepositoryImportException")
             } catch (e: RepositoryImportException) {

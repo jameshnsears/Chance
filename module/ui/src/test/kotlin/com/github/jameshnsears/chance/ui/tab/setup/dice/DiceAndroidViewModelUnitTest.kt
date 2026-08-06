@@ -85,14 +85,34 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
-    fun importValidSampleData() = runTest {
+    fun importValidSampleData25n() = runTest {
         val tabBagViewModel = tabBagViewModel()
         Assert.assertEquals(
             ExportImportStatus.READY,
             tabBagViewModel.stateFlowTabBagImport.value.importStatus
         )
 
-        tabBagViewModel.import(resourceAsString("/data/json/import/2.5.0-valid.json"))
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.5.n-valid.json"))
+        waitForImportStatus(tabBagViewModel)
+        Assert.assertEquals(
+            ExportImportStatus.SUCCESS,
+            tabBagViewModel.stateFlowTabBagImport.value.importStatus
+        )
+        Assert.assertEquals(
+            RepositoryImportStatus.SUCCESS,
+            tabBagViewModel.stateFlowTabBagImport.value.importDetail
+        )
+    }
+
+    @Test
+    fun importValidSampleData260() = runTest {
+        val tabBagViewModel = tabBagViewModel()
+        Assert.assertEquals(
+            ExportImportStatus.READY,
+            tabBagViewModel.stateFlowTabBagImport.value.importStatus
+        )
+
+        tabBagViewModel.import(resourceAsString("/data/json/import/2.6.0-valid.json"))
         waitForImportStatus(tabBagViewModel)
         Assert.assertEquals(
             ExportImportStatus.SUCCESS,

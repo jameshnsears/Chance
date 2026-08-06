@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>MagicNumber:BaselineProfileGenerator.kt$BaselineProfileGenerator$1_000</ID>
-    <ID>MagicNumber:StartupBenchmarks.kt$StartupBenchmarks$10_000</ID>
-  </CurrentIssues>
+    <ManuallySuppressedIssues />
+    <CurrentIssues>
+        <ID>MagicNumber:BaselineProfileGenerator.kt$BaselineProfileGenerator$1_000</ID>
+        <ID>MagicNumber:StartupBenchmarks.kt$StartupBenchmarks$10_000</ID>
+    </CurrentIssues>
 </SmellBaseline>

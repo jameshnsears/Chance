@@ -27,6 +27,7 @@ public final class SettingsProtocolBuffer extends
     public static final int SHAKETOROLL_FIELD_NUMBER = 13;
     public static final int RESIZEZOOM_FIELD_NUMBER = 14;
     public static final int GROUPTITLE_FIELD_NUMBER = 15;
+    public static final int HISTORY_FIELD_NUMBER = 16;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer DEFAULT_INSTANCE;
@@ -81,6 +82,7 @@ public final class SettingsProtocolBuffer extends
     private boolean shakeToRoll_ = false;
     private float resizeZoom_ = 0F;
     private boolean groupTitle_ = false;
+    private boolean history_ = false;
     private byte memoizedIsInitialized = -1;
 
     // Use SettingsProtocolBuffer.newBuilder() to construct.
@@ -91,7 +93,7 @@ public final class SettingsProtocolBuffer extends
     private SettingsProtocolBuffer() {
     }
 
-    public static com.google.protobuf.Descriptors.Descriptor
+    public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
         return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
     }
@@ -354,8 +356,18 @@ public final class SettingsProtocolBuffer extends
         return groupTitle_;
     }
 
+    /**
+     * <code>bool history = 16;</code>
+     *
+     * @return The history.
+     */
     @java.lang.Override
-    public boolean isInitialized() {
+    public boolean getHistory() {
+        return history_;
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
         if (isInitialized == 0) return false;
@@ -370,47 +382,50 @@ public final class SettingsProtocolBuffer extends
         if (resize_ != 0) {
             output.writeInt32(1, resize_);
         }
-        if (rollIndexTime_) {
+        if (rollIndexTime_ != false) {
             output.writeBool(2, rollIndexTime_);
         }
-        if (rollScore_) {
+        if (rollScore_ != false) {
             output.writeBool(3, rollScore_);
         }
-        if (diceTitle_) {
+        if (diceTitle_ != false) {
             output.writeBool(4, diceTitle_);
         }
-        if (sideNumber_) {
+        if (sideNumber_ != false) {
             output.writeBool(5, sideNumber_);
         }
-        if (behaviour_) {
+        if (behaviour_ != false) {
             output.writeBool(6, behaviour_);
         }
-        if (sideDescription_) {
+        if (sideDescription_ != false) {
             output.writeBool(7, sideDescription_);
         }
-        if (sideSVG_) {
+        if (sideSVG_ != false) {
             output.writeBool(8, sideSVG_);
         }
-        if (rollSound_) {
+        if (rollSound_ != false) {
             output.writeBool(9, rollSound_);
         }
-        if (shuffle_) {
+        if (shuffle_ != false) {
             output.writeBool(10, shuffle_);
         }
-        if (haptics_) {
+        if (haptics_ != false) {
             output.writeBool(11, haptics_);
         }
-        if (rollScoreTTS_) {
+        if (rollScoreTTS_ != false) {
             output.writeBool(12, rollScoreTTS_);
         }
-        if (shakeToRoll_) {
+        if (shakeToRoll_ != false) {
             output.writeBool(13, shakeToRoll_);
         }
         if (java.lang.Float.floatToRawIntBits(resizeZoom_) != 0) {
             output.writeFloat(14, resizeZoom_);
         }
-        if (groupTitle_) {
+        if (groupTitle_ != false) {
             output.writeBool(15, groupTitle_);
+        }
+        if (history_ != false) {
+            output.writeBool(16, history_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -425,51 +440,51 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(1, resize_);
         }
-        if (rollIndexTime_) {
+        if (rollIndexTime_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(2, rollIndexTime_);
         }
-        if (rollScore_) {
+        if (rollScore_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(3, rollScore_);
         }
-        if (diceTitle_) {
+        if (diceTitle_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(4, diceTitle_);
         }
-        if (sideNumber_) {
+        if (sideNumber_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(5, sideNumber_);
         }
-        if (behaviour_) {
+        if (behaviour_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(6, behaviour_);
         }
-        if (sideDescription_) {
+        if (sideDescription_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(7, sideDescription_);
         }
-        if (sideSVG_) {
+        if (sideSVG_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(8, sideSVG_);
         }
-        if (rollSound_) {
+        if (rollSound_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(9, rollSound_);
         }
-        if (shuffle_) {
+        if (shuffle_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(10, shuffle_);
         }
-        if (haptics_) {
+        if (haptics_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(11, haptics_);
         }
-        if (rollScoreTTS_) {
+        if (rollScoreTTS_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(12, rollScoreTTS_);
         }
-        if (shakeToRoll_) {
+        if (shakeToRoll_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(13, shakeToRoll_);
         }
@@ -477,9 +492,13 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeFloatSize(14, resizeZoom_);
         }
-        if (groupTitle_) {
+        if (groupTitle_ != false) {
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(15, groupTitle_);
+        }
+        if (history_ != false) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeBoolSize(16, history_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -491,9 +510,10 @@ public final class SettingsProtocolBuffer extends
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof SettingsProtocolBuffer other)) {
+        if (!(obj instanceof com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)) {
             return super.equals(obj);
         }
+        com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer other = (com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer) obj;
 
         if (getResize()
             != other.getResize()) return false;
@@ -526,7 +546,10 @@ public final class SettingsProtocolBuffer extends
             other.getResizeZoom())) return false;
         if (getGroupTitle()
             != other.getGroupTitle()) return false;
-        return getUnknownFields().equals(other.getUnknownFields());
+        if (getHistory()
+            != other.getHistory()) return false;
+        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+        return true;
     }
 
     @java.lang.Override
@@ -580,6 +603,9 @@ public final class SettingsProtocolBuffer extends
         hash = (37 * hash) + GROUPTITLE_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
             getGroupTitle());
+        hash = (37 * hash) + HISTORY_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getHistory());
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -636,6 +662,7 @@ public final class SettingsProtocolBuffer extends
         private boolean shakeToRoll_;
         private float resizeZoom_;
         private boolean groupTitle_;
+        private boolean history_;
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.newBuilder()
         private Builder() {
@@ -648,7 +675,7 @@ public final class SettingsProtocolBuffer extends
 
         }
 
-        public static com.google.protobuf.Descriptors.Descriptor
+        public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
             return com.github.jameshnsears.chance.data.domain.proto.Settings.internal_static_com_github_jameshnsears_chance_data_domain_proto_SettingsProtocolBuffer_descriptor;
         }
@@ -680,6 +707,7 @@ public final class SettingsProtocolBuffer extends
             shakeToRoll_ = false;
             resizeZoom_ = 0F;
             groupTitle_ = false;
+            history_ = false;
             return this;
         }
 
@@ -760,6 +788,9 @@ public final class SettingsProtocolBuffer extends
             if (((from_bitField0_ & 0x00004000) != 0)) {
                 result.groupTitle_ = groupTitle_;
             }
+            if (((from_bitField0_ & 0x00008000) != 0)) {
+                result.history_ = history_;
+            }
         }
 
         @java.lang.Override
@@ -777,47 +808,50 @@ public final class SettingsProtocolBuffer extends
             if (other.getResize() != 0) {
                 setResize(other.getResize());
             }
-            if (other.getRollIndexTime()) {
+            if (other.getRollIndexTime() != false) {
                 setRollIndexTime(other.getRollIndexTime());
             }
-            if (other.getRollScore()) {
+            if (other.getRollScore() != false) {
                 setRollScore(other.getRollScore());
             }
-            if (other.getDiceTitle()) {
+            if (other.getDiceTitle() != false) {
                 setDiceTitle(other.getDiceTitle());
             }
-            if (other.getSideNumber()) {
+            if (other.getSideNumber() != false) {
                 setSideNumber(other.getSideNumber());
             }
-            if (other.getBehaviour()) {
+            if (other.getBehaviour() != false) {
                 setBehaviour(other.getBehaviour());
             }
-            if (other.getSideDescription()) {
+            if (other.getSideDescription() != false) {
                 setSideDescription(other.getSideDescription());
             }
-            if (other.getSideSVG()) {
+            if (other.getSideSVG() != false) {
                 setSideSVG(other.getSideSVG());
             }
-            if (other.getRollSound()) {
+            if (other.getRollSound() != false) {
                 setRollSound(other.getRollSound());
             }
-            if (other.getShuffle()) {
+            if (other.getShuffle() != false) {
                 setShuffle(other.getShuffle());
             }
-            if (other.getHaptics()) {
+            if (other.getHaptics() != false) {
                 setHaptics(other.getHaptics());
             }
-            if (other.getRollScoreTTS()) {
+            if (other.getRollScoreTTS() != false) {
                 setRollScoreTTS(other.getRollScoreTTS());
             }
-            if (other.getShakeToRoll()) {
+            if (other.getShakeToRoll() != false) {
                 setShakeToRoll(other.getShakeToRoll());
             }
             if (other.getResizeZoom() != 0F) {
                 setResizeZoom(other.getResizeZoom());
             }
-            if (other.getGroupTitle()) {
+            if (other.getGroupTitle() != false) {
                 setGroupTitle(other.getGroupTitle());
+            }
+            if (other.getHistory() != false) {
+                setHistory(other.getHistory());
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -825,7 +859,7 @@ public final class SettingsProtocolBuffer extends
         }
 
         @java.lang.Override
-        public boolean isInitialized() {
+        public final boolean isInitialized() {
             return true;
         }
 
@@ -920,6 +954,11 @@ public final class SettingsProtocolBuffer extends
                             bitField0_ |= 0x00004000;
                             break;
                         } // case 120
+                        case 128: {
+                            history_ = input.readBool();
+                            bitField0_ |= 0x00008000;
+                            break;
+                        } // case 128
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -1481,6 +1520,42 @@ public final class SettingsProtocolBuffer extends
         public Builder clearGroupTitle() {
             bitField0_ = (bitField0_ & ~0x00004000);
             groupTitle_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool history = 16;</code>
+         *
+         * @return The history.
+         */
+        @java.lang.Override
+        public boolean getHistory() {
+            return history_;
+        }
+
+        /**
+         * <code>bool history = 16;</code>
+         *
+         * @param value The history to set.
+         * @return This builder for chaining.
+         */
+        public Builder setHistory(boolean value) {
+
+            history_ = value;
+            bitField0_ |= 0x00008000;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool history = 16;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearHistory() {
+            bitField0_ = (bitField0_ & ~0x00008000);
+            history_ = false;
             onChanged();
             return this;
         }

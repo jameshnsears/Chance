@@ -14,6 +14,17 @@
     <string name="tab.bag.import">Import…</string>
     <string name="tab.bag.import.success">Import successful</string>
     <string name="tab.bag.import.failure">Import failed: %s</string>
+    <string name="tab.bag.import.failure.json.file.empty">JSON file is empty</string>
+    <string name="tab.bag.import.failure.json.file.unknown.version">JSON file has an unknown version</string>
+    <string name="tab.bag.import.failure.json.file.missing.section">JSON file is missing a required section</string>
+    <string name="tab.bag.import.failure.json.dice.missing">Dice data is missing in JSON</string>
+    <string name="tab.bag.import.failure.json.dice.uuid">Dice UUID is invalid or duplicate</string>
+    <string name="tab.bag.import.failure.json.dice.title">Dice title is invalid or duplicate</string>
+    <string name="tab.bag.import.failure.json.side.size">Dice has an invalid number of sides</string>
+    <string name="tab.bag.import.failure.json.schema.settings">Settings section does not match schema</string>
+    <string name="tab.bag.import.failure.json.schema.dice">Dice section does not match schema</string>
+    <string name="tab.bag.import.failure.json.schema.side">Side section does not match schema</string>
+    <string name="tab.bag.import.failure.json.schema.group">Group section does not match schema</string>
     <string name="tab.bag.export">Export…</string>
     <string name="tab.bag.export.success">Export successful</string>
 
@@ -52,7 +63,7 @@
     <string name="dialog.bag.dice.title">Title</string>
     <string name="dialog.bag.dice.title.info.0">\u2022 Must be unique</string>
     <string name="dialog.bag.dice.sides"># of Sides</string>
-    <string name="dialog.bag.dice.sides.arbitrary.info">2..100</string>
+    <string name="dialog.bag.dice.sides.arbitrary.info">2..1000</string>
     <string name="dialog.bag.dice.sides.info">\u2022 Changing # will undo related rolls (after Save)</string>
     <string name="dialog.bag.dice.colour">Sides…</string>
 
@@ -85,6 +96,7 @@
     <string name="tab.roll.settings.side.description">Side Description</string>
     <string name="tab.roll.settings.behaviour">Rules</string>
     <string name="tab.roll.settings.group.title">Group Title</string>
+    <string name="tab.roll.settings.history">History</string>
 
     <string name="tab.roll.settings.use.shuffle">Shuffle</string>
     <string name="tab.roll.settings.use.haptics">Haptics</string>

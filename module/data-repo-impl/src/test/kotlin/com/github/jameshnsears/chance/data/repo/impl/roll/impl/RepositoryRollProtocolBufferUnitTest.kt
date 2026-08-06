@@ -190,7 +190,8 @@ class RepositoryRollProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
         val bag = mutableListOf(
             Dice(
                 sides = listOf(
-                    Side(uuid = sideUuid, number = 6, imageBase64 = "imageBase64Data", description = "sideDescription")
+                    Side(uuid = sideUuid, number = 6, imageBase64 = "imageBase64Data", description = "sideDescription"),
+                    Side(number = 1)
                 )
             )
         )
@@ -250,7 +251,7 @@ class RepositoryRollProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
         coEvery { dataStore.data } returns flowOf(rollHistoryProtocolBuffer)
         coEvery { repositoryBag.fetch() } returns flowOf(
             mutableListOf(
-                Dice(sides = listOf(Side(uuid = sideUuid, number = 6)))
+                Dice(sides = listOf(Side(uuid = sideUuid, number = 6), Side(number = 1)))
             )
         )
 

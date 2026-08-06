@@ -2,7 +2,7 @@ package com.github.jameshnsears.chance.data.repo.api
 
 import net.pwall.json.schema.JSONSchema
 
-class RepositoryImportSchemaV250 {
+open class RepositoryImportSchemaV25 {
     companion object {
         val schemaSettings = JSONSchema.parse(
             """
