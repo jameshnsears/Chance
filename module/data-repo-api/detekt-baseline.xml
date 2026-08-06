@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>EmptyFunctionBlock:RepositoryBagUnitTest.kt$RepositoryBagUnitTest.&lt;no name provided&gt;${}</ID>
-    <ID>EmptyFunctionBlock:RepositoryGroupUnitTest.kt$RepositoryGroupUnitTest.&lt;no name provided&gt;${}</ID>
-    <ID>EmptyFunctionBlock:RepositoryRollUnitTest.kt$RepositoryRollUnitTest.&lt;no name provided&gt;${}</ID>
-    <ID>UnusedPrivateProperty:CreateImportSchemaFromType.kt$CreateImportSchemaFromType$val dice: Type = Dice::class.java</ID>
-    <ID>UnusedPrivateProperty:CreateImportSchemaFromType.kt$CreateImportSchemaFromType$val side: Type = Side::class.java</ID>
-  </CurrentIssues>
+    <ManuallySuppressedIssues />
+    <CurrentIssues>
+        <ID>EmptyFunctionBlock:RepositoryBagUnitTest.kt$RepositoryBagUnitTest.&lt;no name provided&gt;${}</ID>
+        <ID>EmptyFunctionBlock:RepositoryGroupUnitTest.kt$RepositoryGroupUnitTest.&lt;no name provided&gt;${}</ID>
+        <ID>EmptyFunctionBlock:RepositoryRollUnitTest.kt$RepositoryRollUnitTest.&lt;no name provided&gt;${}</ID>
+        <ID>UnusedPrivateProperty:CreateImportSchemaFromType.kt$CreateImportSchemaFromType$val dice: Type = Dice::class.java</ID>
+        <ID>UnusedPrivateProperty:CreateImportSchemaFromType.kt$CreateImportSchemaFromType$val side: Type = Side::class.java</ID>
+    </CurrentIssues>
 </SmellBaseline>

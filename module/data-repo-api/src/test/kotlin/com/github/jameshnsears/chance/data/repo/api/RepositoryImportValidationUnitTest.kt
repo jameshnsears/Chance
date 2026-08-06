@@ -135,7 +135,7 @@ class RepositoryImportValidationUnitTest {
     }
 
     @Test
-    fun validateInvalidSideCount() {
+    fun validateInvalidSideCountLowerBound() {
         val root = createValidRootV250()
         val dice = (root.get("bag").get("dice") as ArrayNode).get(0) as ObjectNode
         val sides = dice.get("side") as ArrayNode
@@ -147,6 +147,39 @@ class RepositoryImportValidationUnitTest {
             validator.validate(root)
         }
         assertEquals(RepositoryImportStatus.JSON_SIDE_SIZE, exception.detail)
+    }
+
+    @Test
+    fun validateInvalidSideCountUpperBound() {
+        val root = createValidRootV250()
+        val dice = (root.get("bag").get("dice") as ArrayNode).get(0) as ObjectNode
+        val sides = dice.get("side") as ArrayNode
+        sides.removeAll()
+        repeat(1001) { sides.add(createValidSideV250()) } // 1001 sides, invalid
+
+        val validator = RepositoryImportValidation("2.5.0")
+        val exception = assertThrows(RepositoryImportException::class.java) {
+            validator.validate(root)
+        }
+        assertEquals(RepositoryImportStatus.JSON_SIDE_SIZE, exception.detail)
+    }
+
+    @Test
+    fun validateValidSideCountBounds() {
+        val root = createValidRootV250()
+        val dice = (root.get("bag").get("dice") as ArrayNode).get(0) as ObjectNode
+        val sides = dice.get("side") as ArrayNode
+        val validator = RepositoryImportValidation("2.5.0")
+
+        // Lower bound: 2 sides
+        sides.removeAll()
+        repeat(2) { sides.add(createValidSideV250()) }
+        validator.validate(root)
+
+        // Upper bound: 1000 sides
+        sides.removeAll()
+        repeat(1000) { sides.add(createValidSideV250()) }
+        validator.validate(root)
     }
 
     @Test
@@ -232,32 +265,6 @@ class RepositoryImportValidationUnitTest {
         val root = createValidLegacyRoot()
         val validator = RepositoryImportValidation("2.5.0")
         validator.validate(root)
-    }
-
-    @Test
-    fun validateSideCounts() {
-        val validCounts = listOf(2, 4, 6, 8, 10, 12, 20)
-        val validator = RepositoryImportValidation("2.5.0")
-        validCounts.forEach { count ->
-            val root = createValidRootV250()
-            val dice = (root.get("bag").get("dice") as ArrayNode).get(0) as ObjectNode
-            val sides = dice.get("side") as ArrayNode
-            sides.removeAll()
-            repeat(count) { sides.add(createValidSideV250()) }
-            validator.validate(root)
-        }
-
-        val invalidCounts = listOf(1, 3, 5, 7, 9, 11, 13, 19, 21)
-        invalidCounts.forEach { count ->
-            val root = createValidRootV250()
-            val dice = (root.get("bag").get("dice") as ArrayNode).get(0) as ObjectNode
-            val sides = dice.get("side") as ArrayNode
-            sides.removeAll()
-            repeat(count) { sides.add(createValidSideV250()) }
-            assertThrows("Count $count should be invalid", RepositoryImportException::class.java) {
-                validator.validate(root)
-            }
-        }
     }
 
     @Test

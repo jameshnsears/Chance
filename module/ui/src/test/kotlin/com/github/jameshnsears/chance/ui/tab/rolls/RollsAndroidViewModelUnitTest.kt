@@ -140,7 +140,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.allDice().forEach {
             if (it.selected)
                 it.explode = true
-            it.explodeWhen = DiceRollValues.explodeWhenValues[0]
+            it.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[0]
             it.explodeValue = 2
         }
 
@@ -176,7 +176,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.allDice().forEach {
             if (it.selected)
                 it.explode = true
-            it.explodeWhen = DiceRollValues.explodeWhenValues[1]
+            it.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[1]
             it.explodeValue = 3
         }
 
@@ -203,7 +203,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.allDice().forEach {
             if (it.selected)
                 it.explode = true
-            it.explodeWhen = DiceRollValues.explodeWhenValues[2]
+            it.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[2]
             it.explodeValue = 1
         }
 
@@ -230,7 +230,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.allDice().forEach {
             if (it.selected)
                 it.modifyScore = true
-            it.modifyScoreValue = DiceRollValues.modifyScoreValues[0].toInt()
+            it.modifyScoreValue = DiceRollValues.MODIFY_SCORE_VALUES[0].toInt()
         }
 
         // s2
@@ -392,7 +392,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         diceBag.d6.selected = true
         diceBag.d6.multiplierValue = 1
         diceBag.d6.explode = true
-        diceBag.d6.explodeWhen = DiceRollValues.explodeWhenValues[0] // Equals
+        diceBag.d6.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[0] // Equals
         diceBag.d6.explodeValue = 6
 
         val tabRollAndroidViewModel = tabRollAndroidViewModel(diceBag)

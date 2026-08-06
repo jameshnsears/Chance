@@ -180,7 +180,7 @@ Defined in `UtilityFeature.kt` (`module/common/.../utility/feature/UtilityFeatur
 
 - **ktlint**: 14.2.0 (Android mode, excludes `composable/**`)
 - **detekt**: 1.23.8 (parallel, `LongMethod` threshold 100, custom `detekt.yml`)
-- **Spotless**: 8.8.0
+- **Spotless**: 8.9.0
 - **Jacoco**: 0.8.14 (F-Droid flavor reports)
 - **Lint**: Android lint with baseline per module
 
@@ -258,8 +258,8 @@ class MyTest : TestSupport() {
 
 ## Important Files & Directories
 
-- `build.gradle.kts` — Root config: Jacoco 0.8.14, detekt 1.23.8, spotless 8.8.0, test-retry 1.6.5
-- `gradle/libs.versions.toml` — Version catalog: Kotlin 2.4.10, Compose BOM 2026.06.01, AGP 9.2.1, compileSdk/targetSdk 37, minSdk 31, versionName 2.5.0, versionCode 223137
+- `build.gradle.kts` — Root config: Jacoco 0.8.14, detekt 1.23.8, spotless 8.9.0, test-retry 1.6.5
+- `gradle/libs.versions.toml` — Version catalog: Kotlin 2.4.10, Compose BOM 2026.06.01, AGP 9.2.1, compileSdk/targetSdk 37, minSdk 31, versionName 2.5.2, versionCode 243137
 - `detekt.yml` — Reduced rules config
 - `.github/workflows/` — 7 CI pipelines: `static.analysis`, `static.gitleaks`, `codecov.unitTests`, `codecov.app.androidTest`, `codecov.data-common.androidTest`, `codecov.ui.androidTest`, `release.yml`
 - `.github/actions/cache-gradle/` and `.github/actions/cache-avd/` — CI caching actions
@@ -283,7 +283,7 @@ class MyTest : TestSupport() {
 - **Gradle**: 9.6.1 wrapper; daemon disabled in CI (`GRADLE_OPTS`)
 - **Android CLI**: Used for managing agent skills via `android skills [add|list|remove|find]`. Skills are stored in `.agents/skills/`.
 - **GitHub CLI** (`gh`): Release automation
-- **CI**: GitHub Actions, `actions/checkout@v7`, `actions/upload-artifact@v7`, `codecov/codecov-action@v7`, `reactivecircus/android-emulator-runner@v2` (API 36, x86_64, 4GB RAM)
+- **CI**: GitHub Actions, `actions/checkout@v7`, `actions/upload-artifact@v7`, `codecov/codecov-action@v7`, `reactivecircus/android-emulator-runner@v2` (API 36, x86_64, 2GB RAM)
 - **Release**: Tag push `*.*.*-fdroid` or `*.*.*-rc` triggers build, sign, and GitHub Release
 
 ---

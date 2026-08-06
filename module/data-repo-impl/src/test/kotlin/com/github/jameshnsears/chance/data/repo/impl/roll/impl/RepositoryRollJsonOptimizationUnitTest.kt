@@ -72,7 +72,8 @@ class RepositoryRollJsonOptimizationUnitTest : UtilityAndroidUnitTestHelper() {
             imageBase64 = IMAGE_BASE64,
             description = "Side Six"
         )
-        val bag = mutableListOf(Dice(sides = listOf(side1)))
+        val side2 = Side(uuid = "s2", number = 1)
+        val bag = mutableListOf(Dice(sides = listOf(side1, side2)))
         coEvery { repositoryBag.fetch() } returns flowOf(bag)
 
         val repository = RepositoryRollProtocolBufferImpl.getInstance(context, repositoryBag)
@@ -114,7 +115,8 @@ class RepositoryRollJsonOptimizationUnitTest : UtilityAndroidUnitTestHelper() {
             imageBase64 = IMAGE_BASE64,
             description = "Side Six"
         )
-        val bag = mutableListOf(Dice(sides = listOf(side1)))
+        val side2 = Side(uuid = "s2", number = 1)
+        val bag = mutableListOf(Dice(sides = listOf(side1, side2)))
         coEvery { repositoryBag.fetch() } returns flowOf(bag)
 
         val repository = RepositoryRollProtocolBufferTestDouble.getInstance(LinkedHashMap(), repositoryBag)

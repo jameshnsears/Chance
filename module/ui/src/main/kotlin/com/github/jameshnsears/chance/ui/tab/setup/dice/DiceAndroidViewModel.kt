@@ -48,13 +48,13 @@ data class TabBagImportState(
 )
 
 class DiceAndroidViewModel(
-    private val applicationContext: Application,
+    application: Application,
     val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
     val repositoryGroup: RepositoryGroupInterface,
     resizeInitialValue: Float,
-) : AndroidViewModel(applicationContext) {
+) : AndroidViewModel(application) {
     val validator = RepositoryImportValidation(BuildConfig.VERSION)
 
     val stateFlowResize: StateFlow<Float> = flow {
@@ -193,7 +193,7 @@ class DiceAndroidViewModel(
 
             try {
                 val json = withContext(Dispatchers.IO) {
-                    getContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+                    getApplication<Application>().contentResolver.openInputStream(uri)?.use { inputStream ->
                         inputStream.reader().readText()
                     }
                 }
@@ -220,13 +220,11 @@ class DiceAndroidViewModel(
         }
     }
 
-    private fun getContext() = getApplication<Application>().applicationContext
-
     fun exportFileJson(uri: Uri) {
         viewModelScope.launch {
             val json = exportRepositoriesAsJson()
             withContext(Dispatchers.IO) {
-                getContext().contentResolver.openOutputStream(uri)?.use { outputStream ->
+                getApplication<Application>().contentResolver.openOutputStream(uri)?.use { outputStream ->
                     outputStream.write(json.toByteArray())
                 }
             }
@@ -253,7 +251,7 @@ class DiceAndroidViewModel(
 
     fun resetStorage() {
         viewModelScope.launch {
-            RepositoryFactory(applicationContext).resetStorage()
+            RepositoryFactory(getApplication<Application>()).resetStorage()
 
             DiceResetEvent.emit()
         }

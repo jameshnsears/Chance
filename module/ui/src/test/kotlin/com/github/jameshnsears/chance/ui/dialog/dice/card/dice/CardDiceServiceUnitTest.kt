@@ -1,5 +1,6 @@
 package com.github.jameshnsears.chance.ui.dialog.dice.card.dice
 
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceUnitTestUnitTestHelper
 import kotlinx.coroutines.test.runTest
@@ -88,16 +89,19 @@ class CardDiceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val bagCardDiceAndroidViewModel = dialogBagAndroidViewModel.cardDiceService
         assertTrue(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
 
-        bagCardDiceAndroidViewModel.diceSidesSize("1")
+        bagCardDiceAndroidViewModel.diceSidesSize((DiceRollValues.SIDES_MIN - 1).toString())
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
 
-        bagCardDiceAndroidViewModel.diceSidesSize("101")
+        bagCardDiceAndroidViewModel.diceSidesSize((DiceRollValues.SIDES_MAX + 1).toString())
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
 
         bagCardDiceAndroidViewModel.diceSidesSize("")
         assertFalse(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
 
-        bagCardDiceAndroidViewModel.diceSidesSize("2")
+        bagCardDiceAndroidViewModel.diceSidesSize(DiceRollValues.SIDES_MIN.toString())
+        assertTrue(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
+
+        bagCardDiceAndroidViewModel.diceSidesSize(DiceRollValues.SIDES_MAX.toString())
         assertTrue(bagCardDiceAndroidViewModel.stateFlowCardDice.value.diceCanBeSaved)
     }
 

@@ -6,9 +6,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// The inter_variable.ttf file in res/font is currently a corrupted HTML file.
-// Replacing it with FontFamily.SansSerif to avoid the IllegalArgumentException on AOSP devices
-// that do not have Google Play Services for Downloadable Fonts.
 val fontFamily = FontFamily.SansSerif
 
 // Set of Material typography styles to start with

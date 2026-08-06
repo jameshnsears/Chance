@@ -88,7 +88,8 @@ class RepositoryRollProtocolBufferTestDoubleUnitTest : UtilityAndroidUnitTestHel
         val bag = mutableListOf(
             Dice(
                 sides = listOf(
-                    Side(uuid = sideUuid, number = 6, imageBase64 = "imageBase64Data", description = "sideDescription")
+                    Side(uuid = sideUuid, number = 6, imageBase64 = "imageBase64Data", description = "sideDescription"),
+                    Side(number = 1)
                 )
             )
         )

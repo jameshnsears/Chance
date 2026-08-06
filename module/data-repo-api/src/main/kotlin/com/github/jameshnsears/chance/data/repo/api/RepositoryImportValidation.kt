@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.data.repo.api
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import net.pwall.json.schema.JSONSchema
 import timber.log.Timber
 
@@ -17,7 +18,12 @@ class RepositoryImportValidation(private val currentAppVersion: String) {
         private set
 
     companion object {
-        private val VALID_SIDE_COUNTS = setOf(2, 4, 6, 8, 10, 12, 20)
+        private val NON_LEGACY_VERSIONS = listOf(
+            "2.5.0",
+            "2.5.1",
+            "2.5.2",
+            "2.6.0"
+        )
     }
 
     private data class Schemas(
@@ -75,12 +81,7 @@ class RepositoryImportValidation(private val currentAppVersion: String) {
             throw RepositoryImportException(RepositoryImportStatus.JSON_FILE_UNKNOWN_VERSION)
         }
 
-        val schemas = if (
-            jsonVersion == "2.5.0"
-            ||
-            jsonVersion == "2.5.1"
-            )
-        {
+        val schemas = if (jsonVersion in NON_LEGACY_VERSIONS) {
             Schemas(
                 RepositoryImportSchemaV250.schemaSettings,
                 RepositoryImportSchemaV250.schemaDice,
@@ -144,7 +145,7 @@ class RepositoryImportValidation(private val currentAppVersion: String) {
 
     private fun validateDiceSides(dice: JsonNode, schemaSide: JSONSchema) {
         val sides = dice.get("side")
-        if (sides == null || sides.size() !in VALID_SIDE_COUNTS) {
+        if (sides == null || sides.size() !in DiceRollValues.SIDES_MIN..DiceRollValues.SIDES_MAX) {
             throw RepositoryImportException(RepositoryImportStatus.JSON_SIDE_SIZE)
         }
         sides.forEach { side ->

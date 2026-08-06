@@ -21,21 +21,21 @@ class RollsCoreHelper(
         var explode = false
 
         when (dice.explodeWhen) {
-            DiceRollValues.explodeWhenValues[0] -> {
+            DiceRollValues.EXPLODE_WHEN_VALUES[0] -> {
                 // "="
                 if (side.number == dice.explodeValue) {
                     explode = true
                 }
             }
 
-            DiceRollValues.explodeWhenValues[1] -> {
+            DiceRollValues.EXPLODE_WHEN_VALUES[1] -> {
                 // "<"
                 if (side.number < dice.explodeValue) {
                     explode = true
                 }
             }
 
-            DiceRollValues.explodeWhenValues[2] -> {
+            DiceRollValues.EXPLODE_WHEN_VALUES[2] -> {
                 // ">"
                 if (side.number > dice.explodeValue) {
                     explode = true

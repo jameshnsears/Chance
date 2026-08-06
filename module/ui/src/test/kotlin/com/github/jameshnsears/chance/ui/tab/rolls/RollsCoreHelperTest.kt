@@ -21,15 +21,15 @@ class RollsCoreHelperTest {
         dice.explodeValue = 6
 
         // Equals
-        dice.explodeWhen = DiceRollValues.explodeWhenValues[0]
+        dice.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[0]
         assertTrue(helper.diceCanExplode(dice, dice.sides[0])) // side 6
 
         // Less than
-        dice.explodeWhen = DiceRollValues.explodeWhenValues[1]
+        dice.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[1]
         assertTrue(helper.diceCanExplode(dice, dice.sides[5])) // side 1
 
         // Greater than
-        dice.explodeWhen = DiceRollValues.explodeWhenValues[2]
+        dice.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[2]
         dice.explodeValue = 1
         assertTrue(helper.diceCanExplode(dice, dice.sides[0])) // side 6
     }
@@ -62,7 +62,7 @@ class RollsCoreHelperTest {
         d6.selected = true
         d6.multiplierValue = 1
         d6.explode = true
-        d6.explodeWhen = DiceRollValues.explodeWhenValues[0]
+        d6.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[0]
         d6.explodeValue = 6
 
         // Force explosion: return side with number 6

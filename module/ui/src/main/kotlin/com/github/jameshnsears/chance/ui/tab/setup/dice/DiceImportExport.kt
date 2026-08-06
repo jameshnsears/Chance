@@ -58,7 +58,7 @@ fun ImportExport(
     val importFailureReason = stateFlowTabBagImport.value.importDetail
 
     val launcherImport =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
                 diceAndroidViewModel.importFileJson(uri)
             }
@@ -134,7 +134,7 @@ private fun ExportButton(
 @Composable
 private fun ImportButton(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
-    launcherImport: androidx.activity.result.ActivityResultLauncher<Array<String>>
+    launcherImport: androidx.activity.result.ActivityResultLauncher<String>
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -144,7 +144,7 @@ private fun ImportButton(
                 bottomSheetScaffoldState.bottomSheetState.partialExpand()
             }
 
-            launcherImport.launch(arrayOf("application/json", "*/json"))
+            launcherImport.launch("application/json")
         },
         modifier = Modifier
             .width(150.dp)
@@ -176,9 +176,11 @@ private fun ImportExportToasts(
     val context = LocalContext.current
     val exportSuccessfulToast = stringResource(R.string.tab_bag_export_success)
     val importSuccessfulToast = stringResource(R.string.tab_bag_import_success)
+
+    val importFailureDetail = stringResource(importFailureReason.toStringResId())
     val importFailureReasonToast = stringResource(
         R.string.tab_bag_import_failure,
-        importFailureReason
+        importFailureDetail
     )
 
     LaunchedEffect(exportStatus) {
@@ -193,16 +195,30 @@ private fun ImportExportToasts(
         }
 
         if (importStatus == ExportImportStatus.FAILURE) {
-            if (importFailureReasonToast.isNotEmpty())
-                Toast.makeText(
-                    context,
-                    importFailureReasonToast,
-                    Toast.LENGTH_LONG
-                ).show()
+            Toast.makeText(
+                context,
+                importFailureReasonToast,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
     if (exportStatus != ExportImportStatus.READY || importStatus != ExportImportStatus.READY) {
         diceAndroidViewModel.resetExportImportStatus()
     }
+}
+
+fun RepositoryImportStatus.toStringResId(): Int = when (this) {
+    RepositoryImportStatus.JSON_FILE_EMPTY -> R.string.tab_bag_import_failure_json_file_empty
+    RepositoryImportStatus.JSON_FILE_UNKNOWN_VERSION -> R.string.tab_bag_import_failure_json_file_unknown_version
+    RepositoryImportStatus.JSON_FILE_MISSING_SECTION -> R.string.tab_bag_import_failure_json_file_missing_section
+    RepositoryImportStatus.JSON_DICE_MISSING -> R.string.tab_bag_import_failure_json_dice_missing
+    RepositoryImportStatus.JSON_DICE_UUID -> R.string.tab_bag_import_failure_json_dice_uuid
+    RepositoryImportStatus.JSON_DICE_TITLE -> R.string.tab_bag_import_failure_json_dice_title
+    RepositoryImportStatus.JSON_SIDE_SIZE -> R.string.tab_bag_import_failure_json_side_size
+    RepositoryImportStatus.JSON_SCHEMA_SETTINGS -> R.string.tab_bag_import_failure_json_schema_settings
+    RepositoryImportStatus.JSON_SCHEMA_DICE -> R.string.tab_bag_import_failure_json_schema_dice
+    RepositoryImportStatus.JSON_SCHEMA_SIDE -> R.string.tab_bag_import_failure_json_schema_side
+    RepositoryImportStatus.JSON_SCHEMA_GROUP -> R.string.tab_bag_import_failure_json_schema_group
+    else -> R.string.tab_bag_import_failure
 }

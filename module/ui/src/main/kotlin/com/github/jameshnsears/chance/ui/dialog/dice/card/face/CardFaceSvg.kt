@@ -47,7 +47,7 @@ fun SideImageSVG(
     val sideImageError = stringResource(R.string.dialog_bag_side_image_error)
 
     val launcherImport = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
+        contract = ActivityResultContracts.GetContent()
     ) { uri ->
         if (uri != null) {
             scope.launch {
@@ -97,7 +97,7 @@ fun SideImageSVG(
 private fun SideImageButtons(
     cardSideService: CardSideService,
     state: CardSideState,
-    launcherImport: androidx.activity.result.ActivityResultLauncher<Array<String>>
+    launcherImport: androidx.activity.result.ActivityResultLauncher<String>
 ) {
     Column(
         modifier = Modifier.height(128.dp),
@@ -105,7 +105,7 @@ private fun SideImageButtons(
     ) {
         Button(
             onClick = {
-                launcherImport.launch(arrayOf("image/svg+xml"))
+                launcherImport.launch("image/svg+xml")
             },
             modifier = Modifier
                 .width(180.dp)
