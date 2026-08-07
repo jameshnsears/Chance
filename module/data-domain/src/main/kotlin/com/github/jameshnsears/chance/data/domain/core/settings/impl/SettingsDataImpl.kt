@@ -7,20 +7,22 @@ class SettingsDataImpl(
 
     override var rollIndexTime: Boolean = false,
     override var rollScore: Boolean = false,
-    override var rollScoreTTS: Boolean = false,
-
+    override var groupTitle: Boolean = false,
     override var diceTitle: Boolean = false,
-    override var sideNumber: Boolean = true,
     override var rollBehaviour: Boolean = false,
-    override var sideDescription: Boolean = false,
+
+    override var orientation: Boolean = false,
+
+    override var sideNumber: Boolean = true,
     override var sideSVG: Boolean = true,
+    override var sideDescription: Boolean = false,
+
+    override var shuffle: Boolean = false,
 
     override var haptics: Boolean = false,
-    override var shakeToRoll: Boolean = false,
     override var rollSound: Boolean = false,
-    override var shuffle: Boolean = false,
-    override var groupTitle: Boolean = false,
-    override var orientation: Boolean = true
+    override var rollScoreTTS: Boolean = false,
+    override var shakeToRoll: Boolean = false,
 ) : SettingsDataInterface {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

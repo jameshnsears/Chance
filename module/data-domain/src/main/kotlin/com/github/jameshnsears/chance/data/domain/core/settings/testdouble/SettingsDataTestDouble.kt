@@ -7,24 +7,25 @@ class SettingsDataTestDouble(
 
     override var rollIndexTime: Boolean = false,
     override var rollScore: Boolean = true,
-    override var rollScoreTTS: Boolean = false,
-
+    override var groupTitle: Boolean = true,
     override var diceTitle: Boolean = true,
-    override var sideNumber: Boolean = true,
     override var rollBehaviour: Boolean = true,
-    override var sideDescription: Boolean = true,
+
+    override var orientation: Boolean = false,
+
+    override var sideNumber: Boolean = true,
     override var sideSVG: Boolean = false,
+    override var sideDescription: Boolean = true,
+
+    override var shuffle: Boolean = false,
 
     override var haptics: Boolean = false,
-    override var shakeToRoll: Boolean = false,
     override var rollSound: Boolean = false,
-    override var shuffle: Boolean = false,
-    override var groupTitle: Boolean = true,
-    override var orientation: Boolean = true
+    override var rollScoreTTS: Boolean = false,
+    override var shakeToRoll: Boolean = false,
 ) : SettingsDataInterface {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-
         if (other !is SettingsDataInterface) return false
 
         if (resizeZoom != other.resizeZoom) return false

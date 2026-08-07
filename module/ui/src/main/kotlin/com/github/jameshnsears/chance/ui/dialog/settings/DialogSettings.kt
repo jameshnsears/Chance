@@ -24,13 +24,13 @@ import androidx.compose.material.icons.outlined.FormatListNumbered
 import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.PhonelinkRing
-import androidx.compose.material.icons.outlined.RecentActors
 import androidx.compose.material.icons.outlined.RecordVoiceOver
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Score
 import androidx.compose.material.icons.outlined.Shuffle
 import androidx.compose.material.icons.outlined.Title
 import androidx.compose.material.icons.outlined.Vibration
+import androidx.compose.material.icons.outlined.ViewColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -108,13 +108,13 @@ fun DialogSettingsLayout(
                     .padding(top = 72.dp, bottom = 8.dp)
                     .verticalScroll(scrollState),
             ) {
-                SettingsRollOrientation(rollsAndroidViewModel, state)
+                SettingsRollInfoSection(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
 
-                SettingsRollInfoSection(rollsAndroidViewModel, state)
+                SettingsRollOrientation(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
@@ -165,7 +165,7 @@ private fun SettingsRollOrientation(
 ) {
     CommonSwitch(
         stringResource(R.string.tab_roll_settings_orientation),
-        Icons.Outlined.RecentActors,
+        Icons.Outlined.ViewColumn,
         state.orientation,
         rollsAndroidViewModel::settingsOrientation,
         DialogSettingsTestTag.SETTINGS_ORIENTATION

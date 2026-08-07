@@ -82,13 +82,13 @@ private fun ZoomRollPreviewHelper(
 
 @Preview
 @Composable
-fun ZoomRollWithHistoryPreview() {
+fun ZoomRollHorizontalPreview() {
     ZoomRollPreviewHelper()
 }
 
 @Preview
 @Composable
-fun ZoomRollWithoutHistoryPreview() {
+fun ZoomRollVerticalPreview() {
     ZoomRollPreviewHelper { settings ->
         settings.orientation = false
     }
