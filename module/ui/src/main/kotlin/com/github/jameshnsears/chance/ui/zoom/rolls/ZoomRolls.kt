@@ -121,7 +121,7 @@ fun ZoomRoll(
     ) {
         if (rollHistory.isEmpty()) {
             ZoomRollEmptyState()
-        } else {
+        } else if (stateFlowZoom.history) {
             ZoomRollHistoryList(
                 listState,
                 entriesList,
@@ -131,6 +131,49 @@ fun ZoomRoll(
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
                 stateFlowZoom.resizeViewDp
+            )
+        } else {
+            ZoomRollMostRecent(
+                entriesList,
+                seenRollEvents,
+                rollHistory.size,
+                groupHistory,
+                rollsAndroidViewModel,
+                zoomRollsAndroidViewModel,
+                stateFlowZoom.resizeViewDp
+            )
+        }
+    }
+}
+
+@Composable
+private fun ZoomRollMostRecent(
+    entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
+    seenRollEvents: MutableSet<Long>,
+    rollHistorySize: Int,
+    groupHistory: GroupHistory,
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
+    resizeViewDp: Dp
+) {
+    if (entriesList.isNotEmpty()) {
+        val (originalIndex, rollSequence) = entriesList.first()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 128.dp)
+        ) {
+            ZoomRollHistoryItem(
+                indexSequence = 0,
+                originalIndex = originalIndex,
+                rollSequence = rollSequence,
+                seenRollEvents = seenRollEvents,
+                rollHistorySize = rollHistorySize,
+                groupHistory = groupHistory,
+                rollsAndroidViewModel = rollsAndroidViewModel,
+                zoomRollsAndroidViewModel = zoomRollsAndroidViewModel,
+                resizeViewDp = resizeViewDp,
+                entriesListSize = 1
             )
         }
     }

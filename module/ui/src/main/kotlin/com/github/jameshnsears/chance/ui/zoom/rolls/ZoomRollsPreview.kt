@@ -9,20 +9,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
+import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
-import com.github.jameshnsears.chance.ui.tab.rolls.RollsCoreHelper
-import com.github.jameshnsears.chance.ui.tab.rolls.RollsSelectionHelper
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 @SuppressLint("ViewModelConstructorInComposable")
-@Preview
 @Composable
-fun ZoomRollPreview() {
+private fun ZoomRollPreviewHelper(
+    settingsAction: suspend (SettingsDataInterface) -> Unit = {},
+) {
     UtilityFeature.enabled = setOf(
         Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
     )
@@ -33,14 +35,11 @@ fun ZoomRollPreview() {
                 resetStorage()
                 val settings = repositorySettings.fetch().first()
                 settings.groupTitle = true
+                settingsAction(settings)
                 repositorySettings.store(settings)
             }
         }
     }
-    val repositorySettings = repositoryFactory.repositorySettings
-    val repositoryBag = repositoryFactory.repositoryBag
-    val repositoryRoll = repositoryFactory.repositoryRoll
-    val repositoryGroup = repositoryFactory.repositoryGroup
 
     val context = LocalContext.current
     val application = object : Application() {
@@ -49,28 +48,48 @@ fun ZoomRollPreview() {
         }
     }
 
+    val rollsAndroidViewModel: RollsAndroidViewModel = viewModel(
+        factory = RollsAndroidViewModelFactory(
+            application,
+            repositoryFactory.repositorySettings,
+            repositoryFactory.repositoryBag,
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup,
+        ),
+    )
+
+    val zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel = viewModel(
+        factory = ZoomRollsAndroidViewModelFactory(
+            application,
+            repositoryFactory.repositorySettings,
+            repositoryFactory.repositoryBag,
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup,
+        ),
+    )
+
     ChanceTheme {
         Surface(
             color = MaterialTheme.colorScheme.surfaceContainerLow,
         ) {
             ZoomRoll(
-                RollsAndroidViewModel(
-                    application,
-                    repositorySettings,
-                    repositoryBag,
-                    repositoryRoll,
-                    repositoryGroup,
-                    RollsSelectionHelper(repositoryBag, repositoryGroup),
-                    RollsCoreHelper(repositoryRoll)
-                ),
-                ZoomRollsAndroidViewModel(
-                    application,
-                    repositorySettings,
-                    repositoryBag,
-                    repositoryRoll,
-                    repositoryGroup,
-                ),
+                rollsAndroidViewModel,
+                zoomRollsAndroidViewModel,
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun ZoomRollWithHistoryPreview() {
+    ZoomRollPreviewHelper()
+}
+
+@Preview
+@Composable
+fun ZoomRollWithoutHistoryPreview() {
+    ZoomRollPreviewHelper { settings ->
+        settings.history = false
     }
 }
