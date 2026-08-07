@@ -96,7 +96,7 @@
     <string name="tab.roll.settings.side.description">Side Description</string>
     <string name="tab.roll.settings.behaviour">Rules</string>
     <string name="tab.roll.settings.group.title">Group Title</string>
-    <string name="tab.roll.settings.history">History</string>
+    <string name="tab.roll.settings.orientation">Orientation</string>
 
     <string name="tab.roll.settings.use.shuffle">Shuffle</string>
     <string name="tab.roll.settings.use.haptics">Haptics</string>

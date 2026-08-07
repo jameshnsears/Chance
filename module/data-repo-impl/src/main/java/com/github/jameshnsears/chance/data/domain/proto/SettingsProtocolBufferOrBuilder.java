@@ -118,9 +118,9 @@ public interface SettingsProtocolBufferOrBuilder extends
     boolean getGroupTitle();
 
     /**
-     * <code>bool history = 16;</code>
+     * <code>bool orientation = 16;</code>
      *
-     * @return The history.
+     * @return The orientation.
      */
-    boolean getHistory();
+    boolean getOrientation();
 }

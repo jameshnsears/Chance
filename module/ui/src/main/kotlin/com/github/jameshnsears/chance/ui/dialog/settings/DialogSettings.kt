@@ -108,6 +108,12 @@ fun DialogSettingsLayout(
                     .padding(top = 72.dp, bottom = 8.dp)
                     .verticalScroll(scrollState),
             ) {
+                SettingsRollOrientation(rollsAndroidViewModel, state)
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+                )
+
                 SettingsRollInfoSection(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
@@ -153,18 +159,24 @@ fun DialogSettingsLayout(
 }
 
 @Composable
-private fun SettingsRollInfoSection(
+private fun SettingsRollOrientation(
     rollsAndroidViewModel: RollsAndroidViewModel,
     state: SettingsState
 ) {
     CommonSwitch(
-        stringResource(R.string.tab_roll_settings_history),
+        stringResource(R.string.tab_roll_settings_orientation),
         Icons.Outlined.RecentActors,
-        state.history,
-        rollsAndroidViewModel::settingsHistory,
-        DialogSettingsTestTag.SETTINGS_HISTORY
+        state.orientation,
+        rollsAndroidViewModel::settingsOrientation,
+        DialogSettingsTestTag.SETTINGS_ORIENTATION
     )
+}
 
+@Composable
+private fun SettingsRollInfoSection(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    state: SettingsState
+) {
     CommonSwitch(
         stringResource(R.string.tab_roll_settings_roll_time),
         Icons.Outlined.Schedule,

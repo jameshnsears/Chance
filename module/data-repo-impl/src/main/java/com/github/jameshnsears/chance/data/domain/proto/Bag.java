@@ -11,7 +11,7 @@ public final class Bag {
     static final
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internal_static_com_github_jameshnsears_chance_data_domain_proto_BagProtocolBuffer_fieldAccessorTable;
-    private static com.google.protobuf.Descriptors.FileDescriptor
+    private static final com.google.protobuf.Descriptors.FileDescriptor
         descriptor;
 
     static {

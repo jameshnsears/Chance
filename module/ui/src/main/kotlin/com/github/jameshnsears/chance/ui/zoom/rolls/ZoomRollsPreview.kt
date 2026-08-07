@@ -90,6 +90,6 @@ fun ZoomRollWithHistoryPreview() {
 @Composable
 fun ZoomRollWithoutHistoryPreview() {
     ZoomRollPreviewHelper { settings ->
-        settings.history = false
+        settings.orientation = false
     }
 }

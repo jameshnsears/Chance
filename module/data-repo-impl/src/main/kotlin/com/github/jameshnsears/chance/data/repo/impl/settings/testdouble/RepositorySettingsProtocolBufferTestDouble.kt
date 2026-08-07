@@ -57,7 +57,7 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScoreTTS"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shakeToRoll"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("groupTitle"))
-        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("history"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("orientation"))
 
         return JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(settingsProtocolBufferStateFlow.value)

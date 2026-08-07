@@ -46,7 +46,7 @@ class RepositoryImportValidationUnitTest {
             put("shakeToRoll", true)
             put("resizeZoom", 1.0)
             put("groupTitle", true)
-            put("history", true)
+            put("orientation", true)
         }
     }
 
