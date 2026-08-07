@@ -124,7 +124,7 @@ fun ZoomRoll(
         if (rollHistory.isEmpty()) {
             ZoomRollEmptyState()
         } else if (stateFlowZoom.orientation) {
-            ZoomRollHistoryHorizontel(
+            ZoomRollHistoryHorizontal(
                 listState,
                 entriesList,
                 seenRollEvents,
@@ -165,7 +165,7 @@ private fun ZoomRollVertical(
             .fillMaxSize()
             .testTag(ZoomRollsTestTag.LAZY_COLUMN),
         state = listState,
-        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 128.dp)
+        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 148.dp)
     ) {
         itemsIndexed(
             items = entriesList,
@@ -214,33 +214,35 @@ private fun ZoomRollVerticalItem(
         }
     }
 
+    if (stateFlowZoom.rollIndexTime) {
+        RollIndexTime(
+            rollHistorySize - originalIndex,
+            rollSequence
+        )
+    }
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (stateFlowZoom.rollIndexTime) {
-            RollIndexTime(
-                rollHistorySize - originalIndex,
-                rollSequence
-            )
-        }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            RollScore(
-                rollsAndroidViewModel,
-                zoomRollsAndroidViewModel,
-                rollSequence,
-                resizeViewDp,
-                stateFlowZoom.rollScore,
-                isNewRollEvent
-            )
-        }
+        if (stateFlowZoom.rollScore)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RollScore(
+                    rollsAndroidViewModel,
+                    zoomRollsAndroidViewModel,
+                    rollSequence,
+                    resizeViewDp,
+                    stateFlowZoom.rollScore,
+                    isNewRollEvent
+                )
+            }
 
         FlowRow(
             modifier = Modifier
@@ -286,7 +288,7 @@ private fun ZoomRollEmptyState() {
 }
 
 @Composable
-private fun ZoomRollHistoryHorizontel(
+private fun ZoomRollHistoryHorizontal(
     listState: androidx.compose.foundation.lazy.LazyListState,
     entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
     seenRollEvents: MutableSet<Long>,
@@ -301,7 +303,7 @@ private fun ZoomRollHistoryHorizontel(
             .fillMaxSize()
             .testTag(ZoomRollsTestTag.LAZY_COLUMN),
         state = listState,
-        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 128.dp)
+        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 148.dp)
     ) {
         itemsIndexed(
             items = entriesList,
