@@ -135,7 +135,7 @@ fun ZoomRoll(
                 stateFlowZoom.resizeViewDp
             )
         } else {
-            ZoomRollMostVertical(
+            ZoomRollVertical(
                 listState,
                 entriesList,
                 seenRollEvents,
@@ -150,7 +150,7 @@ fun ZoomRoll(
 }
 
 @Composable
-private fun ZoomRollMostVertical(
+private fun ZoomRollVertical(
     listState: androidx.compose.foundation.lazy.LazyListState,
     entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
     seenRollEvents: MutableSet<Long>,
@@ -171,7 +171,7 @@ private fun ZoomRollMostVertical(
             items = entriesList,
             key = { _, (_, entry) -> entry.key }
         ) { indexSequence, (originalIndex, rollSequence) ->
-            ZoomRollMostRecentItem(
+            ZoomRollVerticalItem(
                 indexSequence,
                 originalIndex,
                 rollSequence,
@@ -188,7 +188,7 @@ private fun ZoomRollMostVertical(
 }
 
 @Composable
-private fun ZoomRollMostRecentItem(
+private fun ZoomRollVerticalItem(
     indexSequence: Int,
     originalIndex: Int,
     rollSequence: Map.Entry<Long, List<Roll>>,
