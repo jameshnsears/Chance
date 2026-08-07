@@ -124,7 +124,7 @@ fun ZoomRoll(
         if (rollHistory.isEmpty()) {
             ZoomRollEmptyState()
         } else if (stateFlowZoom.history) {
-            ZoomRollHistoryList(
+            ZoomRollHistoryHorizontel(
                 listState,
                 entriesList,
                 seenRollEvents,
@@ -135,7 +135,8 @@ fun ZoomRoll(
                 stateFlowZoom.resizeViewDp
             )
         } else {
-            ZoomRollMostRecent(
+            ZoomRollMostVertical(
+                listState,
                 entriesList,
                 seenRollEvents,
                 rollHistory.size,
@@ -149,7 +150,8 @@ fun ZoomRoll(
 }
 
 @Composable
-private fun ZoomRollMostRecent(
+private fun ZoomRollMostVertical(
+    listState: androidx.compose.foundation.lazy.LazyListState,
     entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
     seenRollEvents: MutableSet<Long>,
     rollHistorySize: Int,
@@ -158,71 +160,110 @@ private fun ZoomRollMostRecent(
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     resizeViewDp: Dp
 ) {
-    if (entriesList.isNotEmpty()) {
-        val (originalIndex, rollSequence) = entriesList.first()
-
-        val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-            lifecycleOwner = LocalLifecycleOwner.current
-        )
-
-        val isNewRollEvent = remember(rollSequence.key) {
-            !seenRollEvents.contains(rollSequence.key)
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(ZoomRollsTestTag.LAZY_COLUMN),
+        state = listState,
+        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 128.dp)
+    ) {
+        itemsIndexed(
+            items = entriesList,
+            key = { _, (_, entry) -> entry.key }
+        ) { indexSequence, (originalIndex, rollSequence) ->
+            ZoomRollMostRecentItem(
+                indexSequence,
+                originalIndex,
+                rollSequence,
+                seenRollEvents,
+                rollHistorySize,
+                groupHistory,
+                rollsAndroidViewModel,
+                zoomRollsAndroidViewModel,
+                resizeViewDp,
+                entriesList.size
+            )
         }
+    }
+}
 
-        LaunchedEffect(rollSequence.key) {
+@Composable
+private fun ZoomRollMostRecentItem(
+    indexSequence: Int,
+    originalIndex: Int,
+    rollSequence: Map.Entry<Long, List<Roll>>,
+    seenRollEvents: MutableSet<Long>,
+    rollHistorySize: Int,
+    groupHistory: GroupHistory,
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
+    resizeViewDp: Dp,
+    entriesListSize: Int
+) {
+    val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
+    val isNewRollEvent = remember(rollSequence.key) {
+        indexSequence == 0 && !seenRollEvents.contains(rollSequence.key)
+    }
+
+    LaunchedEffect(rollSequence.key) {
+        if (indexSequence == 0) {
             seenRollEvents.add(rollSequence.key)
         }
+    }
 
-        Column(
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (stateFlowZoom.rollIndexTime) {
+            RollIndexTime(
+                rollHistorySize - originalIndex,
+                rollSequence
+            )
+        }
+
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 128.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxWidth()
+                .padding(top = 8.dp, bottom = 8.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            if (stateFlowZoom.rollIndexTime) {
-                RollIndexTime(
-                    rollHistorySize - originalIndex,
-                    rollSequence
-                )
-            }
+            RollScore(
+                rollsAndroidViewModel,
+                zoomRollsAndroidViewModel,
+                rollSequence,
+                resizeViewDp,
+                stateFlowZoom.rollScore,
+                isNewRollEvent
+            )
+        }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RollScore(
-                    rollsAndroidViewModel,
-                    zoomRollsAndroidViewModel,
-                    rollSequence,
-                    resizeViewDp,
-                    stateFlowZoom.rollScore,
-                    isNewRollEvent
-                )
-            }
-
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag(ZoomRollsTestTag.LAZY_COLUMN_NOT_EMPTY),
-                horizontalArrangement = Arrangement.Center,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                rollSequence.value.forEach { roll ->
-                    Box(modifier = Modifier.padding(horizontal = 4.dp)) {
-                        RollDetails(
-                            zoomRollsAndroidViewModel,
-                            roll,
-                            zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
-                            groupHistory,
-                            resizeViewDp,
-                        )
-                    }
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(ZoomRollsTestTag.LAZY_COLUMN_NOT_EMPTY),
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            rollSequence.value.forEach { roll ->
+                Box(modifier = Modifier.padding(horizontal = 4.dp)) {
+                    RollDetails(
+                        zoomRollsAndroidViewModel,
+                        roll,
+                        zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
+                        groupHistory,
+                        resizeViewDp,
+                    )
                 }
             }
         }
+
+        if (indexSequence < entriesListSize - 1)
+            HorizontalDivider(Modifier.padding(top = 12.dp, bottom = 12.dp))
     }
 }
 
@@ -245,7 +286,7 @@ private fun ZoomRollEmptyState() {
 }
 
 @Composable
-private fun ZoomRollHistoryList(
+private fun ZoomRollHistoryHorizontel(
     listState: androidx.compose.foundation.lazy.LazyListState,
     entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
     seenRollEvents: MutableSet<Long>,
