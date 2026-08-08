@@ -32,8 +32,6 @@ fun RollButton(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    val rollEnabled = stateFlowRollEnabled.value
-
     val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current
     )
@@ -41,6 +39,12 @@ fun RollButton(
     val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current
     )
+
+    val latestRoll = stateFlowZoom.rollHistory.values.firstOrNull()
+    val rootRollCount = latestRoll?.count { it.explodeIndex == 0 } ?: 0
+    val allLocked = rootRollCount > 0 && lockedRollIndices.size == rootRollCount
+
+    val rollEnabled = stateFlowRollEnabled.value && !allLocked
 
     // Use Button (Filled) for primary action as per M3 Google style
     androidx.compose.material3.Button(
