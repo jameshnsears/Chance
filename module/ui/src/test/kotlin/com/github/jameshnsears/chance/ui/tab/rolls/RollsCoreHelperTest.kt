@@ -76,6 +76,35 @@ class RollsCoreHelperTest {
     }
 
     @Test
+    fun generateRollDiceSequenceWithLocks() = runTest {
+        val bagData = BagDataTestDouble()
+        val d6 = bagData.d6
+        d6.selected = true
+        d6.multiplierValue = 2
+
+        val helper = RollsCoreHelper(RepositoryFactory().repositoryRoll)
+
+        // Initial roll: d6 (mult 1) and d6 (mult 2)
+        val initialRolls = mutableListOf<Roll>()
+        helper.generateRollDiceSequence(mutableListOf(d6), emptyList(), initialRolls)
+        assertEquals(2, initialRolls.size)
+
+        // Lock the first roll
+        val lockedIndices = setOf(0)
+
+        // Re-roll with lock
+        val nextRolls = mutableListOf<Roll>()
+        helper.reRollDiceSequence(bagData.allDice(), initialRolls, lockedIndices, nextRolls, false)
+
+        assertEquals(2, nextRolls.size)
+        // First roll should be the locked one
+        assertEquals(initialRolls[0].side.uuid, nextRolls[0].side.uuid)
+        assertEquals(1, nextRolls[0].multiplierIndex)
+        // Second roll should be a new one
+        assertEquals(2, nextRolls[1].multiplierIndex)
+    }
+
+    @Test
     fun generateRollDiceSequenceWithGroups() = runTest {
         val bagData = BagDataTestDouble()
         bagData.allDice().forEach { it.selected = false }

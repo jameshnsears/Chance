@@ -13,6 +13,7 @@ import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.group.Group
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
+import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
@@ -206,7 +207,10 @@ class RollsAndroidViewModel(
         rollsSelectionHelper.markGroupAsSelected(group, groupHistory.value, viewModelScope)
     }
 
-    fun rollDiceSequence() {
+    fun rollDiceSequence(
+        lockedRollIndices: Set<Int> = emptySet(),
+        latestRollHistory: RollHistory = linkedMapOf()
+    ) {
         viewModelScope.launch {
             if (stateFlowSettings.value.haptics) {
                 _sideEffectFlow.emit(RollSideEffect.RollHaptic)
@@ -215,11 +219,25 @@ class RollsAndroidViewModel(
                 _sideEffectFlow.emit(RollSideEffect.RollSound)
             }
 
+            val latestEntry = latestRollHistory.entries.maxByOrNull { it.key }
             val newRollSequence = mutableListOf<Roll>()
-            rollsCoreHelper.generateRollDiceSequence(diceBag.value, groupHistory.value, newRollSequence)
-            rollsCoreHelper.shuffleRollSequence(newRollSequence, stateFlowSettings.value.shuffle)
 
-            rollsCoreHelper.saveNewRollSequence(newRollSequence)
+            if (lockedRollIndices.isNotEmpty() && latestEntry != null) {
+                // RE-ROLL Logic: Update current entry
+                rollsCoreHelper.reRollDiceSequence(
+                    diceBag.value,
+                    latestEntry.value,
+                    lockedRollIndices,
+                    newRollSequence,
+                    stateFlowSettings.value.shuffle
+                )
+                repositoryRoll.store(latestEntry.key, newRollSequence)
+            } else {
+                // NEW ROLL Logic
+                rollsCoreHelper.generateRollDiceSequence(diceBag.value, groupHistory.value, newRollSequence)
+                rollsCoreHelper.shuffleRollSequence(newRollSequence, stateFlowSettings.value.shuffle)
+                rollsCoreHelper.saveNewRollSequence(newRollSequence)
+            }
 
             RollsEvent.emit()
         }

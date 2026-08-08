@@ -138,11 +138,24 @@ fun TabRollBottomSheetPreview() {
         )
     )
 
+    val zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel = viewModel(
+        factory = ZoomRollsAndroidViewModelFactory(
+            application,
+            repositoryFactory.repositorySettings,
+            repositoryFactory.repositoryBag,
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        )
+    )
+
     ChanceTheme {
         Surface(
             color = MaterialTheme.colorScheme.surfaceContainerLow,
         ) {
-            TabRollBottomSheetLayout(rollsAndroidViewModel)
+            TabRollBottomSheetLayout(
+                rollsAndroidViewModel,
+                zoomRollsAndroidViewModel
+            )
         }
     }
 }

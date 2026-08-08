@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -123,12 +124,13 @@ private fun RollScoreContent(
     showScore: Boolean,
     isNewRollEvent: Boolean
 ) {
-    var displayedScore by remember(rollSequence.key, isNewRollEvent) {
-        mutableIntStateOf(if (isNewRollEvent) 0 else rollSequence.value.sumOf { it.score })
+    val currentScore = rollSequence.value.sumOf { it.score }
+    var displayedScore by remember(rollSequence.key, isNewRollEvent, currentScore) {
+        mutableIntStateOf(if (isNewRollEvent) 0 else currentScore)
     }
 
     if (isNewRollEvent) {
-        LaunchedEffect(rollSequence.key) {
+        LaunchedEffect(rollSequence.key, isNewRollEvent, currentScore) {
             val rolls = rollSequence.value
             var currentScore = 0
             rolls.forEachIndexed { index, roll ->
@@ -192,7 +194,8 @@ fun RollDetails(
     groupHistory: GroupHistory,
     resizeViewDp: Dp,
     isLocked: Boolean = false,
-    onToggleLock: (() -> Unit)? = null
+    onToggleLock: (() -> Unit)? = null,
+    rollEventCount: Int = 0
 ) {
     RollDetailsContent(
         zoomRollsAndroidViewModel,
@@ -201,7 +204,8 @@ fun RollDetails(
         groupHistory,
         resizeViewDp,
         isLocked,
-        onToggleLock
+        onToggleLock,
+        rollEventCount
     )
 }
 
@@ -213,7 +217,8 @@ private fun RollDetailsContent(
     groupHistory: GroupHistory,
     resizeViewDp: Dp,
     isLocked: Boolean,
-    onToggleLock: (() -> Unit)?
+    onToggleLock: (() -> Unit)?,
+    rollEventCount: Int
 ) {
     val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current
@@ -240,7 +245,8 @@ private fun RollDetailsContent(
             roll,
             resizeViewDp,
             isLocked,
-            onToggleLock
+            onToggleLock,
+            rollEventCount
         )
 
         if (stateFlowZoom.sideDescription && dice != null) {
@@ -366,7 +372,8 @@ private fun RollImages(
     roll: Roll,
     resizeViewDp: Dp,
     isLocked: Boolean,
-    onToggleLock: (() -> Unit)?
+    onToggleLock: (() -> Unit)?,
+    rollEventCount: Int
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -377,7 +384,8 @@ private fun RollImages(
             roll.side,
             resizeViewDp,
             isLocked,
-            onToggleLock
+            onToggleLock,
+            rollEventCount
         )
 
         if (settingsSideSVG) ZoomRollFaceImageSVG(
@@ -385,7 +393,8 @@ private fun RollImages(
             roll.side,
             resizeViewDp,
             isLocked,
-            onToggleLock
+            onToggleLock,
+            rollEventCount
         )
     }
 }
@@ -460,45 +469,48 @@ fun ZoomRollFaceImageShape(
     side: Side,
     resizeView: Dp,
     isLocked: Boolean = false,
-    onToggleLock: (() -> Unit)? = null
+    onToggleLock: (() -> Unit)? = null,
+    rollEventCount: Int = 0
 ) {
-    Box(
-        modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
-    ) {
-        Image(
-            painter = painterResource(
-                if (dice != null) zoomRollsAndroidViewModel.drawableForDiceSides(dice)
-                else com.github.jameshnsears.chance.data.domain.R.drawable.d6
-            ),
-            contentDescription = side.description,
-            modifier = Modifier
-                .size(resizeView)
-                .padding(top = 8.dp),
-            colorFilter = zoomRollsAndroidViewModel.sideColorFilter(dice?.colour ?: ""),
-            contentScale = ContentScale.Crop
-        )
-
-        Text(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(top = 0.dp),
-            fontSize = zoomRollsAndroidViewModel.sideNumberFontSizeSp(),
-            text = "${side.number}",
-            color = zoomRollsAndroidViewModel.sideColor(side.numberColour),
-            style = MaterialTheme.typography.bodyMedium
-        )
-
-        if (isLocked) {
-            Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = null,
+    key(rollEventCount) {
+        Box(
+            modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
+        ) {
+            Image(
+                painter = painterResource(
+                    if (dice != null) zoomRollsAndroidViewModel.drawableForDiceSides(dice)
+                    else com.github.jameshnsears.chance.data.domain.R.drawable.d6
+                ),
+                contentDescription = side.description,
                 modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .size(resizeView / 3)
-                    .padding(4.dp)
-                    .testTag(ZoomRollsTestTag.ROLL_LOCK),
-                tint = MaterialTheme.colorScheme.primary
+                    .size(resizeView)
+                    .padding(top = 8.dp),
+                colorFilter = zoomRollsAndroidViewModel.sideColorFilter(dice?.colour ?: ""),
+                contentScale = ContentScale.Crop
             )
+
+            Text(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(top = 0.dp),
+                fontSize = zoomRollsAndroidViewModel.sideNumberFontSizeSp(),
+                text = "${side.number}",
+                color = zoomRollsAndroidViewModel.sideColor(side.numberColour),
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            if (isLocked) {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Lock",
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(resizeView / 3)
+                        .padding(4.dp)
+                        .testTag(ZoomRollsTestTag.ROLL_LOCK),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
         }
     }
 }
@@ -509,7 +521,8 @@ fun ZoomRollFaceImageSVG(
     side: Side,
     resizeView: Dp,
     isLocked: Boolean = false,
-    onToggleLock: (() -> Unit)? = null
+    onToggleLock: (() -> Unit)? = null,
+    rollEventCount: Int = 0
 ) {
     val modifier = Modifier
         .size(resizeView)
@@ -519,7 +532,7 @@ fun ZoomRollFaceImageSVG(
         modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
     ) {
         if (side.imageBase64 != "") {
-            val imageRequest by produceState(initialValue = side.imageRequest, side.imageBase64) {
+            val imageRequest by produceState(initialValue = side.imageRequest, side, rollEventCount) {
                 if (value == null) {
                     value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
                 }
@@ -545,7 +558,7 @@ fun ZoomRollFaceImageSVG(
         if (isLocked) {
             Icon(
                 imageVector = Icons.Default.Lock,
-                contentDescription = null,
+                contentDescription = "Lock",
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .size(resizeView / 3)

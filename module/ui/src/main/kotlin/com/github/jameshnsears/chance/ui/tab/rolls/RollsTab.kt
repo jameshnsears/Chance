@@ -82,7 +82,8 @@ fun TabRollLayout(
                 Modifier.testTag(RollsTestTag.BOTTOM_SHEET)
             ) {
                 TabRollBottomSheetLayout(
-                    rollsAndroidViewModel
+                    rollsAndroidViewModel,
+                    zoomRollsAndroidViewModel
                 )
             }
         },
@@ -97,7 +98,8 @@ fun TabRollLayout(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabRollBottomSheetLayout(
-    rollsAndroidViewModel: RollsAndroidViewModel
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel
 ) {
     val isGestureNavigation = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() < 40.dp
     val columnHeight = if (isGestureNavigation) 250.dp else 265.dp
@@ -118,7 +120,7 @@ fun TabRollBottomSheetLayout(
         ) {
             UndoButton(rollsAndroidViewModel)
 
-            RollButton(rollsAndroidViewModel)
+            RollButton(rollsAndroidViewModel, zoomRollsAndroidViewModel)
         }
 
         HorizontalDivider(

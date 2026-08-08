@@ -38,6 +38,7 @@ fun ZoomRollHistoryHorizontal(
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     resizeViewDp: Dp,
+    rollEventCount: Int
 ) {
     LazyColumn(
         modifier = Modifier
@@ -60,7 +61,8 @@ fun ZoomRollHistoryHorizontal(
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
                 resizeViewDp,
-                entriesList.size
+                entriesList.size,
+                rollEventCount
             )
         }
     }
@@ -77,9 +79,10 @@ fun ZoomRollItem(
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     resizeViewDp: Dp,
-    entriesListSize: Int
+    entriesListSize: Int,
+    rollEventCount: Int
 ) {
-    val isNewRollEvent = remember(rollSequence.key) {
+    val isNewRollEvent = remember(rollSequence.key, rollEventCount) {
         (indexSequence == 0) && !seenRollEvents.contains(rollSequence.key)
     }
 
@@ -106,7 +109,7 @@ fun ZoomRollItem(
         }
     }
 
-    LaunchedEffect(rollSequence.key) {
+    LaunchedEffect(rollSequence.key, rollEventCount) {
         if (indexSequence == 0) {
             seenRollEvents.add(rollSequence.key)
         }
@@ -125,7 +128,8 @@ fun ZoomRollItem(
             isNewRollEvent,
             stateFlowZoom.rollIndexTime,
             stateFlowZoom.rollScore,
-            listState
+            listState,
+            rollEventCount
         )
 }
 
@@ -143,7 +147,8 @@ fun ZoomRollItemCol(
     isNewRollEvent: Boolean,
     showRollIndexTime: Boolean,
     showRollScore: Boolean,
-    listState: androidx.compose.foundation.lazy.LazyListState
+    listState: androidx.compose.foundation.lazy.LazyListState,
+    rollEventCount: Int
 ) {
     Column {
         if (showRollIndexTime)
@@ -161,7 +166,8 @@ fun ZoomRollItemCol(
             showRollScore,
             isNewRollEvent,
             listState,
-            groupHistory
+            groupHistory,
+            rollEventCount
         )
 
         if (indexSequence < entriesListSize - 1)
@@ -179,7 +185,8 @@ fun ZoomRollItemRow(
     showRollScore: Boolean,
     isNewRollEvent: Boolean,
     listState: androidx.compose.foundation.lazy.LazyListState,
-    groupHistory: GroupHistory
+    groupHistory: GroupHistory,
+    rollEventCount: Int
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -200,7 +207,8 @@ fun ZoomRollItemRow(
             rollSequence,
             zoomRollsAndroidViewModel,
             groupHistory,
-            resizeViewDp
+            resizeViewDp,
+            rollEventCount
         )
     }
 }
@@ -212,7 +220,8 @@ fun RowScope.ZoomRollItemLR(
     rollSequence: Map.Entry<Long, List<Roll>>,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     groupHistory: GroupHistory,
-    resizeViewDp: Dp
+    resizeViewDp: Dp,
+    rollEventCount: Int
 ) {
     val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current
@@ -229,7 +238,8 @@ fun RowScope.ZoomRollItemLR(
         itemsIndexed(
             rollSequence.value,
             key = { index, item ->
-                "${item.side}_$index"
+                if (indexSequence == 0) "${rollEventCount}_${item.side}_$index"
+                else "${item.side}_$index"
             }
         ) { indexRoll, roll ->
             RollDetails(
@@ -239,9 +249,10 @@ fun RowScope.ZoomRollItemLR(
                 groupHistory,
                 resizeViewDp,
                 isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false,
-                onToggleLock = if (indexSequence == 0) {
+                onToggleLock = if (indexSequence == 0 && roll.explodeIndex == 0) {
                     { zoomRollsAndroidViewModel.toggleLock(indexRoll) }
-                } else null
+                } else null,
+                rollEventCount = if (indexSequence == 0) rollEventCount else 0
             )
         }
     }

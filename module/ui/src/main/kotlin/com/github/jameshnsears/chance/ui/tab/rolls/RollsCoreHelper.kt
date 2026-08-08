@@ -68,9 +68,11 @@ class RollsCoreHelper(
         val diceCountMap = mutableMapOf<String, Int>()
 
         diceToRoll.forEach { (dice, uuidGroup) ->
-            val count = diceCountMap.getOrDefault(dice.uuid, 0)
-            newRollSequence.addAll(rollDice(dice, count * dice.multiplierValue, uuidGroup))
-            diceCountMap[dice.uuid] = count + 1
+            val countOffset = diceCountMap.getOrDefault(dice.uuid, 0)
+            for (m in 1..dice.multiplierValue) {
+                newRollSequence.addAll(rollDiceUnit(dice, countOffset + m, uuidGroup))
+            }
+            diceCountMap[dice.uuid] = countOffset + dice.multiplierValue
         }
     }
 
@@ -87,37 +89,114 @@ class RollsCoreHelper(
         return selectedDice + groupDice
     }
 
-    private fun rollDice(dice: Dice, indexOffset: Int = 0, uuidGroup: String = ""): List<Roll> {
-        val diceRolls = mutableListOf<Roll>()
-        for (indexMultiplier in 1..dice.multiplierValue) {
-            var randomSide = randomSide(dice)
-            diceRolls.add(
-                Roll(
-                    uuidDice = dice.uuid,
-                    side = randomSide,
-                    multiplierIndex = indexMultiplier + indexOffset,
-                    score = randomSide.number,
-                    uuidGroup = uuidGroup
-                )
-            )
+    fun reRollDiceSequence(
+        diceBag: DiceBag,
+        existingSequence: List<Roll>,
+        lockedIndices: Set<Int>,
+        newRollSequence: MutableList<Roll>,
+        shuffle: Boolean
+    ) {
+        val diceMap = diceBag.associateBy { it.uuid }
 
-            if (dice.explode) {
-                var indexExplode = 0
-                val explosionDepth = 5
-                while (indexExplode < explosionDepth && diceCanExplode(dice, randomSide)) {
-                    indexExplode++
-                    randomSide = randomSide(dice)
-                    diceRolls.add(
-                        Roll(
-                            uuidDice = dice.uuid,
-                            side = randomSide,
-                            multiplierIndex = indexMultiplier,
-                            explodeIndex = indexExplode,
-                            score = randomSide.number,
-                            uuidGroup = uuidGroup
-                        )
-                    )
+        data class UnitKey(val uuidDice: String, val multiplierIndex: Int, val uuidGroup: String)
+
+        val unitRootIndices = mutableMapOf<UnitKey, Int>()
+        val unitRoots = mutableMapOf<UnitKey, Roll>()
+
+        existingSequence.forEachIndexed { index, roll ->
+            if (roll.explodeIndex == 0) {
+                val key = UnitKey(roll.uuidDice, roll.multiplierIndex, roll.uuidGroup)
+                unitRootIndices[key] = index
+                unitRoots[key] = roll
+            }
+        }
+
+        val unitKeys = existingSequence.map { UnitKey(it.uuidDice, it.multiplierIndex, it.uuidGroup) }.distinct()
+
+        unitKeys.forEach { key ->
+            val dice = diceMap[key.uuidDice]
+            val rootIndex = unitRootIndices[key]
+            val rootRoll = unitRoots[key]
+
+            if (dice != null && rootRoll != null && rootIndex != null) {
+                if (lockedIndices.contains(rootIndex)) {
+                    newRollSequence.addAll(rollDiceStartingFromRoot(dice, rootRoll))
+                } else {
+                    newRollSequence.addAll(rollDiceUnit(dice, key.multiplierIndex, key.uuidGroup))
                 }
+            }
+        }
+
+        if (shuffle) {
+            newRollSequence.shuffle()
+        }
+    }
+
+    private fun rollDiceUnit(dice: Dice, multiplierIndex: Int, uuidGroup: String): List<Roll> {
+        val diceRolls = mutableListOf<Roll>()
+        var randomSide = randomSide(dice)
+        diceRolls.add(
+            Roll(
+                uuidDice = dice.uuid,
+                side = randomSide,
+                multiplierIndex = multiplierIndex,
+                score = randomSide.number,
+                uuidGroup = uuidGroup
+            )
+        )
+
+        if (dice.explode) {
+            var indexExplode = 0
+            val explosionDepth = 5
+            while (indexExplode < explosionDepth && diceCanExplode(dice, randomSide)) {
+                indexExplode++
+                randomSide = randomSide(dice)
+                diceRolls.add(
+                    Roll(
+                        uuidDice = dice.uuid,
+                        side = randomSide,
+                        multiplierIndex = multiplierIndex,
+                        explodeIndex = indexExplode,
+                        score = randomSide.number,
+                        uuidGroup = uuidGroup
+                    )
+                )
+            }
+        }
+
+        if (dice.modifyScore && diceRolls.isNotEmpty()) {
+            val lastRoll = diceRolls.last()
+            lastRoll.scoreAdjustment = dice.modifyScoreValue
+            lastRoll.score += dice.modifyScoreValue
+        }
+
+        return diceRolls
+    }
+
+    private fun rollDiceStartingFromRoot(dice: Dice, rootRoll: Roll): List<Roll> {
+        val diceRolls = mutableListOf<Roll>()
+        // Reset root roll score in case it was previously the last item with an adjustment
+        val cleanRoot = rootRoll.copy(score = rootRoll.side.number, scoreAdjustment = 0)
+        diceRolls.add(cleanRoot)
+
+        var lastSide = cleanRoot.side
+        if (dice.explode) {
+            var indexExplode = 0
+            val explosionDepth = 5
+            while (indexExplode < explosionDepth && diceCanExplode(dice, lastSide)) {
+                indexExplode++
+                val randomSide = randomSide(dice)
+                diceRolls.add(
+                    Roll(
+                        uuidDice = dice.uuid,
+                        side = randomSide,
+                        multiplierIndex = cleanRoot.multiplierIndex,
+                        explodeIndex = indexExplode,
+                        score = randomSide.number,
+                        uuidGroup = cleanRoot.uuidGroup
+                    )
+                )
+                lastSide = randomSide
             }
         }
 

@@ -538,6 +538,42 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         assertFalse(tabRollAndroidViewModel.undoEnabled.value)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun reRollLatestRoll() = runTest {
+        val diceBag = BagDataTestDouble()
+        val tabRollAndroidViewModel = tabRollAndroidViewModel(diceBag)
+        advanceUntilIdle()
+
+        val initialHistory = tabRollAndroidViewModel.repositoryRoll.fetch().first()
+        val latestEpoch = initialHistory.keys.maxOrNull()!!
+
+        // Mock randomSide to return side index 3 (number 1 for d4)
+        val d4 = diceBag.d4
+        val side1 = d4.sides[3]
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(any()) } returns side1
+
+        // Trigger re-roll on the latest entry
+        // We pass the SORTED history as the UI would
+        val sortedHistory = LinkedHashMap<Long, List<Roll>>()
+        initialHistory.keys.sortedDescending().forEach { sortedHistory[it] = initialHistory[it]!! }
+
+        tabRollAndroidViewModel.rollDiceSequence(
+            lockedRollIndices = setOf(99), // Trigger re-roll logic
+            latestRollHistory = sortedHistory
+        )
+        advanceUntilIdle()
+
+        val updatedHistory = tabRollAndroidViewModel.repositoryRoll.fetch().first()
+        val updatedLatestRolls = updatedHistory[latestEpoch]!!
+
+        // Before re-roll, they were d4.sides[0] and [1].
+        // Now they should both be d4.sides[3] (side1).
+        updatedLatestRolls.forEach {
+            assertEquals(side1.uuid, it.side.uuid)
+        }
+    }
+
     private fun tabRollAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
         groupHistory: GroupHistory? = null,

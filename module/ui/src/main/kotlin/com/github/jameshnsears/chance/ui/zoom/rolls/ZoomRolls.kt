@@ -6,6 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,6 +34,7 @@ fun ZoomRoll(
 
     val seenRollEvents = remember { mutableSetOf<Long>() }
     var rollEventHappened by remember { mutableStateOf(value = false) }
+    var rollEventCount by remember { mutableIntStateOf(0) }
 
     val listState = rememberLazyListState(
         initialFirstVisibleItemIndex = stateFlowZoom.firstVisibleItemIndex,
@@ -45,7 +47,12 @@ fun ZoomRoll(
 
     LaunchedEffect(Unit) {
         RollsEvent.sharedFlowTabRollEvent.collect {
+            rollEventCount++
             rollEventHappened = true
+            // Clear the latest roll from seen so it re-animates if it's a re-roll
+            stateFlowZoom.rollHistory.keys.firstOrNull()?.let {
+                seenRollEvents.remove(it)
+            }
             listState.scrollToItem(0)
         }
     }
@@ -83,7 +90,8 @@ fun ZoomRoll(
                 groupHistory,
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
-                stateFlowZoom.resizeViewDp
+                stateFlowZoom.resizeViewDp,
+                rollEventCount
             )
         } else {
             ZoomRollVertical(
@@ -94,7 +102,8 @@ fun ZoomRoll(
                 groupHistory,
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
-                stateFlowZoom.resizeViewDp
+                stateFlowZoom.resizeViewDp,
+                rollEventCount
             )
         }
     }

@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -18,10 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
+import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
 
 
 @Composable
-fun RollButton(rollsAndroidViewModel: RollsAndroidViewModel) {
+fun RollButton(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel
+) {
     val stateFlowRollEnabled =
         rollsAndroidViewModel.rollEnabled.collectAsStateWithLifecycle(
             lifecycleOwner = LocalLifecycleOwner.current
@@ -29,10 +34,21 @@ fun RollButton(rollsAndroidViewModel: RollsAndroidViewModel) {
 
     val rollEnabled = stateFlowRollEnabled.value
 
+    val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
+    val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
     // Use Button (Filled) for primary action as per M3 Google style
     androidx.compose.material3.Button(
         onClick = {
-            rollsAndroidViewModel.rollDiceSequence()
+            rollsAndroidViewModel.rollDiceSequence(
+                lockedRollIndices = lockedRollIndices,
+                latestRollHistory = stateFlowZoom.rollHistory
+            )
         },
         modifier = Modifier
             .padding(start = 12.dp)

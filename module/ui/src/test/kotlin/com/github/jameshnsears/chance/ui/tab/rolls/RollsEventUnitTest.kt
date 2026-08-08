@@ -12,15 +12,17 @@ class RollsEventUnitTest : UtilityAndroidUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun emitAndCollect() = runTest {
+        var emittedValue = 0L
         val collectorJob = launch {
             RollsEvent.sharedFlowTabRollEvent.collect {
-                Assert.assertTrue(true)
+                emittedValue = it
             }
         }
         RollsEvent.emit()
 
         advanceUntilIdle()
 
+        Assert.assertTrue(emittedValue > 0)
         collectorJob.cancel()
     }
 }

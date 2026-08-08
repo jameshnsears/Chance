@@ -16,6 +16,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +39,7 @@ fun ZoomRollVertical(
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     resizeViewDp: Dp,
+    rollEventCount: Int
 ) {
     LazyColumn(
         modifier = Modifier
@@ -60,7 +62,8 @@ fun ZoomRollVertical(
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
                 resizeViewDp,
-                entriesList.size
+                entriesList.size,
+                rollEventCount
             )
         }
     }
@@ -78,17 +81,18 @@ fun ZoomRollVerticalItem(
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     resizeViewDp: Dp,
-    entriesListSize: Int
+    entriesListSize: Int,
+    rollEventCount: Int
 ) {
     val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current
     )
 
-    val isNewRollEvent = remember(rollSequence.key) {
+    val isNewRollEvent = remember(rollSequence.key, rollEventCount) {
         (indexSequence == 0) && !seenRollEvents.contains(rollSequence.key)
     }
 
-    LaunchedEffect(rollSequence.key) {
+    LaunchedEffect(rollSequence.key, rollEventCount) {
         if (indexSequence == 0) {
             seenRollEvents.add(rollSequence.key)
         }
@@ -136,18 +140,21 @@ fun ZoomRollVerticalItem(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             rollSequence.value.forEachIndexed { indexRoll, roll ->
-                Box(modifier = Modifier.padding(horizontal = 4.dp)) {
-                    RollDetails(
-                        zoomRollsAndroidViewModel,
-                        roll,
-                        zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
-                        groupHistory,
-                        resizeViewDp,
-                        isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false,
-                        onToggleLock = if (indexSequence == 0) {
-                            { zoomRollsAndroidViewModel.toggleLock(indexRoll) }
-                        } else null
-                    )
+                key(if (indexSequence == 0) "${rollEventCount}_$indexRoll" else indexRoll) {
+                    Box(modifier = Modifier.padding(horizontal = 4.dp)) {
+                        RollDetails(
+                            zoomRollsAndroidViewModel,
+                            roll,
+                            zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
+                            groupHistory,
+                            resizeViewDp,
+                            isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false,
+                            onToggleLock = if (indexSequence == 0 && roll.explodeIndex == 0) {
+                                { zoomRollsAndroidViewModel.toggleLock(indexRoll) }
+                            } else null,
+                            rollEventCount = if (indexSequence == 0) rollEventCount else 0
+                        )
+                    }
                 }
             }
         }
