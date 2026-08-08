@@ -101,14 +101,14 @@ class RollsCoreHelper(
         data class UnitKey(val uuidDice: String, val multiplierIndex: Int, val uuidGroup: String)
 
         val unitRootIndices = mutableMapOf<UnitKey, Int>()
-        val unitRoots = mutableMapOf<UnitKey, Roll>()
+        val units = mutableMapOf<UnitKey, MutableList<Roll>>()
 
         existingSequence.forEachIndexed { index, roll ->
+            val key = UnitKey(roll.uuidDice, roll.multiplierIndex, roll.uuidGroup)
             if (roll.explodeIndex == 0) {
-                val key = UnitKey(roll.uuidDice, roll.multiplierIndex, roll.uuidGroup)
                 unitRootIndices[key] = index
-                unitRoots[key] = roll
             }
+            units.getOrPut(key) { mutableListOf() }.add(roll)
         }
 
         val unitKeys = existingSequence.map { UnitKey(it.uuidDice, it.multiplierIndex, it.uuidGroup) }.distinct()
@@ -116,11 +116,10 @@ class RollsCoreHelper(
         unitKeys.forEach { key ->
             val dice = diceMap[key.uuidDice]
             val rootIndex = unitRootIndices[key]
-            val rootRoll = unitRoots[key]
 
-            if (dice != null && rootRoll != null && rootIndex != null) {
+            if (dice != null && rootIndex != null) {
                 if (lockedIndices.contains(rootIndex)) {
-                    newRollSequence.addAll(rollDiceStartingFromRoot(dice, rootRoll))
+                    newRollSequence.addAll(units[key]!!)
                 } else {
                     newRollSequence.addAll(rollDiceUnit(dice, key.multiplierIndex, key.uuidGroup))
                 }
@@ -161,42 +160,6 @@ class RollsCoreHelper(
                         uuidGroup = uuidGroup
                     )
                 )
-            }
-        }
-
-        if (dice.modifyScore && diceRolls.isNotEmpty()) {
-            val lastRoll = diceRolls.last()
-            lastRoll.scoreAdjustment = dice.modifyScoreValue
-            lastRoll.score += dice.modifyScoreValue
-        }
-
-        return diceRolls
-    }
-
-    private fun rollDiceStartingFromRoot(dice: Dice, rootRoll: Roll): List<Roll> {
-        val diceRolls = mutableListOf<Roll>()
-        // Reset root roll score in case it was previously the last item with an adjustment
-        val cleanRoot = rootRoll.copy(score = rootRoll.side.number, scoreAdjustment = 0)
-        diceRolls.add(cleanRoot)
-
-        var lastSide = cleanRoot.side
-        if (dice.explode) {
-            var indexExplode = 0
-            val explosionDepth = 5
-            while (indexExplode < explosionDepth && diceCanExplode(dice, lastSide)) {
-                indexExplode++
-                val randomSide = randomSide(dice)
-                diceRolls.add(
-                    Roll(
-                        uuidDice = dice.uuid,
-                        side = randomSide,
-                        multiplierIndex = cleanRoot.multiplierIndex,
-                        explodeIndex = indexExplode,
-                        score = randomSide.number,
-                        uuidGroup = cleanRoot.uuidGroup
-                    )
-                )
-                lastSide = randomSide
             }
         }
 

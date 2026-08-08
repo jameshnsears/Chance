@@ -472,7 +472,7 @@ fun ZoomRollFaceImageShape(
     onToggleLock: (() -> Unit)? = null,
     rollEventCount: Int = 0
 ) {
-    key(rollEventCount) {
+    key(if (isLocked) 0 else rollEventCount) {
         Box(
             modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
         ) {
@@ -532,7 +532,7 @@ fun ZoomRollFaceImageSVG(
         modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
     ) {
         if (side.imageBase64 != "") {
-            val imageRequest by produceState(initialValue = side.imageRequest, side, rollEventCount) {
+            val imageRequest by produceState(initialValue = side.imageRequest, side, if (isLocked) 0 else rollEventCount) {
                 if (value == null) {
                     value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
                 }

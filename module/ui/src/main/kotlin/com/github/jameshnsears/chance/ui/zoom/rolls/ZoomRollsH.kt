@@ -238,7 +238,8 @@ fun RowScope.ZoomRollItemLR(
         itemsIndexed(
             rollSequence.value,
             key = { index, item ->
-                if (indexSequence == 0) "${rollEventCount}_${item.side}_$index"
+                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(index) else false
+                if (indexSequence == 0 && !isLocked) "${rollEventCount}_${item.side}_$index"
                 else "${item.side}_$index"
             }
         ) { indexRoll, roll ->

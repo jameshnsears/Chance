@@ -140,7 +140,8 @@ fun ZoomRollVerticalItem(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             rollSequence.value.forEachIndexed { indexRoll, roll ->
-                key(if (indexSequence == 0) "${rollEventCount}_$indexRoll" else indexRoll) {
+                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false
+                key(if (indexSequence == 0 && !isLocked) "${rollEventCount}_$indexRoll" else indexRoll) {
                     Box(modifier = Modifier.padding(horizontal = 4.dp)) {
                         RollDetails(
                             zoomRollsAndroidViewModel,

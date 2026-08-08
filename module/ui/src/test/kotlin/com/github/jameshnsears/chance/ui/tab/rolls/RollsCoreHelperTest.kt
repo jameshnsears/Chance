@@ -105,6 +105,39 @@ class RollsCoreHelperTest {
     }
 
     @Test
+    fun reRollDiceSequenceWithExplosionLock() = runTest {
+        val bagData = BagDataTestDouble()
+        val d6 = bagData.d6
+        d6.selected = true
+        d6.multiplierValue = 1
+        d6.explode = true
+        d6.explodeWhen = DiceRollValues.EXPLODE_WHEN_VALUES[0]
+        d6.explodeValue = 6
+
+        val helper = RollsCoreHelper(RepositoryFactory().repositoryRoll)
+
+        // 1. Create an initial sequence with an explosion
+        val initialRolls = mutableListOf(
+            Roll(uuidDice = d6.uuid, multiplierIndex = 1, side = d6.sides[0], explodeIndex = 0, score = 6), // root (side 6)
+            Roll(uuidDice = d6.uuid, multiplierIndex = 1, side = d6.sides[5], explodeIndex = 1, score = 1)  // explosion (side 1)
+        )
+
+        // 2. Lock the root
+        val lockedIndices = setOf(0)
+
+        // 3. Re-roll
+        val nextRolls = mutableListOf<Roll>()
+        helper.reRollDiceSequence(bagData.allDice(), initialRolls, lockedIndices, nextRolls, false)
+
+        // 4. Verify BOTH rolls are preserved
+        assertEquals(2, nextRolls.size)
+        assertEquals(6, nextRolls[0].side.number)
+        assertEquals(0, nextRolls[0].explodeIndex)
+        assertEquals(1, nextRolls[1].side.number)
+        assertEquals(1, nextRolls[1].explodeIndex)
+    }
+
+    @Test
     fun generateRollDiceSequenceWithGroups() = runTest {
         val bagData = BagDataTestDouble()
         bagData.allDice().forEach { it.selected = false }
