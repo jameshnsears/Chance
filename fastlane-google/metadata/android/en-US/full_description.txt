@@ -10,5 +10,7 @@ An easy-to-use dice rolling app, featuring:
 &bull; Works offline
 &bull; Responsive
 &bull; Yes/No shortcut
+&bull; Open Source
+&bull; Free/No ads/Crashlytics only
 
 Feedback (especially via GitHub Issues) drives development.

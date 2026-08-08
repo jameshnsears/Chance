@@ -78,7 +78,11 @@ fun ZoomRoll(
     )
 
     val rollHistory = stateFlowZoom.rollHistory
-    val entriesList = stateFlowZoom.entriesList
+    val entriesList = if (stateFlowZoom.history) {
+        stateFlowZoom.entriesList
+    } else {
+        stateFlowZoom.entriesList.take(1)
+    }
 
     val seenRollEvents = remember { mutableSetOf<Long>() }
     var rollEventHappened by remember { mutableStateOf(false) }
