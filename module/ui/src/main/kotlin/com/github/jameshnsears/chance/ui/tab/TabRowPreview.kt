@@ -6,8 +6,11 @@ import android.content.SharedPreferences
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigationevent.compose.LocalNavigationEventDispatcherOwner
+import androidx.navigationevent.compose.rememberNavigationEventDispatcherOwner
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
@@ -48,49 +51,53 @@ fun TabRowPreview() {
         topLevelRoutes = setOf(ChanceNavKey.SetupDice, ChanceNavKey.SetupGroups, ChanceNavKey.Roll)
     )
 
+    val dispatcherOwner = rememberNavigationEventDispatcherOwner(parent = null)
+
     ChanceTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
-        ) {
-            TabRow(
-                navigationState,
-                DiceAndroidViewModel(
-                    application,
-                    repositorySettings,
-                    repositoryBag,
-                    repositoryRoll,
-                    repositoryGroup,
-                    3.0f
-                ),
-                GroupsAndroidViewModel(
-                    application,
-                    repositoryBag,
-                    repositoryGroup,
-                    repositoryRoll
-                ),
-                RollsAndroidViewModel(
-                    application,
-                    repositorySettings,
-                    repositoryBag,
-                    repositoryRoll,
-                    repositoryGroup,
-                    RollsSelectionHelper(repositoryBag, repositoryGroup),
-                    RollsCoreHelper(repositoryRoll)
-                ),
-                ZoomDiceAndroidViewModel(
-                    application,
-                    repositorySettings,
-                    repositoryBag,
-                    repositoryRoll
-                ),
-                ZoomRollsAndroidViewModel(
-                    application,
-                    repositorySettings,
-                    repositoryBag,
-                    repositoryRoll,
-                    repositoryGroup
+        CompositionLocalProvider(LocalNavigationEventDispatcherOwner provides dispatcherOwner) {
+            Surface(
+                color = MaterialTheme.colorScheme.surfaceContainerLow,
+            ) {
+                TabRow(
+                    navigationState,
+                    DiceAndroidViewModel(
+                        application,
+                        repositorySettings,
+                        repositoryBag,
+                        repositoryRoll,
+                        repositoryGroup,
+                        3.0f
+                    ),
+                    GroupsAndroidViewModel(
+                        application,
+                        repositoryBag,
+                        repositoryGroup,
+                        repositoryRoll
+                    ),
+                    RollsAndroidViewModel(
+                        application,
+                        repositorySettings,
+                        repositoryBag,
+                        repositoryRoll,
+                        repositoryGroup,
+                        RollsSelectionHelper(repositoryBag, repositoryGroup),
+                        RollsCoreHelper(repositoryRoll)
+                    ),
+                    ZoomDiceAndroidViewModel(
+                        application,
+                        repositorySettings,
+                        repositoryBag,
+                        repositoryRoll
+                    ),
+                    ZoomRollsAndroidViewModel(
+                        application,
+                        repositorySettings,
+                        repositoryBag,
+                        repositoryRoll,
+                        repositoryGroup
+                    )
                 )
-            )
+            }
         }
     }
 }
