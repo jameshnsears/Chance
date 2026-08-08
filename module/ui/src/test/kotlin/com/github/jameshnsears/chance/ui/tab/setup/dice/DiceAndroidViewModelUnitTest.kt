@@ -255,6 +255,10 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         tabBagViewModel.resizeSettings(5f)
         waitForResizeValue(tabBagViewModel, 5f)
         Assert.assertEquals(5f, tabBagViewModel.stateFlowResize.value)
+
+        tabBagViewModel.resizeSettings(18f)
+        waitForResizeValue(tabBagViewModel, 18f)
+        Assert.assertEquals(18f, tabBagViewModel.stateFlowResize.value)
     }
 
     @Test

@@ -51,7 +51,7 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
 
         // It should be cleared then re-populated with defaults (2.0f)
         assertEquals(
-            2.0f,
+            3.0f,
             repositoryFactory.repositorySettings.fetch().first().resizeZoom
         )
     }

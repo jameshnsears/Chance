@@ -36,7 +36,7 @@ fun Resize(
             onValueChange = { newValue ->
                 diceAndroidViewModel.resizeSettings(newValue)
             },
-            valueRange = 1f..9f,
+            valueRange = 1f..18f,
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.primary,
                 activeTrackColor = MaterialTheme.colorScheme.primary,
