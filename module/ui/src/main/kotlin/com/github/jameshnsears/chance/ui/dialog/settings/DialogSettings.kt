@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.FormatListNumbered
 import androidx.compose.material.icons.outlined.GridView
+import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.PhonelinkRing
 import androidx.compose.material.icons.outlined.RecordVoiceOver
@@ -173,7 +174,7 @@ private fun SettingsRollLayoutHistory(
 
     CommonSwitch(
         stringResource(R.string.tab_roll_settings_history),
-        Icons.Outlined.Schedule,
+        Icons.Outlined.History,
         state.history,
         rollsAndroidViewModel::settingsHistory,
         DialogSettingsTestTag.SETTINGS_HISTORY
