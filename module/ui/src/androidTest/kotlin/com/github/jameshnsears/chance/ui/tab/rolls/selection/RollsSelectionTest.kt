@@ -2,6 +2,7 @@ package com.github.jameshnsears.chance.ui.tab.rolls.selection
 
 import android.app.Application
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -14,6 +15,8 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.group.Group
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModelFactory
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -48,7 +51,7 @@ class RollsSelectionTest : AndroidTestHelper() {
             )
 
             ChanceTheme {
-                RollSelectionFilterChip(rollsAndroidViewModel, dice)
+                RollSelectionFilterChip(rollsAndroidViewModel, dice, true)
             }
         }
 
@@ -78,7 +81,7 @@ class RollsSelectionTest : AndroidTestHelper() {
             )
 
             ChanceTheme {
-                RollSelectionGroupFilterChip(rollsAndroidViewModel, group)
+                RollSelectionGroupFilterChip(rollsAndroidViewModel, group, true)
             }
         }
 
@@ -86,5 +89,51 @@ class RollsSelectionTest : AndroidTestHelper() {
             .onNodeWithTag(RollsSelectionTestTag.ROLL_BUTTON + groupName)
             .performClick()
             .assertIsSelected()
+    }
+
+    @Test
+    fun rollSelectionRowDisabledWhenLocked() = runTest {
+        composeRule.setContent {
+            val application = LocalContext.current.applicationContext as Application
+            val repositoryFactory = RepositoryFactory()
+
+            val rollsAndroidViewModel: RollsAndroidViewModel = viewModel(
+                factory = RollsAndroidViewModelFactory(
+                    application = application,
+                    repositoryFactory.repositorySettings,
+                    repositoryFactory.repositoryBag,
+                    repositoryFactory.repositoryRoll,
+                    repositoryFactory.repositoryGroup,
+                )
+            )
+
+            val zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel = viewModel(
+                factory = ZoomRollsAndroidViewModelFactory(
+                    application,
+                    repositoryFactory.repositorySettings,
+                    repositoryFactory.repositoryBag,
+                    repositoryFactory.repositoryRoll,
+                    repositoryFactory.repositoryGroup
+                )
+            )
+
+            // Mock locking a side
+            zoomRollsAndroidViewModel.toggleLock(0)
+
+            ChanceTheme {
+                RollSelectionRow(rollsAndroidViewModel, zoomRollsAndroidViewModel)
+            }
+        }
+
+        // We need to wait for the dice bag to be loaded and the chip to appear
+        composeRule.waitForIdle()
+
+        // The default dice bag in test double has a D6 at some index
+        // or I should have stored one.
+        // BagDataTestDouble has d6 as allDice()[2].
+
+        composeRule
+            .onNodeWithTag(RollsSelectionTestTag.ROLL_BUTTON + "d6")
+            .assertIsNotEnabled()
     }
 }

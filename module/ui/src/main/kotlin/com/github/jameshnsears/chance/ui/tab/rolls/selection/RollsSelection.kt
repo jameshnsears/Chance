@@ -25,12 +25,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.group.Group
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
 
 @Composable
-fun RollSelectionRow(rollsAndroidViewModel: RollsAndroidViewModel) {
+fun RollSelectionRow(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel
+) {
     val stateDiceBag = rollsAndroidViewModel.diceBag.collectAsStateWithLifecycle()
 
     val stateGroupHistory = rollsAndroidViewModel.groupHistory.collectAsStateWithLifecycle()
+
+    val stateLockedRollIndices = zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle()
+
+    val chipsEnabled = stateLockedRollIndices.value.isEmpty()
 
     val diceBag = stateDiceBag.value
     val groupHistory = stateGroupHistory.value
@@ -40,22 +48,27 @@ fun RollSelectionRow(rollsAndroidViewModel: RollsAndroidViewModel) {
         modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
     ) {
         items(diceBag.size) { index ->
-            RollSelectionFilterChip(rollsAndroidViewModel, diceBag[index])
+            RollSelectionFilterChip(rollsAndroidViewModel, diceBag[index], chipsEnabled)
         }
         items(groupHistory.size) { index ->
-            RollSelectionGroupFilterChip(rollsAndroidViewModel, groupHistory[index])
+            RollSelectionGroupFilterChip(rollsAndroidViewModel, groupHistory[index], chipsEnabled)
         }
     }
 }
 
 @Composable
-fun RollSelectionFilterChip(rollsAndroidViewModel: RollsAndroidViewModel, dice: Dice) {
+fun RollSelectionFilterChip(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    dice: Dice,
+    enabled: Boolean
+) {
     var selected by remember(dice.selected) { mutableStateOf(dice.selected) }
 
     FilterChip(
         modifier = Modifier
             .padding(end = 8.dp)
             .testTag(RollsSelectionTestTag.ROLL_BUTTON + dice.title),
+        enabled = enabled,
         onClick = {
             selected = !selected
             rollsAndroidViewModel.markDiceAsSelected(dice, selected)
@@ -88,7 +101,8 @@ fun RollSelectionFilterChip(rollsAndroidViewModel: RollsAndroidViewModel, dice: 
 @Composable
 fun RollSelectionGroupFilterChip(
     rollsAndroidViewModel: RollsAndroidViewModel,
-    group: Group
+    group: Group,
+    enabled: Boolean
 ) {
     var selected by remember(group.selected) { mutableStateOf(group.selected) }
 
@@ -96,6 +110,7 @@ fun RollSelectionGroupFilterChip(
         modifier = Modifier
             .padding(end = 8.dp)
             .testTag(RollsSelectionTestTag.ROLL_BUTTON + group.name),
+        enabled = enabled,
         onClick = {
             selected = !selected
             rollsAndroidViewModel.markGroupAsSelected(group)

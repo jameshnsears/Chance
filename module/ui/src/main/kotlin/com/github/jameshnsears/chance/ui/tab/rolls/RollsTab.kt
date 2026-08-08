@@ -128,7 +128,10 @@ fun TabRollBottomSheetLayout(
                 .padding(top = 12.dp, bottom = 12.dp)
         )
 
-        RollSelectionRow(rollsAndroidViewModel)
+        RollSelectionRow(
+            rollsAndroidViewModel,
+            zoomRollsAndroidViewModel
+        )
 
         HorizontalDivider(
             modifier = Modifier
