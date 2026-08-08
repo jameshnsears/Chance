@@ -86,6 +86,7 @@ public final class SettingsProtocolBuffer extends
     private boolean layout_ = false;
     private boolean history_ = false;
     private byte memoizedIsInitialized = -1;
+
     // Use SettingsProtocolBuffer.newBuilder() to construct.
     private SettingsProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);

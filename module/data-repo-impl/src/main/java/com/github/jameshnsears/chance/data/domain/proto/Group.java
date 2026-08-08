@@ -44,6 +44,7 @@ public final class Group {
             new java.lang.String[]{"Uuid", "Name", "UuidDice", "Notes", "DisplayIndex", "Selected",});
         descriptor.resolveAllFeaturesImmutable();
     }
+
     private Group() {
     }
 

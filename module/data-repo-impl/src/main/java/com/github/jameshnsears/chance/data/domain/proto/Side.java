@@ -46,6 +46,7 @@ public final class Side {
             new java.lang.String[]{"Uuid", "Number", "NumberColour", "ImageDrawableId", "ImageBase64", "Description", "DescriptionColour", "ImageBase64Uuid",});
         descriptor.resolveAllFeaturesImmutable();
     }
+
     private Side() {
     }
 

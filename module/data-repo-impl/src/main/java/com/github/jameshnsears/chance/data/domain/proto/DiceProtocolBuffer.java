@@ -83,6 +83,7 @@ public final class DiceProtocolBuffer extends
     private int modifyScoreValue_ = 0;
     private int displayIndex_ = 0;
     private byte memoizedIsInitialized = -1;
+
     // Use DiceProtocolBuffer.newBuilder() to construct.
     private DiceProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);

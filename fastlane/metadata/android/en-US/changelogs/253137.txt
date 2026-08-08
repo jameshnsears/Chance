@@ -1,0 +1,5 @@
+- New: Settings: Layout / History
+- New: One tap roll side lock
+- New: Increase maximum zoom
+- Dev: Bump dependencies
+- Dev: Android Studio Quail 1 | 2026.1.1 Patch 2

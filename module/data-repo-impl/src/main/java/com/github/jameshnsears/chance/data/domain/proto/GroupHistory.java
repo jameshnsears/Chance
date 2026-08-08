@@ -47,6 +47,7 @@ public final class GroupHistory {
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Group.getDescriptor();
     }
+
     private GroupHistory() {
     }
 

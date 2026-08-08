@@ -50,6 +50,7 @@ public final class Roll {
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Side.getDescriptor();
     }
+
     private Roll() {
     }
 

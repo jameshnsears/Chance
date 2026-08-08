@@ -50,6 +50,7 @@ public final class Settings {
             new java.lang.String[]{"Resize", "RollIndexTime", "RollScore", "DiceTitle", "SideNumber", "Behaviour", "SideDescription", "SideSVG", "RollSound", "Shuffle", "Haptics", "RollScoreTTS", "ShakeToRoll", "ResizeZoom", "GroupTitle", "Layout", "History",});
         descriptor.resolveAllFeaturesImmutable();
     }
+
     private Settings() {
     }
 
