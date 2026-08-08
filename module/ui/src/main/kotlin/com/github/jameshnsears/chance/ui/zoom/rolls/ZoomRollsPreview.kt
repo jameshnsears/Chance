@@ -83,13 +83,15 @@ private fun ZoomRollPreviewHelper(
 @Preview
 @Composable
 fun ZoomRollHorizontalPreview() {
-    ZoomRollPreviewHelper()
+    ZoomRollPreviewHelper { settings ->
+        settings.layout = true // This will now correctly show ZoomRollHistoryHorizontal
+    }
 }
 
 @Preview
 @Composable
 fun ZoomRollVerticalPreview() {
     ZoomRollPreviewHelper { settings ->
-        settings.orientation = false
+        settings.layout = false // This will now correctly show ZoomRollVertical
     }
 }

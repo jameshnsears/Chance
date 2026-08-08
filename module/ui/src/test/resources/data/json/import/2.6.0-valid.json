@@ -15,7 +15,8 @@
     "shakeToRoll": false,
     "resizeZoom": 2.0,
     "groupTitle": true,
-    "orientation": true
+    "layout": true,
+    "history": true
   },
   "bag": {
     "dice": [

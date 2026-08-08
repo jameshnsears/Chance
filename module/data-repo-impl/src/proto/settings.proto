@@ -20,5 +20,6 @@ message SettingsProtocolBuffer {
   bool shakeToRoll = 13;
   float resizeZoom = 14;
   bool groupTitle = 15;
-  bool orientation = 16;
+  bool layout = 16;
+  bool history = 17;
 }

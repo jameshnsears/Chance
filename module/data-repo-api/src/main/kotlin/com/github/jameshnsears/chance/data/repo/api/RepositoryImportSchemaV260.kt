@@ -23,7 +23,8 @@ class RepositoryImportSchemaV260 : RepositoryImportSchemaV25() {
     "shakeToRoll": { "type": "boolean" },
     "resizeZoom": { "type": "number" },
     "groupTitle": { "type": "boolean" },
-    "orientation": { "type": "boolean" }
+    "layout": { "type": "boolean" },
+    "history": { "type": "boolean" }
   },
   "required": [
     "rollIndexTime",
@@ -40,7 +41,8 @@ class RepositoryImportSchemaV260 : RepositoryImportSchemaV25() {
     "shakeToRoll",
     "resizeZoom",
     "groupTitle",
-    "orientation"
+    "layout",
+    "history"
   ],
   "additionalProperties": false
 }

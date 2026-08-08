@@ -45,6 +45,8 @@ class RepositorySettingsProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() 
     fun fetch() = runTest {
         val settingsProtocolBuffer = SettingsProtocolBuffer.newBuilder()
             .setResizeZoom(3.0f)
+            .setLayout(true)
+            .setHistory(true)
             .build()
 
         coEvery { dataStore.data } returns flowOf(settingsProtocolBuffer)
@@ -53,6 +55,8 @@ class RepositorySettingsProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() 
         val result = repository.fetch().first()
 
         assertEquals(3.0f, result.resizeZoom)
+        assertTrue(result.layout)
+        assertTrue(result.history)
     }
 
     @Test
@@ -81,6 +85,8 @@ class RepositorySettingsProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() 
     fun jsonExport() = runTest {
         val settingsProtocolBuffer = SettingsProtocolBuffer.newBuilder()
             .setResizeZoom(5.0f)
+            .setLayout(true)
+            .setHistory(true)
             .build()
 
         coEvery { dataStore.data } returns flowOf(settingsProtocolBuffer)
@@ -89,6 +95,8 @@ class RepositorySettingsProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() 
         val json = repository.jsonExport()
 
         assertTrue(json.contains("\"resizeZoom\": 5"))
+        assertTrue(json.contains("\"layout\": true"))
+        assertTrue(json.contains("\"history\": true"))
     }
 
     @Test

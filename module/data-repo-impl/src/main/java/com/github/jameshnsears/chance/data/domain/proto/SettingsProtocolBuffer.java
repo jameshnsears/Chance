@@ -27,7 +27,8 @@ public final class SettingsProtocolBuffer extends
     public static final int SHAKETOROLL_FIELD_NUMBER = 13;
     public static final int RESIZEZOOM_FIELD_NUMBER = 14;
     public static final int GROUPTITLE_FIELD_NUMBER = 15;
-    public static final int ORIENTATION_FIELD_NUMBER = 16;
+    public static final int LAYOUT_FIELD_NUMBER = 16;
+    public static final int HISTORY_FIELD_NUMBER = 17;
     private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(class_scope:com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer)
     private static final com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer DEFAULT_INSTANCE;
@@ -82,9 +83,9 @@ public final class SettingsProtocolBuffer extends
     private boolean shakeToRoll_ = false;
     private float resizeZoom_ = 0F;
     private boolean groupTitle_ = false;
-    private boolean orientation_ = false;
+    private boolean layout_ = false;
+    private boolean history_ = false;
     private byte memoizedIsInitialized = -1;
-
     // Use SettingsProtocolBuffer.newBuilder() to construct.
     private SettingsProtocolBuffer(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
         super(builder);
@@ -357,13 +358,23 @@ public final class SettingsProtocolBuffer extends
     }
 
     /**
-     * <code>bool orientation = 16;</code>
+     * <code>bool layout = 16;</code>
      *
-     * @return The orientation.
+     * @return The layout.
      */
     @java.lang.Override
-    public boolean getOrientation() {
-        return orientation_;
+    public boolean getLayout() {
+        return layout_;
+    }
+
+    /**
+     * <code>bool history = 17;</code>
+     *
+     * @return The history.
+     */
+    @java.lang.Override
+    public boolean getHistory() {
+        return history_;
     }
 
     @java.lang.Override
@@ -424,8 +435,11 @@ public final class SettingsProtocolBuffer extends
         if (groupTitle_) {
             output.writeBool(15, groupTitle_);
         }
-        if (orientation_) {
-            output.writeBool(16, orientation_);
+        if (layout_) {
+            output.writeBool(16, layout_);
+        }
+        if (history_) {
+            output.writeBool(17, history_);
         }
         getUnknownFields().writeTo(output);
     }
@@ -496,9 +510,13 @@ public final class SettingsProtocolBuffer extends
             size += com.google.protobuf.CodedOutputStream
                 .computeBoolSize(15, groupTitle_);
         }
-        if (orientation_) {
+        if (layout_) {
             size += com.google.protobuf.CodedOutputStream
-                .computeBoolSize(16, orientation_);
+                .computeBoolSize(16, layout_);
+        }
+        if (history_) {
+            size += com.google.protobuf.CodedOutputStream
+                .computeBoolSize(17, history_);
         }
         size += getUnknownFields().getSerializedSize();
         memoizedSize = size;
@@ -545,8 +563,10 @@ public final class SettingsProtocolBuffer extends
             other.getResizeZoom())) return false;
         if (getGroupTitle()
             != other.getGroupTitle()) return false;
-        if (getOrientation()
-            != other.getOrientation()) return false;
+        if (getLayout()
+            != other.getLayout()) return false;
+        if (getHistory()
+            != other.getHistory()) return false;
         return getUnknownFields().equals(other.getUnknownFields());
     }
 
@@ -601,9 +621,12 @@ public final class SettingsProtocolBuffer extends
         hash = (37 * hash) + GROUPTITLE_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
             getGroupTitle());
-        hash = (37 * hash) + ORIENTATION_FIELD_NUMBER;
+        hash = (37 * hash) + LAYOUT_FIELD_NUMBER;
         hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getOrientation());
+            getLayout());
+        hash = (37 * hash) + HISTORY_FIELD_NUMBER;
+        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+            getHistory());
         hash = (29 * hash) + getUnknownFields().hashCode();
         memoizedHashCode = hash;
         return hash;
@@ -660,7 +683,8 @@ public final class SettingsProtocolBuffer extends
         private boolean shakeToRoll_;
         private float resizeZoom_;
         private boolean groupTitle_;
-        private boolean orientation_;
+        private boolean layout_;
+        private boolean history_;
 
         // Construct using com.github.jameshnsears.chance.data.domain.proto.SettingsProtocolBuffer.newBuilder()
         private Builder() {
@@ -705,7 +729,8 @@ public final class SettingsProtocolBuffer extends
             shakeToRoll_ = false;
             resizeZoom_ = 0F;
             groupTitle_ = false;
-            orientation_ = false;
+            layout_ = false;
+            history_ = false;
             return this;
         }
 
@@ -787,7 +812,10 @@ public final class SettingsProtocolBuffer extends
                 result.groupTitle_ = groupTitle_;
             }
             if (((from_bitField0_ & 0x00008000) != 0)) {
-                result.orientation_ = orientation_;
+                result.layout_ = layout_;
+            }
+            if (((from_bitField0_ & 0x00010000) != 0)) {
+                result.history_ = history_;
             }
         }
 
@@ -848,8 +876,11 @@ public final class SettingsProtocolBuffer extends
             if (other.getGroupTitle()) {
                 setGroupTitle(other.getGroupTitle());
             }
-            if (other.getOrientation()) {
-                setOrientation(other.getOrientation());
+            if (other.getLayout()) {
+                setLayout(other.getLayout());
+            }
+            if (other.getHistory()) {
+                setHistory(other.getHistory());
             }
             this.mergeUnknownFields(other.getUnknownFields());
             onChanged();
@@ -953,10 +984,15 @@ public final class SettingsProtocolBuffer extends
                             break;
                         } // case 120
                         case 128: {
-                            orientation_ = input.readBool();
+                            layout_ = input.readBool();
                             bitField0_ |= 0x00008000;
                             break;
                         } // case 128
+                        case 136: {
+                            history_ = input.readBool();
+                            bitField0_ |= 0x00010000;
+                            break;
+                        } // case 136
                         default: {
                             if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                                 done = true; // was an endgroup tag
@@ -1523,37 +1559,73 @@ public final class SettingsProtocolBuffer extends
         }
 
         /**
-         * <code>bool orientation = 16;</code>
+         * <code>bool layout = 16;</code>
          *
-         * @return The orientation.
+         * @return The layout.
          */
         @java.lang.Override
-        public boolean getOrientation() {
-            return orientation_;
+        public boolean getLayout() {
+            return layout_;
         }
 
         /**
-         * <code>bool orientation = 16;</code>
+         * <code>bool layout = 16;</code>
          *
-         * @param value The orientation to set.
+         * @param value The layout to set.
          * @return This builder for chaining.
          */
-        public Builder setOrientation(boolean value) {
+        public Builder setLayout(boolean value) {
 
-            orientation_ = value;
+            layout_ = value;
             bitField0_ |= 0x00008000;
             onChanged();
             return this;
         }
 
         /**
-         * <code>bool orientation = 16;</code>
+         * <code>bool layout = 16;</code>
          *
          * @return This builder for chaining.
          */
-        public Builder clearOrientation() {
+        public Builder clearLayout() {
             bitField0_ = (bitField0_ & ~0x00008000);
-            orientation_ = false;
+            layout_ = false;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool history = 17;</code>
+         *
+         * @return The history.
+         */
+        @java.lang.Override
+        public boolean getHistory() {
+            return history_;
+        }
+
+        /**
+         * <code>bool history = 17;</code>
+         *
+         * @param value The history to set.
+         * @return This builder for chaining.
+         */
+        public Builder setHistory(boolean value) {
+
+            history_ = value;
+            bitField0_ |= 0x00010000;
+            onChanged();
+            return this;
+        }
+
+        /**
+         * <code>bool history = 17;</code>
+         *
+         * @return This builder for chaining.
+         */
+        public Builder clearHistory() {
+            bitField0_ = (bitField0_ & ~0x00010000);
+            history_ = false;
             onChanged();
             return this;
         }

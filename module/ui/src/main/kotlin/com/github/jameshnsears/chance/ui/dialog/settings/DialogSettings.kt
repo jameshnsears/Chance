@@ -114,7 +114,7 @@ fun DialogSettingsLayout(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
 
-                SettingsRollOrientation(rollsAndroidViewModel, state)
+                SettingsRollLayoutHistory(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
@@ -159,16 +159,24 @@ fun DialogSettingsLayout(
 }
 
 @Composable
-private fun SettingsRollOrientation(
+private fun SettingsRollLayoutHistory(
     rollsAndroidViewModel: RollsAndroidViewModel,
     state: SettingsState
 ) {
     CommonSwitch(
-        stringResource(R.string.tab_roll_settings_orientation),
+        stringResource(R.string.tab_roll_settings_layout),
         Icons.Outlined.ViewColumn,
-        state.orientation,
-        rollsAndroidViewModel::settingsOrientation,
-        DialogSettingsTestTag.SETTINGS_ORIENTATION
+        state.layout,
+        rollsAndroidViewModel::settingsLayout,
+        DialogSettingsTestTag.SETTINGS_LAYOUT
+    )
+
+    CommonSwitch(
+        stringResource(R.string.tab_roll_settings_history),
+        Icons.Outlined.Schedule,
+        state.history,
+        rollsAndroidViewModel::settingsHistory,
+        DialogSettingsTestTag.SETTINGS_HISTORY
     )
 }
 

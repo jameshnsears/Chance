@@ -29,7 +29,8 @@ interface RepositorySettingsProtocolBufferInterface : RepositorySettingsInterfac
         settingsProtocolBufferBuilder.setShakeToRoll(settingsData.shakeToRoll)
 
         settingsProtocolBufferBuilder.setGroupTitle(settingsData.groupTitle)
-        settingsProtocolBufferBuilder.setOrientation(settingsData.orientation)
+        settingsProtocolBufferBuilder.setLayout(settingsData.layout)
+        settingsProtocolBufferBuilder.setHistory(settingsData.history)
 
         settingsProtocolBufferBuilder.build()
     }
@@ -55,7 +56,8 @@ interface RepositorySettingsProtocolBufferInterface : RepositorySettingsInterfac
             shuffle = settingsProtocolBuffer.shuffle,
             shakeToRoll = settingsProtocolBuffer.shakeToRoll,
             groupTitle = settingsProtocolBuffer.groupTitle,
-            orientation = settingsProtocolBuffer.orientation,
+            layout = settingsProtocolBuffer.layout,
+            history = settingsProtocolBuffer.history,
         )
     }
 

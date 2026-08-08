@@ -123,7 +123,7 @@ fun ZoomRoll(
     ) {
         if (rollHistory.isEmpty()) {
             ZoomRollEmptyState()
-        } else if (stateFlowZoom.orientation) {
+        } else if (stateFlowZoom.layout) {
             ZoomRollHistoryHorizontal(
                 listState,
                 entriesList,

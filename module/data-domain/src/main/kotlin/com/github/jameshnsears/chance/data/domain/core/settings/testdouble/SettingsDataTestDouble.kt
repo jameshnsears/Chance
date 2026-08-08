@@ -11,7 +11,8 @@ class SettingsDataTestDouble(
     override var diceTitle: Boolean = true,
     override var rollBehaviour: Boolean = true,
 
-    override var orientation: Boolean = false,
+    override var layout: Boolean = false,
+    override var history: Boolean = false,
 
     override var sideNumber: Boolean = true,
     override var sideSVG: Boolean = false,
@@ -42,7 +43,8 @@ class SettingsDataTestDouble(
         if (shuffle != other.shuffle) return false
         if (shakeToRoll != other.shakeToRoll) return false
         if (groupTitle != other.groupTitle) return false
-        if (orientation != other.orientation) return false
+        if (layout != other.layout) return false
+        if (history != other.history) return false
 
         return true
     }
@@ -62,7 +64,8 @@ class SettingsDataTestDouble(
         result = 31 * result + shuffle.hashCode()
         result = 31 * result + shakeToRoll.hashCode()
         result = 31 * result + groupTitle.hashCode()
-        result = 31 * result + orientation.hashCode()
+        result = 31 * result + layout.hashCode()
+        result = 31 * result + history.hashCode()
         return result
     }
 }

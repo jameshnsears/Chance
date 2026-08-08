@@ -19,5 +19,6 @@ interface SettingsDataInterface {
     var rollSound: Boolean
     var shuffle: Boolean
     var groupTitle: Boolean
-    var orientation: Boolean
+    var layout: Boolean
+    var history: Boolean
 }

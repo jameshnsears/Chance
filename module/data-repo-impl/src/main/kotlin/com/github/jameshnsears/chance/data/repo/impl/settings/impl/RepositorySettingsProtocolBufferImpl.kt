@@ -71,7 +71,8 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("rollScoreTTS"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("shakeToRoll"))
         fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("groupTitle"))
-        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("orientation"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("layout"))
+        fieldsToAlwaysOutput.add(SettingsProtocolBuffer.getDescriptor().findFieldByName("history"))
 
         JsonFormat.printer().includingDefaultValueFields(fieldsToAlwaysOutput)
             .print(context.settingsDataStore.data.first())

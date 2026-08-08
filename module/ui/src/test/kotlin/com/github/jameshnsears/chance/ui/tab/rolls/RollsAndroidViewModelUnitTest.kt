@@ -309,6 +309,12 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         tabRollAndroidViewModel.settingsShakeToRoll(false)
         assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.shakeToRoll)
 
+        tabRollAndroidViewModel.settingsLayout(false)
+        assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.layout)
+
+        tabRollAndroidViewModel.settingsHistory(false)
+        assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.history)
+
         tabRollAndroidViewModel.settingsUseHaptics(false)
         assertFalse(tabRollAndroidViewModel.stateFlowSettings.value.haptics)
     }
