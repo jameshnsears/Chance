@@ -101,6 +101,10 @@ fun ZoomRollVerticalItem(
         )
     }
 
+    val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -131,7 +135,7 @@ fun ZoomRollVerticalItem(
             horizontalArrangement = Arrangement.Center,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            rollSequence.value.forEach { roll ->
+            rollSequence.value.forEachIndexed { indexRoll, roll ->
                 Box(modifier = Modifier.padding(horizontal = 4.dp)) {
                     RollDetails(
                         zoomRollsAndroidViewModel,
@@ -139,6 +143,10 @@ fun ZoomRollVerticalItem(
                         zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
                         groupHistory,
                         resizeViewDp,
+                        isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false,
+                        onToggleLock = if (indexSequence == 0) {
+                            { zoomRollsAndroidViewModel.toggleLock(indexRoll) }
+                        } else null
                     )
                 }
             }

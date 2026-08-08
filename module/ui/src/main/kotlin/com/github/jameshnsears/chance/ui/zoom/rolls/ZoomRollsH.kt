@@ -112,21 +112,21 @@ fun ZoomRollItem(
         }
     }
 
-    ZoomRollItemCol(
-        indexSequence,
-        originalIndex,
-        rollSequence,
-        rollHistorySize,
-        groupHistory,
-        rollsAndroidViewModel,
-        zoomRollsAndroidViewModel,
-        resizeViewDp,
-        entriesListSize,
-        isNewRollEvent,
-        stateFlowZoom.rollIndexTime,
-        stateFlowZoom.rollScore,
-        listState
-    )
+        ZoomRollItemCol(
+            indexSequence,
+            originalIndex,
+            rollSequence,
+            rollHistorySize,
+            groupHistory,
+            rollsAndroidViewModel,
+            zoomRollsAndroidViewModel,
+            resizeViewDp,
+            entriesListSize,
+            isNewRollEvent,
+            stateFlowZoom.rollIndexTime,
+            stateFlowZoom.rollScore,
+            listState
+        )
 }
 
 @Composable
@@ -153,6 +153,7 @@ fun ZoomRollItemCol(
             )
 
         ZoomRollItemRow(
+            indexSequence,
             rollsAndroidViewModel,
             zoomRollsAndroidViewModel,
             rollSequence,
@@ -170,6 +171,7 @@ fun ZoomRollItemCol(
 
 @Composable
 fun ZoomRollItemRow(
+    indexSequence: Int,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     rollSequence: Map.Entry<Long, List<Roll>>,
@@ -193,6 +195,7 @@ fun ZoomRollItemRow(
         )
 
         ZoomRollItemLR(
+            indexSequence,
             listState,
             rollSequence,
             zoomRollsAndroidViewModel,
@@ -204,12 +207,17 @@ fun ZoomRollItemRow(
 
 @Composable
 fun RowScope.ZoomRollItemLR(
+    indexSequence: Int,
     listState: androidx.compose.foundation.lazy.LazyListState,
     rollSequence: Map.Entry<Long, List<Roll>>,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     groupHistory: GroupHistory,
     resizeViewDp: Dp
 ) {
+    val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
     LazyRow(
         state = listState,
         contentPadding = PaddingValues(horizontal = 0.dp),
@@ -223,13 +231,17 @@ fun RowScope.ZoomRollItemLR(
             key = { index, item ->
                 "${item.side}_$index"
             }
-        ) { _, roll ->
+        ) { indexRoll, roll ->
             RollDetails(
                 zoomRollsAndroidViewModel,
                 roll,
                 zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
                 groupHistory,
                 resizeViewDp,
+                isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false,
+                onToggleLock = if (indexSequence == 0) {
+                    { zoomRollsAndroidViewModel.toggleLock(indexRoll) }
+                } else null
             )
         }
     }

@@ -60,4 +60,41 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         // But I can at least verify that the state has the correct history flag.
         assertEquals(false, state.history)
     }
+
+    @Test
+    fun toggleLock() = runTest {
+        val viewModel = zoomRollsAndroidViewModel()
+
+        assertEquals(emptySet<Int>(), viewModel.lockedRollIndices.value)
+
+        viewModel.toggleLock(0)
+        assertEquals(setOf(0), viewModel.lockedRollIndices.value)
+
+        viewModel.toggleLock(1)
+        assertEquals(setOf(0, 1), viewModel.lockedRollIndices.value)
+
+        viewModel.toggleLock(0)
+        assertEquals(setOf(1), viewModel.lockedRollIndices.value)
+    }
+
+    @Test
+    fun resetLockOnNewRoll() = runTest {
+        val viewModel = zoomRollsAndroidViewModel()
+        val repositoryRoll = RepositoryFactory().repositoryRoll
+
+        viewModel.toggleLock(0)
+        assertEquals(setOf(0), viewModel.lockedRollIndices.value)
+
+        // Add a new roll to history
+        val currentHistory = repositoryRoll.fetch().first()
+        val newHistory = LinkedHashMap(currentHistory)
+        val nextTimestamp = currentHistory.keys.max() + 1000
+        newHistory[nextTimestamp] = currentHistory.values.first()
+
+        repositoryRoll.store(newHistory)
+
+        // Wait for reset
+        viewModel.lockedRollIndices.first { it.isEmpty() }
+        assertEquals(emptySet<Int>(), viewModel.lockedRollIndices.value)
+    }
 }
