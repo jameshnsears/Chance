@@ -6,7 +6,7 @@ description: Helps developers integrate, debug, and resolve Play Engage SDK impl
 license: Complete terms in LICENSE.txt
 metadata:
   author: Google LLC
-  last-updated: '2026-07-18'
+  last-updated: '2026-08-06'
   keywords:
   - android
   - engage
@@ -15,9 +15,7 @@ metadata:
   - google play
 ---
 
-This skill guides you through integrating the Play Engage SDK into an Android
-app. It ensures that the code follows the mandatory structure and uses the
-required Engage entities for each vertical.
+This skill guides you through integrating the Play Engage SDK into an Android app. It ensures that the code follows the mandatory structure and uses the required Engage entities for each vertical.
 
 ## Workflow
 
@@ -54,8 +52,7 @@ Follow these steps to assist the developer:
    - Ask the developer to provide the source of actual data you'll publish.
    - Once you identify the data source, use it to fetch the data in the app's local model schema.
    - Use `{ENGAGE_CODE_DIR}/ItemToEntityConverter` to convert this data to an Engage entity.
-   - Use obtained Engage entity model data with `{ENGAGE_CODE_DIR}/
-     ClusterRequestFactory` to get cluster requests.
+   - Use obtained Engage entity model data with `{ENGAGE_CODE_DIR}/ ClusterRequestFactory` to get cluster requests.
    - Call corresponding cluster publishing method obtained from `{VERTICAL}.md` in the **[references/schemas/](references/schemas)** directory with the obtained request in previous step in `{ENGAGE_CODE_DIR}/EngageWorker`.
 5. **Gradle and manifest updates:**
 
@@ -72,9 +69,7 @@ Follow these steps to assist the developer:
      - Fix import errors. For package `com.google.android.engage` or classes starting with `AppEngage`, verify the package name in the `{VERTICAL}.md` in **[references/schemas/](references/schemas)** directory or [common.md](references/common.md).
      - Fix any other errors.
    - Execute a full Gradle build and resolve any remaining compilation issues. Repeat this step until the Gradle build is successful.
-7. **User checklist:** At the end of code generation, notify the user to go
-   through this checklist to verify that the integration is complete and as
-   intended:
+7. **User checklist:** At the end of code generation, notify the user to go through this checklist to verify that the integration is complete and as intended:
 
    - \[ \] Verify that all the Engage-related files are created in `{ENGAGE_CODE_DIR}/`:
      - `Constants`
@@ -92,8 +87,7 @@ Follow these steps to assist the developer:
 
 ## Reference materials
 
-- **FAQ:** [Engage FAQ](references/android/guide/playcore/engage/faq.md) - Refer to this document for answers to frequently
-  asked questions from developers.
+- **FAQ:** [Engage FAQ](references/android/guide/playcore/engage/faq.md) - Refer to this document for answers to frequently asked questions from developers.
 
 - **Vertical-specific guides:**
 
@@ -102,7 +96,7 @@ Follow these steps to assist the developer:
   - [Listen Vertical](references/android/guide/playcore/engage/listen.md)
   - [Read Vertical](references/android/guide/playcore/engage/read.md)
   - [Shopping Vertical](references/android/guide/playcore/engage/shopping.md)
-  - [Social Vertical](https://developer.android.com/guide/playcore/engage/social)
+  - [Social Vertical](references/android/guide/playcore/engage/social.md)
   - [Travel Vertical](references/android/guide/playcore/engage/travel.md)
   - [Health and Fitness Vertical](references/android/guide/playcore/engage/healthandfitness.md)
   - [Other Verticals](references/android/guide/playcore/engage/otherverticals.md)

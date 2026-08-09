@@ -1,5 +1,4 @@
-Defines the request structures for publishing various data models in
-the Engage SDK.
+Defines the request structures for publishing various data models in the Engage SDK.
 
     {
       "PublishRecommendationClustersRequest": {
