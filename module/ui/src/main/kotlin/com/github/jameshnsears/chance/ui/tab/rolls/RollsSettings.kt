@@ -26,7 +26,6 @@ import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings(
-    rollsAndroidViewModel: RollsAndroidViewModel,
 ) {
     val navigator = LocalNavigator.current
 

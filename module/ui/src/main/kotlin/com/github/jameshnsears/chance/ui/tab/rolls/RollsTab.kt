@@ -139,7 +139,6 @@ fun TabRollBottomSheetLayout(
         )
 
         Settings(
-            rollsAndroidViewModel
         )
     }
 }

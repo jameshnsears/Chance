@@ -71,7 +71,7 @@ class DialogGroupTest : AndroidTestHelper() {
             )
 
             ChanceTheme {
-                DialogGroup(groupsAndroidViewModel, showDialog)
+                DialogGroup(groupsAndroidViewModel, onClose = { showDialog.value = false })
             }
         }
 
@@ -127,7 +127,7 @@ class DialogGroupTest : AndroidTestHelper() {
             )
 
             ChanceTheme {
-                DialogGroup(groupsAndroidViewModel, showDialog)
+                DialogGroup(groupsAndroidViewModel, onClose = { showDialog.value = false })
             }
         }
 

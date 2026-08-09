@@ -51,8 +51,8 @@ class CardDiceTest : AndroidTestHelper() {
 
             ChanceTheme {
                 DialogBag(
-                    showDialog,
-                    dialogDiceAndroidViewModel,
+                    onClose = { showDialog.value = false },
+                    dialogDiceAndroidViewModel = dialogDiceAndroidViewModel,
                 )
             }
         }
@@ -92,8 +92,8 @@ class CardDiceTest : AndroidTestHelper() {
 
             ChanceTheme {
                 DialogBag(
-                    showDialog,
-                    dialogDiceAndroidViewModel,
+                    onClose = { showDialog.value = false },
+                    dialogDiceAndroidViewModel = dialogDiceAndroidViewModel,
                 )
             }
         }

@@ -46,6 +46,8 @@ class RepositoryRollUnitTest : UtilityAndroidUnitTestHelper() {
             override fun fetch() = flowOf(linkedMapOf<Long, List<Roll>>())
             override suspend fun store(newRollHistory: RollHistory) {}
             override suspend fun store(epoch: Long, rollList: List<Roll>) {}
+            override suspend fun delete(diceUuid: String) {}
+
             override suspend fun removeLatest() {}
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}
