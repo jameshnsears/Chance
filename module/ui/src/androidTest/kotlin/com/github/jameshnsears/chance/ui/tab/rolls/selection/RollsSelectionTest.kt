@@ -12,7 +12,9 @@ import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Dice
+import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.group.Group
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
 import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
@@ -118,7 +120,7 @@ class RollsSelectionTest : AndroidTestHelper() {
             )
 
             // Mock locking a side
-            zoomRollsAndroidViewModel.toggleLock(0)
+            zoomRollsAndroidViewModel.toggleLock(Roll(uuidDice = "dummy", side = Side()))
 
             ChanceTheme {
                 RollSelectionRow(rollsAndroidViewModel, zoomRollsAndroidViewModel)
