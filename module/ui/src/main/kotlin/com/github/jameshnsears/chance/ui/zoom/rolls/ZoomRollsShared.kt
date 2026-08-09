@@ -68,13 +68,24 @@ fun ZoomRollEmptyState() {
             .testTag(ZoomRollsTestTag.LAZY_COLUMN_EMPTY),
         contentAlignment = Alignment.Center,
     ) {
-        Text(
-            text = stringResource(R.string.tab_roll_empty),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
-        )
+        Row {
+            Text(
+                text = stringResource(R.string.tab_roll_empty_onboard_01),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+            )
+        }
+        Row {
+            Text(
+                text = stringResource(R.string.tab_roll_empty_onboard_02),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+            )
+        }
     }
 }
 

@@ -6,7 +6,8 @@
     <string name="tab.setup.groups.empty">Tap + to create a new group</string>
 
     <string name="tab.roll">Rolls</string>
-    <string name="tab.roll.empty">Select a dice or group and tap Roll</string>
+    <string name="tab.roll.empty.onboard.01">Select a dice or group and tap Roll</string>
+    <string name="tab.roll.empty.onboard.02">Tap a side or image to toggle a lock</string>
     <string name="tab.roll.undo">Undo</string>
     <string name="tab.roll.roll">Roll</string>
     <string name="tab.roll.settings">Settings</string>
