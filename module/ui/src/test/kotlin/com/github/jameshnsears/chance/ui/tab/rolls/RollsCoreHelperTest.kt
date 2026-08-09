@@ -90,7 +90,7 @@ class RollsCoreHelperTest {
         assertEquals(2, initialRolls.size)
 
         // Lock the first roll
-        val lockedIndices = setOf(0)
+        val lockedIndices = setOf(initialRolls[0].unitKey())
 
         // Re-roll with lock
         val nextRolls = mutableListOf<Roll>()
@@ -123,7 +123,7 @@ class RollsCoreHelperTest {
         )
 
         // 2. Lock the root
-        val lockedIndices = setOf(0)
+        val lockedIndices = setOf(initialRolls[0].unitKey())
 
         // 3. Re-roll
         val nextRolls = mutableListOf<Roll>()

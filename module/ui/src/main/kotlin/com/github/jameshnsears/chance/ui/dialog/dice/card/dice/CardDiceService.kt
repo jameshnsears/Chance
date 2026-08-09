@@ -28,7 +28,7 @@ class CardDiceService(
     private val repositoryRoll: RepositoryRollInterface,
     val dice: Dice,
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private val _stateFlowCardDice = MutableStateFlow(
         CardDiceState(
@@ -48,7 +48,7 @@ class CardDiceService(
     private var isSidesValid = true
 
     init {
-        scope.launch(Dispatchers.IO) {
+        scope.launch {
             _stateFlowCardDice.update {
                 it.copy(
                     diceCanBeDeleted = diceCanBeDeleted(),
@@ -74,7 +74,7 @@ class CardDiceService(
             )
         }
 
-        scope.launch(Dispatchers.IO) {
+        scope.launch {
             _stateFlowCardDice.update {
                 it.copy(
                     diceCanBeDeleted = diceCanBeDeleted(),
@@ -140,7 +140,7 @@ class CardDiceService(
         }
 
         if (isSidesValid) {
-            scope.launch(Dispatchers.IO) {
+            scope.launch {
                 CardDiceSideEvent.emit(sideSizeInt!!)
 
                 if (sideSizeChanged) {

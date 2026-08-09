@@ -1,10 +1,12 @@
 package com.github.jameshnsears.chance.ui.dialog.dice.card.dice
 
+import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceUnitTestUnitTestHelper
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -122,8 +124,11 @@ class CardDiceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         assertFalse(dialogBagAndroidViewModel.cardDiceService.diceCanBeDeleted())
     }
 
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     @Test
     fun diceCardModifySidesDeletesRollHistory() = runTest {
+        RepositoryFactory().resetStorage()
+
         val dialogBagAndroidViewModel = getDialogBagAndroidViewModel()
         val repositoryBag = dialogBagAndroidViewModel.repositoryBag
         val repositoryRoll = dialogBagAndroidViewModel.repositoryRoll
@@ -148,7 +153,7 @@ class CardDiceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
 
         cardDiceService.diceSidesSize("10")
 
-        kotlinx.coroutines.delay(500)
+        advanceUntilIdle()
 
         val updatedRolls = repositoryRoll.fetch().first()
         val hasRollsForDice = updatedRolls.values.any { rolls -> rolls.any { it.uuidDice == diceInRepo.uuid } }

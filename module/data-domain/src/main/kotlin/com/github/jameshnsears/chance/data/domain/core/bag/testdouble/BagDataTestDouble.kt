@@ -23,13 +23,15 @@ class BagDataTestDouble : BagDataInterface {
     }
 
     val d2 = Dice(
-        sides = (2 downTo 1).map { index -> Side(number = index) },
+        uuid = "d2",
+        sides = (2 downTo 1).map { index -> Side(uuid = "d2-$index", number = index) },
         title = "d2",
         multiplierValue = 1
     )
 
     val d4 = Dice(
-        sides = (4 downTo 1).map { index -> Side(number = index) },
+        uuid = "d4",
+        sides = (4 downTo 1).map { index -> Side(uuid = "d4-$index", number = index) },
         title = "d4",
         explode = true,
         explodeValue = 2,
@@ -37,29 +39,34 @@ class BagDataTestDouble : BagDataInterface {
     )
 
     val d6 = Dice(
-        sides = (6 downTo 1).map { index -> Side(number = index) },
+        uuid = "d6",
+        sides = (6 downTo 1).map { index -> Side(uuid = "d6-$index", number = index) },
         title = "d6",
         multiplierValue = 3,
     )
 
     val d8 = Dice(
-        sides = (8 downTo 1).map { index -> Side(number = index) },
+        uuid = "d8",
+        sides = (8 downTo 1).map { index -> Side(uuid = "d8-$index", number = index) },
         title = "d8",
         explode = true,
     )
 
     val d10 = Dice(
-        sides = (10 downTo 1).map { index -> Side(number = index) },
+        uuid = "d10",
+        sides = (10 downTo 1).map { index -> Side(uuid = "d10-$index", number = index) },
         title = "d10",
     )
 
     val d12 = Dice(
-        sides = (12 downTo 1).map { index -> Side(number = index) },
+        uuid = "d12",
+        sides = (12 downTo 1).map { index -> Side(uuid = "d12-$index", number = index) },
         title = "d12",
     )
 
     val d20 = Dice(
-        sides = (20 downTo 1).map { index -> Side(number = index) },
+        uuid = "d20",
+        sides = (20 downTo 1).map { index -> Side(uuid = "d20-$index", number = index) },
         title = "d20",
         explode = true,
         explodeValue = 20,

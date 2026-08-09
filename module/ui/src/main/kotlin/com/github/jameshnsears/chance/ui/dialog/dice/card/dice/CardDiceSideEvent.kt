@@ -1,12 +1,16 @@
 package com.github.jameshnsears.chance.ui.dialog.dice.card.dice
 
 import com.github.jameshnsears.chance.ui.MutableSharedFlowEvent
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import timber.log.Timber
 
 object CardDiceSideEvent : MutableSharedFlowEvent() {
-    private val _sharedFlowDiceSide = MutableSharedFlow<Int>()
+    private val _sharedFlowDiceSide = MutableSharedFlow<Int>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val sharedFlowDiceSide: SharedFlow<Int> = _sharedFlowDiceSide
 
     suspend fun emit(sideSize: Int) {

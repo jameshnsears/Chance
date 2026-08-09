@@ -70,7 +70,8 @@ class RollsCoreHelper(
         diceToRoll.forEach { (dice, uuidGroup) ->
             val countOffset = diceCountMap.getOrDefault(dice.uuid, 0)
             for (m in 1..dice.multiplierValue) {
-                newRollSequence.addAll(rollDiceUnit(dice, countOffset + m, uuidGroup))
+                val isLastMultiplier = (m == dice.multiplierValue)
+                newRollSequence.addAll(rollDiceUnit(dice, countOffset + m, uuidGroup, isLastMultiplier))
             }
             diceCountMap[dice.uuid] = countOffset + dice.multiplierValue
         }
@@ -109,6 +110,9 @@ class RollsCoreHelper(
 
         val unitKeys = existingSequence.map { UnitKey(it.uuidDice, it.multiplierIndex, it.uuidGroup) }.distinct()
 
+        val selectionMaxMultiplier = unitKeys.groupBy { it.uuidDice to it.uuidGroup }
+            .mapValues { entry -> entry.value.maxOf { it.multiplierIndex } }
+
         unitKeys.forEach { key ->
             val dice = diceMap[key.uuidDice]
             val keyString = "${key.uuidDice}_${key.multiplierIndex}_${key.uuidGroup}"
@@ -117,7 +121,8 @@ class RollsCoreHelper(
                 if (lockedIndices.contains(keyString)) {
                     newRollSequence.addAll(units[key]!!)
                 } else {
-                    newRollSequence.addAll(rollDiceUnit(dice, key.multiplierIndex, key.uuidGroup))
+                    val isLast = (key.multiplierIndex == selectionMaxMultiplier[key.uuidDice to key.uuidGroup])
+                    newRollSequence.addAll(rollDiceUnit(dice, key.multiplierIndex, key.uuidGroup, isLast))
                 }
             }
         }
@@ -127,7 +132,12 @@ class RollsCoreHelper(
         }
     }
 
-    private fun rollDiceUnit(dice: Dice, multiplierIndex: Int, uuidGroup: String): List<Roll> {
+    private fun rollDiceUnit(
+        dice: Dice,
+        multiplierIndex: Int,
+        uuidGroup: String,
+        applyModifyScore: Boolean = true
+    ): List<Roll> {
         val diceRolls = mutableListOf<Roll>()
         var randomSide = randomSide(dice)
         diceRolls.add(
@@ -159,7 +169,7 @@ class RollsCoreHelper(
             }
         }
 
-        if (dice.modifyScore && diceRolls.isNotEmpty()) {
+        if (applyModifyScore && dice.modifyScore && diceRolls.isNotEmpty()) {
             val lastRoll = diceRolls.last()
             lastRoll.scoreAdjustment = dice.modifyScoreValue
             lastRoll.score += dice.modifyScoreValue

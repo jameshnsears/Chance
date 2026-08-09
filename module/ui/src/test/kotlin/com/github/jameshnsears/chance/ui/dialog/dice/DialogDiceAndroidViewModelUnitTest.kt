@@ -271,7 +271,7 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
 
         val newSideNumberColour = "FF112233"
         dialogBagAndroidViewModel.cardSideService.sideNumberColour(newSideNumberColour)
-        dialogBagAndroidViewModel.cardSideService.sideApplyToAllSvg(true)
+        dialogBagAndroidViewModel.cardSideService.sideApplyToAllNumberColour(true)
 
         dialogBagAndroidViewModel.save(
             dialogBagAndroidViewModel.cardDiceService.stateFlowCardDice.value,
@@ -284,7 +284,7 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val d12 =
             dialogBagAndroidViewModel.repositoryBag.fetch(BagDataTestDouble().d12.uuid).first()
         d12.sides.forEach {
-            assertTrue(it.numberColour == newSideNumberColour)
+            assertEquals(newSideNumberColour, it.numberColour)
         }
     }
 
