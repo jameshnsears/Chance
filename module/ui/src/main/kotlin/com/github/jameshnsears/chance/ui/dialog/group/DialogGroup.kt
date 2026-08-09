@@ -25,7 +25,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -36,8 +35,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -53,48 +50,41 @@ import com.github.jameshnsears.chance.ui.tab.setup.groups.GroupsAndroidViewModel
 @Composable
 fun DialogGroup(
     groupsAndroidViewModel: GroupsAndroidViewModel,
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
     onOnboardingDismiss: () -> Unit = {}
 ) {
     LaunchedEffect(Unit) {
         onOnboardingDismiss()
     }
 
-    Dialog(
-        onDismissRequest = {
-            showDialog.value = false
-        },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false,
-            decorFitsSystemWindows = false
-        ),
-    ) {
-        val view = LocalView.current
-        SideEffect {
-            (view.parent as? DialogWindowProvider)?.window?.let { window ->
-                val controller = WindowCompat.getInsetsController(window, view)
-                controller.hide(WindowInsetsCompat.Type.statusBars())
-                controller.systemBarsBehavior =
-                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        }
+    val view = LocalView.current
+    SideEffect {
+        val window = (view.parent as? DialogWindowProvider)?.window
+            ?: (view.context as? android.app.Activity)?.window
 
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.surfaceContainerLow
-        ) {
-            DialogGroupContent(
-                groupsAndroidViewModel,
-                showDialog
-            )
+        window?.let {
+            val controller = WindowCompat.getInsetsController(it, view)
+            controller.hide(WindowInsetsCompat.Type.statusBars())
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
+    }
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.surfaceContainerLow
+    ) {
+        DialogGroupContent(
+            groupsAndroidViewModel,
+            onClose
+        )
     }
 }
 
 @Composable
 fun DialogGroupContent(
     groupsAndroidViewModel: GroupsAndroidViewModel,
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
     val diceBag by groupsAndroidViewModel.stateFlowDiceBag.collectAsStateWithLifecycle()
     val newGroup by groupsAndroidViewModel.stateFlowNewGroup.collectAsStateWithLifecycle()
@@ -105,7 +95,7 @@ fun DialogGroupContent(
             .safeDrawingPadding()
             .padding(2.dp)
     ) {
-        DialogGroupHeader(groupsAndroidViewModel, showDialog, newGroup)
+        DialogGroupHeader(groupsAndroidViewModel, onClose, newGroup)
 
         Row(
             modifier = Modifier
@@ -148,7 +138,7 @@ fun DialogGroupContent(
 @Composable
 private fun DialogGroupHeader(
     groupsAndroidViewModel: GroupsAndroidViewModel,
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
     newGroup: com.github.jameshnsears.chance.data.domain.core.group.Group
 ) {
     Row(
@@ -161,7 +151,7 @@ private fun DialogGroupHeader(
             modifier = Modifier
                 .minimumInteractiveComponentSize(),
             onClick = {
-                showDialog.value = false
+                onClose()
             }) {
             Icon(
                 imageVector = Icons.Outlined.Close,
@@ -183,7 +173,7 @@ private fun DialogGroupHeader(
             enabled = groupsAndroidViewModel.canSave(newGroup),
             onClick = {
                 groupsAndroidViewModel.onSave(newGroup)
-                showDialog.value = false
+                onClose()
             },
         ) {
             Text(

@@ -44,7 +44,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -55,7 +54,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
@@ -64,18 +62,11 @@ import com.github.jameshnsears.chance.ui.tab.rolls.SettingsState
 
 @Composable
 fun DialogSettings(
-    showDialog: MutableState<Boolean>,
     rollsAndroidViewModel: RollsAndroidViewModel,
 ) {
-    Dialog(
-        onDismissRequest = {
-            showDialog.value = false
-        },
-    ) {
-        DialogSettingsLayout(
-            rollsAndroidViewModel
-        )
-    }
+    DialogSettingsLayout(
+        rollsAndroidViewModel
+    )
 }
 
 @Composable

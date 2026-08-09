@@ -28,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,7 +53,7 @@ import kotlin.math.absoluteValue
 
 @Composable
 fun DialogBagTabLayout(
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel
 ) {
     val tabs = listOf(
@@ -113,7 +112,7 @@ fun DialogBagTabLayout(
             dialogDiceAndroidViewModel.cardSideService,
             dialogDiceAndroidViewModel.cardRollService,
             pagerState = pagerState,
-            showDialog = showDialog,
+            onClose = onClose,
         )
     }
 }
@@ -126,7 +125,7 @@ fun DialogBagTabContent(
     cardSideService: CardSideService,
     cardRollService: CardRollService,
     pagerState: PagerState,
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         dialogDiceAndroidViewModel.refresh()
@@ -176,7 +175,7 @@ fun DialogBagTabContent(
                     .minimumInteractiveComponentSize()
                     .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_CANCEL),
                 onClick = {
-                    showDialog.value = false
+                    onClose()
                 }) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
@@ -190,7 +189,7 @@ fun DialogBagTabContent(
                 TextButtonDelete(
                     diceCanBeDeleted,
                     dialogDiceAndroidViewModel,
-                    showDialog,
+                    onClose,
                 )
 
                 TextButtonDuplicate(
@@ -198,7 +197,7 @@ fun DialogBagTabContent(
                     dialogDiceAndroidViewModel,
                     stateFlowCardDice.value,
                     stateFlowCardRoll.value,
-                    showDialog,
+                    onClose,
                 )
             }
 
@@ -208,7 +207,7 @@ fun DialogBagTabContent(
                 stateFlowCardDice.value,
                 stateFlowCardRoll.value,
                 stateFlowCardSide.value,
-                showDialog,
+                onClose,
             )
         }
 

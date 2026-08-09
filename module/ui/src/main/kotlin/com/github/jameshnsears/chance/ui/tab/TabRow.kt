@@ -9,18 +9,31 @@ import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.scene.DialogSceneStrategy
 import androidx.navigation3.ui.NavDisplay
 import com.github.jameshnsears.chance.common.R
+import com.github.jameshnsears.chance.ui.dialog.dice.DialogBag
+import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceAndroidViewModel
+import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.dialog.group.DialogGroup
+import com.github.jameshnsears.chance.ui.dialog.settings.DialogSettings
 import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
 import com.github.jameshnsears.chance.ui.navigation.NavigationState
 import com.github.jameshnsears.chance.ui.navigation.Navigator
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
@@ -50,6 +63,11 @@ fun TabRow(
 ) {
     val navigator = remember { Navigator(navigationState) }
 
+    val context = LocalContext.current
+    val application = context.applicationContext as android.app.Application
+
+    val dialogStrategy = remember { DialogSceneStrategy<NavKey>() }
+
     val entryProvider = entryProvider {
         entry<ChanceNavKey.SetupDice> {
             TabBagDice(
@@ -68,21 +86,71 @@ fun TabRow(
                 zoomRollsAndroidViewModel
             )
         }
+        entry<ChanceNavKey.DialogDice>(
+            metadata = DialogSceneStrategy.dialog(
+                DialogProperties(
+                    usePlatformDefaultWidth = false,
+                    decorFitsSystemWindows = false
+                )
+            )
+        ) { key ->
+            val diceBag by zoomDiceAndroidViewModel.diceBagList.collectAsStateWithLifecycle()
+            val dice = diceBag.find { it.uuid == key.diceUuid }
+            val side = dice?.sides?.find { it.uuid == key.sideUuid }
+            if (dice != null && side != null) {
+                val dialogDiceAndroidViewModel: DialogDiceAndroidViewModel = viewModel(
+                    key = "${dice.uuid}-${side.uuid}",
+                    factory = DialogDiceAndroidViewModelFactory(
+                        application,
+                        zoomDiceAndroidViewModel.repositoryBag,
+                        dice,
+                        side
+                    )
+                )
+
+                DialogBag(
+                    onClose = { navigator.goBack() },
+                    dialogDiceAndroidViewModel = dialogDiceAndroidViewModel
+                )
+            }
+        }
+        entry<ChanceNavKey.DialogSettings>(
+            metadata = DialogSceneStrategy.dialog()
+        ) {
+            DialogSettings(rollsAndroidViewModel)
+        }
+        entry<ChanceNavKey.DialogGroup>(
+            metadata = DialogSceneStrategy.dialog(
+                DialogProperties(
+                    usePlatformDefaultWidth = false,
+                    decorFitsSystemWindows = false
+                )
+            )
+        ) {
+            DialogGroup(
+                groupsAndroidViewModel = groupsAndroidViewModel,
+                onClose = { navigator.goBack() }
+            )
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
-    val decoratedEntryProvider: (ChanceNavKey) -> NavEntry<NavKey> = { key -> entryProvider(key) as NavEntry<NavKey> }
+    val decoratedEntryProvider: (ChanceNavKey) -> NavEntry<NavKey> =
+        { key -> entryProvider(key) as NavEntry<NavKey> }
 
-    Column {
-        PrimaryTabs(navigationState, navigator)
+    CompositionLocalProvider(LocalNavigator provides navigator) {
+        Column {
+            PrimaryTabs(navigationState, navigator)
 
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            NavDisplay(
-                entries = navigationState.toDecoratedEntries(decoratedEntryProvider),
-                onBack = { navigator.goBack() }
-            )
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                NavDisplay(
+                    entries = navigationState.toDecoratedEntries(decoratedEntryProvider),
+                    onBack = { navigator.goBack() },
+                    sceneStrategies = listOf(dialogStrategy)
+                )
+            }
         }
     }
 }

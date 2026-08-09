@@ -49,7 +49,7 @@ fun DialogGroupPreview() {
                     repositoryGroup,
                     repositoryRoll,
                 ),
-                showDialog
+                onClose = { showDialog.value = false }
             )
         }
     }

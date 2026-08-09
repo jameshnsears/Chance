@@ -13,4 +13,16 @@ sealed interface ChanceNavKey : NavKey {
 
     @Serializable
     data object Roll : ChanceNavKey
+
+    @Serializable
+    data class DialogDice(val diceUuid: String, val sideUuid: String) : ChanceNavKey
+
+    @Serializable
+    data object DialogSettings : ChanceNavKey
+
+    @Serializable
+    data object DialogGroup : ChanceNavKey
+
+    @Serializable
+    data class DialogConfirm(val diceUuid: String) : ChanceNavKey
 }

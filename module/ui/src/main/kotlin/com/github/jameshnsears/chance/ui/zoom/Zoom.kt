@@ -11,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -35,6 +34,8 @@ import coil.request.ImageRequest
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
 import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceTestTag
 
 @Composable
@@ -71,11 +72,9 @@ fun ZoomFaceImageShape(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     dice: Dice,
     side: Side,
-    showDialog: MutableState<Boolean>,
-    cardDice: MutableState<Dice>,
-    cardSide: MutableState<Side>,
     resizeView: Dp,
 ) {
+    val navigator = LocalNavigator.current
 
     if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_UUID))
         Row {
@@ -102,9 +101,7 @@ fun ZoomFaceImageShape(
                 }
                 .clickable {
                     zoomAndroidViewModel.tapOffset.value = itemOffset
-                    cardDice.value = dice
-                    cardSide.value = side
-                    showDialog.value = true
+                    navigator.navigate(ChanceNavKey.DialogDice(dice.uuid, side.uuid))
                 }
                 .testTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-${dice.title}-${side.number}"),
             colorFilter = zoomAndroidViewModel.sideColorFilter(dice.colour),
@@ -128,11 +125,9 @@ fun ZoomFaceImageSVG(
     zoomAndroidViewModel: ZoomAndroidViewModel,
     dice: Dice,
     side: Side,
-    showDialog: MutableState<Boolean>,
-    cardDice: MutableState<Dice>,
-    cardSide: MutableState<Side>,
     resizeView: Dp,
 ) {
+    val navigator = LocalNavigator.current
 
     var itemOffset by remember { mutableStateOf(Offset.Zero) }
 
@@ -146,9 +141,7 @@ fun ZoomFaceImageSVG(
         }
         .clickable {
             zoomAndroidViewModel.tapOffset.value = itemOffset
-            cardDice.value = dice
-            cardSide.value = side
-            showDialog.value = true
+            navigator.navigate(ChanceNavKey.DialogDice(dice.uuid, side.uuid))
         }
         .testTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SVG}-${dice.title}-${side.number}")
 

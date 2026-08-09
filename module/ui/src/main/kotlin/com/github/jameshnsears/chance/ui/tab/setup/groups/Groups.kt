@@ -26,8 +26,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,8 +36,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.common.R
-import com.github.jameshnsears.chance.ui.dialog.group.DialogGroup
 import com.github.jameshnsears.chance.ui.group.Group
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,7 +48,8 @@ fun Groups(
     val groupHistory by groupsAndroidViewModel.stateFlowGroupHistory.collectAsStateWithLifecycle()
     val groupDrafts by groupsAndroidViewModel.stateFlowGroupDrafts.collectAsStateWithLifecycle()
     val diceBag by groupsAndroidViewModel.stateFlowDiceBag.collectAsStateWithLifecycle()
-    val showDialogGroup = remember { mutableStateOf(value = false) }
+
+    val navigator = LocalNavigator.current
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -148,7 +148,7 @@ fun Groups(
 
             FloatingActionButton(
                 onClick = {
-                    showDialogGroup.value = true
+                    navigator.navigate(ChanceNavKey.DialogGroup)
                 },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -161,13 +161,6 @@ fun Groups(
                 Icon(
                     Icons.Filled.Add,
                     contentDescription = "+",
-                )
-            }
-
-            if (showDialogGroup.value) {
-                DialogGroup(
-                    groupsAndroidViewModel,
-                    showDialogGroup,
                 )
             }
         }

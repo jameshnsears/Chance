@@ -7,7 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -25,7 +24,7 @@ import com.github.jameshnsears.chance.ui.dialog.dice.card.roll.CardRollState
 fun TextButtonDelete(
     enabled: Boolean,
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
     val showDialogConfirm = rememberSaveable { mutableStateOf(false) }
 
@@ -53,7 +52,7 @@ fun TextButtonDelete(
             },
             onConfirmation = {
                 dialogDiceAndroidViewModel.delete()
-                showDialog.value = false
+                onClose()
             },
             title = stringResource(R.string.dialog_bag_delete_confirmation),
             text = stringResource(R.string.dialog_bag_delete_confirmation_question)
@@ -67,7 +66,7 @@ fun TextButtonDuplicate(
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
     cardDiceState: CardDiceState,
     cardRollState: CardRollState,
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
     TextButton(
         modifier = Modifier
@@ -77,7 +76,7 @@ fun TextButtonDuplicate(
         enabled = enabled,
         onClick = {
             dialogDiceAndroidViewModel.clone(cardDiceState, cardRollState)
-            showDialog.value = false
+            onClose()
         },
     ) {
         Text(
@@ -94,7 +93,7 @@ fun TextButtonSave(
     cardDiceState: CardDiceState,
     cardRollState: CardRollState,
     cardSideState: CardSideState,
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
 ) {
     val showDialogConfirm = rememberSaveable { mutableStateOf(false) }
 
@@ -108,7 +107,7 @@ fun TextButtonSave(
                 showDialogConfirm.value = true
             } else {
                 dialogDiceAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)
-                showDialog.value = false
+                onClose()
             }
         },
     ) {
@@ -126,7 +125,7 @@ fun TextButtonSave(
             },
             onConfirmation = {
                 dialogDiceAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)
-                showDialog.value = false
+                onClose()
             },
             title = stringResource(R.string.dialog_bag_save_confirmation),
             text = stringResource(R.string.dialog_bag_save_confirmation_question)

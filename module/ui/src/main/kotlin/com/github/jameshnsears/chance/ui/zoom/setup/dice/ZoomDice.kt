@@ -1,7 +1,5 @@
 package com.github.jameshnsears.chance.ui.zoom.setup.dice
 
-import android.app.Application
-import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,21 +35,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
-import com.github.jameshnsears.chance.ui.dialog.dice.DialogBag
-import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceAndroidViewModel
-import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceAndroidViewModelFactory
 import com.github.jameshnsears.chance.ui.zoom.ZoomFaceImageSVG
 import com.github.jameshnsears.chance.ui.zoom.ZoomFaceImageShape
 import com.github.jameshnsears.chance.ui.zoom.ZoomSideDescription
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @Composable
 fun ZoomBag(
@@ -98,10 +90,6 @@ fun ZoomBag(
                 resizeView
             )
         }
-    }
-
-    if (zoomDiceAndroidViewModel.showDialog.value) {
-        ZoomDiceDialog(zoomDiceAndroidViewModel)
     }
 }
 
@@ -284,9 +272,6 @@ private fun ZoomDiceSidesRow(
                     zoomDiceAndroidViewModel,
                     dice,
                     side,
-                    zoomDiceAndroidViewModel.showDialog,
-                    zoomDiceAndroidViewModel.cardDice,
-                    zoomDiceAndroidViewModel.cardSide,
                     resizeView,
                 )
 
@@ -294,9 +279,6 @@ private fun ZoomDiceSidesRow(
                     zoomDiceAndroidViewModel,
                     dice,
                     side,
-                    zoomDiceAndroidViewModel.showDialog,
-                    zoomDiceAndroidViewModel.cardDice,
-                    zoomDiceAndroidViewModel.cardSide,
                     resizeView,
                 )
 
@@ -306,29 +288,3 @@ private fun ZoomDiceSidesRow(
     }
 }
 
-@Composable
-private fun ZoomDiceDialog(zoomDiceAndroidViewModel: ZoomDiceAndroidViewModel) {
-    Timber.d("ZoomBag: dice.epoch=${zoomDiceAndroidViewModel.cardDice.value.epoch}; side.uuid=${zoomDiceAndroidViewModel.cardSide.value.uuid}")
-
-    val context = LocalContext.current
-    val application = context.applicationContext as? Application ?: object : Application() {
-        override fun getSharedPreferences(name: String?, mode: Int): SharedPreferences {
-            return context.getSharedPreferences(name, mode)
-        }
-    }
-
-    val dialogDiceAndroidViewModel: DialogDiceAndroidViewModel = viewModel(
-        key = "${zoomDiceAndroidViewModel.cardDice.value.uuid}-${zoomDiceAndroidViewModel.cardSide.value.uuid}",
-        factory = DialogDiceAndroidViewModelFactory(
-            application,
-            zoomDiceAndroidViewModel.repositoryBag,
-            zoomDiceAndroidViewModel.cardDice.value,
-            zoomDiceAndroidViewModel.cardSide.value
-        )
-    )
-
-    DialogBag(
-        zoomDiceAndroidViewModel.showDialog,
-        dialogDiceAndroidViewModel
-    )
-}

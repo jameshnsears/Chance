@@ -5,12 +5,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -19,36 +16,29 @@ import androidx.core.view.WindowInsetsControllerCompat
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
 fun DialogBag(
-    showDialog: MutableState<Boolean>,
+    onClose: () -> Unit,
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
 ) {
-    Dialog(
-        onDismissRequest = {
-            showDialog.value = false
-        },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false,
-            decorFitsSystemWindows = false
-        ),
-    ) {
-        val view = LocalView.current
-        SideEffect {
-            (view.parent as? DialogWindowProvider)?.window?.let { window ->
-                val controller = WindowCompat.getInsetsController(window, view)
-                controller.hide(WindowInsetsCompat.Type.statusBars())
-                controller.systemBarsBehavior =
-                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        }
+    val view = LocalView.current
+    SideEffect {
+        val window = (view.parent as? DialogWindowProvider)?.window
+            ?: (view.context as? android.app.Activity)?.window
 
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.surfaceContainerLow
-        ) {
-            DialogBagTabLayout(
-                showDialog,
-                dialogDiceAndroidViewModel,
-            )
+        window?.let {
+            val controller = WindowCompat.getInsetsController(it, view)
+            controller.hide(WindowInsetsCompat.Type.statusBars())
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
+    }
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.surfaceContainerLow
+    ) {
+        DialogBagTabLayout(
+            onClose,
+            dialogDiceAndroidViewModel,
+        )
     }
 }

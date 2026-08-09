@@ -62,7 +62,7 @@ fun DialogBagPreview() {
             color = MaterialTheme.colorScheme.surfaceContainerLow,
         ) {
             DialogBagTabLayout(
-                showDialog,
+                onClose = { showDialog.value = false },
                 dialogDiceAndroidViewModel,
             )
         }

@@ -13,15 +13,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.github.jameshnsears.chance.common.R
-import com.github.jameshnsears.chance.ui.dialog.settings.DialogSettings
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +28,7 @@ import com.github.jameshnsears.chance.ui.dialog.settings.DialogSettings
 fun Settings(
     rollsAndroidViewModel: RollsAndroidViewModel,
 ) {
-    val showDialog = rememberSaveable { mutableStateOf(false) }
+    val navigator = LocalNavigator.current
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -37,7 +36,7 @@ fun Settings(
             .fillMaxWidth()
             .padding(start = 8.dp, bottom = 12.dp)
             .clickable {
-                showDialog.value = true
+                navigator.navigate(ChanceNavKey.DialogSettings)
             }
     ) {
         Text(
@@ -48,7 +47,7 @@ fun Settings(
 
         IconButton(
             onClick = {
-                showDialog.value = true
+                navigator.navigate(ChanceNavKey.DialogSettings)
             },
             modifier = Modifier
                 .minimumInteractiveComponentSize()
@@ -59,12 +58,5 @@ fun Settings(
                 contentDescription = stringResource(R.string.tab_roll_settings),
             )
         }
-    }
-
-    if (showDialog.value) {
-        DialogSettings(
-            showDialog,
-            rollsAndroidViewModel
-        )
     }
 }
