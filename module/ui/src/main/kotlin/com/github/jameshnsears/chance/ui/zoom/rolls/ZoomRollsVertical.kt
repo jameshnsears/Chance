@@ -5,13 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,37 +37,26 @@ fun ZoomRollVertical(
     resizeViewDp: Dp,
     rollEventCount: Int
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag(ZoomRollsTestTag.LAZY_COLUMN),
-        state = listState,
-        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 148.dp)
-    ) {
-        itemsIndexed(
-            items = entriesList,
-            key = { _, (_, entry) -> entry.key }
-        ) { indexSequence, (originalIndex, rollSequence) ->
-            ZoomRollVerticalItem(
-                indexSequence,
-                originalIndex,
-                rollSequence,
-                seenRollEvents,
-                rollHistorySize,
-                groupHistory,
-                rollsAndroidViewModel,
-                zoomRollsAndroidViewModel,
-                resizeViewDp,
-                entriesList.size,
-                rollEventCount
-            )
-        }
+    ZoomRollList(listState, entriesList) { indexSequence, originalIndex, rollSequence ->
+        ZoomRollVerticalItem(
+            indexSequence,
+            originalIndex,
+            rollSequence,
+            seenRollEvents,
+            rollHistorySize,
+            groupHistory,
+            rollsAndroidViewModel,
+            zoomRollsAndroidViewModel,
+            resizeViewDp,
+            entriesList.size,
+            rollEventCount
+        )
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ZoomRollVerticalItem(
+private fun ZoomRollVerticalItem(
     indexSequence: Int,
     originalIndex: Int,
     rollSequence: Map.Entry<Long, List<Roll>>,

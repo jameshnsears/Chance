@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -61,6 +65,28 @@ import kotlin.math.max
 import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
+fun ZoomRollList(
+    listState: LazyListState,
+    entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
+    itemContent: @Composable (indexSequence: Int, originalIndex: Int, rollSequence: Map.Entry<Long, List<Roll>>) -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag(ZoomRollsTestTag.LAZY_COLUMN),
+        state = listState,
+        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 148.dp)
+    ) {
+        itemsIndexed(
+            items = entriesList,
+            key = { _, (_, entry) -> entry.key }
+        ) { indexSequence, (originalIndex, rollSequence) ->
+            itemContent(indexSequence, originalIndex, rollSequence)
+        }
+    }
+}
+
+@Composable
 fun ZoomRollEmptyState() {
     Box(
         modifier = Modifier
@@ -68,7 +94,10 @@ fun ZoomRollEmptyState() {
             .testTag(ZoomRollsTestTag.LAZY_COLUMN_EMPTY),
         contentAlignment = Alignment.Center,
     ) {
-        Row {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Text(
                 text = stringResource(R.string.tab_roll_empty_onboard_01),
                 style = MaterialTheme.typography.bodyLarge,
@@ -76,8 +105,6 @@ fun ZoomRollEmptyState() {
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
             )
-        }
-        Row {
             Text(
                 text = stringResource(R.string.tab_roll_empty_onboard_02),
                 style = MaterialTheme.typography.bodyLarge,
@@ -322,7 +349,7 @@ private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll) {
 }
 
 @Composable
-fun RollDiceTitle(dice: Dice, roll: Roll) {
+private fun RollDiceTitle(dice: Dice, roll: Roll) {
     Box(
         modifier = Modifier.width(110.dp),
         contentAlignment = Alignment.Center
@@ -426,7 +453,7 @@ private fun RollImages(
 }
 
 @Composable
-fun ZoomSideRollBehaviour(
+private fun ZoomSideRollBehaviour(
     roll: Roll,
     resizeView: Dp
 ) {
@@ -489,7 +516,7 @@ private fun ZoomSideRollBehaviourIcon(
 }
 
 @Composable
-fun ZoomRollFaceImageShape(
+private fun ZoomRollFaceImageShape(
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     dice: Dice?,
     side: Side,
@@ -522,7 +549,7 @@ fun ZoomRollFaceImageShape(
 }
 
 @Composable
-fun ZoomRollFaceImageSVG(
+private fun ZoomRollFaceImageSVG(
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     side: Side,
     resizeView: Dp,

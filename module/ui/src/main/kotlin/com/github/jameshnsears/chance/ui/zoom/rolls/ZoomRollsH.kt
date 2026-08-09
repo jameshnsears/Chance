@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -29,7 +27,7 @@ import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 
 @Composable
-fun ZoomRollHistoryHorizontal(
+fun ZoomRollHorizontal(
     listState: androidx.compose.foundation.lazy.LazyListState,
     entriesList: List<Pair<Int, Map.Entry<Long, List<Roll>>>>,
     seenRollEvents: MutableSet<Long>,
@@ -40,36 +38,25 @@ fun ZoomRollHistoryHorizontal(
     resizeViewDp: Dp,
     rollEventCount: Int
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag(ZoomRollsTestTag.LAZY_COLUMN),
-        state = listState,
-        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 148.dp)
-    ) {
-        itemsIndexed(
-            items = entriesList,
-            key = { _, (_, entry) -> entry.key }
-        ) { indexSequence, (originalIndex, rollSequence) ->
-            ZoomRollItem(
-                indexSequence,
-                originalIndex,
-                rollSequence,
-                seenRollEvents,
-                rollHistorySize,
-                groupHistory,
-                rollsAndroidViewModel,
-                zoomRollsAndroidViewModel,
-                resizeViewDp,
-                entriesList.size,
-                rollEventCount
-            )
-        }
+    ZoomRollList(listState, entriesList) { indexSequence, originalIndex, rollSequence ->
+        ZoomRollHorizontalItem(
+            indexSequence,
+            originalIndex,
+            rollSequence,
+            seenRollEvents,
+            rollHistorySize,
+            groupHistory,
+            rollsAndroidViewModel,
+            zoomRollsAndroidViewModel,
+            resizeViewDp,
+            entriesList.size,
+            rollEventCount
+        )
     }
 }
 
 @Composable
-fun ZoomRollItem(
+private fun ZoomRollHorizontalItem(
     indexSequence: Int,
     originalIndex: Int,
     rollSequence: Map.Entry<Long, List<Roll>>,
@@ -115,26 +102,26 @@ fun ZoomRollItem(
         }
     }
 
-        ZoomRollItemCol(
-            indexSequence,
-            originalIndex,
-            rollSequence,
-            rollHistorySize,
-            groupHistory,
-            rollsAndroidViewModel,
-            zoomRollsAndroidViewModel,
-            resizeViewDp,
-            entriesListSize,
-            isNewRollEvent,
-            stateFlowZoom.rollIndexTime,
-            stateFlowZoom.rollScore,
-            listState,
-            rollEventCount
-        )
+    ZoomRollHorizontalItemCol(
+        indexSequence,
+        originalIndex,
+        rollSequence,
+        rollHistorySize,
+        groupHistory,
+        rollsAndroidViewModel,
+        zoomRollsAndroidViewModel,
+        resizeViewDp,
+        entriesListSize,
+        isNewRollEvent,
+        stateFlowZoom.rollIndexTime,
+        stateFlowZoom.rollScore,
+        listState,
+        rollEventCount
+    )
 }
 
 @Composable
-fun ZoomRollItemCol(
+private fun ZoomRollHorizontalItemCol(
     indexSequence: Int,
     originalIndex: Int,
     rollSequence: Map.Entry<Long, List<Roll>>,
@@ -157,7 +144,7 @@ fun ZoomRollItemCol(
                 rollSequence
             )
 
-        ZoomRollItemRow(
+        ZoomRollHorizontalItemRow(
             indexSequence,
             rollsAndroidViewModel,
             zoomRollsAndroidViewModel,
@@ -176,7 +163,7 @@ fun ZoomRollItemCol(
 }
 
 @Composable
-fun ZoomRollItemRow(
+private fun ZoomRollHorizontalItemRow(
     indexSequence: Int,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
@@ -201,7 +188,7 @@ fun ZoomRollItemRow(
             isNewRollEvent
         )
 
-        ZoomRollItemLR(
+        ZoomRollHorizontalItemLR(
             indexSequence,
             listState,
             rollSequence,
@@ -214,7 +201,7 @@ fun ZoomRollItemRow(
 }
 
 @Composable
-fun RowScope.ZoomRollItemLR(
+private fun RowScope.ZoomRollHorizontalItemLR(
     indexSequence: Int,
     listState: androidx.compose.foundation.lazy.LazyListState,
     rollSequence: Map.Entry<Long, List<Roll>>,
