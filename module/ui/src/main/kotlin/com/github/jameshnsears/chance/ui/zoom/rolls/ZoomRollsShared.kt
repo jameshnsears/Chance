@@ -76,7 +76,7 @@ fun ZoomRollList(
             .fillMaxSize()
             .testTag(ZoomRollsTestTag.LAZY_COLUMN),
         state = listState,
-        contentPadding = PaddingValues(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 148.dp)
+        contentPadding = PaddingValues(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 148.dp)
     ) {
         itemsIndexed(
             items = entriesList,
@@ -304,7 +304,7 @@ private fun RollDetailsContent(
 @Composable
 private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll) {
     Box(
-        modifier = Modifier.width(110.dp),
+        modifier = Modifier.width(105.dp),
         contentAlignment = Alignment.Center
     ) {
         val title = groupHistory.find { it.uuid == roll.uuidGroup }?.name ?: ""
@@ -353,7 +353,7 @@ private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll) {
 @Composable
 private fun RollDiceTitle(dice: Dice, roll: Roll) {
     Box(
-        modifier = Modifier.width(110.dp),
+        modifier = Modifier.width(105.dp),
         contentAlignment = Alignment.Center
     ) {
         if (dice.title.isNotEmpty()) {
