@@ -28,6 +28,34 @@ data class Side(
         )
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Side) return false
+
+        if (uuid != other.uuid) return false
+        if (number != other.number) return false
+        if (numberColour != other.numberColour) return false
+        if (imageDrawableId != other.imageDrawableId) return false
+        if (imageBase64 != other.imageBase64) return false
+        if (description != other.description) return false
+        if (descriptionColour != other.descriptionColour) return false
+        if (imageBase64Uuid != other.imageBase64Uuid) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = uuid.hashCode()
+        result = 31 * result + number
+        result = 31 * result + numberColour.hashCode()
+        result = 31 * result + imageDrawableId
+        result = 31 * result + imageBase64.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + descriptionColour.hashCode()
+        result = 31 * result + imageBase64Uuid.hashCode()
+        return result
+    }
+
     override fun toString(): String {
         return "number=$number"
     }

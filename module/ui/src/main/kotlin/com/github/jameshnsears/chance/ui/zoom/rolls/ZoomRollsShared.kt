@@ -472,7 +472,7 @@ fun ZoomRollFaceImageShape(
     onToggleLock: (() -> Unit)? = null,
     rollEventCount: Int = 0
 ) {
-    key(if (isLocked) 0 else rollEventCount) {
+    key(if (isLocked) side.uuid else rollEventCount) {
         Box(
             modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
         ) {
@@ -524,51 +524,57 @@ fun ZoomRollFaceImageSVG(
     onToggleLock: (() -> Unit)? = null,
     rollEventCount: Int = 0
 ) {
-    val modifier = Modifier
-        .size(resizeView)
-        .padding(top = 8.dp)
+    key(if (isLocked) side.uuid else rollEventCount) {
+        val modifier = Modifier
+            .size(resizeView)
+            .padding(top = 8.dp)
 
-    Box(
-        modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
-    ) {
-        var hasImage = false
-        if (side.imageBase64 != "") {
-            val imageRequest by produceState(initialValue = side.imageRequest, side, if (isLocked) 0 else rollEventCount) {
-                if (value == null) {
-                    value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
+        Box(
+            modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
+        ) {
+            var hasImage = false
+            if (side.imageBase64 != "") {
+                val imageRequest by produceState(
+                    initialValue = side.imageRequest,
+                    side,
+                    if (isLocked) 0 else rollEventCount
+                ) {
+                    if (value == null) {
+                        value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
+                    }
+                }
+
+                if (imageRequest != null) {
+                    hasImage = true
+                    AsyncImage(
+                        model = imageRequest,
+                        contentDescription = side.description,
+                        modifier = modifier
+                    )
+                }
+            } else {
+                if (side.imageDrawableId != 0) {
+                    hasImage = true
+                    Image(
+                        painter = painterResource(id = side.imageDrawableId),
+                        contentDescription = side.description,
+                        modifier = modifier
+                    )
                 }
             }
 
-            if (imageRequest != null) {
-                hasImage = true
-                AsyncImage(
-                    model = imageRequest,
-                    contentDescription = side.description,
-                    modifier = modifier
+            if (isLocked && hasImage) {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Lock",
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(resizeView / 3)
+                        .padding(4.dp)
+                        .testTag(ZoomRollsTestTag.ROLL_LOCK),
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
-        } else {
-            if (side.imageDrawableId != 0) {
-                hasImage = true
-                Image(
-                    painter = painterResource(id = side.imageDrawableId),
-                    contentDescription = side.description,
-                    modifier = modifier
-                )
-            }
-        }
-
-        if (isLocked && hasImage) {
-            Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = "Lock",
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .size(resizeView / 3)
-                    .padding(4.dp)
-                    .testTag(ZoomRollsTestTag.ROLL_LOCK),
-                tint = MaterialTheme.colorScheme.primary
-            )
         }
     }
 }

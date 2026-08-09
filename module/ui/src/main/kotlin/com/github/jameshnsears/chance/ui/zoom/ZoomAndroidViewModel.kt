@@ -178,10 +178,11 @@ abstract class ZoomAndroidViewModel(
     init {
         viewModelScope.launch {
             diceBagList.collect { list ->
-                diceUuidCache.clear()
+                val newCache = mutableMapOf<String, Dice>()
                 list.forEach { dice ->
-                    diceUuidCache[dice.uuid] = dice
+                    newCache[dice.uuid] = dice
                 }
+                diceUuidCache = newCache
             }
         }
     }
