@@ -4,6 +4,7 @@ import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer
+import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.impl.roll.RepositoryRollProtocolBufferInterface
 import com.google.protobuf.Descriptors
@@ -54,10 +55,15 @@ class RepositoryRollProtocolBufferTestDouble private constructor(
 
     override suspend fun jsonExport(): String {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
+        fieldsToAlwaysOutput.add(RollProtocolBuffer.getDescriptor().findFieldByName("uuidDice"))
+        fieldsToAlwaysOutput.add(RollProtocolBuffer.getDescriptor().findFieldByName("uuidGroup"))
+        fieldsToAlwaysOutput.add(RollProtocolBuffer.getDescriptor().findFieldByName("side"))
         fieldsToAlwaysOutput.add(RollProtocolBuffer.getDescriptor().findFieldByName("multiplierIndex"))
         fieldsToAlwaysOutput.add(RollProtocolBuffer.getDescriptor().findFieldByName("explodeIndex"))
         fieldsToAlwaysOutput.add(RollProtocolBuffer.getDescriptor().findFieldByName("scoreAdjustment"))
         fieldsToAlwaysOutput.add(RollProtocolBuffer.getDescriptor().findFieldByName("score"))
+
+        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("uuid"))
 
         val rollHistory = mapRollHistoryProtocolBufferIntoRollHistory(rollHistoryProtocolBufferStateFlow.value)
 
