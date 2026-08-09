@@ -12,6 +12,8 @@ interface RepositoryRollInterface : RepositoryImportExportInterface {
 
     suspend fun store(epoch: Long, rollList: List<Roll>)
 
+    suspend fun delete(diceUuid: String)
+
     suspend fun removeLatest()
 
     fun traceUuid(rollHistory: RollHistory) {

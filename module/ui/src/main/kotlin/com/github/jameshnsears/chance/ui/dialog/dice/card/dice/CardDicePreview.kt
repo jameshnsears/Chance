@@ -9,7 +9,10 @@ import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.repo.impl.bag.testdouble.RepositoryBagProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repo.impl.roll.testdouble.RepositoryRollProtocolBufferTestDouble
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
@@ -23,6 +26,17 @@ fun BagCardDicePreview() {
 
     val repositoryBagProtocolBufferTestDouble =
         RepositoryBagProtocolBufferTestDouble.getInstance()
+
+    val bagDataTestDouble = BagDataTestDouble()
+    val repositoryRollProtocolBufferTestDouble =
+        RepositoryRollProtocolBufferTestDouble.getInstance(
+            RollHistoryDataTestDouble(
+                bagDataTestDouble,
+                GroupDataTestDouble(bagDataTestDouble)
+            ).rollHistory,
+            repositoryBagProtocolBufferTestDouble
+        )
+
     runBlocking(Dispatchers.Main) {
         repositoryBagProtocolBufferTestDouble.store(
             mutableListOf(
@@ -34,6 +48,7 @@ fun BagCardDicePreview() {
     val cardDiceService = runBlocking(Dispatchers.Main) {
         CardDiceService(
             repositoryBagProtocolBufferTestDouble,
+            repositoryRollProtocolBufferTestDouble,
             BagDataTestDouble().diceStory
         )
     }

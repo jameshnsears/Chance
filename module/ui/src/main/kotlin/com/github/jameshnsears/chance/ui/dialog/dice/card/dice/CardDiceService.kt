@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.ui.dialog.dice.card.dice
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -24,6 +25,7 @@ data class CardDiceState(
 
 class CardDiceService(
     private val repositoryBag: RepositoryBagInterface,
+    private val repositoryRoll: RepositoryRollInterface,
     val dice: Dice,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -125,6 +127,7 @@ class CardDiceService(
 
     fun diceSidesSize(sideSize: String) {
         val sideSizeInt = sideSize.toIntOrNull()
+        val sideSizeChanged = sideSizeInt != null && sideSizeInt != dice.sides.size
         isSidesValid = sideSizeInt != null && sideSizeInt in DiceRollValues.SIDES_MIN..DiceRollValues.SIDES_MAX
 
         _stateFlowCardDice.update {
@@ -139,6 +142,10 @@ class CardDiceService(
         if (isSidesValid) {
             scope.launch(Dispatchers.IO) {
                 CardDiceSideEvent.emit(sideSizeInt!!)
+
+                if (sideSizeChanged) {
+                    repositoryRoll.delete(dice.uuid)
+                }
             }
         }
     }

@@ -2,7 +2,9 @@ package com.github.jameshnsears.chance.ui.dialog.dice.card.dice
 
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.dialog.dice.DialogDiceUnitTestUnitTestHelper
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -118,5 +120,38 @@ class CardDiceServiceUnitTest : DialogDiceUnitTestUnitTestHelper() {
         )
 
         assertFalse(dialogBagAndroidViewModel.cardDiceService.diceCanBeDeleted())
+    }
+
+    @Test
+    fun diceCardModifySidesDeletesRollHistory() = runTest {
+        val dialogBagAndroidViewModel = getDialogBagAndroidViewModel()
+        val repositoryBag = dialogBagAndroidViewModel.repositoryBag
+        val repositoryRoll = dialogBagAndroidViewModel.repositoryRoll
+
+        val diceInRepo = repositoryBag.fetch().first().first { it.title == "d6" }
+
+        // Add a roll for this dice to ensure we have something to delete
+        val roll = Roll(
+            uuidDice = diceInRepo.uuid,
+            side = diceInRepo.sides[0]
+        )
+        repositoryRoll.store(System.currentTimeMillis(), listOf(roll))
+
+        val cardDiceService = CardDiceService(
+            repositoryBag,
+            repositoryRoll,
+            diceInRepo
+        )
+
+        val initialRolls = repositoryRoll.fetch().first()
+        assertTrue(initialRolls.values.any { rolls -> rolls.any { it.uuidDice == diceInRepo.uuid } })
+
+        cardDiceService.diceSidesSize("10")
+
+        kotlinx.coroutines.delay(500)
+
+        val updatedRolls = repositoryRoll.fetch().first()
+        val hasRollsForDice = updatedRolls.values.any { rolls -> rolls.any { it.uuidDice == diceInRepo.uuid } }
+        assertFalse("Roll history for dice should have been deleted", hasRollsForDice)
     }
 }

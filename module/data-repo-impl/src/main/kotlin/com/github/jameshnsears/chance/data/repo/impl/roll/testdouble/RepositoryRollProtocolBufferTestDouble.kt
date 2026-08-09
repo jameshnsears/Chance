@@ -109,6 +109,24 @@ class RepositoryRollProtocolBufferTestDouble private constructor(
         rollHistoryProtocolBufferStateFlow.value = rollHistoryProtocolBufferBuilder.build()
     }
 
+    override suspend fun delete(diceUuid: String) {
+        Timber.d("repositoryRoll.DELETE ============================================")
+        Timber.d("repositoryRoll.delete.diceUuid=$diceUuid")
+
+        val rollHistoryProtocolBufferBuilder = rollHistoryProtocolBufferStateFlow.value.toBuilder()
+        val keysToRemove = mutableListOf<Long>()
+        rollHistoryProtocolBufferBuilder.valuesMap.forEach { (epoch, rollList) ->
+            if (rollList.rollList.any { it.uuidDice == diceUuid }) {
+                keysToRemove.add(epoch)
+            }
+        }
+
+        keysToRemove.forEach {
+            rollHistoryProtocolBufferBuilder.removeValues(it)
+        }
+        rollHistoryProtocolBufferStateFlow.value = rollHistoryProtocolBufferBuilder.build()
+    }
+
     override suspend fun removeLatest() {
         Timber.d("repositoryRoll.REMOVE.LATEST ============================================")
 

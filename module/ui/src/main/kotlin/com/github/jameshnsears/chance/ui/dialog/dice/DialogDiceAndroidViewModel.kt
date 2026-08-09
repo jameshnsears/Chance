@@ -33,6 +33,7 @@ class DialogDiceAndroidViewModel(
 
     val cardDiceService = CardDiceService(
         repositoryBag,
+        repositoryRoll,
         dice
     )
 
