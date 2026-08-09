@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -91,6 +92,7 @@ fun ZoomRollEmptyState() {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .imePadding()
             .testTag(ZoomRollsTestTag.LAZY_COLUMN_EMPTY),
         contentAlignment = Alignment.Center,
     ) {
