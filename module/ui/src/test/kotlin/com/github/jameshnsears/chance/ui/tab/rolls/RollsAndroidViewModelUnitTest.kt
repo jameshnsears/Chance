@@ -559,7 +559,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         initialHistory.keys.sortedDescending().forEach { sortedHistory[it] = initialHistory[it]!! }
 
         tabRollAndroidViewModel.rollDiceSequence(
-            lockedRollIndices = setOf(99), // Trigger re-roll logic
+            lockedRollIndices = setOf("dummy_1_"), // Trigger re-roll logic
             latestRollHistory = sortedHistory
         )
         advanceUntilIdle()

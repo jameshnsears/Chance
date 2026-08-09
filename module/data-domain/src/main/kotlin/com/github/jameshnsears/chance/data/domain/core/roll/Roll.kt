@@ -11,6 +11,8 @@ data class Roll(
     var score: Int = 0,
     var uuidGroup: String = "",
 ) {
+    fun unitKey(): String = "${uuidDice}_${multiplierIndex}_${uuidGroup}"
+
     override fun toString(): String {
         return "uuidDice=$uuidDice; multiplierIndex=$multiplierIndex; side=$side; uuidGroup=$uuidGroup"
     }

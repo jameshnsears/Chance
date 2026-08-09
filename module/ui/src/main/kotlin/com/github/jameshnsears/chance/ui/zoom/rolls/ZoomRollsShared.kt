@@ -375,27 +375,42 @@ private fun RollImages(
     onToggleLock: (() -> Unit)?,
     rollEventCount: Int
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        if (settingsSideNumber) ZoomRollFaceImageShape(
-            zoomRollsAndroidViewModel,
-            dice,
-            roll.side,
-            resizeViewDp,
-            isLocked,
-            onToggleLock,
-            rollEventCount
-        )
+    key(if (isLocked) roll.side.uuid else rollEventCount) {
+        Box(
+            modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                if (settingsSideNumber) ZoomRollFaceImageShape(
+                    zoomRollsAndroidViewModel,
+                    dice,
+                    roll.side,
+                    resizeViewDp,
+                )
 
-        if (settingsSideSVG) ZoomRollFaceImageSVG(
-            zoomRollsAndroidViewModel,
-            roll.side,
-            resizeViewDp,
-            isLocked = isLocked && settingsSideNumber,
-            onToggleLock,
-            rollEventCount
-        )
+                if (settingsSideSVG) ZoomRollFaceImageSVG(
+                    zoomRollsAndroidViewModel,
+                    roll.side,
+                    resizeViewDp,
+                    isLocked,
+                    rollEventCount
+                )
+            }
+
+            if (isLocked) {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Lock",
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .size(resizeViewDp / 3)
+                        .padding(4.dp)
+                        .testTag(ZoomRollsTestTag.ROLL_LOCK),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
     }
 }
 
@@ -468,50 +483,30 @@ fun ZoomRollFaceImageShape(
     dice: Dice?,
     side: Side,
     resizeView: Dp,
-    isLocked: Boolean = false,
-    onToggleLock: (() -> Unit)? = null,
-    rollEventCount: Int = 0
 ) {
-    key(if (isLocked) side.uuid else rollEventCount) {
-        Box(
-            modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
-        ) {
-            Image(
-                painter = painterResource(
-                    if (dice != null) zoomRollsAndroidViewModel.drawableForDiceSides(dice)
-                    else com.github.jameshnsears.chance.data.domain.R.drawable.d6
-                ),
-                contentDescription = side.description,
-                modifier = Modifier
-                    .size(resizeView)
-                    .padding(top = 8.dp),
-                colorFilter = zoomRollsAndroidViewModel.sideColorFilter(dice?.colour ?: ""),
-                contentScale = ContentScale.Crop
-            )
+    Box(contentAlignment = Alignment.Center) {
+        Image(
+            painter = painterResource(
+                if (dice != null) zoomRollsAndroidViewModel.drawableForDiceSides(dice)
+                else com.github.jameshnsears.chance.data.domain.R.drawable.d6
+            ),
+            contentDescription = side.description,
+            modifier = Modifier
+                .size(resizeView)
+                .padding(top = 8.dp),
+            colorFilter = zoomRollsAndroidViewModel.sideColorFilter(dice?.colour ?: ""),
+            contentScale = ContentScale.Crop
+        )
 
-            Text(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(top = 0.dp),
-                fontSize = zoomRollsAndroidViewModel.sideNumberFontSizeSp(),
-                text = "${side.number}",
-                color = zoomRollsAndroidViewModel.sideColor(side.numberColour),
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            if (isLocked) {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "Lock",
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .size(resizeView / 3)
-                        .padding(4.dp)
-                        .testTag(ZoomRollsTestTag.ROLL_LOCK),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-        }
+        Text(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 0.dp),
+            fontSize = zoomRollsAndroidViewModel.sideNumberFontSizeSp(),
+            text = "${side.number}",
+            color = zoomRollsAndroidViewModel.sideColor(side.numberColour),
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 
@@ -521,58 +516,39 @@ fun ZoomRollFaceImageSVG(
     side: Side,
     resizeView: Dp,
     isLocked: Boolean = false,
-    onToggleLock: (() -> Unit)? = null,
     rollEventCount: Int = 0
 ) {
-    key(if (isLocked) side.uuid else rollEventCount) {
-        val modifier = Modifier
-            .size(resizeView)
-            .padding(top = 8.dp)
+    val modifier = Modifier
+        .size(resizeView)
+        .padding(top = 8.dp)
 
-        Box(
-            modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
-        ) {
-            var hasImage = false
-            if (side.imageBase64 != "") {
-                val imageRequest by produceState(
-                    initialValue = side.imageRequest,
-                    side,
-                    if (isLocked) 0 else rollEventCount
-                ) {
-                    if (value == null) {
-                        value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
-                    }
-                }
-
-                if (imageRequest != null) {
-                    hasImage = true
-                    AsyncImage(
-                        model = imageRequest,
-                        contentDescription = side.description,
-                        modifier = modifier
-                    )
-                }
-            } else {
-                if (side.imageDrawableId != 0) {
-                    hasImage = true
-                    Image(
-                        painter = painterResource(id = side.imageDrawableId),
-                        contentDescription = side.description,
-                        modifier = modifier
-                    )
+    Box(
+        modifier = Modifier
+    ) {
+        if (side.imageBase64 != "") {
+            val imageRequest by produceState(
+                initialValue = side.imageRequest,
+                side,
+                if (isLocked) 0 else rollEventCount
+            ) {
+                if (value == null) {
+                    value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
                 }
             }
 
-            if (isLocked && hasImage) {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "Lock",
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .size(resizeView / 3)
-                        .padding(4.dp)
-                        .testTag(ZoomRollsTestTag.ROLL_LOCK),
-                    tint = MaterialTheme.colorScheme.primary
+            if (imageRequest != null) {
+                AsyncImage(
+                    model = imageRequest,
+                    contentDescription = side.description,
+                    modifier = modifier
+                )
+            }
+        } else {
+            if (side.imageDrawableId != 0) {
+                Image(
+                    painter = painterResource(id = side.imageDrawableId),
+                    contentDescription = side.description,
+                    modifier = modifier
                 )
             }
         }

@@ -2,8 +2,10 @@ package com.github.jameshnsears.chance.ui.zoom.rolls
 
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
+import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -64,37 +66,40 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun toggleLock() = runTest {
         val viewModel = zoomRollsAndroidViewModel()
+        val roll1 = Roll("uuid1", Side(), multiplierIndex = 1)
+        val roll2 = Roll("uuid2", Side(), multiplierIndex = 1)
 
-        assertEquals(emptySet<Int>(), viewModel.lockedRollIndices.value)
+        assertEquals(emptySet<String>(), viewModel.lockedRollIndices.value)
 
-        viewModel.toggleLock(0)
-        assertEquals(setOf(0), viewModel.lockedRollIndices.value)
+        viewModel.toggleLock(roll1)
+        assertEquals(setOf(roll1.unitKey()), viewModel.lockedRollIndices.value)
 
-        viewModel.toggleLock(1)
-        assertEquals(setOf(0, 1), viewModel.lockedRollIndices.value)
+        viewModel.toggleLock(roll2)
+        assertEquals(setOf(roll1.unitKey(), roll2.unitKey()), viewModel.lockedRollIndices.value)
 
-        viewModel.toggleLock(0)
-        assertEquals(setOf(1), viewModel.lockedRollIndices.value)
+        viewModel.toggleLock(roll1)
+        assertEquals(setOf(roll2.unitKey()), viewModel.lockedRollIndices.value)
     }
 
     @Test
     fun resetLockOnNewRoll() = runTest {
         val viewModel = zoomRollsAndroidViewModel()
         val repositoryRoll = RepositoryFactory().repositoryRoll
+        val roll = Roll("uuid", Side())
 
-        viewModel.toggleLock(0)
-        assertEquals(setOf(0), viewModel.lockedRollIndices.value)
+        viewModel.toggleLock(roll)
+        assertEquals(setOf(roll.unitKey()), viewModel.lockedRollIndices.value)
 
         // Add a new roll to history
         val currentHistory = repositoryRoll.fetch().first()
         val newHistory = LinkedHashMap(currentHistory)
-        val nextTimestamp = currentHistory.keys.max() + 1000
+        val nextTimestamp = (currentHistory.keys.maxOrNull() ?: 0L) + 1000
         newHistory[nextTimestamp] = currentHistory.values.first()
 
         repositoryRoll.store(newHistory)
 
         // Wait for reset
         viewModel.lockedRollIndices.first { it.isEmpty() }
-        assertEquals(emptySet<Int>(), viewModel.lockedRollIndices.value)
+        assertEquals(emptySet<String>(), viewModel.lockedRollIndices.value)
     }
 }

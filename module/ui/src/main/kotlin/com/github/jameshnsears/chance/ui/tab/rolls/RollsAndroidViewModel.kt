@@ -208,7 +208,7 @@ class RollsAndroidViewModel(
     }
 
     fun rollDiceSequence(
-        lockedRollIndices: Set<Int> = emptySet(),
+        lockedRollIndices: Set<String> = emptySet(),
         latestRollHistory: RollHistory = linkedMapOf()
     ) {
         viewModelScope.launch {

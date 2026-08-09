@@ -38,22 +38,14 @@ class ZoomRollsAndroidViewModel(
             initialValue = emptyList()
         )
 
-    private val _lockedRollIndices = MutableStateFlow<Set<Int>>(emptySet())
-    val lockedRollIndices: StateFlow<Set<Int>> = _lockedRollIndices
+    private val _lockedRollIndices = MutableStateFlow<Set<String>>(emptySet())
+    val lockedRollIndices: StateFlow<Set<String>> = _lockedRollIndices
 
-    fun toggleLock(index: Int, rollSequence: List<Roll>) {
-        val rootIndex = findRootIndex(rollSequence, index)
+    fun toggleLock(roll: Roll) {
+        val key = roll.unitKey()
         _lockedRollIndices.update { current ->
-            if (current.contains(rootIndex)) current - rootIndex else current + rootIndex
+            if (current.contains(key)) current - key else current + key
         }
-    }
-
-    private fun findRootIndex(rolls: List<Roll>, index: Int): Int {
-        var i = index
-        while (i >= 0 && rolls[i].explodeIndex > 0) {
-            i--
-        }
-        return i
     }
 
     init {

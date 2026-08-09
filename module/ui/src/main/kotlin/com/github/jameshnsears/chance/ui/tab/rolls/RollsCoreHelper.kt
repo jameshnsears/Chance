@@ -92,7 +92,7 @@ class RollsCoreHelper(
     fun reRollDiceSequence(
         diceBag: DiceBag,
         existingSequence: List<Roll>,
-        lockedIndices: Set<Int>,
+        lockedIndices: Set<String>,
         newRollSequence: MutableList<Roll>,
         shuffle: Boolean
     ) {
@@ -100,14 +100,10 @@ class RollsCoreHelper(
 
         data class UnitKey(val uuidDice: String, val multiplierIndex: Int, val uuidGroup: String)
 
-        val unitRootIndices = mutableMapOf<UnitKey, Int>()
         val units = mutableMapOf<UnitKey, MutableList<Roll>>()
 
-        existingSequence.forEachIndexed { index, roll ->
+        existingSequence.forEach { roll ->
             val key = UnitKey(roll.uuidDice, roll.multiplierIndex, roll.uuidGroup)
-            if (roll.explodeIndex == 0) {
-                unitRootIndices[key] = index
-            }
             units.getOrPut(key) { mutableListOf() }.add(roll)
         }
 
@@ -115,10 +111,10 @@ class RollsCoreHelper(
 
         unitKeys.forEach { key ->
             val dice = diceMap[key.uuidDice]
-            val rootIndex = unitRootIndices[key]
+            val keyString = "${key.uuidDice}_${key.multiplierIndex}_${key.uuidGroup}"
 
-            if (dice != null && rootIndex != null) {
-                if (lockedIndices.contains(rootIndex)) {
+            if (dice != null) {
+                if (lockedIndices.contains(keyString)) {
                     newRollSequence.addAll(units[key]!!)
                 } else {
                     newRollSequence.addAll(rollDiceUnit(dice, key.multiplierIndex, key.uuidGroup))
