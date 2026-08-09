@@ -92,8 +92,6 @@ fun DiceSides(
     val state by cardDiceService.stateFlowCardDice.collectAsStateWithLifecycle()
 
     DiceSidesTextField(cardDiceService, state)
-
-    DiceSidesInfo(state.diceSiderInfoColour)
 }
 
 @Composable
@@ -103,7 +101,7 @@ private fun DiceSidesTextField(
 ) {
     Row(
         modifier = Modifier
-            .padding(top = 8.dp)
+            .padding(top = 8.dp, bottom = 12.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -143,34 +141,6 @@ private fun DiceSidesTextField(
     }
 }
 
-@Composable
-private fun DiceSidesInfo(sliderInfoColour: Float) {
-    Row(
-        modifier = Modifier
-            .padding(bottom = 8.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = Icons.Outlined.Info,
-            contentDescription = stringResource(R.string.info),
-            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = sliderInfoColour),
-        )
-    }
-
-    Row(
-        modifier = Modifier
-            .padding(top = 8.dp, bottom = 12.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(R.string.dialog_bag_dice_sides_info),
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = sliderInfoColour),
-            style = MaterialTheme.typography.bodySmall,
-        )
-    }
-}
 
 @Composable
 fun DiceTitle(cardDiceService: CardDiceService) {

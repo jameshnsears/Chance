@@ -35,6 +35,9 @@
     <string name="dialog.ok">OK</string>
 
     <string name="dialog.bag.save">Save</string>
+    <string name="dialog.bag.save.confirmation">Change # of Sides</string>
+    <string name="dialog.bag.save.confirmation.question">Delete rolls containing this dice with prior sides?</string>
+
     <string name="dialog.bag.clone">Duplicate</string>
     <string name="dialog.bag.delete">Delete</string>
     <string name="dialog.group.delete">Delete</string>
@@ -64,7 +67,6 @@
     <string name="dialog.bag.dice.title.info.0">\u2022 Must be unique</string>
     <string name="dialog.bag.dice.sides"># of Sides</string>
     <string name="dialog.bag.dice.sides.arbitrary.info">2..1000</string>
-    <string name="dialog.bag.dice.sides.info">\u2022 Changing # will undo related rolls (after Save)</string>
     <string name="dialog.bag.dice.colour">Sides…</string>
 
     <string name="dialog.bag.roll">Rules</string>

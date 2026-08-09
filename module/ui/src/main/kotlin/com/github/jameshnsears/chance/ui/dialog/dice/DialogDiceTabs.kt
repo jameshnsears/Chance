@@ -193,7 +193,7 @@ fun DialogBagTabContent(
                     showDialog,
                 )
 
-                TextButtonClone(
+                TextButtonDuplicate(
                     diceCanBeCloned,
                     dialogDiceAndroidViewModel,
                     stateFlowCardDice.value,

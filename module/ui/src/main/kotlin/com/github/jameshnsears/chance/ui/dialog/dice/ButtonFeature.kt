@@ -62,7 +62,7 @@ fun TextButtonDelete(
 }
 
 @Composable
-fun TextButtonClone(
+fun TextButtonDuplicate(
     enabled: Boolean,
     dialogDiceAndroidViewModel: DialogDiceAndroidViewModel,
     cardDiceState: CardDiceState,
@@ -96,19 +96,40 @@ fun TextButtonSave(
     cardSideState: CardSideState,
     showDialog: MutableState<Boolean>,
 ) {
+    val showDialogConfirm = rememberSaveable { mutableStateOf(false) }
+
     TextButton(
         modifier = Modifier
             .defaultMinSize(minWidth = 48.dp, minHeight = 48.dp)
             .testTag(ButtonFeatureTestTag.BUTTON_FEATURE_SAVE),
         enabled = enabled,
         onClick = {
-            dialogDiceAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)
-            showDialog.value = false
+            if (cardDiceState.diceSidesSize != dialogDiceAndroidViewModel.dice.sides.size) {
+                showDialogConfirm.value = true
+            } else {
+                dialogDiceAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)
+                showDialog.value = false
+            }
         },
     ) {
         Text(
             text = stringResource(R.string.dialog_bag_save),
             textAlign = TextAlign.End
+        )
+    }
+
+    if (showDialogConfirm.value) {
+        DialogConfirm(
+            openDialog = showDialogConfirm.value,
+            onDismissRequest = {
+                showDialogConfirm.value = false
+            },
+            onConfirmation = {
+                dialogDiceAndroidViewModel.save(cardDiceState, cardRollState, cardSideState)
+                showDialog.value = false
+            },
+            title = stringResource(R.string.dialog_bag_save_confirmation),
+            text = stringResource(R.string.dialog_bag_save_confirmation_question)
         )
     }
 }
