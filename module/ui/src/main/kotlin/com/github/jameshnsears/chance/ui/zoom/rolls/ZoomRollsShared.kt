@@ -89,16 +89,16 @@ fun ZoomRollList(
 
 @Composable
 fun ZoomRollEmptyState() {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
             .testTag(ZoomRollsTestTag.LAZY_COLUMN_EMPTY),
-        contentAlignment = Alignment.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.BottomCenter
         ) {
             Text(
                 text = stringResource(R.string.tab_roll_empty_onboard_01),
@@ -106,13 +106,20 @@ fun ZoomRollEmptyState() {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 6.dp)
             )
+        }
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.TopCenter
+        ) {
             Text(
                 text = stringResource(R.string.tab_roll_empty_onboard_02),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 6.dp)
             )
         }
     }
