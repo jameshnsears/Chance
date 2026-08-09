@@ -101,7 +101,7 @@ private fun DiceSidesTextField(
 ) {
     Row(
         modifier = Modifier
-            .padding(top = 8.dp, bottom = 12.dp)
+            .padding(top = 8.dp, bottom = 18.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
