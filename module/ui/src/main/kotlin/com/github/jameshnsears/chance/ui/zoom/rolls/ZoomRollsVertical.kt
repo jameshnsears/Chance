@@ -140,7 +140,15 @@ fun ZoomRollVerticalItem(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             rollSequence.value.forEachIndexed { indexRoll, roll ->
-                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false
+                val rootIndex = remember(indexRoll, rollSequence.value) {
+                    var i = indexRoll
+                    while (i >= 0 && rollSequence.value[i].explodeIndex > 0) {
+                        i--
+                    }
+                    i
+                }
+                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(rootIndex) else false
+
                 key(if (indexSequence == 0 && !isLocked) "${rollEventCount}_$indexRoll" else indexRoll) {
                     Box(modifier = Modifier.padding(horizontal = 4.dp)) {
                         RollDetails(
@@ -149,9 +157,9 @@ fun ZoomRollVerticalItem(
                             zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
                             groupHistory,
                             resizeViewDp,
-                            isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false,
-                            onToggleLock = if (indexSequence == 0 && roll.explodeIndex == 0) {
-                                { zoomRollsAndroidViewModel.toggleLock(indexRoll) }
+                            isLocked = isLocked,
+                            onToggleLock = if (indexSequence == 0) {
+                                { zoomRollsAndroidViewModel.toggleLock(indexRoll, rollSequence.value) }
                             } else null,
                             rollEventCount = if (indexSequence == 0) rollEventCount else 0
                         )

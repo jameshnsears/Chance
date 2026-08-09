@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.ui.zoom.rolls
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
+import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
@@ -40,10 +41,19 @@ class ZoomRollsAndroidViewModel(
     private val _lockedRollIndices = MutableStateFlow<Set<Int>>(emptySet())
     val lockedRollIndices: StateFlow<Set<Int>> = _lockedRollIndices
 
-    fun toggleLock(index: Int) {
+    fun toggleLock(index: Int, rollSequence: List<Roll>) {
+        val rootIndex = findRootIndex(rollSequence, index)
         _lockedRollIndices.update { current ->
-            if (current.contains(index)) current - index else current + index
+            if (current.contains(rootIndex)) current - rootIndex else current + rootIndex
         }
+    }
+
+    private fun findRootIndex(rolls: List<Roll>, index: Int): Int {
+        var i = index
+        while (i >= 0 && rolls[i].explodeIndex > 0) {
+            i--
+        }
+        return i
     }
 
     init {

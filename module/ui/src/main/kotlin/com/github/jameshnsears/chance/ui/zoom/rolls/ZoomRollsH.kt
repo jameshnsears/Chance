@@ -238,20 +238,33 @@ fun RowScope.ZoomRollItemLR(
         itemsIndexed(
             rollSequence.value,
             key = { index, item ->
-                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(index) else false
+                var rootIndex = index
+                while (rootIndex >= 0 && rollSequence.value[rootIndex].explodeIndex > 0) {
+                    rootIndex--
+                }
+                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(rootIndex) else false
                 if (indexSequence == 0 && !isLocked) "${rollEventCount}_${item.side}_$index"
                 else "${item.side}_$index"
             }
         ) { indexRoll, roll ->
+            val rootIndex = remember(indexRoll, rollSequence.value) {
+                var i = indexRoll
+                while (i >= 0 && rollSequence.value[i].explodeIndex > 0) {
+                    i--
+                }
+                i
+            }
+            val isLocked = if (indexSequence == 0) lockedRollIndices.contains(rootIndex) else false
+
             RollDetails(
                 zoomRollsAndroidViewModel,
                 roll,
                 zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
                 groupHistory,
                 resizeViewDp,
-                isLocked = if (indexSequence == 0) lockedRollIndices.contains(indexRoll) else false,
-                onToggleLock = if (indexSequence == 0 && roll.explodeIndex == 0) {
-                    { zoomRollsAndroidViewModel.toggleLock(indexRoll) }
+                isLocked = isLocked,
+                onToggleLock = if (indexSequence == 0) {
+                    { zoomRollsAndroidViewModel.toggleLock(indexRoll, rollSequence.value) }
                 } else null,
                 rollEventCount = if (indexSequence == 0) rollEventCount else 0
             )
