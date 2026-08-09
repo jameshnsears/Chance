@@ -417,7 +417,8 @@ private fun RollImages(
 ) {
     key(if (isLocked) roll.side.uuid else rollEventCount) {
         Box(
-            modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
+            modifier = (if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier)
+                .testTag(ZoomRollsTestTag.ROLL)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

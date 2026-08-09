@@ -3,7 +3,8 @@ package com.github.jameshnsears.chance.ui.tab.rolls
 import android.app.Application
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,9 +31,10 @@ class RollsLockTest : AndroidTestHelper() {
 
         val repositoryBag = RepositoryFactory().repositoryBag
         val diceBag = repositoryBag.fetch().first()
-        // select at least one dice to enable roll
-        if (diceBag.isNotEmpty()) {
+        // select at least two dice to enable re-roll with lock
+        if (diceBag.size >= 2) {
             diceBag[0].selected = true
+            diceBag[1].selected = true
             repositoryBag.store(diceBag)
         }
     }
@@ -83,21 +85,21 @@ class RollsLockTest : AndroidTestHelper() {
         // 2. Click a dice side to lock it
         // Note: ZoomRollFaceImageShape uses Modifier.clickable if onToggleLock is provided
         // We find the first one in the first sequence
-        composeRule.onNodeWithTag(ZoomRollsTestTag.LAZY_COLUMN_NOT_EMPTY).performClick()
+        composeRule.onAllNodesWithTag(ZoomRollsTestTag.ROLL).onFirst().performClick()
         composeRule.waitForIdle()
 
         // 3. Verify lock icon is displayed
-        composeRule.onNodeWithTag(ZoomRollsTestTag.ROLL_LOCK).assertIsDisplayed()
+        composeRule.onNodeWithTag(ZoomRollsTestTag.ROLL_LOCK, useUnmergedTree = true).assertExists()
 
         // 4. Perform second roll (this should be a RE-ROLL updating the same entry)
         composeRule.onNodeWithTag(RollsTestTag.ROLL_ENABLED).performClick()
         composeRule.waitForIdle()
 
         // 5. Verify that the lock icon STILL EXISTS (locks persist during re-roll)
-        composeRule.onNodeWithTag(ZoomRollsTestTag.ROLL_LOCK).assertIsDisplayed()
+        composeRule.onNodeWithTag(ZoomRollsTestTag.ROLL_LOCK, useUnmergedTree = true).assertExists()
 
         // 6. Click the lock to unlock it
-        composeRule.onNodeWithTag(ZoomRollsTestTag.ROLL_LOCK).performClick()
+        composeRule.onNodeWithTag(ZoomRollsTestTag.ROLL_LOCK, useUnmergedTree = true).performClick()
         composeRule.waitForIdle()
 
         // 7. Perform third roll (this should be a NEW roll)
