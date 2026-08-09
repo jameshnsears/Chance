@@ -392,7 +392,7 @@ private fun RollImages(
             zoomRollsAndroidViewModel,
             roll.side,
             resizeViewDp,
-            isLocked,
+            isLocked = isLocked && settingsSideNumber,
             onToggleLock,
             rollEventCount
         )
@@ -531,6 +531,7 @@ fun ZoomRollFaceImageSVG(
     Box(
         modifier = if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier
     ) {
+        var hasImage = false
         if (side.imageBase64 != "") {
             val imageRequest by produceState(initialValue = side.imageRequest, side, if (isLocked) 0 else rollEventCount) {
                 if (value == null) {
@@ -539,6 +540,7 @@ fun ZoomRollFaceImageSVG(
             }
 
             if (imageRequest != null) {
+                hasImage = true
                 AsyncImage(
                     model = imageRequest,
                     contentDescription = side.description,
@@ -547,6 +549,7 @@ fun ZoomRollFaceImageSVG(
             }
         } else {
             if (side.imageDrawableId != 0) {
+                hasImage = true
                 Image(
                     painter = painterResource(id = side.imageDrawableId),
                     contentDescription = side.description,
@@ -555,7 +558,7 @@ fun ZoomRollFaceImageSVG(
             }
         }
 
-        if (isLocked) {
+        if (isLocked && hasImage) {
             Icon(
                 imageVector = Icons.Default.Lock,
                 contentDescription = "Lock",
