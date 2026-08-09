@@ -118,8 +118,20 @@ class RollsCoreHelperTest {
 
         // 1. Create an initial sequence with an explosion
         val initialRolls = mutableListOf(
-            Roll(uuidDice = d6.uuid, multiplierIndex = 1, side = d6.sides[0], explodeIndex = 0, score = 6), // root (side 6)
-            Roll(uuidDice = d6.uuid, multiplierIndex = 1, side = d6.sides[5], explodeIndex = 1, score = 1)  // explosion (side 1)
+            Roll(
+                uuidDice = d6.uuid,
+                multiplierIndex = 1,
+                side = d6.sides[0],
+                explodeIndex = 0,
+                score = 6
+            ), // root (side 6)
+            Roll(
+                uuidDice = d6.uuid,
+                multiplierIndex = 1,
+                side = d6.sides[5],
+                explodeIndex = 1,
+                score = 1
+            )  // explosion (side 1)
         )
 
         // 2. Lock the root
