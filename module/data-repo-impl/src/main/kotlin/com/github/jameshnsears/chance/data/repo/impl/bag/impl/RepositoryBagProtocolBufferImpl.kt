@@ -60,9 +60,6 @@ class RepositoryBagProtocolBufferImpl private constructor(private val context: C
 
     override suspend fun jsonExport(): String = withContext(Dispatchers.IO) {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
-        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("epoch"))
-        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("uuid"))
-        fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("side"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("title"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("colour"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("selected"))
@@ -73,8 +70,6 @@ class RepositoryBagProtocolBufferImpl private constructor(private val context: C
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("modifyScore"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("modifyScoreValue"))
         fieldsToAlwaysOutput.add(DiceProtocolBuffer.getDescriptor().findFieldByName("displayIndex"))
-
-        fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("uuid"))
         fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("number"))
         fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("numberColour"))
         fieldsToAlwaysOutput.add(SideProtocolBuffer.getDescriptor().findFieldByName("imageDrawableId"))
