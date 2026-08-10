@@ -2,6 +2,7 @@ package com.github.jameshnsears.chance.ui.zoom.rolls
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -436,7 +437,10 @@ private fun RollImages(
 ) {
     key(roll.side.uuid) {
         Box(
-            modifier = (if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier)
+            modifier = (if (onToggleLock != null) Modifier.clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) { onToggleLock() } else Modifier)
                 .testTag(ZoomRollsTestTag.ROLL)
         ) {
             Column(
