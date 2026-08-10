@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -324,7 +323,7 @@ private fun RollDetailsContent(
 @Composable
 private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll) {
     Box(
-        modifier = Modifier.width(105.dp),
+        modifier = Modifier.widthIn(max = 105.dp),
         contentAlignment = Alignment.Center
     ) {
         val title = groupHistory.find { it.uuid == roll.uuidGroup }?.name ?: ""
@@ -373,7 +372,7 @@ private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll) {
 @Composable
 private fun RollDiceTitle(dice: Dice, roll: Roll) {
     Box(
-        modifier = Modifier.width(105.dp),
+        modifier = Modifier.widthIn(max = 105.dp),
         contentAlignment = Alignment.Center
     ) {
         if (dice.title.isNotEmpty()) {
