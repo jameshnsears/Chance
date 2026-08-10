@@ -1,11 +1,9 @@
-An easy-to-use dice rolling app, featuring:
+Easy-to-use dice rolling app:
 
-&bull; Story cubes
-&bull; Decision dice
-&bull; Custom rules
-&bull; Dice groups
+&bull; Highly customisable
+&bull; Example dice included
+&bull; Groups
 &bull; Re-roll locking
-&bull; Customisable roll history
 &bull; Export/Import
 &bull; Persistant data
 &bull; Works offline
