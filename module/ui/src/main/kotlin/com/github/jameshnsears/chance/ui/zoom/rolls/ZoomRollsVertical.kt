@@ -1,7 +1,6 @@
 package com.github.jameshnsears.chance.ui.zoom.rolls
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -82,7 +81,8 @@ private fun ZoomRollVerticalItem(
     if (stateFlowZoom.rollIndexTime) {
         RollIndexTime(
             rollHistorySize - originalIndex,
-            rollSequence
+            rollSequence,
+            stateFlowZoom.resizeViewDp
         )
     }
 
@@ -113,37 +113,36 @@ private fun ZoomRollVerticalItem(
                 )
             }
 
+        val scaleFactor = stateFlowZoom.resizeViewDp.value / 65f
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .testTag(ZoomRollsTestTag.LAZY_COLUMN_NOT_EMPTY),
-            horizontalArrangement = Arrangement.Center,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp * scaleFactor, Alignment.CenterHorizontally),
+            verticalArrangement = Arrangement.spacedBy(8.dp * scaleFactor),
         ) {
             rollSequence.value.forEachIndexed { indexRoll, roll ->
                 val isLocked = if (indexSequence == 0) lockedRollIndices.contains(roll.unitKey()) else false
 
                 key("${roll.side.uuid}_$indexRoll") {
-                    Box(modifier = Modifier.padding(horizontal = 4.dp)) {
-                        RollDetails(
-                            zoomRollsAndroidViewModel,
-                            roll,
-                            zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
-                            groupHistory,
-                            stateFlowZoom.resizeViewDp,
-                            isLocked = isLocked,
-                            onToggleLock = if (indexSequence == 0) {
-                                { zoomRollsAndroidViewModel.toggleLock(roll) }
-                            } else null,
-                            rollEventCount = if (indexSequence == 0) rollEventCount else 0,
-                            showGroupTitle = stateFlowZoom.groupTitle,
-                            showDiceTitle = stateFlowZoom.diceTitle,
-                            showRollBehaviour = stateFlowZoom.rollBehaviour,
-                            showSideNumber = stateFlowZoom.sideNumber,
-                            showSideSVG = stateFlowZoom.sideSVG,
-                            showSideDescription = stateFlowZoom.sideDescription
-                        )
-                    }
+                    RollDetails(
+                        zoomRollsAndroidViewModel,
+                        roll,
+                        zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
+                        groupHistory,
+                        stateFlowZoom.resizeViewDp,
+                        isLocked = isLocked,
+                        onToggleLock = if (indexSequence == 0) {
+                            { zoomRollsAndroidViewModel.toggleLock(roll) }
+                        } else null,
+                        rollEventCount = if (indexSequence == 0) rollEventCount else 0,
+                        showGroupTitle = stateFlowZoom.groupTitle,
+                        showDiceTitle = stateFlowZoom.diceTitle,
+                        showRollBehaviour = stateFlowZoom.rollBehaviour,
+                        showSideNumber = stateFlowZoom.sideNumber,
+                        showSideSVG = stateFlowZoom.sideSVG,
+                        showSideDescription = stateFlowZoom.sideDescription
+                    )
                 }
             }
         }

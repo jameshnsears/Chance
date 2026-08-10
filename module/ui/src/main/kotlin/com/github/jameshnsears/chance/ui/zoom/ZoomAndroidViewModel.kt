@@ -210,7 +210,7 @@ abstract class ZoomAndroidViewModel(
 
     fun sideNumberFontSizeSp() = 17.sp
 
-    fun rollScoreFontSizeSp(resizeViewDp: Dp) = (36 * (resizeViewDp.value / 80f)).sp
+    fun rollScoreFontSizeSp(resizeViewDp: Dp) = (36 * (1f + (resizeViewDp.value / 80f - 1f) * 0.5f)).sp
 
     fun drawableForDiceSides(dice: Dice): Int {
         return when (dice.sides.size) {

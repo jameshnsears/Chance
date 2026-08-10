@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
@@ -39,12 +39,18 @@ import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
 import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceTestTag
 
 @Composable
-fun ZoomSideDescription(zoomAndroidViewModel: ZoomAndroidViewModel, dice: Dice, side: Side) {
+fun ZoomSideDescription(
+    zoomAndroidViewModel: ZoomAndroidViewModel,
+    dice: Dice,
+    side: Side,
+    resizeView: Dp = 65.dp
+) {
+    val scaleFactor = resizeView.value / 65f
     if (side.description != "") {
         Box(
             modifier = Modifier
-                .width(110.dp)
-                .padding(top = 10.dp),
+                .widthIn(max = 90.dp * scaleFactor)
+                .padding(top = 10.dp * scaleFactor),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -86,6 +92,7 @@ fun ZoomFaceImageShape(
         }
 
     var itemOffset by remember { mutableStateOf(Offset.Zero) }
+    val scaleFactor = resizeView.value / 65f
 
     Box {
         Image(
@@ -93,7 +100,7 @@ fun ZoomFaceImageShape(
             contentDescription = side.description,
             modifier = Modifier
                 .size(resizeView)
-                .padding(top = 8.dp)
+                .padding(top = 8.dp * scaleFactor)
                 .minimumInteractiveComponentSize()
                 .onGloballyPositioned { coordinates ->
                     itemOffset = coordinates.positionInWindow() +
@@ -130,10 +137,11 @@ fun ZoomFaceImageSVG(
     val navigator = LocalNavigator.current
 
     var itemOffset by remember { mutableStateOf(Offset.Zero) }
+    val scaleFactor = resizeView.value / 65f
 
     val modifier = Modifier
         .size(resizeView)
-        .padding(top = 8.dp)
+        .padding(top = 8.dp * scaleFactor)
         .minimumInteractiveComponentSize()
         .onGloballyPositioned { coordinates ->
             itemOffset = coordinates.positionInWindow() +

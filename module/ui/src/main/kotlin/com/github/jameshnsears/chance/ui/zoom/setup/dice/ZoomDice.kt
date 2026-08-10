@@ -252,13 +252,15 @@ private fun ZoomDiceSidesRow(
         }
     }
 
+    val scaleFactor = resizeView.value / 65f
     LazyRow(
         state = listState,
         contentPadding = PaddingValues(horizontal = 0.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp * scaleFactor),
         verticalAlignment = Alignment.Top,
         modifier = Modifier.padding(bottom = 6.dp),
-    ) {
+    )
+ {
         items(
             dice.sides,
             key = {
@@ -282,7 +284,7 @@ private fun ZoomDiceSidesRow(
                     resizeView,
                 )
 
-                ZoomSideDescription(zoomDiceAndroidViewModel, dice, side)
+                ZoomSideDescription(zoomDiceAndroidViewModel, dice, side, resizeView)
             }
         }
     }

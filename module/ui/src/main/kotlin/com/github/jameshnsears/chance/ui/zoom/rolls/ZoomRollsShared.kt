@@ -126,10 +126,12 @@ fun ZoomRollEmptyState() {
 @Composable
 fun RollIndexTime(
     position: Int,
-    rollHistory: Map.Entry<Long, List<Roll>>
+    rollHistory: Map.Entry<Long, List<Roll>>,
+    resizeViewDp: Dp = 65.dp
 ) {
+    val scaleFactor = resizeViewDp.value / 65f
     Row(
-        modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
+        modifier = Modifier.padding(top = 12.dp * scaleFactor, bottom = 8.dp * scaleFactor),
     ) {
         Text(
             text = "$position : ${
@@ -169,6 +171,9 @@ private fun RollScoreContent(
     showScore: Boolean,
     isNewRollEvent: Boolean
 ) {
+    val scaleFactor = resizeViewDp.value / 65f
+    val scoreScaleFactor = 1f + (scaleFactor - 1f) * 0.5f
+
     val currentScore = rollSequence.value.sumOf { it.score }
     var displayedScore by remember(rollSequence.key, isNewRollEvent, currentScore) {
         mutableIntStateOf(if (isNewRollEvent) 0 else currentScore)
@@ -192,7 +197,7 @@ private fun RollScoreContent(
     if (showScore) {
         Column(
             Modifier
-                .padding(end = 12.dp, bottom = 8.dp)
+                .padding(end = 12.dp * scoreScaleFactor, bottom = 8.dp * scoreScaleFactor)
                 .widthIn(min = resizeViewDp * 0.8f),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -201,7 +206,7 @@ private fun RollScoreContent(
                 shape = CircleShape,
                 color = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
-                shadowElevation = 6.dp
+                shadowElevation = 6.dp * scoreScaleFactor
             ) {
                 Box(
                     modifier = Modifier
@@ -215,7 +220,7 @@ private fun RollScoreContent(
                                 )
                             }
                         }
-                        .padding(16.dp),
+                        .padding(16.dp * scoreScaleFactor),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -283,13 +288,14 @@ private fun RollDetailsContent(
     showSideSVG: Boolean,
     showSideDescription: Boolean
 ) {
+    val scaleFactor = resizeViewDp.value / 65f
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(4.dp * scaleFactor),
     ) {
-        if (showGroupTitle) RollGroupTitle(groupHistory, roll)
+        if (showGroupTitle) RollGroupTitle(groupHistory, roll, resizeViewDp)
 
-        if (showDiceTitle && dice != null) RollDiceTitle(dice, roll)
+        if (showDiceTitle && dice != null) RollDiceTitle(dice, roll, resizeViewDp)
 
         if (showRollBehaviour) ZoomSideRollBehaviour(
             roll,
@@ -309,60 +315,56 @@ private fun RollDetailsContent(
         )
 
         if (showSideDescription && dice != null) {
-            Box(Modifier.padding(bottom = 12.dp)) {
-                ZoomSideDescription(
-                    zoomRollsAndroidViewModel,
-                    dice,
-                    roll.side
-                )
-            }
+            ZoomSideDescription(
+                zoomRollsAndroidViewModel,
+                dice,
+                roll.side,
+                resizeViewDp
+            )
         }
     }
 }
 
 @Composable
-private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll) {
+private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll, resizeViewDp: Dp) {
+    val scaleFactor = resizeViewDp.value / 65f
     Box(
-        modifier = Modifier.widthIn(max = 105.dp),
+        modifier = Modifier.widthIn(max = 90.dp * scaleFactor),
         contentAlignment = Alignment.Center
     ) {
         val title = groupHistory.find { it.uuid == roll.uuidGroup }?.name ?: ""
 
         if (title.isNotEmpty()) {
-            Row(Modifier.padding(top = 12.dp, bottom = 8.dp)) {
-                Column {
-                    Column {
-                        if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_UUID)) {
-                            Row {
-                                Text(
-                                    title,
-                                    overflow = TextOverflow.Ellipsis,
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.titleSmall.copy(
-                                        lineBreak = LineBreak.Paragraph
-                                    )
-                                )
-                            }
-
-                            Row {
-                                Text(
-                                    roll.uuidGroup,
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-
-                        } else {
-                            Text(
-                                title,
-                                overflow = TextOverflow.Ellipsis,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.titleSmall.copy(
-                                    lineBreak = LineBreak.Paragraph
-                                )
+            Column {
+                if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_UUID)) {
+                    Row {
+                        Text(
+                            title,
+                            overflow = TextOverflow.Ellipsis,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                lineBreak = LineBreak.Paragraph
                             )
-                        }
+                        )
                     }
+
+                    Row {
+                        Text(
+                            roll.uuidGroup,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                } else {
+                    Text(
+                        title,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            lineBreak = LineBreak.Paragraph
+                        )
+                    )
                 }
             }
         }
@@ -370,43 +372,16 @@ private fun RollGroupTitle(groupHistory: GroupHistory, roll: Roll) {
 }
 
 @Composable
-private fun RollDiceTitle(dice: Dice, roll: Roll) {
+private fun RollDiceTitle(dice: Dice, roll: Roll, resizeViewDp: Dp) {
+    val scaleFactor = resizeViewDp.value / 65f
     Box(
-        modifier = Modifier.widthIn(max = 105.dp),
+        modifier = Modifier.widthIn(max = 90.dp * scaleFactor),
         contentAlignment = Alignment.Center
     ) {
         if (dice.title.isNotEmpty()) {
-            Row(Modifier.padding(top = 12.dp, bottom = 8.dp)) {
-                Column {
-                    if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_UUID)) {
-                        Row {
-                            Text(
-                                dice.title,
-                                overflow = TextOverflow.Ellipsis,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.titleSmall.copy(
-                                    lineBreak = LineBreak.Paragraph
-                                )
-                            )
-                        }
-
-                        Row {
-                            Text(
-                                dice.uuid,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-
-                        Row {
-                            Text(
-                                roll.side.uuid,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-
-                    } else {
+            Column {
+                if (UtilityFeature.isEnabled(UtilityFeature.Flag.UI_SHOW_UUID)) {
+                    Row {
                         Text(
                             dice.title,
                             overflow = TextOverflow.Ellipsis,
@@ -416,6 +391,32 @@ private fun RollDiceTitle(dice: Dice, roll: Roll) {
                             )
                         )
                     }
+
+                    Row {
+                        Text(
+                            dice.uuid,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                    Row {
+                        Text(
+                            roll.side.uuid,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                } else {
+                    Text(
+                        dice.title,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            lineBreak = LineBreak.Paragraph
+                        )
+                    )
                 }
             }
         }
@@ -484,37 +485,34 @@ private fun ZoomSideRollBehaviour(
 ) {
     val rollSelectionIconColour = MaterialTheme.colorScheme.onSurface
 
-    Box {
-        Row(
-            modifier = Modifier.padding(top = 12.dp, bottom = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ZoomSideRollBehaviourIcon(
+            resizeView,
+            rollSelectionIconColour,
+            R.drawable.dice_roll_multiplier,
+            roll.multiplierIndex.toString(),
+        )
+
+        if (roll.explodeIndex != 0) {
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+
             ZoomSideRollBehaviourIcon(
                 resizeView,
                 rollSelectionIconColour,
-                R.drawable.dice_roll_multiplier,
-                roll.multiplierIndex.toString(),
+                R.drawable.dice_roll_explode,
+                "${roll.explodeIndex}"
             )
+        }
 
-            if (roll.explodeIndex != 0) {
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-
-                ZoomSideRollBehaviourIcon(
-                    resizeView,
-                    rollSelectionIconColour,
-                    R.drawable.dice_roll_explode,
-                    "${roll.explodeIndex}"
-                )
-            }
-
-            if (roll.scoreAdjustment != 0) {
-                ZoomSideRollBehaviourIcon(
-                    resizeView,
-                    rollSelectionIconColour,
-                    R.drawable.dice_roll_add_subtract,
-                    "${roll.scoreAdjustment}"
-                )
-            }
+        if (roll.scoreAdjustment != 0) {
+            ZoomSideRollBehaviourIcon(
+                resizeView,
+                rollSelectionIconColour,
+                R.drawable.dice_roll_add_subtract,
+                "${roll.scoreAdjustment}"
+            )
         }
     }
 }
@@ -555,8 +553,7 @@ private fun ZoomRollFaceImageShape(
             ),
             contentDescription = side.description,
             modifier = Modifier
-                .size(resizeView)
-                .padding(top = 8.dp),
+                .size(resizeView),
             colorFilter = zoomRollsAndroidViewModel.sideColorFilter(dice?.colour ?: ""),
             contentScale = ContentScale.Crop
         )
@@ -583,7 +580,6 @@ private fun ZoomRollFaceImageSVG(
 ) {
     val modifier = Modifier
         .size(resizeView)
-        .padding(top = 8.dp)
 
     Box(
         modifier = Modifier

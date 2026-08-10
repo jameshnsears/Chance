@@ -133,7 +133,8 @@ private fun ZoomRollHorizontalItemCol(
         if (stateFlowZoom.rollIndexTime)
             RollIndexTime(
                 rollHistorySize - originalIndex,
-                rollSequence
+                rollSequence,
+                stateFlowZoom.resizeViewDp
             )
 
         ZoomRollHorizontalItemRow(
@@ -204,10 +205,11 @@ private fun RowScope.ZoomRollHorizontalItemLR(
         lifecycleOwner = LocalLifecycleOwner.current
     )
 
+    val scaleFactor = stateFlowZoom.resizeViewDp.value / 65f
     LazyRow(
         state = listState,
         contentPadding = PaddingValues(horizontal = 0.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp * scaleFactor),
         verticalAlignment = Alignment.Top,
         modifier = Modifier
             .weight(1f),
