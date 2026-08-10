@@ -74,7 +74,7 @@ fun ZoomRollList(
             .fillMaxSize()
             .testTag(ZoomRollsTestTag.LAZY_COLUMN),
         state = listState,
-        contentPadding = PaddingValues(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 148.dp)
+        contentPadding = PaddingValues(start = 8.dp, top = 12.dp, end = 8.dp, bottom = 148.dp)
     ) {
         itemsIndexed(
             items = entriesList,
