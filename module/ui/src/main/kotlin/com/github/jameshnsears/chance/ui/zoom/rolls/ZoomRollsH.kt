@@ -18,13 +18,13 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.ZoomState
 
 @Composable
 fun ZoomRollHorizontal(
@@ -35,7 +35,7 @@ fun ZoomRollHorizontal(
     groupHistory: GroupHistory,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
-    resizeViewDp: Dp,
+    stateFlowZoom: ZoomState,
     rollEventCount: Int
 ) {
     ZoomRollList(listState, entriesList) { indexSequence, originalIndex, rollSequence ->
@@ -48,7 +48,7 @@ fun ZoomRollHorizontal(
             groupHistory,
             rollsAndroidViewModel,
             zoomRollsAndroidViewModel,
-            resizeViewDp,
+            stateFlowZoom,
             entriesList.size,
             rollEventCount
         )
@@ -65,17 +65,13 @@ private fun ZoomRollHorizontalItem(
     groupHistory: GroupHistory,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
-    resizeViewDp: Dp,
+    stateFlowZoom: ZoomState,
     entriesListSize: Int,
     rollEventCount: Int
 ) {
     val isNewRollEvent = remember(rollSequence.key, rollEventCount) {
         (indexSequence == 0) && !seenRollEvents.contains(rollSequence.key)
     }
-
-    val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
 
     val scrollPosition = stateFlowZoom.horizontalScrollPositions[rollSequence.key.toString()] ?: (0 to 0)
 
@@ -110,11 +106,9 @@ private fun ZoomRollHorizontalItem(
         groupHistory,
         rollsAndroidViewModel,
         zoomRollsAndroidViewModel,
-        resizeViewDp,
+        stateFlowZoom,
         entriesListSize,
         isNewRollEvent,
-        stateFlowZoom.rollIndexTime,
-        stateFlowZoom.rollScore,
         listState,
         rollEventCount
     )
@@ -129,16 +123,14 @@ private fun ZoomRollHorizontalItemCol(
     groupHistory: GroupHistory,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
-    resizeViewDp: Dp,
+    stateFlowZoom: ZoomState,
     entriesListSize: Int,
     isNewRollEvent: Boolean,
-    showRollIndexTime: Boolean,
-    showRollScore: Boolean,
     listState: androidx.compose.foundation.lazy.LazyListState,
     rollEventCount: Int
 ) {
     Column {
-        if (showRollIndexTime)
+        if (stateFlowZoom.rollIndexTime)
             RollIndexTime(
                 rollHistorySize - originalIndex,
                 rollSequence
@@ -149,8 +141,7 @@ private fun ZoomRollHorizontalItemCol(
             rollsAndroidViewModel,
             zoomRollsAndroidViewModel,
             rollSequence,
-            resizeViewDp,
-            showRollScore,
+            stateFlowZoom,
             isNewRollEvent,
             listState,
             groupHistory,
@@ -168,8 +159,7 @@ private fun ZoomRollHorizontalItemRow(
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     rollSequence: Map.Entry<Long, List<Roll>>,
-    resizeViewDp: Dp,
-    showRollScore: Boolean,
+    stateFlowZoom: ZoomState,
     isNewRollEvent: Boolean,
     listState: androidx.compose.foundation.lazy.LazyListState,
     groupHistory: GroupHistory,
@@ -183,8 +173,8 @@ private fun ZoomRollHorizontalItemRow(
             rollsAndroidViewModel,
             zoomRollsAndroidViewModel,
             rollSequence,
-            resizeViewDp,
-            showRollScore,
+            stateFlowZoom.resizeViewDp,
+            stateFlowZoom.rollScore,
             isNewRollEvent
         )
 
@@ -194,7 +184,7 @@ private fun ZoomRollHorizontalItemRow(
             rollSequence,
             zoomRollsAndroidViewModel,
             groupHistory,
-            resizeViewDp,
+            stateFlowZoom,
             rollEventCount
         )
     }
@@ -207,7 +197,7 @@ private fun RowScope.ZoomRollHorizontalItemLR(
     rollSequence: Map.Entry<Long, List<Roll>>,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
     groupHistory: GroupHistory,
-    resizeViewDp: Dp,
+    stateFlowZoom: ZoomState,
     rollEventCount: Int
 ) {
     val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
@@ -225,9 +215,7 @@ private fun RowScope.ZoomRollHorizontalItemLR(
         itemsIndexed(
             rollSequence.value,
             key = { index, item ->
-                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(item.unitKey()) else false
-                if (indexSequence == 0 && !isLocked) "${rollEventCount}_${item.side}_$index"
-                else "${item.side}_$index"
+                "${item.side.uuid}_$index"
             }
         ) { indexRoll, roll ->
             val isLocked = if (indexSequence == 0) lockedRollIndices.contains(roll.unitKey()) else false
@@ -237,12 +225,18 @@ private fun RowScope.ZoomRollHorizontalItemLR(
                 roll,
                 zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
                 groupHistory,
-                resizeViewDp,
+                stateFlowZoom.resizeViewDp,
                 isLocked = isLocked,
                 onToggleLock = if (indexSequence == 0) {
                     { zoomRollsAndroidViewModel.toggleLock(roll) }
                 } else null,
-                rollEventCount = if (indexSequence == 0) rollEventCount else 0
+                rollEventCount = if (indexSequence == 0) rollEventCount else 0,
+                showGroupTitle = stateFlowZoom.groupTitle,
+                showDiceTitle = stateFlowZoom.diceTitle,
+                showRollBehaviour = stateFlowZoom.rollBehaviour,
+                showSideNumber = stateFlowZoom.sideNumber,
+                showSideSVG = stateFlowZoom.sideSVG,
+                showSideDescription = stateFlowZoom.sideDescription
             )
         }
     }

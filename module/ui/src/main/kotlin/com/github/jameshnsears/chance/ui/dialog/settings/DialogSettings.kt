@@ -106,13 +106,25 @@ fun DialogSettingsLayout(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
 
-                SettingsRollLayoutHistory(rollsAndroidViewModel, state)
+                SettingsSideInfoSection(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
                 )
 
-                SettingsSideInfoSection(rollsAndroidViewModel, state)
+                CommonSwitch(
+                    stringResource(R.string.tab_roll_settings_use_shuffle),
+                    Icons.Outlined.Shuffle,
+                    state.shuffle,
+                    rollsAndroidViewModel::settingsShuffle,
+                    DialogSettingsTestTag.SETTINGS_ROLL_SHUFFLE
+                )
+
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+                )
+
+                SettingsRollLayoutHistory(rollsAndroidViewModel, state)
 
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
@@ -192,7 +204,13 @@ private fun SettingsRollInfoSection(
         rollsAndroidViewModel::settingsRollScore,
         DialogSettingsTestTag.SETTINGS_SCORE
     )
+}
 
+@Composable
+private fun SettingsSideInfoSection(
+    rollsAndroidViewModel: RollsAndroidViewModel,
+    state: SettingsState
+) {
     CommonSwitch(
         stringResource(R.string.tab_roll_settings_group_title),
         Icons.Outlined.GridView,
@@ -216,13 +234,7 @@ private fun SettingsRollInfoSection(
         rollsAndroidViewModel::settingsBehaviour,
         DialogSettingsTestTag.SETTINGS_BEHAVIOUR
     )
-}
 
-@Composable
-private fun SettingsSideInfoSection(
-    rollsAndroidViewModel: RollsAndroidViewModel,
-    state: SettingsState
-) {
     CommonSwitch(
         stringResource(R.string.tab_roll_settings_side_number),
         Icons.Outlined.FormatListNumbered,
@@ -253,19 +265,6 @@ private fun SettingsInteractionSection(
     rollsAndroidViewModel: RollsAndroidViewModel,
     state: SettingsState
 ) {
-    CommonSwitch(
-        stringResource(R.string.tab_roll_settings_use_shuffle),
-        Icons.Outlined.Shuffle,
-        state.shuffle,
-        rollsAndroidViewModel::settingsShuffle,
-        DialogSettingsTestTag.SETTINGS_ROLL_SHUFFLE
-    )
-
-    HorizontalDivider(
-        modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
-    )
-
-
     CommonSwitch(
         stringResource(R.string.tab_roll_settings_use_haptics),
         Icons.Outlined.Vibration,

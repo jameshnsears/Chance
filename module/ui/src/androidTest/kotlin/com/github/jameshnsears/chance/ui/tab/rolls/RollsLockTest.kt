@@ -2,6 +2,8 @@ package com.github.jameshnsears.chance.ui.tab.rolls
 
 import android.app.Application
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onFirst
@@ -12,6 +14,10 @@ import com.github.jameshnsears.chance.common.ui.AndroidTestHelper
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
+import com.github.jameshnsears.chance.ui.navigation.Navigator
+import com.github.jameshnsears.chance.ui.navigation.rememberNavigationState
 import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModel
 import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsAndroidViewModelFactory
 import com.github.jameshnsears.chance.ui.zoom.rolls.ZoomRollsTestTag
@@ -70,11 +76,19 @@ class RollsLockTest : AndroidTestHelper() {
                 )
             )
 
+            val navigationState = rememberNavigationState(
+                startRoute = ChanceNavKey.Roll,
+                topLevelRoutes = setOf(ChanceNavKey.Roll)
+            )
+            val navigator = remember { Navigator(navigationState) }
+
             ChanceTheme {
-                TabRollLayout(
-                    rollsAndroidViewModel,
-                    zoomRollsAndroidViewModel
-                )
+                CompositionLocalProvider(LocalNavigator provides navigator) {
+                    TabRollLayout(
+                        rollsAndroidViewModel,
+                        zoomRollsAndroidViewModel
+                    )
+                }
             }
         }
 

@@ -48,8 +48,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
@@ -242,7 +240,13 @@ fun RollDetails(
     resizeViewDp: Dp,
     isLocked: Boolean = false,
     onToggleLock: (() -> Unit)? = null,
-    rollEventCount: Int = 0
+    rollEventCount: Int = 0,
+    showGroupTitle: Boolean = false,
+    showDiceTitle: Boolean = false,
+    showRollBehaviour: Boolean = false,
+    showSideNumber: Boolean = true,
+    showSideSVG: Boolean = true,
+    showSideDescription: Boolean = false
 ) {
     RollDetailsContent(
         zoomRollsAndroidViewModel,
@@ -252,7 +256,13 @@ fun RollDetails(
         resizeViewDp,
         isLocked,
         onToggleLock,
-        rollEventCount
+        rollEventCount,
+        showGroupTitle,
+        showDiceTitle,
+        showRollBehaviour,
+        showSideNumber,
+        showSideSVG,
+        showSideDescription
     )
 }
 
@@ -265,28 +275,30 @@ private fun RollDetailsContent(
     resizeViewDp: Dp,
     isLocked: Boolean,
     onToggleLock: (() -> Unit)?,
-    rollEventCount: Int
+    rollEventCount: Int,
+    showGroupTitle: Boolean,
+    showDiceTitle: Boolean,
+    showRollBehaviour: Boolean,
+    showSideNumber: Boolean,
+    showSideSVG: Boolean,
+    showSideDescription: Boolean
 ) {
-    val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        if (stateFlowZoom.groupTitle) RollGroupTitle(groupHistory, roll)
+        if (showGroupTitle) RollGroupTitle(groupHistory, roll)
 
-        if ((stateFlowZoom.diceTitle) && dice != null) RollDiceTitle(dice, roll)
+        if (showDiceTitle && dice != null) RollDiceTitle(dice, roll)
 
-        if (stateFlowZoom.rollBehaviour) ZoomSideRollBehaviour(
+        if (showRollBehaviour) ZoomSideRollBehaviour(
             roll,
             resizeViewDp,
         )
 
         RollImages(
-            stateFlowZoom.sideNumber,
-            stateFlowZoom.sideSVG,
+            showSideNumber,
+            showSideSVG,
             zoomRollsAndroidViewModel,
             dice,
             roll,
@@ -296,7 +308,7 @@ private fun RollDetailsContent(
             rollEventCount
         )
 
-        if (stateFlowZoom.sideDescription && dice != null) {
+        if (showSideDescription && dice != null) {
             Box(Modifier.padding(bottom = 12.dp)) {
                 ZoomSideDescription(
                     zoomRollsAndroidViewModel,
@@ -422,7 +434,7 @@ private fun RollImages(
     onToggleLock: (() -> Unit)?,
     rollEventCount: Int
 ) {
-    key(if (isLocked) roll.side.uuid else rollEventCount) {
+    key(roll.side.uuid) {
         Box(
             modifier = (if (onToggleLock != null) Modifier.clickable { onToggleLock() } else Modifier)
                 .testTag(ZoomRollsTestTag.ROLL)
@@ -576,8 +588,7 @@ private fun ZoomRollFaceImageSVG(
         if (side.imageBase64 != "") {
             val imageRequest by produceState(
                 initialValue = side.imageRequest,
-                side,
-                if (isLocked) 0 else rollEventCount
+                side
             ) {
                 if (value == null) {
                     value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)

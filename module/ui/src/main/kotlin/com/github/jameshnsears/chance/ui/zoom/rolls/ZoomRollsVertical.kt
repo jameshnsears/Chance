@@ -17,13 +17,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
+import com.github.jameshnsears.chance.ui.zoom.ZoomState
 
 @Composable
 fun ZoomRollVertical(
@@ -34,7 +34,7 @@ fun ZoomRollVertical(
     groupHistory: GroupHistory,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
-    resizeViewDp: Dp,
+    stateFlowZoom: ZoomState,
     rollEventCount: Int
 ) {
     ZoomRollList(listState, entriesList) { indexSequence, originalIndex, rollSequence ->
@@ -47,7 +47,7 @@ fun ZoomRollVertical(
             groupHistory,
             rollsAndroidViewModel,
             zoomRollsAndroidViewModel,
-            resizeViewDp,
+            stateFlowZoom,
             entriesList.size,
             rollEventCount
         )
@@ -65,14 +65,10 @@ private fun ZoomRollVerticalItem(
     groupHistory: GroupHistory,
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel,
-    resizeViewDp: Dp,
+    stateFlowZoom: ZoomState,
     entriesListSize: Int,
     rollEventCount: Int
 ) {
-    val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-
     val isNewRollEvent = remember(rollSequence.key, rollEventCount) {
         (indexSequence == 0) && !seenRollEvents.contains(rollSequence.key)
     }
@@ -111,7 +107,7 @@ private fun ZoomRollVerticalItem(
                     rollsAndroidViewModel,
                     zoomRollsAndroidViewModel,
                     rollSequence,
-                    resizeViewDp,
+                    stateFlowZoom.resizeViewDp,
                     stateFlowZoom.rollScore,
                     isNewRollEvent
                 )
@@ -127,19 +123,25 @@ private fun ZoomRollVerticalItem(
             rollSequence.value.forEachIndexed { indexRoll, roll ->
                 val isLocked = if (indexSequence == 0) lockedRollIndices.contains(roll.unitKey()) else false
 
-                key(if (indexSequence == 0 && !isLocked) "${rollEventCount}_$indexRoll" else indexRoll) {
+                key("${roll.side.uuid}_$indexRoll") {
                     Box(modifier = Modifier.padding(horizontal = 4.dp)) {
                         RollDetails(
                             zoomRollsAndroidViewModel,
                             roll,
                             zoomRollsAndroidViewModel.fetchDiceFromUuidCache(roll.uuidDice),
                             groupHistory,
-                            resizeViewDp,
+                            stateFlowZoom.resizeViewDp,
                             isLocked = isLocked,
                             onToggleLock = if (indexSequence == 0) {
                                 { zoomRollsAndroidViewModel.toggleLock(roll) }
                             } else null,
-                            rollEventCount = if (indexSequence == 0) rollEventCount else 0
+                            rollEventCount = if (indexSequence == 0) rollEventCount else 0,
+                            showGroupTitle = stateFlowZoom.groupTitle,
+                            showDiceTitle = stateFlowZoom.diceTitle,
+                            showRollBehaviour = stateFlowZoom.rollBehaviour,
+                            showSideNumber = stateFlowZoom.sideNumber,
+                            showSideSVG = stateFlowZoom.sideSVG,
+                            showSideDescription = stateFlowZoom.sideDescription
                         )
                     }
                 }

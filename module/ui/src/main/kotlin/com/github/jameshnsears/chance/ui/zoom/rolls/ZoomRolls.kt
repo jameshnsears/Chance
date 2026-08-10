@@ -26,10 +26,12 @@ fun ZoomRoll(
     )
 
     val rollHistory = stateFlowZoom.rollHistory
-    val entriesList = if (stateFlowZoom.history) {
-        stateFlowZoom.entriesList
-    } else {
-        stateFlowZoom.entriesList.take(1)
+    val entriesList = remember(stateFlowZoom.history, stateFlowZoom.entriesList) {
+        if (stateFlowZoom.history) {
+            stateFlowZoom.entriesList
+        } else {
+            stateFlowZoom.entriesList.take(1)
+        }
     }
 
     val seenRollEvents = remember { mutableSetOf<Long>() }
@@ -90,7 +92,7 @@ fun ZoomRoll(
                 groupHistory,
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
-                stateFlowZoom.resizeViewDp,
+                stateFlowZoom,
                 rollEventCount
             )
         } else {
@@ -102,7 +104,7 @@ fun ZoomRoll(
                 groupHistory,
                 rollsAndroidViewModel,
                 zoomRollsAndroidViewModel,
-                stateFlowZoom.resizeViewDp,
+                stateFlowZoom,
                 rollEventCount
             )
         }
