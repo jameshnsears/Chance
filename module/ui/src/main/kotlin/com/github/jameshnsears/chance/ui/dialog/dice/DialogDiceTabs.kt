@@ -76,20 +76,26 @@ fun DialogBagTabLayout(
         )
     )
 
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { tabs.size })
+    val actualTabCount = tabs.size
+    val startIndex = Int.MAX_VALUE / 2
+    val initialPage = startIndex - (startIndex % actualTabCount)
+
+    val pagerState = rememberPagerState(initialPage = initialPage, pageCount = { Int.MAX_VALUE })
     val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier.safeDrawingPadding()
     ) {
-        PrimaryTabRow(selectedTabIndex = pagerState.currentPage) {
+        val currentPage = pagerState.currentPage % actualTabCount
+        PrimaryTabRow(selectedTabIndex = currentPage) {
             tabs.forEachIndexed { index, tab ->
                 Tab(
                     modifier = Modifier.testTag(tab.testTag),
-                    selected = pagerState.currentPage == index,
+                    selected = currentPage == index,
                     onClick = {
                         coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
+                            val targetPage = pagerState.currentPage + (index - currentPage)
+                            pagerState.animateScrollToPage(targetPage)
                         }
                     },
                     icon = {
@@ -127,6 +133,9 @@ fun DialogBagTabContent(
     pagerState: PagerState,
     onClose: () -> Unit,
 ) {
+    val actualTabCount = 3
+    val currentPage = pagerState.currentPage % actualTabCount
+
     LaunchedEffect(Unit) {
         dialogDiceAndroidViewModel.refresh()
     }
@@ -146,7 +155,7 @@ fun DialogBagTabContent(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    val selectedTabIndex = pagerState.currentPage
+    val selectedTabIndex = currentPage
 
     var diceCanBeDeleted = stateFlowCardDice.value.diceCanBeDeleted
 
@@ -232,7 +241,7 @@ fun DialogBagTabContent(
                         alpha = 1f - (0.5f * pageOffset.coerceIn(0f, 1f))
                     }
             ) {
-                when (page) {
+                when (page % actualTabCount) {
                     0 -> DiceContent(Modifier.fillMaxSize(), cardDiceService)
                     1 -> SideContent(Modifier.fillMaxSize(), cardSideService)
                     2 -> BehaviourContent(Modifier.fillMaxSize(), cardRollService)
