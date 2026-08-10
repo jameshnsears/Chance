@@ -152,6 +152,30 @@ private fun RollMultiplier(cardRollService: CardRollService) {
             90.dp
         )
     }
+
+    Row(
+        modifier = Modifier
+            .padding(start = 6.dp, top = 8.dp, bottom = 8.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = stringResource(R.string.info),
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .padding(start = 6.dp, top = 8.dp, bottom = 4.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = stringResource(R.string.dialog_bag_roll_repeat_meaning),
+            style = MaterialTheme.typography.bodySmall,
+        )
+    }
 }
 
 @Composable
@@ -231,7 +255,6 @@ private fun RollExplode(cardRollService: CardRollService) {
                 style = MaterialTheme.typography.bodySmall,
             )
         }
-
     }
 }
 
