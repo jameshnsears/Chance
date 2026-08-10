@@ -34,6 +34,7 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked,
             repositoryFactory.repositoryGroup
         )
     }
@@ -69,16 +70,19 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         val roll1 = Roll("uuid1", Side(), multiplierIndex = 1)
         val roll2 = Roll("uuid2", Side(), multiplierIndex = 1)
 
-        assertEquals(emptySet<String>(), viewModel.lockedRollIndices.value)
+        assertEquals(emptySet<String>(), viewModel.stateFlowZoom.value.lockedRollIndices)
 
         viewModel.toggleLock(roll1)
-        assertEquals(setOf(roll1.unitKey()), viewModel.lockedRollIndices.value)
+        viewModel.stateFlowZoom.first { it.lockedRollIndices.size == 1 }
+        assertEquals(setOf(roll1.unitKey()), viewModel.stateFlowZoom.value.lockedRollIndices)
 
         viewModel.toggleLock(roll2)
-        assertEquals(setOf(roll1.unitKey(), roll2.unitKey()), viewModel.lockedRollIndices.value)
+        viewModel.stateFlowZoom.first { it.lockedRollIndices.size == 2 }
+        assertEquals(setOf(roll1.unitKey(), roll2.unitKey()), viewModel.stateFlowZoom.value.lockedRollIndices)
 
         viewModel.toggleLock(roll1)
-        assertEquals(setOf(roll2.unitKey()), viewModel.lockedRollIndices.value)
+        viewModel.stateFlowZoom.first { it.lockedRollIndices.size == 1 }
+        assertEquals(setOf(roll2.unitKey()), viewModel.stateFlowZoom.value.lockedRollIndices)
     }
 
     @Test
@@ -88,7 +92,8 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         val roll = Roll("uuid", Side())
 
         viewModel.toggleLock(roll)
-        assertEquals(setOf(roll.unitKey()), viewModel.lockedRollIndices.value)
+        viewModel.stateFlowZoom.first { it.lockedRollIndices.isNotEmpty() }
+        assertEquals(setOf(roll.unitKey()), viewModel.stateFlowZoom.value.lockedRollIndices)
 
         // Add a new roll to history
         val currentHistory = repositoryRoll.fetch().first()
@@ -99,7 +104,37 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         repositoryRoll.store(newHistory)
 
         // Wait for reset
-        viewModel.lockedRollIndices.first { it.isEmpty() }
-        assertEquals(emptySet<String>(), viewModel.lockedRollIndices.value)
+        viewModel.stateFlowZoom.first { it.lockedRollIndices.isEmpty() }
+        assertEquals(emptySet<String>(), viewModel.stateFlowZoom.value.lockedRollIndices)
+    }
+
+    @Test
+    fun persistence() = runTest {
+        val repositoryFactory = RepositoryFactory()
+        val viewModel1 = ZoomRollsAndroidViewModel(
+            application(),
+            repositoryFactory.repositorySettings,
+            repositoryFactory.repositoryBag,
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked,
+            repositoryFactory.repositoryGroup
+        )
+        val roll = Roll("uuid", Side())
+        viewModel1.toggleLock(roll)
+
+        // Wait for lock to be stored
+        viewModel1.stateFlowZoom.first { it.lockedRollIndices.isNotEmpty() }
+
+        // Simulate new ViewModel instance with same repository
+        val viewModel2 = ZoomRollsAndroidViewModel(
+            application(),
+            repositoryFactory.repositorySettings,
+            repositoryFactory.repositoryBag,
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked,
+            repositoryFactory.repositoryGroup
+        )
+        val locked = viewModel2.stateFlowZoom.first { it.lockedRollIndices.isNotEmpty() }.lockedRollIndices
+        assertEquals(setOf(roll.unitKey()), locked)
     }
 }

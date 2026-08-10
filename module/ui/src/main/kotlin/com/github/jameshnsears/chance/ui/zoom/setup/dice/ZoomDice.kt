@@ -260,7 +260,7 @@ private fun ZoomDiceSidesRow(
         verticalAlignment = Alignment.Top,
         modifier = Modifier.padding(bottom = 6.dp),
     )
- {
+    {
         items(
             dice.sides,
             key = {

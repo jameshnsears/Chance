@@ -579,25 +579,26 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         groupHistory: GroupHistory? = null,
         selectDefaultDice: Boolean = true
     ): RollsAndroidViewModel {
-        val repositorySettings = RepositoryFactory().repositorySettings
+        val repositoryFactory = RepositoryFactory()
+        val repositorySettings = repositoryFactory.repositorySettings
         runBlocking {
             repositorySettings.store(SettingsDataTestDouble())
         }
 
-        val repositoryBag = RepositoryFactory().repositoryBag
+        val repositoryBag = repositoryFactory.repositoryBag
         runBlocking {
             if (selectDefaultDice)
                 bagDataTestDouble.d6.selected = true
             repositoryBag.store(bagDataTestDouble.allDice())
         }
 
-        val repositoryGroup = RepositoryFactory().repositoryGroup
+        val repositoryGroup = repositoryFactory.repositoryGroup
         val finalGroupHistory = groupHistory ?: GroupDataTestDouble(bagDataTestDouble).groupHistory
         runBlocking {
             repositoryGroup.store(finalGroupHistory)
         }
 
-        val repositoryRoll = RepositoryFactory().repositoryRoll
+        val repositoryRoll = repositoryFactory.repositoryRoll
         val groupData = object : com.github.jameshnsears.chance.data.domain.core.group.GroupDataInterface {
             override val groupHistory = finalGroupHistory
         }
@@ -605,6 +606,8 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         runBlocking {
             repositoryRoll.store(rollDataTestDouble.rollHistory)
         }
+
+        val repositoryLocked = repositoryFactory.repositoryLocked
 
         val repositoryRollSpy = spyk(repositoryRoll)
         val rollsCoreHelper = spyk(RollsCoreHelper(repositoryRollSpy))
@@ -616,6 +619,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryBag,
             repositoryRollSpy,
             repositoryGroup,
+            repositoryLocked,
             rollsSelectionHelper,
             rollsCoreHelper
         )

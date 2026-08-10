@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
                 repositoryFactory.repositoryBag,
                 repositoryFactory.repositoryRoll,
                 repositoryFactory.repositoryGroup,
+                repositoryFactory.repositoryLocked,
                 settings.resizeZoom
             )
         }

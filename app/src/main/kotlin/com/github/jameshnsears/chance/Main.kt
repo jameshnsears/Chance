@@ -15,6 +15,7 @@ import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
+import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
@@ -38,6 +39,7 @@ fun MainComposable(
     repositoryBag: RepositoryBagInterface,
     repositoryRoll: RepositoryRollInterface,
     repositoryGroup: RepositoryGroupInterface,
+    repositoryLocked: RepositoryLockedInterface,
     resizeInitialValue: Float
 ) {
     val tabBagViewModel: DiceAndroidViewModel = viewModel(
@@ -66,7 +68,8 @@ fun MainComposable(
             repositorySettings,
             repositoryBag,
             repositoryRoll,
-            repositoryGroup
+            repositoryGroup,
+            repositoryLocked
         )
     )
 
@@ -75,7 +78,8 @@ fun MainComposable(
             application,
             repositorySettings,
             repositoryBag,
-            repositoryRoll
+            repositoryRoll,
+            repositoryLocked
         )
     )
 
@@ -85,6 +89,7 @@ fun MainComposable(
             repositorySettings,
             repositoryBag,
             repositoryRoll,
+            repositoryLocked,
             repositoryGroup
         )
     )

@@ -32,21 +32,17 @@ fun RollButton(
             lifecycleOwner = LocalLifecycleOwner.current
         )
 
-    val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-
     val stateFlowZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle(
         lifecycleOwner = LocalLifecycleOwner.current
     )
 
     val latestRoll = stateFlowZoom.rollHistory.values.firstOrNull()
     val rootRollCount = latestRoll?.count { it.explodeIndex == 0 } ?: 0
-    val allLocked = rootRollCount > 0 && lockedRollIndices.size == rootRollCount
+    val allLocked = rootRollCount > 0 && stateFlowZoom.lockedRollIndices.size == rootRollCount
 
     val rollEnabled = stateFlowRollEnabled.value && !allLocked
 
-    val rollButtonText = if (lockedRollIndices.isNotEmpty()) {
+    val rollButtonText = if (stateFlowZoom.lockedRollIndices.isNotEmpty()) {
         stringResource(R.string.tab_roll_reroll)
     } else {
         stringResource(R.string.tab_roll_roll)
@@ -56,7 +52,7 @@ fun RollButton(
     androidx.compose.material3.Button(
         onClick = {
             rollsAndroidViewModel.rollDiceSequence(
-                lockedRollIndices = lockedRollIndices,
+                lockedRollIndices = stateFlowZoom.lockedRollIndices,
                 latestRollHistory = stateFlowZoom.rollHistory
             )
         },

@@ -6,16 +6,16 @@ import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
+import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ZoomRollsAndroidViewModel(
@@ -23,12 +23,14 @@ class ZoomRollsAndroidViewModel(
     repositorySettings: RepositorySettingsInterface,
     repositoryBag: RepositoryBagInterface,
     repositoryRoll: RepositoryRollInterface,
+    repositoryLocked: RepositoryLockedInterface,
     val repositoryGroup: RepositoryGroupInterface,
 ) : ZoomAndroidViewModel(
     application,
     repositorySettings,
     repositoryBag,
     repositoryRoll,
+    repositoryLocked,
 ) {
     val groupHistory: StateFlow<GroupHistory> = repositoryGroup.fetch()
         .distinctUntilChanged()
@@ -38,13 +40,12 @@ class ZoomRollsAndroidViewModel(
             initialValue = emptyList()
         )
 
-    private val _lockedRollIndices = MutableStateFlow<Set<String>>(emptySet())
-    val lockedRollIndices: StateFlow<Set<String>> = _lockedRollIndices
-
     fun toggleLock(roll: Roll) {
         val key = roll.unitKey()
-        _lockedRollIndices.update { current ->
-            if (current.contains(key)) current - key else current + key
+        viewModelScope.launch {
+            val current = stateFlowZoom.value.lockedRollIndices
+            val newSet = if (current.contains(key)) current - key else current + key
+            repositoryLocked.store(newSet)
         }
     }
 
@@ -52,8 +53,9 @@ class ZoomRollsAndroidViewModel(
         viewModelScope.launch {
             stateFlowZoom.map { it.rollHistory.keys.firstOrNull() }
                 .distinctUntilChanged()
+                .drop(1)
                 .collect {
-                    _lockedRollIndices.value = emptySet()
+                    repositoryLocked.clear()
                 }
         }
     }

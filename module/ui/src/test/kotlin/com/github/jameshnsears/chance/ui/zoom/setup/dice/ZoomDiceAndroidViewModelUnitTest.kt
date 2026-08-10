@@ -55,10 +55,11 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     private suspend fun zoomBagAndroidViewModel(
         bagDataTestDouble: BagDataTestDouble = BagDataTestDouble(),
     ): ZoomDiceAndroidViewModel {
-        val repositoryBag = RepositoryFactory().repositoryBag
+        val repositoryFactory = RepositoryFactory()
+        val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(bagDataTestDouble.allDice())
 
-        val repositoryRoll = RepositoryFactory().repositoryRoll
+        val repositoryRoll = repositoryFactory.repositoryRoll
         repositoryRoll.store(
             RollHistoryDataTestDouble(
                 bagDataTestDouble,
@@ -68,9 +69,10 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         return ZoomDiceAndroidViewModel(
             application(),
-            RepositoryFactory().repositorySettings,
+            repositoryFactory.repositorySettings,
             repositoryBag,
-            repositoryRoll
+            repositoryRoll,
+            repositoryFactory.repositoryLocked
         )
     }
 }

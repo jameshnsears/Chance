@@ -17,6 +17,7 @@ import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
+import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -77,6 +78,7 @@ class RollsAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
     val repositoryGroup: RepositoryGroupInterface,
+    val repositoryLocked: RepositoryLockedInterface,
     private val rollsSelectionHelper: RollsSelectionHelper,
     val rollsCoreHelper: RollsCoreHelper
 ) : AndroidViewModel(application) {
@@ -222,12 +224,18 @@ class RollsAndroidViewModel(
             val latestEntry = latestRollHistory.entries.maxByOrNull { it.key }
             val newRollSequence = mutableListOf<Roll>()
 
-            if (lockedRollIndices.isNotEmpty() && latestEntry != null) {
+            val currentLocked = if (lockedRollIndices.isEmpty()) {
+                repositoryLocked.fetch().first()
+            } else {
+                lockedRollIndices
+            }
+
+            if (currentLocked.isNotEmpty() && latestEntry != null) {
                 // RE-ROLL Logic: Update current entry
                 rollsCoreHelper.reRollDiceSequence(
                     diceBag.value,
                     latestEntry.value,
-                    lockedRollIndices,
+                    currentLocked,
                     newRollSequence,
                     stateFlowSettings.value.shuffle
                 )

@@ -44,6 +44,7 @@ fun DialogSettingsPreview() {
                     repositoryFactory.repositoryBag,
                     repositoryFactory.repositoryRoll,
                     repositoryFactory.repositoryGroup,
+                    repositoryFactory.repositoryLocked,
                     RollsSelectionHelper(
                         repositoryFactory.repositoryBag,
                         repositoryFactory.repositoryGroup

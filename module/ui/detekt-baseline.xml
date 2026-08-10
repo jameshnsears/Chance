@@ -6,6 +6,7 @@
     <ID>EmptyFunctionBlock:ShakeToRollService.kt$ShakeToRollService${}</ID>
     <ID>FunctionParameterNaming:DialogColourPickerPreview.kt$_: String</ID>
     <ID>LargeClass:DialogDiceAndroidViewModelUnitTest.kt$DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper</ID>
+    <ID>LongMethod:DialogDiceTabs.kt$@Composable fun DialogBagTabContent( modifier: Modifier, dialogDiceAndroidViewModel: DialogDiceAndroidViewModel, cardDiceService: CardDiceService, cardSideService: CardSideService, cardRollService: CardRollService, pagerState: PagerState, onClose: () -&gt; Unit, )</ID>
     <ID>LongMethod:Groups.kt$@Composable fun Groups( groupsAndroidViewModel: GroupsAndroidViewModel, )</ID>
     <ID>MatchingDeclarationName:NavKey.kt$ChanceNavKey : NavKey</ID>
     <ID>MatchingDeclarationName:TabRow.kt$TabRowTestTag</ID>
@@ -18,5 +19,7 @@
     <ID>TooGenericExceptionCaught:RollsSoundPlayer.kt$RollsSoundPlayer$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ShakeToRollService.kt$ShakeToRollService$e: Exception</ID>
     <ID>UnusedParameter:DialogColourPickerPreview.kt$_: String</ID>
+    <ID>UnusedParameter:ZoomRollsShared.kt$isLocked: Boolean = false</ID>
+    <ID>UnusedParameter:ZoomRollsShared.kt$rollEventCount: Int = 0</ID>
   </CurrentIssues>
 </SmellBaseline>

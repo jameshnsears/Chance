@@ -10,15 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
@@ -86,10 +83,6 @@ private fun ZoomRollVerticalItem(
         )
     }
 
-    val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -122,7 +115,8 @@ private fun ZoomRollVerticalItem(
             verticalArrangement = Arrangement.spacedBy(8.dp * scaleFactor),
         ) {
             rollSequence.value.forEachIndexed { indexRoll, roll ->
-                val isLocked = if (indexSequence == 0) lockedRollIndices.contains(roll.unitKey()) else false
+                val isLocked =
+                    if (indexSequence == 0) stateFlowZoom.lockedRollIndices.contains(roll.unitKey()) else false
 
                 key("${roll.side.uuid}_$indexRoll") {
                     RollDetails(

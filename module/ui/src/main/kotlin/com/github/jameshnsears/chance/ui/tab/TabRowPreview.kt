@@ -38,6 +38,7 @@ fun TabRowPreview() {
     val repositoryBag = repositoryFactory.repositoryBag
     val repositoryRoll = repositoryFactory.repositoryRoll
     val repositoryGroup = repositoryFactory.repositoryGroup
+    val repositoryLocked = repositoryFactory.repositoryLocked
 
     val context = LocalContext.current
     val application = object : Application() {
@@ -80,6 +81,7 @@ fun TabRowPreview() {
                         repositoryBag,
                         repositoryRoll,
                         repositoryGroup,
+                        repositoryLocked,
                         RollsSelectionHelper(repositoryBag, repositoryGroup),
                         RollsCoreHelper(repositoryRoll)
                     ),
@@ -87,13 +89,15 @@ fun TabRowPreview() {
                         application,
                         repositorySettings,
                         repositoryBag,
-                        repositoryRoll
+                        repositoryRoll,
+                        repositoryLocked
                     ),
                     ZoomRollsAndroidViewModel(
                         application,
                         repositorySettings,
                         repositoryBag,
                         repositoryRoll,
+                        repositoryLocked,
                         repositoryGroup
                     )
                 )

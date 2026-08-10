@@ -21,6 +21,7 @@ import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.tab.DisplayIndexEvent
@@ -57,6 +58,7 @@ data class ZoomState(
     val groupTitle: Boolean = false,
     val layout: Boolean = true,
     val history: Boolean = false,
+    val lockedRollIndices: Set<String> = emptySet(),
 )
 
 abstract class ZoomAndroidViewModel(
@@ -64,6 +66,7 @@ abstract class ZoomAndroidViewModel(
     val repositorySettings: RepositorySettingsInterface,
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
+    val repositoryLocked: RepositoryLockedInterface,
 ) : AndroidViewModel(application) {
     val tapOffset = mutableStateOf(Offset.Zero)
 
@@ -81,8 +84,9 @@ abstract class ZoomAndroidViewModel(
             }
             sortedHistory
         },
+        repositoryLocked.fetch(),
         _scrollState
-    ) { settings, diceBag, rollHistory, scrollData ->
+    ) { settings, diceBag, rollHistory, lockedRollIndices, scrollData ->
         ZoomState(
             resizeViewDp = resizeViewAsDp(settings.resizeZoom),
             diceBag = diceBag.sortedBy { it.displayIndex }.toMutableList(),
@@ -106,6 +110,7 @@ abstract class ZoomAndroidViewModel(
             groupTitle = settings.groupTitle,
             layout = settings.layout,
             history = settings.history,
+            lockedRollIndices = lockedRollIndices,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -113,7 +118,8 @@ abstract class ZoomAndroidViewModel(
         initialValue = ZoomState(
             resizeViewDp = 0.dp,
             diceBag = mutableListOf(),
-            rollHistory = LinkedHashMap()
+            rollHistory = LinkedHashMap(),
+            lockedRollIndices = emptySet()
         )
     )
 

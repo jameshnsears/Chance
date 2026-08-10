@@ -12,15 +12,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
@@ -201,10 +198,6 @@ private fun RowScope.ZoomRollHorizontalItemLR(
     stateFlowZoom: ZoomState,
     rollEventCount: Int
 ) {
-    val lockedRollIndices by zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle(
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
-
     val scaleFactor = stateFlowZoom.resizeViewDp.value / 65f
     LazyRow(
         state = listState,
@@ -220,7 +213,7 @@ private fun RowScope.ZoomRollHorizontalItemLR(
                 "${item.side.uuid}_$index"
             }
         ) { indexRoll, roll ->
-            val isLocked = if (indexSequence == 0) lockedRollIndices.contains(roll.unitKey()) else false
+            val isLocked = if (indexSequence == 0) stateFlowZoom.lockedRollIndices.contains(roll.unitKey()) else false
 
             RollDetails(
                 zoomRollsAndroidViewModel,

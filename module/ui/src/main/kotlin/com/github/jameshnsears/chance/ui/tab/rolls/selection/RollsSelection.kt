@@ -36,9 +36,9 @@ fun RollSelectionRow(
 
     val stateGroupHistory = rollsAndroidViewModel.groupHistory.collectAsStateWithLifecycle()
 
-    val stateLockedRollIndices = zoomRollsAndroidViewModel.lockedRollIndices.collectAsStateWithLifecycle()
+    val stateZoom = zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle()
 
-    val chipsEnabled = stateLockedRollIndices.value.isEmpty()
+    val chipsEnabled = stateZoom.value.lockedRollIndices.isEmpty()
 
     val diceBag = stateDiceBag.value
     val groupHistory = stateGroupHistory.value

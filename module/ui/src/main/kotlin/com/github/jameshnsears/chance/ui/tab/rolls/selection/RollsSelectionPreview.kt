@@ -41,7 +41,8 @@ fun RollSelectionPreview() {
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryGroup
+            repositoryFactory.repositoryGroup,
+            repositoryFactory.repositoryLocked
         )
     )
 

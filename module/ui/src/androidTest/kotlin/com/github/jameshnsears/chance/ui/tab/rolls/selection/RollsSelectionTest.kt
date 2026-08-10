@@ -49,6 +49,7 @@ class RollsSelectionTest : AndroidTestHelper() {
                     repositoryFactory.repositoryBag,
                     repositoryFactory.repositoryRoll,
                     repositoryFactory.repositoryGroup,
+                    repositoryFactory.repositoryLocked
                 )
             )
 
@@ -79,6 +80,7 @@ class RollsSelectionTest : AndroidTestHelper() {
                     repositoryFactory.repositoryBag,
                     repositoryFactory.repositoryRoll,
                     repositoryFactory.repositoryGroup,
+                    repositoryFactory.repositoryLocked
                 )
             )
 
@@ -106,6 +108,7 @@ class RollsSelectionTest : AndroidTestHelper() {
                     repositoryFactory.repositoryBag,
                     repositoryFactory.repositoryRoll,
                     repositoryFactory.repositoryGroup,
+                    repositoryFactory.repositoryLocked
                 )
             )
 
@@ -115,6 +118,7 @@ class RollsSelectionTest : AndroidTestHelper() {
                     repositoryFactory.repositorySettings,
                     repositoryFactory.repositoryBag,
                     repositoryFactory.repositoryRoll,
+                    repositoryFactory.repositoryLocked,
                     repositoryFactory.repositoryGroup
                 )
             )

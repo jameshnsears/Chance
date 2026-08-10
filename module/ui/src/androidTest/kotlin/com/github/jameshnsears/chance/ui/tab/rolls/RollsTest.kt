@@ -42,6 +42,7 @@ class RollsTest : AndroidTestHelper() {
         val repositoryBag = RepositoryFactory().repositoryBag
         val repositoryRoll = RepositoryFactory().repositoryRoll
         val repositoryGroup = RepositoryFactory().repositoryGroup
+        val repositoryLocked = RepositoryFactory().repositoryLocked
 
         composeRule.setContent {
             val application = LocalContext.current.applicationContext as Application
@@ -53,6 +54,7 @@ class RollsTest : AndroidTestHelper() {
                     repositoryBag,
                     repositoryRoll,
                     repositoryGroup,
+                    repositoryLocked
                 )
             )
 
@@ -62,6 +64,7 @@ class RollsTest : AndroidTestHelper() {
                     repositorySettings,
                     repositoryBag,
                     repositoryRoll,
+                    repositoryLocked,
                     repositoryGroup,
                 )
             )

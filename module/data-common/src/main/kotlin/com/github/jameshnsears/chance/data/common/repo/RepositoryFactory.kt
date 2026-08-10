@@ -15,6 +15,8 @@ import com.github.jameshnsears.chance.data.repo.impl.bag.impl.RepositoryBagProto
 import com.github.jameshnsears.chance.data.repo.impl.bag.testdouble.RepositoryBagProtocolBufferTestDouble
 import com.github.jameshnsears.chance.data.repo.impl.group.impl.RepositoryGroupProtocolBufferImpl
 import com.github.jameshnsears.chance.data.repo.impl.group.testdouble.RepositoryGroupProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repo.impl.locked.impl.RepositoryLockedProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repo.impl.locked.testdouble.RepositoryLockedProtocolBufferTestDouble
 import com.github.jameshnsears.chance.data.repo.impl.roll.impl.RepositoryRollProtocolBufferImpl
 import com.github.jameshnsears.chance.data.repo.impl.roll.testdouble.RepositoryRollProtocolBufferTestDouble
 import com.github.jameshnsears.chance.data.repo.impl.settings.impl.RepositorySettingsProtocolBufferImpl
@@ -97,6 +99,18 @@ class RepositoryFactory(val context: Context? = null) {
         }
     }
 
+    val repositoryLocked by lazy {
+        if (context != null) {
+            if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
+                RepositoryLockedProtocolBufferTestDouble.getInstance()
+            } else {
+                RepositoryLockedProtocolBufferImpl.getInstance(context)
+            }
+        } else {
+            RepositoryLockedProtocolBufferTestDouble.getInstance()
+        }
+    }
+
     // ========================================================================
     // 3. Operations
     // ========================================================================
@@ -107,6 +121,7 @@ class RepositoryFactory(val context: Context? = null) {
             repositoryBag.clear()
             repositoryGroup.clear()
             repositoryRoll.clear()
+            repositoryLocked.clear()
         }
 
         if (repositorySettings.fetch().first().resizeZoom == 0f) {
@@ -128,6 +143,8 @@ class RepositoryFactory(val context: Context? = null) {
     }
 
     suspend fun resetStorage() {
+        repositoryLocked.clear()
+
         if (BuildConfig.DEBUG) {
             if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
                 repositorySettings.store(settingsImpl)

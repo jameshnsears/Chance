@@ -36,17 +36,6 @@
 
     <issue
         id="AndroidGradlePluginVersion"
-        message="A newer version of Gradle than 9.6.1 is available: 9.7.0"
-        errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-9.6.1-bin.zip"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="../gradle/wrapper/gradle-wrapper.properties"
-            line="4"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="AndroidGradlePluginVersion"
         message="A newer version of com.android.application than 9.2.1 is available: 9.3.1"
         errorLine1="com-android-application = &quot;9.2.1&quot;"
         errorLine2="                          ~~~~~~~">
@@ -76,17 +65,6 @@
             file="../gradle/libs.versions.toml"
             line="15"
             column="23"/>
-    </issue>
-
-    <issue
-        id="NewerVersionAvailable"
-        message="A newer version of io.nlopez.compose.rules:detekt than 0.6.3 is available: 0.6.4"
-        errorLine1="io-nlopez-compose-rules-detekt = &quot;0.6.3&quot;"
-        errorLine2="                                 ~~~~~~~">
-        <location
-            file="../gradle/libs.versions.toml"
-            line="28"
-            column="34"/>
     </issue>
 
     <issue
@@ -290,7 +268,7 @@
         errorLine2="        ^">
         <location
             file="src/main/kotlin/com/github/jameshnsears/chance/MainActivity.kt"
-            line="75"
+            line="76"
             column="9"/>
     </issue>
 

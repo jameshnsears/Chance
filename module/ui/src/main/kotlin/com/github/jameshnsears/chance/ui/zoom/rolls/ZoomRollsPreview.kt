@@ -60,6 +60,7 @@ private fun ZoomRollPreviewHelper(
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
             repositoryFactory.repositoryGroup,
+            repositoryFactory.repositoryLocked
         ),
     )
 
@@ -69,6 +70,7 @@ private fun ZoomRollPreviewHelper(
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked,
             repositoryFactory.repositoryGroup,
         ),
     )

@@ -36,7 +36,8 @@ class ZoomDiceTest : AndroidTestHelper() {
             ApplicationProvider.getApplicationContext(),
             repositoryFactory.repositorySettings,
             repositoryBag,
-            repositoryFactory.repositoryRoll
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked
         )
 
         composeRule.setContent {
@@ -64,7 +65,8 @@ class ZoomDiceTest : AndroidTestHelper() {
             ApplicationProvider.getApplicationContext(),
             repositoryFactory.repositorySettings,
             repositoryBag,
-            repositoryFactory.repositoryRoll
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked
         )
 
         composeRule.setContent {
@@ -87,7 +89,8 @@ class ZoomDiceTest : AndroidTestHelper() {
             ApplicationProvider.getApplicationContext(),
             repositoryFactory.repositorySettings,
             repositoryBag,
-            repositoryFactory.repositoryRoll
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked
         )
 
         composeRule.setContent {

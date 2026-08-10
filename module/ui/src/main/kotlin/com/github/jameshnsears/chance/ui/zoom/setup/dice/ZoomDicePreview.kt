@@ -31,6 +31,7 @@ fun ZoomBagPreview() {
     val repositorySettings = repositoryFactory.repositorySettings
     val repositoryBag = repositoryFactory.repositoryBag
     val repositoryRoll = repositoryFactory.repositoryRoll
+    val repositoryLocked = repositoryFactory.repositoryLocked
 
     val context = LocalContext.current
     val application = object : Application() {
@@ -56,6 +57,7 @@ fun ZoomBagPreview() {
                         repositorySettings,
                         repositoryBag,
                         repositoryRoll,
+                        repositoryLocked
                     ),
                 )
             }

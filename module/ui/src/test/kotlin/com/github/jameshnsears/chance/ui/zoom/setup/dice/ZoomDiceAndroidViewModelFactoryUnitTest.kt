@@ -3,6 +3,7 @@ package com.github.jameshnsears.chance.ui.zoom.setup.dice
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import io.mockk.mockk
@@ -15,12 +16,14 @@ class ZoomDiceAndroidViewModelFactoryUnitTest {
     private val repositorySettings: RepositorySettingsInterface = mockk(relaxed = true)
     private val repositoryBag: RepositoryBagInterface = mockk(relaxed = true)
     private val repositoryRoll: RepositoryRollInterface = mockk(relaxed = true)
+    private val repositoryLocked: RepositoryLockedInterface = mockk(relaxed = true)
 
     private val factory = ZoomDiceAndroidViewModelFactory(
         application,
         repositorySettings,
         repositoryBag,
-        repositoryRoll
+        repositoryRoll,
+        repositoryLocked
     )
 
     @Test

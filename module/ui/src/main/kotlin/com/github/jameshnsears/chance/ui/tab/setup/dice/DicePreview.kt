@@ -29,6 +29,7 @@ fun TabBagPreview() {
     val repositoryBag = repositoryFactory.repositoryBag
     val repositoryRoll = repositoryFactory.repositoryRoll
     val repositoryGroup = repositoryFactory.repositoryGroup
+    val repositoryLocked = repositoryFactory.repositoryLocked
 
     val context = LocalContext.current
     val application = context.applicationContext as? Application ?: object : Application() {
@@ -54,7 +55,8 @@ fun TabBagPreview() {
                     application,
                     repositorySettings,
                     repositoryBag,
-                    repositoryRoll
+                    repositoryRoll,
+                    repositoryLocked
                 )
             )
         }
@@ -75,6 +77,7 @@ fun TabBagBottomSheetPreview() {
     val repositoryBag = repositoryFactory.repositoryBag
     val repositoryRoll = repositoryFactory.repositoryRoll
     val repositoryGroup = repositoryFactory.repositoryGroup
+    val repositoryLocked = repositoryFactory.repositoryLocked
 
     val context = LocalContext.current
     val application = context.applicationContext as? Application ?: object : Application() {

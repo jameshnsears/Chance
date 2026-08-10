@@ -70,7 +70,8 @@ fun TabRollPreview() {
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryGroup
+            repositoryFactory.repositoryGroup,
+            repositoryFactory.repositoryLocked
         )
     )
 
@@ -80,6 +81,7 @@ fun TabRollPreview() {
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked,
             repositoryFactory.repositoryGroup
         )
     )
@@ -147,7 +149,8 @@ fun TabRollBottomSheetPreview() {
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryGroup
+            repositoryFactory.repositoryGroup,
+            repositoryFactory.repositoryLocked
         )
     )
 
@@ -157,6 +160,7 @@ fun TabRollBottomSheetPreview() {
             repositoryFactory.repositorySettings,
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryLocked,
             repositoryFactory.repositoryGroup
         )
     )
