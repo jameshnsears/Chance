@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,6 +16,10 @@ import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
+import com.github.jameshnsears.chance.ui.navigation.ChanceNavKey
+import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
+import com.github.jameshnsears.chance.ui.navigation.Navigator
+import com.github.jameshnsears.chance.ui.navigation.rememberNavigationState
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
 import kotlinx.coroutines.flow.first
@@ -69,13 +74,21 @@ private fun ZoomRollPreviewHelper(
     )
 
     ChanceTheme {
-        Surface(
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
-        ) {
-            ZoomRoll(
-                rollsAndroidViewModel,
-                zoomRollsAndroidViewModel,
-            )
+        val navigationState = rememberNavigationState(
+            startRoute = ChanceNavKey.Roll,
+            topLevelRoutes = setOf(ChanceNavKey.Roll)
+        )
+        val navigator = remember(navigationState) { Navigator(navigationState) }
+
+        CompositionLocalProvider(LocalNavigator provides navigator) {
+            Surface(
+                color = MaterialTheme.colorScheme.surfaceContainerLow,
+            ) {
+                ZoomRoll(
+                    rollsAndroidViewModel,
+                    zoomRollsAndroidViewModel,
+                )
+            }
         }
     }
 }

@@ -4,11 +4,11 @@ An easy-to-use dice rolling app, featuring:
 &bull; Decision dice
 &bull; Custom rules
 &bull; Dice groups
+&bull; Re-roll locking
 &bull; Customisable roll history
 &bull; Export/Import
 &bull; Persistant data
 &bull; Works offline
-&bull; Responsive
 &bull; Yes/No shortcut
 &bull; Open Source
 &bull; Free/No ads/Crashlytics only

@@ -46,6 +46,12 @@ fun RollButton(
 
     val rollEnabled = stateFlowRollEnabled.value && !allLocked
 
+    val rollButtonText = if (lockedRollIndices.isNotEmpty()) {
+        stringResource(R.string.tab_roll_reroll)
+    } else {
+        stringResource(R.string.tab_roll_roll)
+    }
+
     // Use Button (Filled) for primary action as per M3 Google style
     androidx.compose.material3.Button(
         onClick = {
@@ -66,14 +72,14 @@ fun RollButton(
 
         Icon(
             rollPainter,
-            contentDescription = stringResource(R.string.tab_roll_roll),
+            contentDescription = rollButtonText,
             modifier = Modifier.size(24.dp),
         )
 
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
         Text(
-            text = stringResource(R.string.tab_roll_roll),
+            text = rollButtonText,
             style = MaterialTheme.typography.titleMedium
         )
     }

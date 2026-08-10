@@ -10,6 +10,7 @@
     <string name="tab.roll.empty.onboard.02">Tap a side or image to toggle a lock</string>
     <string name="tab.roll.undo">Undo</string>
     <string name="tab.roll.roll">Roll</string>
+    <string name="tab.roll.reroll">Re-roll</string>
     <string name="tab.roll.settings">Settings</string>
 
     <string name="tab.bag.import">Import…</string>
@@ -37,7 +38,7 @@
 
     <string name="dialog.bag.save">Save</string>
     <string name="dialog.bag.save.confirmation">Change # of Sides</string>
-    <string name="dialog.bag.save.confirmation.question">Delete rolls containing this dice with prior sides?</string>
+    <string name="dialog.bag.save.confirmation.question">Delete rolls containing this dice?</string>
 
     <string name="dialog.bag.clone">Duplicate</string>
     <string name="dialog.bag.delete">Delete</string>
