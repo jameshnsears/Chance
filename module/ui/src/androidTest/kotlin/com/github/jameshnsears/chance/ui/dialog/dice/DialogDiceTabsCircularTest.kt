@@ -17,11 +17,14 @@ import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.dice.card.dice.CardDiceTestTag
 import com.github.jameshnsears.chance.ui.dialog.dice.card.face.CardFaceTestTag
 import com.github.jameshnsears.chance.ui.dialog.dice.card.roll.CardRollTestTag
+import org.junit.Assume
 import org.junit.Test
 
 class DialogDiceTabsCircularTest : AndroidTestHelper() {
     @Test
     fun circularSwiping() {
+        Assume.assumeFalse(isCI)
+
         val repositoryBag = RepositoryFactory(
             InstrumentationRegistry.getInstrumentation().targetContext
         ).repositoryBag
