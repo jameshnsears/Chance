@@ -75,7 +75,7 @@ jobs:
             adb shell settings put global window_animation_scale 0.0
             adb shell settings put global transition_animation_scale 0.0
             adb shell settings put global animator_duration_scale 0.0
-            ./gradlew :module:data-repo-api:compileFdroidDebugKotlin :module:ui:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx4096m -XX:+UseParallelGC"
+            ./gradlew :module:data-repo-api:compileFdroidDebugKotlin :module:ui:jacocoFdroidAndroidTestReport --parallel --max-workers 2 -Dorg.gradle.jvmargs="-Xmx4096m -XX:+UseParallelGC" -PIN_CI=1
 
       - name: codecov
         if: matrix.run-tests == true
