@@ -6,16 +6,18 @@ import java.io.File
 
 
 class CreateBase64FileFromSvgFileUnitTest : UtilityAndroidUnitTestHelper() {
-    private val diceResources = setOf(
-        "d2_d100",
-        "yang",
-        "yin",
-        "diceman"
-    )
+    private fun getDiceResources(): List<String> {
+        val path = "${System.getProperty("user.dir")}/src/test/resources/data/svg"
+        val folder = File(path)
+        return folder.listFiles { file -> file.extension == "svg" }
+            ?.map { it.nameWithoutExtension }
+            ?.sorted()
+            ?: emptyList()
+    }
 
     @Test
     fun createBase64FileFromSvgFile() {
-        for (svgFile: String in diceResources) {
+        for (svgFile: String in getDiceResources()) {
             val svgFileAsByteArray = resourceAsByteArray("/data/svg/$svgFile.svg")
 
             val base65FilePath =
