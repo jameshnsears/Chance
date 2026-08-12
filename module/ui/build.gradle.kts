@@ -16,6 +16,9 @@ android {
 
         buildConfigField("String", "VERSION", "\"${libs.versions.versionName.get()}\"")
         buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
+        
+        testInstrumentationRunnerArguments["IN_CI"] =
+            project.findProperty("IN_CI")?.toString() ?: ""
     }
 
     testOptions {
