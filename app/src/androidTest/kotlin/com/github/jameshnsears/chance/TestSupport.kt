@@ -10,19 +10,12 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipe
-import androidx.test.platform.app.InstrumentationRegistry
 import com.github.jameshnsears.chance.common.utility.UtilityLoggingHelper
 import org.junit.Rule
 
 open class TestSupport : UtilityLoggingHelper() {
     @get:Rule
     val androidComposeTestRule = createAndroidComposeRule<MainActivity>()
-
-    val isCI: Boolean
-        get() = InstrumentationRegistry.getArguments().getString("IN_CI") == "1"
-
-    val defaultTimeout: Long
-        get() = if (isCI) 20_000L else 5_000L
 
     fun displayBottomSheet(testTag: String) {
         waitForTag(testTag)

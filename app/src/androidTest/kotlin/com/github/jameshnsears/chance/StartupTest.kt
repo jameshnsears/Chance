@@ -8,7 +8,7 @@ import org.junit.Test
 class StartupTest : TestSupport() {
     @Test
     fun appStarts() {
-        androidComposeTestRule.waitForIdle()
+        waitForTag(TabRowTestTag.TAB_ROW)
         androidComposeTestRule
             .onNodeWithTag(TabRowTestTag.TAB_ROW)
             .assertIsDisplayed()

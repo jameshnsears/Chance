@@ -3,7 +3,6 @@ package com.github.jameshnsears.chance.ui.tab.rolls.selection
 import android.app.Application
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,7 +33,7 @@ class RollsSelectionTest : AndroidTestHelper() {
     }
 
     @Test
-    fun rollSelectionFilterChip() = runTest {
+    fun rollSelectionFilterChip() {
         val diceTitle = "D6"
         val dice = Dice(title = diceTitle)
 
@@ -58,14 +57,14 @@ class RollsSelectionTest : AndroidTestHelper() {
             }
         }
 
-        composeRule
-            .onNodeWithTag(RollsSelectionTestTag.ROLL_BUTTON + diceTitle)
-            .performClick()
-            .assertIsSelected()
+        val chipTag = RollsSelectionTestTag.ROLL_BUTTON + diceTitle
+        waitForTag(chipTag)
+        composeRule.onNodeWithTag(chipTag).performClick()
+        waitForSelected(chipTag)
     }
 
     @Test
-    fun rollSelectionGroupFilterChip() = runTest {
+    fun rollSelectionGroupFilterChip() {
         val groupName = "Group 1"
         val group = Group(name = groupName)
 
@@ -89,14 +88,14 @@ class RollsSelectionTest : AndroidTestHelper() {
             }
         }
 
-        composeRule
-            .onNodeWithTag(RollsSelectionTestTag.ROLL_BUTTON + groupName)
-            .performClick()
-            .assertIsSelected()
+        val chipTag = RollsSelectionTestTag.ROLL_BUTTON + groupName
+        waitForTag(chipTag)
+        composeRule.onNodeWithTag(chipTag).performClick()
+        waitForSelected(chipTag)
     }
 
     @Test
-    fun rollSelectionRowDisabledWhenLocked() = runTest {
+    fun rollSelectionRowDisabledWhenLocked() {
         composeRule.setContent {
             val application = LocalContext.current.applicationContext as Application
             val repositoryFactory = RepositoryFactory()
@@ -131,15 +130,10 @@ class RollsSelectionTest : AndroidTestHelper() {
             }
         }
 
-        // We need to wait for the dice bag to be loaded and the chip to appear
-        composeRule.waitForIdle()
-
-        // The default dice bag in test double has a D6 at some index
-        // or I should have stored one.
-        // BagDataTestDouble has d6 as allDice()[2].
-
+        val chipTag = RollsSelectionTestTag.ROLL_BUTTON + "d6"
+        waitForTag(chipTag)
         composeRule
-            .onNodeWithTag(RollsSelectionTestTag.ROLL_BUTTON + "d6")
+            .onNodeWithTag(chipTag)
             .assertIsNotEnabled()
     }
 }

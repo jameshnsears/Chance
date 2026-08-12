@@ -115,7 +115,9 @@ class ZoomDiceTest : AndroidTestHelper() {
         }
 
         // multiple sides have same description tag in this Composable
-        composeRule.onAllNodesWithTag("${ZoomDiceTestTag.ZOOM_SIDE_DESCRIPTION}-${diceStory.title}")[0].assertIsDisplayed()
+        val descriptionTag = "${ZoomDiceTestTag.ZOOM_SIDE_DESCRIPTION}-${diceStory.title}"
+        waitForTag(descriptionTag)
+        composeRule.onAllNodesWithTag(descriptionTag)[0].assertIsDisplayed()
     }
 
     @Test
@@ -195,6 +197,7 @@ class ZoomDiceTest : AndroidTestHelper() {
             }
         }
 
+        waitForText(firstDice.title)
         composeRule.onNodeWithText(firstDice.title).assertIsDisplayed()
         composeRule.onNodeWithText(firstDice.uuid).assertIsDisplayed()
     }
@@ -273,12 +276,12 @@ class ZoomDiceTest : AndroidTestHelper() {
 
         val firstDice = allDice[0]
         val firstSide = firstDice.sides[0]
+        val sideTag = "${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-${firstDice.title}-${firstSide.number}"
 
-        composeRule.onNodeWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-${firstDice.title}-${firstSide.number}")
-            .performClick()
+        waitForTag(sideTag)
+        composeRule.onNodeWithTag(sideTag).performClick()
 
-        composeRule.waitForIdle()
-
+        waitForTag(DialogDiceTabTestTag.TAB_SIDE)
         composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_SIDE).assertIsDisplayed()
     }
 }

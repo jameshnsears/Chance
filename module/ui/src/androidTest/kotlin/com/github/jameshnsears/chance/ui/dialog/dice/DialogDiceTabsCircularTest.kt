@@ -2,7 +2,6 @@ package com.github.jameshnsears.chance.ui.dialog.dice
 
 import android.app.Application
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
@@ -18,12 +17,11 @@ import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.ui.dialog.dice.card.dice.CardDiceTestTag
 import com.github.jameshnsears.chance.ui.dialog.dice.card.face.CardFaceTestTag
 import com.github.jameshnsears.chance.ui.dialog.dice.card.roll.CardRollTestTag
-import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class DialogDiceTabsCircularTest : AndroidTestHelper() {
     @Test
-    fun circularSwiping() = runTest {
+    fun circularSwiping() {
         val repositoryBag = RepositoryFactory(
             InstrumentationRegistry.getInstrumentation().targetContext
         ).repositoryBag
@@ -49,37 +47,32 @@ class DialogDiceTabsCircularTest : AndroidTestHelper() {
         }
 
         // Initially on Dice tab
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_DICE).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_DICE)
         composeRule.onNodeWithTag(CardDiceTestTag.DICE_TITLE).assertExists()
 
         // Swipe Left from Dice -> Side
         composeRule.onNodeWithTag(CardDiceTestTag.DICE_TITLE).performTouchInput { swipeLeft() }
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_SIDE).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_SIDE)
 
         // Swipe Left from Side -> Roll
         composeRule.onNodeWithTag(CardFaceTestTag.SIDE_NUMBER).performTouchInput { swipeLeft() }
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_ROLL).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_ROLL)
 
         // Circular Swipe Left from Roll -> Dice
         composeRule.onNodeWithTag(CardRollTestTag.ROLL_MULTIPLIER_VALUE).performTouchInput { swipeLeft() }
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_DICE).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_DICE)
 
         // Circular Swipe Right from Dice -> Roll
         composeRule.onNodeWithTag(CardDiceTestTag.DICE_TITLE).performTouchInput { swipeRight() }
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_ROLL).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_ROLL)
 
         // Circular Swipe Right from Roll -> Side
         composeRule.onNodeWithTag(CardRollTestTag.ROLL_MULTIPLIER_VALUE).performTouchInput { swipeRight() }
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_SIDE).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_SIDE)
     }
 
     @Test
-    fun tabClicks() = runTest {
+    fun tabClicks() {
         val repositoryBag = RepositoryFactory(
             InstrumentationRegistry.getInstrumentation().targetContext
         ).repositoryBag
@@ -106,17 +99,14 @@ class DialogDiceTabsCircularTest : AndroidTestHelper() {
 
         // Click on Roll tab
         composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_ROLL).performClick()
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_ROLL).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_ROLL)
 
         // Click on Dice tab
         composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_DICE).performClick()
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_DICE).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_DICE)
 
         // Click on Side tab
         composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_SIDE).performClick()
-        composeRule.waitForIdle()
-        composeRule.onNodeWithTag(DialogDiceTabTestTag.TAB_SIDE).assertIsSelected()
+        waitForSelected(DialogDiceTabTestTag.TAB_SIDE)
     }
 }

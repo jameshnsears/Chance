@@ -12,6 +12,12 @@ open class UtilityLoggingHelper {
         )
     }
 
+    val isCI: Boolean
+        get() = InstrumentationRegistry.getArguments().getString("IN_CI") == "1"
+
+    val defaultTimeout: Long
+        get() = if (isCI) 20_000L else 5_000L
+
     companion object {
         @BeforeClass
         @JvmStatic
