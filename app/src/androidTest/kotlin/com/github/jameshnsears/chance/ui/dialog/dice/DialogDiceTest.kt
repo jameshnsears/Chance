@@ -33,28 +33,15 @@ class DialogDiceTest : TestSupport() {
 
     @Test
     fun dialogDice() {
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-1")
-                .fetchSemanticsNodes().size == 1
-        }
+        val diceSideTag = "${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-1"
+        waitForTag(diceSideTag)
 
         // Open DialogDice by clicking on a Dice side in TabBagDiceLayout
-        androidComposeTestRule
-            .onNodeWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-1")
-            .performClick()
+        assertClick(diceSideTag)
 
         // --- CardDice Tab ---
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag(DialogDiceTabTestTag.TAB_DICE)
-                .fetchSemanticsNodes().isNotEmpty()
-        }
-
-        androidComposeTestRule
-            .onNodeWithTag(DialogDiceTabTestTag.TAB_DICE)
-            .assertIsDisplayed()
-            .performClick()
+        waitForTag(DialogDiceTabTestTag.TAB_DICE)
+        assertClick(DialogDiceTabTestTag.TAB_DICE)
 
         androidComposeTestRule
             .onNodeWithTag(CardDiceTestTag.DICE_TITLE)
@@ -76,9 +63,7 @@ class DialogDiceTest : TestSupport() {
             .assertIsDisplayed()
 
         // --- CardFace Tab ---
-        androidComposeTestRule
-            .onNodeWithTag(DialogDiceTabTestTag.TAB_SIDE)
-            .performClick()
+        assertClick(DialogDiceTabTestTag.TAB_SIDE)
 
         androidComposeTestRule
             .onNodeWithTag(CardFaceTestTag.SIDE_NUMBER)
@@ -125,9 +110,7 @@ class DialogDiceTest : TestSupport() {
             .assertIsDisplayed()
 
         // --- CardRoll Tab ---
-        androidComposeTestRule
-            .onNodeWithTag(DialogDiceTabTestTag.TAB_ROLL)
-            .performClick()
+        assertClick(DialogDiceTabTestTag.TAB_ROLL)
 
         androidComposeTestRule
             .onNodeWithTag(CardRollTestTag.ROLL_MULTIPLIER_VALUE)
@@ -171,35 +154,22 @@ class DialogDiceTest : TestSupport() {
 
         // Dialog should be closed now.
         // The title in ZoomBag should have changed
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag("${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-updated")
-                .fetchSemanticsNodes().size == 1
-        }
-
+        val updatedDiceTitleTag = "${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-updated"
+        waitForTag(updatedDiceTitleTag)
         androidComposeTestRule
-            .onNodeWithTag("${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-updated")
+            .onNodeWithTag(updatedDiceTitleTag)
             .assertIsDisplayed()
     }
 
     @Test
     fun dialogDiceCloneDelete() {
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-1")
-                .fetchSemanticsNodes().size == 1
-        }
+        val diceSideTag = "${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-1"
+        waitForTag(diceSideTag)
 
         // Open DialogDice
-        androidComposeTestRule
-            .onNodeWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-1")
-            .performClick()
+        assertClick(diceSideTag)
 
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag(CardDiceTestTag.DICE_TITLE)
-                .fetchSemanticsNodes().isNotEmpty()
-        }
+        waitForTag(CardDiceTestTag.DICE_TITLE)
 
         // Clone requires a unique title that is NOT the same as the original
         androidComposeTestRule
@@ -216,58 +186,32 @@ class DialogDiceTest : TestSupport() {
             .performClick()
 
         // Verify clone exists
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag("${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-cloned")
-                .fetchSemanticsNodes().size == 1
-        }
-
+        val clonedDiceTitleTag = "${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-cloned"
+        waitForTag(clonedDiceTitleTag)
         androidComposeTestRule
-            .onNodeWithTag("${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-cloned")
+            .onNodeWithTag(clonedDiceTitleTag)
             .assertIsDisplayed()
 
         // Delete the clone
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-cloned-1")
-                .fetchSemanticsNodes().size == 1
-        }
+        val clonedDiceSideTag = "${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-cloned-1"
+        waitForTag(clonedDiceSideTag)
+        assertClick(clonedDiceSideTag)
 
-        androidComposeTestRule
-            .onNodeWithTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SHAPE}-d2-cloned-1")
-            .performClick()
-
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE)
-                .fetchSemanticsNodes().isNotEmpty()
-        }
-
-        androidComposeTestRule
-            .onNodeWithTag(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE)
-            .assertIsEnabled()
-            .performClick()
+        waitForTag(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE)
+        assertClick(ButtonFeatureTestTag.BUTTON_FEATURE_DELETE)
 
         // Confirm delete in DialogConfirm
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithTag(DialogConfirmTestTag.OK)
-                .fetchSemanticsNodes().isNotEmpty()
-        }
-
-        androidComposeTestRule
-            .onNodeWithTag(DialogConfirmTestTag.OK)
-            .performClick()
+        waitForTag(DialogConfirmTestTag.OK)
+        assertClick(DialogConfirmTestTag.OK)
 
         // Verify clone is gone
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
+        androidComposeTestRule.waitUntil(timeoutMillis = defaultTimeout) {
             androidComposeTestRule
-                .onAllNodesWithTag("${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-cloned")
+                .onAllNodesWithTag(clonedDiceTitleTag)
                 .fetchSemanticsNodes().isEmpty()
         }
-
         androidComposeTestRule
-            .onNodeWithTag("${ZoomDiceTestTag.ZOOM_DICE_TITLE}-d2-cloned")
+            .onNodeWithTag(clonedDiceTitleTag)
             .assertDoesNotExist()
     }
 }

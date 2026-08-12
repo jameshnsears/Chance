@@ -5,6 +5,7 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
@@ -17,7 +18,14 @@ open class TestSupport : UtilityLoggingHelper() {
     @get:Rule
     val androidComposeTestRule = createAndroidComposeRule<MainActivity>()
 
+    val isCI: Boolean
+        get() = InstrumentationRegistry.getArguments().getString("IN_CI") == "1"
+
+    val defaultTimeout: Long
+        get() = if (isCI) 20_000L else 5_000L
+
     fun displayBottomSheet(testTag: String) {
+        waitForTag(testTag)
         androidComposeTestRule
             .onNodeWithTag(testTag)
             .performTouchInput {
@@ -27,20 +35,37 @@ open class TestSupport : UtilityLoggingHelper() {
                     durationMillis = 500
                 )
             }
-
-        // androidComposeTestRule.onRoot().printToLog("DEBUG_TAGS")
     }
 
     fun assertClick(testTag: String) {
+        waitForTag(testTag)
         androidComposeTestRule
             .onNodeWithTag(testTag)
             .assertIsDisplayed()
             .performClick()
     }
 
+    fun waitForTag(testTag: String) {
+        androidComposeTestRule.waitUntil(timeoutMillis = defaultTimeout) {
+            androidComposeTestRule
+                .onAllNodesWithTag(testTag)
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+    }
+
+    fun waitForText(text: String) {
+        androidComposeTestRule.waitUntil(timeoutMillis = defaultTimeout) {
+            androidComposeTestRule
+                .onAllNodesWithText(text)
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+    }
+
     fun waitForGitHubCI(testTag: String) {
         // Give CI time to reflect the state change where Undo All becomes enabled
-        androidComposeTestRule.waitUntil(timeoutMillis = 20000) {
+        androidComposeTestRule.waitUntil(timeoutMillis = defaultTimeout) {
             androidComposeTestRule
                 .onAllNodesWithTag(testTag)
                 .fetchSemanticsNodes()
@@ -51,7 +76,4 @@ open class TestSupport : UtilityLoggingHelper() {
                 }
         }
     }
-
-    val isCI: Boolean
-        get() = InstrumentationRegistry.getArguments().getString("IN_CI") == "1"
 }

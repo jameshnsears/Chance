@@ -3,7 +3,6 @@ package com.github.jameshnsears.chance.ui.tab.setup.groups
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.onAllNodesWithContentDescription
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
@@ -36,25 +35,18 @@ class GroupsTest : TestSupport() {
         androidComposeTestRule.onNodeWithText(context.getString(R.string.tab_setup)).performClick()
 
         // 1. Click on the groups tab (Secondary Tab)
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithText(context.getString(R.string.tab_setup_groups))
-                .fetchSemanticsNodes().isNotEmpty()
-        }
-        androidComposeTestRule.onNodeWithText(context.getString(R.string.tab_setup_groups)).performClick()
+        val tabSetupGroupsText = context.getString(R.string.tab_setup_groups)
+        waitForText(tabSetupGroupsText)
+        androidComposeTestRule.onNodeWithText(tabSetupGroupsText).performClick()
 
         // Verify we see existing groups from test double (tg1, tg2)
-        // Wait for them to appear as the collection might be async
-        androidComposeTestRule.waitUntil(timeoutMillis = 10000) {
-            androidComposeTestRule
-                .onAllNodesWithText("tg1")
-                .fetchSemanticsNodes().isNotEmpty()
-        }
+        waitForText("tg1")
 
         // 2. Click on the fab
         androidComposeTestRule.onNodeWithContentDescription("+").performClick()
 
         // 3. Create a new group with the name g1
+        waitForTag(CardDiceTestTag.DICE_TITLE)
         androidComposeTestRule.onNodeWithTag(CardDiceTestTag.DICE_TITLE).performTextInput("g1")
 
         // 4. Select the first dice once
@@ -66,12 +58,7 @@ class GroupsTest : TestSupport() {
             .performClick()
 
         // 6. Test the groups list contains the g1 group
-        androidComposeTestRule.waitUntil(timeoutMillis = 20000) {
-            androidComposeTestRule
-                .onAllNodesWithText("g1")
-                .fetchSemanticsNodes().isNotEmpty()
-        }
-
+        waitForText("g1")
         androidComposeTestRule.onNodeWithText("g1").assertIsDisplayed()
     }
 }

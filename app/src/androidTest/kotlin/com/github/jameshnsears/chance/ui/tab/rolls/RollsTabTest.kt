@@ -29,10 +29,8 @@ class RollsTabTest : TestSupport() {
     @Test
     fun rollFirstDice() {
         androidComposeTestRule.onNodeWithText("Rolls").performClick()
-        androidComposeTestRule.waitForIdle()
 
         displayBottomSheet(RollsTestTag.BOTTOM_SHEET)
-        androidComposeTestRule.waitForIdle()
 
         androidComposeTestRule.onAllNodes(
             SemanticsMatcher("tagStartsWith") {
@@ -40,13 +38,10 @@ class RollsTabTest : TestSupport() {
                     .startsWith(RollsSelectionTestTag.ROLL_BUTTON)
             }
         ).onFirst().performClick()
-        androidComposeTestRule.waitForIdle()
 
         assertClick(RollsTestTag.ROLL_ENABLED)
-        androidComposeTestRule.waitForIdle()
 
-        androidComposeTestRule.onNodeWithTag(RollsTestTag.SETTINGS).performClick()
-        androidComposeTestRule.waitForIdle()
+        assertClick(RollsTestTag.SETTINGS)
 
         val settingsTags = listOf(
             DialogSettingsTestTag.SETTINGS_TIME,
@@ -71,21 +66,18 @@ class RollsTabTest : TestSupport() {
         }
 
         // Ensure at least one setting that enables Roll button is ON
-        // SETTINGS_SCORE is a good candidate. If it was ON and we clicked it, it's now OFF.
-        // We'll click it again to be sure it's ON.
         androidComposeTestRule.onNodeWithTag(DialogSettingsTestTag.SETTINGS_SCORE)
             .performScrollTo()
             .performClick()
 
         Espresso.pressBack()
-        androidComposeTestRule.waitForIdle()
 
+        // Wait for the tab to be visible again after back press
+        waitForTag(RollsTestTag.ROLL_ENABLED)
         assertClick(RollsTestTag.ROLL_ENABLED)
-        androidComposeTestRule.waitForIdle()
 
         repeat(4) {
-            androidComposeTestRule.onNodeWithTag(RollsTestTag.UNDO).performClick()
-            androidComposeTestRule.waitForIdle()
+            assertClick(RollsTestTag.UNDO)
         }
 
         androidComposeTestRule.onNodeWithTag(RollsTestTag.UNDO).assertIsNotEnabled()
