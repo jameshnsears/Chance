@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class BagDataImpl(val context: Context? = null) : BagDataInterface {
+    private val utilityBagData = UtilityBagData(context)
     private var allDiceCached: MutableList<Dice>? = null
 
     override suspend fun allDice(): MutableList<Dice> = withContext(Dispatchers.IO) {
@@ -16,6 +17,7 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
             allDiceCached = mutableListOf(
                 diceStory,
                 diceMan,
+                playingCards,
                 d2,
                 d6,
                 hexagram,
@@ -24,19 +26,8 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
         allDiceCached!!
     }
 
-    private fun getString(resId: Int): String {
-        return context?.getString(resId) ?: ""
-    }
-
-    @Synchronized
-    private fun readBase64File(fileName: String): String {
-        return try {
-            context!!.assets.open(fileName).bufferedReader().use { it.readText() }
-        } catch (_: Exception) {
-            // caused by unit tests using mock context
-            ""
-        }
-    }
+    private val playingCards
+        get() = PlayingCards(context).playingCards
 
     private val d2
         get() = Dice(
@@ -50,7 +41,7 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
                     descriptionColour = "FF6650a4",
                 ),
             ),
-            title = getString(R.string.bag_d2),
+            title = utilityBagData.getString(R.string.bag_d2),
         )
 
     private val d6
@@ -58,36 +49,36 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
             sides = listOf(
                 Side(
                     number = 6,
-                    imageBase64 = readBase64File("data/base64/d6/d6s6.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/d6/d6s6.base64"),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 5,
-                    imageBase64 = readBase64File("data/base64/d6/d6s5.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/d6/d6s5.base64"),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 4,
-                    imageBase64 = readBase64File("data/base64/d6/d6s4.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/d6/d6s4.base64"),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 3,
-                    imageBase64 = readBase64File("data/base64/d6/d6s3.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/d6/d6s3.base64"),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 2,
-                    imageBase64 = readBase64File("data/base64/d6/d6s2.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/d6/d6s2.base64"),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 1,
-                    imageBase64 = readBase64File("data/base64/d6/d6s1.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/d6/d6s1.base64"),
                     descriptionColour = "FF6650a4",
                 ),
             ),
-            title = getString(R.string.bag_d6),
+            title = utilityBagData.getString(R.string.bag_d6),
             multiplierValue = 3,
             modifyScore = true,
             modifyScoreValue = 5,
@@ -98,54 +89,54 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
             sides = listOf(
                 Side(
                     number = 8,
-                    imageBase64 = readBase64File("data/base64/hexagram/yin.base64"),
-                    description = getString(R.string.bag_haxagram_yin),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yin.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yin),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 7,
-                    imageBase64 = readBase64File("data/base64/hexagram/yin.base64"),
-                    description = getString(R.string.bag_haxagram_yin),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yin.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yin),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 6,
-                    imageBase64 = readBase64File("data/base64/hexagram/yin.base64"),
-                    description = getString(R.string.bag_haxagram_yin),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yin.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yin),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 5,
-                    imageBase64 = readBase64File("data/base64/hexagram/yang.base64"),
-                    description = getString(R.string.bag_haxagram_yang),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yang.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yang),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 4,
-                    imageBase64 = readBase64File("data/base64/hexagram/yang.base64"),
-                    description = getString(R.string.bag_haxagram_yang),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yang.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yang),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 3,
-                    imageBase64 = readBase64File("data/base64/hexagram/yang.base64"),
-                    description = getString(R.string.bag_haxagram_yang),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yang.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yang),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 2,
-                    imageBase64 = readBase64File("data/base64/hexagram/yang.base64"),
-                    description = getString(R.string.bag_haxagram_yang),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yang.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yang),
                     descriptionColour = "FF6650a4",
                 ),
                 Side(
                     number = 1,
-                    imageBase64 = readBase64File("data/base64/hexagram/yang.base64"),
-                    description = getString(R.string.bag_haxagram_yang),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/hexagram/yang.base64"),
+                    description = utilityBagData.getString(R.string.bag_haxagram_yang),
                     descriptionColour = "FF6650a4",
                 ),
             ),
-            title = getString(R.string.bag_haxagram),
+            title = utilityBagData.getString(R.string.bag_haxagram),
             multiplierValue = 3,
         )
 
@@ -154,42 +145,42 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
             sides = listOf(
                 Side(
                     number = 6,
-                    description = getString(R.string.bag_mrbenn_knight),
+                    description = utilityBagData.getString(R.string.bag_mrbenn_knight),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/story/knight.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/story/knight.base64"),
                 ),
                 Side(
                     number = 5,
-                    description = getString(R.string.bag_mrbenn_lion),
+                    description = utilityBagData.getString(R.string.bag_mrbenn_lion),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/story/lion.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/story/lion.base64"),
                 ),
                 Side(
                     number = 4,
-                    description = getString(R.string.bag_mrbenn_pirate),
+                    description = utilityBagData.getString(R.string.bag_mrbenn_pirate),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/story/pirate.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/story/pirate.base64"),
                 ),
                 Side(
                     number = 3,
-                    description = getString(R.string.bag_mrbenn_crocodile),
+                    description = utilityBagData.getString(R.string.bag_mrbenn_crocodile),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/story/crocodile.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/story/crocodile.base64"),
                 ),
                 Side(
                     number = 2,
-                    description = getString(R.string.bag_mrbenn_queen),
+                    description = utilityBagData.getString(R.string.bag_mrbenn_queen),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/story/queen.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/story/queen.base64"),
                 ),
                 Side(
                     number = 1,
-                    description = getString(R.string.bag_mrbenn_spaceship),
+                    description = utilityBagData.getString(R.string.bag_mrbenn_spaceship),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/story/spaceship.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/story/spaceship.base64"),
                 ),
             ),
-            title = getString(R.string.bag_mrbenn),
+            title = utilityBagData.getString(R.string.bag_mrbenn),
             multiplierValue = 4,
         )
 
@@ -198,66 +189,66 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
             sides = listOf(
                 Side(
                     number = 10,
-                    description = getString(R.string.bag_diceman_00),
+                    description = utilityBagData.getString(R.string.bag_diceman_00),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 9,
-                    description = getString(R.string.bag_diceman_01),
+                    description = utilityBagData.getString(R.string.bag_diceman_01),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 8,
-                    description = getString(R.string.bag_diceman_02),
+                    description = utilityBagData.getString(R.string.bag_diceman_02),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 7,
-                    description = getString(R.string.bag_diceman_03),
+                    description = utilityBagData.getString(R.string.bag_diceman_03),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 6,
-                    description = getString(R.string.bag_diceman_04),
+                    description = utilityBagData.getString(R.string.bag_diceman_04),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 5,
-                    description = getString(R.string.bag_diceman_05),
+                    description = utilityBagData.getString(R.string.bag_diceman_05),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 4,
-                    description = getString(R.string.bag_diceman_06),
+                    description = utilityBagData.getString(R.string.bag_diceman_06),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 3,
-                    description = getString(R.string.bag_diceman_07),
+                    description = utilityBagData.getString(R.string.bag_diceman_07),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 2,
-                    description = getString(R.string.bag_diceman_08),
+                    description = utilityBagData.getString(R.string.bag_diceman_08),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
                 Side(
                     number = 1,
-                    description = getString(R.string.bag_diceman_09),
+                    description = utilityBagData.getString(R.string.bag_diceman_09),
                     descriptionColour = "FF6650a4",
-                    imageBase64 = readBase64File("data/base64/diceman/diceman.base64"),
+                    imageBase64 = utilityBagData.readBase64File("data/base64/diceman/diceman.base64"),
                 ),
             ),
-            title = getString(R.string.bag_diceman),
+            title = utilityBagData.getString(R.string.bag_diceman),
             multiplierValue = 1,
         )
 }

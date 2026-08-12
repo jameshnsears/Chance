@@ -115,6 +115,8 @@
 
     <string name="bag.d6">3d6+5</string>
 
+    <string name="bag.playing.cards">Playing Cards, 54</string>
+
     <string name="bag.haxagram">I Ching, Yarrow Stalk</string>
     <string name="bag.haxagram.yin">Yin, 2</string>
     <string name="bag.haxagram.yang">Yang, 3</string>
