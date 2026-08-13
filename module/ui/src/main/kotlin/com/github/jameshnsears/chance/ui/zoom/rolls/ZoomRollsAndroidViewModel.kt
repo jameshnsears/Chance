@@ -9,6 +9,7 @@ import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterfa
 import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 import com.github.jameshnsears.chance.ui.zoom.ZoomAndroidViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -24,6 +25,7 @@ class ZoomRollsAndroidViewModel(
     repositoryBag: RepositoryBagInterface,
     repositoryRoll: RepositoryRollInterface,
     repositoryLocked: RepositoryLockedInterface,
+    repositorySideCache: RepositorySideCacheInterface? = null,
     val repositoryGroup: RepositoryGroupInterface,
 ) : ZoomAndroidViewModel(
     application,
@@ -31,6 +33,7 @@ class ZoomRollsAndroidViewModel(
     repositoryBag,
     repositoryRoll,
     repositoryLocked,
+    repositorySideCache,
 ) {
     val groupHistory: StateFlow<GroupHistory> = repositoryGroup.fetch()
         .distinctUntilChanged()

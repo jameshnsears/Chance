@@ -7,6 +7,7 @@ import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.impl.utility.svg.UtilitySvgSerializer
 import com.google.protobuf.util.JsonFormat
 import java.util.UUID
 
@@ -132,16 +133,13 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface {
 
             var imageBase64 = sideProtocolBuffer.imageBase64
             if (imageBase64.isEmpty()) {
-                // look in cache
-                // if it's an owner, use its UUID. if it's a ref, use imageBase64Uuid
-                val lookupUuid = if (sideProtocolBuffer.imageBase64Uuid.isNotEmpty()) {
-                    sideProtocolBuffer.imageBase64Uuid
-                } else {
-                    sideProtocolBuffer.uuid
+                // the SVG was moved into the side cache on store, so the proto holds no base64.
+                // if it's an owner, use its UUID. if it's a ref, use imageBase64Uuid.
+                val svgString = sideCache[sideProtocolBuffer.uuid]
+                    ?: sideCache[sideProtocolBuffer.imageBase64Uuid]
+                if (!svgString.isNullOrEmpty()) {
+                    imageBase64 = UtilitySvgSerializer.encodeIntoBase64String(svgString)
                 }
-                // we don't have base64 in cache, we have SVG.
-                // but for now let's keep it simple. The requirement says:
-                // "The SideCacheProtocolBuffer has not json export or import, it is only used internally."
             }
             side.imageBase64 = imageBase64
 

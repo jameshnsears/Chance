@@ -52,6 +52,17 @@ class RepositoryRollProtocolBufferTestDoubleUnitTest {
     }
 
     @Test
+    fun fetchReferencedSideUuids() = runTest {
+        val repository = RepositoryRollProtocolBufferTestDouble.getInstance(LinkedHashMap(), repositoryBag)
+        repository.store(
+            1L,
+            listOf(Roll(uuidDice = "d1", side = Side(uuid = "roll-side-1")))
+        )
+
+        assertTrue(repository.fetchReferencedSideUuids() == setOf("roll-side-1"))
+    }
+
+    @Test
     fun jsonImport() = runTest {
         val repository = RepositoryRollProtocolBufferTestDouble.getInstance(LinkedHashMap(), repositoryBag)
         repository.jsonImport("{}")

@@ -68,7 +68,6 @@ class RepositoryRollProtocolBufferImpl private constructor(
         if (repositorySideCache != null) {
             emitAll(
                 baseFlow.combine(repositorySideCache.fetch()) { (rollHistoryProtocolBuffer, diceBag), sideCache ->
-                    val startTime = System.currentTimeMillis()
                     val rollHistory = mapRollHistoryProtocolBufferIntoRollHistory(
                         rollHistoryProtocolBuffer,
                         diceBag,
@@ -80,7 +79,6 @@ class RepositoryRollProtocolBufferImpl private constructor(
         } else {
             emitAll(
                 baseFlow.map { (rollHistoryProtocolBuffer, diceBag) ->
-                    val startTime = System.currentTimeMillis()
                     val rollHistory = mapRollHistoryProtocolBufferIntoRollHistory(
                         rollHistoryProtocolBuffer,
                         diceBag
@@ -127,6 +125,14 @@ class RepositoryRollProtocolBufferImpl private constructor(
     }
 
     override fun fetch(): Flow<RollHistory> = rollHistoryFlow
+
+    override suspend fun fetchReferencedSideUuids(): Set<String> {
+        val rollHistoryProtocolBuffer = context.rollDataStore.data.first()
+        return rollHistoryProtocolBuffer.valuesMap.values
+            .flatMap { it.rollList }
+            .map { it.side.uuid }
+            .toSet()
+    }
 
     override suspend fun store(newRollHistory: RollHistory) {
         withContext(Dispatchers.IO) {

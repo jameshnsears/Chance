@@ -16,6 +16,14 @@ interface RepositoryRollInterface : RepositoryImportExportInterface {
 
     suspend fun removeLatest()
 
+    /**
+     * Returns the side UUIDs currently referenced by the persisted roll history.
+     * Implementations must read the raw persisted data directly (not a derived
+     * async flow) so callers can rely on an up-to-date result immediately after
+     * a [store].
+     */
+    suspend fun fetchReferencedSideUuids(): Set<String>
+
     fun traceUuid(rollHistory: RollHistory) {
         rollHistory.forEach { (_, rollList) ->
             rollList.forEach { roll ->

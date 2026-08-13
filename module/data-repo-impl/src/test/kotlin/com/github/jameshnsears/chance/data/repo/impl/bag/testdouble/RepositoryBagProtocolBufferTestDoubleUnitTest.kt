@@ -148,6 +148,23 @@ class RepositoryBagProtocolBufferTestDoubleUnitTest {
     }
 
     @Test
+    fun fetchReferencedSideUuids() = runTest {
+        val diceBag = mutableListOf(
+            Dice(
+                uuid = "dice-uuid",
+                sides = mutableListOf(
+                    Side(uuid = "side-1"),
+                    Side(uuid = "side-2"),
+                )
+            )
+        )
+        val repository = RepositoryBagProtocolBufferTestDouble.getInstance()
+        repository.store(diceBag)
+
+        assertTrue(repository.fetchReferencedSideUuids() == setOf("side-1", "side-2"))
+    }
+
+    @Test
     fun fetchSelected() = runTest {
         val diceUuid = "dice-uuid"
         val diceBag = mutableListOf(

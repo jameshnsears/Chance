@@ -7,5 +7,8 @@ class UtilitySvgSerializer {
     companion object {
         @OptIn(ExperimentalEncodingApi::class)
         fun decodeBase64StringIntoByteArray(base64String: String) = Base64.decode(base64String)
+
+        @OptIn(ExperimentalEncodingApi::class)
+        fun encodeIntoBase64String(svgString: String) = Base64.encode(svgString.toByteArray())
     }
 }

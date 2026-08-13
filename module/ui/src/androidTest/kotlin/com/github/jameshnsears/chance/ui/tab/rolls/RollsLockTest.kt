@@ -53,6 +53,7 @@ class RollsLockTest : AndroidTestHelper() {
         val repositoryRoll = RepositoryFactory().repositoryRoll
         val repositoryGroup = RepositoryFactory().repositoryGroup
         val repositoryLocked = RepositoryFactory().repositoryLocked
+        val repositorySideCache = RepositoryFactory().repositorySideCache
 
         composeRule.setContent {
             val application = LocalContext.current.applicationContext as Application
@@ -75,6 +76,7 @@ class RollsLockTest : AndroidTestHelper() {
                     repositoryBag,
                     repositoryRoll,
                     repositoryLocked,
+                    repositorySideCache,
                     repositoryGroup,
                 )
             )

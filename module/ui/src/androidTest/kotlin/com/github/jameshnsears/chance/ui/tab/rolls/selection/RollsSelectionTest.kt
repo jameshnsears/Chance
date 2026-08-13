@@ -119,6 +119,7 @@ class RollsSelectionTest : AndroidTestHelper() {
                     repositoryFactory.repositoryBag,
                     repositoryFactory.repositoryRoll,
                     repositoryFactory.repositoryLocked,
+                    repositoryFactory.repositorySideCache,
                     repositoryFactory.repositoryGroup
                 )
             )

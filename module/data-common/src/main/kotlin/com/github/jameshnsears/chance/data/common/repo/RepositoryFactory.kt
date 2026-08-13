@@ -185,17 +185,12 @@ class RepositoryFactory(val context: Context? = null) {
     }
 
     private suspend fun pruneCache() {
-        val referencedUuids = mutableSetOf<String>()
-        repositoryBag.fetch().first().forEach { dice ->
-            dice.sides.forEach { side ->
-                referencedUuids.add(side.uuid)
-            }
-        }
-        repositoryRoll.fetch().first().values.forEach { rolls ->
-            rolls.forEach { roll ->
-                referencedUuids.add(roll.side.uuid)
-            }
-        }
+        // Reads the raw persisted data directly rather than the derived async
+        // flows. Immediately after store() the shared flows may not yet reflect
+        // the write, so reading them here would prune entries that are still
+        // referenced (see the side-cache SVG feature).
+        val referencedUuids = repositoryBag.fetchReferencedSideUuids() +
+            repositoryRoll.fetchReferencedSideUuids()
         repositorySideCache.prune(referencedUuids)
     }
 }

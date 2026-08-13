@@ -7,6 +7,7 @@ import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 
 class ZoomDiceAndroidViewModelFactory(
     private val application: Application,
@@ -14,6 +15,7 @@ class ZoomDiceAndroidViewModelFactory(
     private val repositoryBag: RepositoryBagInterface,
     private val repositoryRoll: RepositoryRollInterface,
     private val repositoryLocked: RepositoryLockedInterface,
+    private val repositorySideCache: RepositorySideCacheInterface? = null,
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -24,7 +26,8 @@ class ZoomDiceAndroidViewModelFactory(
                 repositorySettings,
                 repositoryBag,
                 repositoryRoll,
-                repositoryLocked
+                repositoryLocked,
+                repositorySideCache
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

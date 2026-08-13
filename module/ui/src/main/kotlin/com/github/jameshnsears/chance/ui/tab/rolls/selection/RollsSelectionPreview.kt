@@ -9,16 +9,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
-import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsCoreHelper
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsSelectionHelper
 
-@SuppressLint("UnrememberedMutableState")
+@SuppressLint("UnrememberedMutableState", "ViewModelConstructorInComposable")
 @Preview
 @Composable
 fun RollSelectionPreview() {
@@ -35,15 +35,18 @@ fun RollSelectionPreview() {
         }
     }
 
-    val rollsAndroidViewModel: RollsAndroidViewModel = viewModel(
-        factory = RollsAndroidViewModelFactory(
-            application,
-            repositoryFactory.repositorySettings,
+    val rollsAndroidViewModel = RollsAndroidViewModel(
+        application,
+        repositoryFactory.repositorySettings,
+        repositoryFactory.repositoryBag,
+        repositoryFactory.repositoryRoll,
+        repositoryFactory.repositoryGroup,
+        repositoryFactory.repositoryLocked,
+        RollsSelectionHelper(
             repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryGroup,
-            repositoryFactory.repositoryLocked
-        )
+            repositoryFactory.repositoryGroup
+        ),
+        RollsCoreHelper(repositoryFactory.repositoryRoll)
     )
 
     ChanceTheme {

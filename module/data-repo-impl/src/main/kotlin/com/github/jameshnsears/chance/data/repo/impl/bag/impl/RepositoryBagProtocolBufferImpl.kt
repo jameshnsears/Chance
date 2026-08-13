@@ -52,13 +52,11 @@ class RepositoryBagProtocolBufferImpl private constructor(
 
     private val diceBagFlow = if (repositorySideCache != null) {
         context.diceBagDataStore.data.combine(repositorySideCache.fetch()) { bagProtocolBuffer, sideCache ->
-            val startTime = System.currentTimeMillis()
             val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer, sideCache)
             diceBag
         }
     } else {
         context.diceBagDataStore.data.map { bagProtocolBuffer ->
-            val startTime = System.currentTimeMillis()
             val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)
             diceBag
         }
@@ -105,6 +103,14 @@ class RepositoryBagProtocolBufferImpl private constructor(
     }
 
     override fun fetch(): Flow<DiceBag> = diceBagFlow
+
+    override suspend fun fetchReferencedSideUuids(): Set<String> {
+        val bagProtocolBuffer = context.diceBagDataStore.data.first()
+        return bagProtocolBuffer.diceList
+            .flatMap { it.sideList }
+            .map { it.uuid }
+            .toSet()
+    }
 
     override fun fetchSelected(): Flow<Set<String>> = context.diceBagDataStore.data
         .map { bag ->

@@ -98,6 +98,7 @@ fun TabRowPreview() {
                         repositoryBag,
                         repositoryRoll,
                         repositoryLocked,
+                        repositoryFactory.repositorySideCache,
                         repositoryGroup
                     )
                 )

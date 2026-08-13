@@ -42,7 +42,6 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
 
     private val settingsFlow = context.settingsDataStore.data
         .map { settingsProtocolBuffer ->
-            val startTime = System.currentTimeMillis()
             val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
             settings
         }.shareIn(

@@ -44,7 +44,6 @@ class RepositoryGroupProtocolBufferImpl private constructor(private val context:
 
     private val groupHistoryFlow = context.groupHistoryDataStore.data
         .map { groupHistoryProtocolBuffer ->
-            val startTime = System.currentTimeMillis()
             val groupHistory = mapGroupHistoryProtocolBufferIntoGroupHistory(groupHistoryProtocolBuffer)
             groupHistory
         }.shareIn(

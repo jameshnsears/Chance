@@ -7,6 +7,8 @@ import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
+import com.github.jameshnsears.chance.data.repo.impl.utility.svg.UtilitySvgSerializer
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -79,6 +81,27 @@ class RepositoryBagProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
 
         assertEquals("d6", result.title)
         assertEquals("uuid", result.uuid)
+    }
+
+    @Test
+    fun fetchReferencedSideUuidsReadsPersistedProto() = runTest {
+        val side1 = SideProtocolBuffer.newBuilder().setUuid("side-1").build()
+        val side2 = SideProtocolBuffer.newBuilder().setUuid("side-2").build()
+        val dice = DiceProtocolBuffer.newBuilder()
+            .setUuid("dice-1")
+            .addSide(side1)
+            .addSide(side2)
+            .build()
+        val bagProtocolBuffer = BagProtocolBuffer.newBuilder()
+            .addDice(dice)
+            .build()
+
+        coEvery { dataStore.data } returns flowOf(bagProtocolBuffer)
+
+        val repository = RepositoryBagProtocolBufferImpl.getInstance(context)
+        val result = repository.fetchReferencedSideUuids()
+
+        assertEquals(setOf("side-1", "side-2"), result)
     }
 
     @Test
@@ -174,6 +197,98 @@ class RepositoryBagProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
 
         // The exported JSON should contain the imageBase64Uuid for deduplication
         assertTrue(json.contains("\"imageBase64Uuid\": \"s1\""))
+    }
+
+    @Test
+    fun fetchResolvesSvgFromSideCache() = runTest {
+        val sideProtocolBuffer = SideProtocolBuffer.newBuilder()
+            .setUuid("side-1")
+            .setImageBase64("")
+            .build()
+        val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
+            .setUuid("dice-1")
+            .setTitle("d6")
+            .addSide(sideProtocolBuffer)
+            .build()
+        val bagProtocolBuffer = BagProtocolBuffer.newBuilder()
+            .addDice(diceProtocolBuffer)
+            .build()
+
+        coEvery { dataStore.data } returns flowOf(bagProtocolBuffer)
+
+        val repositorySideCache = mockk<RepositorySideCacheInterface>()
+        every { repositorySideCache.fetch() } returns flowOf(mapOf("side-1" to "<svg></svg>"))
+
+        val repository = RepositoryBagProtocolBufferImpl.getInstance(context, repositorySideCache)
+        val result = repository.fetch().first()
+
+        val side = result[0].sides[0]
+        val expectedBase64 = UtilitySvgSerializer.encodeIntoBase64String("<svg></svg>")
+        assertEquals("imageBase64 should be reconstructed from the side cache", expectedBase64, side.imageBase64)
+    }
+
+    @Test
+    fun fetchResolvesSvgReferenceFromSideCache() = runTest {
+        val ownerSideProtocolBuffer = SideProtocolBuffer.newBuilder()
+            .setUuid("side-owner")
+            .setImageBase64("")
+            .build()
+        val refSideProtocolBuffer = SideProtocolBuffer.newBuilder()
+            .setUuid("side-ref")
+            .setImageBase64("")
+            .setImageBase64Uuid("side-owner")
+            .build()
+        val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
+            .setUuid("dice-1")
+            .setTitle("d6")
+            .addSide(ownerSideProtocolBuffer)
+            .addSide(refSideProtocolBuffer)
+            .build()
+        val bagProtocolBuffer = BagProtocolBuffer.newBuilder()
+            .addDice(diceProtocolBuffer)
+            .build()
+
+        coEvery { dataStore.data } returns flowOf(bagProtocolBuffer)
+
+        val repositorySideCache = mockk<RepositorySideCacheInterface>()
+        every { repositorySideCache.fetch() } returns flowOf(mapOf("side-owner" to "<svg></svg>"))
+
+        val repository = RepositoryBagProtocolBufferImpl.getInstance(context, repositorySideCache)
+        val result = repository.fetch().first()
+
+        val sides = result[0].sides
+        val expectedBase64 = UtilitySvgSerializer.encodeIntoBase64String("<svg></svg>")
+        assertEquals("owner side should be reconstructed from the side cache", expectedBase64, sides[0].imageBase64)
+        assertEquals(
+            "reference side should resolve its image from the cache via imageBase64Uuid",
+            expectedBase64,
+            sides[1].imageBase64
+        )
+    }
+
+    @Test
+    fun fetchLeavesImageBase64EmptyWhenMissingFromSideCache() = runTest {
+        val sideProtocolBuffer = SideProtocolBuffer.newBuilder()
+            .setUuid("side-1")
+            .setImageBase64("")
+            .build()
+        val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
+            .setUuid("dice-1")
+            .addSide(sideProtocolBuffer)
+            .build()
+        val bagProtocolBuffer = BagProtocolBuffer.newBuilder()
+            .addDice(diceProtocolBuffer)
+            .build()
+
+        coEvery { dataStore.data } returns flowOf(bagProtocolBuffer)
+
+        val repositorySideCache = mockk<RepositorySideCacheInterface>()
+        every { repositorySideCache.fetch() } returns flowOf(emptyMap())
+
+        val repository = RepositoryBagProtocolBufferImpl.getInstance(context, repositorySideCache)
+        val result = repository.fetch().first()
+
+        assertEquals("", result[0].sides[0].imageBase64)
     }
 
     @Test

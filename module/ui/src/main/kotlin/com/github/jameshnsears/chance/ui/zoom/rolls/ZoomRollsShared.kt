@@ -49,6 +49,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.github.jameshnsears.chance.common.R
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.domain.core.Dice
@@ -584,31 +585,27 @@ private fun ZoomRollFaceImageSVG(
     Box(
         modifier = Modifier
     ) {
-        if (side.imageBase64 != "") {
-            val imageRequest by produceState(
-                initialValue = side.imageRequest,
-                side
-            ) {
-                if (value == null) {
-                    value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
-                }
+        val imageRequest by produceState<ImageRequest?>(
+            initialValue = side.imageRequest,
+            side
+        ) {
+            if (value == null) {
+                value = zoomRollsAndroidViewModel.sideSvgImageRequestAsync(side)
             }
+        }
 
-            if (imageRequest != null) {
-                AsyncImage(
-                    model = imageRequest,
-                    contentDescription = side.description,
-                    modifier = modifier
-                )
-            }
-        } else {
-            if (side.imageDrawableId != 0) {
-                Image(
-                    painter = painterResource(id = side.imageDrawableId),
-                    contentDescription = side.description,
-                    modifier = modifier
-                )
-            }
+        if (imageRequest != null) {
+            AsyncImage(
+                model = imageRequest,
+                contentDescription = side.description,
+                modifier = modifier
+            )
+        } else if (side.imageDrawableId != 0) {
+            Image(
+                painter = painterResource(id = side.imageDrawableId),
+                contentDescription = side.description,
+                modifier = modifier
+            )
         }
     }
 }

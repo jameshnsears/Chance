@@ -74,6 +74,33 @@ class RepositorySideCacheProtocolBufferUnitTest : UtilityAndroidUnitTestHelper()
         coVerify { dataStore.updateData(any()) }
     }
 
+    @OptIn(ExperimentalEncodingApi::class)
+    @Test
+    fun storeDoesNotStoreDuplicateUuids() = runTest {
+        val initialCache = SideCacheProtocolBuffer.newBuilder()
+            .putEntries("uuid1", "originalSvg")
+            .build()
+
+        var current = initialCache
+        coEvery { dataStore.updateData(any()) } coAnswers { call ->
+            @Suppress("UNCHECKED_CAST")
+            val transform = call.invocation.args[0] as suspend (SideCacheProtocolBuffer) -> SideCacheProtocolBuffer
+            current = transform(current)
+            current
+        }
+        coEvery { dataStore.data } answers { flowOf(current) }
+
+        val repository = RepositorySideCacheProtocolBufferImpl.getInstance(context)
+
+        val newImageBase64 = Base64.encode("newSvg".toByteArray())
+        repository.store(mapOf("uuid1" to newImageBase64, "uuid2" to newImageBase64))
+
+        val result = repository.fetch().first()
+        assertEquals(2, result.size)
+        assertEquals("originalSvg", result["uuid1"])
+        assertEquals("newSvg", result["uuid2"])
+    }
+
     @Test
     fun prune() = runTest {
         coEvery { dataStore.updateData(any()) } returns SideCacheProtocolBuffer.getDefaultInstance()

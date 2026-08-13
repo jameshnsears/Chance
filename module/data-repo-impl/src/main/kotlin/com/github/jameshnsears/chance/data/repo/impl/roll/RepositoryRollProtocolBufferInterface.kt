@@ -9,6 +9,7 @@ import com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
+import com.github.jameshnsears.chance.data.repo.impl.utility.svg.UtilitySvgSerializer
 import com.google.protobuf.util.JsonFormat
 
 interface RepositoryRollProtocolBufferInterface : RepositoryRollInterface {
@@ -94,6 +95,14 @@ interface RepositoryRollProtocolBufferInterface : RepositoryRollInterface {
                     val sideFromBag = diceBag.flatMap { it.sides }.find { it.uuid == side.uuid }
                     if (sideFromBag != null) {
                         side = sideFromBag.copy()
+                    }
+                }
+
+                if (side.imageBase64.isEmpty()) {
+                    // the SVG was moved into the side cache on store, so the proto holds no base64.
+                    val svgString = sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]
+                    if (!svgString.isNullOrEmpty()) {
+                        side.imageBase64 = UtilitySvgSerializer.encodeIntoBase64String(svgString)
                     }
                 }
 

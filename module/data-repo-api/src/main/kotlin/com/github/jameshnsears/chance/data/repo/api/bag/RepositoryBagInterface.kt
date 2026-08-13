@@ -13,6 +13,14 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
     suspend fun store(newDiceBag: DiceBag)
     suspend fun store(diceUuid: String, selected: Boolean)
 
+    /**
+     * Returns the side UUIDs currently referenced by the persisted bag.
+     * Implementations must read the raw persisted data directly (not a derived
+     * async flow) so callers can rely on an up-to-date result immediately after
+     * a [store].
+     */
+    suspend fun fetchReferencedSideUuids(): Set<String>
+
     fun traceUuid(diceBag: DiceBag) {
         diceBag.forEach {
             it.sides.forEach { side ->

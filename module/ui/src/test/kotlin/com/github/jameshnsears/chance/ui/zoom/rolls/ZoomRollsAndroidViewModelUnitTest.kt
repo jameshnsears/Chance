@@ -35,6 +35,7 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
             repositoryFactory.repositoryLocked,
+            repositoryFactory.repositorySideCache,
             repositoryFactory.repositoryGroup
         )
     }
@@ -117,6 +118,7 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
             repositoryFactory.repositoryLocked,
+            repositoryFactory.repositorySideCache,
             repositoryFactory.repositoryGroup
         )
         val roll = Roll("uuid", Side())
@@ -132,6 +134,7 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryFactory.repositoryBag,
             repositoryFactory.repositoryRoll,
             repositoryFactory.repositoryLocked,
+            repositoryFactory.repositorySideCache,
             repositoryFactory.repositoryGroup
         )
         val locked = viewModel2.stateFlowZoom.first { it.lockedRollIndices.isNotEmpty() }.lockedRollIndices

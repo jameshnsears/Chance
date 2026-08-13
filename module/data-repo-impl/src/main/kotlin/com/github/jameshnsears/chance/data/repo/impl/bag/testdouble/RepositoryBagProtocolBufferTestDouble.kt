@@ -111,6 +111,13 @@ class RepositoryBagProtocolBufferTestDouble private constructor(
                 .toSet()
         }.distinctUntilChanged()
 
+    override suspend fun fetchReferencedSideUuids(): Set<String> {
+        return diceBagProtocolBufferStateFlow.value.diceList
+            .flatMap { it.sideList }
+            .map { it.uuid }
+            .toSet()
+    }
+
     override fun fetch(uuid: String): Flow<Dice> = fetch()
         .map { diceBag ->
             diceBag.find { it.uuid == uuid } ?: Dice()

@@ -52,6 +52,7 @@ class RepositoryRollUnitTest : UtilityAndroidUnitTestHelper() {
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}
             override suspend fun clear() {}
+            override suspend fun fetchReferencedSideUuids() = emptySet<String>()
         }
 
         val rollHistory: RollHistory = linkedMapOf(

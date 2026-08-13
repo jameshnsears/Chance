@@ -132,6 +132,13 @@ class RepositoryRollProtocolBufferTestDouble private constructor(
         updateStateFlow(newRollHistory)
     }
 
+    override suspend fun fetchReferencedSideUuids(): Set<String> {
+        return rollHistoryProtocolBufferStateFlow.value.valuesMap.values
+            .flatMap { it.rollList }
+            .map { it.side.uuid }
+            .toSet()
+    }
+
     override suspend fun store(epoch: Long, rollList: List<Roll>) {
         Timber.d("repositoryRoll.STORE.ENTRY =====================================")
 

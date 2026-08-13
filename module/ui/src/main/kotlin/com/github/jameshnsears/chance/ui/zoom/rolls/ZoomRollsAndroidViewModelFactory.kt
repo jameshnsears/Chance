@@ -8,6 +8,7 @@ import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterfa
 import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 
 class ZoomRollsAndroidViewModelFactory(
     private val application: Application,
@@ -15,6 +16,7 @@ class ZoomRollsAndroidViewModelFactory(
     private val repositoryBag: RepositoryBagInterface,
     private val repositoryRoll: RepositoryRollInterface,
     private val repositoryLocked: RepositoryLockedInterface,
+    private val repositorySideCache: RepositorySideCacheInterface? = null,
     private val repositoryGroup: RepositoryGroupInterface,
 ) : ViewModelProvider.Factory {
 
@@ -27,6 +29,7 @@ class ZoomRollsAndroidViewModelFactory(
                 repositoryBag,
                 repositoryRoll,
                 repositoryLocked,
+                repositorySideCache,
                 repositoryGroup
             ) as T
         }

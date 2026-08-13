@@ -153,27 +153,23 @@ fun ZoomFaceImageSVG(
         }
         .testTag("${ZoomDiceTestTag.ZOOM_SIDE_IMAGE_SVG}-${dice.title}-${side.number}")
 
-    if (side.imageBase64 != "") {
-        val imageRequest by produceState<ImageRequest?>(initialValue = side.imageRequest, side.imageBase64) {
-            if (value == null) {
-                value = zoomAndroidViewModel.sideSvgImageRequestAsync(side)
-            }
+    val imageRequest by produceState<ImageRequest?>(initialValue = side.imageRequest, side.imageBase64) {
+        if (value == null) {
+            value = zoomAndroidViewModel.sideSvgImageRequestAsync(side)
         }
+    }
 
-        if (imageRequest != null) {
-            AsyncImage(
-                model = imageRequest,
-                contentDescription = side.description,
-                modifier = modifier
-            )
-        }
-    } else {
-        if (side.imageDrawableId != 0) {
-            Image(
-                painter = painterResource(id = side.imageDrawableId),
-                contentDescription = "",
-                modifier = modifier
-            )
-        }
+    if (imageRequest != null) {
+        AsyncImage(
+            model = imageRequest,
+            contentDescription = side.description,
+            modifier = modifier
+        )
+    } else if (side.imageDrawableId != 0) {
+        Image(
+            painter = painterResource(id = side.imageDrawableId),
+            contentDescription = "",
+            modifier = modifier
+        )
     }
 }

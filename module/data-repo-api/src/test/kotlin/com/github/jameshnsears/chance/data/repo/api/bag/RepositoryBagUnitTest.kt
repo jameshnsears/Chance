@@ -54,10 +54,13 @@ class RepositoryBagUnitTest : UtilityAndroidUnitTestHelper() {
         val repository = object : RepositoryBagInterface {
             override fun fetch() = flowOf(mutableListOf<Dice>())
             override fun fetch(uuid: String) = flowOf(Dice())
+            override fun fetchSelected() = flowOf(emptySet<String>())
             override suspend fun store(newDiceBag: DiceBag) {}
+            override suspend fun store(diceUuid: String, selected: Boolean) {}
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}
             override suspend fun clear() {}
+            override suspend fun fetchReferencedSideUuids() = emptySet<String>()
         }
 
         val side1 = Side(uuid = "side-uuid-1")

@@ -10,7 +10,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.jameshnsears.chance.common.ui.theme.ChanceTheme
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature.Flag
@@ -21,7 +20,8 @@ import com.github.jameshnsears.chance.ui.navigation.LocalNavigator
 import com.github.jameshnsears.chance.ui.navigation.Navigator
 import com.github.jameshnsears.chance.ui.navigation.rememberNavigationState
 import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModel
-import com.github.jameshnsears.chance.ui.tab.rolls.RollsAndroidViewModelFactory
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsCoreHelper
+import com.github.jameshnsears.chance.ui.tab.rolls.RollsSelectionHelper
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
@@ -53,26 +53,28 @@ private fun ZoomRollPreviewHelper(
         }
     }
 
-    val rollsAndroidViewModel: RollsAndroidViewModel = viewModel(
-        factory = RollsAndroidViewModelFactory(
-            application,
-            repositoryFactory.repositorySettings,
+    val rollsAndroidViewModel = RollsAndroidViewModel(
+        application,
+        repositoryFactory.repositorySettings,
+        repositoryFactory.repositoryBag,
+        repositoryFactory.repositoryRoll,
+        repositoryFactory.repositoryGroup,
+        repositoryFactory.repositoryLocked,
+        RollsSelectionHelper(
             repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryGroup,
-            repositoryFactory.repositoryLocked
+            repositoryFactory.repositoryGroup
         ),
+        RollsCoreHelper(repositoryFactory.repositoryRoll)
     )
 
-    val zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel = viewModel(
-        factory = ZoomRollsAndroidViewModelFactory(
-            application,
-            repositoryFactory.repositorySettings,
-            repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryLocked,
-            repositoryFactory.repositoryGroup,
-        ),
+    val zoomRollsAndroidViewModel = ZoomRollsAndroidViewModel(
+        application,
+        repositoryFactory.repositorySettings,
+        repositoryFactory.repositoryBag,
+        repositoryFactory.repositoryRoll,
+        repositoryFactory.repositoryLocked,
+        repositoryFactory.repositorySideCache,
+        repositoryFactory.repositoryGroup,
     )
 
     ChanceTheme {

@@ -39,7 +39,9 @@ class RepositoryGroupUnitTest : UtilityAndroidUnitTestHelper() {
     fun traceUuid() {
         val repository = object : RepositoryGroupInterface {
             override fun fetch() = flowOf(emptyList<Group>())
+            override fun fetchSelected() = flowOf(emptySet<String>())
             override suspend fun store(newGroupHistory: GroupHistory) {}
+            override suspend fun store(groupUuid: String, selected: Boolean) {}
             override suspend fun jsonExport() = ""
             override suspend fun jsonImport(json: String) {}
             override suspend fun clear() {}

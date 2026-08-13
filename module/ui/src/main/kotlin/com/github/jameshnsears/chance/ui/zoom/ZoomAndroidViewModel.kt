@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -89,8 +88,6 @@ abstract class ZoomAndroidViewModel(
         settings to transient
     }
 
-    private val sideCacheFlow = repositorySideCache?.fetch() ?: flowOf(emptyMap<String, String>())
-
     val stateFlowZoom: StateFlow<ZoomState> = combine(
         settingsWithTransientResize,
         repositoryBag.fetch(),
@@ -102,18 +99,9 @@ abstract class ZoomAndroidViewModel(
             sortedHistory
         },
         repositoryLocked.fetch(),
-        combine(_scrollState, sideCacheFlow) { scroll, cache -> scroll to cache }
-    ) { (settings, transientResize), diceBag, rollHistory, lockedRollIndices, (scrollData, sideCache) ->
+        _scrollState
+    ) { (settings, transientResize), diceBag, rollHistory, lockedRollIndices, scrollData ->
         val resizeZoom = transientResize ?: settings.resizeZoom
-
-        diceBag.forEach { dice ->
-            dice.sides.forEach { side ->
-                val svg = sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]
-                if (svg != null) {
-                    side.imageBase64 = ""
-                }
-            }
-        }
 
         ZoomState(
             resizeViewDp = resizeViewAsDp(resizeZoom),
@@ -286,12 +274,16 @@ abstract class ZoomAndroidViewModel(
 
     private val imageRequestCache = ConcurrentHashMap<String, ImageRequest>()
 
-    suspend fun sideSvgImageRequestAsync(side: Side): ImageRequest = withContext(Dispatchers.Default) {
+    suspend fun sideSvgImageRequestAsync(side: Side): ImageRequest? = withContext(Dispatchers.Default) {
         val sideCache = repositorySideCache?.fetch()?.first() ?: emptyMap()
         val svgString = sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]
 
         if (svgString != null) {
             return@withContext UtilitySvgSerializer.imageRequestFromSvgStringAsync(getApplication(), svgString)
+        }
+
+        if (side.imageBase64.isEmpty()) {
+            return@withContext null
         }
 
         val cacheKey = side.imageBase64

@@ -38,7 +38,6 @@ class RepositoryLockedProtocolBufferImpl private constructor(private val context
 
     private val lockedFlow = context.lockedDataStore.data
         .map { lockedProtocolBuffer ->
-            val startTime = System.currentTimeMillis()
             val locked = mapLockedProtocolBufferIntoLockedSet(lockedProtocolBuffer)
             locked
         }.shareIn(
