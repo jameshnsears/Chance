@@ -115,6 +115,7 @@ class RepositoryBagProtocolBufferImpl private constructor(
     override fun fetchSelected(): Flow<Set<String>> = context.diceBagDataStore.data
         .map { bag ->
             bag.diceList
+                .filter { it.selected }
                 .map { it.uuid }
                 .toSet()
         }.distinctUntilChanged()

@@ -105,6 +105,47 @@ class RepositoryBagProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
+    fun fetchSelectedReturnsOnlySelectedDice() = runTest {
+        val selectedDice = DiceProtocolBuffer.newBuilder()
+            .setUuid("selected-uuid")
+            .setSelected(true)
+            .build()
+        val unselectedDice = DiceProtocolBuffer.newBuilder()
+            .setUuid("unselected-uuid")
+            .setSelected(false)
+            .build()
+        val bagProtocolBuffer = BagProtocolBuffer.newBuilder()
+            .addDice(selectedDice)
+            .addDice(unselectedDice)
+            .build()
+
+        coEvery { dataStore.data } returns flowOf(bagProtocolBuffer)
+
+        val repository = RepositoryBagProtocolBufferImpl.getInstance(context)
+        val result = repository.fetchSelected().first()
+
+        assertEquals(setOf("selected-uuid"), result)
+    }
+
+    @Test
+    fun fetchSelectedReturnsEmptyWhenNoneSelected() = runTest {
+        val unselectedDice = DiceProtocolBuffer.newBuilder()
+            .setUuid("unselected-uuid")
+            .setSelected(false)
+            .build()
+        val bagProtocolBuffer = BagProtocolBuffer.newBuilder()
+            .addDice(unselectedDice)
+            .build()
+
+        coEvery { dataStore.data } returns flowOf(bagProtocolBuffer)
+
+        val repository = RepositoryBagProtocolBufferImpl.getInstance(context)
+        val result = repository.fetchSelected().first()
+
+        assertEquals(emptySet<String>(), result)
+    }
+
+    @Test
     fun store() = runTest {
         coEvery { dataStore.updateData(any()) } returns BagProtocolBuffer.getDefaultInstance()
 
