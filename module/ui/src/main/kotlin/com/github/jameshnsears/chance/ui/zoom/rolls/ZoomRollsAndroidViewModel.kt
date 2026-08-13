@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.dropWhile
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -55,7 +56,11 @@ class ZoomRollsAndroidViewModel(
     init {
         viewModelScope.launch {
             stateFlowZoom.map { it.rollHistory.keys.firstOrNull() }
+                // the stateIn initialValue has an empty roll history, so drop the
+                // placeholder (null) before observing real key changes
+                .dropWhile { it == null }
                 .distinctUntilChanged()
+                // skip the first real key: loading existing history is not a new roll
                 .drop(1)
                 .collect {
                     repositoryLocked.clear()

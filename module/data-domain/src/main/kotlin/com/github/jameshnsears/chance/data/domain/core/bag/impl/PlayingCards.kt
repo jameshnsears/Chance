@@ -8,7 +8,7 @@ import com.github.jameshnsears.chance.data.domain.core.Side
 class PlayingCards(val context: Context? = null) {
     private val utilityBagData = UtilityBagData(context)
 
-    val playingCards
+    val dice
         get() = Dice(
             sides = generateSides(),
             title = utilityBagData.getString(R.string.bag_playing_cards),

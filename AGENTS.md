@@ -95,6 +95,17 @@ MainComposable(
 - **Test Helpers** (`TestSupport`): `displayBottomSheet(testTag)`, `assertClick(testTag)`, `waitForGitHubCI(testTag)` (20s timeout), `isCI` property
 - **Base classes**: `UtilityLoggingHelper` (auto-enables `REPO_PROTOCOL_BUFFER_TEST_DOUBLE`, plants Timber), `AndroidTestHelper` (UI-less instrumented tests), `UtilityAndroidUnitTestHelper`, `UtilityRuleMainDispatcher`
 - **Data Reset**: `runBlocking { RepositoryFactory(context).resetStorage() }` in `@Before`
+- **ViewModel Unit Tests**: ViewModels created in a unit test never receive `onCleared()`, so their `viewModelScope` coroutines (`stateIn` upstreams, `init {}` observers) keep running and can pollute the shared test-double state in later tests. Track created ViewModels and cancel their scope in `@After`:
+
+```kotlin
+private val createdViewModels = mutableListOf<ViewModel>()
+@After fun tearDown() { createdViewModels.forEach { it.viewModelScope.cancel() }; createdViewModels.clear() }
+private fun track(vm: ZoomDiceAndroidViewModel): ZoomDiceAndroidViewModel {
+    createdViewModels.add(vm); return vm
+}
+```
+
+- **Async StateFlow**: after `store()`/`toggleLock()`, wait for the emission with `.stateFlow.first { predicate }` — reading `.value` immediately can return a stale pre-emission value (e.g. `resizeView`, `toggleLock` tests).
 - **Async Testing**: `androidComposeTestRule.waitUntil` with `fetchSemanticsNodes().isNotEmpty()`
 - **Coverage**: Jacoco 0.8.14, F-Droid flavor, protocol buffer filters
 - **Test Retry**: Gradle plugin 1.6.5 (2 retries, 2 max failures)
@@ -125,7 +136,7 @@ fun TabBagPreview() {
 
 ### Naming Patterns
 
-- **Repository Interfaces**: `RepositoryXxxInterface` (in `data-repo-api`)
+- **Repository Interfaces**: `RepositoryXxxInterface` (in `data-repo-api`); `RepositoryBagInterface`/`RepositoryRollInterface` expose `fetchReferencedSideUuids()` for the side-cache prune
 - **Repository Implementations**: `RepositoryXxxProtocolBufferImpl` with singleton `getInstance()`
 - **Test Doubles**: `RepositoryXxxProtocolBufferTestDouble` and `XxxDataTestDouble`
 - **ViewModels**: `XxxAndroidViewModel`, `ZoomXxxAndroidViewModel` (extends abstract `ZoomAndroidViewModel`)
@@ -136,30 +147,37 @@ fun TabBagPreview() {
 
 ### Persistence Layer
 
-Protocol Buffers via `androidx.datastore` (not Room). 8 `.proto` files in `module/data-repo-impl/src/proto/`:
+Protocol Buffers via `androidx.datastore` (not Room). 10 `.proto` files in `module/data-repo-impl/src/proto/`:
 
 - `bag.proto` / `dice.proto` / `side.proto` / `settings.proto`
 - `roll.proto` / `roll_history.proto` / `group.proto` / `group_history.proto`
+- `locked.proto` / `side_cache.proto`
 
 Serializers in `impl` subpackages:
 - `RepositorySettingsProtocolBufferSerializer`
 - `RepositoryBagProtocolBufferSerializer`
 - `RepositoryGroupProtocolBufferSerializer`
 - `RepositoryRollProtocolBufferSerializer`
+- `RepositoryLockedProtocolBufferSerializer`
+- `RepositorySideCacheProtocolBufferSerializer`
 
-#### Protocol Buffer Caching Strategy
+#### Side Cache for SVG Images
 
-The `bag.proto` and `roll_history.proto` implementations use a custom caching strategy to deduplicate large `imageBase64` strings within the Protocol Buffers:
+Large `imageBase64` SVGs are kept out of the `bag`/`roll` protos and stored in a dedicated `RepositorySideCache` DataStore (`side_cache.pb`, `SideCacheProtocolBuffer` = `map<sideUuid, svgString>`).
 
-- **Deduplication**: Unique images are stored once in a dedicated "cache" entry with `epoch = -1L` (`EPOCH_IMAGE_CACHE`).
-    - In `BagProtocolBuffer`, this is a specific `DiceProtocolBuffer` in the `dice` list.
-    - In `RollHistoryProtocolBuffer`, this is a specific entry in the `values` map.
-- **References**: Individual `SideProtocolBuffer` entries store a reference (either a `REF:<SHA256_HASH>` string or just the `uuid`) instead of the full base64 data.
-- **Lifecycle**:
-    - `getOrUpdateCache()`: Computes hashes and updates the cache during writes.
-    - `pruneCache()`: Removes unreferenced images from the cache to save space.
-    - Mapping functions (e.g., `mapBagProtocolBufferIntoDiceBag`): Reconstruct the full `Side` objects by resolving references from the cache during reads.
-- **Implementation**: Managed by `RepositoryBagProtocolBufferInterface`, `RepositoryRollProtocolBufferInterface`, and `RepositoryProtocolBufferImageCache`.
+- **Interface**: `RepositorySideCacheInterface` (`data-repo-api/.../side/`) with `fetch()`, `store()`, `prune()`, `clear()`.
+- **Wiring**: `RepositoryBagProtocolBufferImpl` and `RepositoryRollProtocolBufferImpl` take an optional `repositorySideCache`. `RepositoryFactory` injects the shared instance (test double under `REPO_PROTOCOL_BUFFER_TEST_DOUBLE`). The UI receives it via `ZoomAndroidViewModel` / `MainComposable`.
+- **Write path**: On `store()`, sides with non-empty `imageBase64` are decoded to SVG strings and stored keyed by `side.uuid`; the proto's `imageBase64` is then cleared (this is what keeps `bag.pb`/`roll.pb` small).
+- **Read path**: The fetch flows `combine` the bag/roll proto with `repositorySideCache.fetch()` and resolve each `Side.imageBase64` back from the cache (owner sides resolve by their own uuid; reference sides via `imageBase64Uuid`).
+- **UI path**: `ZoomAndroidViewModel.sideSvgImageRequestAsync(side)` reads the cache first (`sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]`), falling back to `side.imageBase64`. Zoom composables (`ZoomFaceImageSVG`, `ZoomRollFaceImageSVG`) build an `ImageRequest` via `produceState` and render with `AsyncImage`.
+
+> Note: an older in-proto deduplication mechanism (`RepositoryProtocolBufferImageCache`, `EPOCH_IMAGE_CACHE` / `REF:<hash>` references) is defined but no longer wired into the implementations; the side cache above is the active mechanism.
+
+#### pruneCache() Race Condition (Important)
+
+`RepositoryFactory.initialize()` calls `pruneCache()` after seeding the bag. Do **not** derive the referenced-side set from `repositoryBag.fetch()` / `repositoryRoll.fetch()` there: those are `shareIn(WhileSubscribed)` flows whose replay lags the just-completed `store()` write, so reading a stale (empty) replay makes `prune()` delete every cache entry and the SVG faces stop rendering.
+
+Use the synchronous persisted-data reads instead: `RepositoryBagInterface.fetchReferencedSideUuids()` and `RepositoryRollInterface.fetchReferencedSideUuids()` (implementations read the raw DataStore proto, not the derived flow). `RepositoryFactory.pruneCache()` combines both.
 
 Test doubles use in-memory storage (no persistence).
 
@@ -208,7 +226,7 @@ Compose screens use `AndroidViewModelFactory`:
 - **SettingsState**: A data class aggregating specific settings for the UI (e.g., in `RollsAndroidViewModel`).
 - **collectAsStateWithLifecycle**: Preferred way to collect flows in Compose to be lifecycle-aware.
 
-**Base ViewModel** (`zoom/ZoomAndroidViewModel.kt`): Abstract base for zoom views. Provides `ZoomState` data class (`resizeViewDp`, `diceBag`, `rollHistory`, scroll positions), move/reorder (`move()`/`moveUp()`/`moveDown()`), SVG image caching (`sideSvgImageRequestAsync`), and collects `DialogDiceCloseEvent`, `SetupImportEvent`, `DiceResetEvent`, `DisplayIndexEvent`.
+**Base ViewModel** (`zoom/ZoomAndroidViewModel.kt`): Abstract base for zoom views. Provides `ZoomState` data class (`resizeViewDp`, `diceBag`, `rollHistory`, scroll positions), move/reorder (`move()`/`moveUp()`/`moveDown()`), SVG image caching (`sideSvgImageRequestAsync` — resolves from the `RepositorySideCache` first, falling back to `side.imageBase64`), and collects `DialogDiceCloseEvent`, `SetupImportEvent`, `DiceResetEvent`, `DisplayIndexEvent`.
 
 ```kotlin
 class ZoomDiceAndroidViewModelFactory(
@@ -224,7 +242,7 @@ class ZoomDiceAndroidViewModelFactory(
 Core models are in sub-packages under `data.domain.core`:
 
 - **`Dice`** (`core/Dice.kt`): UUID, epoch timestamp, sides (`List<Side>`), title, colour, selected, multiplier/explode/modify rules (`DiceRollValues` companion provides constrained value lists for `multiplierValues`, `explodeWhenValues`, `modifyScoreValues`), `displayIndex`
-- **`Side`** (`core/Side.kt`): UUID, number, colours, `imageDrawableId`, `imageBase64`, `imageRequest` (transient, not in proto), description. Overrides `copy()`.
+- **`Side`** (`core/Side.kt`): UUID, number, colours, `imageDrawableId`, `imageBase64`, `imageBase64Uuid` (dedup reference to the owner side's UUID), `imageRequest` (transient, not in proto), description. Overrides `copy()`.
 - **`DiceBag`** (`core/bag/Bag.kt`): `typealias DiceBag = MutableList<Dice>`. Backed by `BagDataInterface` (`suspend fun allDice(): MutableList<Dice>`) with impl/test double.
 - **`Group`** (`core/group/Group.kt`): UUID, name, linked dice UUIDs, notes, selected, displayIndex. `typealias GroupHistory = List<Group>`. Backed by `GroupDataInterface` (`val groupHistory: GroupHistory` — read-only).
 - **`Roll`** (`core/roll/Roll.kt`): dice UUID, rolled `Side`, multiplier/explode indices, score adjustment, score, group UUID. `typealias RollHistory = LinkedHashMap<Long, List<Roll>>`. Backed by `RollHistoryDataInterface` (`var rollHistory: RollHistory` — mutable).
@@ -264,14 +282,14 @@ class MyTest : TestSupport() {
 - `.github/workflows/` — 7 CI pipelines: `static.analysis`, `static.gitleaks`, `codecov.unitTests`, `codecov.app.androidTest`, `codecov.data-common.androidTest`, `codecov.ui.androidTest`, `release.yml`
 - `.github/actions/cache-gradle/` and `.github/actions/cache-avd/` — CI caching actions
 - `module/*/src/{main,test,androidTest}/kotlin` — Source organization
-- `module/data-repo-impl/src/proto/` — 8 Proto schema files
+- `module/data-repo-impl/src/proto/` — 10 Proto schema files
 - `local.properties` — Local build config (git-ignored)
 - `keystore.jks` + `google-services.json` — Encrypted credentials (*.gpg files)
 
 ## When Adding Features
 
 1. **Domain Models**: Add to `module:data-domain`
-2. **Persistence**: Implement repo in `data-repo-impl`, interface in `data-repo-api`, proto in `src/proto/`
+2. **Persistence**: Implement repo in `data-repo-impl`, interface in `data-repo-api`, proto in `src/proto/`. For new SVG/image data, store it in the `RepositorySideCache` (`side_cache.pb`) rather than bloating `bag.pb`/`roll.pb` — wire the shared `repositorySideCache` instance through `RepositoryFactory` and resolve it in the fetch flows + UI. Run `ktlintFormat` before commit.
 3. **UI Screens**: Create in `module:ui`, add `*Preview.kt`, use `@Preview`/`@UtilityPreview` with test double flag
 4. **Tests**: Match module structure, inherit `UtilityLoggingHelper` or `TestSupport`
 5. **Test Tags**: Define `XxxTestTag` companion object for E2E automation

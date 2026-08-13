@@ -27,7 +27,7 @@ class BagDataImpl(val context: Context? = null) : BagDataInterface {
     }
 
     private val playingCards
-        get() = PlayingCards(context).playingCards
+        get() = PlayingCards(context).dice
 
     private val d2
         get() = Dice(

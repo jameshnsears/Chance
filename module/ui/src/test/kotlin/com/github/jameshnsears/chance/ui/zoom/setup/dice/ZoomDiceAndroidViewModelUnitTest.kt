@@ -2,13 +2,17 @@ package com.github.jameshnsears.chance.ui.zoom.setup.dice
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -18,9 +22,24 @@ import org.junit.Test
 
 
 class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
+    private val createdViewModels = mutableListOf<ViewModel>()
+
     @Before
     fun before() = runTest {
         RepositoryFactory().resetStorage()
+    }
+
+    @After
+    fun tearDown() {
+        // ViewModels created in a unit test never receive onCleared(), so their
+        // viewModelScope coroutines keep running and can pollute subsequent tests.
+        createdViewModels.forEach { it.viewModelScope.cancel() }
+        createdViewModels.clear()
+    }
+
+    private fun track(viewModel: ZoomDiceAndroidViewModel): ZoomDiceAndroidViewModel {
+        createdViewModels.add(viewModel)
+        return viewModel
     }
 
     @Test
@@ -32,7 +51,8 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         settings.resizeZoom = 1f
         repositorySettings.store(settings)
 
-        assertEquals(65.0.dp, zoomBagAndroidViewModel.stateFlowZoom.value.resizeViewDp)
+        val state = zoomBagAndroidViewModel.stateFlowZoom.first { it.resizeViewDp == 65.0.dp }
+        assertEquals(65.0.dp, state.resizeViewDp)
     }
 
     @Test
@@ -62,13 +82,15 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         side.imageBase64 = "PHN2ZyB2aWV3Qm94PSIwIDAgMTAgMTAiPjxjaXJjbGUgY3g9IjUiIGN5PSI1IiByPSI0Ii8+PC9zdmc+"
         repositoryFactory.repositoryBag.store(bagDataTestDouble.allDice())
 
-        val viewModel = ZoomDiceAndroidViewModel(
-            application(),
-            repositoryFactory.repositorySettings,
-            repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryLocked,
-            repositoryFactory.repositorySideCache,
+        val viewModel = track(
+            ZoomDiceAndroidViewModel(
+                application(),
+                repositoryFactory.repositorySettings,
+                repositoryFactory.repositoryBag,
+                repositoryFactory.repositoryRoll,
+                repositoryFactory.repositoryLocked,
+                repositoryFactory.repositorySideCache,
+            )
         )
 
         val imageRequest = viewModel.sideSvgImageRequestAsync(side)
@@ -83,13 +105,15 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun sideSvgImageRequestAsyncReturnsNullWhenNoImage() = runTest {
         val repositoryFactory = RepositoryFactory()
-        val viewModel = ZoomDiceAndroidViewModel(
-            application(),
-            repositoryFactory.repositorySettings,
-            repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryLocked,
-            repositoryFactory.repositorySideCache,
+        val viewModel = track(
+            ZoomDiceAndroidViewModel(
+                application(),
+                repositoryFactory.repositorySettings,
+                repositoryFactory.repositoryBag,
+                repositoryFactory.repositoryRoll,
+                repositoryFactory.repositoryLocked,
+                repositoryFactory.repositorySideCache,
+            )
         )
 
         val side = BagDataTestDouble().allDice()[0].sides[0]
@@ -107,13 +131,15 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         side.imageBase64 = "PHN2ZyB2aWV3Qm94PSIwIDAgMTAgMTAiPjxjaXJjbGUgY3g9IjUiIGN5PSI1IiByPSI0Ii8+PC9zdmc+"
         repositoryFactory.repositoryBag.store(bagDataTestDouble.allDice())
 
-        val viewModel = ZoomDiceAndroidViewModel(
-            application(),
-            repositoryFactory.repositorySettings,
-            repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryLocked,
-            repositoryFactory.repositorySideCache,
+        val viewModel = track(
+            ZoomDiceAndroidViewModel(
+                application(),
+                repositoryFactory.repositorySettings,
+                repositoryFactory.repositoryBag,
+                repositoryFactory.repositoryRoll,
+                repositoryFactory.repositoryLocked,
+                repositoryFactory.repositorySideCache,
+            )
         )
 
         val state = viewModel.stateFlowZoom.first { it.diceBag.isNotEmpty() }
@@ -139,12 +165,14 @@ class ZoomDiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
             ).rollHistory
         )
 
-        return ZoomDiceAndroidViewModel(
-            application(),
-            repositoryFactory.repositorySettings,
-            repositoryBag,
-            repositoryRoll,
-            repositoryFactory.repositoryLocked
+        return track(
+            ZoomDiceAndroidViewModel(
+                application(),
+                repositoryFactory.repositorySettings,
+                repositoryBag,
+                repositoryRoll,
+                repositoryFactory.repositoryLocked
+            )
         )
     }
 }

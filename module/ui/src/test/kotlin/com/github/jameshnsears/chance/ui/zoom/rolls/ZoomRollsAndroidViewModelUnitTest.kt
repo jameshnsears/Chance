@@ -1,5 +1,7 @@
 package com.github.jameshnsears.chance.ui.zoom.rolls
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Side
@@ -7,16 +9,34 @@ import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTes
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
+    private val createdViewModels = mutableListOf<ViewModel>()
+
     @Before
     fun before() = runTest {
         RepositoryFactory().resetStorage()
+    }
+
+    @After
+    fun tearDown() {
+        // ViewModels created in a unit test never receive onCleared(), so their
+        // viewModelScope coroutines keep running and can pollute subsequent tests
+        // (e.g. the roll-history observer clearing the lock repository).
+        createdViewModels.forEach { it.viewModelScope.cancel() }
+        createdViewModels.clear()
+    }
+
+    private fun track(viewModel: ZoomRollsAndroidViewModel): ZoomRollsAndroidViewModel {
+        createdViewModels.add(viewModel)
+        return viewModel
     }
 
     private suspend fun zoomRollsAndroidViewModel(): ZoomRollsAndroidViewModel {
@@ -29,14 +49,16 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         repositoryFactory.repositoryGroup.store(groupDataTestDouble.groupHistory)
         repositoryFactory.repositoryRoll.store(rollHistoryDataTestDouble.rollHistory)
 
-        return ZoomRollsAndroidViewModel(
-            application(),
-            repositoryFactory.repositorySettings,
-            repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryLocked,
-            repositoryFactory.repositorySideCache,
-            repositoryFactory.repositoryGroup
+        return track(
+            ZoomRollsAndroidViewModel(
+                application(),
+                repositoryFactory.repositorySettings,
+                repositoryFactory.repositoryBag,
+                repositoryFactory.repositoryRoll,
+                repositoryFactory.repositoryLocked,
+                repositoryFactory.repositorySideCache,
+                repositoryFactory.repositoryGroup
+            )
         )
     }
 
@@ -112,14 +134,16 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun persistence() = runTest {
         val repositoryFactory = RepositoryFactory()
-        val viewModel1 = ZoomRollsAndroidViewModel(
-            application(),
-            repositoryFactory.repositorySettings,
-            repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryLocked,
-            repositoryFactory.repositorySideCache,
-            repositoryFactory.repositoryGroup
+        val viewModel1 = track(
+            ZoomRollsAndroidViewModel(
+                application(),
+                repositoryFactory.repositorySettings,
+                repositoryFactory.repositoryBag,
+                repositoryFactory.repositoryRoll,
+                repositoryFactory.repositoryLocked,
+                repositoryFactory.repositorySideCache,
+                repositoryFactory.repositoryGroup
+            )
         )
         val roll = Roll("uuid", Side())
         viewModel1.toggleLock(roll)
@@ -128,14 +152,16 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         viewModel1.stateFlowZoom.first { it.lockedRollIndices.isNotEmpty() }
 
         // Simulate new ViewModel instance with same repository
-        val viewModel2 = ZoomRollsAndroidViewModel(
-            application(),
-            repositoryFactory.repositorySettings,
-            repositoryFactory.repositoryBag,
-            repositoryFactory.repositoryRoll,
-            repositoryFactory.repositoryLocked,
-            repositoryFactory.repositorySideCache,
-            repositoryFactory.repositoryGroup
+        val viewModel2 = track(
+            ZoomRollsAndroidViewModel(
+                application(),
+                repositoryFactory.repositorySettings,
+                repositoryFactory.repositoryBag,
+                repositoryFactory.repositoryRoll,
+                repositoryFactory.repositoryLocked,
+                repositoryFactory.repositorySideCache,
+                repositoryFactory.repositoryGroup
+            )
         )
         val locked = viewModel2.stateFlowZoom.first { it.lockedRollIndices.isNotEmpty() }.lockedRollIndices
         assertEquals(setOf(roll.unitKey()), locked)
