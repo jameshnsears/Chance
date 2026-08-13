@@ -75,7 +75,6 @@ public final class RollHistory {
         descriptor.resolveAllFeaturesImmutable();
         com.github.jameshnsears.chance.data.domain.proto.Roll.getDescriptor();
     }
-
     private RollHistory() {
     }
 

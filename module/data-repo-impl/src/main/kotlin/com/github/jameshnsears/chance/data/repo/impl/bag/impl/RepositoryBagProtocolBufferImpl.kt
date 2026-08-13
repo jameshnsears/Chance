@@ -10,7 +10,7 @@ import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
-import com.github.jameshnsears.chance.data.repo.impl.RepositoryProtocolBufferImageCache
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 import com.github.jameshnsears.chance.data.repo.impl.bag.RepositoryBagProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -26,17 +27,21 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class RepositoryBagProtocolBufferImpl private constructor(private val context: Context) :
+class RepositoryBagProtocolBufferImpl private constructor(
+    private val context: Context,
+    private val repositorySideCache: RepositorySideCacheInterface? = null
+) :
     RepositoryBagProtocolBufferInterface {
     companion object {
         @SuppressLint("StaticFieldLeak")
         private var instance: RepositoryBagProtocolBufferImpl? = null
 
         fun getInstance(
-            context: Context
+            context: Context,
+            repositorySideCache: RepositorySideCacheInterface? = null
         ): RepositoryBagProtocolBufferImpl {
             if (instance == null) {
-                instance = RepositoryBagProtocolBufferImpl(context)
+                instance = RepositoryBagProtocolBufferImpl(context, repositorySideCache)
             }
 
             return instance!!
@@ -45,20 +50,23 @@ class RepositoryBagProtocolBufferImpl private constructor(private val context: C
 
     private val repositoryScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    private val diceBagFlow = context.diceBagDataStore.data
-        .map { bagProtocolBuffer ->
+    private val diceBagFlow = if (repositorySideCache != null) {
+        context.diceBagDataStore.data.combine(repositorySideCache.fetch()) { bagProtocolBuffer, sideCache ->
+            val startTime = System.currentTimeMillis()
+            val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer, sideCache)
+            diceBag
+        }
+    } else {
+        context.diceBagDataStore.data.map { bagProtocolBuffer ->
             val startTime = System.currentTimeMillis()
             val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)
-
-            Timber.d("repositoryBag.FETCH ============================================")
-            Timber.d("repositoryBag.size=${diceBag.size}; mapping_time=${System.currentTimeMillis() - startTime}ms")
-
             diceBag
-        }.shareIn(
-            scope = repositoryScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            replay = 1
-        )
+        }
+    }.shareIn(
+        scope = repositoryScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        replay = 1
+    )
 
     override suspend fun jsonExport(): String = withContext(Dispatchers.IO) {
         val fieldsToAlwaysOutput: MutableSet<Descriptors.FieldDescriptor> = HashSet()
@@ -101,7 +109,6 @@ class RepositoryBagProtocolBufferImpl private constructor(private val context: C
     override fun fetchSelected(): Flow<Set<String>> = context.diceBagDataStore.data
         .map { bag ->
             bag.diceList
-                .filter { it.selected && it.epoch != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
                 .map { it.uuid }
                 .toSet()
         }.distinctUntilChanged()
@@ -116,13 +123,29 @@ class RepositoryBagProtocolBufferImpl private constructor(private val context: C
             Timber.d("repositoryBag.STORE ============================================")
             Timber.d("repositoryBag.size=${newDiceBag.size}")
 
+            if (repositorySideCache != null) {
+                val cacheEntries = newDiceBag.flatMap { it.sides }
+                    .filter { it.imageBase64.isNotEmpty() }
+                    .associate { it.uuid to it.imageBase64 }
+                repositorySideCache.store(cacheEntries)
+            }
+
             context.diceBagDataStore.updateData {
                 val bagProtocolBufferBuilder = BagProtocolBuffer.newBuilder()
                 mapDiceBagIntoBagProtocolBufferBuilder(
                     newDiceBag,
                     bagProtocolBufferBuilder
                 )
-                bagProtocolBufferBuilder.build()
+                val result = bagProtocolBufferBuilder.build()
+
+                // Optimization: clear imageBase64 in stored proto after moving to cache
+                val optimizedBuilder = result.toBuilder()
+                optimizedBuilder.diceBuilderList.forEach { diceBuilder ->
+                    diceBuilder.sideBuilderList.forEach { sideBuilder ->
+                        sideBuilder.imageBase64 = ""
+                    }
+                }
+                optimizedBuilder.build()
             }
         }
     }

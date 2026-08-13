@@ -5,17 +5,20 @@ import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
-import com.github.jameshnsears.chance.data.repo.impl.RepositoryProtocolBufferImageCache
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 import com.github.jameshnsears.chance.data.repo.impl.bag.RepositoryBagProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
-class RepositoryBagProtocolBufferTestDouble private constructor() :
+class RepositoryBagProtocolBufferTestDouble private constructor(
+    private val repositorySideCache: RepositorySideCacheInterface? = null
+) :
     RepositoryBagProtocolBufferInterface {
     private val diceBagProtocolBufferStateFlow =
         MutableStateFlow(BagProtocolBuffer.getDefaultInstance())
@@ -27,9 +30,10 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
 
         fun getInstance(
             diceBag: DiceBag = mutableListOf(),
+            repositorySideCache: RepositorySideCacheInterface? = null
         ): RepositoryBagProtocolBufferTestDouble {
             if (instance == null) {
-                instance = RepositoryBagProtocolBufferTestDouble()
+                instance = RepositoryBagProtocolBufferTestDouble(repositorySideCache)
             }
 
             if (!instance!!.initialized && diceBag.isNotEmpty()) {
@@ -85,43 +89,44 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
         store(jsonImportProcess(json))
     }
 
-    override fun fetch(): Flow<DiceBag> = diceBagProtocolBufferStateFlow
-        .map { bagProtocolBuffer ->
-            val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)
-
-            Timber.d("repositoryBag.FETCH ============================================")
+    override fun fetch(): Flow<DiceBag> = if (repositorySideCache != null) {
+        diceBagProtocolBufferStateFlow.combine(repositorySideCache.fetch()) { bagProtocolBuffer, sideCache ->
+            val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer, sideCache)
             Timber.d("repositoryBag.size=${diceBag.size}")
-
             diceBag
         }
+    } else {
+        diceBagProtocolBufferStateFlow.map { bagProtocolBuffer ->
+            val diceBag = mapBagProtocolBufferIntoDiceBag(bagProtocolBuffer)
+            Timber.d("repositoryBag.size=${diceBag.size}")
+            diceBag
+        }
+    }
 
     override fun fetchSelected(): Flow<Set<String>> = diceBagProtocolBufferStateFlow
         .map { bag ->
             bag.diceList
-                .filter { it.selected && it.epoch != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
+                .filter { it.selected }
                 .map { it.uuid }
                 .toSet()
         }.distinctUntilChanged()
 
-    override fun fetch(uuid: String): Flow<Dice> = diceBagProtocolBufferStateFlow
-        .map { bagProtocolBuffer ->
-            val cacheDice =
-                bagProtocolBuffer.diceList.find { it.epoch == RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
-            val imageCache = cacheDice?.sideList?.associate { it.uuid to it.imageBase64 } ?: emptyMap()
-
-            var dice = Dice()
-
-            bagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
-                if (uuid == diceProtocolBuffer.uuid) {
-                    dice = mapDiceProtocolBufferIntoDice(diceProtocolBuffer, imageCache)
-                }
-            }
-            dice
+    override fun fetch(uuid: String): Flow<Dice> = fetch()
+        .map { diceBag ->
+            diceBag.find { it.uuid == uuid } ?: Dice()
         }
 
     override suspend fun store(newDiceBag: DiceBag) {
         Timber.d("repositoryBag.STORE ============================================")
         Timber.d("repositoryBag.size=${newDiceBag.size}")
+
+        if (repositorySideCache != null) {
+            newDiceBag.forEach { dice ->
+                dice.sides.forEach { side ->
+                    repositorySideCache.store(side.uuid, side.imageBase64)
+                }
+            }
+        }
 
         updateStateFlow(newDiceBag)
     }

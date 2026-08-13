@@ -4,11 +4,9 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelper
 import com.github.jameshnsears.chance.data.domain.core.Dice
-import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
-import com.github.jameshnsears.chance.data.repo.impl.RepositoryProtocolBufferImageCache
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -20,7 +18,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -142,41 +139,6 @@ class RepositoryBagProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
-    fun storeWithDeduplication() = runTest {
-        val capturedBag = mutableListOf<BagProtocolBuffer>()
-        coEvery { dataStore.updateData(any()) } coAnswers {
-            val transform = it.invocation.args[0] as suspend (BagProtocolBuffer) -> BagProtocolBuffer
-            val result = transform(BagProtocolBuffer.getDefaultInstance())
-            capturedBag.add(result)
-            result
-        }
-
-        val repository = RepositoryBagProtocolBufferImpl.getInstance(context)
-        val image64 = "sameImage"
-        val diceBag = mutableListOf(
-            Dice(title = "d6", sides = mutableListOf(Side(imageBase64 = image64))),
-            Dice(title = "d20", sides = mutableListOf(Side(imageBase64 = image64)))
-        )
-        repository.store(diceBag)
-
-        val bag = capturedBag[0]
-        // One cache dice and two real dice
-        assertEquals(3, bag.diceCount)
-
-        val cacheDice = bag.diceList.find { it.epoch == RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
-        assertEquals(1, cacheDice!!.sideCount)
-        assertEquals(image64, cacheDice.getSide(0).imageBase64)
-
-        val d6 = bag.diceList.find { it.title == "d6" }
-        assertTrue(d6!!.getSide(0).imageBase64.startsWith(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX))
-
-        val d20 = bag.diceList.find { it.title == "d20" }
-        assertTrue(d20!!.getSide(0).imageBase64.startsWith(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX))
-
-        assertEquals(d6.getSide(0).imageBase64, d20.getSide(0).imageBase64)
-    }
-
-    @Test
     fun jsonExportWithDeduplication() = runTest {
         val image64 = "someImage"
         val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
@@ -188,23 +150,21 @@ class RepositoryBagProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
             .setModifyScore(false)
             .addSide(
                 SideProtocolBuffer.newBuilder()
-                    .setImageBase64(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX + "somehash")
+                    .setUuid("s1")
+                    .setImageBase64(image64)
                     .setDescription("")
                     .build()
             )
-            .build()
-        val cacheDice = DiceProtocolBuffer.newBuilder()
-            .setEpoch(RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE)
             .addSide(
                 SideProtocolBuffer.newBuilder()
-                    .setUuid("somehash")
+                    .setUuid("s2")
                     .setImageBase64(image64)
+                    .setDescription("")
                     .build()
             )
             .build()
         val bagProtocolBuffer = BagProtocolBuffer.newBuilder()
             .addDice(diceProtocolBuffer)
-            .addDice(cacheDice)
             .build()
 
         coEvery { dataStore.data } returns flowOf(bagProtocolBuffer)
@@ -212,9 +172,8 @@ class RepositoryBagProtocolBufferUnitTest : UtilityAndroidUnitTestHelper() {
         val repository = RepositoryBagProtocolBufferImpl.getInstance(context)
         val json = repository.jsonExport()
 
-        // The exported JSON should contain the actual image, not the reference
-        assertTrue(json.contains("\"imageBase64\": \"$image64\""))
-        assertFalse(json.contains(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX))
+        // The exported JSON should contain the imageBase64Uuid for deduplication
+        assertTrue(json.contains("\"imageBase64Uuid\": \"s1\""))
     }
 
     @Test

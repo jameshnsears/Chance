@@ -5,7 +5,6 @@ import com.github.jameshnsears.chance.data.repo.impl.locked.RepositoryLockedProt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 
 class RepositoryLockedProtocolBufferTestDouble private constructor() :
     RepositoryLockedProtocolBufferInterface {
@@ -25,16 +24,11 @@ class RepositoryLockedProtocolBufferTestDouble private constructor() :
 
     override fun fetch(): Flow<Set<String>> = lockedProtocolBufferStateFlow
         .map { lockedProtocolBuffer ->
-            Timber.d("repositoryLocked.FETCH ============================================")
             val locked = mapLockedProtocolBufferIntoLockedSet(lockedProtocolBuffer)
-            Timber.d("repositoryLocked.size=${locked.size}")
             locked
         }
 
     override suspend fun store(lockedRollIndices: Set<String>) {
-        Timber.d("repositoryLocked.STORE ============================================")
-        Timber.d("repositoryLocked.size=${lockedRollIndices.size}")
-
         val lockedProtocolBufferBuilder = LockedProtocolBuffer.newBuilder()
         mapLockedSetIntoLockedProtocolBufferBuilder(
             lockedRollIndices,

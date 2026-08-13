@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 
 class RepositoryGroupProtocolBufferTestDouble private constructor() :
     RepositoryGroupProtocolBufferInterface {
@@ -67,10 +66,6 @@ class RepositoryGroupProtocolBufferTestDouble private constructor() :
     override fun fetch(): Flow<GroupHistory> = groupHistoryProtocolBufferStateFlow
         .map { groupHistoryProtocolBuffer ->
             val groupHistory = mapGroupHistoryProtocolBufferIntoGroupHistory(groupHistoryProtocolBuffer)
-
-            Timber.d("repositoryGroup.FETCH ============================================")
-            Timber.d("repositoryGroup.size=${groupHistory.size}")
-
             groupHistory
         }
 
@@ -83,16 +78,10 @@ class RepositoryGroupProtocolBufferTestDouble private constructor() :
         }.distinctUntilChanged()
 
     override suspend fun store(newGroupHistory: GroupHistory) {
-        Timber.d("repositoryGroup.STORE ============================================")
-        Timber.d("repositoryGroup.size=${newGroupHistory.size}")
-
         updateStateFlow(newGroupHistory)
     }
 
     override suspend fun store(groupUuid: String, selected: Boolean) {
-        Timber.d("repositoryGroup.STORE.TARGETED ===================================")
-        Timber.d("groupUuid=$groupUuid; selected=$selected")
-
         val builder = groupHistoryProtocolBufferStateFlow.value.toBuilder()
         val groupIndex = builder.groupList.indexOfFirst { it.uuid == groupUuid }
         if (groupIndex != -1) {

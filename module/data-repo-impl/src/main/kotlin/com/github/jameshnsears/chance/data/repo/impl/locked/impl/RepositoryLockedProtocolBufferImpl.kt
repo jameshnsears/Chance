@@ -40,10 +40,6 @@ class RepositoryLockedProtocolBufferImpl private constructor(private val context
         .map { lockedProtocolBuffer ->
             val startTime = System.currentTimeMillis()
             val locked = mapLockedProtocolBufferIntoLockedSet(lockedProtocolBuffer)
-
-            Timber.d("repositoryLocked.FETCH ============================================")
-            Timber.d("repositoryLocked.size=${locked.size}; mapping_time=${System.currentTimeMillis() - startTime}ms")
-
             locked
         }.shareIn(
             scope = repositoryScope,

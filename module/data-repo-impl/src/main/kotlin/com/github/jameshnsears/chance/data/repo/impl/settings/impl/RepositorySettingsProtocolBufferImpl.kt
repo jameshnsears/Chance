@@ -44,10 +44,6 @@ class RepositorySettingsProtocolBufferImpl private constructor(private val conte
         .map { settingsProtocolBuffer ->
             val startTime = System.currentTimeMillis()
             val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
-
-            Timber.d("repositorySettings.FETCH ============================================")
-            Timber.d("repositorySettings.resizeZoom=${settings.resizeZoom}; mapping_time=${System.currentTimeMillis() - startTime}ms")
-
             settings
         }.shareIn(
             scope = repositoryScope,

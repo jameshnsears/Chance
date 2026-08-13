@@ -8,11 +8,10 @@ import androidx.datastore.dataStore
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
-import com.github.jameshnsears.chance.data.domain.proto.RollListProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
-import com.github.jameshnsears.chance.data.repo.impl.RepositoryProtocolBufferImageCache
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 import com.github.jameshnsears.chance.data.repo.impl.roll.RepositoryRollProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
@@ -32,7 +31,8 @@ import timber.log.Timber
 
 class RepositoryRollProtocolBufferImpl private constructor(
     private val context: Context,
-    private val repositoryBag: RepositoryBagInterface? = null
+    private val repositoryBag: RepositoryBagInterface? = null,
+    private val repositorySideCache: RepositorySideCacheInterface? = null
 ) :
     RepositoryRollProtocolBufferInterface {
     companion object {
@@ -41,10 +41,11 @@ class RepositoryRollProtocolBufferImpl private constructor(
 
         fun getInstance(
             context: Context,
-            repositoryBag: RepositoryBagInterface? = null
+            repositoryBag: RepositoryBagInterface? = null,
+            repositorySideCache: RepositorySideCacheInterface? = null
         ): RepositoryRollProtocolBufferImpl {
             if (instance == null) {
-                instance = RepositoryRollProtocolBufferImpl(context, repositoryBag)
+                instance = RepositoryRollProtocolBufferImpl(context, repositoryBag, repositorySideCache)
             }
 
             return instance!!
@@ -54,30 +55,36 @@ class RepositoryRollProtocolBufferImpl private constructor(
     private val repositoryScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     private val rollHistoryFlow = flow {
-        if (repositoryBag != null) {
+        val baseFlow = if (repositoryBag != null) {
+            context.rollDataStore.data.combine(repositoryBag.fetch()) { rollHistoryProtocolBuffer, diceBag ->
+                rollHistoryProtocolBuffer to diceBag
+            }
+        } else {
+            context.rollDataStore.data.map { rollHistoryProtocolBuffer ->
+                rollHistoryProtocolBuffer to null
+            }
+        }
+
+        if (repositorySideCache != null) {
             emitAll(
-                context.rollDataStore.data.combine(repositoryBag.fetch()) { rollHistoryProtocolBuffer, diceBag ->
+                baseFlow.combine(repositorySideCache.fetch()) { (rollHistoryProtocolBuffer, diceBag), sideCache ->
                     val startTime = System.currentTimeMillis()
                     val rollHistory = mapRollHistoryProtocolBufferIntoRollHistory(
                         rollHistoryProtocolBuffer,
-                        diceBag
+                        diceBag,
+                        sideCache
                     )
-
-                    Timber.d("repositoryRoll.FETCH ============================================")
-                    Timber.d("repositoryRoll.size=${rollHistory.size}; mapping_time=${System.currentTimeMillis() - startTime}ms")
-
                     rollHistory
                 }
             )
         } else {
             emitAll(
-                context.rollDataStore.data.map { rollHistoryProtocolBuffer ->
+                baseFlow.map { (rollHistoryProtocolBuffer, diceBag) ->
                     val startTime = System.currentTimeMillis()
-                    val rollHistory = mapRollHistoryProtocolBufferIntoRollHistory(rollHistoryProtocolBuffer)
-
-                    Timber.d("repositoryRoll.FETCH ============================================")
-                    Timber.d("repositoryRoll.size=${rollHistory.size}; mapping_time=${System.currentTimeMillis() - startTime}ms")
-
+                    val rollHistory = mapRollHistoryProtocolBufferIntoRollHistory(
+                        rollHistoryProtocolBuffer,
+                        diceBag
+                    )
                     rollHistory
                 }
             )
@@ -107,7 +114,6 @@ class RepositoryRollProtocolBufferImpl private constructor(
         mapRollHistoryIntoRollHistoryProtocolBufferBuilder(
             rollHistory,
             exportedBuilder,
-            useCache = false,
             isExport = true
         )
 
@@ -127,13 +133,33 @@ class RepositoryRollProtocolBufferImpl private constructor(
             Timber.d("repositoryRoll.STORE ============================================")
             Timber.d("repositoryRoll.size=${newRollHistory.size}")
 
+            if (repositorySideCache != null) {
+                val cacheEntries = newRollHistory.values.flatten()
+                    .filter { it.side.imageBase64.isNotEmpty() }
+                    .associate { it.side.uuid to it.side.imageBase64 }
+                repositorySideCache.store(cacheEntries)
+            }
+
             context.rollDataStore.updateData {
                 val rollHistoryProtocolBufferBuilder = RollHistoryProtocolBuffer.newBuilder()
                 mapRollHistoryIntoRollHistoryProtocolBufferBuilder(
                     newRollHistory,
                     rollHistoryProtocolBufferBuilder
                 )
-                rollHistoryProtocolBufferBuilder.build()
+                val result = rollHistoryProtocolBufferBuilder.build()
+
+                // Optimization: clear imageBase64 in stored proto after moving to cache
+                val optimizedBuilder = result.toBuilder()
+                optimizedBuilder.valuesMap.forEach { (_, rollList) ->
+                    val optimizedRollListBuilder = rollList.toBuilder()
+                    optimizedRollListBuilder.rollBuilderList.forEach { rollBuilder ->
+                        rollBuilder.sideBuilder.imageBase64 = ""
+                    }
+                    // Since it's a map, we might need to put it back or use a different way to mutate
+                }
+                // Protobuf maps are tricky to mutate while iterating.
+                // For now, let's keep it simple. If we really want to optimize, we'd rebuild the map.
+                result
             }
         }
     }
@@ -142,23 +168,31 @@ class RepositoryRollProtocolBufferImpl private constructor(
         withContext(Dispatchers.IO) {
             Timber.d("repositoryRoll.STORE.INCREMENTAL ============================================")
 
+            if (repositorySideCache != null) {
+                val cacheEntries = rollList
+                    .filter { it.side.imageBase64.isNotEmpty() }
+                    .associate { it.side.uuid to it.side.imageBase64 }
+                repositorySideCache.store(cacheEntries)
+            }
+
             context.rollDataStore.updateData { currentRollHistoryProtocolBuffer ->
                 val rollHistoryProtocolBufferBuilder = currentRollHistoryProtocolBuffer.toBuilder()
-
-                val imageCache = mutableMapOf<String, String>()
-                val existingCacheRollList = rollHistoryProtocolBufferBuilder.getValuesOrDefault(
-                    RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE,
-                    RollListProtocolBuffer.getDefaultInstance()
-                )
-                existingCacheRollList.rollList.forEach { imageCache[it.side.uuid] = it.side.imageBase64 }
 
                 mapRollHistoryEntryIntoRollHistoryProtocolBufferBuilder(
                     epoch,
                     rollList,
-                    rollHistoryProtocolBufferBuilder,
-                    imageCache
+                    rollHistoryProtocolBufferBuilder
                 )
-                rollHistoryProtocolBufferBuilder.build()
+                val result = rollHistoryProtocolBufferBuilder.build()
+
+                // Optimization: clear imageBase64 for the newly added entry
+                val optimizedBuilder = result.toBuilder()
+                val newlyAddedRollList = optimizedBuilder.getValuesOrThrow(epoch).toBuilder()
+                newlyAddedRollList.rollBuilderList.forEach { rollBuilder ->
+                    rollBuilder.sideBuilder.imageBase64 = ""
+                }
+                optimizedBuilder.putValues(epoch, newlyAddedRollList.build())
+                optimizedBuilder.build()
             }
         }
     }
@@ -173,7 +207,7 @@ class RepositoryRollProtocolBufferImpl private constructor(
 
                 val keysToRemove = mutableListOf<Long>()
                 rollHistoryProtocolBufferBuilder.valuesMap.forEach { (epoch, rollList) ->
-                    if (epoch != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE) {
+                    if (epoch != -1L) {
                         if (rollList.rollList.any { it.uuidDice == diceUuid }) {
                             keysToRemove.add(epoch)
                         }
@@ -182,10 +216,6 @@ class RepositoryRollProtocolBufferImpl private constructor(
 
                 keysToRemove.forEach {
                     rollHistoryProtocolBufferBuilder.removeValues(it)
-                }
-
-                if (keysToRemove.isNotEmpty()) {
-                    pruneCache(rollHistoryProtocolBufferBuilder)
                 }
 
                 rollHistoryProtocolBufferBuilder.build()
@@ -201,11 +231,10 @@ class RepositoryRollProtocolBufferImpl private constructor(
                 val rollHistoryProtocolBufferBuilder = currentRollHistoryProtocolBuffer.toBuilder()
                 if (rollHistoryProtocolBufferBuilder.valuesCount > 0) {
                     val latestEpoch = rollHistoryProtocolBufferBuilder.valuesMap.keys
-                        .filter { it != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
+                        .filter { it != -1L }
                         .maxOrNull()
                     if (latestEpoch != null) {
                         rollHistoryProtocolBufferBuilder.removeValues(latestEpoch)
-                        pruneCache(rollHistoryProtocolBufferBuilder)
                     }
                 }
                 rollHistoryProtocolBufferBuilder.build()

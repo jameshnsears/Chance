@@ -46,10 +46,6 @@ class RepositoryGroupProtocolBufferImpl private constructor(private val context:
         .map { groupHistoryProtocolBuffer ->
             val startTime = System.currentTimeMillis()
             val groupHistory = mapGroupHistoryProtocolBufferIntoGroupHistory(groupHistoryProtocolBuffer)
-
-            Timber.d("repositoryGroup.FETCH ============================================")
-            Timber.d("repositoryGroup.size=${groupHistory.size}; mapping_time=${System.currentTimeMillis() - startTime}ms")
-
             groupHistory
         }.shareIn(
             scope = repositoryScope,

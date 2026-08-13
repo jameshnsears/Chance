@@ -43,7 +43,6 @@ public final class Locked {
             new java.lang.String[]{"LockedRollIndices",});
         descriptor.resolveAllFeaturesImmutable();
     }
-
     private Locked() {
     }
 

@@ -1,22 +1,26 @@
 package com.github.jameshnsears.chance.data.repo.impl.roll.testdouble
 
+import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.RollHistory
 import com.github.jameshnsears.chance.data.domain.proto.RollHistoryProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.RollProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 import com.github.jameshnsears.chance.data.repo.impl.roll.RepositoryRollProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 class RepositoryRollProtocolBufferTestDouble private constructor(
-    private val repositoryBag: RepositoryBagInterface? = null
+    private val repositoryBag: RepositoryBagInterface? = null,
+    private val repositorySideCache: RepositorySideCacheInterface? = null
 ) :
     RepositoryRollProtocolBufferInterface {
     private val rollHistoryProtocolBufferStateFlow =
@@ -28,18 +32,19 @@ class RepositoryRollProtocolBufferTestDouble private constructor(
         private var instance: RepositoryRollProtocolBufferTestDouble? = null
 
         fun getInstance(
-            rollHistory: RollHistory,
-            repositoryBag: RepositoryBagInterface? = null
+            rollHistory: RollHistory = LinkedHashMap(),
+            repositoryBag: RepositoryBagInterface? = null,
+            repositorySideCache: RepositorySideCacheInterface? = null
         ): RepositoryRollProtocolBufferTestDouble {
             if (instance == null) {
-                instance = RepositoryRollProtocolBufferTestDouble(repositoryBag)
+                instance = RepositoryRollProtocolBufferTestDouble(repositoryBag, repositorySideCache)
             }
 
-            if (!instance!!.initialized) {
+            if (!instance!!.initialized && rollHistory.isNotEmpty()) {
                 instance!!.updateStateFlow(rollHistory)
-                instance!!.traceUuid(rollHistory)
                 instance!!.initialized = true
             }
+
             return instance!!
         }
     }
@@ -71,7 +76,6 @@ class RepositoryRollProtocolBufferTestDouble private constructor(
         mapRollHistoryIntoRollHistoryProtocolBufferBuilder(
             rollHistory,
             exportedBuilder,
-            useCache = false,
             isExport = true
         )
 
@@ -84,66 +88,103 @@ class RepositoryRollProtocolBufferTestDouble private constructor(
         store(jsonImportProcess(json, diceBag))
     }
 
-    override fun fetch(): Flow<RollHistory> = rollHistoryProtocolBufferStateFlow
-        .map { rollHistoryProtocolBuffer ->
-            Timber.d("repositoryRoll.FETCH.start ============================================")
-
-            val rollHistory = mapRollHistoryProtocolBufferIntoRollHistory(rollHistoryProtocolBuffer)
-
-            Timber.d("repositoryRoll.FETCH.end ============================================")
-            Timber.d("repositoryRoll.size=${rollHistory.size}")
-
-            rollHistory
+    override fun fetch(): Flow<RollHistory> {
+        val baseFlow = if (repositoryBag != null) {
+            rollHistoryProtocolBufferStateFlow.combine(repositoryBag.fetch()) { rollHistoryProtocolBuffer, diceBag ->
+                rollHistoryProtocolBuffer to diceBag
+            }
+        } else {
+            rollHistoryProtocolBufferStateFlow.map { rollHistoryProtocolBuffer ->
+                rollHistoryProtocolBuffer to null as DiceBag?
+            }
         }
+
+        return if (repositorySideCache != null) {
+            baseFlow.combine(repositorySideCache.fetch()) { (rollHistoryProtocolBuffer, diceBag), sideCache ->
+                mapRollHistoryProtocolBufferIntoRollHistory(
+                    rollHistoryProtocolBuffer,
+                    diceBag,
+                    sideCache
+                )
+            }
+        } else {
+            baseFlow.map { (rollHistoryProtocolBuffer, diceBag) ->
+                mapRollHistoryProtocolBufferIntoRollHistory(
+                    rollHistoryProtocolBuffer,
+                    diceBag
+                )
+            }
+        }
+    }
 
     override suspend fun store(newRollHistory: RollHistory) {
         Timber.d("repositoryRoll.STORE ============================================")
         Timber.d("repositoryRoll.size=${newRollHistory.size}")
 
+        if (repositorySideCache != null) {
+            newRollHistory.values.forEach { rolls ->
+                rolls.forEach { roll ->
+                    repositorySideCache.store(roll.side.uuid, roll.side.imageBase64)
+                }
+            }
+        }
+
         updateStateFlow(newRollHistory)
     }
 
     override suspend fun store(epoch: Long, rollList: List<Roll>) {
-        Timber.d("repositoryRoll.STORE.INCREMENTAL ============================================")
+        Timber.d("repositoryRoll.STORE.ENTRY =====================================")
 
-        val rollHistoryProtocolBufferBuilder = rollHistoryProtocolBufferStateFlow.value.toBuilder()
+        if (repositorySideCache != null) {
+            rollList.forEach { roll ->
+                repositorySideCache.store(roll.side.uuid, roll.side.imageBase64)
+            }
+        }
+
+        val builder = rollHistoryProtocolBufferStateFlow.value.toBuilder()
         mapRollHistoryEntryIntoRollHistoryProtocolBufferBuilder(
             epoch,
             rollList,
-            rollHistoryProtocolBufferBuilder
+            builder
         )
-        rollHistoryProtocolBufferStateFlow.value = rollHistoryProtocolBufferBuilder.build()
+        rollHistoryProtocolBufferStateFlow.value = builder.build()
     }
 
     override suspend fun delete(diceUuid: String) {
         Timber.d("repositoryRoll.DELETE ============================================")
         Timber.d("repositoryRoll.delete.diceUuid=$diceUuid")
 
-        val rollHistoryProtocolBufferBuilder = rollHistoryProtocolBufferStateFlow.value.toBuilder()
+        val builder = rollHistoryProtocolBufferStateFlow.value.toBuilder()
+
         val keysToRemove = mutableListOf<Long>()
-        rollHistoryProtocolBufferBuilder.valuesMap.forEach { (epoch, rollList) ->
-            if (rollList.rollList.any { it.uuidDice == diceUuid }) {
-                keysToRemove.add(epoch)
+        builder.valuesMap.forEach { (epoch, rollList) ->
+            if (epoch != -1L) {
+                if (rollList.rollList.any { it.uuidDice == diceUuid }) {
+                    keysToRemove.add(epoch)
+                }
             }
         }
 
         keysToRemove.forEach {
-            rollHistoryProtocolBufferBuilder.removeValues(it)
+            builder.removeValues(it)
         }
-        rollHistoryProtocolBufferStateFlow.value = rollHistoryProtocolBufferBuilder.build()
+
+        rollHistoryProtocolBufferStateFlow.value = builder.build()
     }
 
     override suspend fun removeLatest() {
         Timber.d("repositoryRoll.REMOVE.LATEST ============================================")
 
-        val rollHistoryProtocolBufferBuilder = rollHistoryProtocolBufferStateFlow.value.toBuilder()
-        if (rollHistoryProtocolBufferBuilder.valuesCount > 0) {
-            val latestEpoch = rollHistoryProtocolBufferBuilder.valuesMap.keys.maxOrNull()
+        val builder = rollHistoryProtocolBufferStateFlow.value.toBuilder()
+        if (builder.valuesCount > 0) {
+            val latestEpoch = builder.valuesMap.keys
+                .filter { it != -1L }
+                .maxOrNull()
             if (latestEpoch != null) {
-                rollHistoryProtocolBufferBuilder.removeValues(latestEpoch)
+                builder.removeValues(latestEpoch)
             }
         }
-        rollHistoryProtocolBufferStateFlow.value = rollHistoryProtocolBufferBuilder.build()
+        rollHistoryProtocolBufferStateFlow.value = builder.build()
     }
 
     override suspend fun clear() {

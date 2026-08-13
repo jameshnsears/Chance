@@ -11,6 +11,7 @@ import com.github.jameshnsears.chance.data.domain.core.roll.impl.RollHistoryData
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 import com.github.jameshnsears.chance.data.repo.impl.bag.impl.RepositoryBagProtocolBufferImpl
 import com.github.jameshnsears.chance.data.repo.impl.bag.testdouble.RepositoryBagProtocolBufferTestDouble
 import com.github.jameshnsears.chance.data.repo.impl.group.impl.RepositoryGroupProtocolBufferImpl
@@ -21,6 +22,8 @@ import com.github.jameshnsears.chance.data.repo.impl.roll.impl.RepositoryRollPro
 import com.github.jameshnsears.chance.data.repo.impl.roll.testdouble.RepositoryRollProtocolBufferTestDouble
 import com.github.jameshnsears.chance.data.repo.impl.settings.impl.RepositorySettingsProtocolBufferImpl
 import com.github.jameshnsears.chance.data.repo.impl.settings.testdouble.RepositorySettingsProtocolBufferTestDouble
+import com.github.jameshnsears.chance.data.repo.impl.side.impl.RepositorySideCacheProtocolBufferImpl
+import com.github.jameshnsears.chance.data.repo.impl.side.testdouble.RepositorySideCacheProtocolBufferTestDouble
 import kotlinx.coroutines.flow.first
 
 class RepositoryFactory(val context: Context? = null) {
@@ -51,6 +54,18 @@ class RepositoryFactory(val context: Context? = null) {
     // 2. Repositories (Guaranteed to initialize AFTER all above variables exist)
     // ========================================================================
 
+    val repositorySideCache: RepositorySideCacheInterface by lazy {
+        if (context != null) {
+            if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
+                RepositorySideCacheProtocolBufferTestDouble.getInstance()
+            } else {
+                RepositorySideCacheProtocolBufferImpl.getInstance(context)
+            }
+        } else {
+            RepositorySideCacheProtocolBufferTestDouble.getInstance()
+        }
+    }
+
     val repositorySettings by lazy {
         if (context != null) {
             if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
@@ -66,12 +81,12 @@ class RepositoryFactory(val context: Context? = null) {
     val repositoryBag by lazy {
         if (context != null) {
             if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
-                RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDiceList())
+                RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDiceList(), repositorySideCache)
             } else {
-                RepositoryBagProtocolBufferImpl.getInstance(context)
+                RepositoryBagProtocolBufferImpl.getInstance(context, repositorySideCache)
             }
         } else {
-            RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDiceList())
+            RepositoryBagProtocolBufferTestDouble.getInstance(bagDataTestDouble.allDiceList(), repositorySideCache)
         }
     }
 
@@ -90,12 +105,12 @@ class RepositoryFactory(val context: Context? = null) {
     val repositoryRoll by lazy {
         if (context != null) {
             if (BuildConfig.DEBUG && !UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
-                RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble, repositoryBag)
+                RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble, repositoryBag, repositorySideCache)
             } else {
-                RepositoryRollProtocolBufferImpl.getInstance(context, repositoryBag)
+                RepositoryRollProtocolBufferImpl.getInstance(context, repositoryBag, repositorySideCache)
             }
         } else {
-            RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble, repositoryBag)
+            RepositoryRollProtocolBufferTestDouble.getInstance(rollHistoryTestDouble, repositoryBag, repositorySideCache)
         }
     }
 
@@ -122,6 +137,7 @@ class RepositoryFactory(val context: Context? = null) {
             repositoryGroup.clear()
             repositoryRoll.clear()
             repositoryLocked.clear()
+            repositorySideCache.clear()
         }
 
         if (repositorySettings.fetch().first().resizeZoom == 0f) {
@@ -140,10 +156,13 @@ class RepositoryFactory(val context: Context? = null) {
             repositoryRoll.store(rollHistoryDataImpl)
             repositoryRoll.traceUuid(rollHistoryDataImpl)
         }
+
+        pruneCache()
     }
 
     suspend fun resetStorage() {
         repositoryLocked.clear()
+        repositorySideCache.clear()
 
         if (BuildConfig.DEBUG) {
             if (UtilityFeature.isEnabled(UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD)) {
@@ -163,5 +182,20 @@ class RepositoryFactory(val context: Context? = null) {
             repositoryGroup.store(groupDataImpl)
             repositoryRoll.store(rollHistoryDataImpl)
         }
+    }
+
+    private suspend fun pruneCache() {
+        val referencedUuids = mutableSetOf<String>()
+        repositoryBag.fetch().first().forEach { dice ->
+            dice.sides.forEach { side ->
+                referencedUuids.add(side.uuid)
+            }
+        }
+        repositoryRoll.fetch().first().values.forEach { rolls ->
+            rolls.forEach { roll ->
+                referencedUuids.add(roll.side.uuid)
+            }
+        }
+        repositorySideCache.prune(referencedUuids)
     }
 }

@@ -24,6 +24,7 @@ import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
 import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
+import com.github.jameshnsears.chance.data.repo.api.side.RepositorySideCacheInterface
 import com.github.jameshnsears.chance.ui.tab.DisplayIndexEvent
 import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceResizeEvent
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +33,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -69,6 +72,7 @@ abstract class ZoomAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val repositoryRoll: RepositoryRollInterface,
     val repositoryLocked: RepositoryLockedInterface,
+    val repositorySideCache: RepositorySideCacheInterface? = null,
 ) : AndroidViewModel(application) {
     val tapOffset = mutableStateOf(Offset.Zero)
 
@@ -85,6 +89,8 @@ abstract class ZoomAndroidViewModel(
         settings to transient
     }
 
+    private val sideCacheFlow = repositorySideCache?.fetch() ?: flowOf(emptyMap<String, String>())
+
     val stateFlowZoom: StateFlow<ZoomState> = combine(
         settingsWithTransientResize,
         repositoryBag.fetch(),
@@ -96,9 +102,19 @@ abstract class ZoomAndroidViewModel(
             sortedHistory
         },
         repositoryLocked.fetch(),
-        _scrollState
-    ) { (settings, transientResize), diceBag, rollHistory, lockedRollIndices, scrollData ->
+        combine(_scrollState, sideCacheFlow) { scroll, cache -> scroll to cache }
+    ) { (settings, transientResize), diceBag, rollHistory, lockedRollIndices, (scrollData, sideCache) ->
         val resizeZoom = transientResize ?: settings.resizeZoom
+
+        diceBag.forEach { dice ->
+            dice.sides.forEach { side ->
+                val svg = sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]
+                if (svg != null) {
+                    side.imageBase64 = ""
+                }
+            }
+        }
+
         ZoomState(
             resizeViewDp = resizeViewAsDp(resizeZoom),
             diceBag = diceBag.sortedBy { it.displayIndex }.toMutableList(),
@@ -271,6 +287,13 @@ abstract class ZoomAndroidViewModel(
     private val imageRequestCache = ConcurrentHashMap<String, ImageRequest>()
 
     suspend fun sideSvgImageRequestAsync(side: Side): ImageRequest = withContext(Dispatchers.Default) {
+        val sideCache = repositorySideCache?.fetch()?.first() ?: emptyMap()
+        val svgString = sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]
+
+        if (svgString != null) {
+            return@withContext UtilitySvgSerializer.imageRequestFromSvgStringAsync(getApplication(), svgString)
+        }
+
         val cacheKey = side.imageBase64
         // Return cached result if available (fast path - no lock)
         imageRequestCache[cacheKey]?.let { return@withContext it }

@@ -8,7 +8,6 @@ import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import timber.log.Timber
 
 class RepositorySettingsProtocolBufferTestDouble private constructor() :
     RepositorySettingsProtocolBufferInterface {
@@ -71,17 +70,10 @@ class RepositorySettingsProtocolBufferTestDouble private constructor() :
     override fun fetch(): Flow<SettingsDataInterface> = settingsProtocolBufferStateFlow
         .map { settingsProtocolBuffer ->
             val settings = mapSettingsProtocolBufferIntoSettings(settingsProtocolBuffer)
-
-            Timber.d("repositorySettings.FETCH ============================================")
-            Timber.d("repositorySettings.resizeZoom=${settings.resizeZoom}")
-
             settings
         }
 
     override suspend fun store(settingsData: SettingsDataInterface) {
-        Timber.d("repositorySettings.STORE ============================================")
-        Timber.d("repositorySettings.resizeZoom=${settingsData.resizeZoom}")
-
         updateStateFlow(settingsData)
     }
 

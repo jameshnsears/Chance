@@ -7,73 +7,16 @@ import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
-import com.github.jameshnsears.chance.data.repo.impl.RepositoryProtocolBufferImageCache
 import com.google.protobuf.util.JsonFormat
-import timber.log.Timber
 import java.util.UUID
 
-interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface, RepositoryProtocolBufferImageCache {
-
-    private fun getOrUpdateCache(
-        base64: String,
-        bagProtocolBufferBuilder: BagProtocolBuffer.Builder,
-        imageCache: MutableMap<String, String>
-    ): String {
-        if (base64.isEmpty() || base64.startsWith(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX)) {
-            return base64
-        }
-
-        val hash = sha256(base64)
-
-        if (!imageCache.containsKey(hash)) {
-            var cacheDiceIndex = -1
-            for (i in 0 until bagProtocolBufferBuilder.diceCount) {
-                if (bagProtocolBufferBuilder.getDice(i).epoch == RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE) {
-                    cacheDiceIndex = i
-                    break
-                }
-            }
-
-            val cacheDiceBuilder = if (cacheDiceIndex != -1) {
-                bagProtocolBufferBuilder.getDice(cacheDiceIndex).toBuilder()
-            } else {
-                DiceProtocolBuffer.newBuilder().setEpoch(RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE)
-            }
-
-            val cacheSide = SideProtocolBuffer.newBuilder()
-                .setUuid(hash)
-                .setImageBase64(base64)
-                .build()
-            cacheDiceBuilder.addSide(cacheSide)
-
-            if (cacheDiceIndex != -1) {
-                bagProtocolBufferBuilder.setDice(cacheDiceIndex, cacheDiceBuilder.build())
-            } else {
-                bagProtocolBufferBuilder.addDice(cacheDiceBuilder.build())
-                cacheDiceIndex = bagProtocolBufferBuilder.diceCount - 1
-            }
-
-            imageCache[hash] = base64
-
-            Timber.d("repositoryBag.CACHE.ADD: size=${bagProtocolBufferBuilder.getDice(cacheDiceIndex).sideCount}")
-        }
-
-        return "${RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX}$hash"
-    }
+interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface {
 
     fun mapDiceBagIntoBagProtocolBufferBuilder(
         diceBag: DiceBag,
-        bagProtocolBufferBuilder: BagProtocolBuffer.Builder,
-        useCache: Boolean = true
+        bagProtocolBufferBuilder: BagProtocolBuffer.Builder
     ) {
         bagProtocolBufferBuilder.clearDice()
-
-        val imageCache = mutableMapOf<String, String>()
-        if (useCache) {
-            val existingCacheDice =
-                bagProtocolBufferBuilder.diceList.find { it.epoch == RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
-            existingCacheDice?.sideList?.forEach { imageCache[it.uuid] = it.imageBase64 }
-        }
 
         // Create a lookup for imageBase64 referenced by UUID
         val sideUuidToImageBase64Map = diceBag.flatMap { it.sides }
@@ -101,13 +44,7 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface, Reposit
                     imageBase64ToUse = sideUuidToImageBase64Map[side.imageBase64Uuid] ?: ""
                 }
 
-                if (useCache) {
-                    sideProtocolBuffer.setImageBase64(
-                        getOrUpdateCache(imageBase64ToUse, bagProtocolBufferBuilder, imageCache)
-                    )
-                } else {
-                    sideProtocolBuffer.setImageBase64(imageBase64ToUse)
-                }
+                sideProtocolBuffer.setImageBase64(imageBase64ToUse)
 
                 sideProtocolBuffer
                     .setDescription(side.description)
@@ -135,72 +72,29 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface, Reposit
             bagProtocolBufferBuilder
                 .addDice(diceProtocolBuffer)
         }
-
-        pruneCache(bagProtocolBufferBuilder)
-    }
-
-    fun pruneCache(bagProtocolBufferBuilder: BagProtocolBuffer.Builder) {
-        val cacheDiceIndex = bagProtocolBufferBuilder.diceList.indexOfFirst {
-            it.epoch == RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE
-        }
-
-        if (cacheDiceIndex == -1) return
-
-        val existingCacheDice = bagProtocolBufferBuilder.getDice(cacheDiceIndex)
-        Timber.d("repositoryBag.CACHE.PRUNE.start: size=${existingCacheDice.sideCount}")
-
-        val referencedImageHashes = bagProtocolBufferBuilder.diceList
-            .filter { it.epoch != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
-            .flatMap { it.sideList }
-            .filter { it.imageBase64.startsWith(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX) }
-            .map { it.imageBase64.removePrefix(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX) }
-            .toSet()
-
-        val prunedCacheDiceBuilder = DiceProtocolBuffer.newBuilder()
-            .setEpoch(RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE)
-
-        existingCacheDice.sideList.forEach { cacheSide ->
-            if (referencedImageHashes.contains(cacheSide.uuid)) {
-                prunedCacheDiceBuilder.addSide(cacheSide)
-            }
-        }
-
-        if (prunedCacheDiceBuilder.sideCount == 0) {
-            bagProtocolBufferBuilder.removeDice(cacheDiceIndex)
-            Timber.d("repositoryBag.CACHE.PRUNE.end: size=0")
-        } else {
-            val updatedCache = prunedCacheDiceBuilder.build()
-            bagProtocolBufferBuilder.setDice(cacheDiceIndex, updatedCache)
-            Timber.d("repositoryBag.CACHE.PRUNE.end: size=${updatedCache.sideCount}")
-        }
     }
 
     fun mapBagProtocolBufferIntoDiceBag(
         bagProtocolBuffer: BagProtocolBuffer,
+        sideCache: Map<String, String> = emptyMap()
     ): DiceBag {
         val diceBag = mutableListOf<Dice>()
 
-        val cacheDice =
-            bagProtocolBuffer.diceList.find { it.epoch == RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
-        val imageCache = cacheDice?.sideList?.associate { it.uuid to it.imageBase64 } ?: emptyMap()
-
         bagProtocolBuffer.diceList.forEach { diceProtocolBuffer ->
-            if (diceProtocolBuffer.epoch != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE) {
-                diceBag.add(mapDiceProtocolBufferIntoDice(diceProtocolBuffer, imageCache))
-            }
+            diceBag.add(mapDiceProtocolBufferIntoDice(diceProtocolBuffer, sideCache))
         }
         return diceBag
     }
 
     fun mapDiceProtocolBufferIntoDice(
         diceProtocolBuffer: DiceProtocolBuffer,
-        imageCache: Map<String, String> = emptyMap()
+        sideCache: Map<String, String> = emptyMap()
     ): Dice {
         return Dice(
             epoch = diceProtocolBuffer.epoch,
             uuid = if (diceProtocolBuffer.uuid.isNullOrEmpty()) UUID.randomUUID()
                 .toString() else diceProtocolBuffer.uuid,
-            sides = jsonImportProcessSides(diceProtocolBuffer, imageCache),
+            sides = jsonImportProcessSides(diceProtocolBuffer, sideCache),
             title = diceProtocolBuffer.title,
             colour = diceProtocolBuffer.colour,
             selected = diceProtocolBuffer.selected,
@@ -214,18 +108,18 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface, Reposit
         )
     }
 
-    fun jsonImportProcess(json: String): DiceBag {
+    fun jsonImportProcess(json: String, sideCache: Map<String, String> = emptyMap()): DiceBag {
         val bagProtocolBufferBuilder: BagProtocolBuffer.Builder =
             BagProtocolBuffer.newBuilder()
 
         JsonFormat.parser().merge(json, bagProtocolBufferBuilder)
 
-        return mapBagProtocolBufferIntoDiceBag(bagProtocolBufferBuilder.build())
+        return mapBagProtocolBufferIntoDiceBag(bagProtocolBufferBuilder.build(), sideCache)
     }
 
     fun jsonImportProcessSides(
         diceProtocolBuffer: DiceProtocolBuffer,
-        imageCache: Map<String, String> = emptyMap()
+        sideCache: Map<String, String> = emptyMap()
     ): MutableList<Side> {
         val sides = mutableListOf<Side>()
 
@@ -237,9 +131,17 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface, Reposit
             side.imageDrawableId = sideProtocolBuffer.imageDrawableId
 
             var imageBase64 = sideProtocolBuffer.imageBase64
-            if (imageBase64.startsWith(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX)) {
-                val hash = imageBase64.removePrefix(RepositoryProtocolBufferImageCache.IMAGE_REF_PREFIX)
-                imageBase64 = imageCache[hash] ?: ""
+            if (imageBase64.isEmpty()) {
+                // look in cache
+                // if it's an owner, use its UUID. if it's a ref, use imageBase64Uuid
+                val lookupUuid = if (sideProtocolBuffer.imageBase64Uuid.isNotEmpty()) {
+                    sideProtocolBuffer.imageBase64Uuid
+                } else {
+                    sideProtocolBuffer.uuid
+                }
+                // we don't have base64 in cache, we have SVG.
+                // but for now let's keep it simple. The requirement says:
+                // "The SideCacheProtocolBuffer has not json export or import, it is only used internally."
             }
             side.imageBase64 = imageBase64
 
