@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.ui.tab.rolls.selection
 
 import android.app.Application
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.onNodeWithTag
@@ -53,7 +54,7 @@ class RollsSelectionTest : AndroidTestHelper() {
             )
 
             ChanceTheme {
-                RollSelectionFilterChip(rollsAndroidViewModel, dice, true)
+                RollSelectionFilterChip(rollsAndroidViewModel, dice, true, true)
             }
         }
 
@@ -84,7 +85,7 @@ class RollsSelectionTest : AndroidTestHelper() {
             )
 
             ChanceTheme {
-                RollSelectionGroupFilterChip(rollsAndroidViewModel, group, true)
+                RollSelectionGroupFilterChip(rollsAndroidViewModel, group, true, true)
             }
         }
 
@@ -122,8 +123,9 @@ class RollsSelectionTest : AndroidTestHelper() {
                 )
             )
 
-            // Mock locking a side
-            zoomRollsAndroidViewModel.toggleLock(Roll(uuidDice = "dummy", side = Side()))
+            LaunchedEffect(Unit) {
+                zoomRollsAndroidViewModel.toggleLock(Roll(uuidDice = "dummy", side = Side()))
+            }
 
             ChanceTheme {
                 RollSelectionRow(rollsAndroidViewModel, zoomRollsAndroidViewModel)

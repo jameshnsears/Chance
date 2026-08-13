@@ -10,6 +10,7 @@ import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.proto.BagProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.DiceProtocolBuffer
 import com.github.jameshnsears.chance.data.domain.proto.SideProtocolBuffer
+import com.github.jameshnsears.chance.data.repo.impl.RepositoryProtocolBufferImageCache
 import com.github.jameshnsears.chance.data.repo.impl.bag.RepositoryBagProtocolBufferInterface
 import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
@@ -96,6 +98,14 @@ class RepositoryBagProtocolBufferImpl private constructor(private val context: C
 
     override fun fetch(): Flow<DiceBag> = diceBagFlow
 
+    override fun fetchSelected(): Flow<Set<String>> = context.diceBagDataStore.data
+        .map { bag ->
+            bag.diceList
+                .filter { it.selected && it.epoch != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
+                .map { it.uuid }
+                .toSet()
+        }.distinctUntilChanged()
+
     override fun fetch(uuid: String): Flow<Dice> = diceBagFlow
         .map { diceBag ->
             diceBag.find { it.uuid == uuid } ?: Dice()
@@ -113,6 +123,24 @@ class RepositoryBagProtocolBufferImpl private constructor(private val context: C
                     bagProtocolBufferBuilder
                 )
                 bagProtocolBufferBuilder.build()
+            }
+        }
+    }
+
+    override suspend fun store(diceUuid: String, selected: Boolean) {
+        withContext(Dispatchers.IO) {
+            Timber.d("repositoryBag.STORE.TARGETED =====================================")
+            Timber.d("diceUuid=$diceUuid; selected=$selected")
+
+            context.diceBagDataStore.updateData { bagProtocolBuffer ->
+                val builder = bagProtocolBuffer.toBuilder()
+                val diceIndex = builder.diceList.indexOfFirst { it.uuid == diceUuid }
+                if (diceIndex != -1) {
+                    val diceBuilder = builder.getDice(diceIndex).toBuilder()
+                    diceBuilder.selected = selected
+                    builder.setDice(diceIndex, diceBuilder.build())
+                }
+                builder.build()
             }
         }
     }

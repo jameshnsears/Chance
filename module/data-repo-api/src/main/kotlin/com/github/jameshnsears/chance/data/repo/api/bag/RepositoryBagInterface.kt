@@ -9,7 +9,9 @@ import timber.log.Timber
 interface RepositoryBagInterface : RepositoryImportExportInterface {
     fun fetch(): Flow<DiceBag>
     fun fetch(uuid: String): Flow<Dice>
+    fun fetchSelected(): Flow<Set<String>>
     suspend fun store(newDiceBag: DiceBag)
+    suspend fun store(diceUuid: String, selected: Boolean)
 
     fun traceUuid(diceBag: DiceBag) {
         diceBag.forEach {

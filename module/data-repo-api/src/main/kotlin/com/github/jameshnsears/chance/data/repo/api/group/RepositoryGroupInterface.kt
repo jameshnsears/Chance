@@ -7,7 +7,9 @@ import timber.log.Timber
 
 interface RepositoryGroupInterface : RepositoryImportExportInterface {
     fun fetch(): Flow<GroupHistory>
+    fun fetchSelected(): Flow<Set<String>>
     suspend fun store(newGroupHistory: GroupHistory)
+    suspend fun store(groupUuid: String, selected: Boolean)
 
     fun traceUuid(groupHistory: GroupHistory) {
         groupHistory.forEach { group ->

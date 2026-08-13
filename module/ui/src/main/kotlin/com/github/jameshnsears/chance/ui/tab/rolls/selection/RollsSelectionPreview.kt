@@ -52,19 +52,19 @@ fun RollSelectionPreview() {
         ) {
             Row {
                 RollSelectionFilterChip(
-                    rollsAndroidViewModel, BagDataTestDouble().d2, true
+                    rollsAndroidViewModel, BagDataTestDouble().d2, true, true
                 )
 
                 RollSelectionFilterChip(
-                    rollsAndroidViewModel, BagDataTestDouble().d4, true
+                    rollsAndroidViewModel, BagDataTestDouble().d4, true, true
                 )
 
                 RollSelectionFilterChip(
-                    rollsAndroidViewModel, BagDataTestDouble().d4, true
+                    rollsAndroidViewModel, BagDataTestDouble().d4, true, true
                 )
 
                 RollSelectionFilterChip(
-                    rollsAndroidViewModel, BagDataTestDouble().d12, true
+                    rollsAndroidViewModel, BagDataTestDouble().d12, true, true
                 )
             }
         }

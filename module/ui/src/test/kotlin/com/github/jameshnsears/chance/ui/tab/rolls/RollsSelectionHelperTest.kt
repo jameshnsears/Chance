@@ -23,10 +23,10 @@ class RollsSelectionHelperTest : UtilityAndroidUnitTestHelper() {
         val diceBag = BagDataTestDouble().allDice()
         val dice = diceBag[0]
 
-        helper.markDiceAsSelected(dice, true, diceBag, this)
+        helper.markDiceAsSelected(dice, true, this)
         advanceUntilIdle()
 
-        coVerify { repositoryBag.store(any()) }
+        coVerify { repositoryBag.store(dice.uuid, true) }
     }
 
     @Test
@@ -38,9 +38,9 @@ class RollsSelectionHelperTest : UtilityAndroidUnitTestHelper() {
         val groupHistory = GroupDataTestDouble(bagData).groupHistory
         val group = groupHistory[0]
 
-        helper.markGroupAsSelected(group, groupHistory, this)
+        helper.markGroupAsSelected(group, this)
         advanceUntilIdle()
 
-        coVerify { repositoryGroup.store(any()) }
+        coVerify { repositoryGroup.store(group.uuid, !group.selected) }
     }
 }

@@ -125,4 +125,50 @@ class RepositoryBagProtocolBufferTestDoubleUnitTest {
         assertTrue("side-1 should not have imageBase64Uuid", !side1Block.contains("imageBase64Uuid"))
         assertTrue("side-2 should have empty imageBase64", side2Block.contains("\"imageBase64\": \"\""))
     }
+
+    @Test
+    fun storeTargeted() = runTest {
+        val diceUuid = "dice-uuid"
+        val diceBag = mutableListOf(
+            Dice(
+                uuid = diceUuid,
+                selected = false
+            )
+        )
+        val repository = RepositoryBagProtocolBufferTestDouble.getInstance()
+        repository.store(diceBag)
+
+        repository.store(diceUuid, true)
+        val fetchedBag = repository.fetch().first()
+        assertTrue(fetchedBag.first().selected)
+
+        repository.store(diceUuid, false)
+        val fetchedBag2 = repository.fetch().first()
+        assertTrue(!fetchedBag2.first().selected)
+    }
+
+    @Test
+    fun fetchSelected() = runTest {
+        val diceUuid = "dice-uuid"
+        val diceBag = mutableListOf(
+            Dice(
+                uuid = diceUuid,
+                selected = true
+            ),
+            Dice(
+                uuid = "other-uuid",
+                selected = false
+            )
+        )
+        val repository = RepositoryBagProtocolBufferTestDouble.getInstance()
+        repository.store(diceBag)
+
+        val selectedUuids = repository.fetchSelected().first()
+        assertTrue(selectedUuids.size == 1)
+        assertTrue(selectedUuids.contains(diceUuid))
+
+        repository.store(diceUuid, false)
+        val selectedUuids2 = repository.fetchSelected().first()
+        assertTrue(selectedUuids2.isEmpty())
+    }
 }

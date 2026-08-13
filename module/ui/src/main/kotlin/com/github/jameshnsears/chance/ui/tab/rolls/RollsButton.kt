@@ -10,7 +10,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -36,16 +38,23 @@ fun RollButton(
         lifecycleOwner = LocalLifecycleOwner.current
     )
 
-    val latestRoll = stateFlowZoom.rollHistory.values.firstOrNull()
-    val rootRollCount = latestRoll?.count { it.explodeIndex == 0 } ?: 0
-    val allLocked = rootRollCount > 0 && stateFlowZoom.lockedRollIndices.size == rootRollCount
+    val rollEnabled by remember {
+        derivedStateOf {
+            val latestRoll = stateFlowZoom.rollHistory.values.firstOrNull()
+            val rootRollCount = latestRoll?.count { it.explodeIndex == 0 } ?: 0
+            val allLocked = rootRollCount > 0 && stateFlowZoom.lockedRollIndices.size == rootRollCount
+            stateFlowRollEnabled.value && !allLocked
+        }
+    }
 
-    val rollEnabled = stateFlowRollEnabled.value && !allLocked
-
-    val rollButtonText = if (stateFlowZoom.lockedRollIndices.isNotEmpty()) {
-        stringResource(R.string.tab_roll_reroll)
-    } else {
-        stringResource(R.string.tab_roll_roll)
+    val rollButtonText = remember {
+        derivedStateOf {
+            if (stateFlowZoom.lockedRollIndices.isNotEmpty()) {
+                R.string.tab_roll_reroll
+            } else {
+                R.string.tab_roll_roll
+            }
+        }
     }
 
     // Use Button (Filled) for primary action as per M3 Google style
@@ -68,14 +77,14 @@ fun RollButton(
 
         Icon(
             rollPainter,
-            contentDescription = rollButtonText,
+            contentDescription = stringResource(rollButtonText.value),
             modifier = Modifier.size(24.dp),
         )
 
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
         Text(
-            text = rollButtonText,
+            text = stringResource(rollButtonText.value),
             style = MaterialTheme.typography.titleMedium
         )
     }

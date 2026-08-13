@@ -14,9 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -32,26 +29,47 @@ fun RollSelectionRow(
     rollsAndroidViewModel: RollsAndroidViewModel,
     zoomRollsAndroidViewModel: ZoomRollsAndroidViewModel
 ) {
-    val stateDiceBag = rollsAndroidViewModel.diceBag.collectAsStateWithLifecycle()
+    val stateDiceBag by rollsAndroidViewModel.diceBag.collectAsStateWithLifecycle()
 
-    val stateGroupHistory = rollsAndroidViewModel.groupHistory.collectAsStateWithLifecycle()
+    val stateGroupHistory by rollsAndroidViewModel.groupHistory.collectAsStateWithLifecycle()
 
-    val stateZoom = zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle()
+    val stateZoom by zoomRollsAndroidViewModel.stateFlowZoom.collectAsStateWithLifecycle()
 
-    val chipsEnabled = stateZoom.value.lockedRollIndices.isEmpty()
+    val selectedDiceUuids by rollsAndroidViewModel.selectedDiceUuids.collectAsStateWithLifecycle()
+    val selectedGroupUuids by rollsAndroidViewModel.selectedGroupUuids.collectAsStateWithLifecycle()
 
-    val diceBag = stateDiceBag.value
-    val groupHistory = stateGroupHistory.value
+    val chipsEnabled = stateZoom.lockedRollIndices.isEmpty()
+
+    val diceBag = stateDiceBag
+    val groupHistory = stateGroupHistory
 
     LazyRow(
         state = rollsAndroidViewModel.rollSelectionRowScrollState,
         modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)
     ) {
-        items(diceBag.size) { index ->
-            RollSelectionFilterChip(rollsAndroidViewModel, diceBag[index], chipsEnabled)
+        items(
+            count = diceBag.size,
+            key = { index -> diceBag[index].uuid }
+        ) { index ->
+            val dice = diceBag[index]
+            RollSelectionFilterChip(
+                rollsAndroidViewModel,
+                dice,
+                selectedDiceUuids.contains(dice.uuid),
+                chipsEnabled
+            )
         }
-        items(groupHistory.size) { index ->
-            RollSelectionGroupFilterChip(rollsAndroidViewModel, groupHistory[index], chipsEnabled)
+        items(
+            count = groupHistory.size,
+            key = { index -> groupHistory[index].uuid }
+        ) { index ->
+            val group = groupHistory[index]
+            RollSelectionGroupFilterChip(
+                rollsAndroidViewModel,
+                group,
+                selectedGroupUuids.contains(group.uuid),
+                chipsEnabled
+            )
         }
     }
 }
@@ -60,26 +78,24 @@ fun RollSelectionRow(
 fun RollSelectionFilterChip(
     rollsAndroidViewModel: RollsAndroidViewModel,
     dice: Dice,
+    isSelected: Boolean,
     enabled: Boolean
 ) {
-    var selected by remember(dice.selected) { mutableStateOf(dice.selected) }
-
     FilterChip(
         modifier = Modifier
             .padding(end = 8.dp)
             .testTag(RollsSelectionTestTag.ROLL_BUTTON + dice.title),
         enabled = enabled,
         onClick = {
-            selected = !selected
-            rollsAndroidViewModel.markDiceAsSelected(dice, selected)
+            rollsAndroidViewModel.markDiceAsSelected(dice, !isSelected)
         },
         label = {
             Text(
                 text = dice.title
             )
         },
-        selected = selected,
-        leadingIcon = if (selected) {
+        selected = isSelected,
+        leadingIcon = if (isSelected) {
             {
                 Icon(
                     imageVector = Icons.Filled.Done,
@@ -102,17 +118,15 @@ fun RollSelectionFilterChip(
 fun RollSelectionGroupFilterChip(
     rollsAndroidViewModel: RollsAndroidViewModel,
     group: Group,
+    isSelected: Boolean,
     enabled: Boolean
 ) {
-    var selected by remember(group.selected) { mutableStateOf(group.selected) }
-
     FilterChip(
         modifier = Modifier
             .padding(end = 8.dp)
             .testTag(RollsSelectionTestTag.ROLL_BUTTON + group.name),
         enabled = enabled,
         onClick = {
-            selected = !selected
             rollsAndroidViewModel.markGroupAsSelected(group)
         },
         label = {
@@ -129,8 +143,8 @@ fun RollSelectionGroupFilterChip(
                 )
             }
         },
-        selected = selected,
-        leadingIcon = if (selected) {
+        selected = isSelected,
+        leadingIcon = if (isSelected) {
             {
                 Icon(
                     imageVector = Icons.Filled.Done,

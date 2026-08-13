@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
@@ -75,6 +76,14 @@ class RepositoryGroupProtocolBufferImpl private constructor(private val context:
 
     override fun fetch(): Flow<GroupHistory> = groupHistoryFlow
 
+    override fun fetchSelected(): Flow<Set<String>> = context.groupHistoryDataStore.data
+        .map { history ->
+            history.groupList
+                .filter { it.selected }
+                .map { it.uuid }
+                .toSet()
+        }.distinctUntilChanged()
+
     override suspend fun store(newGroupHistory: GroupHistory) {
         withContext(Dispatchers.IO) {
             Timber.d("repositoryGroup.STORE ============================================")
@@ -87,6 +96,24 @@ class RepositoryGroupProtocolBufferImpl private constructor(private val context:
                     groupHistoryProtocolBufferBuilder
                 )
                 groupHistoryProtocolBufferBuilder.build()
+            }
+        }
+    }
+
+    override suspend fun store(groupUuid: String, selected: Boolean) {
+        withContext(Dispatchers.IO) {
+            Timber.d("repositoryGroup.STORE.TARGETED ===================================")
+            Timber.d("groupUuid=$groupUuid; selected=$selected")
+
+            context.groupHistoryDataStore.updateData { groupHistoryProtocolBuffer ->
+                val builder = groupHistoryProtocolBuffer.toBuilder()
+                val groupIndex = builder.groupList.indexOfFirst { it.uuid == groupUuid }
+                if (groupIndex != -1) {
+                    val groupBuilder = builder.getGroup(groupIndex).toBuilder()
+                    groupBuilder.selected = selected
+                    builder.setGroup(groupIndex, groupBuilder.build())
+                }
+                builder.build()
             }
         }
     }

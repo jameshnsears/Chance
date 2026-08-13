@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -123,16 +124,18 @@ abstract class ZoomAndroidViewModel(
             history = settings.history,
             lockedRollIndices = lockedRollIndices,
         )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = ZoomState(
-            resizeViewDp = 0.dp,
-            diceBag = mutableListOf(),
-            rollHistory = LinkedHashMap(),
-            lockedRollIndices = emptySet()
+    }
+        .flowOn(Dispatchers.Default)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = ZoomState(
+                resizeViewDp = 0.dp,
+                diceBag = mutableListOf(),
+                rollHistory = LinkedHashMap(),
+                lockedRollIndices = emptySet()
+            )
         )
-    )
 
     private fun isContentAvailableToDisplay(
         rolls: List<Roll>,

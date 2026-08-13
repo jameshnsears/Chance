@@ -8,6 +8,7 @@ import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
@@ -73,11 +74,33 @@ class RepositoryGroupProtocolBufferTestDouble private constructor() :
             groupHistory
         }
 
+    override fun fetchSelected(): Flow<Set<String>> = groupHistoryProtocolBufferStateFlow
+        .map { history ->
+            history.groupList
+                .filter { it.selected }
+                .map { it.uuid }
+                .toSet()
+        }.distinctUntilChanged()
+
     override suspend fun store(newGroupHistory: GroupHistory) {
         Timber.d("repositoryGroup.STORE ============================================")
         Timber.d("repositoryGroup.size=${newGroupHistory.size}")
 
         updateStateFlow(newGroupHistory)
+    }
+
+    override suspend fun store(groupUuid: String, selected: Boolean) {
+        Timber.d("repositoryGroup.STORE.TARGETED ===================================")
+        Timber.d("groupUuid=$groupUuid; selected=$selected")
+
+        val builder = groupHistoryProtocolBufferStateFlow.value.toBuilder()
+        val groupIndex = builder.groupList.indexOfFirst { it.uuid == groupUuid }
+        if (groupIndex != -1) {
+            val groupBuilder = builder.getGroup(groupIndex).toBuilder()
+            groupBuilder.selected = selected
+            builder.setGroup(groupIndex, groupBuilder.build())
+        }
+        groupHistoryProtocolBufferStateFlow.value = builder.build()
     }
 
     override suspend fun clear() {

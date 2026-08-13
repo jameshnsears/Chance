@@ -11,6 +11,7 @@ import com.google.protobuf.Descriptors
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
@@ -94,6 +95,14 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
             diceBag
         }
 
+    override fun fetchSelected(): Flow<Set<String>> = diceBagProtocolBufferStateFlow
+        .map { bag ->
+            bag.diceList
+                .filter { it.selected && it.epoch != RepositoryProtocolBufferImageCache.EPOCH_IMAGE_CACHE }
+                .map { it.uuid }
+                .toSet()
+        }.distinctUntilChanged()
+
     override fun fetch(uuid: String): Flow<Dice> = diceBagProtocolBufferStateFlow
         .map { bagProtocolBuffer ->
             val cacheDice =
@@ -115,6 +124,20 @@ class RepositoryBagProtocolBufferTestDouble private constructor() :
         Timber.d("repositoryBag.size=${newDiceBag.size}")
 
         updateStateFlow(newDiceBag)
+    }
+
+    override suspend fun store(diceUuid: String, selected: Boolean) {
+        Timber.d("repositoryBag.STORE.TARGETED =====================================")
+        Timber.d("diceUuid=$diceUuid; selected=$selected")
+
+        val builder = diceBagProtocolBufferStateFlow.value.toBuilder()
+        val diceIndex = builder.diceList.indexOfFirst { it.uuid == diceUuid }
+        if (diceIndex != -1) {
+            val diceBuilder = builder.getDice(diceIndex).toBuilder()
+            diceBuilder.selected = selected
+            builder.setDice(diceIndex, diceBuilder.build())
+        }
+        diceBagProtocolBufferStateFlow.value = builder.build()
     }
 
     override suspend fun clear() {

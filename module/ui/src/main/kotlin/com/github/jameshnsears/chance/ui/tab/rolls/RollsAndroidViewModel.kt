@@ -20,17 +20,23 @@ import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterfa
 import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInterface
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.concurrent.ConcurrentHashMap
 
 sealed class RollSideEffect {
     object RollHaptic : RollSideEffect()
@@ -127,6 +133,7 @@ class RollsAndroidViewModel(
     val diceBag: StateFlow<DiceBag> = repositoryBag.fetch()
         .map { it.sortedBy { dice -> dice.displayIndex }.toMutableList() }
         .distinctUntilChanged()
+        .flowOn(Dispatchers.Default)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
@@ -136,11 +143,21 @@ class RollsAndroidViewModel(
     val groupHistory: StateFlow<GroupHistory> = repositoryGroup.fetch()
         .map { it.sortedBy { group -> group.displayIndex } }
         .distinctUntilChanged()
+        .flowOn(Dispatchers.Default)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
             initialValue = emptyList()
         )
+
+    private val _selectedDiceUuids = MutableStateFlow<Set<String>>(emptySet())
+    val selectedDiceUuids: StateFlow<Set<String>> = _selectedDiceUuids.asStateFlow()
+
+    private val _selectedGroupUuids = MutableStateFlow<Set<String>>(emptySet())
+    val selectedGroupUuids: StateFlow<Set<String>> = _selectedGroupUuids.asStateFlow()
+
+    private val diceIntentions = ConcurrentHashMap<String, Boolean>()
+    private val groupIntentions = ConcurrentHashMap<String, Boolean>()
 
     private val _rollHistoryFlow = repositoryRoll.fetch()
         .distinctUntilChanged()
@@ -153,12 +170,14 @@ class RollsAndroidViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     val rollEnabled: StateFlow<Boolean> = combine(
-        diceBag,
-        groupHistory,
+        selectedDiceUuids,
+        selectedGroupUuids,
         stateFlowSettings
-    ) { diceBag, groupHistory, settings ->
-        (diceBag.any { it.selected } || groupHistory.any { it.selected }) && !settings.isSettingsNotEnabled()
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+    ) { selectedDiceUuids, selectedGroupUuids, settings ->
+        (selectedDiceUuids.isNotEmpty() || selectedGroupUuids.isNotEmpty()) && !settings.isSettingsNotEnabled()
+    }
+        .distinctUntilChanged()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     val rollSelectionRowScrollState = LazyListState()
 
@@ -199,14 +218,45 @@ class RollsAndroidViewModel(
                 updateShakeService()
             }
         }
+
+        viewModelScope.launch {
+            repositoryBag.fetchSelected().collect { repoUuids ->
+                _selectedDiceUuids.update { current ->
+                    val newSet = repoUuids.toMutableSet()
+                    diceIntentions.forEach { (uuid, selected) ->
+                        if (selected) newSet.add(uuid) else newSet.remove(uuid)
+                        if (repoUuids.contains(uuid) == selected) diceIntentions.remove(uuid)
+                    }
+                    newSet
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            repositoryGroup.fetchSelected().collect { repoUuids ->
+                _selectedGroupUuids.update { current ->
+                    val newSet = repoUuids.toMutableSet()
+                    groupIntentions.forEach { (uuid, selected) ->
+                        if (selected) newSet.add(uuid) else newSet.remove(uuid)
+                        if (repoUuids.contains(uuid) == selected) groupIntentions.remove(uuid)
+                    }
+                    newSet
+                }
+            }
+        }
     }
 
     fun markDiceAsSelected(dice: Dice, selected: Boolean) {
-        rollsSelectionHelper.markDiceAsSelected(dice, selected, diceBag.value, viewModelScope)
+        diceIntentions[dice.uuid] = selected
+        _selectedDiceUuids.update { if (selected) it + dice.uuid else it - dice.uuid }
+        rollsSelectionHelper.markDiceAsSelected(dice, selected, viewModelScope)
     }
 
     fun markGroupAsSelected(group: Group) {
-        rollsSelectionHelper.markGroupAsSelected(group, groupHistory.value, viewModelScope)
+        val nextSelected = !group.selected
+        groupIntentions[group.uuid] = nextSelected
+        _selectedGroupUuids.update { if (nextSelected) it + group.uuid else it - group.uuid }
+        rollsSelectionHelper.markGroupAsSelected(group, viewModelScope)
     }
 
     fun rollDiceSequence(
