@@ -5,11 +5,16 @@ import kotlinx.coroutines.flow.SharedFlow
 import timber.log.Timber
 
 object DiceResizeEvent {
-    private val _sharedFlowResizeEvent = MutableSharedFlow<Boolean>()
-    val sharedFlowResizeEvent: SharedFlow<Boolean> = _sharedFlowResizeEvent
+    private val _sharedFlowResizeEvent = MutableSharedFlow<Float>(extraBufferCapacity = 10)
+    val sharedFlowResizeEvent: SharedFlow<Float> = _sharedFlowResizeEvent
 
-    suspend fun emit() {
-        Timber.d("emit.DiceResizeEvent")
-        _sharedFlowResizeEvent.emit(true)
+    suspend fun emit(resizeZoom: Float) {
+        Timber.d("emit.DiceResizeEvent: $resizeZoom")
+        _sharedFlowResizeEvent.emit(resizeZoom)
+    }
+
+    fun tryEmit(resizeZoom: Float) {
+        Timber.d("tryEmit.DiceResizeEvent: $resizeZoom")
+        _sharedFlowResizeEvent.tryEmit(resizeZoom)
     }
 }

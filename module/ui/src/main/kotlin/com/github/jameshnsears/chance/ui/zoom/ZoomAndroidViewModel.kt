@@ -25,6 +25,7 @@ import com.github.jameshnsears.chance.data.repo.api.locked.RepositoryLockedInter
 import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsInterface
 import com.github.jameshnsears.chance.ui.tab.DisplayIndexEvent
+import com.github.jameshnsears.chance.ui.tab.setup.dice.DiceResizeEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -74,8 +75,17 @@ abstract class ZoomAndroidViewModel(
         Triple(0, 0, emptyMap<String, Pair<Int, Int>>())
     )
 
-    val stateFlowZoom: StateFlow<ZoomState> = combine(
+    private val transientResize = MutableStateFlow<Float?>(null)
+
+    private val settingsWithTransientResize = combine(
         repositorySettings.fetch(),
+        transientResize
+    ) { settings, transient ->
+        settings to transient
+    }
+
+    val stateFlowZoom: StateFlow<ZoomState> = combine(
+        settingsWithTransientResize,
         repositoryBag.fetch(),
         repositoryRoll.fetch().map { rollHistory ->
             val sortedHistory = LinkedHashMap<Long, List<Roll>>()
@@ -86,9 +96,10 @@ abstract class ZoomAndroidViewModel(
         },
         repositoryLocked.fetch(),
         _scrollState
-    ) { settings, diceBag, rollHistory, lockedRollIndices, scrollData ->
+    ) { (settings, transientResize), diceBag, rollHistory, lockedRollIndices, scrollData ->
+        val resizeZoom = transientResize ?: settings.resizeZoom
         ZoomState(
-            resizeViewDp = resizeViewAsDp(settings.resizeZoom),
+            resizeViewDp = resizeViewAsDp(resizeZoom),
             diceBag = diceBag.sortedBy { it.displayIndex }.toMutableList(),
             rollHistory = rollHistory,
             entriesList = rollHistory.entries
@@ -182,6 +193,12 @@ abstract class ZoomAndroidViewModel(
     private var diceUuidCache: MutableMap<String, Dice> = mutableMapOf()
 
     init {
+        viewModelScope.launch {
+            DiceResizeEvent.sharedFlowResizeEvent.collect { newSize ->
+                transientResize.value = newSize
+            }
+        }
+
         viewModelScope.launch {
             diceBagList.collect { list ->
                 val newCache = mutableMapOf<String, Dice>()

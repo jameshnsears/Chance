@@ -15,9 +15,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.yield
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -259,6 +261,34 @@ class DiceAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         tabBagViewModel.resizeSettings(18f)
         waitForResizeValue(tabBagViewModel, 18f)
         Assert.assertEquals(18f, tabBagViewModel.stateFlowResize.value)
+    }
+
+    @Test
+    fun resizeSettingsImmediateEvent() = runTest {
+        val tabBagViewModel = tabBagViewModel()
+        val received = mutableListOf<Float>()
+        val job = launch {
+            DiceResizeEvent.sharedFlowResizeEvent.collect { received.add(it) }
+        }
+        yield()
+        tabBagViewModel.resizeSettings(5f)
+        yield()
+        Assert.assertEquals(1, received.size)
+        Assert.assertEquals(5f, received[0])
+        job.cancel()
+    }
+
+    @Test
+    fun resizeSettingsDebounce() = runTest {
+        val tabBagViewModel = tabBagViewModel()
+
+        tabBagViewModel.resizeSettings(10f)
+        tabBagViewModel.resizeSettings(11f)
+        tabBagViewModel.resizeSettings(12f)
+
+        // Wait for debounce and repo update
+        waitForResizeValue(tabBagViewModel, 12f)
+        Assert.assertEquals(12f, tabBagViewModel.stateFlowResize.value)
     }
 
     @Test

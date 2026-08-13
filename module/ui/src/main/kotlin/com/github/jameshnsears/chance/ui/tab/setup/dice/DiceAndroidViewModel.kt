@@ -17,6 +17,8 @@ import com.github.jameshnsears.chance.data.repo.api.settings.RepositorySettingsI
 import com.github.jameshnsears.chance.ui.BuildConfig
 import com.github.jameshnsears.chance.ui.tab.SetupImportEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +32,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.time.Duration.Companion.milliseconds
 
 enum class ExportImportStatus {
     READY,
@@ -56,6 +59,8 @@ class DiceAndroidViewModel(
     resizeInitialValue: Float,
 ) : AndroidViewModel(application) {
     val validator = RepositoryImportValidation()
+
+    private var resizeJob: Job? = null
 
     val stateFlowResize: StateFlow<Float> = flow {
         emitAll(repositorySettings.fetch())
@@ -238,13 +243,15 @@ class DiceAndroidViewModel(
     }
 
     fun resizeSettings(newResize: Float) {
-        viewModelScope.launch {
+        DiceResizeEvent.tryEmit(newResize)
+
+        resizeJob?.cancel()
+        resizeJob = viewModelScope.launch {
+            delay(300.milliseconds)
             val settings = repositorySettings.fetch().first()
             if (settings.resizeZoom != newResize) {
                 settings.resizeZoom = newResize
                 repositorySettings.store(settings)
-
-                DiceResizeEvent.emit()
             }
         }
     }
