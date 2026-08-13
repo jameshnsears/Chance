@@ -90,7 +90,10 @@ abstract class ZoomAndroidViewModel(
 
     val stateFlowZoom: StateFlow<ZoomState> = combine(
         settingsWithTransientResize,
-        repositoryBag.fetch(),
+        repositoryBag.fetch()
+            .distinctUntilChanged { previous, current ->
+                previous.contentEqualsIgnoringSelection(current)
+            },
         repositoryRoll.fetch().map { rollHistory ->
             val sortedHistory = LinkedHashMap<Long, List<Roll>>()
             rollHistory.keys.sortedDescending().forEach { key ->
@@ -140,6 +143,11 @@ abstract class ZoomAndroidViewModel(
                 lockedRollIndices = emptySet()
             )
         )
+
+    private fun DiceBag.contentEqualsIgnoringSelection(other: DiceBag): Boolean {
+        if (size != other.size) return false
+        return map { it.copy(selected = false) } == other.map { it.copy(selected = false) }
+    }
 
     private fun isContentAvailableToDisplay(
         rolls: List<Roll>,

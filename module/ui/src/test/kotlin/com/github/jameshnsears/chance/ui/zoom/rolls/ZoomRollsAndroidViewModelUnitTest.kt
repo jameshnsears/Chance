@@ -9,11 +9,17 @@ import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTes
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertSame
 import org.junit.Before
 import org.junit.Test
 
@@ -129,6 +135,39 @@ class ZoomRollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         // Wait for reset
         viewModel.stateFlowZoom.first { it.lockedRollIndices.isEmpty() }
         assertEquals(emptySet<String>(), viewModel.stateFlowZoom.value.lockedRollIndices)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun selectionChangeDoesNotReEmitZoomState() = runTest {
+        val viewModel = zoomRollsAndroidViewModel()
+        val repositoryFactory = RepositoryFactory()
+        val repositoryBag = repositoryFactory.repositoryBag
+
+        // Keep stateFlowZoom (WhileSubscribed) alive for the duration of the test.
+        val keepAlive = launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.stateFlowZoom.collect { }
+        }
+
+        val initial = viewModel.stateFlowZoom.first { it.diceBag.isNotEmpty() }
+        val instanceBefore = viewModel.stateFlowZoom.value
+        val diceUuid = initial.diceBag[0].uuid
+
+        // Selection-only change: everything else in the bag stays identical.
+        repositoryBag.store(diceUuid, true)
+        repositoryFactory.repositoryBag.fetchSelected().first { it.contains(diceUuid) }
+
+        // A buggy zoom recomputation would run on Dispatchers.Default; give it a
+        // real moment to land before asserting the zoom state was NOT re-emitted.
+        withContext(Dispatchers.IO) { Thread.sleep(100) }
+
+        assertSame(
+            "a selection-only change must not re-emit ZoomState",
+            instanceBefore,
+            viewModel.stateFlowZoom.value
+        )
+
+        keepAlive.cancel()
     }
 
     @Test
