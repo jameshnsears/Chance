@@ -2,12 +2,12 @@
 minSdk = "31"
 targetSdk = "37"
 compileSdk = "37"
-versionName = "2.6.0"
+versionName = "3.0.0"
 
 activity-compose = "1.13.0"
 androidxTestOrchestrator = "1.6.1"
 androidxTestRunner = "1.7.0"
-appcompat = "1.7.1"
+appcompat = "1.8.0"
 archCoreTesting = "2.2.0"
 coil-svg = "2.7.0"
 colorpicker-compose = "1.2.0"
@@ -15,7 +15,7 @@ com-android-application = "9.2.1"
 com-android-library = "9.2.1"
 com-diffplug-spotless = "8.9.0"
 com-google-gms-google-services = "4.5.0"
-compose-bom = "2026.06.01"
+compose-bom = "2026.08.00"
 compose-icons = "1.7.8"
 core-ktx = "1.19.0"
 core-splashscreen = "1.2.0"
@@ -41,11 +41,11 @@ kotlinx-serialization = "1.11.0"
 leakcanary-android = "2.14"
 lifecycle-runtime-compose = "2.11.0"
 lifecycle-viewmodel-compose = "2.11.0"
-manifest = "1.11.4"
+manifest = "1.12.0"
 material = "1.14.0"
 mockk = "1.14.11"
 mockk-android = "1.14.11"
-navigation3 = "1.1.5"
+navigation3 = "1.1.6"
 org-gradle-test-retry = "1.6.5"
 org-jlleitschuh-gradle-ktlint = "14.2.0"
 profileinstaller = "1.4.1"
@@ -53,12 +53,13 @@ protobuf-java = "4.35.1"
 protobuf-java-util = "4.35.1"
 protobuf-kotlin = "4.35.1"
 slf4j-simple = "2.0.18"
+sqldelight = "2.3.2"
 timber = "5.0.1"
-uiTestJunit4 = "1.11.4"
-ui-tooling = "1.11.4"
+uiTestJunit4 = "1.12.0"
+ui-tooling = "1.12.0"
 uiautomator = "2.4.0"
-benchmarkMacroJunit4 = "1.5.0-beta01"
-baselineprofile = "1.5.0-beta01"
+benchmarkMacroJunit4 = "1.5.0-rc01"
+baselineprofile = "1.5.0-rc01"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -111,6 +112,9 @@ protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "p
 protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf-java-util" }
 protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-kotlin" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple" }
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-sqlite-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 io-nlopez-compose-rules-detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "io-nlopez-compose-rules-detekt" }
 androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
@@ -128,4 +132,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 org-jetbrains-kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 org-jlleitschuh-gradle-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "org-jlleitschuh-gradle-ktlint" }
 testretry = { id = "org.gradle.test-retry", version.ref = "org-gradle-test-retry" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }

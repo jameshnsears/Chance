@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.plugin.compose) apply false
     alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
     alias(libs.plugins.testretry) apply false
+    alias(libs.plugins.sqldelight) apply false
     alias(libs.plugins.baselineprofile) apply false
 }
 

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.com.android.library)
+    alias(libs.plugins.sqldelight)
 }
 
 android {
@@ -72,6 +73,14 @@ android {
     }
 }
 
+sqldelight {
+    databases {
+        create("ChanceDatabase") {
+            packageName.set("com.github.jameshnsears.chance.data.repo.impl.sqldelight")
+        }
+    }
+}
+
 kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
@@ -92,6 +101,8 @@ dependencies {
     implementation(libs.protobuf.kotlin)
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
+    implementation(libs.sqldelight.android.driver)
+    implementation(libs.sqldelight.coroutines.extensions)
 
     implementation(project(":module:data-domain"))
     implementation(project(":module:data-repo-api"))
@@ -101,6 +112,7 @@ dependencies {
     testImplementation(libs.kotlin.test)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.sqldelight.sqlite.driver)
     testImplementation(platform(libs.org.junit.bom))
     testImplementation(testFixtures(project(":module:common")))
 }

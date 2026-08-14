@@ -1,0 +1,211 @@
+import kotlin.Boolean;
+
+CREATE TABLE Dice (
+    uuid TEXT NOT NULL PRIMARY KEY,
+
+    title TEXT NOT NULL
+        CHECK (length(trim(title)) > 0),
+
+    colour TEXT NOT NULL
+        CHECK (length(trim(colour)) > 0),
+
+    selected INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (selected IN (0, 1)),
+
+    multiplierValue INTEGER NOT NULL DEFAULT 1
+        CHECK (multiplierValue > 0),
+
+    explode INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (explode IN (0, 1)),
+
+    explodeWhen TEXT,
+
+    explodeValue INTEGER,
+
+    modifyScore INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (modifyScore IN (0, 1)),
+
+    modifyScoreValue INTEGER,
+
+    displayIndex INTEGER NOT NULL DEFAULT 0
+        CHECK (displayIndex >= 0),
+
+    CHECK (
+        (explode = 0
+        AND explodeWhen IS NULL
+        AND explodeValue IS NULL)
+        OR
+        (explode = 1
+        AND explodeWhen IN ('<', '=', '>')
+        AND explodeValue IS NOT NULL
+        AND explodeValue >= 0)
+    ),
+
+    CHECK (
+        (modifyScore = 0
+        AND modifyScoreValue IS NULL)
+        OR
+        (modifyScore = 1
+        AND modifyScoreValue IS NOT NULL
+        AND modifyScoreValue >= 0)
+    )
+);
+
+CREATE INDEX Dice_displayIndex
+ON Dice(displayIndex);
+
+
+CREATE TABLE Image (
+    uuid TEXT NOT NULL PRIMARY KEY,
+
+    base64 TEXT,
+    svg TEXT,
+
+    CHECK (
+        base64 IS NOT NULL
+        OR svg IS NOT NULL
+    ),
+
+    CHECK (
+        base64 IS NULL
+        OR svg IS NULL
+    )
+);
+
+CREATE UNIQUE INDEX Image_base64
+ON Image(base64)
+WHERE base64 IS NOT NULL;
+
+CREATE UNIQUE INDEX Image_svg
+ON Image(svg)
+WHERE svg IS NOT NULL;
+
+
+CREATE TABLE Side (
+    uuid TEXT NOT NULL PRIMARY KEY,
+
+    diceUuid TEXT NOT NULL,
+    number INTEGER NOT NULL,
+
+    numberColour TEXT NOT NULL
+        CHECK (length(trim(numberColour)) > 0),
+
+    imageDrawableId INTEGER,
+    imageUuid TEXT,
+
+    description TEXT,
+    descriptionColour TEXT NOT NULL
+        CHECK (length(trim(descriptionColour)) > 0),
+
+    FOREIGN KEY (diceUuid)
+        REFERENCES Dice(uuid)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (imageUuid)
+        REFERENCES Image(uuid)
+        ON DELETE SET NULL,
+
+    UNIQUE (diceUuid, number),
+
+    CHECK (number > 0),
+
+    CHECK (
+        imageDrawableId IS NULL
+        OR imageUuid IS NULL
+    )
+);
+
+CREATE INDEX Side_imageUuid
+ON Side(imageUuid);
+
+
+CREATE TABLE DiceGroup (
+    uuid TEXT NOT NULL PRIMARY KEY,
+
+    name TEXT NOT NULL
+        CHECK (length(trim(name)) > 0),
+
+    notes TEXT,
+
+    displayIndex INTEGER NOT NULL DEFAULT 0
+        CHECK (displayIndex >= 0),
+
+    selected INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (selected IN (0, 1))
+);
+
+CREATE INDEX DiceGroup_displayIndex
+ON DiceGroup(displayIndex);
+
+
+CREATE TABLE DiceGroupDice (
+    groupUuid TEXT NOT NULL,
+    diceUuid TEXT NOT NULL,
+
+    PRIMARY KEY (groupUuid, diceUuid),
+
+    FOREIGN KEY (groupUuid)
+        REFERENCES DiceGroup(uuid)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (diceUuid)
+        REFERENCES Dice(uuid)
+        ON DELETE CASCADE
+);
+
+CREATE INDEX DiceGroupDice_diceUuid
+ON DiceGroupDice(diceUuid);
+
+
+CREATE TABLE Settings (
+    id INTEGER NOT NULL PRIMARY KEY
+        CHECK (id = 1),
+
+    rollIndexTime INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (rollIndexTime IN (0, 1)),
+
+    rollScore INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (rollScore IN (0, 1)),
+
+    diceTitle INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (diceTitle IN (0, 1)),
+
+    sideNumber INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (sideNumber IN (0, 1)),
+
+    behaviour INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (behaviour IN (0, 1)),
+
+    sideDescription INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (sideDescription IN (0, 1)),
+
+    sideSVG INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (sideSVG IN (0, 1)),
+
+    rollSound INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (rollSound IN (0, 1)),
+
+    shuffle INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (shuffle IN (0, 1)),
+
+    haptics INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (haptics IN (0, 1)),
+
+    rollScoreTTS INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (rollScoreTTS IN (0, 1)),
+
+    shakeToRoll INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (shakeToRoll IN (0, 1)),
+
+    resizeZoom REAL NOT NULL DEFAULT 1.0
+        CHECK (resizeZoom > 0),
+
+    groupTitle INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (groupTitle IN (0, 1)),
+
+    layout INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (layout IN (0, 1)),
+
+    history INTEGER AS Boolean NOT NULL DEFAULT 0
+        CHECK (history IN (0, 1))
+);
