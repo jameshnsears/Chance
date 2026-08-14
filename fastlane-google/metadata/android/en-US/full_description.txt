@@ -1,13 +1,10 @@
-Easy-to-use dice rolling app:
+Chance replaces the random physical components of your game — not the game itself.
 
 &bull; Highly customisable
-&bull; Example dice included
-&bull; Groups
-&bull; Re-roll locking
-&bull; Export/Import
+&bull; Examples included
 &bull; Persistant data
+&bull; Export/Import
 &bull; Works offline
-&bull; Yes/No shortcut
 &bull; Open Source
 &bull; Free/No ads/Crashlytics only
 

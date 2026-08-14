@@ -1,1 +1,1 @@
-Create custom dice with text and SVG faces.
+Create custom dice and cards with text and SVG faces.

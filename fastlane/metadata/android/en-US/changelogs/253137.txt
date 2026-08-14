@@ -1,8 +1,6 @@
-- New: Re-roll locking
-- New: Settings: Layout / History
-- New: Increase maximum resize
-- New: Circular swiping in dice dialog
-- New: Additional Rules instructions
-- Fix: Decrease roll flicker
+- New: New terminology
+- New: Card drawdown rule
+- Fix: Scalability
+- Fix: Remove screen clutter
 - Dev: Bump dependencies
 - Dev: Android Studio Quail 1 | 2026.1.1 Patch 2
