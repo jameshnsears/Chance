@@ -26,7 +26,6 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface {
 
         for (dice in diceBag) {
             val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
-            diceProtocolBuffer.setEpoch(dice.epoch)
             diceProtocolBuffer.setUuid(dice.uuid)
 
             dice.sides.forEach { side ->
@@ -92,7 +91,6 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface {
         sideCache: Map<String, String> = emptyMap()
     ): Dice {
         return Dice(
-            epoch = diceProtocolBuffer.epoch,
             uuid = if (diceProtocolBuffer.uuid.isNullOrEmpty()) UUID.randomUUID()
                 .toString() else diceProtocolBuffer.uuid,
             sides = jsonImportProcessSides(diceProtocolBuffer, sideCache),
@@ -164,7 +162,6 @@ interface RepositoryBagProtocolBufferInterface : RepositoryBagInterface {
 
         for (dice in diceBag) {
             val diceProtocolBuffer = DiceProtocolBuffer.newBuilder()
-            diceProtocolBuffer.setEpoch(dice.epoch)
             diceProtocolBuffer.setUuid(dice.uuid)
 
             dice.sides.forEach { side ->

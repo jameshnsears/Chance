@@ -28,9 +28,7 @@ class RepositoryBagTest : UtilityLoggingHelper() {
 
         originalDiceBag.forEachIndexed { indexDice, originalDice ->
             val fetchedDice = fetchedDiceBag[indexDice]
-
-            Assert.assertEquals(originalDice.epoch, fetchedDice.epoch)
-
+            
             originalDice.sides.forEachIndexed { indexSide, originalSide ->
                 Assert.assertEquals(originalSide.number, fetchedDice.sides[indexSide].number)
                 Assert.assertEquals(originalSide.numberColour, fetchedDice.sides[indexSide].numberColour)
@@ -92,7 +90,6 @@ class RepositoryBagTest : UtilityLoggingHelper() {
 
         originalDieBag.forEachIndexed { indexDice, originalDice ->
             val fetchedDice = fetchedDiceBag[indexDice]
-            Assert.assertTrue(originalDice.epoch == fetchedDice.epoch)
             Assert.assertTrue(originalDice.sides.size == fetchedDice.sides.size)
             Assert.assertTrue(originalDice.title == fetchedDice.title)
             Assert.assertTrue(originalDice.colour == fetchedDice.colour)

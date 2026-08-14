@@ -435,9 +435,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
 
         assertEquals(4, diceBagWithClonedDice.size)
 
-        assertEquals(initialDiceBag[0].epoch, diceBagWithClonedDice[0].epoch)
-        assertEquals(initialDiceBag[1].epoch, diceBagWithClonedDice[1].epoch)
-
         // The clone
         assertEquals(newTitleForClonedDice, diceBagWithClonedDice[2].title)
         assertNotEquals(initialDiceBag[1].uuid, diceBagWithClonedDice[2].uuid)

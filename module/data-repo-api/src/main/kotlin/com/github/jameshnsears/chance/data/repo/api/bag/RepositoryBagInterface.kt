@@ -24,7 +24,7 @@ interface RepositoryBagInterface : RepositoryImportExportInterface {
     fun traceUuid(diceBag: DiceBag) {
         diceBag.forEach {
             it.sides.forEach { side ->
-                Timber.d("bag: dice.uuid=${it.uuid}; dice.epoch=${it.epoch}; side.uuid=${side.uuid}")
+                Timber.d("bag: dice.uuid=${it.uuid}; side.uuid=${side.uuid}")
             }
         }
     }
