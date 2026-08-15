@@ -1,5 +1,5 @@
-- New: New terminology
-- New: Card drawdown rule
+- New: Changed terminology
+- New: drawdown rule
 - Fix: Scalability
 - Fix: Remove screen clutter
 - Dev: Bump dependencies
