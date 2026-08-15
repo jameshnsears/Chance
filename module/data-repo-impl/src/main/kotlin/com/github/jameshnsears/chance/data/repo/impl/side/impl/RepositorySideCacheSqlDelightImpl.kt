@@ -37,10 +37,16 @@ class RepositorySideCacheSqlDelightImpl(
     @OptIn(ExperimentalEncodingApi::class)
     override suspend fun store(uuid: String, imageBase64: String) {
         withContext(Dispatchers.IO) {
-            val decoded = try {
-                String(Base64.decode(imageBase64))
-            } catch (_: Exception) {
-                null
+            val isRawSvg = imageBase64.contains("<svg") && imageBase64.contains("</svg>")
+
+            val decoded = if (isRawSvg) {
+                imageBase64
+            } else {
+                try {
+                    String(Base64.decode(imageBase64))
+                } catch (_: Exception) {
+                    null
+                }
             }
 
             val isSvg = decoded != null && decoded.contains("<svg") && decoded.contains("</svg>")
@@ -58,10 +64,16 @@ class RepositorySideCacheSqlDelightImpl(
         withContext(Dispatchers.IO) {
             database.transaction {
                 entries.forEach { (uuid, imageBase64) ->
-                    val decoded = try {
-                        String(Base64.decode(imageBase64))
-                    } catch (_: Exception) {
-                        null
+                    val isRawSvg = imageBase64.contains("<svg") && imageBase64.contains("</svg>")
+
+                    val decoded = if (isRawSvg) {
+                        imageBase64
+                    } else {
+                        try {
+                            String(Base64.decode(imageBase64))
+                        } catch (_: Exception) {
+                            null
+                        }
                     }
 
                     val isSvg = decoded != null && decoded.contains("<svg") && decoded.contains("</svg>")

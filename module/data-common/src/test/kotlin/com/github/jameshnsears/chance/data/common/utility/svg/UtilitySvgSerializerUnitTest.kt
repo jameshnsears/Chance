@@ -61,6 +61,21 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
     }
 
     @Test
+    fun imageRequestFromRawSvgString() {
+        val svgString = resourceAsString("/data/svg/d2_d100.svg")
+
+        val side = Side(imageBase64 = svgString)
+
+        val application = application()
+
+        // This should not crash
+        val imageRequest = UtilitySvgSerializer.imageRequestFromBase64String(application, side)
+
+        assertTrue(imageRequest != null)
+        assertTrue(side.imageRequest != null)
+    }
+
+    @Test
     fun imageRequestFromSvgString() {
         val svgString = resourceAsString("/data/svg/d2_d100.svg")
 
@@ -92,6 +107,22 @@ class UtilitySvgSerializerUnitTest : UtilityAndroidUnitTestHelper() {
 
         val application = application()
 
+        val imageRequest = UtilitySvgSerializer.imageRequestFromBase64StringAsync(application, side)
+
+        assertTrue(imageRequest != null)
+        assertTrue(side.imageRequest != null)
+    }
+
+    @Test
+    fun imageRequestFromRawSvgStringAsync() = runTest {
+        val svgString = resourceAsString("/data/svg/d2_d100.svg")
+
+        // Store RAW SVG in the field that normally expects Base64
+        val side = Side(imageBase64 = svgString)
+
+        val application = application()
+
+        // This should not crash now
         val imageRequest = UtilitySvgSerializer.imageRequestFromBase64StringAsync(application, side)
 
         assertTrue(imageRequest != null)

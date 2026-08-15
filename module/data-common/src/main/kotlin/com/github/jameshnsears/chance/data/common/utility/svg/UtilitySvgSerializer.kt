@@ -36,8 +36,14 @@ class UtilitySvgSerializer {
 
         fun imageRequestFromBase64String(application: Application, side: Side): ImageRequest {
             if (side.imageRequest == null) {
+                val data = if (isStringSvg(side.imageBase64)) {
+                    side.imageBase64.toByteArray()
+                } else {
+                    decodeBase64StringIntoByteArray(side.imageBase64)
+                }
+
                 val imageRequest = ImageRequest.Builder(application)
-                    .data(decodeBase64StringIntoByteArray(side.imageBase64))
+                    .data(data)
                     .decoderFactory(SvgDecoder.Factory())
                     .memoryCachePolicy(CachePolicy.ENABLED)
                     .memoryCacheKey(side.imageBase64.hashCode().toString())
@@ -68,8 +74,14 @@ class UtilitySvgSerializer {
             side.imageRequest?.let { return@withContext it }
 
             // Perform CPU-intensive work on background dispatcher
+            val data = if (isStringSvg(side.imageBase64)) {
+                side.imageBase64.toByteArray()
+            } else {
+                decodeBase64StringIntoByteArray(side.imageBase64)
+            }
+
             val imageRequest = ImageRequest.Builder(application)
-                .data(decodeBase64StringIntoByteArray(side.imageBase64))
+                .data(data)
                 .decoderFactory(SvgDecoder.Factory())
                 .memoryCachePolicy(CachePolicy.ENABLED)
                 .memoryCacheKey(side.imageBase64.hashCode().toString())
