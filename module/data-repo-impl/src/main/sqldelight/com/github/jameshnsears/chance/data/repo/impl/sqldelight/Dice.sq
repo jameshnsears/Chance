@@ -1,0 +1,36 @@
+import kotlin.Boolean;
+
+CREATE TABLE Dice (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL CHECK (length(trim(title)) > 0),
+    colour TEXT NOT NULL CHECK (length(trim(colour)) > 0),
+    selected INTEGER AS Boolean NOT NULL DEFAULT 0 CHECK (selected IN (0, 1)),
+    multiplierValue INTEGER NOT NULL DEFAULT 1 CHECK (multiplierValue > 0),
+    explode INTEGER AS Boolean NOT NULL DEFAULT 0 CHECK (explode IN (0, 1)),
+    explodeWhen TEXT,
+    explodeValue INTEGER,
+    modifyScore INTEGER AS Boolean NOT NULL DEFAULT 0 CHECK (modifyScore IN (0, 1)),
+    modifyScoreValue INTEGER,
+    displayIndex INTEGER NOT NULL DEFAULT 0 CHECK (displayIndex >= 0)
+);
+
+saveDice:
+INSERT OR REPLACE INTO Dice (
+    uuid, title, colour, selected, multiplierValue, explode,
+    explodeWhen, explodeValue, modifyScore, modifyScoreValue, displayIndex
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+getDice:
+SELECT * FROM Dice WHERE uuid = :uuid;
+
+getAllDice:
+SELECT * FROM Dice ORDER BY displayIndex;
+
+getSelectedDiceUuids:
+SELECT uuid FROM Dice WHERE selected = 1;
+
+updateDiceSelection:
+UPDATE Dice SET selected = :selected WHERE uuid = :uuid;
+
+clear:
+DELETE FROM Dice;

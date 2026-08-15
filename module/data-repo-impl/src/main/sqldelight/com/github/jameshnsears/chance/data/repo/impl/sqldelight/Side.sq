@@ -1,0 +1,26 @@
+CREATE TABLE Side (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    diceUuid TEXT NOT NULL,
+    number INTEGER NOT NULL CHECK (number > 0),
+    numberColour TEXT NOT NULL CHECK (length(trim(numberColour)) > 0),
+    imageDrawableId INTEGER,
+    imageUuid TEXT,
+    description TEXT,
+    descriptionColour TEXT NOT NULL CHECK (length(trim(descriptionColour)) > 0),
+    FOREIGN KEY (diceUuid) REFERENCES Dice(uuid) ON DELETE CASCADE,
+    FOREIGN KEY (imageUuid) REFERENCES Image(uuid) ON DELETE SET NULL
+);
+
+saveSide:
+INSERT OR REPLACE INTO Side (
+    uuid, diceUuid, number, numberColour, imageDrawableId, imageUuid, description, descriptionColour
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+
+getSidesForDice:
+SELECT * FROM Side WHERE diceUuid = :diceUuid ORDER BY number;
+
+getAllSideUuids:
+SELECT uuid FROM Side;
+
+clear:
+DELETE FROM Side;
