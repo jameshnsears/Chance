@@ -252,11 +252,10 @@ class RollsAndroidViewModel(
         rollsSelectionHelper.markDiceAsSelected(dice, selected, viewModelScope)
     }
 
-    fun markGroupAsSelected(group: Group) {
-        val nextSelected = !group.selected
-        groupIntentions[group.uuid] = nextSelected
-        _selectedGroupUuids.update { if (nextSelected) it + group.uuid else it - group.uuid }
-        rollsSelectionHelper.markGroupAsSelected(group, viewModelScope)
+    fun markGroupAsSelected(group: Group, selected: Boolean) {
+        groupIntentions[group.uuid] = selected
+        _selectedGroupUuids.update { if (selected) it + group.uuid else it - group.uuid }
+        rollsSelectionHelper.markGroupAsSelected(group, selected, viewModelScope)
     }
 
     fun rollDiceSequence(
@@ -292,7 +291,23 @@ class RollsAndroidViewModel(
                 repositoryRoll.store(latestEntry.key, newRollSequence)
             } else {
                 // NEW ROLL Logic
-                rollsCoreHelper.generateRollDiceSequence(diceBag.value, groupHistory.value, newRollSequence)
+                val currentDiceBag = diceBag.value
+                val currentGroupHistory = groupHistory.value
+                val currentSelectedDiceUuids = selectedDiceUuids.value
+                val currentSelectedGroupUuids = selectedGroupUuids.value
+
+                val updatedDiceBag = currentDiceBag.map { dice ->
+                    dice.copy(selected = currentSelectedDiceUuids.contains(dice.uuid))
+                }.toMutableList()
+                val updatedGroupHistory = currentGroupHistory.map { group ->
+                    group.copy(selected = currentSelectedGroupUuids.contains(group.uuid))
+                }
+
+                rollsCoreHelper.generateRollDiceSequence(
+                    updatedDiceBag,
+                    updatedGroupHistory,
+                    newRollSequence
+                )
                 rollsCoreHelper.shuffleRollSequence(newRollSequence, stateFlowSettings.value.shuffle)
                 rollsCoreHelper.saveNewRollSequence(newRollSequence)
             }

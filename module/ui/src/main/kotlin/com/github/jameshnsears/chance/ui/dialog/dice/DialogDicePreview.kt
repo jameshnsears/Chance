@@ -54,6 +54,8 @@ fun DialogBagPreview() {
             repositoryBag,
             dice,
             sides,
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup,
         )
     }
 

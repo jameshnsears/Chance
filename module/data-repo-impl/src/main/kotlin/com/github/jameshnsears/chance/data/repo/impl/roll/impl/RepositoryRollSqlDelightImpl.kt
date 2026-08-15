@@ -74,6 +74,7 @@ class RepositoryRollSqlDelightImpl(
     override suspend fun store(epoch: Long, rollList: List<Roll>) {
         withContext(Dispatchers.IO) {
             database.transaction {
+                database.rollQueries.deleteRollsForEpoch(epoch)
                 rollList.forEach { roll ->
                     database.rollQueries.saveRoll(
                         epoch = epoch,

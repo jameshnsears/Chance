@@ -1,5 +1,6 @@
 CREATE TABLE Roll (
-    epoch INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    epoch INTEGER NOT NULL,
     multiplierIndex INTEGER NOT NULL CHECK (multiplierIndex >= 0),
     explodeIndex INTEGER NOT NULL CHECK (explodeIndex >= 0),
     scoreAdjustment INTEGER NOT NULL DEFAULT 0,
@@ -19,6 +20,9 @@ SELECT * FROM Roll ORDER BY epoch DESC;
 
 deleteRollsForDice:
 DELETE FROM Roll WHERE sideUuid IN (SELECT uuid FROM Side WHERE diceUuid = :diceUuid);
+
+deleteRollsForEpoch:
+DELETE FROM Roll WHERE epoch = :epoch;
 
 removeLatestRoll:
 DELETE FROM Roll WHERE epoch = (SELECT MAX(epoch) FROM Roll);

@@ -3,7 +3,6 @@ package com.github.jameshnsears.chance.ui.dialog.dice
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
@@ -23,8 +22,8 @@ class DialogDiceAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val dice: Dice,
     val side: Side,
-    val repositoryRoll: RepositoryRollInterface = RepositoryFactory(application).repositoryRoll,
-    val repositoryGroup: RepositoryGroupInterface = RepositoryFactory(application).repositoryGroup,
+    val repositoryRoll: RepositoryRollInterface,
+    val repositoryGroup: RepositoryGroupInterface,
 ) : AndroidViewModel(application) {
 
     val dialogDiceService = DialogDiceService(

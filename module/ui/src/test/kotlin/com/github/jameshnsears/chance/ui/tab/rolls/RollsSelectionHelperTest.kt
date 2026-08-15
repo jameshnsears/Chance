@@ -38,9 +38,9 @@ class RollsSelectionHelperTest : UtilityAndroidUnitTestHelper() {
         val groupHistory = GroupDataTestDouble(bagData).groupHistory
         val group = groupHistory[0]
 
-        helper.markGroupAsSelected(group, this)
+        helper.markGroupAsSelected(group, true, this)
         advanceUntilIdle()
 
-        coVerify { repositoryGroup.store(group.uuid, !group.selected) }
+        coVerify { repositoryGroup.store(group.uuid, true) }
     }
 }

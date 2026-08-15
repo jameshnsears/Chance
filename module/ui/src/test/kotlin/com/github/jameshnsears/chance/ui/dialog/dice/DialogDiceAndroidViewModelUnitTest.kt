@@ -347,13 +347,15 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val bagDataTestDouble = BagDataTestDouble()
         val sampleBagTestDataAllDice = bagDataTestDouble.allDice()
 
-        val repositoryBag = RepositoryFactory().repositoryBag
+        val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(sampleBagTestDataAllDice)
 
         val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
             application(), repositoryBag, sampleBagTestDataAllDice[2],
-            sampleBagTestDataAllDice[2].sides[0]
-        )
+            sampleBagTestDataAllDice[2].sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
 
         dialogDiceAndroidViewModel.save(
             dialogDiceAndroidViewModel.cardDiceService.stateFlowCardDice.value,
@@ -379,7 +381,7 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val bagDataTestDouble = BagDataTestDouble()
         val diceToDelete = bagDataTestDouble.d4
 
-        val repositoryBag = RepositoryFactory().repositoryBag
+        val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(
             mutableListOf(
                 bagDataTestDouble.d2, diceToDelete, bagDataTestDouble.d6
@@ -387,8 +389,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         )
 
         val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
-            application(), repositoryBag, diceToDelete, diceToDelete.sides[0]
-        )
+            application(), repositoryBag, diceToDelete, diceToDelete.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
 
         dialogDiceAndroidViewModel.delete()
 
@@ -406,7 +410,7 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val bagDataTestDouble = BagDataTestDouble()
         val diceToClone = bagDataTestDouble.d12
 
-        val repositoryBag = RepositoryFactory().repositoryBag
+        val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(
             mutableListOf(
                 bagDataTestDouble.d10, diceToClone, bagDataTestDouble.d20
@@ -418,8 +422,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val d12FromRepo = initialDiceBag[1]
 
         val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
-            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0]
-        )
+            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
 
         val newTitleForClonedDice = d12FromRepo.title + " clone"
         dialogDiceAndroidViewModel.cardDiceService.diceTitle(newTitleForClonedDice)
@@ -445,8 +451,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun removeRollSequenceWithDiceThatBeenDeleted() = runTest {
-        val repositoryFactory = RepositoryFactory()
-
         val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(repositoryFactory.bagDataTestDouble.allDice())
         assertEquals(7, repositoryBag.fetch().first().size)
@@ -459,8 +463,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
             application(),
             repositoryBag,
             repositoryFactory.bagDataTestDouble.allDice()[0],
-            repositoryFactory.bagDataTestDouble.allDice()[0].sides[0]
-        )
+            repositoryFactory.bagDataTestDouble.allDice()[0].sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
 
         dialogDiceAndroidViewModel.save(
             dialogDiceAndroidViewModel.cardDiceService.stateFlowCardDice.value,
@@ -484,8 +490,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun removeRollSequenceWithDiceWhereNumberOfSidesChanged() = runTest {
-        val repositoryFactory = RepositoryFactory()
-
         val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(repositoryFactory.bagDataTestDouble.allDice())
         assertEquals(7, repositoryBag.fetch().first().size)
@@ -498,8 +502,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
             application(),
             repositoryBag,
             repositoryFactory.bagDataTestDouble.allDice()[0],
-            repositoryFactory.bagDataTestDouble.allDice()[0].sides[0]
-        )
+            repositoryFactory.bagDataTestDouble.allDice()[0].sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
 
         dialogDiceAndroidViewModel.cardDiceService.diceSidesSize("4")
 
@@ -519,8 +525,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun removeGroupWithDiceThatBeenDeleted() = runTest {
-        val repositoryFactory = RepositoryFactory()
-
         val repositoryBag = repositoryFactory.repositoryBag
         val allDice = repositoryFactory.bagDataTestDouble.allDice()
         repositoryBag.store(allDice)
@@ -540,8 +544,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
             application(),
             repositoryBag,
             diceToDelete,
-            diceToDelete.sides[0]
-        )
+            diceToDelete.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
 
         dialogDiceAndroidViewModel.delete()
 
@@ -557,8 +563,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun migrateGroupDiceEpochWhenNumberOfSidesChanged() = runTest {
-        val repositoryFactory = RepositoryFactory()
-
         val repositoryBag = repositoryFactory.repositoryBag
         val allDice = repositoryFactory.bagDataTestDouble.allDice()
         repositoryBag.store(allDice)
@@ -572,8 +576,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
             application(),
             repositoryBag,
             diceToChange,
-            diceToChange.sides[0]
-        )
+            diceToChange.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
 
         dialogDiceAndroidViewModel.cardDiceService.diceSidesSize("4")
 
@@ -593,7 +599,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun deleteDiceRemovesGroupIfItWasTheLastDiceInThatGroup() = runTest {
-        val repositoryFactory = RepositoryFactory()
         val repositoryBag = repositoryFactory.repositoryBag
         val repositoryGroup = repositoryFactory.repositoryGroup
 
@@ -614,8 +619,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
             application(),
             repositoryBag,
             d6,
-            d6.sides[0]
-        )
+            d6.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
         dialogDiceAndroidViewModel.delete()
         advanceUntilIdle()
 
@@ -643,13 +650,13 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         val diceToKeep = bagDataTestDouble.d6
 
         // 1. Setup dice bag with just these two dice
-        val repositoryBag = RepositoryFactory().repositoryBag
+        val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(mutableListOf(diceToDelete, diceToKeep))
         assertEquals(2, repositoryBag.fetch().first().size)
 
         // 2. Setup a group containing both dice
         val group = Group(name = "Test Group", uuidDice = listOf(diceToDelete.uuid, diceToKeep.uuid))
-        val repositoryGroup = RepositoryFactory().repositoryGroup
+        val repositoryGroup = repositoryFactory.repositoryGroup
         repositoryGroup.store(listOf(group))
         assertEquals(1, repositoryGroup.fetch().first().size)
 
@@ -657,7 +664,7 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         //    Epoch A: standalone roll of diceToDelete (uuidGroup = "")
         //    Epoch B: group roll of both dice together (uuidGroup = group.uuid)
         //    Epoch C: standalone roll of diceToKeep (should survive deletion)
-        val repositoryRoll = RepositoryFactory().repositoryRoll
+        val repositoryRoll = repositoryFactory.repositoryRoll
         repositoryRoll.store(
             linkedMapOf(
                 1L to listOf(
@@ -676,8 +683,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
 
         // 4. Delete diceToDelete
         val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
-            application(), repositoryBag, diceToDelete, diceToDelete.sides[0]
-        )
+            application(), repositoryBag, diceToDelete, diceToDelete.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
         dialogDiceAndroidViewModel.delete()
         advanceUntilIdle()
 
@@ -712,7 +721,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun clonePreservesRollAndGroupSemantics() = runTest {
-        val repositoryFactory = RepositoryFactory()
         val bagDataTestDouble = BagDataTestDouble()
         val repositoryBag = repositoryFactory.repositoryBag
         val repositoryRoll = repositoryFactory.repositoryRoll
@@ -744,8 +752,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         // 4. Clone d12 with a new title
         val d12FromRepo = repositoryBag.fetch().first()[1] // d12 is at index 1
         val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
-            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0]
-        )
+            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
         val cloneTitle = "d12 clone"
         dialogDiceAndroidViewModel.cardDiceService.diceTitle(cloneTitle)
 
@@ -808,7 +818,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun saveWithSameSideCountPreservesRollAndGroupSemantics() = runTest {
-        val repositoryFactory = RepositoryFactory()
         val bagDataTestDouble = BagDataTestDouble()
         val repositoryBag = repositoryFactory.repositoryBag
         val repositoryRoll = repositoryFactory.repositoryRoll
@@ -838,8 +847,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         // 4. Save with the same number of sides (only title change)
         val d12FromRepo = repositoryBag.fetch().first()[0]
         val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
-            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0]
-        )
+            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
         val newTitle = "d12 Renamed"
         dialogDiceAndroidViewModel.cardDiceService.diceTitle(newTitle)
 
@@ -876,7 +887,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun saveWithChangedSideMigratesGroupAndCleansUpRollSemantics() = runTest {
-        val repositoryFactory = RepositoryFactory()
         val bagDataTestDouble = BagDataTestDouble()
         val repositoryBag = repositoryFactory.repositoryBag
         val repositoryRoll = repositoryFactory.repositoryRoll
@@ -917,8 +927,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         // 4. Save d12 with fewer sides (12 → 6) so UUID changes
         val d12FromRepo = repositoryBag.fetch().first()[1]
         val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
-            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0]
-        )
+            application(), repositoryBag, d12FromRepo, d12FromRepo.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
+        ).also { createdViewModels.add(it) }
         dialogDiceAndroidViewModel.cardDiceService.diceSidesSize("6")
 
         dialogDiceAndroidViewModel.save(
@@ -973,7 +985,6 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
     @Test
     fun saveWithChangedSideMigratesGroupAndRollSemanticsInCombinedScenario() =
         runTest {
-            val repositoryFactory = RepositoryFactory()
             val bagDataTestDouble = BagDataTestDouble()
             val repositoryBag = repositoryFactory.repositoryBag
             val repositoryRoll = factoryRoll(repositoryFactory)
@@ -1004,8 +1015,10 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
             // 4. Change d6 sides (6 → 4) so its UUID changes
             val d6FromRepo = repositoryBag.fetch().first()[0]
             val dialogDiceAndroidViewModel = DialogDiceAndroidViewModel(
-                application(), repositoryBag, d6FromRepo, d6FromRepo.sides[0]
-            )
+                application(), repositoryBag, d6FromRepo, d6FromRepo.sides[0],
+                repositoryFactory.repositoryRoll,
+                repositoryFactory.repositoryGroup
+            ).also { createdViewModels.add(it) }
             dialogDiceAndroidViewModel.cardDiceService.diceSidesSize("4")
             dialogDiceAndroidViewModel.save(
                 dialogDiceAndroidViewModel.cardDiceService.stateFlowCardDice.value,
@@ -1039,12 +1052,19 @@ class DialogDiceAndroidViewModelUnitTest : DialogDiceUnitTestUnitTestHelper() {
         }
 
     private suspend fun dialogBagAndroidViewModel(dice: Dice): DialogDiceAndroidViewModel {
-        val repositoryBag = RepositoryFactory().repositoryBag
+        val repositoryBag = repositoryFactory.repositoryBag
         repositoryBag.store(mutableListOf(dice))
 
-        return DialogDiceAndroidViewModel(
-            application(), repositoryBag, dice, dice.sides[0]
+        val viewModel = DialogDiceAndroidViewModel(
+            application(),
+            repositoryBag,
+            dice,
+            dice.sides[0],
+            repositoryFactory.repositoryRoll,
+            repositoryFactory.repositoryGroup
         )
+        createdViewModels.add(viewModel)
+        return viewModel
     }
 
     private fun factoryRoll(repositoryFactory: RepositoryFactory) = repositoryFactory.repositoryRoll

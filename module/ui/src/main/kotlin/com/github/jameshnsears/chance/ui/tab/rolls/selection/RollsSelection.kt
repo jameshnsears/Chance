@@ -127,7 +127,7 @@ fun RollSelectionGroupFilterChip(
             .testTag(RollsSelectionTestTag.ROLL_BUTTON + group.name),
         enabled = enabled,
         onClick = {
-            rollsAndroidViewModel.markGroupAsSelected(group)
+            rollsAndroidViewModel.markGroupAsSelected(group, !isSelected)
         },
         label = {
             Row(verticalAlignment = Alignment.CenterVertically) {

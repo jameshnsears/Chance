@@ -15,7 +15,7 @@ import org.junit.Before
 
 open class DialogDiceUnitTestUnitTestHelper : UtilityAndroidUnitTestHelper() {
     protected lateinit var repositoryFactory: RepositoryFactory
-    private val createdViewModels = mutableListOf<ViewModel>()
+    protected val createdViewModels = mutableListOf<ViewModel>()
 
     @Before
     fun setUp() {

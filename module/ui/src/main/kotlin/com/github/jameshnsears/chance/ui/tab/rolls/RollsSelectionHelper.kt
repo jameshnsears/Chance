@@ -26,12 +26,13 @@ class RollsSelectionHelper(
 
     fun markGroupAsSelected(
         group: Group,
+        selected: Boolean,
         scope: CoroutineScope
     ) {
-        Timber.d("group.uuid=${group.uuid}")
+        Timber.d("group.uuid=${group.uuid}; selected=$selected")
 
         scope.launch {
-            repositoryGroup.store(group.uuid, !group.selected)
+            repositoryGroup.store(group.uuid, selected)
         }
     }
 }

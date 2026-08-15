@@ -7,12 +7,14 @@ import com.github.jameshnsears.chance.common.utility.UtilityAndroidUnitTestHelpe
 import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.DiceRollValues
+import com.github.jameshnsears.chance.data.domain.core.bag.DiceBag
 import com.github.jameshnsears.chance.data.domain.core.bag.testdouble.BagDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.group.GroupHistory
 import com.github.jameshnsears.chance.data.domain.core.group.testdouble.GroupDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.roll.Roll
 import com.github.jameshnsears.chance.data.domain.core.roll.testdouble.RollHistoryDataTestDouble
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.slot
 import io.mockk.spyk
@@ -20,6 +22,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -356,7 +359,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         tabRollAndroidViewModel.groupHistory.first { it.isNotEmpty() }
 
         val group = groupDataTestDouble.groupHistory[0]
-        tabRollAndroidViewModel.markGroupAsSelected(group)
+        tabRollAndroidViewModel.markGroupAsSelected(group, true)
 
         tabRollAndroidViewModel.groupHistory.first { it.any { g -> g.uuid == group.uuid && g.selected } }
     }
@@ -378,7 +381,7 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
 
         val group = groupDataTestDouble.groupHistory[0] // tg1: dice 0 and 1
 
-        tabRollAndroidViewModel.markGroupAsSelected(group)
+        tabRollAndroidViewModel.markGroupAsSelected(group, true)
         tabRollAndroidViewModel.groupHistory.first { it.any { g -> g.uuid == group.uuid && g.selected } }
 
         // Mock randomSide to return something predictable
@@ -509,8 +512,8 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         // Mock randomSide to return sides that won't trigger explosions
         // d2 sides are [2, 1]. d4 sides are [4, 3, 2, 1].
         // d4 explodes on 2. So we'll return side 4 (index 0).
-        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(d2) } returns d2.sides[0]
-        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(d4) } returns d4.sides[0]
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(match { it.uuid == d2.uuid }) } returns d2.sides[0]
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(match { it.uuid == d4.uuid }) } returns d4.sides[0]
 
         val newRollSequence = mutableListOf<Roll>()
         tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
@@ -578,6 +581,138 @@ class RollsAndroidViewModelUnitTest : UtilityAndroidUnitTestHelper() {
         updatedLatestRolls.forEach {
             assertEquals(side1.uuid, it.side.uuid)
         }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun rollDiceSequenceMultipleSelections() = runTest {
+        val bagDataTestDouble = BagDataTestDouble()
+        // Deselect everything by default
+        bagDataTestDouble.allDice().forEach { it.selected = false }
+
+        val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
+        val tabRollAndroidViewModel = tabRollAndroidViewModel(
+            bagDataTestDouble,
+            groupHistory = groupDataTestDouble.groupHistory,
+            selectDefaultDice = false
+        )
+        tabRollAndroidViewModel.repositoryRoll.clear()
+
+        val bag = tabRollAndroidViewModel.diceBag.first { it.isNotEmpty() }
+        assertEquals(7, bag.size)
+
+        tabRollAndroidViewModel.groupHistory.first { it.isNotEmpty() }
+
+        val d4 = bagDataTestDouble.d4
+        val d6 = bagDataTestDouble.d6
+
+        tabRollAndroidViewModel.markDiceAsSelected(d4, true)
+        tabRollAndroidViewModel.markDiceAsSelected(d6, true)
+
+        val tg1 = groupDataTestDouble.groupHistory[0]
+        val tg2 = groupDataTestDouble.groupHistory[1]
+
+        tabRollAndroidViewModel.markGroupAsSelected(tg1, true)
+        tabRollAndroidViewModel.markGroupAsSelected(tg2, true)
+
+        advanceUntilIdle()
+
+        // Mock randomSide to avoid explosions
+        every { tabRollAndroidViewModel.rollsCoreHelper.randomSide(any()) } answers {
+            (it.invocation.args[0] as Dice).sides[0]
+        }
+
+        // Trigger roll
+        tabRollAndroidViewModel.rollDiceSequence()
+
+        // Verify roll history - wait for 1st entry
+        val history = tabRollAndroidViewModel.repositoryRoll.fetch().first { it.isNotEmpty() }
+        val latestEpoch = history.keys.maxOrNull()!!
+        val rolls = history[latestEpoch]!!
+
+        // Counts:
+        // Selected Dice: d4(2) + d6(3) = 5 rolls
+        // Selected Groups: tg1 (d2(1), d4(2)) + tg2 (d4(2)) = 5 rolls
+        // Total = 10 rolls
+        assertEquals(10, rolls.size)
+
+        assertEquals(6, rolls.filter { it.uuidDice == d4.uuid }.size)
+        assertEquals(3, rolls.filter { it.uuidDice == d6.uuid }.size)
+        assertEquals(1, rolls.filter { it.uuidDice == bagDataTestDouble.d2.uuid }.size)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun rollDiceSequenceUsesOptimisticSelectionBeforeRepositoryCommit() = runTest {
+        val bagDataTestDouble = BagDataTestDouble()
+        // Deselect everything by default
+        bagDataTestDouble.allDice().forEach { it.selected = false }
+        val groupDataTestDouble = GroupDataTestDouble(bagDataTestDouble)
+
+        val repositorySettings = repositoryFactory.repositorySettings
+        val repositoryBag = repositoryFactory.repositoryBag
+        val repositoryGroup = repositoryFactory.repositoryGroup
+        val repositoryRoll = repositoryFactory.repositoryRoll
+        val repositoryLocked = repositoryFactory.repositoryLocked
+        runBlocking {
+            repositorySettings.store(SettingsDataTestDouble())
+            repositoryBag.store(bagDataTestDouble.allDice())
+            repositoryGroup.store(groupDataTestDouble.groupHistory)
+            repositoryRoll.clear()
+        }
+
+        // Persisted selection stores are no-ops, so the dice bag fetched from the
+        // repository stays with all dice deselected until the test finishes.
+        val repositoryBagSpy = spyk(repositoryBag)
+        coEvery { repositoryBagSpy.store(any<String>(), any()) } returns Unit
+
+        // Locked repository resolves synchronously so rollDiceSequence does not
+        // suspend on real IO before generating the roll sequence.
+        val repositoryLockedSpy = spyk(repositoryLocked)
+        every { repositoryLockedSpy.fetch() } returns flowOf(emptySet())
+
+        val repositoryRollSpy = spyk(repositoryRoll)
+        val rollsCoreHelper = spyk(RollsCoreHelper(repositoryRollSpy))
+        val rollsSelectionHelper = RollsSelectionHelper(repositoryBagSpy, repositoryGroup)
+
+        val tabRollAndroidViewModel = RollsAndroidViewModel(
+            application(),
+            repositorySettings,
+            repositoryBagSpy,
+            repositoryRollSpy,
+            repositoryGroup,
+            repositoryLockedSpy,
+            rollsSelectionHelper,
+            rollsCoreHelper
+        ).also { createdViewModels.add(it) }
+
+        tabRollAndroidViewModel.diceBag.first { it.isNotEmpty() }
+        tabRollAndroidViewModel.groupHistory.first { it.isNotEmpty() }
+
+        // Capture the dice bag that rollDiceSequence passes to the roll generator.
+        val diceBagSlot = slot<DiceBag>()
+        every {
+            tabRollAndroidViewModel.rollsCoreHelper.generateRollDiceSequence(
+                capture(diceBagSlot),
+                any(),
+                any()
+            )
+        } answers { }
+
+        // Select two dice and roll IMMEDIATELY, before any selection is persisted.
+        // Regression test: rollDiceSequence must use the optimistic selection state,
+        // otherwise only dice whose selection has been persisted appear in the roll.
+        val d2 = bagDataTestDouble.d2
+        val d4 = bagDataTestDouble.d4
+
+        tabRollAndroidViewModel.markDiceAsSelected(d2, true)
+        tabRollAndroidViewModel.markDiceAsSelected(d4, true)
+        tabRollAndroidViewModel.rollDiceSequence()
+
+        advanceUntilIdle()
+
+        val selectedUuids = diceBagSlot.captured.filter { it.selected }.map { it.uuid }.toSet()
+        assertEquals(setOf(d2.uuid, d4.uuid), selectedUuids)
     }
 
     private fun tabRollAndroidViewModel(
