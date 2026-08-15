@@ -1,0 +1,15 @@
+saveLocked:
+INSERT OR REPLACE INTO Locked (
+    diceUuid
+) VALUES (
+    :diceUuid
+);
+
+getLocked:
+SELECT diceUuid FROM Locked;
+
+deleteLocked:
+DELETE FROM Locked WHERE diceUuid = :diceUuid;
+
+clear:
+DELETE FROM Locked;

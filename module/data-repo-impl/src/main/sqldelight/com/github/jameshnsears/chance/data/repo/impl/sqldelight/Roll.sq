@@ -1,0 +1,33 @@
+saveRoll:
+INSERT OR REPLACE INTO Roll (
+    epoch,
+    multiplierIndex,
+    explodeIndex,
+    scoreAdjustment,
+    score,
+    sideUuid,
+    groupUuid
+) VALUES (
+    :epoch,
+    :multiplierIndex,
+    :explodeIndex,
+    :scoreAdjustment,
+    :score,
+    :sideUuid,
+    :groupUuid
+);
+
+getRolls:
+SELECT * FROM Roll ORDER BY epoch DESC;
+
+deleteRollsForDice:
+DELETE FROM Roll WHERE sideUuid IN (SELECT uuid FROM Side WHERE diceUuid = :diceUuid);
+
+removeLatestRoll:
+DELETE FROM Roll WHERE epoch = (SELECT MAX(epoch) FROM Roll);
+
+getAllSideUuidsFromRolls:
+SELECT DISTINCT sideUuid FROM Roll;
+
+clear:
+DELETE FROM Roll;
