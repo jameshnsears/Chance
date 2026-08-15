@@ -19,7 +19,6 @@ CREATE TABLE Dice (
         CHECK (explode IN (0, 1)),
 
     explodeWhen TEXT,
-
     explodeValue INTEGER,
 
     modifyScore INTEGER AS Boolean NOT NULL DEFAULT 0
@@ -52,7 +51,7 @@ CREATE TABLE Dice (
 );
 
 CREATE INDEX Dice_displayIndex
-ON Dice(displayIndex);
+    ON Dice(displayIndex);
 
 
 CREATE TABLE Image (
@@ -73,19 +72,20 @@ CREATE TABLE Image (
 );
 
 CREATE UNIQUE INDEX Image_base64
-ON Image(base64)
-WHERE base64 IS NOT NULL;
+    ON Image(base64)
+    WHERE base64 IS NOT NULL;
 
 CREATE UNIQUE INDEX Image_svg
-ON Image(svg)
-WHERE svg IS NOT NULL;
+    ON Image(svg)
+    WHERE svg IS NOT NULL;
 
 
 CREATE TABLE Side (
     uuid TEXT NOT NULL PRIMARY KEY,
 
     diceUuid TEXT NOT NULL,
-    number INTEGER NOT NULL,
+    number INTEGER NOT NULL
+        CHECK (number > 0),
 
     numberColour TEXT NOT NULL
         CHECK (length(trim(numberColour)) > 0),
@@ -94,6 +94,7 @@ CREATE TABLE Side (
     imageUuid TEXT,
 
     description TEXT,
+
     descriptionColour TEXT NOT NULL
         CHECK (length(trim(descriptionColour)) > 0),
 
@@ -107,8 +108,6 @@ CREATE TABLE Side (
 
     UNIQUE (diceUuid, number),
 
-    CHECK (number > 0),
-
     CHECK (
         imageDrawableId IS NULL
         OR imageUuid IS NULL
@@ -116,7 +115,10 @@ CREATE TABLE Side (
 );
 
 CREATE INDEX Side_imageUuid
-ON Side(imageUuid);
+    ON Side(imageUuid);
+
+CREATE INDEX Side_diceUuid
+    ON Side(diceUuid);
 
 
 CREATE TABLE DiceGroup (
@@ -135,7 +137,7 @@ CREATE TABLE DiceGroup (
 );
 
 CREATE INDEX DiceGroup_displayIndex
-ON DiceGroup(displayIndex);
+    ON DiceGroup(displayIndex);
 
 
 CREATE TABLE DiceGroupDice (
@@ -154,7 +156,45 @@ CREATE TABLE DiceGroupDice (
 );
 
 CREATE INDEX DiceGroupDice_diceUuid
-ON DiceGroupDice(diceUuid);
+    ON DiceGroupDice(diceUuid);
+
+
+CREATE TABLE Roll (
+    epoch INTEGER PRIMARY KEY,
+
+    multiplierIndex INTEGER NOT NULL
+        CHECK (multiplierIndex >= 0),
+
+    explodeIndex INTEGER NOT NULL
+        CHECK (explodeIndex >= 0),
+
+    scoreAdjustment INTEGER NOT NULL DEFAULT 0,
+
+    score INTEGER NOT NULL,
+
+    sideUuid TEXT NOT NULL,
+    groupUuid TEXT,
+
+    FOREIGN KEY (sideUuid)
+        REFERENCES Side(uuid)
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (groupUuid)
+        REFERENCES DiceGroup(uuid)
+        ON DELETE SET NULL
+);
+
+CREATE INDEX Roll_multiplierIndex
+    ON Roll(multiplierIndex);
+
+CREATE INDEX Roll_explodeIndex
+    ON Roll(explodeIndex);
+
+CREATE INDEX Roll_sideUuid
+    ON Roll(sideUuid);
+
+CREATE INDEX Roll_groupUuid
+    ON Roll(groupUuid);
 
 
 CREATE TABLE Settings (
