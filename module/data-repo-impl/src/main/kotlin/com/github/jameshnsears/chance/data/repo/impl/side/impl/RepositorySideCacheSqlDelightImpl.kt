@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 class RepositorySideCacheSqlDelightImpl(
     private val database: ChanceDatabase
@@ -32,24 +34,42 @@ class RepositorySideCacheSqlDelightImpl(
 
     override fun fetch(): Flow<Map<String, String>> = sideCacheFlow
 
+    @OptIn(ExperimentalEncodingApi::class)
     override suspend fun store(uuid: String, imageBase64: String) {
         withContext(Dispatchers.IO) {
+            val decoded = try {
+                String(Base64.decode(imageBase64))
+            } catch (_: Exception) {
+                null
+            }
+
+            val isSvg = decoded != null && decoded.contains("<svg") && decoded.contains("</svg>")
+
             database.imageQueries.saveImage(
                 uuid = uuid,
-                base64 = imageBase64,
-                svg = null
+                base64 = if (isSvg) null else imageBase64,
+                svg = if (isSvg) decoded else null
             )
         }
     }
 
+    @OptIn(ExperimentalEncodingApi::class)
     override suspend fun store(entries: Map<String, String>) {
         withContext(Dispatchers.IO) {
             database.transaction {
                 entries.forEach { (uuid, imageBase64) ->
+                    val decoded = try {
+                        String(Base64.decode(imageBase64))
+                    } catch (_: Exception) {
+                        null
+                    }
+
+                    val isSvg = decoded != null && decoded.contains("<svg") && decoded.contains("</svg>")
+
                     database.imageQueries.saveImage(
                         uuid = uuid,
-                        base64 = imageBase64,
-                        svg = null
+                        base64 = if (isSvg) null else imageBase64,
+                        svg = if (isSvg) decoded else null
                     )
                 }
             }
