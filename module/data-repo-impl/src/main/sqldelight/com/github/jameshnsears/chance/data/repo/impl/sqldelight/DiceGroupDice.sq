@@ -1,0 +1,16 @@
+CREATE TABLE DiceGroupDice (
+    groupUuid TEXT NOT NULL,
+    diceUuid TEXT NOT NULL,
+    PRIMARY KEY (groupUuid, diceUuid),
+    FOREIGN KEY (groupUuid) REFERENCES DiceGroup(uuid) ON DELETE CASCADE,
+    FOREIGN KEY (diceUuid) REFERENCES Dice(uuid) ON DELETE CASCADE
+);
+
+saveDiceGroupDice:
+INSERT OR REPLACE INTO DiceGroupDice (groupUuid, diceUuid) VALUES (?, ?);
+
+getDiceForGroup:
+SELECT diceUuid FROM DiceGroupDice WHERE groupUuid = :groupUuid;
+
+clear:
+DELETE FROM DiceGroupDice;

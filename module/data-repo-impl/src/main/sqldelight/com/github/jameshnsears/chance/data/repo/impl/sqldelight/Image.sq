@@ -1,0 +1,17 @@
+CREATE TABLE Image (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    base64 TEXT,
+    svg TEXT
+);
+
+saveImage:
+INSERT OR REPLACE INTO Image (uuid, base64, svg) VALUES (?, ?, ?);
+
+getAllImages:
+SELECT * FROM Image;
+
+pruneImages:
+DELETE FROM Image WHERE uuid NOT IN :referencedUuids;
+
+clear:
+DELETE FROM Image;

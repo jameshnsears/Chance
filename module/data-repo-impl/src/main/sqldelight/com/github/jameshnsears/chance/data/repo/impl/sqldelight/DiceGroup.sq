@@ -1,0 +1,24 @@
+import kotlin.Boolean;
+
+CREATE TABLE DiceGroup (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL CHECK (length(trim(name)) > 0),
+    notes TEXT,
+    displayIndex INTEGER NOT NULL DEFAULT 0 CHECK (displayIndex >= 0),
+    selected INTEGER AS Boolean NOT NULL DEFAULT 0 CHECK (selected IN (0, 1))
+);
+
+saveDiceGroup:
+INSERT OR REPLACE INTO DiceGroup (uuid, name, notes, displayIndex, selected) VALUES (?, ?, ?, ?, ?);
+
+getAllDiceGroups:
+SELECT * FROM DiceGroup ORDER BY displayIndex;
+
+getSelectedDiceGroupUuids:
+SELECT uuid FROM DiceGroup WHERE selected = 1;
+
+updateDiceGroupSelection:
+UPDATE DiceGroup SET selected = :selected WHERE uuid = :uuid;
+
+clear:
+DELETE FROM DiceGroup;

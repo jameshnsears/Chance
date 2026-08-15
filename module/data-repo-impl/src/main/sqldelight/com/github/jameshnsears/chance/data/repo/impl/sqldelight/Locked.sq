@@ -1,15 +1,13 @@
-saveLocked:
-INSERT OR REPLACE INTO Locked (
-    diceUuid
-) VALUES (
-    :diceUuid
+CREATE TABLE Locked (
+    diceUuid TEXT NOT NULL PRIMARY KEY,
+    FOREIGN KEY (diceUuid) REFERENCES Dice(uuid) ON DELETE CASCADE
 );
+
+saveLocked:
+INSERT OR REPLACE INTO Locked (diceUuid) VALUES (:diceUuid);
 
 getLocked:
 SELECT diceUuid FROM Locked;
-
-deleteLocked:
-DELETE FROM Locked WHERE diceUuid = :diceUuid;
 
 clear:
 DELETE FROM Locked;
