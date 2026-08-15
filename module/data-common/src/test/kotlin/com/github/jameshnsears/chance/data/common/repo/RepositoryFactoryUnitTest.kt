@@ -95,7 +95,10 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
         // Put some non-default data in
         repositoryFactory.repositorySettings.store(SettingsDataTestDouble(resizeZoom = 5.0f))
 
-        val customDice = repositoryFactory.bagDataTestDouble.allDice().take(1).toMutableList()
+        // Store the full bag but with a distinguishable change so the group/roll
+        // seeding in initialize() has valid dice references to satisfy the FK.
+        val customDice = repositoryFactory.bagDataTestDouble.allDice().toMutableList()
+        customDice[0] = customDice[0].copy(title = "custom-title")
         repositoryFactory.repositoryBag.store(customDice)
 
         repositoryFactory.initialize()
@@ -106,10 +109,9 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
             repositoryFactory.repositorySettings.fetch().first().resizeZoom
         )
 
-        // Should STILL be just 1 dice
-        assertEquals(
-            1,
-            repositoryFactory.repositoryBag.fetch().first().size
-        )
+        // Should STILL be the custom dice (not overwritten by defaults)
+        val fetchedBag = repositoryFactory.repositoryBag.fetch().first()
+        assertEquals(customDice.size, fetchedBag.size)
+        assertEquals("custom-title", fetchedBag[0].title)
     }
 }

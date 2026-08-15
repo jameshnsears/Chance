@@ -1,16 +1,20 @@
 CREATE TABLE DiceGroupDice (
     groupUuid TEXT NOT NULL,
+    position INTEGER NOT NULL,
     diceUuid TEXT NOT NULL,
-    PRIMARY KEY (groupUuid, diceUuid),
+    PRIMARY KEY (groupUuid, position),
     FOREIGN KEY (groupUuid) REFERENCES DiceGroup(uuid) ON DELETE CASCADE,
     FOREIGN KEY (diceUuid) REFERENCES Dice(uuid) ON DELETE CASCADE
 );
 
 saveDiceGroupDice:
-INSERT OR REPLACE INTO DiceGroupDice (groupUuid, diceUuid) VALUES (?, ?);
+INSERT OR REPLACE INTO DiceGroupDice (groupUuid, position, diceUuid) VALUES (?, ?, ?);
 
 getDiceForGroup:
-SELECT diceUuid FROM DiceGroupDice WHERE groupUuid = :groupUuid;
+SELECT diceUuid FROM DiceGroupDice WHERE groupUuid = :groupUuid ORDER BY position;
+
+getAllDiceGroupDice:
+SELECT * FROM DiceGroupDice ORDER BY position;
 
 clear:
 DELETE FROM DiceGroupDice;

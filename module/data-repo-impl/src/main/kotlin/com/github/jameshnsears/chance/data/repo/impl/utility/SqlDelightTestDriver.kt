@@ -13,6 +13,10 @@ object SqlDelightTestDriver {
         })
 
         ChanceDatabase.Schema.create(driver)
-        return driver
+
+        // The JDBC in-memory driver uses a single shared java.sql.Connection which is not
+        // thread-safe; repository flows execute queries on Dispatchers.IO concurrently. Wrap the
+        // driver so all statements (and whole transactions) are serialized.
+        return SynchronizedSqlDriver(driver)
     }
 }

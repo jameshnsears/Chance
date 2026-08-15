@@ -7,6 +7,8 @@ import com.github.jameshnsears.chance.data.common.repo.RepositoryFactory
 import com.github.jameshnsears.chance.data.domain.core.Dice
 import com.github.jameshnsears.chance.data.domain.core.Side
 import com.github.jameshnsears.chance.data.repo.api.bag.RepositoryBagInterface
+import com.github.jameshnsears.chance.data.repo.api.group.RepositoryGroupInterface
+import com.github.jameshnsears.chance.data.repo.api.roll.RepositoryRollInterface
 import com.github.jameshnsears.chance.ui.dialog.dice.card.dice.CardDiceService
 import com.github.jameshnsears.chance.ui.dialog.dice.card.dice.CardDiceState
 import com.github.jameshnsears.chance.ui.dialog.dice.card.face.CardSideService
@@ -21,9 +23,9 @@ class DialogDiceAndroidViewModel(
     val repositoryBag: RepositoryBagInterface,
     val dice: Dice,
     val side: Side,
+    val repositoryRoll: RepositoryRollInterface = RepositoryFactory(application).repositoryRoll,
+    val repositoryGroup: RepositoryGroupInterface = RepositoryFactory(application).repositoryGroup,
 ) : AndroidViewModel(application) {
-    val repositoryRoll = RepositoryFactory(application).repositoryRoll
-    val repositoryGroup = RepositoryFactory(application).repositoryGroup
 
     val dialogDiceService = DialogDiceService(
         repositoryBag,

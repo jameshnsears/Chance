@@ -6,8 +6,7 @@ CREATE TABLE Roll (
     score INTEGER NOT NULL,
     sideUuid TEXT NOT NULL,
     groupUuid TEXT,
-    FOREIGN KEY (sideUuid) REFERENCES Side(uuid) ON DELETE CASCADE,
-    FOREIGN KEY (groupUuid) REFERENCES DiceGroup(uuid) ON DELETE SET NULL
+    FOREIGN KEY (sideUuid) REFERENCES Side(uuid) ON DELETE CASCADE
 );
 
 saveRoll:

@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -29,10 +30,12 @@ class RepositoryGroupSqlDelightImpl(
     private val groupHistoryFlow = database.diceGroupQueries.getAllDiceGroups()
         .asFlow()
         .mapToList(Dispatchers.IO)
-        .map { groupEntities ->
+        .combine(
+            database.diceGroupDiceQueries.getAllDiceGroupDice().asFlow().mapToList(Dispatchers.IO)
+        ) { groupEntities, groupDiceEntities ->
+            val diceByGroup = groupDiceEntities.groupBy { it.groupUuid }
             groupEntities.map { groupEntity ->
-                val diceUuids = database.diceGroupDiceQueries.getDiceForGroup(groupEntity.uuid).executeAsList()
-                groupEntity.toGroup(diceUuids)
+                groupEntity.toGroup(diceByGroup[groupEntity.uuid].orEmpty().map { it.diceUuid })
             }
         }.shareIn(
             scope = repositoryScope,
@@ -63,9 +66,10 @@ class RepositoryGroupSqlDelightImpl(
                         selected = group.selected
                     )
 
-                    group.uuidDice.forEach { diceUuid ->
+                    group.uuidDice.forEachIndexed { index, diceUuid ->
                         database.diceGroupDiceQueries.saveDiceGroupDice(
                             groupUuid = group.uuid,
+                            position = index.toLong(),
                             diceUuid = diceUuid
                         )
                     }

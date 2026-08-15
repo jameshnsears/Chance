@@ -19,6 +19,9 @@ INSERT OR REPLACE INTO Side (
 getSidesForDice:
 SELECT * FROM Side WHERE diceUuid = :diceUuid ORDER BY number;
 
+getAllSides:
+SELECT * FROM Side;
+
 getAllSideUuids:
 SELECT uuid FROM Side;
 

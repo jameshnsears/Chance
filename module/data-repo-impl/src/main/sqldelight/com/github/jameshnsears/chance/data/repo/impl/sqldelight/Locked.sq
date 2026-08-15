@@ -1,6 +1,5 @@
 CREATE TABLE Locked (
-    diceUuid TEXT NOT NULL PRIMARY KEY,
-    FOREIGN KEY (diceUuid) REFERENCES Dice(uuid) ON DELETE CASCADE
+    diceUuid TEXT NOT NULL PRIMARY KEY
 );
 
 saveLocked:

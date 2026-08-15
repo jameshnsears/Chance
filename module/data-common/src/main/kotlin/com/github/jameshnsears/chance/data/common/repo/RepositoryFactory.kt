@@ -1,6 +1,7 @@
 package com.github.jameshnsears.chance.data.common.repo
 
 import android.content.Context
+import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.common.BuildConfig
@@ -49,7 +50,19 @@ class RepositoryFactory(val context: Context? = null) {
 
     val database by lazy {
         val newDriver = if (context != null && !isTestDoubleMode) {
-            AndroidSqliteDriver(ChanceDatabase.Schema, context, "chance.db")
+            AndroidSqliteDriver(
+                schema = ChanceDatabase.Schema,
+                context = context,
+                name = "chance.db",
+                callback = object : AndroidSqliteDriver.Callback(ChanceDatabase.Schema) {
+                    override fun onConfigure(db: SupportSQLiteDatabase) {
+                        super.onConfigure(db)
+                        db.enableWriteAheadLogging()
+                        db.execSQL("PRAGMA foreign_keys=ON;")
+                        db.execSQL("PRAGMA synchronous=NORMAL;")
+                    }
+                }
+            )
         } else {
             SqlDelightTestDriver.create()
         }

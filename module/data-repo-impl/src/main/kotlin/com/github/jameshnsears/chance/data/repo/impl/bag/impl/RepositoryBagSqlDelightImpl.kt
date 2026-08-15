@@ -33,12 +33,12 @@ class RepositoryBagSqlDelightImpl(
 
     private val diceBagFlow: Flow<DiceBag> = combine(
         database.diceQueries.getAllDice().asFlow().mapToList(Dispatchers.IO),
-        database.sideQueries.getAllSideUuids().asFlow().mapToList(Dispatchers.IO),
+        database.sideQueries.getAllSides().asFlow().mapToList(Dispatchers.IO),
         repositorySideCache?.fetch() ?: kotlinx.coroutines.flow.flowOf(emptyMap())
-    ) { diceEntities: List<DiceEntity>, _: List<String>, sideCache: Map<String, String> ->
+    ) { diceEntities: List<DiceEntity>, sideEntities: List<SideEntity>, sideCache: Map<String, String> ->
+        val sidesByDice = sideEntities.groupBy { it.diceUuid }
         diceEntities.map { diceEntity ->
-            val sideEntities = database.sideQueries.getSidesForDice(diceEntity.uuid).executeAsList()
-            diceEntity.toDice(sideEntities, sideCache)
+            diceEntity.toDice(sidesByDice[diceEntity.uuid] ?: emptyList(), sideCache)
         }.toMutableList()
     }.shareIn(
         scope = repositoryScope,
@@ -60,6 +60,17 @@ class RepositoryBagSqlDelightImpl(
 
     override suspend fun store(newDiceBag: DiceBag) {
         withContext(Dispatchers.IO) {
+            val imageEntries = mutableMapOf<String, String>()
+            newDiceBag.forEach { dice ->
+                dice.sides.forEach { side ->
+                    if (side.imageBase64.isNotEmpty()) {
+                        imageEntries[side.uuid] = side.imageBase64
+                    }
+                }
+            }
+
+            repositorySideCache?.store(imageEntries)
+
             database.transaction {
                 database.diceQueries.clear()
                 database.sideQueries.clear()
@@ -90,14 +101,6 @@ class RepositoryBagSqlDelightImpl(
                             description = side.description,
                             descriptionColour = side.descriptionColour
                         )
-
-                        if (side.imageBase64.isNotEmpty()) {
-                            repositorySideCache?.let {
-                                kotlinx.coroutines.runBlocking {
-                                    it.store(side.uuid, side.imageBase64)
-                                }
-                            }
-                        }
                     }
                 }
             }

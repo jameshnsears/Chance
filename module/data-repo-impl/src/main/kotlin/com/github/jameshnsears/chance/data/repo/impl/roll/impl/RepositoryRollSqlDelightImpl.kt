@@ -63,7 +63,7 @@ class RepositoryRollSqlDelightImpl(
                             scoreAdjustment = roll.scoreAdjustment.toLong(),
                             score = roll.score.toLong(),
                             sideUuid = roll.side.uuid,
-                            groupUuid = roll.uuidGroup
+                            groupUuid = roll.uuidGroup.ifEmpty { null }
                         )
                     }
                 }
@@ -82,7 +82,7 @@ class RepositoryRollSqlDelightImpl(
                         scoreAdjustment = roll.scoreAdjustment.toLong(),
                         score = roll.score.toLong(),
                         sideUuid = roll.side.uuid,
-                        groupUuid = roll.uuidGroup
+                        groupUuid = roll.uuidGroup.ifEmpty { null }
                     )
                 }
             }

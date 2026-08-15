@@ -1,7 +1,7 @@
 package com.github.jameshnsears.chance.data.repo.impl.settings.impl
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToOne
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.jameshnsears.chance.data.domain.core.settings.SettingsDataInterface
 import com.github.jameshnsears.chance.data.domain.core.settings.impl.SettingsDataImpl
@@ -26,8 +26,8 @@ class RepositorySettingsSqlDelightImpl(
 
     private val settingsFlow = database.settingsQueries.getSettings()
         .asFlow()
-        .mapToOne(Dispatchers.IO)
-        .map { it.toSettingsData() }
+        .mapToOneOrNull(Dispatchers.IO)
+        .map { it?.toSettingsData() ?: SettingsDataImpl() }
         .shareIn(
             scope = repositoryScope,
             started = SharingStarted.WhileSubscribed(5000),
