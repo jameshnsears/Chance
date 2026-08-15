@@ -1,12 +1,12 @@
 <resources>
     <string name="tab.setup">Setup</string>
 
-    <string name="tab.setup.dice">Sets</string>
+    <string name="tab.setup.dice">Pieces</string>
     <string name="tab.setup.groups">Loadouts</string>
     <string name="tab.setup.groups.empty">Tap + to create a new loadout</string>
 
     <string name="tab.roll">Plays</string>
-    <string name="tab.roll.empty.onboard.01">Toggle a set or loadout and tap Play</string>
+    <string name="tab.roll.empty.onboard.01">Toggle a piece or loadout and tap Play</string>
     <string name="tab.roll.empty.onboard.02">Tap a side or image to toggle a lock</string>
     <string name="tab.roll.undo">Undo</string>
     <string name="tab.roll.roll">Play</string>
@@ -19,12 +19,12 @@
     <string name="tab.bag.import.failure.json.file.empty">JSON file is empty</string>
     <string name="tab.bag.import.failure.json.file.unknown.version">JSON file has an unknown version</string>
     <string name="tab.bag.import.failure.json.file.missing.section">JSON file is missing a required section</string>
-    <string name="tab.bag.import.failure.json.dice.missing">Set data is missing in JSON</string>
-    <string name="tab.bag.import.failure.json.dice.uuid">Set UUID is invalid or duplicate</string>
-    <string name="tab.bag.import.failure.json.dice.title">Set title is invalid or duplicate</string>
-    <string name="tab.bag.import.failure.json.side.size">Set has an invalid number of sides</string>
+    <string name="tab.bag.import.failure.json.dice.missing">Pieces data is missing in JSON</string>
+    <string name="tab.bag.import.failure.json.dice.uuid">Piece uuid is invalid or duplicate</string>
+    <string name="tab.bag.import.failure.json.dice.title">Piece title is invalid or duplicate</string>
+    <string name="tab.bag.import.failure.json.side.size">Piece has an invalid number of sides</string>
     <string name="tab.bag.import.failure.json.schema.settings">Settings section does not match schema</string>
-    <string name="tab.bag.import.failure.json.schema.dice">Set section does not match schema</string>
+    <string name="tab.bag.import.failure.json.schema.dice">Piece section does not match schema</string>
     <string name="tab.bag.import.failure.json.schema.side">Side section does not match schema</string>
     <string name="tab.bag.import.failure.json.schema.group">Loadout section does not match schema</string>
     <string name="tab.bag.export">Export…</string>
@@ -38,14 +38,14 @@
 
     <string name="dialog.bag.save">Save</string>
     <string name="dialog.bag.save.confirmation">Change # of Sides</string>
-    <string name="dialog.bag.save.confirmation.question">Delete plays containing this set?</string>
+    <string name="dialog.bag.save.confirmation.question">Delete plays containing this piece?</string>
 
     <string name="dialog.bag.clone">Duplicate</string>
     <string name="dialog.bag.delete">Delete</string>
     <string name="dialog.group.delete">Delete</string>
     <string name="dialog.group.delete.confirmation">This will delete associated plays</string>
     <string name="dialog.bag.delete.confirmation">Delete</string>
-    <string name="dialog.bag.delete.confirmation.question">Delete set, associated loadouts and plays?</string>
+    <string name="dialog.bag.delete.confirmation.question">Delete piece, associated loadouts and plays?</string>
     <string name="dialog.bag.delete.confirmation.ok">OK</string>
     <string name="dialog.bag.delete.confirmation.cancel">Cancel</string>
 
@@ -64,7 +64,7 @@
     <string name="dialog.bag.side.image_apply.svg.size">\u2022 256 KB size limit for SVG image file</string>
     <string name="dialog.bag.side.image.error">Invalid image</string>
 
-    <string name="dialog.bag.dice">Set</string>
+    <string name="dialog.bag.dice">Piece</string>
     <string name="dialog.bag.dice.title">Title</string>
     <string name="dialog.bag.dice.title.info.0">\u2022 Must be unique</string>
     <string name="dialog.bag.dice.sides"># of Sides</string>
@@ -72,42 +72,42 @@
     <string name="dialog.bag.dice.colour">Sides…</string>
 
     <string name="dialog.bag.roll">Rules</string>
-    <string name="dialog.bag.roll.info">\u2022 Rules apply to this set only</string>
+    <string name="dialog.bag.roll.info">\u2022 Rules apply to this piece only</string>
     <string name="dialog.bag.roll.repeat">Play multiplier</string>
-    <string name="dialog.bag.roll.repeat.meaning">\u2022 The number of times the set will be played</string>
+    <string name="dialog.bag.roll.repeat.meaning">\u2022 The number of times the piece will be played</string>
     <string name="dialog.bag.roll.explode.side">Explode if side #</string>
     <string name="dialog.bag.roll.explode.meaning">\u2022 Play again up to 5× and adds to the score</string>
     <string name="dialog.bag.roll.score">Modify score</string>
 
     <string name="dialog.bag.colour.picker.side">Side #</string>
     <string name="dialog.bag.colour.picker.description">Side Description</string>
-    <string name="dialog.bag.colour.picker.dice">Set Sides</string>
+    <string name="dialog.bag.colour.picker.dice">Piece sides</string>
 
     <string name="dialog.bag.setup.groups.title">Create loadout</string>
     <string name="dialog.bag.setup.groups.name">Title</string>
     <string name="dialog.bag.setup.groups.name.info.0">\u2022 Must be unique</string>
-    <string name="dialog.bag.setup.groups.select">\u2022 Loadout must contain at least one set</string>
+    <string name="dialog.bag.setup.groups.select">\u2022 Loadout must contain at least one piece</string>
     <string name="dialog.bag.setup.groups.notes">Notes (optional)</string>
-    <string name="dialog.bag.setup.groups.change.info.0">\u2022 Changing a set will undo associated plays</string>
+    <string name="dialog.bag.setup.groups.change.info.0">\u2022 Changing a piece will undo associated plays</string>
 
-    <string name="tab.roll.settings.title">Game Setup</string>
+    <string name="tab.roll.settings.title">Settings</string>
     <string name="tab.roll.settings.roll.time">Play index</string>
     <string name="tab.roll.settings.score">Score</string>
     <string name="tab.roll.settings.score.tts">Score TTS</string>
 
-    <string name="tab.roll.settings.dice.title">Set Title</string>
+    <string name="tab.roll.settings.dice.title">Piece title</string>
     <string name="tab.roll.settings.side.number">Side #</string>
     <string name="tab.roll.settings.side.svg">Image</string>
-    <string name="tab.roll.settings.side.description">Side Description</string>
+    <string name="tab.roll.settings.side.description">Side description</string>
     <string name="tab.roll.settings.behaviour">Rules</string>
-    <string name="tab.roll.settings.group.title">Loadout Title</string>
+    <string name="tab.roll.settings.group.title">Loadout title</string>
     <string name="tab.roll.settings.layout">Layout</string>
     <string name="tab.roll.settings.history">History</string>
 
     <string name="tab.roll.settings.use.shuffle">Shuffle</string>
     <string name="tab.roll.settings.use.haptics">Haptics</string>
     <string name="tab.roll.settings.shake.to.roll">Shake to Play</string>
-    <string name="tab.roll.settings.use.sound">Play Sound</string>
+    <string name="tab.roll.settings.use.sound">Play sound</string>
 
     <string name="tab.roll.settings.undo.all">Undo All</string>
 
