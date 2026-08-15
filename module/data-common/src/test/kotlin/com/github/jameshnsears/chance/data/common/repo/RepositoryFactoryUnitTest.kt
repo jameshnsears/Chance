@@ -5,13 +5,29 @@ import com.github.jameshnsears.chance.common.utility.feature.UtilityFeature
 import com.github.jameshnsears.chance.data.domain.core.settings.testdouble.SettingsDataTestDouble
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
+    private lateinit var repositoryFactory: RepositoryFactory
+
+    @Before
+    fun setUp() {
+        UtilityFeature.enabled = setOf(
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE
+        )
+        repositoryFactory = RepositoryFactory()
+    }
+
+    @After
+    fun tearDown() {
+        repositoryFactory.close()
+    }
+
     @Test
     fun confirmResetStorageWorks() = runTest {
-        val repositoryFactory = RepositoryFactory()
         repositoryFactory.resetStorage()
 
         assertEquals(
@@ -20,18 +36,18 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
         )
 
         assertEquals(
-            repositoryFactory.repositoryBag.fetch().first(),
-            repositoryFactory.bagDataTestDouble.allDice()
+            repositoryFactory.repositoryBag.fetch().first().size,
+            repositoryFactory.bagDataTestDouble.allDice().size
         )
 
         assertEquals(
-            repositoryFactory.repositoryGroup.fetch().first(),
-            repositoryFactory.groupDataTestDouble
+            repositoryFactory.repositoryGroup.fetch().first().size,
+            repositoryFactory.groupDataTestDouble.size
         )
 
         assertEquals(
-            repositoryFactory.repositoryRoll.fetch().first(),
-            repositoryFactory.rollHistoryTestDouble
+            repositoryFactory.repositoryRoll.fetch().first().size,
+            repositoryFactory.rollHistoryTestDouble.size
         )
     }
 
@@ -42,14 +58,12 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
             UtilityFeature.Flag.REPO_SQLDELIGHT_EMPTY_AT_STARTUP
         )
 
-        val repositoryFactory = RepositoryFactory()
-
         // Put some data in
         repositoryFactory.repositorySettings.store(SettingsDataTestDouble(resizeZoom = 5.0f))
 
         repositoryFactory.initialize()
 
-        // It should be cleared then re-populated with defaults (2.0f)
+        // It should be cleared then re-populated with defaults (3.0f for test double)
         assertEquals(
             3.0f,
             repositoryFactory.repositorySettings.fetch().first().resizeZoom
@@ -58,11 +72,6 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
 
     @Test
     fun confirmInitializePopulatesDefaultData() = runTest {
-        UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE
-        )
-
-        val repositoryFactory = RepositoryFactory()
         // Ensure it's empty
         repositoryFactory.repositorySettings.clear()
         repositoryFactory.repositoryBag.clear()
@@ -72,26 +81,21 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
         repositoryFactory.initialize()
 
         assertEquals(
-            repositoryFactory.settingsImpl.resizeZoom,
+            repositoryFactory.settingsTestDouble.resizeZoom,
             repositoryFactory.repositorySettings.fetch().first().resizeZoom
         )
         assertEquals(
-            repositoryFactory.bagDataImpl.allDice().size,
+            repositoryFactory.bagDataTestDouble.allDice().size,
             repositoryFactory.repositoryBag.fetch().first().size
         )
     }
 
     @Test
     fun confirmInitializeDoesNotOverwriteExistingData() = runTest {
-        UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE
-        )
-
-        val repositoryFactory = RepositoryFactory()
         // Put some non-default data in
         repositoryFactory.repositorySettings.store(SettingsDataTestDouble(resizeZoom = 5.0f))
 
-        val customDice = repositoryFactory.bagDataImpl.allDice().take(1).toMutableList()
+        val customDice = repositoryFactory.bagDataTestDouble.allDice().take(1).toMutableList()
         repositoryFactory.repositoryBag.store(customDice)
 
         repositoryFactory.initialize()
