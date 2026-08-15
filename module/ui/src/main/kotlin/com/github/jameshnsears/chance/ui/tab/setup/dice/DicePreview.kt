@@ -21,7 +21,7 @@ import com.github.jameshnsears.chance.ui.zoom.setup.dice.ZoomDiceAndroidViewMode
 @Composable
 fun TabBagPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val repositoryFactory = RepositoryFactory()
@@ -69,7 +69,7 @@ fun TabBagPreview() {
 @Composable
 fun TabBagBottomSheetPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val repositoryFactory = RepositoryFactory()

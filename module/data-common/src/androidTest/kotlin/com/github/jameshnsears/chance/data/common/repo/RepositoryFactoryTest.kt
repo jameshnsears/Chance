@@ -15,7 +15,7 @@ class RepositoryFactoryTest : UtilityLoggingHelper() {
     @Test
     fun debugWithTestDoubleFlag() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
         )
 
         val repositoryFactory = RepositoryFactory(applicationContext)
@@ -40,7 +40,7 @@ class RepositoryFactoryTest : UtilityLoggingHelper() {
     @Test
     fun debugWithProdFlag() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_PROD,
         )
 
         val repositoryFactory = RepositoryFactory(applicationContext)

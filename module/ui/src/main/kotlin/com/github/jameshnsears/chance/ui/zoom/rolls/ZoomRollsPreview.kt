@@ -31,7 +31,7 @@ private fun ZoomRollPreviewHelper(
     settingsAction: suspend (SettingsDataInterface) -> Unit = {},
 ) {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val repositoryFactory = remember {

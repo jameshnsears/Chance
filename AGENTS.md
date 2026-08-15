@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Chance** is a D&D dice roller app built with Kotlin/Android. It manages dice bags, performs rolls, and displays results. The architecture uses clean separation of concerns with protocol buffers for persistence and Jetpack Compose for UI.
+**Chance** is a D&D dice roller app built with Kotlin/Android. It manages dice bags, performs rolls, and displays results. The architecture uses clean separation of concerns with SQLDelight for persistence and Jetpack Compose for UI.
 
 ## Architecture Essentials
 
@@ -11,15 +11,15 @@
 - **app** - Entry point with `MainActivity`, initializes logging & shortcuts
 - **module:common** - Shared utilities: logging, UI theme, preview helpers, epoch time, colour utilities
 - **module:data-domain** - Domain models: `Dice`, `Side`, `DiceBag`, `Group`, `Roll`, `RollHistory`, `Settings`
-- **module:data-repo-api** - Repository interfaces & JSON schemas for import/validation, `RepositoryImportExportInterface`
-- **module:data-repo-impl** - Protocol Buffer serialization (DataStore) + test doubles for persistence
+- **module:data-repo-api** - Repository interfaces & JSON schemas for import/validation, `RepositoryImportExportInterface`, `RepositoryImportValidation`
+- **module:data-repo-impl** - SQLDelight database + test doubles for persistence
 - **module:data-common** - `RepositoryFactory` (singleton-like DI), SVG serializer
 - **module:ui** - Compose UI: tabs, dialogs, zoomed views, groups, ViewModels, Events, Services, TestTags, Previews
 
 ### Data Flow Pattern
 
 ```
-UI (Compose) → ViewModel → Repository (Flow-based) → Serializer → Protocol Buffer Storage (DataStore)
+UI (Compose) → ViewModel → Repository (Flow-based) → SQLDelight Database
                                 ↓
                         Test Double (if FLAG enabled)
 ```
@@ -61,7 +61,7 @@ sealed class RollSideEffect {
 `RepositoryFactory` is a simple service locator (not DI framework). It conditionally creates real or test implementations based on:
 
 1. **BuildConfig.DEBUG** - Dev mode enables features
-2. **UtilityFeature flags** - Switches between protocol buffers and test doubles
+2. **UtilityFeature flags** - Switches between SQLDelight and test doubles
 
 Example from `MainActivity`:
 
@@ -93,7 +93,7 @@ MainComposable(
 - **Unit Tests**: `*Test.kt` or `*UnitTest.kt` in `src/test/kotlin`
 - **Instrumented Tests**: `*Test.kt` in `src/androidTest/kotlin`. Inherit from `TestSupport` (extends `UtilityLoggingHelper`) for `androidComposeTestRule` and helpers.
 - **Test Helpers** (`TestSupport`): `displayBottomSheet(testTag)`, `assertClick(testTag)`, `waitForGitHubCI(testTag)` (20s timeout), `isCI` property
-- **Base classes**: `UtilityLoggingHelper` (auto-enables `REPO_PROTOCOL_BUFFER_TEST_DOUBLE`, plants Timber), `AndroidTestHelper` (UI-less instrumented tests), `UtilityAndroidUnitTestHelper`, `UtilityRuleMainDispatcher`
+- **Base classes**: `UtilityLoggingHelper` (auto-enables `REPO_SQLDELIGHT_TEST_DOUBLE`, plants Timber), `AndroidTestHelper` (UI-less instrumented tests), `UtilityAndroidUnitTestHelper`, `UtilityRuleMainDispatcher`
 - **Data Reset**: `runBlocking { RepositoryFactory(context).resetStorage() }` in `@Before`
 - **ViewModel Unit Tests**: ViewModels created in a unit test never receive `onCleared()`, so their `viewModelScope` coroutines (`stateIn` upstreams, `init {}` observers) keep running and can pollute the shared test-double state in later tests. Track created ViewModels and cancel their scope in `@After`:
 
@@ -115,7 +115,7 @@ private fun track(vm: ZoomDiceAndroidViewModel): ZoomDiceAndroidViewModel {
 
 16 `*Preview.kt` files across the UI module. Pattern:
 
-1. Set `UtilityFeature.enabled` to `REPO_PROTOCOL_BUFFER_TEST_DOUBLE`
+1. Set `UtilityFeature.enabled` to `REPO_SQLDELIGHT_TEST_DOUBLE`
 2. Create `RepositoryFactory()`, instantiate ViewModels
 3. Use `@UtilityPreview` (multi-device: phone 360x640, landscape 640x360, foldable 673x841, tablet 1280x800) or `@Preview`
 4. Wrap with `ChanceTheme {}`
@@ -125,7 +125,7 @@ private fun track(vm: ZoomDiceAndroidViewModel): ZoomDiceAndroidViewModel {
 @Preview
 @Composable
 fun TabBagPreview() {
-    UtilityFeature.enabled = setOf(Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE)
+    UtilityFeature.enabled = setOf(Flag.REPO_SQLDELIGHT_TEST_DOUBLE)
     val repositoryFactory = RepositoryFactory()
     val viewModel = DiceAndroidViewModel(...)
     ChanceTheme { TabBagDice(viewModel, ...) }
@@ -137,8 +137,8 @@ fun TabBagPreview() {
 ### Naming Patterns
 
 - **Repository Interfaces**: `RepositoryXxxInterface` (in `data-repo-api`); `RepositoryBagInterface`/`RepositoryRollInterface` expose `fetchReferencedSideUuids()` for the side-cache prune
-- **Repository Implementations**: `RepositoryXxxProtocolBufferImpl` with singleton `getInstance()`
-- **Test Doubles**: `RepositoryXxxProtocolBufferTestDouble` and `XxxDataTestDouble`
+- **Repository Implementations**: `RepositoryXxxSqlDelightImpl` with singleton `getInstance()`
+- **Test Doubles**: `RepositoryXxxTestDouble` and `XxxDataTestDouble`
 - **ViewModels**: `XxxAndroidViewModel`, `ZoomXxxAndroidViewModel` (extends abstract `ZoomAndroidViewModel`)
 - **ViewModel Factories**: `XxxAndroidViewModelFactory` implementing `ViewModelProvider.Factory`
 - **Services**: `CardDiceService`, `CardFaceService`, `CardRollService` (dialog dice cards); `RollsScoreTtsPlayer` (TTS), `RollsSoundPlayer` (sound effects), `ShakeToRollService` (shake gesture), `HapticHelper` (haptic feedback), `RollsSequenceHelper` (roll persistence)
@@ -147,52 +147,40 @@ fun TabBagPreview() {
 
 ### Persistence Layer
 
-Protocol Buffers via `androidx.datastore` (not Room). 10 `.proto` files in `module/data-repo-impl/src/proto/`:
+SQLDelight is used for persistence. 8 `.sq` files in `module/data-repo-impl/src/main/sqldelight/com/github/jameshnsears/chance/data/repo/impl/sqldelight/`:
 
-- `bag.proto` / `dice.proto` / `side.proto` / `settings.proto`
-- `roll.proto` / `roll_history.proto` / `group.proto` / `group_history.proto`
-- `locked.proto` / `side_cache.proto`
-
-Serializers in `impl` subpackages:
-- `RepositorySettingsProtocolBufferSerializer`
-- `RepositoryBagProtocolBufferSerializer`
-- `RepositoryGroupProtocolBufferSerializer`
-- `RepositoryRollProtocolBufferSerializer`
-- `RepositoryLockedProtocolBufferSerializer`
-- `RepositorySideCacheProtocolBufferSerializer`
+- `Settings.sq` / `Dice.sq` / `Side.sq` / `Image.sq`
+- `Roll.sq` / `DiceGroup.sq` / `DiceGroupDice.sq` / `Locked.sq`
 
 #### Side Cache for SVG Images
 
-Large `imageBase64` SVGs are kept out of the `bag`/`roll` protos and stored in a dedicated `RepositorySideCache` DataStore (`side_cache.pb`, `SideCacheProtocolBuffer` = `map<sideUuid, svgString>`).
+Large `imageBase64` SVGs are kept out of the main tables and stored in a dedicated `Image` table (`Image.sq`).
 
 - **Interface**: `RepositorySideCacheInterface` (`data-repo-api/.../side/`) with `fetch()`, `store()`, `prune()`, `clear()`.
-- **Wiring**: `RepositoryBagProtocolBufferImpl` and `RepositoryRollProtocolBufferImpl` take an optional `repositorySideCache`. `RepositoryFactory` injects the shared instance (test double under `REPO_PROTOCOL_BUFFER_TEST_DOUBLE`). The UI receives it via `ZoomAndroidViewModel` / `MainComposable`.
-- **Write path**: On `store()`, sides with non-empty `imageBase64` are decoded to SVG strings and stored keyed by `side.uuid`; the proto's `imageBase64` is then cleared (this is what keeps `bag.pb`/`roll.pb` small).
-- **Read path**: The fetch flows `combine` the bag/roll proto with `repositorySideCache.fetch()` and resolve each `Side.imageBase64` back from the cache (owner sides resolve by their own uuid; reference sides via `imageBase64Uuid`).
-- **UI path**: `ZoomAndroidViewModel.sideSvgImageRequestAsync(side)` reads the cache first (`sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]`), falling back to `side.imageBase64`. Zoom composables (`ZoomFaceImageSVG`, `ZoomRollFaceImageSVG`) build an `ImageRequest` via `produceState` and render with `AsyncImage`.
-
-> Note: an older in-proto deduplication mechanism (`RepositoryProtocolBufferImageCache`, `EPOCH_IMAGE_CACHE` / `REF:<hash>` references) is defined but no longer wired into the implementations; the side cache above is the active mechanism.
+- **Wiring**: `RepositoryBagSqlDelightImpl` and `RepositoryRollSqlDelightImpl` take an optional `repositorySideCache`. `RepositoryFactory` injects the shared instance (test double under `REPO_SQLDELIGHT_TEST_DOUBLE`). The UI receives it via `ZoomAndroidViewModel` / `MainComposable`.
+- **Write path**: On `store()`, sides with non-empty `imageBase64` are decoded to SVG strings and stored in the `Image` table keyed by `side.uuid`; the side's `imageBase64` is then cleared.
+- **Read path**: The fetch flows `combine` the repository data with `repositorySideCache.fetch()` and resolve each `Side.imageBase64` back from the cache (owner sides resolve by their own uuid; reference sides via `imageBase64Uuid`).
+- **UI path**: `ZoomAndroidViewModel.sideSvgImageRequestAsync(side)` reads the cache first (`sideCache[side.uuid] ?: sideCache[side.imageBase64Uuid]`), falling back to `side.imageBase64`.
 
 #### pruneCache() Race Condition (Important)
 
 `RepositoryFactory.initialize()` calls `pruneCache()` after seeding the bag. Do **not** derive the referenced-side set from `repositoryBag.fetch()` / `repositoryRoll.fetch()` there: those are `shareIn(WhileSubscribed)` flows whose replay lags the just-completed `store()` write, so reading a stale (empty) replay makes `prune()` delete every cache entry and the SVG faces stop rendering.
 
-Use the synchronous persisted-data reads instead: `RepositoryBagInterface.fetchReferencedSideUuids()` and `RepositoryRollInterface.fetchReferencedSideUuids()` (implementations read the raw DataStore proto, not the derived flow). `RepositoryFactory.pruneCache()` combines both.
+Use the synchronous persisted-data reads instead: `RepositoryBagInterface.fetchReferencedSideUuids()` and `RepositoryRollInterface.fetchReferencedSideUuids()` (implementations read the raw SQL database, not the derived flow). `RepositoryFactory.pruneCache()` combines both.
 
 Test doubles use in-memory storage (no persistence).
 
-### Feature Flags
+- **Feature Flags**: `REPO_SQLDELIGHT_PROD` uses `AndroidSqliteDriver` and `chance.db`; `REPO_SQLDELIGHT_TEST_DOUBLE` uses `SqlDelightTestDriver`.
+- **Feature Flags**: Defined in `UtilityFeature.kt` (`module/common/.../utility/feature/UtilityFeature.kt`):
 
-Defined in `UtilityFeature.kt` (`module/common/.../utility/feature/UtilityFeature.kt`):
-
-- `REPO_PROTOCOL_BUFFER_PROD` — Real protocol buffer storage (DataStore)
-- `REPO_PROTOCOL_BUFFER_TEST_DOUBLE` — In-memory test doubles
-- `REPO_PROTOCOL_BUFFER_EMPTY_AT_STARTUP` — Clear storage at startup
+- `REPO_SQLDELIGHT_PROD` — Real SQLDelight storage (SQLite)
+- `REPO_SQLDELIGHT_TEST_DOUBLE` — In-memory test doubles
+- `REPO_SQLDELIGHT_EMPTY_AT_STARTUP` — Clear storage at startup
 - `UI_SHOW_CRASHLYTICS_BUTTON` — Debug crash button (F-Droid)
 - `UI_SHOW_UUID` — Show UUIDs in UI
 
-**Default (production)**: `REPO_PROTOCOL_BUFFER_PROD` only.
-**Test context** (extends `UtilityLoggingHelper`): Auto-switches to `REPO_PROTOCOL_BUFFER_TEST_DOUBLE`.
+**Default (production)**: `REPO_SQLDELIGHT_PROD` only.
+**Test context** (extends `UtilityLoggingHelper`): Auto-switches to `REPO_SQLDELIGHT_TEST_DOUBLE`.
 
 ### Code Quality
 
@@ -246,7 +234,7 @@ Core models are in sub-packages under `data.domain.core`:
 - **`DiceBag`** (`core/bag/Bag.kt`): `typealias DiceBag = MutableList<Dice>`. Backed by `BagDataInterface` (`suspend fun allDice(): MutableList<Dice>`) with impl/test double.
 - **`Group`** (`core/group/Group.kt`): UUID, name, linked dice UUIDs, notes, selected, displayIndex. `typealias GroupHistory = List<Group>`. Backed by `GroupDataInterface` (`val groupHistory: GroupHistory` — read-only).
 - **`Roll`** (`core/roll/Roll.kt`): dice UUID, rolled `Side`, multiplier/explode indices, score adjustment, score, group UUID. `typealias RollHistory = LinkedHashMap<Long, List<Roll>>`. Backed by `RollHistoryDataInterface` (`var rollHistory: RollHistory` — mutable).
-- **`SettingsDataInterface`** (`core/settings/SettingsDataInterface.kt`): `var` properties: `resizeZoom`, `rollIndexTime`, `rollScore`, `rollScoreTTS`, `diceTitle`, `sideNumber`, `rollBehaviour`, `sideDescription`, `sideSVG`, `haptics`, `shakeToRoll`, `rollSound`, `shuffle`, `groupTitle`.
+- **`SettingsDataInterface`** (`core/settings/SettingsDataInterface.kt`): `var` properties: `resizeZoom`, `rollIndexTime`, `rollScore`, `rollScoreTTS`, `diceTitle`, `sideNumber`, `rollBehaviour`, `sideDescription`, `sideSVG`, `haptics`, `shakeToRoll`, `rollSound`, `shuffle`, `groupTitle`, `layout`, `history`.
 
 ### UI Dialog Structure
 
@@ -282,14 +270,15 @@ class MyTest : TestSupport() {
 - `.github/workflows/` — 7 CI pipelines: `static.analysis`, `static.gitleaks`, `codecov.unitTests`, `codecov.app.androidTest`, `codecov.data-common.androidTest`, `codecov.ui.androidTest`, `release.yml`
 - `.github/actions/cache-gradle/` and `.github/actions/cache-avd/` — CI caching actions
 - `module/*/src/{main,test,androidTest}/kotlin` — Source organization
-- `module/data-repo-impl/src/proto/` — 10 Proto schema files
+- `module/data-repo-impl/src/main/sqldelight/` — 8 SQLDelight schema files
+- `module/data-repo-api/src/main/kotlin/com/github/jameshnsears/chance/data/repo/api/RepositoryImportValidation.kt` — JSON schema validation for imports
 - `local.properties` — Local build config (git-ignored)
 - `keystore.jks` + `google-services.json` — Encrypted credentials (*.gpg files)
 
 ## When Adding Features
 
 1. **Domain Models**: Add to `module:data-domain`
-2. **Persistence**: Implement repo in `data-repo-impl`, interface in `data-repo-api`, proto in `src/proto/`. For new SVG/image data, store it in the `RepositorySideCache` (`side_cache.pb`) rather than bloating `bag.pb`/`roll.pb` — wire the shared `repositorySideCache` instance through `RepositoryFactory` and resolve it in the fetch flows + UI. Run `ktlintFormat` before commit.
+2. **Persistence**: Implement repo in `data-repo-impl`, interface in `data-repo-api`, SQL schema in `src/main/sqldelight/`. For new SVG/image data, store it in the `Image` table rather than bloating the main tables — wire the shared `repositorySideCache` instance through `RepositoryFactory` and resolve it in the fetch flows + UI. Run `ktlintFormat` before commit.
 3. **UI Screens**: Create in `module:ui`, add `*Preview.kt`, use `@Preview`/`@UtilityPreview` with test double flag
 4. **Tests**: Match module structure, inherit `UtilityLoggingHelper` or `TestSupport`
 5. **Test Tags**: Define `XxxTestTag` companion object for E2E automation

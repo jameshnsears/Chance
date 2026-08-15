@@ -21,7 +21,7 @@ import com.github.jameshnsears.chance.ui.tab.setup.groups.GroupsAndroidViewModel
 @Composable
 fun DialogGroupPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val showDialog = remember { mutableStateOf(value = true) }

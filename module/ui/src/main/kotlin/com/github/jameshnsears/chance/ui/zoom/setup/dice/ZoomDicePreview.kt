@@ -24,7 +24,7 @@ import com.github.jameshnsears.chance.ui.navigation.rememberNavigationState
 @Composable
 fun ZoomBagPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val repositoryFactory = RepositoryFactory()

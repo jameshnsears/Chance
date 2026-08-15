@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-option java_multiple_files = true;
-
-package com.github.jameshnsears.chance.data.domain.proto;
-
-message LockedProtocolBuffer {
-  repeated string lockedRollIndices = 1;
-}

@@ -16,7 +16,7 @@ android {
 
         buildConfigField("String", "VERSION", "\"${libs.versions.versionName.get()}\"")
         buildConfigField("String", "GIT_HASH", "\"${gitHash()}\"")
-        
+
         testInstrumentationRunnerArguments["IN_CI"] =
             project.findProperty("IN_CI")?.toString() ?: ""
     }
@@ -102,8 +102,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.datastore.core)
-    implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.lifecycle.runtime.compose)
@@ -120,9 +118,6 @@ dependencies {
     implementation(libs.jackson.module.kotlin)
     implementation(libs.jsonschema.generator)
     implementation(libs.mockk)
-    implementation(libs.protobuf.java)
-    implementation(libs.protobuf.java.util)
-    implementation(libs.protobuf.kotlin)
     implementation(libs.slf4j.simple)
     implementation(libs.timber)
     implementation(platform(libs.androidx.compose.bom))

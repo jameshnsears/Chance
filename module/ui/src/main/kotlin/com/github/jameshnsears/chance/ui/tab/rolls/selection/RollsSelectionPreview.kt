@@ -23,7 +23,7 @@ import com.github.jameshnsears.chance.ui.tab.rolls.RollsSelectionHelper
 @Composable
 fun RollSelectionPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val repositoryFactory = RepositoryFactory()

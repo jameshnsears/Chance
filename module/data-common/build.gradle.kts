@@ -82,14 +82,11 @@ kotlin {
 
 dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.androidx.datastore.core)
-    androidTestImplementation(libs.androidx.datastore.preferences)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.coil.compose)
     androidTestImplementation(libs.coil.svg)
     androidTestImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.protobuf.kotlin)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(testFixtures(project(":module:common")))
     androidTestUtil(libs.androidx.test.orchestrator)
@@ -99,6 +96,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
+    implementation(libs.sqldelight.android.driver)
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":module:common"))
     implementation(project(":module:data-domain"))

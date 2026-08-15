@@ -20,7 +20,6 @@ compose-icons = "1.7.8"
 core-ktx = "1.19.0"
 core-splashscreen = "1.2.0"
 crashalytics = "20.1.0"
-datastore-core = "1.2.1"
 espresso = "3.7.0"
 firebase-bom = "34.17.0"
 firebase-crashalytics-plugin = "3.0.7"
@@ -49,9 +48,6 @@ navigation3 = "1.1.6"
 org-gradle-test-retry = "1.6.5"
 org-jlleitschuh-gradle-ktlint = "14.2.0"
 profileinstaller = "1.4.1"
-protobuf-java = "4.35.1"
-protobuf-java-util = "4.35.1"
-protobuf-kotlin = "4.35.1"
 slf4j-simple = "2.0.18"
 sqldelight = "2.3.2"
 timber = "5.0.1"
@@ -71,8 +67,6 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
-androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore-core" }
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-core" }
 androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junit" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle-runtime-compose" }
@@ -108,9 +102,6 @@ material = { group = "com.google.android.material", name = "material", version.r
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk-android" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 org-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit-bom" }
-protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf-java" }
-protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf-java-util" }
-protobuf-kotlin = { module = "com.google.protobuf:protobuf-kotlin", version.ref = "protobuf-kotlin" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple" }
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }

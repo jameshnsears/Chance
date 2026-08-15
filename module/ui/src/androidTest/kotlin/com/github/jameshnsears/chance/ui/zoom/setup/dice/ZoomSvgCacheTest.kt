@@ -31,14 +31,14 @@ class ZoomSvgCacheTest : AndroidTestHelper() {
     @After
     fun tearDown() {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
         )
     }
 
     @Test
     fun svgFaceDisplaysFromSideCacheProdImpl() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_PROD,
         )
 
         val repositoryFactory = RepositoryFactory(ApplicationProvider.getApplicationContext())
@@ -87,7 +87,7 @@ class ZoomSvgCacheTest : AndroidTestHelper() {
     @Test
     fun initializeKeepsCacheEntriesReferencedByBag() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_PROD,
         )
 
         val repositoryFactory = RepositoryFactory(ApplicationProvider.getApplicationContext())

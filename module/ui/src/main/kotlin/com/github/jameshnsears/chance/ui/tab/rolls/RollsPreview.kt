@@ -28,7 +28,7 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun TabRollPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val context = LocalContext.current
@@ -112,7 +112,7 @@ fun TabRollPreview() {
 @Composable
 fun TabRollBottomSheetPreview() {
     UtilityFeature.enabled = setOf(
-        Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+        Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
     )
 
     val context = LocalContext.current

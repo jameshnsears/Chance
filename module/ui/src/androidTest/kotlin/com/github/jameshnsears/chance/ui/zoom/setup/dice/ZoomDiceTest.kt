@@ -37,7 +37,7 @@ class ZoomDiceTest : AndroidTestHelper() {
     @After
     fun tearDown() {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
         )
     }
 
@@ -123,7 +123,7 @@ class ZoomDiceTest : AndroidTestHelper() {
     @Test
     fun showEpochUuid() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
             UtilityFeature.Flag.UI_SHOW_UUID
         )
 

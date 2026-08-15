@@ -25,7 +25,7 @@ class DialogSettingsTest : AndroidTestHelper() {
     @Before
     fun setup() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
         )
 
         RepositoryFactory().resetStorage()

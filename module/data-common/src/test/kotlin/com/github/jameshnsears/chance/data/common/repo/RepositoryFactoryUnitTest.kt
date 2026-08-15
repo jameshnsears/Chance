@@ -38,8 +38,8 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun confirmInitializeWithEmptyAtStartupWorks() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE,
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_EMPTY_AT_STARTUP
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE,
+            UtilityFeature.Flag.REPO_SQLDELIGHT_EMPTY_AT_STARTUP
         )
 
         val repositoryFactory = RepositoryFactory()
@@ -59,7 +59,7 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun confirmInitializePopulatesDefaultData() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE
         )
 
         val repositoryFactory = RepositoryFactory()
@@ -84,7 +84,7 @@ class RepositoryFactoryUnitTest : UtilityAndroidUnitTestHelper() {
     @Test
     fun confirmInitializeDoesNotOverwriteExistingData() = runTest {
         UtilityFeature.enabled = setOf(
-            UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_TEST_DOUBLE
+            UtilityFeature.Flag.REPO_SQLDELIGHT_TEST_DOUBLE
         )
 
         val repositoryFactory = RepositoryFactory()

@@ -54,7 +54,7 @@ class RepositoryImportValidationTest : UtilityLoggingHelper() {
     fun validateDefaultDataShippedWithApp() {
         runBlocking {
             UtilityFeature.enabled = setOf(
-                UtilityFeature.Flag.REPO_PROTOCOL_BUFFER_PROD
+                UtilityFeature.Flag.REPO_SQLDELIGHT_PROD
             )
 
             repositoryFactory.resetStorage()
